@@ -52,7 +52,7 @@ export class PathValidator {
    * @param filePath - The path to validate (absolute or relative)
    * @returns The canonicalized absolute path
    * @throws {PathValidationError} If the path is invalid or outside allowed directories
-   * @throws {Error} If the file does not exist (preserves ENOENT)
+   * @throws {Error} If the file does not exist. ENOENT errors are re-thrown as-is, preserving their original error type and code.
    */
   async validateAndResolvePath(filePath: string): Promise<string> {
     return path.isAbsolute(filePath)
