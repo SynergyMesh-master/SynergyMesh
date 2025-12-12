@@ -217,7 +217,10 @@ PY
         run: |
           python - <<'PY'
 import json
+import sys
 from pathlib import Path
+
+sys.path.insert(0, str(Path(".").resolve()))
 
 from governance.technical_debt_manager import TechnicalDebtManager
 
@@ -253,6 +256,10 @@ PY
           cache: "npm"
       - name: Generate SBOM and run audit
         run: |
+          if [ ! -f package.json ]; then
+            echo "::warning::No package.json found; skipping Node-based security scan"
+            exit 0
+          fi
           npm install --ignore-scripts
           npx @cyclonedx/cyclonedx-npm --output-file sbom.json
           npm audit --audit-level=high
@@ -278,7 +285,11 @@ PY
             compose_cmd="docker-compose"
           fi
 
-          ${compose_cmd} config || { echo "::error::Compose config validation failed"; exit 1; }
+          if [ -f docker-compose.yml ]; then
+            ${compose_cmd} config || { echo "::error::Compose config validation failed"; exit 1; }
+          else
+            echo "::warning::No docker-compose.yml found; skipping default config validation"
+          fi
           if [ -f docker-compose.dev.yml ]; then
             ${compose_cmd} -f docker-compose.dev.yml config || { echo "::error::Dev compose config validation failed"; exit 1; }
           fi

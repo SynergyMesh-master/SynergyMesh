@@ -8,6 +8,10 @@ if [ ! -f "governance/index/governance-index.json" ]; then
 fi
 
 echo "🔍 Running governance index validation..."
-python governance/index/scripts/index-validator.py --verbose
+if command -v python3 >/dev/null 2>&1; then
+  python3 governance/index/scripts/index-validator.py --verbose
+else
+  python governance/index/scripts/index-validator.py --verbose
+fi
 
 echo "✅ governance/ci-run.sh completed"
