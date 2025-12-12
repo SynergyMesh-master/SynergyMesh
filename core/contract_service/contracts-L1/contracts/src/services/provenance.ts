@@ -3,15 +3,8 @@ import { readFile, stat } from 'fs/promises';
 import { tmpdir } from 'os';
 import * as path from 'path';
 
-import { SLSAAttestationService, SLSAProvenance, BuildMetadata } from './attestation';
 
-// Define a safe root directory for allowed file operations
-const SAFE_ROOT = path.resolve(process.cwd(), 'safefiles');
-// Allowed absolute path prefixes based on environment
-// In test: allow tmpdir for test files
-// In production: allow project workspace and safefiles directory only
-const ALLOWED_ABSOLUTE_PREFIXES =
-  process.env.NODE_ENV === 'test' ? [tmpdir(), process.cwd()] : [process.cwd()];
+import { SLSAAttestationService, SLSAProvenance, BuildMetadata } from './attestation';
 
 // Define a safe root directory for allowed file operations
 // In test environment, this can be overridden to use tmpdir
@@ -151,11 +144,14 @@ export interface Dependency {
 }
 
 export class ProvenanceService {
-  private slsaService: SLSAAttestationService;
+  private readonly slsaService: SLSAAttestationService;
+  private readonly pathValidator: PathValidator;
 
-  constructor() {
+  constructor(pathValidator?: PathValidator) {
     this.slsaService = new SLSAAttestationService();
+    this.pathValidator = pathValidator || new PathValidator();
   }
+
   /**
    * 生成文件的 SHA256 摘要
    * Validates the file path to prevent path traversal attacks.
