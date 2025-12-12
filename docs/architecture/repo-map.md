@@ -23,20 +23,20 @@
 > 來源: repository root 的目錄列表（例如 `ls` 或 `dir`）  
 > 作用: 提供 AI 代理與開發者快速對照「真實存在的目錄」與上層語義邊界
 
-| 分類 | 主要目錄 (僅列核心) | 備註 |
+| 分類 Category | 主要目錄 / Key directories | 備註 Notes |
 | --- | --- | --- |
 | 核心平台 | `core/`, `runtime/`, `shared/` | AI 決策、整合層、運行時、共用資源 |
 | 自動化 | `automation/` | 智能/超自動化、架構骨架、零接觸部署（含 `automation/pipelines/` 子模組） |
 | 自主/無人 | `autonomous/`, `v1-python-drones/`, `v2-multi-islands/` | 無人機與多島嶼框架 |
 | 服務/代理 | `services/`, `agent/`, `mcp-servers/` | 長生命週期代理、MCP 工具端點 |
 | 前端/應用 | `frontend/`, `apps/` | UI 套件與 Web 應用 |
-| 治理/政策 | `governance/`, `config/` | 23 維治理矩陣、統一配置與模組映射 (`config/system-module-map.yaml`) |
+| 治理/政策 | `governance/`, `config/` | 23 維治理矩陣（定義於 `governance/README.md` 等）與統一配置/模組映射 (`config/system-module-map.yaml`) |
 | 基礎設施 | `infrastructure/`, `infra/`, `deployment/` | K8s、監控、canary、部署腳本 |
 | 測試/質量 | `tests/`, `scripts/`, `tools/` | 單元/性能測試、輔助腳本、CI 工具 |
 | 文檔 | `docs/`, `knowledge/` | 文件、索引、報告；生成文件集中於 `docs/generated/` |
 | 其他歷史資產 | `legacy/`, `experiments/`, `supply-chain/`, `bridges/` | 歷史遺留與橋接實驗 |
 
-> ⚠️ 如需完整樹狀結構（含檔案層級），請參考已存在的 `docs/DIRECTORY_TREE.md`；若需語義對應與治理邊界，請依此文檔與 `config/system-module-map.yaml`。
+> ⚠️ 如需完整樹狀結構（含檔案層級），請參考已存在的 `docs/DIRECTORY_TREE.md`。若需語義對應與治理邊界，請依此文檔與 `config/system-module-map.yaml`。
 
 ---
 
