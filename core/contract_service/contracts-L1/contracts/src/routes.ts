@@ -54,9 +54,9 @@ const escalationController = new EscalationController();
  * @apiGroup Health
  * @apiVersion 1.0.0
  *
- * @apiDescription Kubernetes liveness probe endpoint. Returns HTTP 200 status code when the service
- * is alive and able to respond to requests. Used by orchestrators to detect and
- * restart unhealthy containers.
+ * @apiDescription Kubernetes liveness probe endpoint. Always returns HTTP 200 status.
+ * Used by orchestrators to detect and restart unhealthy containers.
+ *
  *
  * @apiSuccess {String} status Always "healthy"
  * @apiSuccess {String} timestamp ISO 8601 timestamp
