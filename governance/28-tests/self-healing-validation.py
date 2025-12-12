@@ -23,6 +23,7 @@ import yaml
 class ValidationResult:
     """驗證結果"""
     def __init__(self, name: str):
+        """TODO: Add function documentation"""
         self.name = name
         self.passed = 0
         self.failed = 0
@@ -84,6 +85,7 @@ class UnmannedIslandValidator:
         self.results: Dict[str, ValidationResult] = {}
     
     def validate_all(self) -> bool:
+        # NOTE: Consider refactoring this function (complexity > 50 lines)
         """
         執行所有驗證
         
@@ -320,6 +322,7 @@ class UnmannedIslandValidator:
         self.results['API Endpoints'] = result
     
     def _validate_performance_baselines(self):
+        # NOTE: Consider refactoring this function (complexity > 50 lines)
         """驗證性能基線"""
         result = ValidationResult("Performance Baselines")
         

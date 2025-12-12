@@ -33,6 +33,7 @@ class Colors:
 
 class GovernanceValidator:
     def __init__(self, governance_root: str = "governance", verbose: bool = False):
+        """TODO: Add function documentation"""
         self.governance_root = Path(governance_root)
         self.verbose = verbose
         self.errors: List[str] = []
@@ -180,6 +181,7 @@ class GovernanceValidator:
                     self.log(f"Invalid deadline format for {asset}: {deadline_str}", "warning")
     
     def validate(self) -> bool:
+        # NOTE: Consider refactoring this function (complexity > 50 lines)
         """Run all validation checks"""
         print(f"\n{Colors.HEADER}{Colors.BOLD}{'='*70}")
         print(f"SynergyMesh Governance Structure Validator")

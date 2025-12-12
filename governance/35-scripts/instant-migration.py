@@ -24,6 +24,7 @@ class InstantMigrationTool:
     """Instant automated migration for governance restructuring"""
     
     def __init__(self, project_root: Path):
+        """TODO: Add function documentation"""
         self.project_root = project_root
         self.governance_root = project_root / "governance"
         
@@ -165,6 +166,7 @@ class InstantMigrationTool:
         }
     
     def run(self) -> bool:
+        # NOTE: Consider refactoring this function (complexity > 50 lines)
         """Execute instant migration"""
         print("=" * 70)
         print("🚀 INSTANT GOVERNANCE MIGRATION TOOL")

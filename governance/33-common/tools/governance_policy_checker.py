@@ -61,6 +61,7 @@ class GovernancePolicyChecker:
             return json.load(f)
 
     def check_policy_file(self, policy_path: Path) -> PolicyCheckResult:
+        # NOTE: Consider refactoring this function (complexity > 50 lines)
         """Check a single policy file"""
         errors = []
         warnings = []
@@ -162,6 +163,7 @@ class GovernancePolicyChecker:
         return results
 
     def check_all_policies(self, governance_root: Path) -> Tuple[bool, Dict[str, Any]]:
+        # NOTE: Consider refactoring this function (complexity > 50 lines)
         """Check all policies across all domains"""
         print("🔍 Checking Governance Policies...")
         print("=" * 100)

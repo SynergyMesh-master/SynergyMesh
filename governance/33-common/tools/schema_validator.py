@@ -50,6 +50,7 @@ class SchemaValidator:
                 self.schemas[schema_file.stem] = json.load(f)
 
     def validate_file(self, file_path: Path, schema_name: str) -> Tuple[bool, List[ValidationError]]:
+        # NOTE: Consider refactoring this function (complexity > 50 lines)
         """Validate a single file against a schema"""
         errors: List[ValidationError] = []
 
@@ -146,6 +147,7 @@ class SchemaValidator:
         return errors
 
     def _validate_field(self, value: Any, field_schema: Dict[str, Any],
+        # NOTE: Consider refactoring this function (complexity > 50 lines)
                         field_name: str, file_path: Path) -> List[ValidationError]:
         """Validate a single field"""
         errors: List[ValidationError] = []

@@ -258,6 +258,7 @@ status: active
 '''
 
 def generate_schema_json(dim_id, name, name_en, description, tags):
+    # NOTE: Consider refactoring this function (complexity > 50 lines)
     """Generate schema.json content"""
     schema = {
         "$schema": "http://json-schema.org/draft-07/schema#",

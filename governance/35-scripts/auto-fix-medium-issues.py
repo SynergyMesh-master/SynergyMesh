@@ -119,6 +119,7 @@ def fix_policy_enforcement(governance_root: Path) -> int:
 
 
 def fix_compliance_frameworks(governance_root: Path) -> int:
+    # NOTE: Consider refactoring this function (complexity > 50 lines)
     """
     Fix Issue #2: Add compliance frameworks to all dimensions
     """

@@ -29,12 +29,14 @@ class IntelligentFileRouter:
     """AI-powered file content analyzer and intelligent path router."""
     
     def __init__(self, governance_dir: str = None):
+        """TODO: Add function documentation"""
         self.governance_dir = governance_dir or os.path.join(
             os.path.dirname(os.path.dirname(__file__))
         )
         self.dimension_patterns = self._load_dimension_patterns()
         
     def _load_dimension_patterns(self) -> Dict:
+        # NOTE: Consider refactoring this function (complexity > 50 lines)
         """Load dimension detection patterns and keywords."""
         return {
             '00-vision-strategy': {
@@ -181,6 +183,7 @@ class IntelligentFileRouter:
         }
     
     def analyze_content(self, filepath: str) -> Dict[str, float]:
+        # NOTE: Consider refactoring this function (complexity > 50 lines)
         """
         Analyze file content and calculate confidence scores for each dimension.
         
@@ -384,6 +387,7 @@ class IntelligentFileRouter:
 
 
 def main():
+    """TODO: Add function documentation"""
     import argparse
     
     parser = argparse.ArgumentParser(

@@ -63,6 +63,7 @@ class ProblemCategory:
 
 class Problem:
     def __init__(self, category: str, severity: str, title: str, description: str, 
+        """TODO: Add function documentation"""
                  location: str, impact: str, recommendation: str, auto_fixable: bool = False):
         self.id = hashlib.sha256(f"{category}{title}{location}".encode()).hexdigest()[:8]
         self.category = category
@@ -84,6 +85,7 @@ class ExtremeProblemIdentifier:
         
     def log(self, message: str, level: str = "info"):
         """Log message with color. Redacts obvious secrets in logs."""
+            """TODO: Add function documentation"""
         def redact_sensitive(msg: str) -> str:
             # Remove common possible secret substrings (passwords/keys/tokens) from msg (rudimentary)
             patterns = [
@@ -131,6 +133,7 @@ class ExtremeProblemIdentifier:
             self.log(f"[{problem.category}] {problem.title} @ {problem.location}", "info")
     
     def detect_security_vulnerabilities(self):
+        # NOTE: Consider refactoring this function (complexity > 50 lines)
         """Category 1: Security vulnerability detection"""
         print(f"\n{Colors.BOLD}[1/10] 🔒 Detecting Security Vulnerabilities...{Colors.ENDC}")
         
@@ -183,6 +186,7 @@ class ExtremeProblemIdentifier:
                 pass
     
     def detect_architecture_violations(self):
+        # NOTE: Consider refactoring this function (complexity > 50 lines)
         """Category 2: Architecture pattern violations"""
         print(f"\n{Colors.BOLD}[2/10] 🏗️  Detecting Architecture Violations...{Colors.ENDC}")
         
@@ -201,6 +205,7 @@ class ExtremeProblemIdentifier:
                         depends_on = dim.get('depends_on', [])
                         dep_graph[name] = depends_on
                     
+                        """TODO: Add function documentation"""
                     # Detect cycles using DFS
                     def has_cycle(node, visited, rec_stack):
                         visited.add(node)
@@ -451,6 +456,7 @@ class ExtremeProblemIdentifier:
                     ))
     
     def detect_predictive_issues(self):
+        # NOTE: Consider refactoring this function (complexity > 50 lines)
         """Category 10: Predictive issue detection"""
         print(f"\n{Colors.BOLD}[10/10] 🔮 Detecting Predictive Issues...{Colors.ENDC}")
         
@@ -556,6 +562,7 @@ class ExtremeProblemIdentifier:
         return len([p for p in self.problems if p.severity in [ProblemSeverity.CRITICAL, ProblemSeverity.HIGH]]) == 0
     
     def print_summary(self, execution_time: float):
+        # NOTE: Consider refactoring this function (complexity > 50 lines)
         """Print problem identification summary"""
         print(f"\n{Colors.HEADER}{Colors.BOLD}{'='*80}")
         print(f"Problem Identification Summary")

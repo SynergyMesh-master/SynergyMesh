@@ -33,6 +33,7 @@ class LogicalConsistencyEngine:
     """Engine for deep logical consistency analysis and tech debt detection."""
     
     def __init__(self, governance_dir: str = None):
+        """TODO: Add function documentation"""
         self.governance_dir = governance_dir or os.path.join(
             os.path.dirname(os.path.dirname(__file__))
         )
@@ -96,6 +97,7 @@ class LogicalConsistencyEngine:
             print(f"  Found {self.stats['structural_issues']} structural issues\n")
     
     def check_dependency_consistency(self, verbose: bool = False):
+        # NOTE: Consider refactoring this function (complexity > 50 lines)
         """Check dependency coherence, DAG validity, version conflicts."""
         if verbose:
             print(f"{CYAN}Checking dependency consistency...{RESET}")
@@ -121,6 +123,7 @@ class LogicalConsistencyEngine:
         visited = set()
         rec_stack = set()
         
+            """TODO: Add function documentation"""
         def has_cycle(node):
             visited.add(node)
             rec_stack.add(node)
@@ -471,6 +474,7 @@ class LogicalConsistencyEngine:
 
 
 def main():
+    """TODO: Add function documentation"""
     import argparse
     
     parser = argparse.ArgumentParser(

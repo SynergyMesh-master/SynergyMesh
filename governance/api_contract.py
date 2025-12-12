@@ -326,6 +326,7 @@ class GovernanceValidator:
         rec_stack = set()
         
         def dfs(node: str, path: List[str]) -> None:
+            """TODO: Add function documentation"""
             visited.add(node)
             rec_stack.add(node)
             path.append(node)

@@ -402,6 +402,7 @@ class TestIntegration:
     """Integration tests for complete workflows"""
     
     def test_complete_workflow(self):
+        # NOTE: Consider refactoring this function (complexity > 50 lines)
         """Test a complete workflow from registration to reporting"""
         validator = GovernanceValidator()
         

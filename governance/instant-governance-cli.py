@@ -23,6 +23,7 @@ class GovernanceCLI:
     """Instant execution CLI for governance operations"""
     
     def __init__(self):
+        """TODO: Add function documentation"""
         self.script_dir = Path(__file__).parent
         self.scripts_dir = self.script_dir / "35-scripts"
         

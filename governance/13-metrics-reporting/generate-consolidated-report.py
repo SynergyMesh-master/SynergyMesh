@@ -17,6 +17,7 @@ class ConsolidatedReportGenerator:
     """Generate consolidated security and governance report"""
     
     def __init__(self, results_dir: str, output_file: str):
+        """TODO: Add function documentation"""
         self.results_dir = Path(results_dir)
         self.output_file = Path(output_file)
         self.governance_data = None
@@ -61,6 +62,7 @@ class ConsolidatedReportGenerator:
             print("⚠ Semgrep results not found")
     
     def generate_report(self):
+        # NOTE: Consider refactoring this function (complexity > 50 lines)
         """Generate consolidated markdown report"""
         lines = []
         

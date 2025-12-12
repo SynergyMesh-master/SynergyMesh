@@ -42,6 +42,7 @@ class LanguageGovernanceAnalyzer:
     }
     
     def __init__(self, repo_root: str, policy_file: str):
+        """TODO: Add function documentation"""
         self.repo_root = Path(repo_root)
         self.policy_file = Path(policy_file)
         self.policy = self._load_policy()
@@ -70,6 +71,7 @@ class LanguageGovernanceAnalyzer:
         return language in allowed_list
     
     def _check_directory_rules(self):
+        # NOTE: Consider refactoring this function (complexity > 50 lines)
         """Check directory-level language rules"""
         directory_rules = self.policy.get('directory_rules', {})
         
@@ -283,6 +285,7 @@ class LanguageGovernanceAnalyzer:
         print("\n" + "=" * 70)
 
 def main():
+    # NOTE: Consider refactoring this function (complexity > 50 lines)
     """Main function"""
     parser = argparse.ArgumentParser(
         description='Language Governance Analyzer for CI/CD'
