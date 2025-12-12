@@ -251,7 +251,14 @@ class ProjectSpec:
                 "layers": self.architecture.layers,
                 "bounded_contexts": self.architecture.bounded_contexts,
             },
-            # Additional fields would be serialized here
+            "governance": {
+                "compliance": self.governance.compliance,
+                "security_level": self.governance.security_level,
+                "audit_trail": self.governance.audit_trail,
+                "sbom": self.governance.sbom,
+                "provenance": self.governance.provenance,
+                "license": self.governance.license,
+            },
         }
 
     @classmethod
