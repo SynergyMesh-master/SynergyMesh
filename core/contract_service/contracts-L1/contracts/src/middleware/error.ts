@@ -5,6 +5,32 @@ import { Request, Response, NextFunction } from 'express';
 import config from '../config';
 import { AppError, ErrorCode, createError } from '../errors';
 
+const convertToError = (err: unknown): Error => {
+  if (err instanceof Error) {
+    return err;
+  }
+  if (err === null || err === undefined) {
+    return new Error('Unknown error');
+  }
+  // Safely convert to string for non-Error types
+  let message: string;
+  if (typeof err === 'string') {
+    message = err;
+  } else if (typeof err === 'number' || typeof err === 'boolean') {
+    message = String(err);
+  } else if (typeof err === 'object') {
+    try {
+      message = JSON.stringify(err);
+    } catch {
+      message = 'Unknown error (could not stringify)';
+    }
+  } else {
+    // symbol, bigint, function, etc.
+    message = 'Unknown error (unsupported type)';
+  }
+  return new Error(message);
+};
+
 export const errorMiddleware = (
   err: unknown,
   req: Request,
@@ -12,10 +38,7 @@ export const errorMiddleware = (
   _next: NextFunction
 ): void => {
   const isAppError = err instanceof AppError;
-  const safeError =
-    err instanceof Error
-      ? err
-      : new Error(err === null || err === undefined ? 'Unknown error' : String(err));
+  const safeError = convertToError(err);
   const traceId = req.traceId || (isAppError ? err.traceId : randomUUID());
   let logLevel: 'error' | 'warn' = 'error';
 
