@@ -286,6 +286,10 @@ jobs:
 
       - name: Commit registry update
         if: inputs.test_mode != true
+        env:
+          EVENT_ID: ${{ needs.generate-comment.outputs.event_id }}
+          ERROR_TYPE: ${{ needs.generate-comment.outputs.error_type }}
+          AUTO_FIXED: ${{ needs.generate-comment.outputs.auto_fixed }}
         run: |
           git config --local user.email "governance-bot@synergymesh.io"
           git config --local user.name "Governance Bot"
@@ -299,9 +303,9 @@ jobs:
           git add governance/index/events/registry.json
           git commit -m "[81-auto-comment] Update events registry
 
-          Event ID: ${{ needs.generate-comment.outputs.event_id }}
-          Error Type: ${{ needs.generate-comment.outputs.error_type }}
-          Auto-Fixed: ${{ needs.generate-comment.outputs.auto_fixed }}"
+          Event ID: $EVENT_ID
+          Error Type: $ERROR_TYPE
+          Auto-Fixed: $AUTO_FIXED"
 
           git push
 
@@ -330,6 +334,9 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
 
       - name: Push auto-fix changes
+        env:
+          EVENT_ID: ${{ needs.generate-comment.outputs.event_id }}
+          ERROR_TYPE: ${{ needs.generate-comment.outputs.error_type }}
         run: |
           git config --local user.email "governance-bot@synergymesh.io"
           git config --local user.name "Governance Bot"
@@ -337,11 +344,11 @@ jobs:
           # 檢查是否有自動修復產生的變更
           if git status --porcelain | grep -q .; then
             git add .
-            git commit -m "[auto-fix] 自動修復 ${{ needs.generate-comment.outputs.error_type }} 錯誤
+            git commit -m "[auto-fix] 自動修復 $ERROR_TYPE 錯誤
 
             治理維度：81-auto-comment
-            事件 ID：${{ needs.generate-comment.outputs.event_id }}
-            修復類型：${{ needs.generate-comment.outputs.error_type }}"
+            事件 ID：$EVENT_ID
+            修復類型：$ERROR_TYPE"
 
             git push
             echo "Auto-fix changes committed and pushed"
@@ -359,6 +366,15 @@ jobs:
 
     steps:
       - name: Generate workflow summary
+        env:
+          WORKFLOW_NAME: ${{ needs.check-trigger.outputs.workflow_name }}
+          WORKFLOW_CONCLUSION: ${{ needs.check-trigger.outputs.workflow_conclusion }}
+          HEAD_SHA: ${{ needs.check-trigger.outputs.head_sha }}
+          HEAD_BRANCH: ${{ needs.check-trigger.outputs.head_branch }}
+          PR_NUMBER: ${{ needs.check-trigger.outputs.pr_number || 'N/A' }}
+          EVENT_ID: ${{ needs.generate-comment.outputs.event_id }}
+          ERROR_TYPE: ${{ needs.generate-comment.outputs.error_type }}
+          AUTO_FIXED: ${{ needs.generate-comment.outputs.auto_fixed }}
         run: |
           cat >> $GITHUB_STEP_SUMMARY << EOF
           ## 🤖 Governance Auto-Comment Engine Report
@@ -366,18 +382,18 @@ jobs:
           ### 執行資訊
           | 項目 | 值 |
           |------|-----|
-          | 觸發 Workflow | ${{ needs.check-trigger.outputs.workflow_name }} |
-          | 結果 | ${{ needs.check-trigger.outputs.workflow_conclusion }} |
-          | Commit | \`${{ needs.check-trigger.outputs.head_sha }}\` |
-          | 分支 | ${{ needs.check-trigger.outputs.head_branch }} |
-          | PR 編號 | ${{ needs.check-trigger.outputs.pr_number || 'N/A' }} |
+          | 觸發 Workflow | $WORKFLOW_NAME |
+          | 結果 | $WORKFLOW_CONCLUSION |
+          | Commit | \`$HEAD_SHA\` |
+          | 分支 | $HEAD_BRANCH |
+          | PR 編號 | $PR_NUMBER |
 
           ### 處理結果
           | 項目 | 值 |
           |------|-----|
           | 事件 ID | \`$EVENT_ID\` |
-          | 錯誤類型 | ${{ needs.generate-comment.outputs.error_type }} |
-          | 自動修復 | ${{ needs.generate-comment.outputs.auto_fixed }} |
+          | 錯誤類型 | $ERROR_TYPE |
+          | 自動修復 | $AUTO_FIXED |
 
           ### 治理追蹤
           - **維度**：81-auto-comment

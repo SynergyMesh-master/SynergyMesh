@@ -90,9 +90,11 @@ jobs:
         if: steps.check-scanning.outputs.code_scanning_enabled == 'true' && steps.evaluate.outputs.gate_status == 'review_required'
         env:
           GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          HIGH_COUNT: ${{ steps.evaluate.outputs.high }}
         run: |
-          gh pr review ${{ github.event.pull_request.number }} --request-changes \
-            --body "⚠️ Security review required: ${{ steps.evaluate.outputs.high }} high severity alerts found. Please review and address these security issues before merging."
+          gh pr review "$PR_NUMBER" --request-changes \
+            --body "⚠️ Security review required: $HIGH_COUNT high severity alerts found. Please review and address these security issues before merging."
 
       - name: Comment PR Results
         if: always() && steps.check-scanning.outputs.code_scanning_enabled == 'true'

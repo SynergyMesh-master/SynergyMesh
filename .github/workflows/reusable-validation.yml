@@ -80,9 +80,13 @@ jobs:
       - name: Get changed files
         if: inputs.changed-files-only
         id: changed-files
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.sha }}
         run: |
-          if [ "${{ github.event_name }}" == "pull_request" ]; then
-            echo "files=$(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.sha }} | tr '\n' ' ')" >> $GITHUB_OUTPUT
+          if [ "$EVENT_NAME" == "pull_request" ]; then
+            echo "files=$(git diff --name-only "$BASE_SHA" "$HEAD_SHA" | tr '\n' ' ')" >> $GITHUB_OUTPUT
           else
             echo "files=$(git diff --name-only HEAD~1 HEAD | tr '\n' ' ')" >> $GITHUB_OUTPUT
           fi
@@ -99,12 +103,15 @@ jobs:
 
       - name: Validate YAML syntax
         if: inputs.validate-yaml
+        env:
+          CHANGED_FILES_ONLY: ${{ inputs.changed-files-only }}
+          CHANGED_FILES: ${{ steps.changed-files.outputs.files }}
         run: |
           echo "## 📄 YAML Validation" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
 
-          if [ "${{ inputs.changed-files-only }}" == "true" ]; then
-            yaml_files=$(echo "${{ steps.changed-files.outputs.files }}" | tr ' ' '\n' | grep -E '\.(yaml|yml)$' || true)
+          if [ "$CHANGED_FILES_ONLY" == "true" ]; then
+            yaml_files=$(echo "$CHANGED_FILES" | tr ' ' '\n' | grep -E '\.(yaml|yml)$' || true)
           else
             yaml_files=$(find . -type f \( -name "*.yaml" -o -name "*.yml" \) ! -path "*/node_modules/*" ! -path "*/.git/*" || true)
           fi
@@ -136,12 +143,15 @@ jobs:
 
       - name: Validate JSON syntax
         if: inputs.validate-json
+        env:
+          CHANGED_FILES_ONLY: ${{ inputs.changed-files-only }}
+          CHANGED_FILES: ${{ steps.changed-files.outputs.files }}
         run: |
           echo "## 📋 JSON Validation" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
 
-          if [ "${{ inputs.changed-files-only }}" == "true" ]; then
-            json_files=$(echo "${{ steps.changed-files.outputs.files }}" | tr ' ' '\n' | grep -E '\.json$' || true)
+          if [ "$CHANGED_FILES_ONLY" == "true" ]; then
+            json_files=$(echo "$CHANGED_FILES" | tr ' ' '\n' | grep -E '\.json$' || true)
           else
             json_files=$(find . -type f -name "*.json" ! -path "*/node_modules/*" ! -path "*/.git/*" ! -path "*/dist/*" || true)
           fi
@@ -183,12 +193,15 @@ jobs:
 
       - name: Validate Markdown
         if: inputs.validate-markdown
+        env:
+          CHANGED_FILES_ONLY: ${{ inputs.changed-files-only }}
+          CHANGED_FILES: ${{ steps.changed-files.outputs.files }}
         run: |
           echo "## 📝 Markdown Validation" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
 
-          if [ "${{ inputs.changed-files-only }}" == "true" ]; then
-            md_files=$(echo "${{ steps.changed-files.outputs.files }}" | tr ' ' '\n' | grep -E '\.md$' || true)
+          if [ "$CHANGED_FILES_ONLY" == "true" ]; then
+            md_files=$(echo "$CHANGED_FILES" | tr ' ' '\n' | grep -E '\.md$' || true)
           else
             md_files=$(find . -type f -name "*.md" ! -path "*/node_modules/*" ! -path "*/.git/*" || true)
           fi
@@ -224,12 +237,15 @@ jobs:
 
       - name: Validate Python code
         if: inputs.validate-python
+        env:
+          CHANGED_FILES_ONLY: ${{ inputs.changed-files-only }}
+          CHANGED_FILES: ${{ steps.changed-files.outputs.files }}
         run: |
           echo "## 🐍 Python Validation" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
 
-          if [ "${{ inputs.changed-files-only }}" == "true" ]; then
-            py_files=$(echo "${{ steps.changed-files.outputs.files }}" | tr ' ' '\n' | grep -E '\.py$' || true)
+          if [ "$CHANGED_FILES_ONLY" == "true" ]; then
+            py_files=$(echo "$CHANGED_FILES" | tr ' ' '\n' | grep -E '\.py$' || true)
           else
             py_files=$(find . -type f -name "*.py" ! -path "*/node_modules/*" ! -path "*/.git/*" ! -path "*/venv/*" ! -path "*/.venv/*" || true)
           fi
@@ -326,15 +342,23 @@ jobs:
 
       - name: Validation Summary
         if: always()
+        env:
+          VALIDATE_YAML: ${{ inputs.validate-yaml }}
+          VALIDATE_JSON: ${{ inputs.validate-json }}
+          VALIDATE_MARKDOWN: ${{ inputs.validate-markdown }}
+          VALIDATE_PYTHON: ${{ inputs.validate-python }}
+          VALIDATE_TYPESCRIPT: ${{ inputs.validate-typescript }}
+          CHANGED_FILES_ONLY: ${{ inputs.changed-files-only }}
+          FAIL_ON_ERROR: ${{ inputs.fail-on-error }}
         run: |
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "---" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "### Validation Configuration" >> $GITHUB_STEP_SUMMARY
-          echo "- YAML: ${{ inputs.validate-yaml }}" >> $GITHUB_STEP_SUMMARY
-          echo "- JSON: ${{ inputs.validate-json }}" >> $GITHUB_STEP_SUMMARY
-          echo "- Markdown: ${{ inputs.validate-markdown }}" >> $GITHUB_STEP_SUMMARY
-          echo "- Python: ${{ inputs.validate-python }}" >> $GITHUB_STEP_SUMMARY
-          echo "- TypeScript: ${{ inputs.validate-typescript }}" >> $GITHUB_STEP_SUMMARY
-          echo "- Changed files only: ${{ inputs.changed-files-only }}" >> $GITHUB_STEP_SUMMARY
-          echo "- Fail on error: ${{ inputs.fail-on-error }}" >> $GITHUB_STEP_SUMMARY
+          echo "- YAML: $VALIDATE_YAML" >> $GITHUB_STEP_SUMMARY
+          echo "- JSON: $VALIDATE_JSON" >> $GITHUB_STEP_SUMMARY
+          echo "- Markdown: $VALIDATE_MARKDOWN" >> $GITHUB_STEP_SUMMARY
+          echo "- Python: $VALIDATE_PYTHON" >> $GITHUB_STEP_SUMMARY
+          echo "- TypeScript: $VALIDATE_TYPESCRIPT" >> $GITHUB_STEP_SUMMARY
+          echo "- Changed files only: $CHANGED_FILES_ONLY" >> $GITHUB_STEP_SUMMARY
+          echo "- Fail on error: $FAIL_ON_ERROR" >> $GITHUB_STEP_SUMMARY
