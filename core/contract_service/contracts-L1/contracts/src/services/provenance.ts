@@ -3,9 +3,11 @@ import { readFile, stat } from 'fs/promises';
 import { relative } from 'path';
 import * as path from 'path';
 
+import { PathValidationError } from '../errors';
+import { SLSAAttestationService, SLSAProvenance, BuildMetadata } from './attestation';
+
 // Define a safe root directory for allowed file operations
 const SAFE_ROOT = path.resolve(process.cwd(), 'safefiles');
-import { SLSAAttestationService, SLSAProvenance, BuildMetadata } from './attestation';
 
 export interface BuildAttestation {
   id: string;
@@ -77,9 +79,10 @@ export class ProvenanceService {
   async generateFileDigest(filePath: string): Promise<string> {
     // Normalize and resolve against the SAFE_ROOT
     const resolvedPath = path.resolve(SAFE_ROOT, filePath);
-    // Ensure the resolved path is within SAFE_ROOT
-    if (!resolvedPath.startsWith(SAFE_ROOT + path.sep)) {
-      throw new Error('Invalid file path: Access outside of allowed directory is not permitted.');
+    // Ensure the resolved path is within SAFE_ROOT using relative path check
+    const relativePath = path.relative(SAFE_ROOT, resolvedPath);
+    if (relativePath.startsWith('..') || path.isAbsolute(relativePath)) {
+      throw new PathValidationError();
     }
     const content = await readFile(resolvedPath);
     const hash = createHash('sha256');
@@ -97,9 +100,10 @@ export class ProvenanceService {
   ): Promise<BuildAttestation> {
     // Normalize and resolve against the SAFE_ROOT
     const resolvedPath = path.resolve(SAFE_ROOT, subjectPath);
-    // Ensure the resolved path is within SAFE_ROOT
-    if (!resolvedPath.startsWith(SAFE_ROOT + path.sep)) {
-      throw new Error('Invalid file path: Access outside of allowed directory is not permitted.');
+    // Ensure the resolved path is within SAFE_ROOT using relative path check
+    const relativePath = path.relative(SAFE_ROOT, resolvedPath);
+    if (relativePath.startsWith('..') || path.isAbsolute(relativePath)) {
+      throw new PathValidationError();
     }
     const stats = await stat(resolvedPath);
     if (!stats.isFile()) {

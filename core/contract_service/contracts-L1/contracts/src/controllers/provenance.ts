@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 
 import { sendSuccess, sendError, createTimestamp, getErrorMessage } from '../middleware/response';
 import { ProvenanceService } from '../services/provenance';
+import { PathValidationError } from '../errors';
 
 export class ProvenanceController {
   private provenanceService: ProvenanceService;
@@ -39,8 +40,7 @@ export class ProvenanceController {
       });
     } catch (error) {
       const nodeError = error as NodeJS.ErrnoException;
-      const errorMessage = error instanceof Error ? error.message : '';
-      if (nodeError.code === 'ENOENT' || errorMessage.includes('Invalid file path')) {
+      if (error instanceof PathValidationError || nodeError.code === 'ENOENT') {
         sendError(res, 'File not found', { status: 404, includeTimestamp: true });
       } else {
         sendError(res, getErrorMessage(error, 'Failed to create attestation'), {
@@ -113,8 +113,7 @@ export class ProvenanceController {
       );
     } catch (error) {
       const nodeError = error as NodeJS.ErrnoException;
-      const errorMessage = error instanceof Error ? error.message : '';
-      if (nodeError.code === 'ENOENT' || errorMessage.includes('Invalid file path')) {
+      if (error instanceof PathValidationError || nodeError.code === 'ENOENT') {
         sendError(res, 'File not found', { status: 404, includeTimestamp: true });
       } else {
         sendError(res, getErrorMessage(error, 'Failed to generate file digest'), {

@@ -3,6 +3,7 @@ import { z } from 'zod';
 import * as path from 'path';
 
 import { SLSAAttestationService } from '../services/attestation';
+import { PathValidationError } from '../errors';
 
 // Define a safe root directory for allowed file operations
 const SAFE_ROOT = path.resolve(process.cwd(), 'safefiles');
@@ -55,9 +56,10 @@ export class SLSAController {
         const fs = await import('fs/promises');
         // Normalize and resolve against the SAFE_ROOT
         const resolvedPath = path.resolve(SAFE_ROOT, validatedInput.subjectPath);
-        // Ensure the resolved path is within SAFE_ROOT
-        if (!resolvedPath.startsWith(SAFE_ROOT + path.sep)) {
-          throw new Error('Invalid file path: Access outside of allowed directory is not permitted.');
+        // Ensure the resolved path is within SAFE_ROOT using relative path check
+        const relativePath = path.relative(SAFE_ROOT, resolvedPath);
+        if (relativePath.startsWith('..') || path.isAbsolute(relativePath)) {
+          throw new PathValidationError();
         }
         const content = await fs.readFile(resolvedPath);
         subjects = [this.slsaService.createSubjectFromContent(validatedInput.subjectPath, content)];

@@ -86,7 +86,7 @@ describe('ProvenanceService', () => {
       await expect(service.createBuildAttestation('../', {
         id: 'test-builder',
         version: '1.0.0'
-      })).rejects.toThrow(/Subject path must be a file|Invalid file path/);
+      })).rejects.toThrow(/File not found/);
     });
   });
 

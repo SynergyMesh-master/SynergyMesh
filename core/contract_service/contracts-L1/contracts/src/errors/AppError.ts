@@ -78,6 +78,17 @@ export class NotFoundError extends AppError {
 }
 
 /**
+ * Path validation error - thrown when a file path fails security validation
+ * This is treated as a NotFound error to avoid leaking information about the file system
+ */
+export class PathValidationError extends AppError {
+  constructor(message = 'File not found') {
+    super(message, ErrorCode.NOT_FOUND, 404);
+    Object.setPrototypeOf(this, PathValidationError.prototype);
+  }
+}
+
+/**
  * Unauthorized error - thrown when authentication fails
  */
 export class UnauthorizedError extends AppError {
