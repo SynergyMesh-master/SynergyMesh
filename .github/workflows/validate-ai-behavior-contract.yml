@@ -23,10 +23,9 @@ jobs:
       
       - name: Validate PR description against AI Behavior Contract
         id: validate
+        env:
+          PR_BODY: ${{ github.event.pull_request.body }}
         run: |
-          # Get PR description
-          PR_BODY="${{ github.event.pull_request.body }}"
-          
           # Run validation script
           .github/scripts/validate-ai-response.sh "$PR_BODY" > validation_result.txt 2>&1 || true
           
