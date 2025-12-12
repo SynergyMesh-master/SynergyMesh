@@ -15,15 +15,17 @@ metadata:
 spec:
   description: Security Governance dimension for SynergyMesh governance framework
   schema:
-    path: ./schema.json
+    path: ../dimensions/06-security/schema.json
     format: json-schema
-    validation: optional
+    validation: required
   policy:
-    path: ./policy.rego
+    path: ../dimensions/06-security/policy.rego
     engine: opa
     enforcement: required
   dependencies:
-    required: []
+    required:
+      - "04-risk"
+      - "05-compliance"
     optional: []
   interface:
     inputs:
