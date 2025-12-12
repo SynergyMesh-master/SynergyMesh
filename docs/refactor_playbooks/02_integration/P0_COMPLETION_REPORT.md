@@ -19,10 +19,12 @@ Successfully completed Phase 0 (P0) of the Baseline YAML integration project. Al
 ### 1. Governance Policies (治理策略) - 4 files
 
 #### 📋 namespace-naming-policy.yaml
+
 **Location:** `governance/policies/namespace-naming-policy.yaml`  
 **Source:** Extracted from `baseline-01-namespace-governance.v1.0.yaml`
 
 **Key Features:**
+
 - ✅ 5 environment naming patterns (production, staging, development, feature, tenant)
 - ✅ Regex validation for each pattern
 - ✅ Forbidden prefix enforcement (kube-, kubernetes-, system-)
@@ -30,7 +32,8 @@ Successfully completed Phase 0 (P0) of the Baseline YAML integration project. Al
 - ✅ Admission webhook integration
 - ✅ 9 system namespace exemptions
 
-**Impact:** 
+**Impact:**
+
 - Prevents namespace naming conflicts
 - Ensures consistent environment isolation
 - Enables automated validation at admission time
@@ -38,10 +41,12 @@ Successfully completed Phase 0 (P0) of the Baseline YAML integration project. Al
 ---
 
 #### 🔐 rbac-role-matrix.yaml
+
 **Location:** `governance/policies/security/rbac-role-matrix.yaml`  
 **Source:** Extracted from `baseline-02-security-rbac.v1.0.yaml`
 
 **Key Features:**
+
 - ✅ 6-tier RBAC role hierarchy (cluster-admin, platform-operator, developer, viewer, ci-cd-automation, security-auditor)
 - ✅ Permission definitions with verbs mapping
 - ✅ MFA requirements for privileged roles
@@ -50,6 +55,7 @@ Successfully completed Phase 0 (P0) of the Baseline YAML integration project. Al
 - ✅ Break-glass emergency access (4-hour auto-expire)
 
 **Impact:**
+
 - Implements principle of least privilege
 - Establishes clear permission boundaries
 - Enables automated access governance
@@ -57,10 +63,12 @@ Successfully completed Phase 0 (P0) of the Baseline YAML integration project. Al
 ---
 
 #### 📝 audit-policy.yaml
+
 **Location:** `governance/policies/security/audit-policy.yaml`  
 **Source:** Extracted from `baseline-02-security-rbac.v1.0.yaml`
 
 **Key Features:**
+
 - ✅ 3-level audit logging (Metadata, Request, RequestResponse)
 - ✅ 7-year log retention for compliance
 - ✅ S3-compatible archive storage with AES-256-GCM encryption
@@ -69,6 +77,7 @@ Successfully completed Phase 0 (P0) of the Baseline YAML integration project. Al
 - ✅ Performance optimization (batching, async processing)
 
 **Impact:**
+
 - Meets SOC2, GDPR, PCI-DSS audit requirements
 - Enables security event detection and response
 - Provides forensic evidence for incidents
@@ -76,10 +85,12 @@ Successfully completed Phase 0 (P0) of the Baseline YAML integration project. Al
 ---
 
 #### ✅ compliance-standards.yaml
+
 **Location:** `governance/policies/compliance/compliance-standards.yaml`  
 **Source:** Extracted from `baseline-05-compliance-attestation.v1.0.yaml`
 
 **Key Features:**
+
 - ✅ 4 compliance frameworks (SOC2 Type II, GDPR, PCI DSS 4.0, ISO27001)
 - ✅ Control mappings (CC6.1, CC7.2, CC7.3 for SOC2)
 - ✅ GDPR principles (data minimization, purpose limitation, data subject rights)
@@ -89,6 +100,7 @@ Successfully completed Phase 0 (P0) of the Baseline YAML integration project. Al
 - ✅ Evidence collection (audit logs, snapshots, scans, reviews)
 
 **Impact:**
+
 - Establishes multi-framework compliance baseline
 - Automates compliance validation
 - Reduces audit preparation time
@@ -98,10 +110,12 @@ Successfully completed Phase 0 (P0) of the Baseline YAML integration project. Al
 ### 2. Governance Schemas (治理架構) - 1 file
 
 #### 📐 namespace-labels.schema.json
+
 **Location:** `governance/schemas/namespace-labels.schema.json`  
 **Source:** Extracted from `baseline-01-namespace-governance.v1.0.yaml`
 
 **Key Features:**
+
 - ✅ 10 required labels (app.kubernetes.io/*, environment, owner, cost-center, compliance.level, baseline.level)
 - ✅ 5 optional labels (security.scan.required, backup.enabled, monitoring.tier, network.zone, tenant-id)
 - ✅ JSON Schema Draft-07 format
@@ -110,6 +124,7 @@ Successfully completed Phase 0 (P0) of the Baseline YAML integration project. Al
 - ✅ Examples for reference
 
 **Impact:**
+
 - Enables automated label validation
 - Standardizes metadata across all namespaces
 - Supports cost allocation and compliance tracking
@@ -119,10 +134,12 @@ Successfully completed Phase 0 (P0) of the Baseline YAML integration project. Al
 ### 3. Configuration (配置) - 1 file
 
 #### 💰 tenant-tier-definitions.yaml
+
 **Location:** `config/tenant-tier-definitions.yaml`  
 **Source:** Extracted from `baseline-03-resource-management.v1.0.yaml`
 
 **Key Features:**
+
 - ✅ 4 tenant tiers (enterprise, business, startup, development)
 - ✅ Resource quotas per tier (CPU, memory, storage, pods, services)
 - ✅ SLA targets per tier (99.95% for enterprise, 99.0% for development)
@@ -132,6 +149,7 @@ Successfully completed Phase 0 (P0) of the Baseline YAML integration project. Al
 - ✅ Enforcement policies (hard limits, burst allowance, grace period)
 
 **Impact:**
+
 - Enables multi-tenant resource isolation
 - Provides clear cost structure
 - Supports tiered service offerings
@@ -141,16 +159,19 @@ Successfully completed Phase 0 (P0) of the Baseline YAML integration project. Al
 ### 4. Documentation (文檔) - 2 files
 
 #### 📖 infrastructure/kubernetes/baseline/README.md
+
 **Location:** `infrastructure/kubernetes/baseline/README.md`  
 **Source:** Synthesized from all 6 baseline files
 
 **Key Features:**
+
 - ✅ Overview of 6 baseline components
 - ✅ Quick start deployment commands
 - ✅ Component feature summaries
 - ✅ References to related documentation
 
 **Impact:**
+
 - Provides single entry point for baseline deployment
 - Explains purpose and scope of each baseline
 - Guides users to detailed documentation
@@ -158,10 +179,12 @@ Successfully completed Phase 0 (P0) of the Baseline YAML integration project. Al
 ---
 
 #### 📚 KUBERNETES_BASELINE_GUIDE.md
+
 **Location:** `docs/refactor_playbooks/03_refactor/meta/KUBERNETES_BASELINE_GUIDE.md`  
 **Source:** Synthesized from all 6 baseline files
 
 **Key Features:**
+
 - ✅ 15KB comprehensive deployment guide
 - ✅ Prerequisites checklist (required & optional)
 - ✅ Phase-by-phase deployment steps (7 phases)
@@ -172,6 +195,7 @@ Successfully completed Phase 0 (P0) of the Baseline YAML integration project. Al
 - ✅ Backup & disaster recovery procedures
 
 **Impact:**
+
 - Enables self-service baseline deployment
 - Reduces onboarding time for new team members
 - Provides operational runbook
@@ -222,6 +246,7 @@ Successfully completed Phase 0 (P0) of the Baseline YAML integration project. Al
 **Target:** 21 files to integrate
 
 **High-Priority Items:**
+
 1. **Capability Registry Schema** - `governance/schemas/capability-registry.schema.json`
 2. **State Machine Extension** - Expand `governance/schemas/state-machine.yaml`
 3. **Pod Security Standards** - `governance/policies/security/pod-security-standards.yaml`
@@ -244,6 +269,7 @@ Successfully completed Phase 0 (P0) of the Baseline YAML integration project. Al
 **Focus:** Quantum computing module (experimental)
 
 **Items:**
+
 1. **Quantum Circuit Library** - 4 circuit definitions in `core/quantum-circuits/`
 2. **Quantum Resource Pool** - `config/quantum-resource-pool.yaml`
 3. **Quantum Workflows** - 2 Argo workflow templates in `automation/quantum-workflows/`
@@ -321,6 +347,7 @@ Status: Modular, maintainable, production-ready ✅
 ```
 
 **Key Improvements:**
+
 - 📦 **Separation of Concerns:** Policies, schemas, configuration, and documentation are separated
 - 🔄 **Reusability:** Each component can be reused independently
 - 📈 **Scalability:** Easy to add new policies, schemas, or tenant tiers
@@ -354,24 +381,28 @@ Status: Modular, maintainable, production-ready ✅
 ### Team Notifications
 
 **Platform Engineering Team:**
+
 - ✅ New governance policies are available in `governance/policies/`
 - ✅ RBAC role matrix defines 6 standard roles
 - ✅ Tenant tier definitions enable multi-tenant deployment
 - ✅ Deployment guide available for baseline installation
 
 **Security Team:**
+
 - ✅ Audit policy implements 7-year retention for compliance
 - ✅ RBAC enforces least privilege principle
 - ✅ Compliance standards cover SOC2, GDPR, PCI-DSS, ISO27001
 - ✅ Zero Trust principles embedded in policies
 
 **Compliance Team:**
+
 - ✅ 4 compliance frameworks supported with automated validation
 - ✅ Evidence collection configured for all frameworks
 - ✅ Attestation generation runs every 6 hours
 - ✅ Audit logs encrypted and immutable
 
 **Finance Team:**
+
 - ✅ Cost allocation model defined with 4 tenant tiers
 - ✅ Showback reports configured (weekly)
 - ✅ Discount tiers documented (10%/20%/30%)

@@ -20,6 +20,7 @@ This skeleton serves as the system's core orchestrator, responsible for workflow
 **主要指南**: `unmanned-engineer-ceo/60-machine-guides/70-architecture-skeletons/nucleus-orchestrator/`
 
 ### 指南文件結構
+
 ```
 nucleus-orchestrator/
 ├── overview.md              # 骨架簡介與應用場景
@@ -34,6 +35,7 @@ nucleus-orchestrator/
 ### 使用時機 / When to Use
 
 當您需要：
+
 - 編排複雜工作流
 - 協調多個 AI 代理
 - 實現智能任務分派
@@ -210,12 +212,14 @@ def match_agent_for_task(task: Task) -> Agent:
 ### 協作模式 / Collaboration Patterns
 
 #### 1. 順序協作 (Sequential Collaboration)
+
 ```
 Agent A → Agent B → Agent C
 任務依次執行，輸出作為下一個輸入
 ```
 
 #### 2. 並行協作 (Parallel Collaboration)
+
 ```
        ┌─ Agent A ─┐
 Task ──┼─ Agent B ─┼── Merge
@@ -224,6 +228,7 @@ Task ──┼─ Agent B ─┼── Merge
 ```
 
 #### 3. 分層協作 (Hierarchical Collaboration)
+
 ```
 Coordinator Agent
     ├─ Worker Agent 1
@@ -423,17 +428,20 @@ dashboard:
 ## 📞 支援與參考 / Support and References
 
 ### 相關文檔
+
 - [架構指南](../../unmanned-engineer-ceo/60-machine-guides/70-architecture-skeletons/nucleus-orchestrator/)
 - [Mind Matrix](../../core/mind_matrix/README.md)
 - [Unified Integration](../../core/unified_integration/README.md)
 - [Virtual Experts](../../config/agents/team/virtual-experts.yaml)
 
 ### 相關骨架
+
 - [Architecture Stability Skeleton](../architecture-stability/README.md)
 - [API Governance Skeleton](../api-governance/README.md)
 - [Knowledge Base Skeleton](../knowledge-base/README.md)
 
 ### 外部資源
+
 - [Airflow - Workflow Orchestration](https://airflow.apache.org/)
 - [Temporal - Workflow Engine](https://temporal.io/)
 - [Dapr - Distributed Application Runtime](https://dapr.io/)

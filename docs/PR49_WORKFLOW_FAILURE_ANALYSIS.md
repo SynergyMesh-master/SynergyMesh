@@ -40,6 +40,7 @@ These are **GOOD failures** - they indicate the hardening is working:
 ### Action Required
 
 For each failing workflow, we need to:
+
 1. Identify if failure is legitimate (real issue) or configuration problem
 2. Fix legitimate issues in the codebase
 3. Adjust thresholds/configurations if too strict
@@ -50,11 +51,13 @@ For each failing workflow, we need to:
 ### 1. Test Workflows
 
 **Likely Failures**:
+
 - `02-test.yml`: Pytest failures now properly block (Phase 4)
 - `core-services-ci.yml`: May have failing unit tests
 - `contracts-cd.yml`: Contract tests may be failing
 
 **Fix Strategy**:
+
 - Run tests locally to identify specific failures
 - Fix failing tests or update test configurations
 - Ensure all dependencies are properly installed
@@ -62,11 +65,13 @@ For each failing workflow, we need to:
 ### 2. Security Workflows
 
 **Likely Failures**:
+
 - `06-security-scan.yml`: npm audit finding high-severity issues
 - `snyk-security.yml`: Snyk finding critical/high vulnerabilities
 - `pr-security-gate.yml`: Security gate catching issues
 
 **Fix Strategy**:
+
 - Review vulnerability reports
 - Update dependencies with known vulnerabilities
 - Add exceptions for false positives (with justification)
@@ -75,11 +80,13 @@ For each failing workflow, we need to:
 ### 3. Build/Deploy Workflows
 
 **Likely Failures**:
+
 - `03-build.yml`: Build errors from code changes
 - `contracts-cd.yml`: Deployment failures
 - `mcp-servers-cd.yml`: MCP server build issues
 
 **Fix Strategy**:
+
 - Check build logs for specific errors
 - Ensure all build dependencies are available
 - Validate TypeScript/JavaScript compilation
@@ -87,6 +94,7 @@ For each failing workflow, we need to:
 ### 4. Cancelled Workflows
 
 **Expected Behavior**:
+
 - 3 cancelled workflows are likely due to new concurrency settings
 - When a new push happens, old runs are automatically cancelled
 - This is **correct behavior** and saves costs
@@ -94,6 +102,7 @@ For each failing workflow, we need to:
 ### 5. Skipped Workflows
 
 **Expected Behavior**:
+
 - 2 skipped workflows are likely due to:
   - Path filters (only run on specific file changes)
   - Branch conditions (only run on main/specific branches)
@@ -119,6 +128,7 @@ gh run view <run-id> --log-failed
 ### Phase 3: Fix Systematically (1-2 hours)
 
 For each category:
+
 - Document the issue
 - Implement fix
 - Test locally if possible
@@ -170,6 +180,7 @@ This PR is ready to merge when:
 ## Tools & Commands
 
 ### Check Workflow Status
+
 ```bash
 # List recent workflow runs
 gh run list --limit 20
@@ -185,6 +196,7 @@ gh run watch
 ```
 
 ### Local Testing
+
 ```bash
 # Validate YAML
 yamllint .github/workflows/
@@ -198,6 +210,7 @@ snyk test --severity-threshold=high
 ```
 
 ### Fix Verification
+
 ```bash
 # Check git status
 git status
@@ -214,22 +227,26 @@ git push
 ## Appendix: Phase 4 Changes That May Cause Failures
 
 ### Test Workflow (02-test.yml)
+
 - **Removed**: `pytest || true`
 - **Effect**: Test failures now block PRs
 - **Expected**: If tests were failing silently before, they now properly block
 
 ### Security Scan (06-security-scan.yml)
+
 - **Removed**: `npm audit --audit-level=high || true`
 - **Effect**: High/critical vulnerabilities now block
 - **Expected**: If vulnerabilities exist, they now properly block
 
 ### Snyk Security (snyk-security.yml)
+
 - **Removed**: All `|| true` patterns (5 instances)
 - **Added**: `--severity-threshold=high`
 - **Effect**: Critical/high vulnerabilities now block
 - **Expected**: More strict vulnerability blocking
 
 ### PR Security Gate (pr-security-gate.yml)
+
 - **Removed**: `continue-on-error: true`
 - **Added**: Strict error checking with `set -e`
 - **Effect**: Any security check failure blocks PR
@@ -240,6 +257,7 @@ git push
 The workflow failures on PR #49 are likely a **positive sign** that our Phase 4 fail-fast improvements are working correctly. Previously masked issues (failing tests, vulnerabilities) are now being properly caught and blocked.
 
 Our next steps are to:
+
 1. Identify each specific failure
 2. Fix legitimate issues
 3. Adjust thresholds if necessary

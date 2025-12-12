@@ -1,4 +1,5 @@
 # Plugin Architecture Pattern
+
 # 插件架構模式
 
 **創建日期 (Created Date)**: 2025-12-07  
@@ -128,6 +129,7 @@ vector_alignment_map:
 ```
 
 **配置化原則**:
+
 - 嵌入模型名稱引用 `config/ai-models/` 中定義的模型
 - 維度與閾值可根據任務類型調整
 - 系統提供默認嵌入模型，插件可覆蓋
@@ -141,6 +143,7 @@ vector_alignment_map:
 **決策**: 每個插件運行在獨立的命名空間，使用明確的 API 邊界。
 
 **理由**:
+
 - 防止插件間的非預期交互
 - 限制插件故障影響範圍
 - 簡化安全審計與權限管理
@@ -150,6 +153,7 @@ vector_alignment_map:
 **決策**: 強制使用語義化版本 (Semantic Versioning) 並嚴格檢查。
 
 **理由**:
+
 - 避免 "依賴地獄" (Dependency Hell)
 - 明確向後兼容性保證
 - 支持自動化依賴更新
@@ -159,11 +163,13 @@ vector_alignment_map:
 **決策**: 使用中央能力註冊表管理所有系統能力。
 
 **理由**:
+
 - 防止能力命名衝突
 - 提供能力發現機制
 - 支持能力版本演進
 
 **實現**:
+
 - 能力註冊表位於 `core/unified_integration/service_registry.py`
 - 映射定義在 `config/system-module-map.yaml` 的 `capability_matrix` 區塊
 
@@ -194,6 +200,7 @@ vector_alignment_map:
 **考慮但未採用**: 純微內核架構（所有功能作為外部模組）
 
 **原因**:
+
 - 通信開銷過大
 - 系統啟動時間延長
 - 調試複雜度增加
@@ -205,6 +212,7 @@ vector_alignment_map:
 **考慮但未採用**: 靜態連結所有插件
 
 **原因**:
+
 - 失去動態擴展能力
 - 增加核心系統體積
 - 無法在運行時更新插件
@@ -231,6 +239,7 @@ vector_alignment_map:
 ### 6.3 審計日誌 (Audit Logging)
 
 所有插件操作記錄在審計日誌：
+
 - 插件註冊/停用事件
 - 能力調用記錄
 - 異常與錯誤事件
@@ -315,17 +324,20 @@ plugin-registry disable <plugin-id>
 ## 10. 參考資料 (References)
 
 ### 內部文檔
+
 - `config/templates/plugin-specification-template.yaml` - 插件規範模板
 - `governance/schemas/plugin-specification.schema.json` - JSON Schema 定義
 - `governance/policies/plugin-quality-gates.yaml` - 插件質量門檻
 - `config/system-module-map.yaml` - 系統模組映射
 
 ### 外部標準
+
 - [Semantic Versioning 2.0.0](https://semver.org/)
 - [JSON Schema Draft 7](https://json-schema.org/draft-07/schema)
 - [OpenAPI 3.0 Specification](https://swagger.io/specification/)
 
 ### 相關架構文檔
+
 - `docs/ARCHITECTURE/knowledge-graph-processing.md` - 知識圖譜處理
 - `docs/ARCHITECTURE/storage-architecture.md` - 存儲架構
 - `docs/ARCHITECTURE/vector-alignment-strategy.md` - 向量對齊策略

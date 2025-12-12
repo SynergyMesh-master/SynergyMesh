@@ -112,18 +112,21 @@ _整合 SynergyMesh 核心引擎 + 結構治理系統 + 無人之島自主框架
 ### 🎯 發展階段
 
 #### ✅ Phase 1: 核心基礎建設 (Completed)
+
 - [x] SynergyMesh 核心引擎
 - [x] 結構治理系統
 - [x] 自主系統框架
 - [x] 基礎文檔與測試
 
 #### ✅ Phase 2: 智能化與自動化 (Completed)
+
 - [x] Island AI Agent 系統 (Stage 1)
 - [x] 語言治理自動化
 - [x] 全局優化推理系統
 - [x] Refactor Playbook 系統
 
 #### ✅ Phase 3: 分發與部署系統 (Completed - v1.0.0)
+
 - [x] 跨平台構建系統 (60 個檔案)
 - [x] Windows/macOS/Linux 安裝程式
 - [x] Docker 容器化完整堆疊
@@ -132,6 +135,7 @@ _整合 SynergyMesh 核心引擎 + 結構治理系統 + 無人之島自主框架
 - [x] 完整安裝/構建文檔
 
 #### 🔄 Phase 4: 生產化與擴展 (In Progress)
+
 - [ ] Island AI Stage 2-4 (協作、自學習、生產化)
 - [ ] Architecture Reasoner Agent MVP
 - [ ] Dashboard Frontend & Backend
@@ -139,6 +143,7 @@ _整合 SynergyMesh 核心引擎 + 結構治理系統 + 無人之島自主框架
 - [ ] 多語言 SDK (Python/TypeScript/Go)
 
 #### 📋 Phase 5: 企業級增強 (Planned - Q1 2025)
+
 - [ ] 多租戶支持 (Multi-Tenancy)
 - [ ] 高可用性部署 (HA Deployment)
 - [ ] 進階身份認證 (Advanced IAM)
@@ -146,6 +151,7 @@ _整合 SynergyMesh 核心引擎 + 結構治理系統 + 無人之島自主框架
 - [ ] SLA 監控與自動報告
 
 #### 🌟 Phase 6: 生態系統擴展 (Planned - Q2-Q3 2025)
+
 - [ ] 插件市場 (Plugin Marketplace)
 - [ ] 第三方整合 (GitHub/GitLab/Azure DevOps)
 - [ ] 託管服務版本 (SaaS)
@@ -166,18 +172,21 @@ _整合 SynergyMesh 核心引擎 + 結構治理系統 + 無人之島自主框架
 ### 🎓 學習路徑建議
 
 **新用戶入門順序**:
+
 1. 📖 閱讀 [README.md](./README.md) - 系統概覽
 2. 📥 按照 [INSTALL.md](./INSTALL.md) 安裝
 3. 🚀 跟隨 [快速開始](#-快速開始) 啟動服務
 4. 📚 瀏覽 [文檔導航](#-文檔導航) 深入了解
 
 **開發者進階路徑**:
+
 1. 🔨 學習 [BUILD.md](./BUILD.md) - 構建系統
 2. 🏗️ 理解 [架構治理矩陣](./governance/ARCHITECTURE_GOVERNANCE_MATRIX.md)
 3. 🤖 探索 [Island AI 系統](./island-ai/README.md)
 4. 🔄 掌握 [Refactor Playbook](./docs/refactor_playbooks/README.md)
 
 **貢獻者完整路徑**:
+
 1. 📋 閱讀 [CONTRIBUTING.md](./CONTRIBUTING.md) - 貢獻指南
 2. 🔍 理解 [全局優化推理](#-全局優化推理系統global-optimization-reasoning)
 3. ✅ 遵循 [AI Behavior Contract](./.github/AI-BEHAVIOR-CONTRACT.md)
@@ -261,6 +270,7 @@ python -m core.project_factory.cli generate project \
 | ✅ **治理整合** | SLSA L3 溯源, Schema 驗證, 策略閘檢查 |
 
 **自動治理合規：**
+
 - ✅ 語言政策驗證
 - ✅ 安全標準檢查
 - ✅ 架構約束驗證
@@ -302,6 +312,7 @@ reports.forEach(report => {
 | 📋 **Product Manager** | 產品規劃與優先級 | KPI 追蹤、用戶反饋、功能排序     |
 
 **整合狀態：**
+
 - ✅ Stage 1 完成（6 個 Agents，TypeScript 實現）
 - ✅ npm workspace 整合
 - 🔄 與 SynergyMesh 核心引擎整合中
@@ -339,6 +350,7 @@ dashboard:
 ```
 
 **快速開始：**
+
 ```bash
 # 存取儀表板
 cd apps/web && npm run dev
@@ -351,6 +363,7 @@ python3 tools/generate-migration-flow.py
 ```
 
 **主要功能：**
+
 - ✅ **健康分數監控**：85/100 (Grade B)，目標 90+ (Grade A)
 - ✅ **違規追蹤**：2 個活躍違規，12% 減少趨勢
 - ✅ **安全掃描**：Semgrep 整合，1 個警告
@@ -359,6 +372,7 @@ python3 tools/generate-migration-flow.py
 - ✅ **遷移建議**：9 個流程 (2 歷史 + 7 建議)
 
 📚 完整文檔：
+
 - [實作指南](docs/LANGUAGE_GOVERNANCE_IMPLEMENTATION.md)
 - [Hotspot 演算法](docs/HOTSPOT_HEATMAP.md)
 - [遷移流模型](docs/MIGRATION_FLOW.md)
@@ -441,6 +455,7 @@ architecture_reasoner:
 監控與優化系統健康的 6 個關鍵指標：
 
 #### 1. Language Stack Convergence（語言堆疊收斂）
+
 ```yaml
 formula: convergence = 1 - (current_count - ideal_count) / ideal_count
 ideal_state: 5 種語言 (TypeScript, Python, Go, C++, Rust)
@@ -450,6 +465,7 @@ target: ≥ 0.90 (90%)
 ```
 
 #### 2. Architecture Compliance（架構合規分數）
+
 ```yaml
 formula: compliance = (valid_dependencies / total_dependencies) × 100%
 checks:
@@ -461,6 +477,7 @@ target: 100%
 ```
 
 #### 3. Security Posture Index（安全態勢指數）
+
 ```yaml
 formula: security = 100 - (critical×10 + high×5 + medium×2 + low×0.5)
 current_findings:
@@ -473,6 +490,7 @@ target: 100 (zero HIGH+)
 ```
 
 #### 4. Refactor Progress Index（重構進度指數）
+
 ```yaml
 formula: progress = (completed_tasks / total_tasks) × 100%
 tasks:
@@ -484,6 +502,7 @@ target: 100%
 ```
 
 #### 5. Test Coverage Momentum（測試覆蓋率動量）
+
 ```yaml
 formula: momentum = (current_coverage - baseline_coverage) / weeks
 baseline: 68% (4 weeks ago)
@@ -493,6 +512,7 @@ target: ≥ 75% coverage, ≥ 0% momentum
 ```
 
 #### 6. Cyclomatic Complexity Trend（圈複雜度趨勢）
+
 ```yaml
 formula: trend = (current_avg - baseline_avg) / baseline_avg
 baseline: avg_complexity = 18.2
@@ -508,6 +528,7 @@ target: ≤ 15 avg, negative trend
 ### 🌐 Dashboard & API
 
 **存取 Dashboard**：
+
 ```bash
 # 啟動 Dashboard（Phase 5 實施後）
 cd services/dashboard && npm run dev
@@ -618,6 +639,7 @@ cat config/system-module-map.example.yaml
 ### 🗺️ Implementation Roadmap
 
 #### ✅ Phase 1-3: Core Documentation (已完成)
+
 - AI Behavior Contract Section 9
 - AI Prompts Section 1.5
 - Playbook Template Section 3
@@ -626,27 +648,33 @@ cat config/system-module-map.example.yaml
 - System Module Map Example
 
 #### ✅ Phase 4: Integration & Validation (已完成基礎架構)
+
 - 文檔交叉引用（本 README）
 - 驗證腳本規範與骨架
 - 測試結構與 fixtures
 
 #### 📋 Phase 5: Implementation (預計 3-4 weeks)
+
 **PR #1**: Dashboard Backend MVP
+
 - 6 個目標函數計算引擎
 - FastAPI 端點實現
 - 可驗證成果：`curl localhost:8080/api/architecture/health`
 
 **PR #2**: Architecture Reasoner Agent MVP
+
 - 決策邏輯與 Veto 引擎
 - CLI 介面
 - 可驗證成果：`python agent.py --check playbook.yaml`
 
 **PR #3**: Dashboard Frontend MVP
+
 - React 可視化介面
 - 指標卡片與 Gap Report UI
 - 可驗證成果：瀏覽器訪問 Dashboard
 
 #### 📋 Phase 6: Rollout & Training (預計 2-3 weeks)
+
 - Quick Start Guide（30 分鐘上手）
 - Training Workshops（理論 + 實作 + 分析）
 - Gradual Enablement（Advisory → Soft Veto → Full Enforcement）
@@ -685,7 +713,7 @@ optional_fields:
 | 9    | Cosign Sign    | Sigstore 無密鑰簽名   |
 | 10   | Audit          | 審計事件記錄          |
 
-### 🏗️ 治理工具：
+### 🏗️ 治理工具
 
 - tools/docs/validate_index.py - Schema 驗證器
 - tools/docs/scan_repo_generate_index.py - 倉庫掃描生成索引
@@ -848,6 +876,7 @@ unmanned-island/
 ### 快速入門
 
 查看重構系統文檔：
+
 ```bash
 # 查看重構系統總覽
 cat docs/refactor_playbooks/README.md
@@ -1082,18 +1111,21 @@ make build-all          # 所有平台
 #### 平台特定構建
 
 **Windows**:
+
 ```batch
 cd build\windows
 build-windows.bat
 ```
 
 **macOS**:
+
 ```bash
 cd build/macos
 ./build-macos.sh
 ```
 
 **Linux**:
+
 ```bash
 cd build/linux
 ./build-linux.sh
@@ -1324,6 +1356,7 @@ drone-config.yml 定義無人機編隊與協調策略，並透過 automation/aut
 ```
 
 **核心文檔**：
+
 - [README](./docs/refactor_playbooks/README.md) - 系統總覽與使用指南
 - [CONFIG_INTEGRATION_GUIDE](./docs/refactor_playbooks/CONFIG_INTEGRATION_GUIDE.md) - 配置整合指南
 - [PROPOSER_CRITIC_WORKFLOW](./docs/refactor_playbooks/03_refactor/meta/PROPOSER_CRITIC_WORKFLOW.md) - 雙層 AI 重構工作流程 ⭐
@@ -1331,6 +1364,7 @@ drone-config.yml 定義無人機編隊與協調策略，並透過 automation/aut
 - [INTEGRATION_REPORT](./docs/refactor_playbooks/INTEGRATION_REPORT.md) - 整合報告與使用方式
 
 **快速開始**：
+
 ```bash
 # 生成重構劇本
 python3 tools/generate-refactor-playbook.py --cluster "core/"
@@ -1343,6 +1377,7 @@ cat docs/refactor_playbooks/03_refactor/INDEX.md
 ```
 
 **關鍵特性**：
+
 - ✅ 三階段重構流程（解構 → 集成 → 重構）
 - ✅ 舊資產管理（實體隔離、知識保留）
 - ✅ 架構約束強制（11 個骨架規則、依賴方向、語言策略）

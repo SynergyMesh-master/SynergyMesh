@@ -46,9 +46,11 @@
 ## 下一步建議
 
 短期：
+
 - 先讓 pipeline 穩定執行（報告成功產出即可），不必馬上自動 commit。
 - 視實際情況調整 `config/system-evolution.yaml` 中的目標與權重。
 
 長期：
+
 - 在工具層接上 AI，用 evolution-state.yaml 作為輸入，產出更細緻的重構計畫與 Auto-Fix PR。
 - 將「演化目標」擴充到成本、可靠性、延遲等維度。

@@ -1,7 +1,7 @@
 # core/architecture-stability 重構劇本（Refactor Playbook）
 
 - **Cluster ID**: `core/architecture-stability`
-- **對應目錄**: 
+- **對應目錄**:
   - `core/unified_integration/`
   - `core/island_ai_runtime/`
   - `core/safety_mechanisms/`
@@ -100,7 +100,7 @@
 
 1. `core:php` → `removed` (建議移除)
    - 行動：刪除 `core/legacy_module/old_api.php`
-   
+
 2. `core:javascript` → `core:typescript` (建議遷移)
    - 行動：將 `core/mind_matrix/brain.js` 改寫為 TypeScript
 
@@ -186,7 +186,7 @@ core/
       4. 執行 TypeScript 編譯驗證
       5. 刪除原始 `brain.js`
     - **預估時間**：6-8 小時
-    
+
 - 驗收條件：
   - ✅ core/ 目錄下無 PHP 檔案
   - ✅ core/ 目錄下無 JavaScript 檔案（除了配置檔）
@@ -468,6 +468,7 @@ Human Review → Merge
 **職責**: 產生具體重構方案與 patch
 
 **輸入資料**:
+
 1. `docs/refactor_playbooks/01_deconstruction/core/core__architecture_deconstruction.md` - 解構分析
 2. `docs/refactor_playbooks/02_integration/core/core__architecture_integration.md` - 集成設計
 3. `config/system-module-map.yaml` - 模組定義與約束
@@ -475,6 +476,7 @@ Human Review → Merge
 5. 本重構劇本 - 執行計畫
 
 **輸出**:
+
 1. **架構設計方案**
    - 新的目錄結構（已在 Integration 定義）
    - API 邊界定義（已在 Integration 定義）
@@ -526,6 +528,7 @@ proposer_output:
 **職責**: 用架構規則嚴格審查 Proposer 的方案
 
 **審查依據**:
+
 1. `config/system-module-map.yaml` → `refactor.architecture_constraints`
 2. `automation/architecture-skeletons/` → 骨架規則
 3. `governance/policies/` → 治理政策
@@ -695,6 +698,7 @@ critic_feedback:
 ### 9.5 自動化工具支援
 
 **依賴掃描**:
+
 ```bash
 # 找出所有依賴舊路徑的檔案
 tools/scan-dependencies.sh core.ai_decision_engine
@@ -705,6 +709,7 @@ tools/scan-dependencies.sh core.ai_decision_engine
 ```
 
 **批次重構**:
+
 ```bash
 # 自動更新 import 路徑
 tools/batch-refactor.py \
@@ -714,6 +719,7 @@ tools/batch-refactor.py \
 ```
 
 **Critic 自動檢查**:
+
 ```bash
 # 執行完整 Critic 檢查
 tools/critic-check.py \
@@ -754,6 +760,7 @@ tools/critic-check.py \
 | 頂層 AI engines | 30% | 70% | 30% (0%) | 🔴 未開始 |
 
 **圖例**:
+
 - ✅ 達標: 已達成目標
 - 🟢 良好: 進度 ≥ 80%
 - 🟡 進行中: 進度 50-79%
@@ -775,6 +782,7 @@ tools/critic-check.py \
 ### 10.3 實時追蹤儀表板
 
 **命令**:
+
 ```bash
 # 生成實時進度報告
 tools/refactor-dashboard.py \
@@ -783,6 +791,7 @@ tools/refactor-dashboard.py \
 ```
 
 **儀表板內容**:
+
 - 📊 指標達成率（視覺化進度條）
 - 📈 趨勢圖（每日指標變化）
 - 🎯 里程碑時間軸
@@ -1032,12 +1041,14 @@ jobs:
 **當前狀態**: `in_progress`
 
 **狀態定義**:
+
 - `draft`: 劇本草稿階段
 - `in_progress`: 正在執行重構
 - `completed`: 重構完成並驗收通過
 - `archived`: 已歸檔（不再維護）
 
 **更新**:
+
 ```yaml
 # 在 03_refactor/index.yaml 中更新
 clusters:
@@ -1055,12 +1066,14 @@ clusters:
 ### 12.2 索引交叉引用
 
 **向後引用**:
+
 - ← `01_deconstruction/core/core__architecture_deconstruction.md`
   - 依賴：解構分析提供問題清單
 - ← `02_integration/core/core__architecture_integration.md`
   - 依賴：集成設計提供目標架構
 
 **向前引用**:
+
 - → `config/system-module-map.yaml`
   - 更新：完成後更新模組定義
 - → `docs/api/core-v3.md`
@@ -1071,11 +1084,13 @@ clusters:
 ### 12.3 相關文檔
 
 **必讀**:
+
 1. `docs/refactor_playbooks/NEXT_STEPS_PLAN.md` - 整體計畫
 2. `docs/refactor_playbooks/03_refactor/meta/PROPOSER_CRITIC_WORKFLOW.md` - 工作流程
 3. `docs/refactor_playbooks/03_refactor/templates/REFRACTOR_PLAYBOOK_TEMPLATE.md` - 範本
 
 **參考**:
+
 1. `.github/copilot-instructions.md` - 技術指南
 2. `.github/AI-BEHAVIOR-CONTRACT.md` - 行為準則
 3. `config/system-module-map.yaml` - 模組定義
@@ -1084,7 +1099,8 @@ clusters:
 
 **狀態**: 🟡 執行中（Phase 1 of 4: 解構→集成→重構→驗證）  
 **最後更新**: 2025-12-07  
-**下一步**: 
+**下一步**:
+
 1. ✅ 解構劇本完成
 2. ✅ 集成劇本完成
 3. 🔄 本重構劇本強化完成

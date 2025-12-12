@@ -22,7 +22,7 @@
 
 ### 層級 2: 核心 | Level 2: Core
 
-2. **決策治理** (`decision-governance/`) - 5階段決策流程
+1. **決策治理** (`decision-governance/`) - 5階段決策流程
 2. **變更治理** (`change-governance/`) - 7階段變更流程
 3. **風險治理** (`risk-governance/`) - 4階段風險流程
 4. **合規治理** (`compliance-governance/`) - 多層合規檢查
@@ -30,23 +30,23 @@
 
 ### 層級 3: 實施 | Level 3: Implementation
 
-7. **安全治理** (`security-governance/`) - 安全政策和控制
+1. **安全治理** (`security-governance/`) - 安全政策和控制
 2. **審計治理** (`audit-governance/`) - 5階段審計流程
 3. **流程治理** (`process-governance/`) - 流程管理和優化
 4. **績效治理** (`performance-governance/`) - KPI和評估
 
 ### 層級 4: 支撑 | Level 4: Support
 
-11. **治理工具與系統** (`governance-tools/`) - IT系統和工具
+1. **治理工具與系統** (`governance-tools/`) - IT系統和工具
 2. **治理文化與能力** (`governance-culture/`) - 培訓和能力建設
 
 ### 層級 5: 彙總 | Level 5: Aggregation
 
-13. **治理指標與報告** (`governance-metrics/`) - 儀表板和報告
+1. **治理指標與報告** (`governance-metrics/`) - 儀表板和報告
 
 ### 層級 6: 改進 | Level 6: Improvement
 
-14. **治理持續改進** (`governance-improvement/`) - 閉環改進
+1. **治理持續改進** (`governance-improvement/`) - 閉環改進
 
 ---
 
@@ -241,13 +241,13 @@ vim governance/[dimension-name]/[config-file].yaml
 
 ### 中級 (3-4 小時)
 
-5. 閱讀所有 14 個維度的 README
+1. 閱讀所有 14 個維度的 README
 2. 查看主配置文件
 3. 運行驗證工具
 
 ### 高級 (4+ 小時)
 
-8. 詳細閱讀配置文件
+1. 詳細閱讀配置文件
 2. 理解依賴關係
 3. 計劃修改或擴展
 

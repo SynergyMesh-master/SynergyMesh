@@ -18,11 +18,13 @@ hlp-executor-core/
 This plugin meets SLSA Level 3 requirements:
 
 ### ✅ Source Requirements
+
 - **Source integrity**: Git commit SHA verified
 - **Provenance available**: Build provenance recorded
 - **Unforgeable**: Provenance cryptographically signed
 
 ### ✅ Build Requirements
+
 - **Scripted build**: Automated build process
 - **Build service**: Secure build platform used
 - **Build as code**: Build configuration version-controlled
@@ -30,12 +32,14 @@ This plugin meets SLSA Level 3 requirements:
 - **Isolated**: Build isolated from other builds
 
 ### ✅ Provenance Requirements
+
 - **Available**: Provenance available to consumers
 - **Authenticated**: Provenance is signed
 - **Service generated**: Build service generates provenance
 - **Non-falsifiable**: Provenance cannot be tampered
 
 ### ✅ Common Requirements
+
 - **Security**: Security reviews conducted
 - **Access**: Access controls enforced
 - **Superusers**: Limited privileged access
@@ -135,9 +139,9 @@ This provenance meets the following standards:
 
 For security issues or questions about provenance:
 
-- **Security Team**: security@unmanned-island.io
-- **Platform Team**: platform@unmanned-island.io
-- **Issue Tracker**: https://github.com/SynergyMesh-admin/Unmanned-Island/issues
+- **Security Team**: <security@unmanned-island.io>
+- **Platform Team**: <platform@unmanned-island.io>
+- **Issue Tracker**: <https://github.com/SynergyMesh-admin/Unmanned-Island/issues>
 
 ## References
 

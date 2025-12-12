@@ -64,7 +64,7 @@ class ProblemCategory:
 class Problem:
     def __init__(self, category: str, severity: str, title: str, description: str, 
                  location: str, impact: str, recommendation: str, auto_fixable: bool = False):
-        self.id = hashlib.md5(f"{category}{title}{location}".encode()).hexdigest()[:8]
+        self.id = hashlib.sha256(f"{category}{title}{location}".encode()).hexdigest()[:8]
         self.category = category
         self.severity = severity
         self.title = title

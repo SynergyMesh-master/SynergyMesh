@@ -30,17 +30,20 @@ configuration/
 ### Docker配置
 
 1. **啟動所有服務**
+
    ```bash
    cd docker/
    docker-compose up -d
    ```
 
 2. **構建自定義檢查工具容器**
+
    ```bash
    docker build -f docker/Dockerfile.code-checker -t code-checker:latest .
    ```
 
 3. **停止服務**
+
    ```bash
    docker-compose down
    ```
@@ -55,17 +58,20 @@ configuration/
 ### Kubernetes配置
 
 1. **創建命名空間和部署服務**
+
    ```bash
    kubectl apply -f kubernetes/k8s-sonarqube.yaml
    ```
 
 2. **查看服務狀態**
+
    ```bash
    kubectl get pods -n code-quality
    kubectl get services -n code-quality
    ```
 
 3. **訪問SonarQube**
+
    ```bash
    kubectl port-forward -n code-quality svc/sonarqube-service 9000:9000
    ```
@@ -79,16 +85,19 @@ chmod +x scripts/*.sh
 ```
 
 #### 格式檢查
+
 ```bash
 ./scripts/format-check.sh
 ```
 
 #### 安全掃描
+
 ```bash
 ./scripts/security-scan.sh
 ```
 
 #### 配置驗證
+
 ```bash
 ./scripts/config-check.sh
 ```
@@ -96,19 +105,25 @@ chmod +x scripts/*.sh
 ### 配置文件範例
 
 #### ESLint配置
+
 複製 `.eslintrc.example.js` 到項目根目錄並重命名為 `.eslintrc.js`：
+
 ```bash
 cp .eslintrc.example.js /path/to/project/.eslintrc.js
 ```
 
 #### Prettier配置
+
 複製 `.prettierrc.example.json` 到項目根目錄並重命名為 `.prettierrc.json`：
+
 ```bash
 cp .prettierrc.example.json /path/to/project/.prettierrc.json
 ```
 
 #### SonarQube配置
+
 複製 `sonar-project.properties.example` 到項目根目錄並重命名為 `sonar-project.properties`：
+
 ```bash
 cp sonar-project.properties.example /path/to/project/sonar-project.properties
 ```
@@ -144,6 +159,7 @@ POSTGRES_PASSWORD=your_password
 ### Prometheus
 
 1. 啟動Prometheus：
+
    ```bash
    docker run -d \
      -p 9090:9090 \
@@ -157,6 +173,7 @@ POSTGRES_PASSWORD=your_password
 ### Grafana
 
 1. 啟動Grafana：
+
    ```bash
    docker run -d \
      -p 3000:3000 \
@@ -188,17 +205,20 @@ POSTGRES_PASSWORD=your_password
 ## 最佳實踐
 
 1. **定期更新鏡像**
+
    ```bash
    docker-compose pull
    docker-compose up -d
    ```
 
 2. **備份數據**
+
    ```bash
    docker-compose exec postgres pg_dump -U sonarqube sonarqube > backup.sql
    ```
 
 3. **監控資源使用**
+
    ```bash
    docker stats
    kubectl top pods -n code-quality
@@ -236,16 +256,19 @@ POSTGRES_PASSWORD=your_password
 ## 維護
 
 ### 日常維護任務
+
 - 檢查服務健康狀態
 - 查看錯誤日誌
 - 監控資源使用
 
 ### 定期維護任務
+
 - 更新依賴包
 - 清理舊數據
 - 審查和更新配置
 
 ### 升級流程
+
 1. 備份當前配置和數據
 2. 測試新版本
 3. 更新生產環境
@@ -254,6 +277,7 @@ POSTGRES_PASSWORD=your_password
 ## 支持
 
 如有問題或建議，請：
+
 1. 查看相關文檔
 2. 檢查issue列表
 3. 提交新issue

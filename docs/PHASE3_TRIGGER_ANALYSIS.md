@@ -80,19 +80,20 @@ These workflows trigger on every push, potentially wasting CI minutes:
    - **Recommendation**: Remove push trigger (PR covers it)
 
 10. **snyk-security.yml**
-   - Triggers on push to: `main`
-   - Also triggers on PR: ✅ Yes
-   - Jobs: 1
-   - Has timeouts: ✅
-   - **Recommendation**: Remove push trigger (PR covers it)
 
-11. **validate-yaml.yml**
-   - Triggers on push to: `main`
-   - Also triggers on PR: ✅ Yes
-   - Jobs: 1
-   - Has timeouts: ✅
-   - **Recommendation**: Remove push trigger (PR covers it)
+- Triggers on push to: `main`
+- Also triggers on PR: ✅ Yes
+- Jobs: 1
+- Has timeouts: ✅
+- **Recommendation**: Remove push trigger (PR covers it)
 
+1. **validate-yaml.yml**
+
+- Triggers on push to: `main`
+- Also triggers on PR: ✅ Yes
+- Jobs: 1
+- Has timeouts: ✅
+- **Recommendation**: Remove push trigger (PR covers it)
 
 ### 2. Push Triggers With Path Filters (Medium Priority)
 
@@ -367,7 +368,7 @@ Total scheduled workflows: 11
 ### dynamic-ci-assistant.yml
 
 - **Jobs**: 5
-- **Triggers**: 
+- **Triggers**:
 - **Has job timeouts**: ❌
 
 ### integration-deployment.yml
@@ -379,7 +380,7 @@ Total scheduled workflows: 11
 ### interactive-ci-service.yml
 
 - **Jobs**: 1
-- **Triggers**: 
+- **Triggers**:
 - **Has job timeouts**: ❌
 
 ### island-ai-setup-steps.yml
@@ -392,7 +393,7 @@ Total scheduled workflows: 11
 ### label.yml
 
 - **Jobs**: 1
-- **Triggers**: 
+- **Triggers**:
 - **Has job timeouts**: ✅
 
 ### language-check.yml
@@ -450,7 +451,7 @@ Total scheduled workflows: 11
 ### project-cd.yml
 
 - **Jobs**: 3
-- **Triggers**: 
+- **Triggers**:
 - **Has job timeouts**: ✅
 
 ### project-self-awareness-nightly.yml
@@ -468,7 +469,7 @@ Total scheduled workflows: 11
 ### reusable-ci.yml
 
 - **Jobs**: 1
-- **Triggers**: 
+- **Triggers**:
 - **Has job timeouts**: ❌
 
 ### secret-bypass-request.yml
@@ -519,4 +520,3 @@ Total scheduled workflows: 11
 - **Jobs**: 1
 - **Triggers**: push, pull_request
 - **Has job timeouts**: ✅
-

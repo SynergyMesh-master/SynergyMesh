@@ -12,14 +12,16 @@
 ### 1. Configuration Files → `governance/policies/workflow/`
 
 #### ✅ `config/behavior-contracts.yaml`
+
 - **New Location:** `governance/policies/workflow/behavior-contracts.yaml`
 - **Purpose:** Workflow behavior contract definitions
 - **Integration:** Copied to governance policies directory
-- **References Updated:** 
+- **References Updated:**
   - `config/system-manifest.yaml` → Added `behavior_contracts` reference
   - `config/unified-config-index.yaml` → Added workflow governance section
 
 #### ✅ `config/validation-rules.yaml`
+
 - **New Location:** `governance/policies/workflow/validation-rules.yaml`
 - **Purpose:** Workflow validation rules
 - **Integration:** Copied to governance policies directory
@@ -28,6 +30,7 @@
   - `config/unified-config-index.yaml` → Added workflow governance section
 
 #### ✅ `config/main-configuration.yaml`
+
 - **Integration Strategy:** Merged into `config/system-manifest.yaml`
 - **New Section:** Added comprehensive `workflow_system` configuration block
 - **Content Integrated:**
@@ -45,6 +48,7 @@
 ### 2. Core Code Files → Keep in place, already integrated
 
 #### ✅ `core/contract_engine.py`
+
 - **Status:** Keep as-is (883 lines, production-ready)
 - **Location:** `core/contract_engine.py`
 - **Integration:** Already referenced in system-manifest.yaml
@@ -57,6 +61,7 @@
   - ContractEngine
 
 #### ✅ `core/plugin_system.py`
+
 - **Status:** Keep as-is (77 lines)
 - **Location:** `core/plugin_system.py`
 - **Integration:** Already referenced in system-manifest.yaml
@@ -68,6 +73,7 @@
   - PluginSystem
 
 #### ✅ `core/validators/multi_layer_validator.py`
+
 - **Status:** Keep as-is (47 lines)
 - **Location:** `core/validators/multi_layer_validator.py`
 - **Integration:** Referenced in system-manifest.yaml validation_system section
@@ -77,6 +83,7 @@
   - MultiLayerValidator
 
 #### ✅ `tools/generators/contract_generator.py`
+
 - **Status:** Keep as-is (69 lines)
 - **Location:** `tools/generators/contract_generator.py`
 - **Integration:** Referenced in unified-config-index.yaml
@@ -87,9 +94,10 @@
 ### 3. Docker Files → `deployment/docker/`
 
 #### ✅ `Dockerfile.workflow`
+
 - **New Location:** `deployment/docker/Dockerfile.workflow`
 - **Purpose:** Workflow system container image
-- **Integration:** 
+- **Integration:**
   - Copied to deployment/docker directory
   - Added workflow services to `docker-compose.yml` as optional profile
 - **Services Added:**
@@ -101,6 +109,7 @@
 - **Usage:** `docker-compose --profile workflow up`
 
 #### ❌ `docker-compose.workflow.yml`
+
 - **Status:** Can be deleted (functionality integrated into main docker-compose.yml)
 - **Reason:** Workflow services added to main docker-compose.yml with profile support
 
@@ -109,7 +118,9 @@
 ## Configuration Updates
 
 ### `config/system-manifest.yaml`
+
 Added comprehensive workflow system configuration:
+
 ```yaml
 workflow_system:
   version: "2.0.0"
@@ -129,7 +140,9 @@ workflow_system:
 ```
 
 ### `config/unified-config-index.yaml`
+
 Added workflow system references:
+
 ```yaml
 governance:
   workflow_behavior_contracts:
@@ -149,7 +162,9 @@ workflow:
 ```
 
 ### `docker-compose.yml`
+
 Added workflow services with profile support:
+
 - workflow-system
 - workflow-postgres
 - workflow-redis
@@ -169,6 +184,7 @@ The following files are now redundant and should be deleted:
 5. ✅ `docker-compose.workflow.yml` (integrated into docker-compose.yml)
 
 **Note:** The following files are kept in place as they are actively used:
+
 - `core/contract_engine.py`
 - `core/plugin_system.py`
 - `core/validators/multi_layer_validator.py`
@@ -183,6 +199,7 @@ The following files are now redundant and should be deleted:
 #### Starting the Workflow System
 
 **Option 1: Using Docker Compose (Recommended)**
+
 ```bash
 # Start all services including workflow system
 docker-compose --profile workflow up -d
@@ -192,6 +209,7 @@ docker-compose --profile workflow down
 ```
 
 **Option 2: Using Python Directly**
+
 ```bash
 # Start contract engine
 python -m core.contract_engine --config config/system-manifest.yaml
@@ -308,16 +326,19 @@ docker-compose --profile workflow down
 The workflow system integration follows SynergyMesh's three-systems architecture:
 
 ### 1. SynergyMesh Core
+
 - **Contract Engine** (`core/contract_engine.py`)
 - **Plugin System** (`core/plugin_system.py`)
 - **Multi-Layer Validator** (`core/validators/multi_layer_validator.py`)
 
 ### 2. Structural Governance
+
 - **Behavior Contracts** (`governance/policies/workflow/behavior-contracts.yaml`)
 - **Validation Rules** (`governance/policies/workflow/validation-rules.yaml`)
 - **System Manifest** (`config/system-manifest.yaml` - workflow_system section)
 
 ### 3. Autonomous/Drone Stack
+
 - **Contract Generator** (`tools/generators/contract_generator.py`)
 - **Workflow Orchestration** (via system manifest configuration)
 

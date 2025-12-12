@@ -22,12 +22,14 @@ Phase 5 implements comprehensive AI-driven governance analytics and optimization
 **檔案 / File**: `monitoring/governance-health-score.yaml`
 
 **功能 / Features**:
+
 - 自動計算治理健康分數 (0-100)
 - 加權平均 5 個關鍵指標
 - 持續監控 (60秒間隔)
 - 自動警報 (Critical < 60, Warning < 80)
 
 **指標 / Metrics**:
+
 ```yaml
 metrics:
   policy_compliance_rate: 30%  # 策略合規率
@@ -38,6 +40,7 @@ metrics:
 ```
 
 **執行 / Execution**:
+
 - 模式: CONTINUOUS
 - 間隔: 60s
 - 責任: AI AUTONOMOUS
@@ -50,12 +53,14 @@ metrics:
 **檔案 / File**: `k8s/resource-optimizer.yaml`
 
 **功能 / Features**:
+
 - CPU/內存自動優化
 - 副本數量自動調整
 - 成本自動優化 (檢測 > 20% 浪費)
 - 基於 7 天分析窗口
 
 **優化策略 / Optimization Strategies**:
+
 ```yaml
 strategies:
   cpu_memory_optimization:
@@ -74,12 +79,14 @@ strategies:
 ```
 
 **安全限制 / Safety Limits**:
+
 - Min replicas: 1
 - Max replicas: 20
 - Max CPU per pod: 2000m
 - Max memory per pod: 4Gi
 
 **執行 / Execution**:
+
 - 模式: CONTINUOUS
 - 間隔: 5m
 - 責任: AI AUTONOMOUS
@@ -92,6 +99,7 @@ strategies:
 **檔案 / File**: `monitoring/ai-anomaly-detection.yaml`
 
 **功能 / Features**:
+
 - ML 機器學習異常檢測
 - 即時警報 (0秒延遲)
 - 自動調查和修復
@@ -115,6 +123,7 @@ strategies:
    - 延遲: 0s
 
 **執行 / Execution**:
+
 - 模式: CONTINUOUS
 - 間隔: 30s
 - ML 驅動: YES
@@ -127,20 +136,23 @@ strategies:
 **檔案 / File**: `k8s/compliance-report-generator.yaml`
 
 **功能 / Features**:
+
 - 自動生成合規報告
 - 多格式輸出 (JSON, YAML, PDF, HTML)
 - 自動分發 (Slack, Email, S3)
 - 定時執行 (每 6 小時)
 
 **報告類型 / Report Types**:
+
 - Compliance reports (合規報告)
 - Health reports (健康報告)
 - Optimization reports (優化報告)
 - Predictions reports (預測報告)
 
 **執行 / Execution**:
+
 - 模式: SCHEDULED
-- 頻率: 每 6 小時 (0 */6 * * *)
+- 頻率: 每 6 小時 (0 */6* **)
 - 自動分發: YES
 - 責任: AI AUTONOMOUS
 
@@ -151,12 +163,14 @@ strategies:
 **檔案 / File**: `policy/policy-impact-analyzer.rego`
 
 **功能 / Features**:
+
 - AI 自動分析策略變更影響
 - 風險等級評估 (0-1)
 - 回滾複雜度評估
 - 條件性自動批准
 
 **分析維度 / Analysis Dimensions**:
+
 ```rego
 impact_analysis:
   affected_resources: count  # 受影響資源數量
@@ -166,11 +180,13 @@ impact_analysis:
 ```
 
 **自動批准邏輯 / Auto-Approval Logic**:
+
 - **風險 < 0.3**: AUTO_APPROVE_AND_DEPLOY (即時部署)
 - **0.3 <= 風險 < 0.7**: AUTO_APPROVE_WITH_MONITORING (帶監控)
 - **風險 >= 0.7**: REQUEST_HUMAN_REVIEW (需要人工審核)
 
 **執行 / Execution**:
+
 - 模式: ON_DEMAND
 - 自動批准: 風險 < 0.3
 - 責任: AI AUTONOMOUS
@@ -234,12 +250,14 @@ phase_5_responsibilities:
 ```
 
 **AI 禁止事項 / AI Forbidden Actions**:
+
 - ❌ 修改 9 個戰略 YAML 檔案
 - ❌ 改變治理章程基本原則
 - ❌ 變更風險偏好
 - ❌ 覆蓋人類戰略決策
 
 **AI 完全自主權限 / AI Full Autonomous Authority**:
+
 - ✅ 所有 Phase 5 運營資源 (6 檔案)
 - ✅ 資源優化和調整
 - ✅ 異常檢測和修復
@@ -380,6 +398,7 @@ Phase 5 完成後，系統具備完整的 AI 驅動治理、分析和優化能�
 **建議行動 / Recommended Actions**:
 
 1. **部署到生產環境**
+
    ```bash
    kubectl apply -f governance/00-vision-strategy/gitops/applicationset.yaml
    ```
@@ -396,6 +415,7 @@ Phase 5 完成後，系統具備完整的 AI 驅動治理、分析和優化能�
    - 審查合規報告
 
 **系統能力 / System Capabilities**:
+
 - ✅ 完整的治理基礎設施 (Phase 1-3)
 - ✅ AI 驅動自動化 (Phase 4)
 - ✅ AI 智能分析與優化 (Phase 5)
@@ -428,6 +448,6 @@ phase_5_status:
 
 ---
 
-_文檔生成時間 / Documentation Generated: 2025-12-11T05:16:00Z_  
-_責任 / Responsibility: AI AUTONOMOUS_  
-_人工批准 / Human Approval: NOT REQUIRED_
+*文檔生成時間 / Documentation Generated: 2025-12-11T05:16:00Z*  
+*責任 / Responsibility: AI AUTONOMOUS*  
+*人工批准 / Human Approval: NOT REQUIRED*

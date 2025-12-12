@@ -37,6 +37,7 @@ v1-python-drones/
 ## 🚀 使用方式
 
 ### 直接執行
+
 ```bash
 # 從專案根目錄
 python -m v1_python_drones.main --mode=auto
@@ -48,12 +49,14 @@ python -m v1_python_drones.main --drone=deployment
 ```
 
 ### 透過自動化入口
+
 ```bash
 ./tools/scripts/automation-entry.sh
 # 選擇選項 1: 自動模式
 ```
 
 ### 作為 Python 模組導入
+
 ```python
 from v1_python_drones.drones import CoordinatorDrone, AutopilotDrone
 
@@ -80,11 +83,13 @@ print(config.drone_fleet)
 ## 🔧 開發
 
 ### 安裝依賴
+
 ```bash
 pip install pyyaml
 ```
 
 ### 執行測試
+
 ```bash
 python -m pytest v1-python-drones/tests/
 ```

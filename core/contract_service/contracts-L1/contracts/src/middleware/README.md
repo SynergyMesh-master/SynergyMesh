@@ -11,12 +11,14 @@ Middleware handles **cross-cutting concerns** that apply across multiple routes 
 **Purpose:** Tracks critical operations for audit trail.
 
 **Usage:**
+
 ```typescript
 import { auditLogMiddleware } from './middleware/audit-log';
 router.post('/api/v1/critical', auditLogMiddleware('CREATE'), controller.create);
 ```
 
 **Features:**
+
 - Records user actions
 - Tracks sensitive operations
 - Maintains audit trail
@@ -26,6 +28,7 @@ router.post('/api/v1/critical', auditLogMiddleware('CREATE'), controller.create)
 **Purpose:** Centralized error handling and formatting.
 
 **Usage:**
+
 ```typescript
 import { errorMiddleware, notFoundMiddleware } from './middleware/error';
 
@@ -35,12 +38,14 @@ app.use(errorMiddleware);    // Handle all errors
 ```
 
 **Features:**
+
 - Consistent error responses
 - Stack trace handling (dev/prod)
 - Error logging
 - HTTP status code mapping
 
 **Error Response Format:**
+
 ```json
 {
   "error": {
@@ -58,12 +63,14 @@ app.use(errorMiddleware);    // Handle all errors
 **Purpose:** Request/response logging with performance tracking.
 
 **Usage:**
+
 ```typescript
 import { loggingMiddleware } from './middleware/logging';
 app.use(loggingMiddleware);
 ```
 
 **Features:**
+
 - Request logging (method, URL, IP, user-agent)
 - Response logging (status code, duration)
 - Trace ID generation
@@ -71,6 +78,7 @@ app.use(loggingMiddleware);
 - Sensitive data redaction
 
 **Log Levels:**
+
 - `debug`: Full request/response details
 - `info`: Basic request/response info
 - `warn`: Client errors (4xx)
@@ -81,6 +89,7 @@ app.use(loggingMiddleware);
 **Purpose:** Protects endpoints from abuse.
 
 **Usage:**
+
 ```typescript
 import { rateLimitMiddleware } from './middleware/rate-limit';
 
@@ -95,6 +104,7 @@ router.post('/api/v1/expensive',
 ```
 
 **Features:**
+
 - Configurable limits per endpoint
 - Time window configuration
 - IP-based tracking
@@ -105,6 +115,7 @@ router.post('/api/v1/expensive',
 **Purpose:** Standardized response formatting.
 
 **Usage:**
+
 ```typescript
 import { sendSuccess, sendError, handleControllerError } from './middleware/response';
 
@@ -124,6 +135,7 @@ try {
 ```
 
 **Success Response Format:**
+
 ```json
 {
   "data": { /* your data */ },
@@ -139,6 +151,7 @@ try {
 **Purpose:** Zod-based input validation.
 
 **Usage:**
+
 ```typescript
 import { validateBody, validateQuery, validateParams } from './middleware/validation';
 import { createUserSchema } from './models/user.model';
@@ -154,6 +167,7 @@ router.get('/api/v1/users/:id', validateParams(userIdSchema), controller.get);
 ```
 
 **Features:**
+
 - Schema-based validation
 - Type coercion
 - Detailed error messages
@@ -165,6 +179,7 @@ router.get('/api/v1/users/:id', validateParams(userIdSchema), controller.get);
 **Purpose:** Formats Zod validation errors.
 
 **Usage:**
+
 ```typescript
 import { formatZodError, isZodError } from './middleware/zodErrorHandler';
 
@@ -175,6 +190,7 @@ if (isZodError(error)) {
 ```
 
 **Features:**
+
 - Human-readable error messages
 - Field-level error details
 - Integration with error middleware
@@ -420,6 +436,7 @@ describe('loggingMiddleware', () => {
 ## Adding New Middleware
 
 1. **Create middleware file:**
+
 ```typescript
 // middleware/example.ts
 import { Request, Response, NextFunction } from 'express';
@@ -434,7 +451,8 @@ export const exampleMiddleware = (
 };
 ```
 
-2. **Add tests:**
+1. **Add tests:**
+
 ```typescript
 // __tests__/middleware-example.test.ts
 import { exampleMiddleware } from '../middleware/example';
@@ -446,7 +464,8 @@ describe('exampleMiddleware', () => {
 });
 ```
 
-3. **Register in app:**
+1. **Register in app:**
+
 ```typescript
 // server.ts
 import { exampleMiddleware } from './middleware/example';

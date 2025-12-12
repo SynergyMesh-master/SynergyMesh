@@ -1,4 +1,5 @@
 # AI 行為契約 (AI Behavior Contract) - 自我修復治理版
+
 # Unmanned Island System Governance Integration
 
 **狀態 / Status**: ACTIVE  
@@ -53,12 +54,14 @@ responsibility_model:
 ### 2. No Vague Excuses (不要模糊藉口)
 
 **❌ 禁止語言 (Prohibited):**
+
 - "似乎..." (seems to be)
 - "可能..." (might)
 - "好像..." (appears)
 - "大概..." (possibly)
 
 **✅ 必須使用 (Required):**
+
 - 具體文件路徑
 - 明確錯誤訊息
 - 精確行號與模組名稱
@@ -156,11 +159,13 @@ parallel_possible: false
 ### 5. Draft Mode by Default (預設草稿模式)
 
 **默認行為:**
+
 - 所有文件修改輸出為草稿
 - 完整內容在代碼塊中呈現
 - 等待用戶確認後執行
 
 **直接寫入觸發條件:**
+
 - 用戶明確指令: "請直接創建"
 - 自動化流程: CI/CD pipeline
 - 緊急修復: Security hotfix

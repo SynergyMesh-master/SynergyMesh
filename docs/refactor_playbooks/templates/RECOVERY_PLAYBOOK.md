@@ -18,20 +18,25 @@ Launcher启动失败？
 ## 应急响应等级
 
 ### 🟢 Level 0: 正常运行
+
 - **状态**: 所有组件健康
 - **操作**: 无需介入
 
 ### 🟡 Level 1: 部分降级
+
 - **状态**: 单个引擎故障
-- **操作**: 
+- **操作**:
+
   ```bash
   # 重启特定引擎
   python automation_launcher.py start-engine <engine_id>
   ```
 
 ### 🟠 Level 2: 主控故障
+
 - **状态**: MasterOrchestrator无响应
 - **操作**:
+
   ```bash
   # 1. 尝试优雅重启
   python automation_launcher.py stop
@@ -42,14 +47,17 @@ Launcher启动失败？
   ```
 
 ### 🔴 Level 3: Launcher故障
+
 - **状态**: automation_launcher.py完全失效
 - **操作**:
+
   ```bash
   # 直接运行应急恢复
   python emergency_recovery.py
   ```
 
 ### ⚫ Level 4: 灾难性故障
+
 - **状态**: 所有自动化失效
 - **操作**: 执行手动恢复（见下方）
 
@@ -60,6 +68,7 @@ Launcher启动失败？
 ### Scenario 1: Launcher启动引擎功能失效
 
 #### 症状识别
+
 - ✗ `python automation_launcher.py start-engine <id>` 失败
 - ✗ 引擎无法通过launcher启动
 - ✓ MasterOrchestrator可能仍在运行
@@ -67,6 +76,7 @@ Launcher启动失败？
 #### 恢复步骤
 
 **Step 1: 验证问题**
+
 ```bash
 # 检查launcher自身状态
 python automation_launcher.py status
@@ -76,6 +86,7 @@ ps aux | grep master_orchestrator
 ```
 
 **Step 2: 绕过launcher直接操作**
+
 ```bash
 # 方案A: 使用应急脚本
 python emergency_recovery.py
@@ -95,6 +106,7 @@ asyncio.run(direct_start())
 ```
 
 **Step 3: 临时修复launcher**
+
 ```bash
 # 备份当前版本
 cp automation_launcher.py automation_launcher.py.broken
@@ -111,6 +123,7 @@ cp automation_launcher_backup.py automation_launcher.py
 #### 手动恢复流程
 
 **1. 杀死所有相关进程**
+
 ```bash
 # 找出所有相关进程
 ps aux | grep -E "(automation|orchestrator|engine)" | grep -v grep
@@ -124,6 +137,7 @@ pkill -SIGKILL -f "master_orchestrator"
 ```
 
 **2. 清理状态文件**
+
 ```bash
 # 清除可能损坏的状态
 rm -f .orchestrator_status
@@ -132,6 +146,7 @@ rm -f /tmp/synergymesh_*
 ```
 
 **3. 验证环境**
+
 ```bash
 # 检查Python环境
 python --version
@@ -142,6 +157,7 @@ pip list | grep -E "(pyyaml|asyncio)"
 ```
 
 **4. 重新启动**
+
 ```bash
 # 使用应急恢复脚本
 python emergency_recovery.py
@@ -156,6 +172,7 @@ python emergency_recovery.py
 ### 1. 直接启动MasterOrchestrator
 
 创建临时启动脚本 `manual_start.py`:
+
 ```python
 #!/usr/bin/env python3
 import asyncio
@@ -196,6 +213,7 @@ if __name__ == "__main__":
 ```
 
 运行：
+
 ```bash
 python manual_start.py
 ```
@@ -242,22 +260,26 @@ if __name__ == "__main__":
 ## 故障诊断检查清单
 
 ### ✓ 环境检查
+
 - [ ] Python版本正确 (3.8+)
 - [ ] 虚拟环境已激活
 - [ ] 所有依赖已安装
 - [ ] 必要目录存在且可写
 
 ### ✓ 进程检查
+
 - [ ] 没有僵尸进程
 - [ ] 端口没有被占用
 - [ ] 系统资源充足（CPU、内存）
 
 ### ✓ 配置检查
+
 - [ ] 配置文件完整
 - [ ] 路径设置正确
 - [ ] 权限设置正确
 
 ### ✓ 日志检查
+
 - [ ] 查看最新错误日志
 - [ ] 检查堆栈跟踪
 - [ ] 识别根本原因
@@ -267,6 +289,7 @@ if __name__ == "__main__":
 ## 预防性措施
 
 ### 1. 定期备份
+
 ```bash
 # 每日备份脚本
 #!/bin/bash
@@ -281,12 +304,14 @@ echo "✅ 备份完成: $BACKUP_DIR"
 ```
 
 ### 2. 健康监控
+
 ```bash
 # 添加到crontab
 */5 * * * * /path/to/health_check.sh
 ```
 
 ### 3. 配置版本控制
+
 ```bash
 # 提交所有配置到Git
 git add config/ tools/
@@ -298,13 +323,16 @@ git commit -m "Config snapshot $(date +%Y%m%d_%H%M%S)"
 ## 联系与升级
 
 ### 何时升级到人工介入
+
 - ⚠️ 应急恢复脚本连续失败3次
 - ⚠️ 数据损坏或丢失风险
 - ⚠️ 安全事件（未授权访问）
 - ⚠️ 不明原因的系统行为
 
 ### 记录和报告
+
 每次恢复操作后，请记录：
+
 1. 故障时间和持续时间
 2. 故障现象和错误消息
 3. 执行的恢复步骤
@@ -312,6 +340,7 @@ git commit -m "Config snapshot $(date +%Y%m%d_%H%M%S)"
 5. 建议的预防措施
 
 使用模板：
+
 ```markdown
 ## 故障报告 - [YYYY-MM-DD HH:MM]
 

@@ -35,12 +35,14 @@ The HLP Executor Core is a high-performance asynchronous DAG orchestration engin
 執行器使用改良的 Kahn 算法進行拓撲排序，確保依賴關係正確處理。
 
 **算法流程**:
+
 1. 構建入度表 (In-degree table)
 2. 將入度為 0 的節點加入隊列
 3. 處理隊列中的節點，並更新相鄰節點的入度
 4. 重複直到所有節點處理完畢
 
 **偽代碼**:
+
 ```python
 def topological_sort(graph):
     in_degree = calculate_in_degree(graph)
@@ -64,12 +66,14 @@ def topological_sort(graph):
 每個執行節點都有關聯的風險評分，影響調度優先級和資源分配。
 
 **風險評分因素**:
+
 - **複雜度** (Complexity): 執行單元的複雜程度
 - **歷史失敗率** (Historical Failure Rate): 過去執行的失敗比率
 - **資源需求** (Resource Requirements): 所需的系統資源
 - **影響範圍** (Impact Scope): 失敗時的影響範圍
 
 **風險計算公式**:
+
 ```
 Risk Score = (Complexity × 0.3) + (Failure Rate × 0.4) + 
              (Resource Demand × 0.2) + (Impact Scope × 0.1)
@@ -80,11 +84,13 @@ Risk Score = (Complexity × 0.3) + (Failure Rate × 0.4) +
 識別 DAG 中的關鍵路徑，優先分配資源給關鍵任務。
 
 **關鍵路徑定義**:
+
 - 從起點到終點的最長路徑
 - 決定整體執行時間的路徑
 - 無鬆弛時間 (slack time) 的任務序列
 
 **應用**:
+
 - 優先調度關鍵路徑上的任務
 - 為關鍵任務預留資源
 - 監控關鍵任務的執行狀態
@@ -98,12 +104,14 @@ Risk Score = (Complexity × 0.3) + (Failure Rate × 0.4) +
 執行器採用最大寬度調度算法，在每個階段最大化並行執行的任務數量。
 
 **調度規則**:
+
 1. **依賴滿足** (Dependency Satisfaction): 只調度所有依賴已完成的任務
 2. **資源限制** (Resource Constraints): 尊重資源限制（CPU、內存、GPU）
 3. **公平性** (Fairness): 確保所有任務最終都能執行
 4. **優先級** (Priority): 考慮任務優先級和風險評分
 
 **最大並行度**:
+
 ```yaml
 parallelization:
   max_concurrent_tasks: 100
@@ -119,6 +127,7 @@ parallelization:
 根據實際執行情況動態調整任務分配。
 
 **負載平衡策略**:
+
 - **輪詢** (Round-robin): 平均分配任務
 - **最少連接** (Least connections): 分配給負載最輕的執行器
 - **加權** (Weighted): 根據執行器能力分配
@@ -131,12 +140,14 @@ parallelization:
 ### 4.1 存儲後端 (Storage Backend)
 
 **主要選項: Kubernetes etcd**
+
 - 高可用性
 - 強一致性
 - 原生支援 watch 機制
 - 與 K8s 集群整合
 
 **替代選項: PostgreSQL**
+
 - 關係型數據模型
 - 豐富的查詢能力
 - 成熟的備份和恢復機制
@@ -178,17 +189,20 @@ ExecutionState:
 **頻率**: Per-phase (每個階段一次)
 
 **內容**:
+
 - 當前階段的完整狀態
 - 已完成的 plan units
 - 中間結果和元數據
 - 依賴關係圖
 
 **保留策略**:
+
 - 保留最近 5 個檢查點
 - 壓縮舊檢查點 (gzip)
 - 過期檢查點自動清理（7 天）
 
 **恢復策略**:
+
 - Last-known-good-state: 恢復到最後一個成功的檢查點
 - Forward recovery: 從檢查點重新執行後續步驟
 - Partial rollback: 只回滾失敗的部分
@@ -342,16 +356,19 @@ sequenceDiagram
 ### 6.2 優化策略
 
 **解析優化**:
+
 - 使用緩存減少重複解析
 - 並行化依賴分析
 - 增量更新執行圖
 
 **調度優化**:
+
 - 預測性調度（基於歷史數據）
 - 批量調度減少開銷
 - 智能資源預留
 
 **存儲優化**:
+
 - 連接池管理
 - 批量寫入
 - 異步持久化
@@ -364,6 +381,7 @@ sequenceDiagram
 ### 7.1 水平擴展
 
 **HPA 配置**:
+
 ```yaml
 minReplicas: 3
 maxReplicas: 20
@@ -383,6 +401,7 @@ metrics:
 ```
 
 **分片策略**:
+
 - 按執行 ID 哈希分片
 - 保證同一執行的請求路由到同一實例
 - 利用 Kubernetes StatefulSet 提供穩定標識
@@ -390,6 +409,7 @@ metrics:
 ### 7.2 垂直擴展
 
 **資源配置**:
+
 ```yaml
 resources:
   requests:
@@ -401,6 +421,7 @@ resources:
 ```
 
 **擴展限制**:
+
 - 單個執行最多 500 個 plan units
 - 狀態大小限制 100MB
 - 檢查點大小限制 50MB
@@ -434,16 +455,19 @@ resources:
 ### 9.1 關鍵指標
 
 **執行指標**:
+
 - `hlp_executor_tasks_total`: 總任務數（按狀態）
 - `hlp_executor_execution_duration_seconds`: 執行時長
 - `hlp_executor_rollback_operations_total`: 回滾操作數
 
 **性能指標**:
+
 - `hlp_executor_dag_parse_duration_seconds`: DAG 解析時長
 - `hlp_executor_state_transition_duration_seconds`: 狀態轉換時長
 - `hlp_executor_checkpoint_size_bytes`: 檢查點大小
 
 **資源指標**:
+
 - CPU 使用率
 - 內存使用率
 - 存儲使用率

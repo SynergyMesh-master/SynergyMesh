@@ -121,7 +121,7 @@ Node.js >= 18.0.0
   C++ 17 (GCC 11+)
   ```
 
-  ### Installation
+### Installation
 
   ```bash
   git clone https://github.com/SynergyMesh-admin/Unmanned-Island.git
@@ -133,7 +133,7 @@ Node.js >= 18.0.0
   npm run test
   ```
 
-  ### Start Core Services
+### Start Core Services
 
   ```bash
   cd core/contract_service/contracts-L1/contracts
@@ -146,7 +146,7 @@ Node.js >= 18.0.0
   python tools/docs/validate_index.py --verbose
   ```
 
-  ### Docker Deployment
+### Docker Deployment
 
   ```bash
 | Document                                                  | Description               |
@@ -155,9 +155,9 @@ Node.js >= 18.0.0
 
   ---
 
-  ## 🛠️ Core Features
+## 🛠️ Core Features
 
-  ### 🤖 Intelligent Automation
+### 🤖 Intelligent Automation
 
   | Feature             | Description                                 | Entry Point                        |
   | ------------------- | ------------------------------------------- | ---------------------------------- |
@@ -166,7 +166,7 @@ Node.js >= 18.0.0
   | Advanced Escalation | 5-level escalation ladder (L1 Auto → L5 CS) | docs/ADVANCED_ESCALATION_SYSTEM.md |
   | Auto-Fix Bot        | Automatic CI failure repair                 | config/auto-fix-bot.yml            |
 
-  ### 🔒 Security & Compliance
+### 🔒 Security & Compliance
 
   | Feature            | Description                  | Entry Point              |
   | ------------------ | ---------------------------- | ------------------------ |
@@ -175,7 +175,7 @@ Node.js >= 18.0.0
   | Policy Gates       | OPA/Conftest policy checks   | governance/policies/    |
   | SBOM Generation    | Software Bill of Materials   | governance/sbom/        |
 
-  ### 📊 Monitoring & Observability
+### 📊 Monitoring & Observability
 
   | Feature               | Description                    | Entry Point                       |
   | --------------------- | ------------------------------ | --------------------------------- |
@@ -185,87 +185,87 @@ Node.js >= 18.0.0
 
   ---
 
-  ## 4️⃣ Living Knowledge Base
+## 4️⃣ Living Knowledge Base
 
   Self-aware documentation and structure model of the repository.
 
-  - Detects changes (git history, CI results, scheduled scans)
-  - Rebuilds structure (generated-mndoc.yaml, knowledge-graph.yaml)
-  - Runs self-diagnostics (orphan components, dead configs, broken links)
-  - Emits health reports and can open GitHub issues automatically
+- Detects changes (git history, CI results, scheduled scans)
+- Rebuilds structure (generated-mndoc.yaml, knowledge-graph.yaml)
+- Runs self-diagnostics (orphan components, dead configs, broken links)
+- Emits health reports and can open GitHub issues automatically
 
   Design details: docs/LIVING_KNOWLEDGE_BASE.md.
 
   ---
 
-  ## 🖥️ Admin Copilot CLI (Public Preview)
+## 🖥️ Admin Copilot CLI (Public Preview)
 
   Admin Copilot CLI brings AI-powered analysis and operations into the terminal:
 
-  - Chat, analyze, fix, explain, generate, review, test
-  - GitHub integration and MCP extension support
-  - Safe-by-default: previews every action before execution
+- Chat, analyze, fix, explain, generate, review, test
+- GitHub integration and MCP extension support
+- Safe-by-default: previews every action before execution
 
   See docs/ADMIN_COPILOT_CLI.md and tools/cli/README.md.
 
   ---
 
-  ## 🌐 Web UI & Code Analysis API (apps/web)
+## 🌐 Web UI & Code Analysis API (apps/web)
 
   apps/web contains:
 
-  - React front-end UI (npm install, npm run dev/build)
-  - FastAPI backend for multi-language code analysis (pytest, coverage)
-  - Docker, docker-compose and Kubernetes manifests
+- React front-end UI (npm install, npm run dev/build)
+- FastAPI backend for multi-language code analysis (pytest, coverage)
+- Docker, docker-compose and Kubernetes manifests
 
   Details: apps/web/README.md.
 
   ---
 
-  ## ️ Global Configuration Overview
+## ️ Global Configuration Overview
 
   Key configuration files:
 
-  - synergymesh.yaml – global entry
-  - config/system-manifest.yaml – system manifest
-  - config/unified-config-index.yaml – unified config index
-  - config/system-module-map.yaml – module mapping
-  - config/ai-constitution.yaml – AI constitution
-  - config/agents/team/virtual-experts.yaml – virtual expert team
-  - config/safety-mechanisms.yaml – safety mechanisms
-  - config/topology-mind-matrix.yaml – mind matrix topology
-  - config/drone-config.yml – drone fleet configuration
+- synergymesh.yaml – global entry
+- config/system-manifest.yaml – system manifest
+- config/unified-config-index.yaml – unified config index
+- config/system-module-map.yaml – module mapping
+- config/ai-constitution.yaml – AI constitution
+- config/agents/team/virtual-experts.yaml – virtual expert team
+- config/safety-mechanisms.yaml – safety mechanisms
+- config/topology-mind-matrix.yaml – mind matrix topology
+- config/drone-config.yml – drone fleet configuration
 
   ---
 
-  ## 👨‍💼 Virtual Expert Team
+## 👨‍💼 Virtual Expert Team
 
   Virtual experts model domain knowledge across architecture, security, DB, AI, DevOps, etc.
   Mappings and domains: config/agents/team/virtual-experts.yaml.
 
   ---
 
-  ## 🤖 Agent Services
+## 🤖 Agent Services
 
   services/agents/ exposes long-lived business agents:
 
-  - Auto-Repair Agent – automatic code repair
-  - Code Analyzer Agent – deep code analysis
-  - Dependency Manager – dependency updates and security
-  - Orchestrator – multi-agent workflows
-  - Vulnerability Detector – CVE detection and reports
+- Auto-Repair Agent – automatic code repair
+- Code Analyzer Agent – deep code analysis
+- Dependency Manager – dependency updates and security
+- Orchestrator – multi-agent workflows
+- Vulnerability Detector – CVE detection and reports
 
   See services/agents/README.md.
 
   ---
 
-  ## 🚁 Drone System Configuration
+## 🚁 Drone System Configuration
 
   Drone fleet and automation configuration is defined in config/drone-config.yml and implemented by automation/autonomous/.
 
   ---
 
-  ## 🚗 Autonomous Framework (Drone / AV)
+## 🚗 Autonomous Framework (Drone / AV)
 
   Five-skeleton autonomous framework for drones and autonomous vehicles.
 
@@ -273,31 +273,31 @@ Node.js >= 18.0.0
 
   ---
 
-  ## 📚 Documentation
+## 📚 Documentation
 
   Main documentation portal: docs/README.md.
 
-  - Architecture: docs/architecture/
-  - Quick Start: docs/QUICK_START.md
-  - API Docs: docs/AUTO_ASSIGNMENT_API.md
-  - Operations: docs/operations/
+- Architecture: docs/architecture/
+- Quick Start: docs/QUICK_START.md
+- API Docs: docs/AUTO_ASSIGNMENT_API.md
+- Operations: docs/operations/
 
   ---
 
-  ## 🔄 CI/CD
+## 🔄 CI/CD
 
   Workflows under .github/workflows/ enforce quality gates:
 
-  - core-services.yml – core services tests
-  - integration.yml – integration tests
-  - apply.yaml – 10-stage governance pipeline
-  - auto-review.yml – auto review & merge
+- core-services.yml – core services tests
+- integration.yml – integration tests
+- apply.yaml – 10-stage governance pipeline
+- auto-review.yml – auto review & merge
 
   Quality gates: coverage, lint, security, schema, policy.
 
   ---
 
-  ## 📄 License & Acknowledgments
+## 📄 License & Acknowledgments
 
   Licensed under the MIT License (see LICENSE).
 

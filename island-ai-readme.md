@@ -135,21 +135,25 @@ Island AI 是為現代 AI 工程團隊打造的**企業級智能自動化平台*
 ##### 必要條件（L0 治理門檻）
 
 **A. 可回滾能力**
+
 - ✅ 所有操作必須可 atomic rollback
 - ✅ 回滾路徑事先演練
 - ❌ 不可逆操作（金流、永久刪除）禁止 L0
 
 **B. 爆炸半徑控制**
+
 - ✅ 預設只作用於子集（5% 流量、單一服務）
 - ✅ 明確 rate limit / concurrency 限制
 - ✅ 異常指標觸發自動降級
 
 **C. 事前驗證 & 事後監控**
+
 - ✅ staging 通過 N 次（100+）無異常
 - ✅ 全套觀測（metrics + logs + traces）
 - ✅ 自動告警與降級機制
 
 **D. 治理與審計**
+
 - ✅ 完整審計記錄（不可竄改）
 - ✅ 明確風險分級與白名單
 - ✅ 啟用/停用需治理流程
@@ -442,6 +446,7 @@ island-cli collaborate "重構支付模組" \
 ```
 
 📚 完整文檔：
+
 - [island-cli 詳解](docs/AGENTS/CLI.md)
 - [Agent 系統](docs/AGENTS/VIRTUAL_EXPERTS.md)
 - [MCP 協議](docs/AGENTS/MCP.md)
@@ -451,6 +456,7 @@ island-cli collaborate "重構支付模組" \
 ## 📊 實施計畫（18 個月）
 
 ### 第 1 階段：基礎設施（3 個月，$1.5M）
+
 - ✅ Agent 運行時框架
 - ✅ 開發者 Agent MVP
 - ✅ 知識庫系統 v1
@@ -458,6 +464,7 @@ island-cli collaborate "重構支付模組" \
 - ✅ 統一構建系統（Bazel）
 
 ### 第 2 階段：多 Agent 生態（6 個月，$3M）
+
 - ✅ 實現所有 7 種 Agent
 - ✅ 協作機制
 - ✅ 自動激活觸發器
@@ -465,6 +472,7 @@ island-cli collaborate "重構支付模組" \
 - ✅ 統一可觀測性層
 
 ### 第 3 階段：智能化升級（6 個月，$2.5M）
+
 - ✅ Agent 自學習
 - ✅ 治理框架（L2-L4）
 - ✅ 合規檢查
@@ -472,6 +480,7 @@ island-cli collaborate "重構支付模組" \
 - ✅ 跨語言 API 合約
 
 ### 第 4 階段：生產化（3 個月，$1.5M）
+
 - ✅ 規模化測試
 - ✅ 安全加固
 - ✅ 文檔和培訓
@@ -574,7 +583,7 @@ island-cli test:integration
 ## 📞 聯繫我們
 
 - 🌐 官網：[island-ai.io](https://island-ai.io)
-- 📧 Email：hello@island-ai.io
+- 📧 Email：<hello@island-ai.io>
 - 💬 Discord：[加入社群](https://discord.gg/island-ai)
 - 🐦 Twitter：[@IslandAI](https://twitter.com/IslandAI)
 

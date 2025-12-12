@@ -30,6 +30,7 @@
 ## Data Model | 數據模型
 
 ### Contract Definition
+
 ```yaml
 metadata:
   name: string

@@ -22,10 +22,12 @@
 ### 問題 1: MCP 伺服器路徑不一致 (已修復)
 
 **描述**: 專案中存在兩個 MCP 伺服器目錄：
+
 - `mcp-servers/` - npm workspace 配置和 CI 工作流程使用
 - `services/mcp/` - 文檔和部分配置引用
 
 **影響檔案**:
+
 - `auto-fix-bot-dashboard.html` ✅ 已修復
 - `synergymesh.yaml` ✅ 已修復
 - `DOCUMENTATION_INDEX.md` ✅ 已修復
@@ -33,11 +35,13 @@
 - `island-ai.md` ✅ 已修復
 
 **修復方式**:
+
 1. 更新文檔和配置以使用正確的 `mcp-servers/` 路徑
 2. 在 `synergymesh.yaml` 中新增 `mcp_servers` 目錄引用
 3. 保留 `services_mcp` 以保持向後相容
 
 **待處理**:
+
 - `docs/knowledge-graph.yaml` - 此為生成檔案，需執行 `make all-kg` 重新生成
 - `docs/superroot-entities.yaml` - 此為生成檔案，需執行 `make all-kg` 重新生成
 
@@ -107,6 +111,7 @@
 | dashboard | ✅ | 8080 | nginx |
 
 ### 網路配置
+
 - 網路名稱: `synergymesh-network`
 - 驅動: bridge
 - 服務依賴順序: contracts-l1 → mcp-servers → dashboard
@@ -116,9 +121,11 @@
 ## 📝 建議後續行動
 
 1. **重新生成知識圖譜**
+
    ```bash
    make all-kg
    ```
+
    這將更新 `docs/knowledge-graph.yaml` 和 `docs/superroot-entities.yaml` 中的路徑引用。
 
 2. **清理重複目錄** (可選)

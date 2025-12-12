@@ -213,6 +213,7 @@ docs/refactor_playbooks/
 - `{cluster_name}_prompt.txt` - LLM prompts（僅在 `--use-llm` 時生成）
 
 範例：
+
 - `core__playbook.md` - core/ 的完整 playbook
 - `core/core__architecture_refactor.md` - core/architecture-stability 重構劇本
 - `services__playbook.md` - services/ 的完整 playbook

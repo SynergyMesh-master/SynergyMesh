@@ -70,11 +70,13 @@ mv .git/hooks/post-commit .git/hooks/post-commit.disabled
 If you have any scripts or documentation referencing the old files:
 
 **Replace:**
+
 ```bash
 ./watch_sync_script.sh
 ```
 
 **With:**
+
 ```bash
 ./scripts/sync/watch-and-sync.sh --once
 # or
@@ -152,15 +154,18 @@ rm -rf .git/refactor-cache
 ### 1. Configuration Source
 
 **Before:**
+
 - Directories hardcoded in `scripts/sync/watch-and-sync.sh`
 - Debounce time hardcoded
 
 **After:**
+
 - Everything configurable in `config/sync-refactor-config.yaml`
 - Update config, not code
 
 **Migration:**
 If you modified directories in the old script, now update:
+
 ```yaml
 sync:
   monitored_directories:
@@ -171,11 +176,13 @@ sync:
 ### 2. Watch Script Usage
 
 **Before:**
+
 ```bash
 ./watch_sync_script.sh
 ```
 
 **After:**
+
 ```bash
 ./scripts/sync/watch-and-sync.sh --once   # One-time sync
 ./scripts/sync/watch-and-sync.sh --watch  # Continuous watch
@@ -184,9 +191,11 @@ sync:
 ### 3. Cache Location
 
 **Before:**
+
 - No caching (or undocumented cache)
 
 **After:**
+
 - Cache in `.cache/refactor/`
 - Add to `.gitignore` if not already present
 
@@ -232,11 +241,13 @@ rm -rf .cache/refactor/
 ### Issue 1: "Config file not found"
 
 **Symptom:**
+
 ```
 ⚠️ Could not load cache settings: [Errno 2] No such file or directory
 ```
 
 **Solution:**
+
 ```bash
 # Ensure you're on the correct branch
 git checkout copilot/optimize-project-sync-refactor
@@ -253,6 +264,7 @@ git restore config/sync-refactor-config.yaml
 **Symptom:** Multiple commits for the same changes
 
 **Solution:**
+
 ```bash
 # Disable post-commit hook
 mv .git/hooks/post-commit .git/hooks/post-commit.disabled
@@ -266,6 +278,7 @@ mv .git/hooks/post-commit .git/hooks/post-commit.disabled
 **Symptom:** "0% cache hit rate" every time
 
 **Solution:**
+
 ```bash
 # Check cache directory exists
 ls -la .cache/refactor/
@@ -282,6 +295,7 @@ ls -l governance/language-governance-report.md
 **Symptom:** "YAML validation failed"
 
 **Solution:**
+
 ```bash
 # Identify broken file
 python3 -c "import yaml; yaml.safe_load(open('your-file.yaml'))"
@@ -300,6 +314,7 @@ python3 -c "import yaml; yaml.safe_load(open('your-file.yaml'))"
 **Symptom:** Refactor workflow doesn't run after governance changes
 
 **Solution:**
+
 ```bash
 # Check config
 grep -A10 "integration:" config/sync-refactor-config.yaml
@@ -348,6 +363,7 @@ When reporting issues, include:
 ### Providing Feedback
 
 We want to know:
+
 - What works well?
 - What's confusing?
 - What could be better?

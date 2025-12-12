@@ -8,6 +8,7 @@
 ---
 
 ## 🔗 BUILD REFERENCE INTEGRATION (v1.0.0)
+
 ## 建造基準整合 - 與 docs/README.md 的映射一致性
 
 > **關鍵原則**: 本商業規劃書的每個執行里程碑必須對應到 `docs/README.md` 中定義的**代理決策樹**和**執行路徑**，確保所有開發、部署、運維工作都符合統一的映射標準。
@@ -25,6 +26,7 @@
 ### 一致性驗證 (Consistency Checkpoint)
 
 在每個季度里程碑前，執行：
+
 ```bash
 # 1. 驗證文檔索引一致性
 python tools/docs/validate_index.py
@@ -44,11 +46,13 @@ cat core/contract_service/ | grep -i "version_1_0_0"
 ## 📊 Executive Summary（執行摘要）
 
 你正在規劃的是一個**操作系統級別的企業自動化平台**，類似於：
+
 - **Windows/Linux** 之於個人電腦
 - **iOS/Android** 之於行動裝置
 - **GPT/Claude** 之於AI生態
 
 關鍵商業指標：
+
 - **目標用戶**: 企業級客戶（500-50,000人規模）
 - **計價模式**: SaaS + 微服務委派費用
 - **毛利率目標**: 70-85%
@@ -59,13 +63,14 @@ cat core/contract_service/ | grep -i "version_1_0_0"
 ---
 
 ## 🎯 第一階段：產品-市場契合度 (0-6個月)
+
 ## Phase 1: Product-Market Fit with Build Reference Compliance
 
 ### 1.0 建造基準清單 (Build Reference Checklist) ⭐
 
 在啟動第一階段前，必須完成：
 
-- [ ] **代碼邊界定義** 
+- [ ] **代碼邊界定義**
   - 文檔: `docs/architecture/repo-map.md`
   - 驗證: 每個模塊的職責、所有者、依賴關係
   - 代理查詢: `grep -i "phase-1" docs/architecture/repo-map.md`
@@ -92,6 +97,7 @@ cat core/contract_service/ | grep -i "version_1_0_0"
 ### 1.1 核心價值主張優化
 
 **當前你已有的資產：**
+
 - ✅ 五骨架自主系統框架
 - ✅ AI決策引擎 + 認知處理器
 - ✅ SLSA L3供應鏈安全
@@ -183,6 +189,7 @@ revenue_model:
 ---
 
 ## 💼 第二階段：最小可行產品 (MVP) 商業化 (6-12個月)
+
 ## Phase 2: MVP Commercialization with Build Consistency
 
 ### 2.0 建造基準映射 (Build Reference Mapping) ⭐
@@ -299,6 +306,7 @@ M12  | 60      | $1.5M | $18M  | 進入B2 階段準備
 ```
 
 **計算說明：**
+
 - Starter: $5K/月 × 40% = 新客戶
 - Professional: $25K/月 × 50% = 中型客戶
 - Enterprise: $50K+/月 × 10% = 大型客戶
@@ -306,6 +314,7 @@ M12  | 60      | $1.5M | $18M  | 進入B2 階段準備
 ---
 
 ## 🌍 第三階段：規模化與市場擴張 (12-18個月)
+
 ## Phase 3: Scaling with Distributed Build Reference Compliance
 
 ### 3.0 分布式建造基準 (Distributed Build Reference) ⭐
@@ -315,6 +324,7 @@ M12  | 60      | $1.5M | $18M  | 進入B2 階段準備
 #### 全局建造基準
 
 所有區域/團隊都必須遵守：
+
 - `docs/README.md` v1.0.0 - 全局建造標準
 - `docs/architecture/repo-map.md` - 統一代碼邊界
 - `docs/architecture/layers.md` - 統一依賴規則
@@ -417,6 +427,7 @@ priority_3_future:
 ---
 
 ## 💰 第四階段：十億美元目標達成 (18-24個月)
+
 ## Phase 4: $1B+ Milestone with Enterprise-Grade Build Reference
 
 ### 4.0 企業級建造基準 (Enterprise Build Reference) ⭐
@@ -551,6 +562,7 @@ team_size_progression:
 ---
 
 ## 📈 詳細的12-24月實施路線圖
+
 ## Implementation Roadmap with Build Reference Checkpoints
 
 ### Quarter-by-Quarter Breakdown
@@ -695,31 +707,40 @@ Q7-Q8 (Month 19-24):
 ---
 
 ## 🎬 立即行動計畫 (Next 30 Days)
+
 ## Immediate Action Plan with Build Reference Compliance
 
 ### Week 1: 戰略確認 + Build Reference Baseline
+
 - [ ] 確定3個潛在目標客戶
 - [ ] 準備10分鐘電梯演講版本
 - [ ] 建立簡化的定價頁面
 - [ ] ⭐ **驗證 `docs/README.md` v1.0.0 建造基準已整合**
+
   ```bash
   python tools/docs/validate_index.py --baseline
   ```
+
 - [ ] ⭐ **確認 `docs/architecture/repo-map.md` 邊界完整**
+
   ```bash
   grep -E "phase.1|mvp" docs/architecture/repo-map.md
   ```
 
 ### Week 2: 產品清晰化 + Contract Definition
+
 - [ ] 建立核心3個功能的演示環境
 - [ ] 錄製2-3個產品演示視頻
 - [ ] 準備ROI計算器
 - [ ] ⭐ **定義 MVP 契約 in `core/contract_service/`**
+
   ```bash
   # Create: contract_service/mvp_contracts.ts
   # Define: AutoReviewInput, AutoReviewOutput, TaskAssignmentContract, etc.
   ```
+
 - [ ] ⭐ **建立 MVP 決策樹與執行路徑**
+
   ```bash
   # Map to docs/README.md decision trees
   # Auto Review → Build Task Decision Tree
@@ -727,10 +748,12 @@ Q7-Q8 (Month 19-24):
   ```
 
 ### Week 3: 銷售準備 + Governance Rules
+
 - [ ] 聯繫第一個目標客戶
 - [ ] 安排3個產品演示會議
 - [ ] 準備試用條款
 - [ ] ⭐ **配置 `governance/build-rules.yaml` for MVP**
+
   ```yaml
   phase: mvp
   rules:
@@ -745,10 +768,12 @@ Q7-Q8 (Month 19-24):
   ```
 
 ### Week 4: 執行與測試 + Validation
+
 - [ ] 完成第一份商業合約的談判
 - [ ] 確定第一位 customers/success 經理
 - [ ] 更新財務預測模型
 - [ ] ⭐ **運行完整驗證流程**
+
   ```bash
   # Phase 1 Baseline Validation
   python tools/docs/validate_index.py --phase 1
@@ -861,6 +886,7 @@ success_metrics:
 **加上 Build Reference 一致性監控，確保技術與商業完全對齊。**
 
 **下一步：**
+
 1. **驗證 Build Reference** → `python tools/docs/validate_index.py`
 2. **選擇第一個目標客戶** → 本週聯繫
 3. **確保所有決策都符合 `docs/README.md` 決策樹**

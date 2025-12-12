@@ -1,4 +1,5 @@
 # Proposer/Critic 雙層 AI 重構工作流程
+
 # Proposer/Critic Dual-Layer AI Refactor Workflow
 
 **Date:** 2025-12-06  
@@ -34,6 +35,7 @@ Human Review → Merge
 **職責**：產生重構方案與具體 patch
 
 **輸入資料**：
+
 1. `language-governance-report.md` - 語言違規清單
 2. `hotspot.json` - 高風險檔案列表
 3. `cluster-heatmap.json` - Cluster 健康狀態
@@ -41,16 +43,17 @@ Human Review → Merge
 5. `config/system-module-map.yaml` - Module 定義與 refactor 規則
 
 **輸出**：
+
 1. **架構設計方案**
    - 新的目錄結構
    - 新的 interface / API 定義
    - 模組依賴關係圖
-   
+
 2. **具體 Patch**
    - 檔案移動計畫
    - 程式碼修改 (diff)
    - import/require 路徑更新
-   
+
 3. **理由說明**
    - 為什麼這樣改？
    - 解決了哪些問題？
@@ -61,11 +64,13 @@ Human Review → Merge
 **職責**：用架構骨架與 refactor 規則嚴格審查 Proposer 的方案
 
 **角色定位**：
+
 - 首席架構師（Chief Architect）
 - 安全顧問（Security Advisor）
 - 品質守門員（Quality Gatekeeper）
 
 **審查依據**：
+
 1. `config/system-module-map.yaml` 中的 `refactor.architecture_constraints`
 2. `automation/architecture-skeletons/` 中的骨架規則
 3. `governance/policies/` 中的治理政策
@@ -74,6 +79,7 @@ Human Review → Merge
 **審查項目**：
 
 #### 1. 架構約束檢查
+
 - ✅ 依賴方向是否正確？
   - core → apps? ❌
   - services → core? ✅
@@ -83,21 +89,25 @@ Human Review → Merge
   - 透過 interface 呼叫? ✅
 
 #### 2. 語言策略檢查
+
 - ✅ 是否使用 preferred languages？
 - ❌ 是否引入 banned languages？
 - ✅ 語言混用是否減少？
 
 #### 3. 品質指標檢查
+
 - ✅ 複雜度是否降低？
 - ✅ 測試覆蓋率是否維持/提升？
 - ❌ 是否引入新的安全問題？
 
 #### 4. 可維護性檢查
+
 - ✅ 命名是否清晰？
 - ✅ 是否符合專案風格？
 - ✅ 是否有充分文檔？
 
 **輸出**：
+
 1. **Approved** - 通過審查，可進入 CI
 2. **Rejected with Reasons** - 列出具體違規項目，要求 Proposer 修正
 3. **Conditional Approved** - 需要額外人工審查的部分
@@ -128,6 +138,7 @@ semgrep_report="governance/semgrep-report.json"
 **Step 1.2: 分析問題**
 
 Proposer 分析：
+
 - 語言違規有哪些？
 - Hotspot 檔案在哪裡？
 - 依賴關係是否混亂？
@@ -212,6 +223,7 @@ skeleton_rules = load_skeleton_rules(['architecture-stability', 'api-governance'
 **Step 2.3: 修正循環**
 
 如果 Critic 發現違規：
+
 1. 將審查結果返回給 Proposer
 2. Proposer 修正方案
 3. 重新提交給 Critic
@@ -242,6 +254,7 @@ skeleton_rules = load_skeleton_rules(['architecture-stability', 'api-governance'
 ### Phase 4: Human Review
 
 **即使通過 CI**，仍需人工審查：
+
 - P0 級別的重構
 - 涉及安全邊界的變更
 - 跨服務的 API 變更
@@ -348,28 +361,34 @@ skeleton_rules = load_skeleton_rules(['architecture-stability', 'api-governance'
 
 ### 如果通過審查
 ```
+
 ## ✅ 審查通過
 
 所有檢查項目均已通過，方案可進入 CI 驗證階段。
 
 ### 通過項目
+
 1. 依賴方向正確 ✅
 2. 語言策略符合 ✅
 3. 品質指標改善 ✅
 ...
 
 ### 建議（非強制）
+
 - 可以考慮進一步優化 XXX
 - 建議補充 YYY 的文檔
+
 ```
 
 ### 如果發現違規
 ```
+
 ## ❌ 審查未通過
 
 發現 {{N}} 個必須修正的問題。
 
 ### 違規項目
+
 1. **架構邊界問題** (嚴重)
    - 檔案：`path/to/file.ts` 第 42 行
    - 問題：違反依賴規則，core 不可依賴 apps
@@ -383,7 +402,9 @@ skeleton_rules = load_skeleton_rules(['architecture-stability', 'api-governance'
 ...
 
 ### 要求修正
+
 請 Proposer 修正上述問題後重新提交。
+
 ```
 
 ## 嚴格度設定
@@ -400,6 +421,7 @@ skeleton_rules = load_skeleton_rules(['architecture-stability', 'api-governance'
 ### 範例 1: Core Architecture 重構
 
 **Proposer Input:**
+
 ```
 Cluster: core/architecture-stability
 Playbook: docs/refactor_playbooks/03_refactor/core/core__architecture_refactor.md
@@ -408,6 +430,7 @@ Hotspots: 8 files with score > 80
 ```
 
 **Proposer Output:**
+
 ```markdown
 ## 重構方案：Core Architecture TypeScript 遷移
 
@@ -425,6 +448,7 @@ Hotspots: 8 files with score > 80
 ```
 
 **Critic Review:**
+
 ```markdown
 ## ✅ 初步審查通過
 
@@ -436,6 +460,7 @@ Hotspots: 8 files with score > 80
 ```
 
 **Proposer Revised:**
+
 ```markdown
 已修正：
 - 移除對 apps/web/utils 的依賴
@@ -446,6 +471,7 @@ Hotspots: 8 files with score > 80
 ```
 
 **Critic Final:**
+
 ```markdown
 ## ✅ 審查通過
 
@@ -533,16 +559,19 @@ def check_metrics(before_commit, after_commit):
 ## 🎯 成功指標
 
 ### 流程層面
+
 - Proposer 提出的方案，70% 能一次通過 Critic 審查
 - Critic 發現的問題，90% 能在第二輪修正
 - 通過 Critic 審查的方案，95% 能通過 CI
 
 ### 品質層面
+
 - 重構後的語言違規數平均減少 80%
 - 重構後的 Semgrep HIGH 問題 = 0
 - 重構後的測試覆蓋率平均提升 10%
 
 ### 效率層面
+
 - Proposer/Critic 循環平均 < 3 輪
 - 整個重構流程（含 CI）< 2 小時
 - 人工審查時間平均 < 30 分鐘

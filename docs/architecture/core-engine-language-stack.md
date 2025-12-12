@@ -140,6 +140,7 @@ core/
 ### ❌ 不允許在 TypeScript 內實作複雜 ML/AI 演算法
 
 **錯誤示例：**
+
 ```typescript
 // ❌ 不要在 TypeScript 裡實現複雜的 ML 邏輯
 function trainNeuralNetwork(data: number[][]): Model {
@@ -148,6 +149,7 @@ function trainNeuralNetwork(data: number[][]): Model {
 ```
 
 **正確做法：**
+
 ```typescript
 // ✅ 應該抽象為「調用 Python 模組」
 async function trainModel(data: number[][]): Promise<Model> {
@@ -158,6 +160,7 @@ async function trainModel(data: number[][]): Promise<Model> {
 ### ❌ 不允許在 Python 內直接控制 core/ 內部部署 / 基礎設施
 
 **錯誤示例：**
+
 ```python
 # ❌ 不要在 Python 裡直接操作基礎設施
 def deploy_to_kubernetes(manifest: dict):
@@ -165,6 +168,7 @@ def deploy_to_kubernetes(manifest: dict):
 ```
 
 **正確做法：**
+
 ```python
 # ✅ 應交由 TS orchestration 模組執行
 async def request_deployment(manifest: dict):
@@ -174,12 +178,14 @@ async def request_deployment(manifest: dict):
 ### ❌ 不允許直接從 apps/ 或 services/ 呼叫 C++ 函式庫
 
 **錯誤示例：**
+
 ```typescript
 // ❌ 不要直接從應用層調用 C++ 模組
 import { realtimeController } from 'core/native_adapters/realtime_controller.cpp';
 ```
 
 **正確做法：**
+
 ```typescript
 // ✅ 必須透過 core/native_adapters 提供的 API 使用
 import { NativeAdapter } from 'core/native_adapters';
@@ -192,6 +198,7 @@ await controller.executeCommand({ ... });
 ### TypeScript ↔ Python
 
 **方法 1：HTTPS/REST API（推薦用於異步任務）**
+
 ```typescript
 // TypeScript 調用 Python 服務（使用 TLS 加密）
 const response = await fetch('https://python-service:8000/api/analyze', {
@@ -205,6 +212,7 @@ const response = await fetch('https://python-service:8000/api/analyze', {
 ```
 
 **方法 2：gRPC with TLS（推薦用於高性能同步調用）**
+
 ```typescript
 // TypeScript gRPC 客戶端（使用 TLS 和雙向認證）
 import * as grpc from '@grpc/grpc-js';
@@ -224,6 +232,7 @@ const result = await client.analyzeCode({ code: sourceCode });
 ```
 
 **方法 3：MCP 協議（推薦用於 Agent 間通訊）**
+
 ```typescript
 // 使用 MCP 協議與 Python Agent 通訊（透過 TLS）
 const mcpClient = new MCPClient('python-cognitive-agent', {
@@ -243,6 +252,7 @@ const response = await mcpClient.sendMessage({
 ### TypeScript/Python ↔ C++
 
 **方法：gRPC + Protocol Buffers with TLS**
+
 ```protobuf
 // realtime_controller.proto
 service RealtimeController {
@@ -295,6 +305,7 @@ result = stub.ExecuteControl(control_request)
 ```
 
 > **🔒 安全注意事項：**
+>
 > - 所有服務間通訊必須使用 TLS/SSL 加密
 > - 實施雙向 TLS（mTLS）進行服務身份驗證
 > - 定期輪換證書和密鑰
@@ -435,16 +446,19 @@ modules:
 Core Engine 需要同時處理高階編排和 AI 推理。
 
 **決策：**
+
 - TypeScript 負責控制流程、服務協調、API 層
 - Python 負責 AI/ML、數據分析、認知處理
 
 **理由：**
+
 1. TypeScript 提供類型安全和優秀的異步支持
 2. Python 擁有最豐富的 AI/ML 生態系統
 3. 兩者通過 HTTP/gRPC/MCP 良好協作
 4. 降低團隊認知負擔（前端也用 TS）
 
 **後果：**
+
 - 需要維護兩種語言的開發環境
 - 需要清晰的語言邊界定義
 - 需要標準化的通訊協議
@@ -456,16 +470,19 @@ Core Engine 需要同時處理高階編排和 AI 推理。
 
 **決策：**
 C++ 僅用於以下場景：
+
 - 實時控制（< 10ms 響應）
 - 感測器融合
 - 高頻數據處理
 
 **理由：**
+
 1. C++ 提供最佳性能和內存控制
 2. 避免過度使用增加維護成本
 3. 通過抽象層保護上層代碼
 
 **後果：**
+
 - 所有 C++ 模組必須提供綁定
 - 增加了額外的接口層開銷
 - 需要專門的 C++ 開發者維護
@@ -537,6 +554,7 @@ Core Engine 的語言策略設計旨在：
 4. **提升品質**：明確的規範和測試策略保證代碼質量
 
 **核心原則：**
+
 - ✅ 在正確的層使用正確的語言
 - ✅ 通過清晰的 API 邊界通訊
 - ✅ 優先使用現有生態系統

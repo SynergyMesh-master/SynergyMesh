@@ -1,4 +1,5 @@
 # Self-Healing Integration Manifest
+
 # 自我修復跨維度整合清單
 
 **版本 / Version**: 1.0.0  

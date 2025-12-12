@@ -1,4 +1,5 @@
 # Python Syntax Validation System
+
 # Python 語法驗證系統
 
 ## 📋 Overview | 概述
@@ -11,6 +12,7 @@ This validation system ensures all Python code in the SynergyMesh repository mai
 
 **Problem Addressed:**
 The issue referenced syntax errors in `tools/refactor/__init__.py` and `tools/automation/engines/__init__.py` where missing commas in `__all__` lists could cause:
+
 - Runtime `AttributeError` exceptions
 - Unintended string concatenation (e.g., `"Item1" "Item2"` becomes `"Item1Item2"`)
 - Import failures
@@ -18,6 +20,7 @@ The issue referenced syntax errors in `tools/refactor/__init__.py` and `tools/au
 
 **問題描述：**
 問題引用了 `tools/refactor/__init__.py` 和 `tools/automation/engines/__init__.py` 中的語法錯誤，其中 `__all__` 列表中缺少逗號可能導致：
+
 - 運行時 `AttributeError` 異常
 - 意外的字符串連接（例如，`"Item1" "Item2"` 變成 `"Item1Item2"`）
 - 導入失敗
@@ -26,9 +29,11 @@ The issue referenced syntax errors in `tools/refactor/__init__.py` and `tools/au
 ## ✅ Solution Implemented | 實施的解決方案
 
 ### 1. Python Syntax Validator Script
+
 **Location:** `governance/35-scripts/validate-python-syntax.py`
 
 Features:
+
 - ✅ AST (Abstract Syntax Tree) parsing validation
 - ✅ `__all__` list comma separation checks
 - ✅ Detection of string concatenation patterns
@@ -37,10 +42,13 @@ Features:
 - ✅ Comprehensive error reporting
 
 ### 2. Updated Module Structure
+
 **Files Fixed:**
+
 - `tools/automation/engines/__init__.py` - Added lazy loading, removed non-existent engines
 
 **Pattern Applied:**
+
 ```python
 def __getattr__(name):
     if name == "ClassName":
@@ -55,22 +63,27 @@ __all__ = [
 ```
 
 ### 3. CI/CD Integration
+
 **Workflow:** `.github/workflows/python-validation.yml`
 
 Automatically runs on:
+
 - Pull requests to `main` branch
 - Changes to any `.py` file
 - Changes to `pyproject.toml`
 
 Validates:
+
 - `tools/` directory
 - `core/` directory
 - `governance/` directory
 
 ### 4. Pre-commit Hooks
+
 **Configuration:** `.pre-commit-config.yaml`
 
 Hooks installed:
+
 - Python AST validation
 - Ruff linting and formatting
 - Import sorting (isort)
@@ -78,9 +91,11 @@ Hooks installed:
 - Custom governance validation
 
 ### 5. Documentation
+
 **Policy Document:** `governance/23-policies/python-code-standards.md`
 
 Covers:
+
 - Syntax standards
 - `__all__` list best practices
 - Code formatting rules
@@ -171,6 +186,7 @@ Meeting the project's INSTANT execution standards:
 ### Missing Comma in `__all__`
 
 **Symptom:**
+
 ```python
 __all__ = [
     "Item1"  # ❌ Missing comma
@@ -181,6 +197,7 @@ __all__ = [
 **Result:** `__all__` becomes `['Item1Item2']` instead of `['Item1', 'Item2']`
 
 **Fix:**
+
 ```python
 __all__ = [
     "Item1",  # ✅ Comma added
@@ -191,11 +208,13 @@ __all__ = [
 ### AttributeError on Import
 
 **Symptom:**
+
 ```
 AttributeError: module 'tools.refactor' has no attribute 'ClassName'
 ```
 
 **Fix:** Add lazy loading or explicit import:
+
 ```python
 def __getattr__(name):
     if name == "ClassName":
@@ -255,6 +274,7 @@ def validate_docstring(self, file_path: Path) -> bool:
 ## 📈 Future Enhancements | 未來增強
 
 Planned improvements:
+
 - [ ] Type hint coverage validation
 - [ ] Docstring completeness checks
 - [ ] Import cycle detection

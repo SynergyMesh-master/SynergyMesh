@@ -12,6 +12,7 @@
 ## 1. Cluster 概覽
 
 本 cluster 是 **API Gateway 與服務層**，負責：
+
 - API 路由與負載平衡
 - 認證與授權整合
 - 速率限制與配額管理
@@ -43,6 +44,7 @@
 ## 3. P0 行動（24-48小時）
 
 ✅ **行動 1**: `services/gateway/router.lua` (score: 88, HIGH)
+
 - **操作**: 改寫為 Go
 - **步驟**:
   1. 使用 `gorilla/mux` 或 `chi` 重寫路由
@@ -52,9 +54,11 @@
 - **預估**: 12-16 小時
 
 ✅ **行動 2**: 備份至 legacy_scratch
+
 - 更新 `legacy_assets_index.yaml`
 
 ### 驗收條件
+
 - ✅ 無 Lua 檔案
 - ✅ 功能等價（整合測試通過）
 - ✅ 效能無退化 (< 5%)

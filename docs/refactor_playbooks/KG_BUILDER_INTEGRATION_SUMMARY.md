@@ -1,4 +1,5 @@
 # Knowledge Graph Builder Integration - Complete Summary
+
 # 知識圖譜構建器整合 - 完整總結報告
 
 **報告日期 (Report Date)**: 2025-12-07  
@@ -37,18 +38,21 @@
 從原始 564 行 YAML 規範中識別出以下核心概念：
 
 #### 高階概念 (4 個)
+
 1. **Knowledge Graph Construction** - 知識圖譜構建
 2. **Plugin Architecture** - 插件架構
 3. **Processing Pipeline** - 處理流水線
 4. **Enterprise Governance** - 企業治理
 
 #### 技術架構概念 (4 個)
-5. **Kubernetes Native Deployment** - K8s 原生部署
-6. **Storage Architecture** - 存儲架構
-7. **Observability** - 可觀測性
-8. **Integration Points** - 集成點
+
+1. **Kubernetes Native Deployment** - K8s 原生部署
+2. **Storage Architecture** - 存儲架構
+3. **Observability** - 可觀測性
+4. **Integration Points** - 集成點
 
 #### 功能模組 (12 個)
+
 - **核心處理**: Document Ingestion, Entity Extraction, Relation Extraction, Triple Generation, Entity Resolution, Ontology Alignment
 - **支撐服務**: Vector Embedding, Quality Control, Error Handling, Data Privacy, Provenance
 - **運營維護**: Data Cleanup, Model Updates, Performance Optimization
@@ -56,6 +60,7 @@
 ### 2.2 依賴關係分析 (Dependency Analysis)
 
 #### 硬依賴 (5 個)
+
 - axiom-kernel-compute >= 1.0.0
 - hlp-executor-core >= 1.0.0
 - neo4j-database 5.x
@@ -63,9 +68,11 @@
 - axiom-trust-bundle
 
 #### 軟依賴 (1 個)
+
 - embedding-offline-pack >= 0.9.0 (graceful_degradation: true)
 
 #### 外部系統依賴
+
 - Redis Cluster (快取)
 - Kafka (流處理)
 - S3-compatible Storage (數據湖)
@@ -102,6 +109,7 @@
 ### 3.2 系統對齊策略 (System Alignment Strategy)
 
 #### 語言治理對齊
+
 - ✅ Python: NLP 處理、AI/ML 模型集成
 - ✅ TypeScript: 插件註冊、配置管理
 - ✅ YAML: 聲明式配置
@@ -109,12 +117,14 @@
 - ❌ 避免: PHP, Perl, Ruby
 
 #### 質量門檻對齊
+
 - Semgrep: HIGH=0, MEDIUM<=5, LOW<=15
 - Test Coverage: >= 70%
 - Cyclomatic Complexity: <= 15
 - Plugin Specific: Accuracy >= 0.85, Latency P95 <= 30s
 
 #### 安全合規對齊
+
 - Data Privacy: PII 檢測、K-匿名化、GDPR 合規
 - SLSA Provenance: Level 3 溯源
 - Security Scanning: Semgrep, CodeQL, Trivy, OSV Scanner
@@ -143,6 +153,7 @@
 | `docs/ARCHITECTURE/storage-architecture.md` | 15 KB | 615 | ✅ |
 
 **關鍵內容**:
+
 - 插件註冊機制、依賴管理、向量對齊策略
 - 6 階段處理流水線（文檔攝取→實體提取→關係提取→三元組生成→實體解析→本體對齊）
 - 三層存儲架構（Primary Neo4j + Cache Redis + Backup）
@@ -157,6 +168,7 @@
 | `governance/policies/data-privacy-policy.yaml` | 16 KB | 559 | ✅ |
 
 **關鍵內容**:
+
 - JSON Schema Draft 7 插件規範（必填: id, name, version, provides, requires）
 - 質量門檻（準確率 >= 0.85, 延遲 P95 <= 30s, CPU 利用率 70%）
 - 數據隱私策略（PII 檢測、K-匿名化、GDPR 合規、數據主體權利）
@@ -169,6 +181,7 @@
 | `config/system-module-map.yaml` | 擴展 | +66 | ✅ |
 
 **關鍵內容**:
+
 - 可復用插件規範模板（移除 AXIOM 術語，添加註釋）
 - knowledge_processing 模組註冊（path, components, dependencies）
 
@@ -237,16 +250,19 @@
 ### 7.2 P0 執行文件 (8 個)
 
 #### 架構文檔 (3 個)
+
 - ✅ `docs/ARCHITECTURE/plugin-architecture-pattern.md` (9.9 KB, 337 lines)
 - ✅ `docs/ARCHITECTURE/knowledge-graph-processing.md` (14 KB, 496 lines)
 - ✅ `docs/ARCHITECTURE/storage-architecture.md` (15 KB, 615 lines)
 
 #### 治理規則 (3 個)
+
 - ✅ `governance/schemas/plugin-specification.schema.json` (18 KB, 621 lines)
 - ✅ `governance/policies/plugin-quality-gates.yaml` (13 KB, 445 lines)
 - ✅ `governance/policies/data-privacy-policy.yaml` (16 KB, 559 lines)
 
 #### 配置模板 (2 個)
+
 - ✅ `config/templates/plugin-specification-template.yaml` (8.6 KB, 214 lines)
 - ✅ `config/system-module-map.yaml` (擴展 +66 lines)
 
@@ -266,17 +282,21 @@
 ### 8.1 P1 優先級項目 (預估 20-26 小時)
 
 #### 驗證工具 (12-16h)
+
 - [ ] `tools/validate-plugin-spec.py` - 插件規範驗證工具
 - [ ] `tools/validate-ontology.py` - OWL 本體驗證工具
 
 #### CLI 工具 (6-8h)
+
 - [ ] `tools/cli/plugin-registry-cli.py` - 插件註冊 CLI
 
 #### 架構文檔 (4-6h)
+
 - [ ] `docs/ARCHITECTURE/batch-stream-processing.md` - 批流混合處理
 - [ ] `docs/ARCHITECTURE/vector-alignment-strategy.md` - 向量對齊策略
 
 #### 配置文件 (3-6h)
+
 - [ ] `config/ai-models/vector-alignment-config.yaml` - 向量嵌入配置
 - [ ] `config/processing/pipeline-config.yaml` - 處理管線配置
 - [ ] `config/quality/quality-control-config.yaml` - 質量控制配置
@@ -284,21 +304,27 @@
 ### 8.2 P2 優先級項目 (預估 29-37 小時)
 
 #### Kubernetes 模板 (6-8h)
+
 - [ ] 5 個 K8s 模板（knowledge-processor, neo4j, redis, service, monitor）
 
 #### 知識庫 (5-6h)
+
 - [ ] 3 個知識庫文件（workflow, patterns, rules）
 
 #### CI/CD 集成 (4-5h)
+
 - [ ] 1 個 workflow + 文檔更新
 
 #### 性能測試 (6-8h)
+
 - [ ] 基準測試工具 + 示例文檔
 
 #### 治理規則補充 (3-4h)
+
 - [ ] 2 個策略文件（compliance, knowledge-processing）
 
 #### 工具擴展 (5-6h)
+
 - [ ] ai-auto-fix.py 擴展 + AI 提示文檔
 
 ### 8.3 最終清理
@@ -375,25 +401,30 @@ P2 (優化): ░░░░░░░░░░░░░░░░░░░░   0% (
 ## 📚 11. 相關文檔索引 (Related Document Index)
 
 ### 規劃文檔
+
 - `docs/refactor_playbooks/01_deconstruction/kg-builder_deconstruction.md`
 - `docs/refactor_playbooks/02_integration/kg-builder_integration.md`
 - `docs/refactor_playbooks/03_refactor/kg-builder_refactor.md`
 
 ### 架構文檔
+
 - `docs/ARCHITECTURE/plugin-architecture-pattern.md`
 - `docs/ARCHITECTURE/knowledge-graph-processing.md`
 - `docs/ARCHITECTURE/storage-architecture.md`
 
 ### 治理規則
+
 - `governance/schemas/plugin-specification.schema.json`
 - `governance/policies/plugin-quality-gates.yaml`
 - `governance/policies/data-privacy-policy.yaml`
 
 ### 配置模板
+
 - `config/templates/plugin-specification-template.yaml`
 - `config/system-module-map.yaml`
 
 ### 遷移記錄
+
 - `docs/refactor_playbooks/_legacy_scratch/MIGRATION_COMPLETE.md`
 - `docs/refactor_playbooks/_legacy_scratch/README.md` (已棄用)
 
@@ -418,6 +449,7 @@ P2 (優化): ░░░░░░░░░░░░░░░░░░░░   0% (
 ### 下一階段準備
 
 P1/P2 階段已規劃完成，包含詳細的：
+
 - 文件創建清單
 - 工作量估算
 - 驗收標準

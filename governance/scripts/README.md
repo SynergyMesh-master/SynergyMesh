@@ -24,6 +24,7 @@ This directory contains utility scripts for governance automation and validation
 **智能文件路由系統** - AI-powered content analysis and intelligent path assignment.
 
 **Purpose:**
+
 - Deep content understanding (keywords, structure, semantics)
 - Intelligent dimension classification
 - Automatic misplacement detection
@@ -31,6 +32,7 @@ This directory contains utility scripts for governance automation and validation
 - INSTANT EXECUTION: < 5 seconds full scan
 
 **Features:**
+
 - 10 dimension detection patterns
 - 85-95% classification accuracy
 - Multi-factor decision logic
@@ -38,6 +40,7 @@ This directory contains utility scripts for governance automation and validation
 - Auto-suggestion for file moves
 
 **Usage:**
+
 ```bash
 # Analyze single file
 python governance/scripts/intelligent-file-router.py --file path/to/file.md
@@ -53,6 +56,7 @@ python governance/scripts/intelligent-file-router.py --suggest-moves --verbose
 ```
 
 **Output Example:**
+
 ```
 File: COMPREHENSIVE_SYSTEM_ANALYSIS.md
 Recommended dimension: 00-vision-strategy (92% confidence)
@@ -70,6 +74,7 @@ Top matches:
 **邏輯一致性引擎** - Deep project understanding and logical consistency validation.
 
 **Purpose:**
+
 - Comprehensive logical consistency analysis across 7 dimensions
 - Technical debt detection and prevention
 - Logic error detection
@@ -77,6 +82,7 @@ Top matches:
 - INSTANT EXECUTION: < 10 seconds full analysis
 
 **7 Consistency Dimensions:**
+
 1. 🏗️ **Structural Consistency** - Directory structure, naming, organization
 2. 🔗 **Dependency Consistency** - DAG validation, circular detection
 3. ⚙️ **Configuration Consistency** - Cross-file validation, drift detection
@@ -86,6 +92,7 @@ Top matches:
 7. 🏷️ **Metadata Consistency** - Version alignment, owner verification
 
 **Technical Debt Detection:**
+
 - TODO/FIXME/HACK markers
 - Duplicate code patterns
 - Dead code
@@ -94,6 +101,7 @@ Top matches:
 - Complexity issues
 
 **Logic Error Detection:**
+
 - Circular reasoning
 - Contradictory configurations
 - Invalid cross-references
@@ -101,6 +109,7 @@ Top matches:
 - Impossible state combinations
 
 **Usage:**
+
 ```bash
 # Full consistency check
 python governance/scripts/logical-consistency-engine.py --check-all
@@ -120,6 +129,7 @@ python governance/scripts/logical-consistency-engine.py --full-report --verbose
 ```
 
 **Output Example:**
+
 ```
 ═══════════════════════════════════════════════════════════
   Logical Consistency Report
@@ -149,6 +159,7 @@ Issues by Category:
 **極致問題識別系統** - Advanced multi-dimensional problem detection and root cause analysis.
 
 **Purpose:**
+
 - 10+ problem detection categories
 - Root cause analysis with AI-powered insights
 - Predictive issue detection
@@ -157,6 +168,7 @@ Issues by Category:
 - INSTANT EXECUTION: < 10 seconds full scan
 
 **Categories:**
+
 1. 🔒 **Security Vulnerabilities** - Exposed secrets, insecure configurations
 2. 🏗️ **Architecture Violations** - Circular dependencies, missing documentation
 3. ⚡ **Performance Issues** - Large files, deep nesting, bottlenecks
@@ -169,6 +181,7 @@ Issues by Category:
 10. 🔮 **Predictive Issues** - Approaching deadlines, high change velocity
 
 **Usage:**
+
 ```bash
 # Full scan
 python governance/scripts/extreme-problem-identifier.py
@@ -184,10 +197,12 @@ python governance/scripts/extreme-problem-identifier.py --export json --output p
 ```
 
 **Exit Codes:**
+
 - `0`: No critical/high severity problems
 - `1`: Critical or high severity problems found
 
 **Output:**
+
 - Color-coded terminal output with severity levels
 - Problem counts by severity and category
 - Risk level assessment
@@ -195,6 +210,7 @@ python governance/scripts/extreme-problem-identifier.py --export json --output p
 - Detailed recommendations
 
 **CI Integration:**
+
 - `.github/workflows/extreme-problem-identification.yml` - Runs on governance/ changes and daily
 - Exports JSON report as workflow artifact
 - Comments on PRs with problem summary
@@ -207,6 +223,7 @@ python governance/scripts/extreme-problem-identifier.py --export json --output p
 Validates the governance directory structure against `governance-map.yaml` registry.
 
 **Purpose:**
+
 - Ensure all directories are properly registered
 - Validate dimension dependencies
 - Check naming conventions
@@ -214,6 +231,7 @@ Validates the governance directory structure against `governance-map.yaml` regis
 - Track migration deadlines
 
 **Usage:**
+
 ```bash
 # Basic validation
 python governance/scripts/validate-governance-structure.py
@@ -226,10 +244,12 @@ python governance/scripts/validate-governance-structure.py --governance-root ./g
 ```
 
 **Exit Codes:**
+
 - `0`: Validation passed (no errors)
 - `1`: Validation failed (errors found)
 
 **Checks Performed:**
+
 1. Dimension structure validation (dimension.yaml presence)
 2. Shared resource validation
 3. Naming convention compliance
@@ -239,6 +259,7 @@ python governance/scripts/validate-governance-structure.py --governance-root ./g
 
 **CI Integration:**
 This script is automatically run by `.github/workflows/governance-validation.yml` on:
+
 - Push to `governance/**`
 - Pull requests modifying `governance/**`
 - Manual workflow dispatch
@@ -256,6 +277,7 @@ When adding a new dimension directory:
 1. Create the directory: `governance/XX-dimension-name/`
 2. Add `dimension.yaml` file in the directory
 3. Register in `governance-map.yaml`:
+
    ```yaml
    - name: "XX-dimension-name"
      type: dimension
@@ -266,6 +288,7 @@ When adding a new dimension directory:
      purpose: "Description of dimension"
      status: active
    ```
+
 4. Run validation: `python governance/scripts/validate-governance-structure.py`
 5. Update `governance/dimensions/index.yaml` if needed
 
@@ -275,6 +298,7 @@ When adding shared (unnumbered) directories:
 
 1. Create the directory: `governance/resource-name/`
 2. Register in `governance-map.yaml`:
+
    ```yaml
    - name: "resource-name"
      type: shared
@@ -283,11 +307,13 @@ When adding shared (unnumbered) directories:
      purpose: "Description of shared resource"
      consumers: ["dimension-1", "dimension-2"]
    ```
+
 3. Run validation
 
 ## Maintenance
 
 **Owners:**
+
 - Governance Team
 - Infrastructure Team
 

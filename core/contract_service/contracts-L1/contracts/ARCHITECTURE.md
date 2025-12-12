@@ -32,17 +32,20 @@ The service implements a **3-tier layered architecture**:
 **Purpose:** Handles HTTP request/response cycle, input validation, and routing.
 
 **Components:**
+
 - **Controllers** (`controllers/`): Handle HTTP requests, orchestrate service calls, format responses
 - **Routes** (`routes.ts`): Define API endpoints and map them to controllers
 - **Middleware** (`middleware/`): Cross-cutting concerns (logging, validation, error handling, rate limiting)
 
 **Key Principles:**
+
 - Controllers should be thin - only handle request/response
 - No business logic in controllers
 - All input validation via Zod schemas
 - Use middleware for cross-cutting concerns
 
 **Example:**
+
 ```typescript
 // controllers/provenance.ts
 export class ProvenanceController {
@@ -64,12 +67,14 @@ export class ProvenanceController {
 **Purpose:** Contains core business logic, orchestrates workflows, enforces business rules.
 
 **Components:**
+
 - **Attestation Service** (`services/attestation.ts`): Handles Sigstore attestation creation/verification
 - **Provenance Service** (`services/provenance.ts`): Manages build provenance tracking
 - **Assignment Engine** (`services/assignment/`): Automated responsibility assignment system
 - **Escalation Engine** (`services/escalation/`): Incident escalation workflows
 
 **Key Principles:**
+
 - Services contain all business logic
 - Services are framework-agnostic (no Express/HTTP dependencies)
 - Services can call other services
@@ -77,6 +82,7 @@ export class ProvenanceController {
 - Testable without HTTP layer
 
 **Example:**
+
 ```typescript
 // services/provenance.ts
 export class ProvenanceService {
@@ -97,17 +103,20 @@ export class ProvenanceService {
 **Purpose:** Defines data structures, validation schemas, and type definitions.
 
 **Components:**
+
 - **Models** (`models/`): Zod schemas for data validation and TypeScript types
 - **Types** (`types/`): TypeScript type definitions and interfaces
 - **Errors** (`errors/`): Custom error types
 
 **Key Principles:**
+
 - All data structures validated with Zod
 - Strong typing throughout
 - Models are immutable
 - Clear separation of input/output types
 
 **Example:**
+
 ```typescript
 // models/provenance.model.ts
 export const createAttestationSchema = z.object({
@@ -426,6 +435,7 @@ export const errorMiddleware = (err: Error, req: Request, res: Response, next: N
 ### Middleware Order
 
 Middleware ordered for optimal performance:
+
 1. Logging (fast, needed for all requests)
 2. Body parsing (fast)
 3. Rate limiting (fast, protects expensive operations)

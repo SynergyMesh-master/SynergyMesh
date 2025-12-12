@@ -5,9 +5,11 @@
 ## 📁 檔案結構
 
 ### `language-history.yaml`
+
 記錄所有語言治理修復事件的歷史紀錄。
 
 **內容包含**:
+
 - 違規類型
 - 修復動作
 - 檔案路徑
@@ -16,6 +18,7 @@
 - 統計資料
 
 **更新方式**:
+
 ```bash
 python tools/language-history-writer.py \
   --violation-type "forbidden-language" \
@@ -25,15 +28,18 @@ python tools/language-history-writer.py \
 ```
 
 ### `language-health-score.yaml`
+
 語言層級健康分數（0-100）及其組成部分。
 
 **評分維度**:
+
 - Violation Score (40 分): 語言治理違規
 - Security Score (30 分): 安全漏洞
 - Architecture Score (20 分): 架構對齊
 - Trend Score (10 分): 修復趨勢
 
 **計算方式**:
+
 ```bash
 python tools/language-health-score.py \
   --governance-report governance/language-governance-report.json \
@@ -43,6 +49,7 @@ python tools/language-health-score.py \
 ```
 
 ### `language-history-report.md`
+
 人類可讀的語言治理歷史報告，包含統計圖表和趨勢分析。
 
 ## 🔄 知識循環 (Knowledge Cycle)
@@ -69,7 +76,9 @@ graph LR
 ## 📊 整合工具
 
 ### Living Knowledge Base Updater
+
 更新活體知識庫及觸發知識循環：
+
 ```bash
 python tools/lkb-update.py \
   --event "auto-fix" \
@@ -80,7 +89,9 @@ python tools/lkb-update.py \
 ```
 
 ### Semantic Commit Generator
+
 生成符合 Conventional Commits 的提交訊息：
+
 ```bash
 python tools/semantic-commit-generator.py \
   --files "services/api/legacy.php" \
@@ -120,6 +131,7 @@ python tools/semantic-commit-generator.py \
 ## 📝 維護
 
 此目錄由以下系統自動維護：
+
 - AI Auto-Fix Bot Workflow
 - Language Governance Analyzer
 - Living Knowledge Base Updater

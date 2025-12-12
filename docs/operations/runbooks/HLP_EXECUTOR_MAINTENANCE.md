@@ -31,11 +31,13 @@ This document provides routine maintenance procedures for the HLP Executor Core 
 ### 1. 狀態清理 (State Cleanup)
 
 #### 目的 | Purpose
+
 自動清理超過 7 天的舊狀態和 checkpoint，防止磁碟空間耗盡。
 
 Automatically clean up old states and checkpoints older than 7 days to prevent disk space exhaustion.
 
 #### 排程 | Schedule
+
 - **時間 | Time**: 每日 03:00 UTC | Daily at 03:00 UTC
 - **持續時間 | Duration**: 5-10 分鐘 | 5-10 minutes
 - **影響 | Impact**: 無 (低流量時段) | None (low traffic period)
@@ -217,11 +219,13 @@ kubectl logs -n unmanned-island-system -l maintenance-task=daily-cleanup --tail=
 ### 1. 滾動重啟 (Rolling Restart)
 
 #### 目的 | Purpose
+
 定期重啟以釋放記憶體、刷新配置並確保所有 Pod 運行最新版本。
 
 Periodic restart to release memory, refresh configuration, and ensure all pods run the latest version.
 
 #### 排程 | Schedule
+
 - **時間 | Time**: 每週二 02:00-04:00 UTC | Weekly Tuesday 02:00-04:00 UTC
 - **持續時間 | Duration**: 15-30 分鐘 | 15-30 minutes
 - **影響 | Impact**: 最小 (滾動重啟保持服務可用) | Minimal (rolling restart maintains availability)
@@ -404,6 +408,7 @@ kubectl exec -n unmanned-island-system deployment/hlp-executor-core -- \
 ### 1. 完整健康檢查 (Comprehensive Health Check)
 
 #### 排程 | Schedule
+
 - **時間 | Time**: 每月第一個週二 02:00-03:00 UTC | First Tuesday of month 02:00-03:00 UTC
 - **持續時間 | Duration**: 30-45 分鐘 | 30-45 minutes
 
@@ -534,6 +539,7 @@ cat /tmp/hlp-executor-health-report-$(date +%Y%m).txt | \
 ### 1. 容量審查與規劃 (Capacity Review and Planning)
 
 #### 排程 | Schedule
+
 - **時間 | Time**: 季度末第一個週二 02:00-05:00 UTC | First Tuesday of quarter-end month 02:00-05:00 UTC
 - **持續時間 | Duration**: 1-2 小時 | 1-2 hours
 

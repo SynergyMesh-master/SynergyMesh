@@ -69,6 +69,7 @@ Unmanned Island System Agent Architecture
 The Architecture Reasoner's involvement varies by phase:
 
 ### Phase 0: Inventory & Discovery
+
 - **Reasoning Weight**: 🔴 HIGH
 - **Focus**: Establish global baseline metrics
 - **Activities**:
@@ -79,6 +80,7 @@ The Architecture Reasoner's involvement varies by phase:
   - Catalogue all architecture violations
 
 ### Phase 1: Governance Baseline
+
 - **Reasoning Weight**: 🔴 HIGH
 - **Focus**: Define optimization targets and constraints
 - **Activities**:
@@ -89,6 +91,7 @@ The Architecture Reasoner's involvement varies by phase:
   - Create global optimization roadmap
 
 ### Phase 2: Refactor Planning
+
 - **Reasoning Weight**: 🟠 CRITICAL
 - **Focus**: Design global optimization strategy
 - **Activities**:
@@ -99,6 +102,7 @@ The Architecture Reasoner's involvement varies by phase:
   - Approve P0/P1/P2 prioritization
 
 ### Phase 3: Safe Execution
+
 - **Reasoning Weight**: 🟡 MEDIUM
 - **Focus**: Implement with continuous metric validation
 - **Activities**:
@@ -109,6 +113,7 @@ The Architecture Reasoner's involvement varies by phase:
   - Trigger rollbacks if global metrics degrade
 
 ### Phase 4: Consolidation
+
 - **Reasoning Weight**: 🟢 LOW
 - **Focus**: Verify global metrics improved as planned
 - **Activities**:
@@ -119,6 +124,7 @@ The Architecture Reasoner's involvement varies by phase:
   - Certify phase completion
 
 ### Phase 5: Continuous Governance
+
 - **Reasoning Weight**: 🟡 MEDIUM
 - **Focus**: Monitor for regression against global targets
 - **Activities**:

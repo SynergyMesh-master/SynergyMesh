@@ -21,6 +21,7 @@
 ```
 
 **為什麼是嚴重問題？**
+
 - 您提到：「治理已經全部遷移至 ./governance 並且統一映射引用依賴執行操作統一管理」
 - 但 `docs/GOVERNANCE/` 仍然存在，造成矛盾和混淆
 - 影響 24 處引用需要更新
@@ -28,6 +29,7 @@
 ### 問題 2: 大小寫目錄衝突（P1）
 
 7 組重複目錄：
+
 - `ARCHITECTURE/` vs `architecture/`
 - `AGENTS/` vs `agents/`
 - 及其他 5 個 UPPERCASE 目錄
@@ -57,6 +59,7 @@ make all-kg
 ```
 
 **修復內容**:
+
 1. ✅ 治理目錄: docs/GOVERNANCE/ → governance/29-docs/
 2. ✅ 大小寫統一: UPPERCASE → lowercase
 3. ✅ 生成文件: 移至 docs/generated/
@@ -106,15 +109,19 @@ python3 tools/docs/scan_repo_generate_index.py
 ## 🤔 Q&A
 
 ### Q: 為什麼 docs/GOVERNANCE/ 不應該存在？
+
 **A**: 根據您的專案設計，治理應該統一在 `./governance/` 目錄（23維度治理矩陣）。`docs/GOVERNANCE/` 的存在違反了這個原則，造成「治理在哪裡」的混淆。
 
 ### Q: 執行修復會破壞什麼嗎？
+
 **A**: 主要影響是路徑變更。腳本會自動更新已知引用，但可能有少數手動引用需要檢查。**建議先 dry-run 預覽**。
 
 ### Q: 可以部分執行嗎？
+
 **A**: 可以。腳本分4個階段，您可以編輯腳本註解掉不需要的階段。或直接手動執行選項B（僅修復治理問題）。
 
 ### Q: 如果執行後有問題怎麼辦？
+
 **A**: Git 可以完全回滾：`git reset --hard HEAD^`
 
 ---

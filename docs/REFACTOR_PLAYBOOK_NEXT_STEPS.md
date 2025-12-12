@@ -45,6 +45,7 @@
 **目標：** 建立互動式 Web UI 展示 Refactor Playbooks
 
 **實作項目：**
+
 - [ ] **前端頁面** (`apps/web/pages/language-governance-dashboard.tsx`)
   - React + Next.js + TypeScript
   - 顯示所有 8 個 clusters 的健康分數
@@ -63,12 +64,14 @@
   - Migration Flow Sankey Diagram（語言遷移桑基圖）
 
 **交付物：**
+
 - `apps/web/pages/language-governance-dashboard.tsx`
 - `apps/web/pages/api/refactor-playbooks.ts`
 - `apps/web/components/RefactorPlaybookViewer.tsx`
 - `apps/web/components/ClusterHealthGauge.tsx`
 
 **預期成果：**
+
 - 訪問 `http://localhost:3000/language-governance-dashboard` 即可查看所有 playbooks
 - 互動式介面，點擊 cluster 查看詳細重構計畫
 - 實時數據展示（從 CI 自動更新）
@@ -80,6 +83,7 @@
 **目標：** 讓 Auto-Fix Bot 能直接讀取 Playbooks 並自動產生 PR
 
 **實作項目：**
+
 - [ ] **Playbook Parser** (`tools/ai-auto-fix-playbook-parser.py`)
   - 解析 Markdown playbooks
   - 提取 P0/P1 項目
@@ -96,11 +100,13 @@
   - 自動 comment PR 包含 playbook 連結
 
 **交付物：**
+
 - `tools/ai-auto-fix-playbook-parser.py`
 - `tools/ai-auto-fix-executor.py`
 - 更新 `.github/workflows/auto-fix-bot.yml`
 
 **預期成果：**
+
 - Auto-Fix Bot 每週自動執行 P0 項目
 - 產生的 PR 會引用對應的 playbook
 - PR description 包含「Section 7: 結構視圖」
@@ -112,6 +118,7 @@
 **目標：** 將 Playbooks 整合到 Living Knowledge Base，建立知識圖譜
 
 **實作項目：**
+
 - [ ] **Knowledge Graph Integration**
   - 將 playbooks 加入 `docs/knowledge-graph.yaml`
   - 建立 cluster → playbook → files 的關聯
@@ -128,11 +135,13 @@
   - 文檔間的雙向連結
 
 **交付物：**
+
 - 更新 `docs/knowledge-graph.yaml`
 - `docs/REFACTOR_HISTORY.md` （重構歷史記錄）
 - `tools/update-knowledge-graph.py` 更新
 
 **預期成果：**
+
 - Knowledge Base 自動更新包含 playbook 資訊
 - 可追溯每個 cluster 的重構歷史
 - 文檔交叉引用完整
@@ -144,6 +153,7 @@
 **目標：** 建立完整的測試框架確保 playbook 品質
 
 **實作項目：**
+
 - [ ] **Playbook Validator**
   - 驗證 playbook 格式正確性
   - 檢查必要章節是否完整
@@ -160,11 +170,13 @@
   - Cross-reference accuracy
 
 **交付物：**
+
 - `tests/tools/test_generate_refactor_playbook.py`
 - `tests/integration/test_playbook_workflow.py`
 - `tools/validate-playbook.py`
 
 **預期成果：**
+
 - 所有 playbooks 通過格式驗證
 - CI 自動執行 playbook tests
 - Quality metrics 報告
@@ -257,21 +269,25 @@
 ## 🔧 技術棧規劃
 
 ### Frontend
+
 - **Framework**: Next.js 14 + React 18
 - **UI Library**: Radix UI + Tailwind CSS (已有)
 - **Charts**: Recharts + Mermaid
 - **State**: Zustand (已有)
 
 ### Backend
+
 - **API**: Next.js API Routes
 - **Parser**: Python (Markdown parsing)
 - **Data**: JSON + YAML
 
 ### CI/CD
+
 - **GitHub Actions**: 現有 workflows 擴展
 - **Deployment**: Self-hosted on Unmanned Island infrastructure (primary), Vercel (alternative for frontend)
 
 ### Testing
+
 - **Python**: pytest + coverage
 - **TypeScript**: Jest + React Testing Library
 - **E2E**: Playwright (如需要)
@@ -281,6 +297,7 @@
 ## 📅 時間線規劃
 
 ### Week 1-2 (Current - Phase 3)
+
 - **Day 1-3**: Web Dashboard 基礎實作
 - **Day 4-5**: Auto-Fix Bot 整合
 - **Day 6-7**: Living Knowledge Base 整合
@@ -288,6 +305,7 @@
 - **Day 11-14**: Bug fixes + Documentation
 
 ### Week 3-4 (Phase 4)
+
 - **Day 15-18**: 進階視覺化
 - **Day 19-21**: LLM API 整合
 - **Day 22-24**: 多語言支援
@@ -298,16 +316,19 @@
 ## 🎯 立即行動項目（24 小時內）
 
 ### Priority 1: Web Dashboard
+
 1. 建立 `apps/web/pages/language-governance-dashboard.tsx`
 2. 實作基本 UI layout
 3. 載入並顯示 8 個 clusters 資料
 
 ### Priority 2: API Endpoint
+
 1. 建立 `apps/web/pages/api/refactor-playbooks.ts`
 2. 讀取所有 playbook.md 檔案
 3. 轉換為 JSON API response
 
 ### Priority 3: Documentation Sync
+
 1. 掃描所有 .md 檔案
 2. 更新 refactor playbooks 相關引用
 3. 確保交叉引用正確
@@ -327,16 +348,19 @@
 ## 🤝 協作指南
 
 ### For Engineers
+
 - 查看對應 cluster 的 playbook
 - 優先處理 P0 項目
 - PR 時引用 playbook
 
 ### For Architects
+
 - Review playbooks 確保符合架構
 - 提供 feedback 改進建議
 - 更新全局 AI 建議
 
 ### For Auto-Fix Bot
+
 - 讀取 playbooks 的「可自動修復」項目
 - 產生 PR 時附上 playbook 連結
 - 追蹤修復進度

@@ -7,6 +7,7 @@
 ---
 
 ## ⚡ AUTOMATION LEVEL SYSTEM (L0-L5)
+
 ## 自動化等級系統 - 系統決策與執行框架
 
 > **核心原則**: 所有系統操作、代理決策、任務執行都根據自動化等級分類，確保正確的決策層級和人工介入時機。
@@ -135,6 +136,7 @@ agent_decision_framework:
 ### 自動化等級使用規則
 
 1. **向上驗證**: 總是從低等級開始，驗證後才能升級到 L0
+
    ```
    L5 (人工) → L4 (人工主導) → L3 (人工審核) → L2 (條件確認) → L1 (事後通知) → L0 (全自動)
    ```
@@ -231,7 +233,8 @@ automation_context_injection:
 
 **回應結構 (含自動化等級):**
 ```
-[快速答案 - 1句] 
+
+[快速答案 - 1句]
 ↓ 為什麼這樣? [數據支持]
 ↓ 具體怎麼做? [行動步驟]
 ↓ 長期影響? [戰略視角]
@@ -239,6 +242,7 @@ automation_context_injection:
 ↓ 自動化等級? [L0-L5 分類 + 原因] ⭐ 必需
 ↓ 批准鏈? [誰需要簽字?] ⭐ 必需
 ↓ 驗證條件? [通過條件是什麼?] ⭐ 必需
+
 ```
 
 ### ⚙️ 自動化等級操作原則 ⭐ 核心
@@ -427,12 +431,14 @@ IF 用戶在重複問同類問題:
 基於你的公司特徵:
 
 ```
+
 投資者類型 | 典型檢查點 | 我們的優勢 | 溝通策略
 -----------|-----------|---------|--------
 Tier-1 VC  | TAM, Growth, Team | 大市場+快速增長 | 強調market opportunity
 Growth PE  | Unit Economics, Path to profitability | 已成熟+盈利軌跡 | 聚焦ROI
 Strategic  | Competitive advantage, Synergy | 技術+市場進入 | 強調並購價值
 Corporate VC | Fit with parent, Strategic value | 補充現有產品 | 提供exit機制
+
 ```
 
 ### 第4層 - 融資材料與敘述
@@ -451,10 +457,12 @@ Corporate VC | Fit with parent, Strategic value | 補充現有產品 | 提供exi
 
 **故事敘述 (3分鐘電梯演講)**
 ```
+
 我們解決 [問題] 通過 [獨特方法]
 在 [市場規模] 的市場中
 已經達成 [具體成就]
 需要 [融資金額] 來 [明確里程碑]
+
 ```
 
 ### 第5層 - 融資談判策略
@@ -498,11 +506,13 @@ Corporate VC | Fit with parent, Strategic value | 補充現有產品 | 提供exi
 ### 銷售模型對比
 
 ```
+
 銷售模式        | ACV範圍 | 銷售周期 | 團隊規模 | 適用階段
 ----------------|---------|---------|---------|----------
 自助式 (Self-serve) | <$5K | <1週 | 1-2人 | MVP驗證
 内部銷售 (Inside) | $5-30K | 2-4週 | 3-5人 | 早期增長
 企業銷售 (Enterprise) | $30-300K+ | 3-6個月 | 5-10人 | 規模化
+
 ```
 
 **推薦:** 混合模式
@@ -512,6 +522,7 @@ Corporate VC | Fit with parent, Strategic value | 補充現有產品 | 提供exi
 ### 第2層 - 銷售漏斗設計
 
 ```
+
 階段 1: 意識 (Awareness)
 ├─ 渠道: 內容行銷、GitHub trends、領英
 ├─ 目標: 月度1000次網站訪問
@@ -538,6 +549,7 @@ Corporate VC | Fit with parent, Strategic value | 補充現有產品 | 提供exi
 ├─ CSM指導升級
 ├─ 目標: 40% 淨收入保留增長
 └─ 時間: 持續
+
 ```
 
 ### 第3層 - 銷售資料與工具
@@ -545,6 +557,7 @@ Corporate VC | Fit with parent, Strategic value | 補充現有產品 | 提供exi
 **銷售資料庫 (根據客戶類型)**
 
 ```
+
 對於 Startup 客戶 ($5-15K):
 ├─ 3分鐘演示視頻
 ├─ ROI計算器 (在線)
@@ -565,6 +578,7 @@ Corporate VC | Fit with parent, Strategic value | 補充現有產品 | 提供exi
 ├─ 專屬成功團隊
 ├─ SLA保證
 └─ 年度戰略回顧
+
 ```
 
 ### 第4層 - 營運流程
@@ -572,6 +586,7 @@ Corporate VC | Fit with parent, Strategic value | 補充現有產品 | 提供exi
 **客戶成功流程 (CSM角色)**
 
 ```
+
 Day 1 - 歡迎:
 ├─ 舉行30分鐘入門會議
 ├─ 分享入門指南
@@ -599,6 +614,7 @@ Month 4-12 - 保留與擴張:
 ├─ 推動升級 (Tier提升)
 ├─ 主動式健康檢查
 └─ 識別流失風險
+
 ```
 
 **CSM指標與目標**
@@ -615,6 +631,7 @@ Month 4-12 - 保留與擴張:
 
 **初期團隊 (M1-M6)**
 ```
+
 VP Sales (1人)
 ├─ 背景: Enterprise SaaS銷售經驗
 ├─ 職責: 銷售戰略、談判、客戶關係
@@ -634,16 +651,19 @@ CSM (Customer Success Manager, 1人)
 ├─ 職責: 客戶入門、保留、擴張
 ├─ 客戶比例: 1:10 (10個客戶/CSM)
 └─ 薪酬: $90K + 5% 淨收入保留bonus
+
 ```
 
 **規模期團隊 (M12時)**
 ```
+
 總銷售與成功團隊: 8-10人
 ├─ VP Sales/Head of Growth
 ├─ 4-5 Account Executives
 ├─ 1-2 SDRs
 ├─ 2-3 CSMs
 └─ 1 Operations/Enablement
+
 ```
 
 ## 輸出結果

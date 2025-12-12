@@ -1,4 +1,5 @@
 # SynergyMesh MCP Servers
+
 # MCP 服務器
 
 Enterprise-grade Model Context Protocol (MCP) servers for the AutoExecutionEngine Agent.
@@ -48,12 +49,15 @@ This directory contains specialized MCP servers that provide advanced capabiliti
 ## 📦 MCP Servers
 
 ### 1. Code Analyzer (`code-analyzer.js`)
+
 **Capabilities:**
+
 - `analyze-code` - Comprehensive code quality and complexity analysis
 - `detect-issues` - Issue detection with severity filtering
 - `suggest-improvements` - AI-powered code improvement suggestions
 
 **Features:**
+
 - Cyclomatic and cognitive complexity calculation
 - Security vulnerability detection
 - Performance issue identification
@@ -61,48 +65,60 @@ This directory contains specialized MCP servers that provide advanced capabiliti
 - Code smell detection
 
 ### 2. Test Generator (`test-generator.js`)
+
 **Capabilities:**
+
 - `generate-unit-tests` - Generate unit tests for functions and classes
 - `generate-integration-tests` - Generate API integration tests
 - `generate-e2e-tests` - Generate end-to-end test scenarios
 
 **Features:**
+
 - Multiple framework support (Jest, Mocha, Vitest, Playwright, Cypress)
 - Configurable coverage levels (basic, comprehensive, exhaustive)
 - Automatic test scaffold generation
 - Edge case and error handling tests
 
 ### 3. Documentation Generator (`doc-generator.js`)
+
 **Capabilities:**
+
 - `generate-jsdoc` - Generate JSDoc documentation
 - `generate-api-docs` - Generate API documentation (Markdown, OpenAPI)
 - `generate-guides` - Generate comprehensive guides
 
 **Features:**
+
 - Multiple documentation styles (standard, Google, TypeScript)
 - Automatic API reference generation
 - Context-aware guide generation
 - Multiple output formats (Markdown, OpenAPI, Postman)
 
 ### 4. SLSA Validator (`slsa-validator.js`)
+
 **Capabilities:**
+
 - `validate-provenance` - Validate SLSA provenance data
 - `check-slsa-compliance` - Check compliance for target SLSA level
 - `generate-compliance-report` - Generate comprehensive compliance reports
 
 **Features:**
+
 - SLSA Level 1-4 validation
 - Compliance gap analysis
 - Remediation recommendations
 - Detailed compliance reporting
 
 ### 5. Security Scanner (`security-scanner.js`)
+
 **Capabilities:**
+
 - `scan-vulnerabilities` - Scan for security vulnerabilities
 - `check-dependencies` - Check dependencies for known CVEs
 - `analyze-secrets` - Detect exposed secrets and credentials
 
 **Features:**
+
 - SQL injection detection
 - XSS vulnerability detection
 - Command injection detection
@@ -111,12 +127,15 @@ This directory contains specialized MCP servers that provide advanced capabiliti
 - CWE and OWASP mapping
 
 ### 6. Performance Analyzer (`performance-analyzer.js`)
+
 **Capabilities:**
+
 - `analyze-performance` - Analyze code performance metrics
 - `identify-bottlenecks` - Identify performance bottlenecks
 - `suggest-optimizations` - Suggest performance optimizations
 
 **Features:**
+
 - Complexity analysis (cyclomatic, cognitive, Halstead)
 - Memory usage analysis
 - Loop optimization detection
@@ -157,6 +176,7 @@ npm run check:strict
 ### Validation Features
 
 #### 1. **Deployment Configuration Validator**
+
 - ✅ Required files check (package.json, README.md, .gitignore)
 - ✅ Package.json structure validation
 - ✅ Security configuration verification
@@ -164,6 +184,7 @@ npm run check:strict
 - ✅ Node.js version compatibility check
 
 #### 2. **Logic Validator**
+
 - ✅ **Authenticity checks**: Detects suspicious patterns (eval, dynamic functions)
 - ✅ **Obfuscation detection**: Identifies potentially obfuscated code
 - ✅ **Integrity hashing**: SHA-256 hash for code verification
@@ -173,7 +194,9 @@ npm run check:strict
 - ✅ **Dependency analysis**: Validates import/require statements
 
 #### 3. **Comprehensive Validator**
+
 Combines all validators and provides:
+
 - 📊 Overall quality score and grade
 - 📈 Per-file analysis with warnings count
 - 🎯 Prioritized recommendations
@@ -359,6 +382,7 @@ MIT License - see [LICENSE](../LICENSE) for details.
 ## 🆘 Support
 
 For issues and questions:
+
 - Open an issue in the repository
 - Check documentation at `/docs`
 - Contact the SynergyMesh team

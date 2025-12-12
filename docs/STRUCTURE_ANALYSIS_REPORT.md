@@ -24,6 +24,7 @@
 ### 問題 1: 治理目錄重複與混淆 🚨 最嚴重
 
 #### 現狀
+
 ```
 SynergyMesh/
 ├── docs/
@@ -44,12 +45,15 @@ SynergyMesh/
 ```
 
 #### 問題診斷
+
 - **根本矛盾**: 專案已完成「治理統一遷移到 `./governance/`」，但 `docs/GOVERNANCE/` 仍存在
 - **造成混淆**: 開發者不清楚治理文檔應該放在哪裡
 - **違反原則**: 違反了「統一映射、引用、依賴、執行操作統一管理」的架構原則
 
 #### 影響範圍
+
 找到 **24 處引用** 指向 `docs/GOVERNANCE/`:
+
 - `tools/cli/README.md` - 4 處
 - `docs/generated-index.yaml` - 6 處
 - 其他自動生成文件
@@ -57,6 +61,7 @@ SynergyMesh/
 #### 推薦方案
 
 **方案 A（強烈推薦）**: 遷移到 governance/29-docs/
+
 ```bash
 # 1. 將治理文檔遷移到治理目錄內
 mkdir -p governance/29-docs
@@ -71,6 +76,7 @@ sed -i 's|docs/GOVERNANCE/|governance/29-docs/|g' tools/cli/README.md
 ```
 
 **理由**:
+
 - ✅ 符合「治理統一管理」原則
 - ✅ 治理相關文檔應該在治理目錄內
 - ✅ 與23維度治理矩陣結構一致
@@ -94,11 +100,13 @@ sed -i 's|docs/GOVERNANCE/|governance/29-docs/|g' tools/cli/README.md
 #### 內容差異分析
 
 **ARCHITECTURE/ vs architecture/**:
+
 - `ARCHITECTURE/`: 知識圖譜處理、插件架構、存儲架構、多語言策略等
 - `architecture/`: 系統架構、代碼質量檢查、部署基礎設施、執行模型等
 - **結論**: 兩者職責不同，需要合併或重新分類
 
 **AGENTS/ vs agents/**:
+
 - `AGENTS/`: CLI、生命週期、MCP、虛擬專家等
 - `agents/`: 僅雲端代理角色
 - **結論**: 應合併到 `agents/` 並分子目錄
@@ -106,6 +114,7 @@ sed -i 's|docs/GOVERNANCE/|governance/29-docs/|g' tools/cli/README.md
 #### 推薦方案
 
 **方案 B**: 統一到 lowercase 並分類
+
 ```bash
 # 1. 合併 AGENTS/ 到 agents/
 mkdir -p agents/cli agents/mcp agents/virtual-experts
@@ -132,6 +141,7 @@ mv ARCHITECTURE/MULTILANG_STRATEGY.md architecture/
 ### 問題 3: 根目錄文件過多
 
 #### 統計數據
+
 - **根目錄 .md 文件數**: 106 個
 - **建議閾值**: ≤ 20 個
 - **超標**: 5.3 倍
@@ -156,6 +166,7 @@ mv ARCHITECTURE/MULTILANG_STRATEGY.md architecture/
 #### 推薦方案
 
 **方案 C**: 分階段整理
+
 ```bash
 # 階段 1: 處理明確分類（CI/CD、Automation）
 mkdir -p ci-cd/analysis automation/guides
@@ -172,6 +183,7 @@ mkdir -p guides reports/summaries
 ### 問題 4: 生成文件散落
 
 #### 現狀
+
 ```
 docs/
 ├── generated-index.yaml        # 217KB
@@ -184,6 +196,7 @@ docs/
 #### 推薦方案
 
 **方案 D**: 集中管理
+
 ```bash
 # 1. 建立 generated/ 目錄
 mkdir -p docs/generated
@@ -219,6 +232,7 @@ echo "!.gitignore" >> docs/generated/.gitignore
 ### 階段 1: 緊急修復（1-2天）
 
 1. **治理目錄整合**
+
    ```bash
    # 執行方案 A
    mkdir -p governance/29-docs
@@ -232,6 +246,7 @@ echo "!.gitignore" >> docs/generated/.gitignore
    - 其他引用文件
 
 3. **驗證**
+
    ```bash
    python3 tools/docs/validate_index.py --verbose
    make all-kg  # 重新生成知識圖譜

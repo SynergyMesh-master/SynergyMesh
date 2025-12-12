@@ -7,6 +7,7 @@
 - **P2 (長期優化)**: 優化與增強功能，可逐步完成
 
 **動作類型**:
+
 - `CREATE`: 創建新檔案
 - `UPDATE`: 更新現有檔案
 - `MOVE`: 移動檔案
@@ -18,11 +19,13 @@
 ## P0 行動清單（立即執行）
 
 ### P0-1: 註冊插件到治理體系
+
 **目標檔案**: `governance/registry/plugins/hlp-executor-core.yaml`  
 **動作類型**: CREATE  
 **理由**: 建立插件正式註冊清單，使其可被服務發現系統識別
 
 **內容要點**:
+
 ```yaml
 plugin_id: "hlp-executor-core"
 version: "1.0.0"
@@ -40,11 +43,13 @@ dependencies:
 ---
 
 ### P0-2: 更新系統模組映射
+
 **目標檔案**: `config/system-module-map.yaml`  
 **動作類型**: UPDATE  
 **理由**: 將 HLP Executor 整合到系統模組映射中，建立模組發現路徑
 
 **新增條目**:
+
 ```yaml
 modules:
   execution:
@@ -58,11 +63,13 @@ modules:
 ---
 
 ### P0-3: 創建 Kubernetes 部署清單
+
 **目標檔案**: `infrastructure/kubernetes/deployments/hlp-executor-core.yaml`  
 **動作類型**: CREATE  
 **理由**: 定義 K8s 部署規格，使插件可在集群中運行
 
 **從 legacy_scratch 提取**:
+
 - Deployment spec (replicas, image, resources)
 - Container ports (8080, 9090, 50051)
 - Environment variables
@@ -70,6 +77,7 @@ modules:
 - Probes (liveness, readiness)
 
 **修改點**:
+
 - Namespace: `unmanned-island-system` → `unmanned-island-system`
 - Image registry: `registry.local` → 使用實際 registry
 - GPU 要求設為 optional
@@ -77,11 +85,13 @@ modules:
 ---
 
 ### P0-4: 創建 RBAC 配置
+
 **目標檔案**: `infrastructure/kubernetes/rbac/hlp-executor-rbac.yaml`  
 **動作類型**: CREATE  
 **理由**: 定義服務帳戶與權限，確保安全存取 K8s API
 
 **內容要點**:
+
 ```yaml
 apiVersion: v1
 kind: ServiceAccount
@@ -103,22 +113,26 @@ rules:
 ---
 
 ### P0-5: 創建網絡策略
+
 **目標檔案**: `infrastructure/kubernetes/network-policies/hlp-executor-netpol.yaml`  
 **動作類型**: CREATE  
 **理由**: 限制網絡存取，遵循最小權限原則
 
 **內容要點**:
+
 - Ingress: 僅允許來自 `unmanned-island-system` namespace
 - Egress: 僅允許到資料庫、Redis、其他系統服務
 
 ---
 
 ### P0-6: 創建持久化存儲配置
+
 **目標檔案**: `infrastructure/kubernetes/storage/hlp-executor-storage.yaml`  
 **動作類型**: CREATE  
 **理由**: 定義 PVC 與 ConfigMap，確保狀態持久化
 
 **內容要點**:
+
 ```yaml
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -143,11 +157,13 @@ data:
 ---
 
 ### P0-7: 建立 SLSA 證據目錄結構
+
 **目標檔案**: `core/slsa_provenance/plugins/hlp-executor-core/`  
 **動作類型**: CREATE (directory)  
 **理由**: 準備 SLSA L3 供應鏈安全證據存放位置
 
 **目錄結構**:
+
 ```
 core/slsa_provenance/plugins/hlp-executor-core/
 ├── README.md
@@ -160,11 +176,13 @@ core/slsa_provenance/plugins/hlp-executor-core/
 ---
 
 ### P0-8: 更新依賴配置
+
 **目標檔案**: `config/dependencies.yaml`  
 **動作類型**: UPDATE  
 **理由**: 聲明 HLP Executor 的依賴關係，支援依賴解析
 
 **新增條目**:
+
 ```yaml
 components:
   hlp-executor-core:
@@ -181,11 +199,13 @@ components:
 ---
 
 ### P0-9: 創建執行模型架構文件
+
 **目標檔案**: `docs/architecture/EXECUTION_MODEL.md`  
 **動作類型**: CREATE  
 **理由**: 記錄核心架構決策，供開發者與維運人員參考
 
 **章節**:
+
 1. 概述（Async DAG Orchestrator）
 2. 執行圖構建算法（拓撲排序 + 風險權重）
 3. 並行化策略（最大寬度調度）
@@ -195,11 +215,13 @@ components:
 ---
 
 ### P0-10: 創建部分回滾模組
+
 **目標檔案**: `core/safety_mechanisms/partial_rollback.py`  
 **動作類型**: CREATE  
 **理由**: 實現核心安全功能，確保執行失敗時可安全回滾
 
 **功能要點**:
+
 - Phase-level rollback
 - Plan-unit-level rollback
 - Artifact-level rollback
@@ -207,6 +229,7 @@ components:
 - Rollback trigger evaluation
 
 **接口**:
+
 ```python
 class PartialRollbackManager:
     def evaluate_rollback_trigger(self, condition: str, scope: str) -> RollbackAction
@@ -220,11 +243,13 @@ class PartialRollbackManager:
 ## P1 行動清單（一週內完成）
 
 ### P1-1: 創建狀態機 JSON Schema
+
 **目標檔案**: `governance/schemas/state-machine.schema.json`  
 **動作類型**: CREATE  
 **理由**: 定義狀態機規範，使其可被驗證工具檢查
 
 **Schema 要點**:
+
 ```json
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
@@ -251,11 +276,13 @@ class PartialRollbackManager:
 ---
 
 ### P1-2: 更新向量配置索引
+
 **目標檔案**: `config/unified-config-index.yaml`  
 **動作類型**: UPDATE  
 **理由**: 整合 HLP Executor 的語義向量配置
 
 **新增區塊**:
+
 ```yaml
 vector_alignment:
   hlp_executor:
@@ -272,11 +299,13 @@ vector_alignment:
 ---
 
 ### P1-3: 創建檢查點策略文件
+
 **目標檔案**: `docs/architecture/CHECKPOINT_STRATEGY.md`  
 **動作類型**: CREATE  
 **理由**: 記錄檢查點機制設計，供實現者參考
 
 **章節**:
+
 1. Phase-level 檢查點設計
 2. Copy-on-Write 策略
 3. 保留策略（最近 5 個檢查點）
@@ -286,11 +315,13 @@ vector_alignment:
 ---
 
 ### P1-4: 創建恢復模式文件
+
 **目標檔案**: `docs/architecture/RECOVERY_MODE.md`  
 **動作類型**: CREATE  
 **理由**: 記錄部分回滾與恢復邏輯
 
 **章節**:
+
 1. 回滾粒度（Phase, Plan-unit, Artifact）
 2. 觸發條件與動作映射
 3. Last-known-good-state 策略
@@ -300,11 +331,13 @@ vector_alignment:
 ---
 
 ### P1-5: 創建 HPA 配置
+
 **目標檔案**: `infrastructure/kubernetes/autoscaling/hlp-executor-hpa.yaml`  
 **動作類型**: CREATE  
 **理由**: 實現水平自動擴展，滿足彈性需求
 
 **內容要點**:
+
 ```yaml
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
@@ -336,11 +369,13 @@ spec:
 ---
 
 ### P1-6: 創建安全政策文件
+
 **目標檔案**: `governance/policies/security/hlp-executor-security-policy.yaml`  
 **動作類型**: CREATE  
 **理由**: 定義合規要求（GDPR, SOC2, Quantum-Safe）
 
 **內容要點**:
+
 ```yaml
 policy_id: "hlp-executor-security-policy"
 version: "1.0.0"
@@ -361,11 +396,13 @@ compliance:
 ---
 
 ### P1-7: 創建 Prometheus ServiceMonitor
+
 **目標檔案**: `infrastructure/monitoring/prometheus/servicemonitors/hlp-executor-metrics.yaml`  
 **動作類型**: CREATE  
 **理由**: 配置 Prometheus 抓取指標
 
 **內容要點**:
+
 ```yaml
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
@@ -385,11 +422,13 @@ spec:
 ---
 
 ### P1-8: 更新日誌配置
+
 **目標檔案**: `config/monitoring.yaml`  
 **動作類型**: UPDATE  
 **理由**: 整合 HLP Executor 的日誌配置
 
 **新增區塊**:
+
 ```yaml
 logging:
   hlp_executor:
@@ -402,11 +441,13 @@ logging:
 ---
 
 ### P1-9: 創建重試策略模組
+
 **目標檔案**: `core/safety_mechanisms/retry_policies.py`  
 **動作類型**: UPDATE (如已存在) 或 CREATE  
 **理由**: 實現重試邏輯，支援指數退避 + Jitter + Risk-Adaptive
 
 **新增函數**:
+
 ```python
 def hlp_executor_retry_policy(attempt: int, risk_score: float) -> int:
     """
@@ -431,11 +472,13 @@ def hlp_executor_retry_policy(attempt: int, risk_score: float) -> int:
 ---
 
 ### P1-10: 更新斷路器配置
+
 **目標檔案**: `config/safety-mechanisms.yaml`  
 **動作類型**: UPDATE  
 **理由**: 新增 HLP Executor 的斷路器參數
 
 **新增區塊**:
+
 ```yaml
 circuit_breakers:
   hlp_executor:
@@ -447,11 +490,13 @@ circuit_breakers:
 ---
 
 ### P1-11: 創建錯誤處理運維手冊
+
 **目標檔案**: `docs/operations/runbooks/HLP_EXECUTOR_ERROR_HANDLING.md`  
 **動作類型**: CREATE  
 **理由**: 提供運維人員故障排查指引
 
 **章節**:
+
 1. 常見故障模式
    - Kubernetes API 不可用
    - 狀態持久化失敗
@@ -463,11 +508,13 @@ circuit_breakers:
 ---
 
 ### P1-12: 創建檢查點管理模組
+
 **目標檔案**: `core/safety_mechanisms/checkpoint_manager.py`  
 **動作類型**: CREATE  
 **理由**: 實現檢查點創建、壓縮、恢復功能
 
 **接口**:
+
 ```python
 class CheckpointManager:
     def create_checkpoint(self, execution_id: str, phase_id: str, state: dict) -> str
@@ -480,11 +527,13 @@ class CheckpointManager:
 ---
 
 ### P1-13: 更新回滾配置
+
 **目標檔案**: `config/safety-mechanisms.yaml`  
 **動作類型**: UPDATE  
 **理由**: 定義回滾觸發條件與動作映射
 
 **新增區塊**:
+
 ```yaml
 rollback_configuration:
   hlp_executor:
@@ -506,11 +555,13 @@ rollback_configuration:
 ---
 
 ### P1-14: 創建量子整合配置
+
 **目標檔案**: `config/integrations/quantum-integration.yaml`  
 **動作類型**: CREATE  
 **理由**: 定義與量子後端的整合端點
 
 **內容要點**:
+
 ```yaml
 quantum_integration:
   enabled: false  # 預設禁用，等量子後端就緒
@@ -522,11 +573,13 @@ quantum_integration:
 ---
 
 ### P1-15: 創建知識圖譜整合配置
+
 **目標檔案**: `config/integrations/knowledge-graph-integration.yaml`  
 **動作類型**: CREATE  
 **理由**: 定義與知識圖譜的整合端點
 
 **內容要點**:
+
 ```yaml
 knowledge_graph_integration:
   kg_builder_endpoint: "kg-graph-builder.unmanned-island-system.svc.cluster.local:8890"
@@ -537,11 +590,13 @@ knowledge_graph_integration:
 ---
 
 ### P1-16: 創建緊急程序手冊
+
 **目標檔案**: `docs/operations/runbooks/HLP_EXECUTOR_EMERGENCY.md`  
 **動作類型**: CREATE  
 **理由**: 定義 P1/P2 緊急程序與升級路徑
 
 **內容要點**:
+
 1. **executor-core-down** (P1)
    - 症狀: 所有副本無法就緒
    - 診斷: 檢查 Pod 日誌、事件
@@ -554,11 +609,13 @@ knowledge_graph_integration:
 ---
 
 ### P1-17: 創建維護程序手冊
+
 **目標檔案**: `docs/operations/runbooks/HLP_EXECUTOR_MAINTENANCE.md`  
 **動作類型**: CREATE  
 **理由**: 定義常規維護程序
 
 **內容要點**:
+
 1. **Rolling Restart**
    - 頻率: 每週
    - 維護窗口: 02:00-04:00 UTC
@@ -572,11 +629,13 @@ knowledge_graph_integration:
 ---
 
 ### P1-18: 創建 SLO 指標文件
+
 **目標檔案**: `docs/operations/slo/HLP_EXECUTOR_SLO.md`  
 **動作類型**: CREATE  
 **理由**: 定義服務水平目標（SLO）
 
 **內容要點**:
+
 | 指標 | 目標值 | 測量方法 |
 |------|--------|---------|
 | DAG 解析延遲 (P95) | < 120ms | Prometheus histogram |
@@ -587,11 +646,13 @@ knowledge_graph_integration:
 ---
 
 ### P1-19: 創建單元測試配置
+
 **目標檔案**: `tests/unit/hlp-executor/jest.config.js`  
 **動作類型**: CREATE  
 **理由**: 配置單元測試環境
 
 **內容要點**:
+
 ```javascript
 module.exports = {
   displayName: 'hlp-executor-core',
@@ -610,11 +671,13 @@ module.exports = {
 ---
 
 ### P1-20: 創建部署檢查清單
+
 **目標檔案**: `docs/operations/deployment/HLP_EXECUTOR_DEPLOYMENT_CHECKLIST.md`  
 **動作類型**: CREATE  
 **理由**: 提供部署前驗證清單
 
 **檢查項目**:
+
 - [ ] K8s 集群版本 >= 1.24
 - [ ] Namespace `unmanned-island-system` 已創建
 - [ ] Trust bundle ConfigMap 已部署
@@ -628,11 +691,13 @@ module.exports = {
 ---
 
 ### P1-21: 更新 CHANGELOG
+
 **目標檔案**: `CHANGELOG.md`  
 **動作類型**: UPDATE  
 **理由**: 記錄 HLP Executor Core 的新增
 
 **新增條目**:
+
 ```markdown
 ## [Unreleased]
 
@@ -650,11 +715,13 @@ module.exports = {
 ## P2 行動清單（長期優化）
 
 ### P2-1: 創建 Grafana 儀表板
+
 **目標檔案**: `infrastructure/monitoring/grafana/dashboards/hlp-executor-dashboard.json`  
 **動作類型**: CREATE  
 **理由**: 提供可視化監控儀表板
 
 **面板**:
+
 1. 任務總數（按狀態分組）
 2. 執行時長 (P50/P90/P95/P99)
 3. 回滾操作數
@@ -664,11 +731,13 @@ module.exports = {
 ---
 
 ### P2-2: 更新量子安全密碼配置
+
 **目標檔案**: `config/security-network-config.yml`  
 **動作類型**: UPDATE  
 **理由**: 整合量子安全加密算法
 
 **新增區塊**:
+
 ```yaml
 quantum_safe_cryptography:
   hlp_executor:
@@ -680,11 +749,13 @@ quantum_safe_cryptography:
 ---
 
 ### P2-3: 創建 OpenTelemetry 配置
+
 **目標檔案**: `infrastructure/monitoring/otel/hlp-executor-otel-config.yaml`  
 **動作類型**: CREATE  
 **理由**: 配置分散式追蹤
 
 **內容要點**:
+
 ```yaml
 receivers:
   otlp:
@@ -712,11 +783,13 @@ service:
 ---
 
 ### P2-4: 創建可觀測性整合配置
+
 **目標檔案**: `config/integrations/observability-integration.yaml`  
 **動作類型**: CREATE  
 **理由**: 統一可觀測性端點配置
 
 **內容要點**:
+
 ```yaml
 observability_integration:
   prometheus_endpoint: "prometheus.unmanned-island-system.svc.cluster.local:9090"
@@ -727,11 +800,13 @@ observability_integration:
 ---
 
 ### P2-5: 創建 Canary 部署配置
+
 **目標檔案**: `infrastructure/canary/hlp-executor-canary.yaml`  
 **動作類型**: CREATE  
 **理由**: 支援 Canary 部署策略
 
 **內容要點**:
+
 ```yaml
 apiVersion: flagger.app/v1beta1
 kind: Canary
@@ -764,11 +839,13 @@ spec:
 ---
 
 ### P2-6: 創建 Blue-Green 策略文件
+
 **目標檔案**: `docs/operations/deployment/BLUE_GREEN_STRATEGY.md`  
 **動作類型**: CREATE  
 **理由**: 記錄 Blue-Green 部署流程
 
 **章節**:
+
 1. 概述（5 分鐘驗證期 + 手動晉級）
 2. 部署流程
 3. 驗證標準
@@ -778,11 +855,13 @@ spec:
 ---
 
 ### P2-7: 創建整合測試環境配置
+
 **目標檔案**: `tests/integration/hlp-executor/test-setup.yaml`  
 **動作類型**: CREATE  
 **理由**: 配置整合測試環境（Kind + Quantum Simulation）
 
 **內容要點**:
+
 ```yaml
 kind_cluster:
   name: "hlp-executor-test"
@@ -803,11 +882,13 @@ quantum_simulation:
 ---
 
 ### P2-8: 創建混沌工程場景
+
 **目標檔案**: `tests/chaos/hlp-executor-chaos-scenarios.yaml`  
 **動作類型**: CREATE  
 **理由**: 定義混沌工程測試場景
 
 **場景**:
+
 1. **pod-kill**: 隨機終止 Pod
 2. **network-latency**: 注入網絡延遲（200ms）
 3. **resource-exhaustion**: 模擬 CPU/Memory 耗盡
@@ -815,11 +896,13 @@ quantum_simulation:
 ---
 
 ### P2-9: 創建性能測試腳本
+
 **目標檔案**: `tests/performance/hlp-executor-k6-script.js`  
 **動作類型**: CREATE  
 **理由**: k6 性能測試腳本（1000 RPS, 10 分鐘）
 
 **內容要點**:
+
 ```javascript
 import http from 'k6/http';
 import { check } from 'k6';
@@ -853,11 +936,13 @@ export default function () {
 ---
 
 ### P2-10: 創建 DAG 執行器自動化腳本
+
 **目標檔案**: `automation/intelligent/dag_executor.py`  
 **動作類型**: CREATE  
 **理由**: 實現 DAG 執行邏輯（拓撲排序 + 關鍵路徑分析）
 
 **功能要點**:
+
 ```python
 class DAGExecutor:
     def parse_dag(self, plan_units: List[PlanUnit]) -> ExecutionGraph
@@ -869,11 +954,13 @@ class DAGExecutor:
 ---
 
 ### P2-11: 創建狀態機驗證工具
+
 **目標檔案**: `tools/governance/state-machine-validator.py`  
 **動作類型**: CREATE  
 **理由**: 驗證狀態轉換合法性
 
 **功能要點**:
+
 ```python
 def validate_state_machine(state_machine: dict) -> ValidationResult:
     """
@@ -891,11 +978,13 @@ def validate_state_machine(state_machine: dict) -> ValidationResult:
 ---
 
 ### P2-12: 創建回滾分析器
+
 **目標檔案**: `automation/intelligent/rollback_analyzer.py`  
 **動作類型**: CREATE  
 **理由**: 分析回滾觸發條件與歷史趨勢
 
 **功能要點**:
+
 ```python
 class RollbackAnalyzer:
     def analyze_rollback_history(self, time_range: TimeRange) -> RollbackReport
@@ -906,11 +995,13 @@ class RollbackAnalyzer:
 ---
 
 ### P2-13: 創建插件模板
+
 **目標檔案**: `templates/plugins/quantum-yaml-plugin-template.yaml`  
 **動作類型**: CREATE  
 **理由**: 可重用的 Quantum-YAML 插件規格模板
 
 **模板結構**:
+
 ```yaml
 %YAML 1.2
 ---
@@ -938,6 +1029,7 @@ plugin_specification:
 ## 整合順序建議
 
 ### 第一階段（P0，1-2 天）
+
 1. 創建治理註冊 (P0-1)
 2. 更新系統模組映射 (P0-2)
 3. 創建 K8s 基礎清單 (P0-3, P0-4, P0-5, P0-6)
@@ -947,6 +1039,7 @@ plugin_specification:
 7. 實現部分回滾模組 (P0-10)
 
 ### 第二階段（P1，3-7 天）
+
 1. 創建治理 Schema (P1-1)
 2. 創建架構文件 (P1-3, P1-4)
 3. 創建監控配置 (P1-7, P1-8)
@@ -958,6 +1051,7 @@ plugin_specification:
 9. 更新 CHANGELOG (P1-21)
 
 ### 第三階段（P2，2-4 週）
+
 1. 創建監控儀表板 (P2-1)
 2. 創建進階配置 (P2-2, P2-3, P2-4, P2-5, P2-6)
 3. 創建測試場景 (P2-7, P2-8, P2-9)
@@ -969,6 +1063,7 @@ plugin_specification:
 ## 驗證檢查點
 
 ### 階段一完成驗證
+
 ```bash
 # 驗證 K8s 清單
 kubectl apply --dry-run=client -f infrastructure/kubernetes/
@@ -981,6 +1076,7 @@ ls -la core/slsa_provenance/plugins/hlp-executor-core/
 ```
 
 ### 階段二完成驗證
+
 ```bash
 # 驗證 Schema
 jsonschema -i governance/schemas/state-machine.schema.json
@@ -993,6 +1089,7 @@ npm test -w tests/unit/hlp-executor
 ```
 
 ### 階段三完成驗證
+
 ```bash
 # 運行整合測試
 npm test -w tests/integration/hlp-executor

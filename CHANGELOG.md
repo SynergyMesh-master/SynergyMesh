@@ -67,6 +67,7 @@ YYYY-MM-DD | <username> | <path> | <change_type> | <reason>
 **說明**: HLP Executor Core Plugin P1 階段整合完成（21項任務）
 
 **Added**:
+
 - **HLP Executor Core Plugin** (v1.0.0): 新增 Async DAG 編排引擎
   - 狀態機 JSON Schema 規範與驗證
   - 檢查點管理模組（支援壓縮、保留策略、檢查和驗證）
@@ -89,6 +90,7 @@ YYYY-MM-DD | <username> | <path> | <change_type> | <reason>
 **Description**: Completed HLP Executor Core Plugin P1 phase integration (21 tasks)
 
 **Added**:
+
 - **HLP Executor Core Plugin** (v1.0.0): New Async DAG orchestration engine
   - State machine JSON schema for validation
   - Checkpoint management with compression and retention policies
@@ -121,6 +123,7 @@ YYYY-MM-DD | <username> | <path> | <change_type> | <reason>
 **Description**: Integrated all build instructions and documentation from `apps/web` subdirectory into the root README.md.
 
 **主要變更 | Key Changes**:
+
 - 新增 `apps/web` 到目錄結構說明 (Added `apps/web` to directory structure)
 - 新增 Web 前端與代碼分析 API 完整章節 (Added complete Web Frontend & Code Analysis API section)
   - 安裝與設定指南 (Installation and setup guide)
@@ -148,6 +151,7 @@ YYYY-MM-DD | <username> | <path> | <change_type> | <reason>
 **Description**: Major system update - Version synchronized to 4.0.0, reflecting Phase 4 directory consolidation completion. Added Admin Copilot CLI tool.
 
 **主要變更 | Key Changes**:
+
 - 版本號更新至 4.0.0 (Version updated to 4.0.0)
 - Phase 4 目錄整合完成 (Phase 4 directory consolidation complete)
 - 深度執行系統 (Deep Execution System) 已整合 (PR#10)

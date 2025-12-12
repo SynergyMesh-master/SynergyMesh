@@ -44,6 +44,7 @@ The system supports rollback at three granularity levels:
 **Definition**: Roll back an entire execution phase
 
 **Use Cases**:
+
 - Phase validation failure
 - Critical error within phase
 - Phase timeout exceeded
@@ -51,6 +52,7 @@ The system supports rollback at three granularity levels:
 **Impact**: All work within the phase is rolled back
 
 **Example**:
+
 ```python
 result = rollback_manager.execute_rollback(
     scope="phase",
@@ -64,6 +66,7 @@ result = rollback_manager.execute_rollback(
 **Definition**: Roll back a specific plan unit within a phase
 
 **Use Cases**:
+
 - Single task failure
 - Resource exhaustion for specific unit
 - Unit-specific validation failure
@@ -71,6 +74,7 @@ result = rollback_manager.execute_rollback(
 **Impact**: Only the failing plan unit and its dependents are rolled back
 
 **Example**:
+
 ```python
 result = rollback_manager.execute_rollback(
     scope="plan-unit",
@@ -84,6 +88,7 @@ result = rollback_manager.execute_rollback(
 **Definition**: Roll back a specific artifact or resource
 
 **Use Cases**:
+
 - Single file corruption
 - Specific resource creation failure
 - Artifact validation failure
@@ -91,6 +96,7 @@ result = rollback_manager.execute_rollback(
 **Impact**: Only the specific artifact is rolled back
 
 **Example**:
+
 ```python
 result = rollback_manager.execute_rollback(
     scope="artifact",
@@ -223,6 +229,7 @@ Backward Dependencies (reverse of above):
 **Use Case**: Rolling back A requires rolling back all items that depend on A (B, C, D, E)
 
 **Implementation**:
+
 ```python
 self._execution_graph: Dict[str, Set[str]] = {}  # target -> dependents
 
@@ -238,6 +245,7 @@ self._execution_graph["B"] = {"C", "D"}
 **Use Case**: Validating dependencies before execution
 
 **Implementation**:
+
 ```python
 self._reverse_graph: Dict[str, Set[str]] = {}  # source -> dependencies
 

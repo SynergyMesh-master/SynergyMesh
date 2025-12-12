@@ -126,6 +126,7 @@ export JWT_SECRET=your-jwt-secret
 Main configuration file: `config/main-configuration.yaml`
 
 Key sections:
+
 - `core_engine`: Engine settings
 - `ai_governance`: AI configuration
 - `validation_system`: Validation rules
@@ -150,19 +151,21 @@ curl http://localhost:8080/health/status
 ### Prometheus Metrics
 
 Access metrics:
+
 ```bash
 curl http://localhost:8080/metrics
 ```
 
 ### Grafana Dashboard
 
-1. Access Grafana: http://localhost:3000
+1. Access Grafana: <http://localhost:3000>
 2. Login (default: admin/admin)
 3. Import dashboard from `config/grafana-dashboard.json`
 
 ### Log Aggregation
 
 Logs are output to:
+
 - Console (stdout/stderr)
 - File: `logs/workflow.log`
 - Elasticsearch (if configured)
@@ -172,6 +175,7 @@ Logs are output to:
 ### Common Issues | 常見問題
 
 **Issue:** Port already in use
+
 ```bash
 # Find and kill process
 lsof -i :8080
@@ -179,6 +183,7 @@ kill -9 <PID>
 ```
 
 **Issue:** Permission denied
+
 ```bash
 # Fix permissions
 chmod +x scripts/run-instant-execution.sh
@@ -186,6 +191,7 @@ chown -R $USER:$USER config/
 ```
 
 **Issue:** Database connection failed
+
 ```bash
 # Check database
 psql -h localhost -U workflow -d workflow
@@ -302,6 +308,7 @@ docker-compose up -d --no-deps --build workflow-system
 ### Log Rotation
 
 Configure logrotate:
+
 ```bash
 /app/logs/*.log {
     daily
@@ -316,6 +323,7 @@ Configure logrotate:
 ## Support | 支持
 
 For deployment issues:
+
 - Documentation: [docs/](../docs/)
 - Issues: [GitHub Issues](https://github.com/synergymesh/issues)
 - Community: [Discussions](https://github.com/synergymesh/discussions)

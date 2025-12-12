@@ -9,36 +9,42 @@ This directory contains the foundational Kubernetes resources extracted from the
 ## 📦 Baseline Components / 基線組件
 
 ### 1. Namespace Governance (baseline-01)
+
 - Namespace naming conventions
 - Mandatory labels validation
 - Lifecycle state machine
 - Capability registry
 
 ### 2. Security & RBAC (baseline-02)
+
 - Zero Trust principles
 - 5-tier RBAC role matrix
 - Encryption standards (AES-256-GCM, mTLS, post-quantum)
 - Audit policy
 
 ### 3. Resource Management (baseline-03)
+
 - 4 tenant tiers (enterprise, business, startup, development)
 - VPA + HPA autoscaling
 - Cost allocation model
 - Quota enforcement
 
 ### 4. Network Policy (baseline-04)
+
 - Microsegmentation (4 zones)
 - Istio service mesh (mTLS STRICT)
 - Ingress/egress control
 - Network observability
 
 ### 5. Compliance Attestation (baseline-05)
+
 - Policy-as-Code (OPA, Kyverno, Conftest)
 - Attestation providers (Cosign, in-toto, SLSA)
 - Drift detection
 - Evidence collection
 
 ### 6. Quantum Orchestration (baseline-06)
+
 - Quantum circuit library (QAOA, VQE, QNN, QSVM)
 - Quantum resource pool (IBM, AWS Braket)
 - Hybrid workflow orchestration

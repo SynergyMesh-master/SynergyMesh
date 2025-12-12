@@ -1,4 +1,5 @@
 # Runtime Environment
+
 # 運行時環境
 
 > 實際運行時環境，承載 execution 的部署和啟動組件。
@@ -41,7 +42,7 @@ runtime/
 - **不提供 AI 能力** - 使用 `core/` 中的 AI 引擎
 - **不處理配置** - 配置在 `config/`
 
-## 🔗 Relationship with core/execution_* 與 core/execution_* 的關係
+## 🔗 Relationship with core/execution_*與 core/execution_* 的關係
 
 ```
 ┌─────────────────────────────────────────────────────────┐

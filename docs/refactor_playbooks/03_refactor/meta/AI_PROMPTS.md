@@ -11,6 +11,7 @@
 👉 **[PROPOSER_CRITIC_WORKFLOW.md](./PROPOSER_CRITIC_WORKFLOW.md)**
 
 該文件包含：
+
 - 🎭 Proposer（提案者）角色定義與 System Prompt
 - 🔍 Critic（審查者）角色定義與 System Prompt  
 - 🔄 完整的 Proposer → Critic → Revision 循環流程
@@ -18,6 +19,7 @@
 - ✅ 驗證檢查清單與品質閘門
 
 **配置來源 (Configuration Sources)**：
+
 - `config/system-module-map.yaml` - 模組定義、架構約束、品質閾值
 - `docs/refactor_playbooks/03_refactor/index.yaml` - Cluster 對應與治理狀態
 - Architecture skeletons (11 個) - 架構骨架規則
@@ -29,22 +31,26 @@
 所有 AI 重構提案都必須遵守以下約束（詳細規則見 `PROPOSER_CRITIC_WORKFLOW.md`）：
 
 ### 架構約束 (Architecture Constraints)
+
 - ✅ **允許依賴**：從 `config/system-module-map.yaml` 讀取 `allowed_dependencies`
 - ❌ **禁止依賴**：從 `config/system-module-map.yaml` 讀取 `banned_dependencies`
 - 🏗️ **骨架規則**：遵守 `skeleton_rules` 連結的架構骨架
 
 ### 語言策略 (Language Strategy)
+
 - ✅ **偏好語言**：`preferred_languages` (TypeScript, Python, Go, Rust, C++)
 - ❌ **禁用語言**：`banned_languages` (PHP, Perl, Ruby)
 - 📊 **語言違規**：必須減少或保持不變，不能增加
 
 ### 品質閾值 (Quality Thresholds)
+
 - 🔴 **Semgrep HIGH**: `semgrep_high_max: 0` (零容忍)
 - 🟡 **Semgrep MEDIUM**: 參考模組特定閾值
 - 🧪 **測試覆蓋率**: 不得下降超過 2%
 - 🌀 **圈複雜度**: 不得超過 `cyclomatic_complexity_max`
 
 ### 路徑治理 (Path Governance)
+
 - 📂 **目標根目錄**：只能在 `target_roots` 中操作
 - 🚫 **禁止新子目錄**：`allow_new_subdirs: false` (預設)
 - 🔍 **檔案匹配**：遵守 `include_globs` 和 `exclude_globs`
@@ -233,6 +239,7 @@ constraint_compliance:
 
 **調整後的依賴方向：**
 ```
+
 core/ (foundation)
   ↑ ✅ depends on: infra/
   ↓ ❌ must not depend on: services/, apps/
@@ -244,6 +251,7 @@ services/ (mediation)
 apps/ (presentation)
   ↑ ✅ depends on: services/, infra/
   ↓ ❌ must not depend on: core/ (MUST go through services/)
+
 ```
 
 **邊界修復計畫：**
@@ -285,6 +293,7 @@ apps/ (presentation)
 3. **Self-Check** → 作為提交給 Critic 前的自我審查
 
 Critic 審查時必須驗證：
+
 - ✅ Global Optimization View 是否完整且合理
 - ✅ Local Plan 是否真的推進全局目標
 - ✅ Self-Check 是否誠實評估負面影響
@@ -615,11 +624,13 @@ jobs:
 ### 5.1 提供充足上下文
 
 ❌ **不好的提示詞**：
+
 ```
 請幫我產生 core/ 的重構計畫
 ```
 
 ✅ **好的提示詞**：
+
 ```
 請根據以下資料產生 core/architecture-stability 的重構劇本：
 - 語言治理報告：{完整報告}
@@ -631,11 +642,13 @@ jobs:
 ### 5.2 明確輸出格式
 
 ❌ **模糊要求**：
+
 ```
 給我一些建議
 ```
 
 ✅ **明確要求**：
+
 ```
 產生 P0/P1/P2 分級清單，每個項目包含：
 - 檔案路徑

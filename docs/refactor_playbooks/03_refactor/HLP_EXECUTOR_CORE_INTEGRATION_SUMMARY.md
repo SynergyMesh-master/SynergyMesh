@@ -9,9 +9,11 @@
 ## 📋 交付成果
 
 ### 1. 解構摘要文件
+
 **檔案**: `docs/refactor_playbooks/01_deconstruction/HLP_EXECUTOR_CORE_DECONSTRUCTION.md`
 
 **內容**:
+
 - ✅ 從548行Quantum-YAML規格中提取12個核心概念領域
 - ✅ 5個核心功能模組完整解構（執行引擎、狀態管理、部分回滾、重試策略、錯誤處理）
 - ✅ Kubernetes部署與基礎設施規格
@@ -21,9 +23,11 @@
 - ✅ 運維手冊與測試配置
 
 ### 2. 邏輯→目標位置對應表
+
 **檔案**: `docs/refactor_playbooks/02_integration/HLP_EXECUTOR_CORE_INTEGRATION_MAPPING.md`
 
 **內容**:
+
 - ✅ **42項邏輯元件**的詳細對應表，包含：
   - 邏輯名稱與說明
   - 建議目標路徑（具體到檔名）
@@ -38,9 +42,11 @@
 - ✅ 整合檢查清單與完成標準
 
 ### 3. P0/P1/P2 行動清單
+
 **檔案**: `docs/refactor_playbooks/03_refactor/HLP_EXECUTOR_CORE_ACTION_PLAN.md`
 
 **內容**:
+
 - ✅ **P0行動（10項）**: 立即執行的關鍵路徑任務（1-2天）
   - 插件註冊、模組映射、K8s清單、RBAC、網絡策略、存儲配置
   - SLSA證據目錄、依賴配置、架構文件、部分回滾模組
@@ -57,9 +63,11 @@
 - ✅ 3個整合階段的驗證檢查點
 
 ### 4. legacy_scratch 清理計畫
+
 **檔案**: `docs/refactor_playbooks/03_refactor/HLP_EXECUTOR_CORE_LEGACY_CLEANUP.md`
 
 **內容**:
+
 - ✅ **5階段清理流程**:
   - 階段0: 創建備份
   - 階段1: 驗證整合完整性
@@ -77,9 +85,11 @@
 - ✅ 清理決策樹
 
 ### 5. 目錄與檔案整合藍圖
+
 **檔案**: `docs/refactor_playbooks/03_refactor/HLP_EXECUTOR_CORE_DIRECTORY_BLUEPRINT.md`
 
 **內容**:
+
 - ✅ **完整目錄樹**（只涵蓋受影響範圍）
 - ✅ **按階段劃分的目錄變化**（P0/P1/P2）
 - ✅ **檔案統計**:
@@ -127,6 +137,7 @@
 | `axiom.io` | `unmanned-island.io` | K8s API Group |
 
 **依賴適配策略**:
+
 - `axiom-quantum-runtime` → `quantum-scheduler` (Soft, 優雅降級)
 - `axiom-trust-bundle` → Unmanned Island trust bundle
 - `axiom-kernel-compute` → `core/` 計算模組
@@ -171,38 +182,46 @@ templates/             1 檔案  (0 P0, 0 P1, 1 P2)
 ## ⚡ 關鍵特性整合
 
 ### 1. Async DAG Orchestrator
+
 - **位置**: `automation/intelligent/dag_executor.py`
 - **算法**: 拓撲排序 + 風險權重 + 關鍵路徑分析
 - **並行化**: 最大寬度調度
 
 ### 2. Partial Rollback System
+
 - **位置**: `core/safety_mechanisms/partial_rollback.py`
 - **粒度**: Phase / Plan-unit / Artifact 三級
 - **觸發**: 驗證失敗、資源耗盡、安全違規
 
 ### 3. State Machine
+
 - **位置**: `governance/schemas/state-machine.schema.json`
 - **狀態**: PENDING → SCHEDULING → EXECUTING → VERIFYING → COMMIT
 - **恢復**: ROLLBACK → PENDING
 
 ### 4. Retry Policies
+
 - **位置**: `core/safety_mechanisms/retry_policies.py`
 - **策略**: 指數退避 + Jitter + Risk-Adaptive
 - **參數**: 基礎延遲2s，最大4次，最大延遲30s
 
 ### 5. Circuit Breaker
+
 - **位置**: `config/safety-mechanisms.yaml`
 - **參數**: 失敗閾值5，恢復超時30s，半開最大調用3
 
 ### 6. SLSA L3 Supply Chain Security
+
 - **位置**: `core/slsa_provenance/plugins/hlp-executor-core/`
 - **內容**: Cosign簽名 + SBOM (SPDX-JSON) + Provenance
 
 ### 7. Quantum Integration
+
 - **位置**: `config/integrations/quantum-integration.yaml`
 - **特性**: Soft Dependency，優雅降級到經典模式
 
 ### 8. Observability Stack
+
 - **位置**: `infrastructure/monitoring/`
 - **組件**: Prometheus + Grafana + OpenTelemetry + Jaeger
 
@@ -294,6 +313,7 @@ k6 run tests/performance/hlp-executor-k6-script.js
 ## ✅ 驗證標準
 
 ### P0 完成標準
+
 - [ ] 所有 P0 檔案已創建（10個）
 - [ ] K8s 清單通過 `kubectl apply --dry-run`
 - [ ] 插件已註冊到 `governance/registry/`
@@ -301,6 +321,7 @@ k6 run tests/performance/hlp-executor-k6-script.js
 - [ ] SLSA 證據目錄已建立
 
 ### P1 完成標準
+
 - [ ] 所有 P1 檔案已創建（23個）
 - [ ] 所有配置通過 YAML 驗證
 - [ ] 運維手冊已審查
@@ -308,6 +329,7 @@ k6 run tests/performance/hlp-executor-k6-script.js
 - [ ] 文件索引已更新
 
 ### P2 完成標準
+
 - [ ] 所有 P2 檔案已創建（17個）
 - [ ] 整合測試通過
 - [ ] 性能測試達標（1000 RPS, P95 < 200ms）
@@ -319,6 +341,7 @@ k6 run tests/performance/hlp-executor-k6-script.js
 ## 🧹 清理流程
 
 ### 清理時機
+
 在以下條件**全部**滿足後執行清理：
 
 1. ✅ 所有 P0 行動完成
@@ -357,6 +380,7 @@ mv docs/refactor_playbooks/_legacy_scratch/README.md \
 ## 📖 文件索引
 
 ### 解構與規劃文件
+
 1. `docs/refactor_playbooks/01_deconstruction/HLP_EXECUTOR_CORE_DECONSTRUCTION.md`
 2. `docs/refactor_playbooks/02_integration/HLP_EXECUTOR_CORE_INTEGRATION_MAPPING.md`
 3. `docs/refactor_playbooks/03_refactor/HLP_EXECUTOR_CORE_ACTION_PLAN.md`
@@ -365,6 +389,7 @@ mv docs/refactor_playbooks/_legacy_scratch/README.md \
 6. `docs/refactor_playbooks/03_refactor/HLP_EXECUTOR_CORE_INTEGRATION_SUMMARY.md` (本文件)
 
 ### 原始規格
+
 - `docs/refactor_playbooks/_legacy_scratch/README.md` (548行 Quantum-YAML 規格)
 
 ---
@@ -383,21 +408,25 @@ mv docs/refactor_playbooks/_legacy_scratch/README.md \
 ## 💡 後續建議
 
 ### 立即行動
+
 1. 執行 P0 行動清單（10項，1-2天）
 2. 驗證 K8s 清單可部署性
 3. 實現部分回滾核心邏輯
 
 ### 短期行動（1週內）
+
 1. 完成 P1 行動清單（21項）
 2. 創建運維手冊
 3. 配置監控與告警
 
 ### 長期行動（1月內）
+
 1. 完成 P2 行動清單（13項）
 2. 執行整合與性能測試
 3. 創建 Grafana 儀表板
 
 ### 持續改進
+
 1. 監控系統穩定性
 2. 收集運維反饋
 3. 優化性能與可靠性

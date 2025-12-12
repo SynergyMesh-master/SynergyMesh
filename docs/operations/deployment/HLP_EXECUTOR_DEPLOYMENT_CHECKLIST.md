@@ -46,6 +46,7 @@ Phase 4: Rollout & Handover (10-15 min)
 ```
 
 ### 預計時間 | Estimated Time
+
 - **總計 | Total**: 70-110 分鐘 | 70-110 minutes
 - **最小團隊規模 | Minimum Team**: 2 人 (1 Deployer + 1 Verifier)
 - **建議窗口 | Recommended Window**: 非高峰時段 | Off-peak hours
@@ -84,12 +85,14 @@ kubectl top nodes
 ```
 
 **資源需求 | Resource Requirements**:
+
 - **CPU**: 每節點至少 4 核心可用 | At least 4 cores available per node
 - **Memory**: 每節點至少 8 GB 可用 | At least 8 GB available per node
 - **Disk**: 每節點至少 50 GB 可用 | At least 50 GB available per node
 - **節點數量 | Node Count**: 至少 3 個 worker 節點 | At least 3 worker nodes
 
 **驗證命令 | Verification Command**:
+
 ```bash
 # Verify sufficient resources
 NODE_COUNT=$(kubectl get nodes --no-headers | wc -l)
@@ -115,6 +118,7 @@ kubectl get storageclass -o json | \
 ```
 
 **要求 | Requirements**:
+
 - ✅ 至少一個 StorageClass 可用 | At least one StorageClass available
 - ✅ StorageClass 支援動態配置 | StorageClass supports dynamic provisioning
 - ✅ (推薦) 支援卷擴展 | (Recommended) Supports volume expansion
@@ -141,6 +145,7 @@ kubectl label namespace unmanned-island-system \
 ```
 
 **驗證 | Verification**:
+
 ```bash
 kubectl get namespace unmanned-island-system -o yaml | grep -A 5 "labels:"
 ```
@@ -190,6 +195,7 @@ kubectl describe configmap hlp-executor-trust-bundle -n unmanned-island-system
 ```
 
 **驗證內容 | Verify Content**:
+
 ```bash
 kubectl get configmap hlp-executor-trust-bundle -n unmanned-island-system -o jsonpath='{.data.ca\.crt}' | \
   openssl x509 -noout -text
@@ -396,7 +402,8 @@ kubectl get pvc hlp-executor-state-pvc -n unmanned-island-system
 kubectl describe pvc hlp-executor-state-pvc -n unmanned-island-system
 ```
 
-**驗證狀態 | Verify Status**: 
+**驗證狀態 | Verify Status**:
+
 - **Status**: `Bound`
 - **Capacity**: `10Gi`
 - **Access Mode**: `RWO`
@@ -494,6 +501,7 @@ cosign verify \
 ```
 
 **驗證標準 | Validation Criteria**:
+
 - ✅ 簽名驗證成功 | Signature verification successful
 - ✅ 簽名者身份正確 | Signer identity correct
 - ✅ 映像摘要匹配 | Image digest matches
@@ -515,6 +523,7 @@ cosign verify-attestation \
 ```
 
 **驗證項目 | Verification Items**:
+
 - ✅ Builder ID 正確 | Builder ID correct
 - ✅ 構建參數完整 | Build parameters complete
 - ✅ 來源倉庫匹配 | Source repository matches
@@ -646,6 +655,7 @@ kubectl get pods -n unmanned-island-system -l app=hlp-executor-core
 ```
 
 **預期結果 | Expected Result**:
+
 - **Replicas**: 3/3 ready
 - **Pod Status**: All Running
 - **Restarts**: 0
@@ -1147,6 +1157,7 @@ first_week_metrics:
 ### 回滾觸發條件 | Rollback Triggers
 
 如遇以下情況應立即回滾：
+
 - ❌ 健康檢查失敗超過 5 分鐘
 - ❌ 錯誤率 > 5%
 - ❌ P95 延遲 > 200ms 持續 10 分鐘

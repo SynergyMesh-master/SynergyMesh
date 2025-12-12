@@ -11,12 +11,14 @@ SynergyMesh is an autonomous coordination grid system (無人化自主協同網�
 This is a polyglot monorepo containing:
 
 ### Languages & Frameworks
+
 - **TypeScript/JavaScript**: Frontend (React) and tooling
 - **Python**: Core AI/ML modules, automation, and backend services
 - **Rust**: High-performance runtime components (planned)
 - **Go**: Microservices (planned)
 
 ### Directory Structure
+
 ```
 apps/
   web/           # React frontend application (esbuild + Tailwind) - STATIC ONLY
@@ -36,6 +38,7 @@ tests/           # Test suites
 ```
 
 ### Package Managers
+
 - **npm**: Primary JavaScript package manager (workspaces in package.json)
 - **pnpm**: Alternative JS package manager (pnpm-workspace.yaml)
 - **pip/uv**: Python dependencies (pyproject.toml)
@@ -43,14 +46,17 @@ tests/           # Test suites
 ## Development
 
 ### Frontend
+
 ```bash
 cd apps/web && npm run dev
 ```
+
 - Runs on port 5000
 - Uses esbuild for bundling
 - Tailwind CSS for styling
 
 ### Python
+
 ```bash
 pip install -e ".[dev]"
 ```
@@ -62,6 +68,7 @@ pip install -e ".[dev]"
 ## Deployment
 
 The frontend is configured for static deployment:
+
 - Build: `npm run build --workspace apps/web`
 - Output: `apps/web/dist/`
 

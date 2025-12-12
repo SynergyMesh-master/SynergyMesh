@@ -235,6 +235,7 @@ $ python3 automation/pipelines/instant_execution_pipeline.py run --dry-run
 **Location:** `config/instant-execution-pipeline.yaml`
 
 **Key Settings:**
+
 ```yaml
 performance_targets:
   stage_1_max_duration: 5      # seconds
@@ -279,6 +280,7 @@ integrations:
 ### Code Documentation
 
 All Python files include:
+
 - ✅ Module docstrings
 - ✅ Class docstrings
 - ✅ Function docstrings
