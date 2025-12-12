@@ -20,7 +20,7 @@
 
 ### 2. Actual Repository Surface (2025-12-12) 實際目錄快照
 
-> 來源: `ls` 觀察當前 repository root  
+> 來源: repository root 的目錄列表（例如 `ls` 或 `dir`）  
 > 作用: 提供 AI 代理與開發者快速對照「真實存在的目錄」與上層語義邊界
 
 | 分類 | 主要目錄 (僅列核心) | 備註 |
@@ -36,7 +36,7 @@
 | 文檔 | `docs/`, `knowledge/` | 文件、索引、報告；生成文件集中於 `docs/generated/` |
 | 其他歷史資產 | `legacy/`, `experiments/`, `supply-chain/`, `bridges/` | 歷史遺留與橋接實驗 |
 
-> ⚠️ 如需完整樹狀結構，請參考 `docs/DIRECTORY_TREE.md`；若需語義對應與治理邊界，請依此文檔與 `config/system-module-map.yaml`。
+> ⚠️ 如需完整樹狀結構，請參考已存在的 `docs/DIRECTORY_TREE.md`；若需語義對應與治理邊界，請依此文檔與 `config/system-module-map.yaml`。
 
 ---
 
