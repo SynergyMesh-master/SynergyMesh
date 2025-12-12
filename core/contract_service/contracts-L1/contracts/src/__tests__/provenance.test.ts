@@ -1,21 +1,23 @@
 import { ProvenanceService } from '../services/provenance';
-import { writeFile, unlink } from 'fs/promises';
-import { join } from 'path';
-import { tmpdir } from 'os';
+import { writeFile, unlink, mkdir } from 'fs/promises';
+import { join, resolve } from 'path';
 
 describe('ProvenanceService', () => {
   let service: ProvenanceService;
   let testFilePath: string;
+  const SAFE_ROOT = resolve(process.cwd(), 'safefiles');
 
   beforeEach(async () => {
     service = new ProvenanceService();
-    testFilePath = join(tmpdir(), `test-${Date.now()}.txt`);
-    await writeFile(testFilePath, 'test content for attestation');
+    // Ensure safe directory exists
+    await mkdir(SAFE_ROOT, { recursive: true });
+    testFilePath = `test-${Date.now()}.txt`;
+    await writeFile(join(SAFE_ROOT, testFilePath), 'test content for attestation');
   });
 
   afterEach(async () => {
     try {
-      await unlink(testFilePath);
+      await unlink(join(SAFE_ROOT, testFilePath));
     } catch {
       // Ignore cleanup errors
     }
@@ -28,8 +30,8 @@ describe('ProvenanceService', () => {
     });
 
     it('should throw error for non-existent file', async () => {
-      await expect(service.generateFileDigest('/non/existent/file'))
-        .rejects.toThrow(/ENOENT/);
+      await expect(service.generateFileDigest('non-existent-file.txt'))
+        .rejects.toThrow(/ENOENT|Invalid file path/);
     });
   });
 
@@ -81,10 +83,10 @@ describe('ProvenanceService', () => {
     });
 
     it('should reject directories', async () => {
-      await expect(service.createBuildAttestation(tmpdir(), {
+      await expect(service.createBuildAttestation('../', {
         id: 'test-builder',
         version: '1.0.0'
-      })).rejects.toThrow('Subject path must be a file');
+      })).rejects.toThrow(/Subject path must be a file|Invalid file path/);
     });
   });
 

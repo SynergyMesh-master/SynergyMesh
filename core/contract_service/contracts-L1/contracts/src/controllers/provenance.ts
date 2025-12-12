@@ -39,7 +39,8 @@ export class ProvenanceController {
       });
     } catch (error) {
       const nodeError = error as NodeJS.ErrnoException;
-      if (nodeError.code === 'ENOENT') {
+      const errorMessage = error instanceof Error ? error.message : '';
+      if (nodeError.code === 'ENOENT' || errorMessage.includes('Invalid file path')) {
         sendError(res, 'File not found', { status: 404, includeTimestamp: true });
       } else {
         sendError(res, getErrorMessage(error, 'Failed to create attestation'), {
@@ -112,7 +113,8 @@ export class ProvenanceController {
       );
     } catch (error) {
       const nodeError = error as NodeJS.ErrnoException;
-      if (nodeError.code === 'ENOENT') {
+      const errorMessage = error instanceof Error ? error.message : '';
+      if (nodeError.code === 'ENOENT' || errorMessage.includes('Invalid file path')) {
         sendError(res, 'File not found', { status: 404, includeTimestamp: true });
       } else {
         sendError(res, getErrorMessage(error, 'Failed to generate file digest'), {

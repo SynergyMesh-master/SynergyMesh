@@ -1,6 +1,6 @@
 import { createHash, randomUUID } from 'crypto';
 import { readFile, stat } from 'fs/promises';
-import { relative, resolve, normalize } from 'path';
+import { relative } from 'path';
 import * as path from 'path';
 
 // Define a safe root directory for allowed file operations
@@ -75,7 +75,13 @@ export class ProvenanceService {
    * 生成文件的 SHA256 摘要
    */
   async generateFileDigest(filePath: string): Promise<string> {
-    const content = await readFile(filePath);
+    // Normalize and resolve against the SAFE_ROOT
+    const resolvedPath = path.resolve(SAFE_ROOT, filePath);
+    // Ensure the resolved path is within SAFE_ROOT
+    if (!resolvedPath.startsWith(SAFE_ROOT + path.sep)) {
+      throw new Error('Invalid file path: Access outside of allowed directory is not permitted.');
+    }
+    const content = await readFile(resolvedPath);
     const hash = createHash('sha256');
     hash.update(content);
     return `sha256:${hash.digest('hex')}`;

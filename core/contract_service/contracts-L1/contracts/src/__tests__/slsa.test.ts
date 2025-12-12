@@ -3,9 +3,8 @@ import express from 'express';
 import routes from '../routes';
 import { loggingMiddleware } from '../middleware/logging';
 import { errorMiddleware } from '../middleware/error';
-import { writeFile, unlink } from 'fs/promises';
-import { join } from 'path';
-import { tmpdir } from 'os';
+import { writeFile, unlink, mkdir } from 'fs/promises';
+import { join, resolve } from 'path';
 
 // Create standalone test application
 const createTestApp = () => {
@@ -20,16 +19,19 @@ const createTestApp = () => {
 describe('SLSA API Endpoints', () => {
   let testFilePath: string;
   let app: express.Application;
+  const SAFE_ROOT = resolve(process.cwd(), 'safefiles');
 
   beforeEach(async () => {
     app = createTestApp();
-    testFilePath = join(tmpdir(), `test-slsa-${Date.now()}.txt`);
-    await writeFile(testFilePath, 'test content for SLSA testing');
+    // Ensure safe directory exists
+    await mkdir(SAFE_ROOT, { recursive: true });
+    testFilePath = `test-slsa-${Date.now()}.txt`;
+    await writeFile(join(SAFE_ROOT, testFilePath), 'test content for SLSA testing');
   });
 
   afterEach(async () => {
     try {
-      await unlink(testFilePath);
+      await unlink(join(SAFE_ROOT, testFilePath));
     } catch {
       // Ignore cleanup errors
     }
