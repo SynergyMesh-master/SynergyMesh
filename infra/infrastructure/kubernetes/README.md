@@ -116,12 +116,14 @@ kubectl get ingress -n autofix-bot
 ### 最小集群要求
 
 #### 開發環境
+
 - **節點**: 3 個
 - **CPU**: 12 核心
 - **內存**: 24 GB
 - **存儲**: 100 GB
 
 #### 生產環境
+
 - **節點**: 10 個（可擴展至 20）
 - **CPU**: 40 核心（可擴展至 80）
 - **內存**: 80 GB（可擴展至 160）
@@ -147,7 +149,9 @@ kubectl get ingress -n autofix-bot
 ## 🔧 配置說明
 
 ### ConfigMap
+
 包含所有服務的配置：
+
 - 數據庫連接
 - Redis 配置
 - 服務端口
@@ -156,14 +160,18 @@ kubectl get ingress -n autofix-bot
 - SLSA Level 3 配置
 
 ### Secrets
+
 敏感數據（需要手動創建）：
+
 - 數據庫密碼
 - Redis 密碼
 - API 密鑰（SonarQube, Snyk, GitHub）
 - 加密密鑰
 
 ### Ingress
+
 路由配置：
+
 - `/api/analyze` → Code Analyzer
 - `/api/scan` → Vulnerability Detector
 - `/api/repair` → Auto Repair
@@ -172,6 +180,7 @@ kubectl get ingress -n autofix-bot
 - `/prometheus` → Prometheus UI
 
 ### HPA（自動擴展）
+
 - **Code Analyzer**: 3-10 副本（CPU 70%, 內存 80%）
 - **Vulnerability Detector**: 3-8 副本（CPU 75%）
 - **Auto Repair**: 2-6 副本（CPU 70%）
@@ -239,19 +248,23 @@ kubectl get hpa -n autofix-bot -w
 ## 📈 監控與日誌
 
 ### Prometheus
+
 - **URL**: `https://autofix-bot.example.com/prometheus`
 - **指標**: 請求率、錯誤率、延遲、資源使用
 
 ### Grafana
+
 - **URL**: `https://autofix-bot.example.com/grafana`
 - **默認用戶**: admin
 - **密碼**: 查看 secrets
 
 ### Loki
+
 - **端點**: `http://loki:3100`
 - **日誌聚合**: 所有服務日誌
 
 ### Jaeger
+
 - **UI**: 通過 port-forward 訪問
 - **追蹤**: 完整的分布式追蹤
 
@@ -266,6 +279,7 @@ kubectl port-forward -n autofix-bot svc/jaeger 16686:16686
 ## 🔒 安全最佳實踐
 
 ### 已實施的安全措施
+
 1. ✅ **最小權限 RBAC**: 僅授予必要權限
 2. ✅ **Network Policies**: 網絡隔離和訪問控制
 3. ✅ **Secrets 加密**: 敏感數據加密存儲
@@ -274,7 +288,9 @@ kubectl port-forward -n autofix-bot svc/jaeger 16686:16686
 6. ✅ **資源限制**: 防止資源耗盡攻擊
 
 ### Pod Security Context
+
 所有 Pod 使用：
+
 ```yaml
 securityContext:
   runAsNonRoot: true
@@ -389,6 +405,7 @@ kubectl exec -i -n autofix-bot postgres-0 -- \
 ## ✅ 檢查清單
 
 ### 部署前
+
 - [ ] 創建 Kubernetes 集群
 - [ ] 安裝 kubectl 和 kustomize
 - [ ] 創建密鑰
@@ -397,6 +414,7 @@ kubectl exec -i -n autofix-bot postgres-0 -- \
 - [ ] 安裝 cert-manager
 
 ### 部署後
+
 - [ ] 驗證所有 Pod 運行
 - [ ] 測試服務健康檢查
 - [ ] 配置 Grafana 儀表板

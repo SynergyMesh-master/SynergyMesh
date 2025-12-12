@@ -1,4 +1,5 @@
 # Storage Architecture for Knowledge Processing
+
 # 知識處理存儲架構
 
 **創建日期 (Created Date)**: 2025-12-07  
@@ -110,6 +111,7 @@ primary_store:
 Neo4j 存儲知識圖譜的核心結構：
 
 **節點類型 (Node Types)**:
+
 ```cypher
 // 實體節點
 CREATE (:Entity {
@@ -132,6 +134,7 @@ CREATE (:Class {
 ```
 
 **關係類型 (Relationship Types)**:
+
 ```cypher
 // 實體間關係
 MATCH (s:Entity {id: "ent-12345"}), (o:Entity {id: "ent-67890"})
@@ -222,6 +225,7 @@ cache_layer:
 #### 2.3.2 緩存策略 (Caching Strategy)
 
 **熱點數據緩存 (Hot Data Caching)**:
+
 ```python
 # 緩存實體基本信息
 cache_key = f"entity:{entity_id}"
@@ -240,6 +244,7 @@ redis.setex(cache_key, ttl=1800, value=json.dumps(query_result))
 ```
 
 **嵌入向量緩存 (Embedding Vector Caching)**:
+
 ```python
 # 緩存實體嵌入向量
 embedding_key = f"embedding:{entity_id}"
@@ -247,6 +252,7 @@ redis.setex(embedding_key, ttl=7200, value=vector.tobytes())
 ```
 
 **緩存失效策略 (Cache Invalidation)**:
+
 - **寫穿 (Write-Through)**: 更新 Neo4j 時同步更新 Redis
 - **TTL 過期**: 自動過期策略
 - **主動失效**: 實體更新時主動刪除相關緩存
@@ -313,6 +319,7 @@ sequenceDiagram
 **恢復點目標 (RPO)**: < 1 hour
 
 **恢復流程**:
+
 ```bash
 # 1. 停止受影響的 Neo4j 節點
 neo4j stop
@@ -344,6 +351,7 @@ cypher-shell "MATCH (n) RETURN count(n)"
 **決策**: 選擇 Neo4j 作為主存儲而非關係型數據庫或文檔數據庫。
 
 **理由**:
+
 - **原生圖遍歷**: 比 SQL JOIN 快 1000 倍以上
 - **Cypher 查詢語言**: 直觀表達圖查詢
 - **ACID 保證**: 完整的事務支持
@@ -351,6 +359,7 @@ cypher-shell "MATCH (n) RETURN count(n)"
 - **豐富生態**: 與 Spark, Elasticsearch 良好集成
 
 **權衡**:
+
 - 學習曲線較陡峭
 - 運維複雜度較高
 - 授權成本（企業版）
@@ -360,6 +369,7 @@ cypher-shell "MATCH (n) RETURN count(n)"
 **決策**: 使用 Redis Cluster 而非 Memcached 或其他緩存方案。
 
 **理由**:
+
 - **數據結構豐富**: 支持 Hash, List, Set, Sorted Set
 - **持久化選項**: AOF / RDB 備份
 - **集群模式**: 自動分片與高可用
@@ -370,6 +380,7 @@ cypher-shell "MATCH (n) RETURN count(n)"
 **決策**: 引入獨立的緩存層，而非僅使用 Neo4j + 備份。
 
 **理由**:
+
 - **降低主存儲負載**: 熱點查詢不直接打到 Neo4j
 - **提升響應速度**: 緩存命中延遲 < 1ms
 - **成本優化**: 緩存層成本低於擴展 Neo4j 節點
@@ -594,16 +605,19 @@ maintenance:
 ## 10. 參考資料 (References)
 
 ### 內部文檔
+
 - `infrastructure/kubernetes/templates/neo4j-statefulset.yaml` - Neo4j 部署模板
 - `infrastructure/kubernetes/templates/redis-cluster-config.yaml` - Redis 配置
 - `config/storage/` - 存儲配置目錄
 
 ### 外部文檔
+
 - [Neo4j Operations Manual](https://neo4j.com/docs/operations-manual/)
 - [Redis Cluster Specification](https://redis.io/docs/management/scaling/)
 - [AWS S3 Best Practices](https://docs.aws.amazon.com/AmazonS3/latest/userguide/best-practices.html)
 
 ### 相關架構文檔
+
 - `docs/ARCHITECTURE/plugin-architecture-pattern.md` - 插件架構
 - `docs/ARCHITECTURE/knowledge-graph-processing.md` - 知識圖譜處理
 - `docs/ARCHITECTURE/batch-stream-processing.md` - 批流處理

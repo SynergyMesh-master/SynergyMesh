@@ -19,6 +19,7 @@ Error: Jest: Failed to parse the TypeScript config file jest.config.ts
 ## Root Cause
 
 Jest configuration file was written in TypeScript (`jest.config.ts`) but:
+
 1. The required `ts-node` loader was not installed as a dependency
 2. The package has `"type": "module"` in package.json, requiring CommonJS config to use `.cjs` extension
 
@@ -43,12 +44,14 @@ Jest configuration file was written in TypeScript (`jest.config.ts`) but:
 ## Validation
 
 ### Test Results
+
 - Advisory Database: **60/60 tests passing** ✅
 - Full Test Suite: **98/98 tests passing** ✅
 - Build: **All workspaces build successfully** ✅
 - Security Scan: **No issues detected** ✅
 
 ### Test Output
+
 ```
 > @synergymesh/advisory-database@1.0.0 test
 > jest --passWithNoTests
@@ -74,6 +77,7 @@ Tests:       60 passed, 60 total
 ### Why `.cjs` instead of `.js`?
 
 The package.json contains `"type": "module"`, which means:
+
 - `.js` files are treated as ES modules
 - Jest config uses `module.exports`, which is CommonJS
 - `.cjs` explicitly marks the file as CommonJS
@@ -81,6 +85,7 @@ The package.json contains `"type": "module"`, which means:
 ### Configuration Rationale
 
 The `useESM: true` in ts-jest config is correct because:
+
 - It's for handling ES modules in the TypeScript **source code**, not the config file
 - The source files use ES module imports/exports
 - The config file itself is CommonJS (`.cjs`)

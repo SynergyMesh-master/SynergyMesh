@@ -18,6 +18,7 @@
 ### 文檔 (docs/)
 
 #### security-model.md - 安全模型
+
 定義完整的安全策略，包括:
 
 - **認證機制**
@@ -35,6 +36,7 @@
   - 審計日誌格式 (JSON，包含時間戳、事件類型、行為者、資源、變更)
 
 #### observability-standards.md - 可觀測性標準
+
 三支柱的可觀測性實踐:
 
 - **日誌 (Logs)**
@@ -55,17 +57,20 @@
 ### 配置 (config/)
 
 #### rbac-policies.yaml - RBAC 策略配置
+
 - 5 個內建角色定義 (super_admin, tenant_admin, project_admin, developer, viewer)
 - 權限定義 (租戶、專案、部署、Agent、知識庫、帳務)
 - 角色分配權限矩陣
 
 #### log-schema.json - 日誌 JSON Schema
+
 - 標準化日誌格式定義
 - 必要字段: timestamp, level, service, message
 - 可選字段: trace_id, span_id, context, error, http, performance
 - 敏感資訊驗證
 
 #### trace-config.yaml - 追蹤配置
+
 - OpenTelemetry (OTEL) 導出器配置
 - 資源屬性定義
 - 取樣策略規則
@@ -76,7 +81,9 @@
 ### 工具 (tools/)
 
 #### security-scan.ts - 安全掃描工具
+
 自動掃描代碼中的安全問題:
+
 - 硬編碼密碼檢測
 - SQL 注入風險
 - 代碼注入 (eval 使用)
@@ -85,18 +92,22 @@
 - 敏感資訊日誌外洩
 
 使用 CLI:
+
 ```bash
 npx ts-node tools/security-scan.ts [patterns]
 npx ts-node tools/security-scan.ts '**/*.ts' '**/*.js'
 ```
 
 #### log-validator.ts - 日誌驗證工具
+
 驗證日誌是否符合標準 schema:
+
 - JSON Schema 驗證
 - 敏感資訊檢測
 - 格式驗證報告
 
 使用 CLI:
+
 ```bash
 npx ts-node tools/log-validator.ts [schema-path] <log-file>
 npx ts-node tools/log-validator.ts ./config/log-schema.json app.log

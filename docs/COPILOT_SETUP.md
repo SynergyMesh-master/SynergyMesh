@@ -11,6 +11,7 @@ This document explains the GitHub Copilot custom instructions setup for the Syne
 ### Repository-Level Instructions
 
 A comprehensive custom instructions file has been created at:
+
 ```
 .github/copilot-instructions.md
 ```
@@ -97,16 +98,19 @@ Copilot can help review code against project standards:
 ## 🎯 Benefits
 
 ### Consistency
+
 - All team members get code suggestions following the same standards
 - New contributors quickly learn project conventions
 - Less time spent on code review for style issues
 
 ### Quality
+
 - Automatic adherence to security best practices
 - Proper error handling patterns
 - Complete documentation with JSDoc
 
 ### Efficiency
+
 - Faster development with context-aware suggestions
 - Reduced cognitive load remembering all conventions
 - Quick answers to project-specific questions
@@ -207,6 +211,7 @@ GitHub Copilot in any supported editor will read the `.github/copilot-instructio
    - Error handling patterns
 
 If suggestions don't follow the instructions:
+
 1. Reload your editor
 2. Check if `.github/copilot-instructions.md` exists
 3. Ensure Copilot extension is up to date

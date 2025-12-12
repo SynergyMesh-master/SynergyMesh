@@ -81,21 +81,25 @@
 ### 2.1 引用關係（References）
 
 #### HLP Executor Core → 現有系統
+
 - `config/system-manifest.yaml`: 新增 HLP Executor 作為 enhanced_integration 元件
 - `config/unified-config-index.yaml`: 引用 HLP 的向量配置與整合端點
 - `governance/registry/`: 註冊 HLP Executor 插件
 - `core/slsa_provenance/`: 引用 HLP 的 SLSA L3 證據
 
 #### 現有系統 → HLP Executor Core
+
 - `core/unified_integration/service_registry.py`: 發現並管理 HLP Executor 服務
 - `automation/intelligent/`: 調用 HLP 的 DAG 執行能力
 - `infrastructure/kubernetes/`: 部署 HLP Executor 到 K8s 集群
 
 ### 2.2 替代關係（Replaces）
+
 - **無直接替代**: HLP Executor Core 是新增功能，不替代現有模組
 - **增強關係**: 增強 `automation/` 下的執行能力，提供更強大的編排機制
 
 ### 2.3 被引用關係（Referenced By）
+
 - `docs/DOCUMENTATION_INDEX.md`: 新增 HLP Executor 架構與運維文件的索引條目
 - `docs/refactor_playbooks/03_refactor/meta/AI_PROMPTS.md`: 新增 HLP Executor 相關 AI 提示
 - `.github/workflows/`: 新增 HLP Executor 的 CI/CD 工作流
@@ -107,7 +111,8 @@
 ### 3.1 命名空間與依賴適配
 
 #### Namespace 適配（已完成）
-- ✅ **原始**: `axiom-system` 
+
+- ✅ **原始**: `axiom-system`
 - ✅ **適配**: `unmanned-island-system`
 - ✅ **理由**: 與 Unmanned Island 系統命名約定一致
 
@@ -123,14 +128,17 @@
 | `axiom.io` API Group | 改用 `unmanned-island.io` 或 `synergymesh.io` | P0 |
 
 #### Priority Class 適配
+
 - **原始**: `axiom-critical`
 - **適配**: `system-cluster-critical` (K8s 標準) 或自定義 `unmanned-island-critical`
 
 #### Image Registry 適配
+
 - **原始**: `registry.local/axiom/`
 - **適配**: 使用專案實際 registry（例如 `ghcr.io/synergymesh-admin/`）
 
 #### 路徑與端點適配
+
 - **Trust Bundle**: `/etc/axiom/trust` → `/etc/unmanned-island/trust`
 - **Config**: `/etc/axiom/config` → `/etc/unmanned-island/config`
 - **State Storage**: `/var/lib/axiom/state` → `/var/lib/unmanned-island/state`
@@ -150,6 +158,7 @@
    - **替代方案**: 使用 ConfigMap + Annotations 代替 CRD（Phase 1）
 
 ### 3.3 版本對齊
+
 - **Kubernetes**: 確保目標集群 >= 1.24（支援 CustomResources, HPA v2）
 - **Prometheus**: 確保 >= 2.30（支援 ServiceMonitor CRD）
 - **Sigstore/Cosign**: 確保 >= 2.0（供應鏈安全）
@@ -177,6 +186,7 @@
 ## 五、整合完成標準
 
 ### 必要條件（Must-Have）
+
 1. ✅ 所有 P0 檔案已創建且通過驗證
 2. ✅ K8s 清單可成功 `kubectl apply --dry-run`
 3. ✅ 所有配置檔案通過 YAML schema 驗證
@@ -184,12 +194,14 @@
 5. ✅ 文件索引更新完成
 
 ### 推薦條件（Should-Have）
+
 1. ✅ 所有 P1 檔案已創建
 2. ✅ 運維手冊已撰寫完成
 3. ✅ 測試配置已準備就緒
 4. ✅ CI/CD 工作流已配置
 
 ### 優化條件（Nice-to-Have）
+
 1. ✅ 所有 P2 檔案已創建
 2. ✅ Grafana 儀表板已設計
 3. ✅ 混沌工程場景已配置

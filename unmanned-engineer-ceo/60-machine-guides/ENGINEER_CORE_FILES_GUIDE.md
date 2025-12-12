@@ -27,23 +27,27 @@
 ## 1. 統一配置來源層
 
 ### 1.1 [synergymesh.yaml](synergymesh.yaml)
+
 - **使命**：定義整體平台的模組、執行模式、治理指標，是所有 Pipeline 的入口參數。
 - **必讀欄位**：`capabilities`, `service_registry`, `safety.posture`, `knowledge_cycle`。
 - **更新節奏**：任何新服務、AI 模組、或 SLSA 承諾變更時立即更新。
 - **驗證**：`npm run lint --workspaces --if-present` 會對其 Schema 做靜態檢查。
 
 ### 1.2 [config/system-manifest.yaml](config/system-manifest.yaml)
+
 - **使命**：列出每個子系統的狀態、擁有者、SLA、版本。
 - **必備內容**：`id`, `owner`, `lifecycle`, `deployment`, `observability`。
 - **常見錯誤**：忘記同步 `status`（例如 `ga`, `beta`）。
 - **驗證**：`python tools/docs/validate_index.py --verbose`。
 
 ### 1.3 [config/unified-config-index.yaml](config/unified-config-index.yaml)
+
 - **使命**：整合所有配置檔的索引，描述每個檔案的 domain、優先順序、使用場景。
 - **必備內容**：`entries[].path`, `layer`, `environment`, `checksum`。
 - **驗證**：`make all-kg` 會讀取此索引並生成知識圖譜。
 
 ### 1.4 [config/system-module-map.yaml](config/system-module-map.yaml)
+
 - **使命**：標註模組依賴與部署邊界，供架構師與 DevOps 溝通。
 - **建議內容**：`modules[].inputs`, `modules[].outputs`, `runtime`, `compliance`。
 - **驗證**：`python automation/self_awareness_report.py --check modules`。
@@ -53,21 +57,25 @@
 ## 2. 安全與治理層
 
 ### 2.1 [.env](.env)
+
 - **使命**：提供生產級環境變數樣板，對照 K8s Secret 與 CI Variables。
 - **必填欄位**：`DATABASE_URL`, `API_GATEWAY_KEY`, `JWT_SECRET`, `PROMETHEUS_URL` 等。
 - **守則**：不直接 commit 真實密鑰，僅填占位符；確保與 `config/environment.yaml` 對齊。
 
 ### 2.2 [config/safety-mechanisms.yaml](config/safety-mechanisms.yaml)
+
 - **使命**：定義 Kill Switch、降級策略、SLSA 鑑別流程。
 - **內容要點**：`circuit_breakers`, `rollback`, `incident_bridge`, `audit_hooks`。
 - **驗證**：`npm run dev:stack` 會在啟動時載入並檢查必填欄位。
 
 ### 2.3 [config/ai-constitution.yaml](config/ai-constitution.yaml)
+
 - **使命**：AI 三層憲法，約束決策引擎、虛擬專家與自動化代理。
 - **必讀段落**：`supreme_directives`, `delegation_matrix`, `redline_policies`。
 - **治理要求**：重大改動需透過架構評審並更新 `FINAL_DELIVERY_REPORT`。
 
 ### 2.4 [governance/policies/](governance/policies)
+
 - **使命**：Conftest/OPA Policy Gate，保證 K8s、容器、CI 維持合規。
 - **流程**：每次 PR 由 CI 自動執行 `npm run docs:lint` + `policy test`。
 
@@ -76,27 +84,33 @@
 ## 3. 部署與營運層
 
 ### 3.1 [DEPLOYMENT_MANIFEST.md](DEPLOYMENT_MANIFEST.md)
+
 - **使命**：提供 Docker Compose 與 Kubernetes 兩條部署流程。
 - **必查章節**：`Pre-deployment Checklist`, `Dependency Manifest`, `Troubleshooting`。
 - **實務建議**：在 PR 描述中貼上執行過的段落與結果。
 
 ### 3.2 [DEPLOYMENT_CHECKLIST.md](DEPLOYMENT_CHECKLIST.md)
+
 - **使命**：99 項部署驗證清單，覆蓋環境、依賴、安全、文件、驗證。
 - **操作方式**：逐項打勾並在 MR/PR 訊息附上完成時間戳。
 
 ### 3.3 [QUICK_START.production.md](QUICK_START.production.md)
+
 - **使命**：繁/英雙語的 5 分鐘生產啟動指引。
 - **段落**：環境準備 → 依賴安裝 → 模組啟動 → Docker → K8s → 監控 → 安全。
 
 ### 3.4 [SYSTEM_DIAGNOSTICS.md](SYSTEM_DIAGNOSTICS.md)
+
 - **使命**：健康檢查、Prometheus 查詢、Grafana 儀表板、ELK 日誌流程。
 - **CICD 務必執行**：`python automation/self_awareness_report.py --mode=health`。
 
 ### 3.5 [PROJECT_DELIVERY_CHECKLIST.md](PROJECT_DELIVERY_CHECKLIST.md)
+
 - **使命**：交付驗證（檔案、README、CI、可靠度指標、SLSA）
 - **建議**：作為每次版本切換的 Release Gate。
 
 ### 3.6 [FINAL_DELIVERY_REPORT.md](FINAL_DELIVERY_REPORT.md)
+
 - **使命**：統計交付內容、後續任務、品質指標，方便稽核與回溯。
 - **必填欄位**：`Achievement Summary`, `Next Steps`, `Verification Steps`。
 
@@ -120,13 +134,16 @@
 ## 5. 知識庫與觀測層
 
 ### 5.1 [docs/KNOWLEDGE_HEALTH.md](docs/KNOWLEDGE_HEALTH.md)
+
 - 敘述活體知識庫健康狀態、突出指標、Open Issues。
 
 ### 5.2 [docs/generated-mndoc.yaml](docs/generated-mndoc.yaml) / [docs/knowledge-graph.yaml](docs/knowledge-graph.yaml) / [docs/superroot-entities.yaml](docs/superroot-entities.yaml)
+
 - 由 `make all-kg` 自動產出，**禁止手動修改**。
 - 當 README 或配置變更後，務必重新生成並提交。
 
 ### 5.3 [automation/self_awareness_report.py](automation/self_awareness_report.py)
+
 - 腳本說明與輸出位於上述 docs；執行 `python automation/self_awareness_report.py --mode=health` 以產生最新報告。
 
 ---

@@ -33,6 +33,7 @@ Enforcement Layer (Phase 2) ✅  ← THIS PHASE
 ## 📁 Generated Resources
 
 ### Kubernetes CRDs (`crd/`)
+
 1. `visionstatement-crd.yaml` - Vision & Mission CRD
 2. `strategic-objectives-crd.yaml` - OKRs CRD
 3. `governance-charter-crd.yaml` - Governance structure CRD
@@ -44,6 +45,7 @@ Enforcement Layer (Phase 2) ✅  ← THIS PHASE
 9. `change-management-protocol-crd.yaml` - Change management CRD
 
 ### K8s Instances (`k8s/`)
+
 1. `vision-instance.yaml` - Vision 2025-2030
 2. `objectives-2025-q4.yaml` - Q4 2025 OKRs
 3. `charter-v1.yaml` - Governance charter v1
@@ -55,6 +57,7 @@ Enforcement Layer (Phase 2) ✅  ← THIS PHASE
 9. `change-mgmt-v1.yaml` - Change protocol v1
 
 ### OPA Policies (`policy/`)
+
 1. `policy-vision.rego` - Vision validation
 2. `policy-okr.rego` - OKR validation
 3. `policy-governance.rego` - Governance validation
@@ -70,28 +73,35 @@ Enforcement Layer (Phase 2) ✅  ← THIS PHASE
 ## 🔧 Tools & Scripts (`tests/`)
 
 ### Generation Script
+
 **File**: `generate-resources.sh`
+
 - Auto-generates CRDs, K8s instances, and OPA policies
 - Uses templates from `gac-templates/`
 - Follows mappings in `gac-architecture.yaml`
 
 **Usage**:
+
 ```bash
 ./tests/generate-resources.sh
 ```
 
 ### Validation Script
+
 **File**: `validate-all.sh`
+
 - Validates YAML syntax for all CRDs and K8s instances
 - Validates Rego syntax for OPA policies (if OPA installed)
 - Verifies file counts match expected
 
 **Usage**:
+
 ```bash
 ./tests/validate-all.sh
 ```
 
 **Latest Results**:
+
 ```
 ✅ All validations passed!
 Success: 19
@@ -104,21 +114,25 @@ Errors: 0
 ## 🚀 Deployment
 
 ### Prerequisites
+
 - Kubernetes cluster (v1.20+)
 - kubectl configured
 - (Optional) OPA Gatekeeper for policy enforcement
 
 ### Deploy CRDs
+
 ```bash
 kubectl apply -f crd/
 ```
 
 ### Deploy Instances
+
 ```bash
 kubectl apply -f k8s/
 ```
 
 ### Verify Deployment
+
 ```bash
 # Check CRDs
 kubectl get crds | grep governance.kai
@@ -130,7 +144,9 @@ kubectl get strategicobjectives -n governance
 ```
 
 ### (Optional) Deploy OPA Policies
+
 If using OPA Gatekeeper:
+
 ```bash
 kubectl apply -f policy/
 ```
@@ -140,6 +156,7 @@ kubectl apply -f policy/
 ## 📊 Validation Results
 
 ### Pre-Deployment Validation
+
 ```
 📋 CRDs: 9/9 ✅ (100% valid YAML)
 🔧 K8s Instances: 9/9 ✅ (100% valid YAML)
@@ -148,7 +165,9 @@ kubectl apply -f policy/
 ```
 
 ### Post-Deployment Validation
+
 Run after deploying to cluster:
+
 ```bash
 # Check CRD creation
 kubectl get crds | grep governance.kai | wc -l
@@ -195,18 +214,21 @@ metadata:
 ## 🔄 Agent Handoff
 
 ### From Previous Agent (Phase 1)
+
 - ✅ Received 9 strategic YAML documents
 - ✅ Received GaC architecture blueprint
 - ✅ Received 5 templates
 - ✅ Clear mapping table provided
 
 ### This Agent (Phase 2)
+
 - ✅ Generated 27 operational resources
 - ✅ Created generation + validation scripts
 - ✅ Validated all outputs
 - ✅ Documented deployment procedures
 
 ### To Next Agent (Phase 3)
+
 - 📝 All Phase 2 resources ready for GitOps integration
 - 📝 OPA policies ready for admission controller
 - 📝 Monitoring & dashboard implementation needed
@@ -217,11 +239,13 @@ metadata:
 ## 📌 Phase 3 Starting Points
 
 ### What's Ready
+
 1. **9 CRDs** - Deployed to cluster
 2. **9 K8s Instances** - Governance resources active
 3. **9 OPA Policies** - Ready for Gatekeeper integration
 
 ### What's Needed (Phase 3)
+
 1. **GitOps Integration**
    - Argo CD / Flux configuration
    - Auto-sync from strategic YAMLs

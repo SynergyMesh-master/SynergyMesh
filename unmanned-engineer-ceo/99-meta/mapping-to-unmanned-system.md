@@ -12,6 +12,7 @@
 | 99 | 連接活體知識庫 | docs/knowledge-graph.yaml |
 
 ## 資料流
+
 1. manifest.yaml → governance pipelines → docs/knowledge-index。
 2. knowledge-index.yaml → runtime/knowledge-base → dashboards。
 3. metrics-and-roi.md → docs/KNOWLEDGE_HEALTH.md + leadership review。

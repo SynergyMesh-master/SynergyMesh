@@ -41,6 +41,7 @@ npm run dev
 ```
 
 The app will be available at:
+
 - **Replit Preview:** `https://<your-repl>.replit.dev`
 - **Local:** `http://localhost:5000`
 
@@ -78,6 +79,7 @@ Unmanned-Island/
 ### `.replit` File
 
 The project is configured to:
+
 - Use **Node.js 20** runtime
 - Run on **port 5000** (frontend)
 - Use **esbuild** for fast bundling
@@ -126,6 +128,7 @@ npm run dev
 ```
 
 **What happens:**
+
 - Starts esbuild in watch mode
 - Bundles React app to `main.js` and `main.css`
 - Serves on `http://0.0.0.0:5000`
@@ -139,6 +142,7 @@ npm run build
 ```
 
 **Output:**
+
 - `dist/index.html` - Main HTML file
 - `dist/main.js` - Bundled JavaScript (~2.9 MB)
 - `dist/main.css` - Bundled CSS (~71 KB)
@@ -160,6 +164,7 @@ npm test
 ```
 
 **Expected Output:**
+
 ```
 Test Suites: 2 passed, 2 total
 Tests:       38 passed, 38 total
@@ -168,6 +173,7 @@ Time:        ~4s
 ```
 
 **Test Coverage:**
+
 - Stage 1 Agents: 25 tests
 - Stage 2 Coordinator: 13 tests
 
@@ -178,6 +184,7 @@ Time:        ~4s
 ### Frontend (`apps/web`)
 
 **Key Dependencies:**
+
 - `react` ^18.3.1
 - `react-router` ^7.9.6
 - `lucide-react` ^0.556.0 (icons)
@@ -186,6 +193,7 @@ Time:        ~4s
 - `@radix-ui/*` (UI components)
 
 **Dev Dependencies:**
+
 - `esbuild` 0.27.1
 - `tailwindcss` ^3.4.18
 - `postcss` ^8.5.3
@@ -193,6 +201,7 @@ Time:        ~4s
 ### Island AI (`island-ai`)
 
 **Dev Dependencies:**
+
 - `typescript` ^5.4.0
 - `jest` ^29.7.0
 - `ts-jest` ^29.1.2
@@ -204,6 +213,7 @@ Time:        ~4s
 ### Issue: Build fails with "Cannot find module 'esbuild'"
 
 **Solution:**
+
 ```bash
 cd apps/web
 rm -rf node_modules package-lock.json
@@ -214,6 +224,7 @@ npm run build
 ### Issue: Port 5000 already in use
 
 **Solution:**
+
 ```bash
 # Kill existing process
 lsof -ti:5000 | xargs kill -9
@@ -225,6 +236,7 @@ lsof -ti:5000 | xargs kill -9
 ### Issue: Island AI tests fail
 
 **Solution:**
+
 ```bash
 cd island-ai
 rm -rf node_modules package-lock.json
@@ -236,6 +248,7 @@ npm test
 
 **Solution:**
 Check that `main.tsx` imports React:
+
 ```typescript
 import React from 'react';
 import { createRoot } from 'react-dom/client';
@@ -245,6 +258,7 @@ import { createRoot } from 'react-dom/client';
 
 **Solution:**
 Ensure `HashRouter` is used (not `BrowserRouter`):
+
 ```typescript
 import { HashRouter } from 'react-router';
 // ... use <HashRouter> in App.tsx
@@ -358,6 +372,7 @@ npm run build
 **Repository:** [SynergyMesh-admin/Unmanned-Island](https://github.com/SynergyMesh-admin/Unmanned-Island)
 
 For issues or questions:
+
 1. Check this deployment guide
 2. Review the troubleshooting section
 3. Check the related documentation

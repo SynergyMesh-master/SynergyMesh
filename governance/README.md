@@ -40,12 +40,12 @@ SynergyMesh 採用分層閉環治理架構，整合 GitOps、Policy as Code、In
 
 ### Extended Governance Dimensions | 延伸治理維度
 
-4. **Layers & Domains** - Semantic definitions and responsibilities
-5. **Roles & Capabilities** - Module behavioral intent
-6. **Behavior Contracts** - API, events, invariants, failure modes
-7. **Lifecycle & Ownership** - Team ownership and module state
-8. **Policies & Constraints** - Executable architectural policies
-9. **Quality & Metrics** - Measurable architecture health
+1. **Layers & Domains** - Semantic definitions and responsibilities
+2. **Roles & Capabilities** - Module behavioral intent
+3. **Behavior Contracts** - API, events, invariants, failure modes
+4. **Lifecycle & Ownership** - Team ownership and module state
+5. **Policies & Constraints** - Executable architectural policies
+6. **Quality & Metrics** - Measurable architecture health
 
 This framework makes architecture governance **explicit, measurable, and automatable**.
 
@@ -123,34 +123,40 @@ governance/
 
 ### ✅ Responsibilities 職責
 
-#### 1. **分層治理框架 (Layered Governance Framework)** ⭐ NEW!
+#### 1. **分層治理框架 (Layered Governance Framework)** ⭐ NEW
 
 **10-policy: Policy as Code**
+
 - 治理規則、合規政策以程式碼形式定義
 - 自動化策略閘 (CI/CD/Runtime)
 - Suppress 機制與審計追蹤
 
 **20-intent: Intent-based Orchestration**
+
 - 意圖驅動編排，語意一致性保障
 - 高階意圖轉譯為具體操作
 - 閉環保障與數位分身模擬
 
 **30-agents: AI Agent Governance**
+
 - AI Agent 全生命週期管理
 - 權限與安全控管
 - 合規 (ISO/IEC 42001, NIST AI RMF, EU AI Act)
 
 **60-contracts: Contract Registry**
+
 - 契約驅動模組化設計
 - 接口標準化與版本控管
 - 契約測試與向後兼容
 
 **70-audit: Audit & Traceability**
+
 - 全鏈路審計日誌與追蹤
 - 資料血緣與模型溯源
 - 合規報告自動化
 
 **80-feedback: Closed-Loop Feedback**
+
 - 策略—執行—監控—回饋閉環
 - AI/ML 驅動異常預測與優化
 - A/B 測試與持續改進
@@ -158,43 +164,51 @@ governance/
 #### 2. **原有治理職責 (Existing Governance)**
 
 **Policy Definitions 策略定義** (`23-policies/`)
-   - 安全策略
-   - 存取控制策略
-   - 代碼品質策略
-   - Conftest/OPA 策略
+
+- 安全策略
+- 存取控制策略
+- 代碼品質策略
+- Conftest/OPA 策略
 
 **Audit Configurations 審計配置** (`07-audit/`)
-   - 審計日誌配置
-   - 合規檢查規則
-   - 審計報告模板
+
+- 審計日誌配置
+- 合規檢查規則
+- 審計報告模板
 
 **Governance Rules 治理規則** (`32-rules/`)
-   - 依賴管理規則
-   - 版本控制規則
-   - 發布流程規則
+
+- 依賴管理規則
+- 版本控制規則
+- 發布流程規則
 
 **Software Bill of Materials 軟體物料清單** (`38-sbom/`)
-   - 依賴清單
-   - 授權資訊
-   - 簽章策略
+
+- 依賴清單
+- 授權資訊
+- 簽章策略
 
 **Schema Definitions Schema 定義** (`31-schemas/`)
-   - 配置文件 schema
-   - API schema
-   - Data model definitions / 資料模型定義
+
+- 配置文件 schema
+- API schema
+- Data model definitions / 資料模型定義
 
 **Environment Matrix 環境映射** (`environment-matrix/`)
-   - 模組環境需求映射
-   - 語言維度映射
-   - 條件式部署配置
+
+- 模組環境需求映射
+- 語言維度映射
+- 條件式部署配置
 
 **Deployment Configuration 部署配置** (`deployment/`)
-   - 服務部署配置
-   - Kubernetes 清單
+
+- 服務部署配置
+- Kubernetes 清單
 
 **Module Registry 模組註冊表** (`24-registry/`)
-   - 服務治理元數據
-   - 模組依賴關係
+
+- 服務治理元數據
+- 模組依賴關係
 
 ### ❌ What This Directory Does NOT Do 本目錄不負責什麼
 

@@ -16,6 +16,7 @@
 ## 📁 文件結構
 
 ### 文檔 (docs/)
+
 - **invariants.md** - 架構不變條件定義
   - 分層不變條件 (INV-001 ~ INV-003)
   - 資料存取不變條件 (INV-004 ~ INV-005)
@@ -33,6 +34,7 @@
   - 共享庫範圍和版本管理
 
 ### 工具 (tools/)
+
 - **arch-lint.config.yml** - Architecture Linter 配置
   - 分層檢查、循環依賴檢查
   - 命名規範、檔案組織要求
@@ -44,6 +46,7 @@
   - 生成詳細的違規報告
 
 ### 測試 (tests/)
+
 - **arch-lint.test.ts** - Linter 單元測試
   - 規則驗證測試
   - 邊界情況測試

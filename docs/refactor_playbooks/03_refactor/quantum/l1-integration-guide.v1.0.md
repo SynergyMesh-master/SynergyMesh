@@ -1,4 +1,5 @@
 # L1 憲法級基線整合指南 v1.0
+
 ## L1 Constitutional Baseline Integration Guide v1.0
 
 ---
@@ -545,6 +546,7 @@ sum(rate(baseline_attestation_attempts_total[5m]))
 #### Issue 1: 政策驗證失敗 / Policy Validation Failure
 
 **症狀 / Symptoms:**
+
 ```
 Error from server (Forbidden): error when creating "deployment.yaml": 
 admission webhook "validation.gatekeeper.sh" denied the request: 
@@ -552,6 +554,7 @@ admission webhook "validation.gatekeeper.sh" denied the request:
 ```
 
 **解決方案 / Solution:**
+
 ```bash
 # 檢查必要標籤 / Check required labels
 kubectl get constrainttemplate k8srequiredlabels -o yaml
@@ -563,6 +566,7 @@ kubectl label deployment my-app baseline.level=L-A
 #### Issue 2: 資源配額超限 / Resource Quota Exceeded
 
 **症狀 / Symptoms:**
+
 ```
 Error from server (Forbidden): pods "my-pod" is forbidden: 
 exceeded quota: baseline-resource-quota, 
@@ -570,6 +574,7 @@ requested: requests.cpu=2, used: requests.cpu=99, limited: requests.cpu=100
 ```
 
 **解決方案 / Solution:**
+
 ```bash
 # 檢查當前配額使用情況 / Check current quota usage
 kubectl get resourcequota baseline-resource-quota -n $NAMESPACE -o yaml
@@ -581,11 +586,13 @@ kubectl describe resourcequota baseline-resource-quota -n $NAMESPACE
 #### Issue 3: 網路策略阻擋流量 / Network Policy Blocking Traffic
 
 **症狀 / Symptoms:**
+
 ```
 Connection timeout when trying to reach service X from pod Y
 ```
 
 **解決方案 / Solution:**
+
 ```bash
 # 檢查應用的網路策略 / Check applied network policies
 kubectl get networkpolicy -n $NAMESPACE
@@ -698,23 +705,23 @@ kubectl apply -f custom-allow-policy.yaml
 
 ### 聯絡資訊 / Contact Information
 
-- Platform Team: platform-ops@example.com
-- Security Team: security@example.com
-- Quantum Team: quantum-engineering@example.com
+- Platform Team: <platform-ops@example.com>
+- Security Team: <security@example.com>
+- Quantum Team: <quantum-engineering@example.com>
 - Emergency: +1-555-BASELINE (24x7 Hotline)
 
 ---
 
 ## 📚 參考資料 / References
 
-1. **Kubernetes Official Documentation**: https://kubernetes.io/docs/
-2. **Open Policy Agent (OPA)**: https://www.openpolicyagent.org/
-3. **Kyverno Policy Engine**: https://kyverno.io/
-4. **Istio Service Mesh**: https://istio.io/
-5. **Qiskit Quantum SDK**: https://qiskit.org/
-6. **ArgoCD GitOps**: https://argo-cd.readthedocs.io/
-7. **SLSA Supply Chain Security**: https://slsa.dev/
-8. **CNCF Security Best Practices**: https://www.cncf.io/blog/2022/06/07/cncf-kubernetes-security-best-practices/
+1. **Kubernetes Official Documentation**: <https://kubernetes.io/docs/>
+2. **Open Policy Agent (OPA)**: <https://www.openpolicyagent.org/>
+3. **Kyverno Policy Engine**: <https://kyverno.io/>
+4. **Istio Service Mesh**: <https://istio.io/>
+5. **Qiskit Quantum SDK**: <https://qiskit.org/>
+6. **ArgoCD GitOps**: <https://argo-cd.readthedocs.io/>
+7. **SLSA Supply Chain Security**: <https://slsa.dev/>
+8. **CNCF Security Best Practices**: <https://www.cncf.io/blog/2022/06/07/cncf-kubernetes-security-best-practices/>
 
 ---
 

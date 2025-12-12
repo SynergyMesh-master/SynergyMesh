@@ -57,11 +57,13 @@ MCP 是一種開放標準，定義了應用程式如何與大型語言模型 (LL
 ### 1. Code Analyzer（代碼分析器）
 
 **能力：**
+
 - `analyze-code` - 綜合代碼品質和複雜度分析
 - `detect-issues` - 問題檢測與嚴重性篩選
 - `suggest-improvements` - AI 驅動的改進建議
 
 **功能：**
+
 - 循環複雜度和認知複雜度計算
 - 安全漏洞偵測
 - 性能問題識別
@@ -86,17 +88,20 @@ const request = {
 ### 2. Test Generator（測試生成器）
 
 **能力：**
+
 - `generate-unit-tests` - 為函數和類別生成單元測試
 - `generate-integration-tests` - 生成 API 整合測試
 - `generate-e2e-tests` - 生成端到端測試場景
 
 **支援框架：**
+
 - Jest, Mocha, Vitest (單元測試)
 - Playwright, Cypress (E2E 測試)
 
 ### 3. Doc Generator（文檔生成器）
 
 **能力：**
+
 - `generate-jsdoc` - 生成 JSDoc 文檔
 - `generate-api-docs` - 生成 API 文檔 (Markdown, OpenAPI)
 - `generate-guides` - 生成綜合指南
@@ -104,6 +109,7 @@ const request = {
 ### 4. SLSA Validator（SLSA 驗證器）
 
 **能力：**
+
 - `validate-provenance` - 驗證 SLSA 溯源數據
 - `check-slsa-compliance` - 檢查目標 SLSA 等級合規性
 - `generate-compliance-report` - 生成綜合合規報告
@@ -113,11 +119,13 @@ const request = {
 ### 5. Security Scanner（安全掃描器）
 
 **能力：**
+
 - `scan-vulnerabilities` - 掃描安全漏洞
 - `check-dependencies` - 檢查依賴項的已知 CVE
 - `analyze-secrets` - 偵測暴露的密鑰和憑證
 
 **偵測類型：**
+
 - SQL 注入
 - XSS 漏洞
 - 命令注入
@@ -126,6 +134,7 @@ const request = {
 ### 6. Performance Analyzer（性能分析器）
 
 **能力：**
+
 - `analyze-performance` - 分析代碼性能指標
 - `identify-bottlenecks` - 識別性能瓶頸
 - `suggest-optimizations` - 建議性能優化
@@ -139,6 +148,7 @@ const request = {
 ### 配置文件位置
 
 MCP 配置文件通常位於：
+
 - VS Code: `.vscode/mcp.json`
 - 專案根目錄: `mcp.json`
 
@@ -334,6 +344,7 @@ MCP 配置文件通常位於：
 ### 最佳實踐
 
 1. **使用語義化的服務器 ID**
+
    ```json
    // ✅ Good
    "synergymesh/code-analyzer": { ... }
@@ -343,6 +354,7 @@ MCP 配置文件通常位於：
    ```
 
 2. **敏感資訊使用 inputs**
+
    ```json
    // ✅ Good - 使用 inputs
    "env": { "TOKEN": "${input:token}" }
@@ -352,11 +364,13 @@ MCP 配置文件通常位於：
    ```
 
 3. **指定版本號**
+
    ```json
    "version": "1.0.0"
    ```
 
 4. **適當設置環境變數**
+
    ```json
    "env": {
      "NODE_ENV": "production",

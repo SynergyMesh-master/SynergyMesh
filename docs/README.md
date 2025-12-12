@@ -279,7 +279,7 @@ optional_fields:
 | 9    | Cosign Sign    | Sigstore 無密鑰簽名   |
 | 10   | Audit          | 審計事件記錄          |
 
-### 🏗️ 治理工具：
+### 🏗️ 治理工具
 
 - `tools/docs/validate_index.py` - Schema 驗證器
 - `tools/docs/scan_repo_generate_index.py` - 倉庫掃描生成索引
@@ -563,7 +563,7 @@ admin-copilot review ./src/controllers
 
 1. **裝置流程（推薦）**：執行 `/login` 並按照指示操作
 2. **個人存取令牌**：
-   - 訪問 https://github.com/settings/personal-access-tokens/new
+   - 訪問 <https://github.com/settings/personal-access-tokens/new>
    - 新增「Copilot Requests」權限
    - 設定環境變數 `GH_TOKEN` 或 `GITHUB_TOKEN`
 
@@ -723,6 +723,7 @@ curl http://localhost:8000/api/v1/metrics
 #### 檢測能力
 
 **安全漏洞（6 類）**：
+
 - 硬編碼密鑰
 - SQL 注入
 - XSS 漏洞
@@ -731,11 +732,13 @@ curl http://localhost:8000/api/v1/metrics
 - 密碼學弱點
 
 **代碼質量**：
+
 - 圈複雜度
 - 代碼重複率
 - 類型註解缺失
 
 **性能問題**：
+
 - N+1 查詢
 - 低效循環
 

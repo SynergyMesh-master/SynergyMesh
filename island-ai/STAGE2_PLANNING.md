@@ -291,6 +291,7 @@ await triggerEngine.processEvent({
 - [ ] 基礎協作策略
 
 **可交付成果：**
+
 - 兩個 Agent 可以順序協作
 - Insight 可以在 Agent 間共享
 
@@ -302,6 +303,7 @@ await triggerEngine.processEvent({
 - [ ] Trigger Registry
 
 **可交付成果：**
+
 - 基於事件自動調度 Agent
 - 支持條件觸發
 
@@ -313,6 +315,7 @@ await triggerEngine.processEvent({
 - [ ] 執行計劃器
 
 **可交付成果：**
+
 - 自動化決策制定
 - 多目標優化
 
@@ -324,6 +327,7 @@ await triggerEngine.processEvent({
 - [ ] Subscription Manager
 
 **可交付成果：**
+
 - Agent 間實時通訊
 - 發布/訂閱模式
 
@@ -335,6 +339,7 @@ await triggerEngine.processEvent({
 - [ ] Execution Tracker
 
 **可交付成果：**
+
 - 複雜工作流定義與執行
 - 任務狀態追蹤
 
@@ -438,6 +443,7 @@ npm run example
 **PR Title:** `feat(island-ai): Stage 2 - Agent Coordinator Implementation`
 
 **包含內容:**
+
 - Agent Coordinator 基礎實現
 - 同步屏障機制
 - 簡單的順序協作策略

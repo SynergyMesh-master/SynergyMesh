@@ -89,6 +89,7 @@ config/agents/profiles/recovery_expert.yaml ← Phoenix's profile
 ```
 
 **Dr. Phoenix is:**
+
 - ✅ Always available
 - ✅ Cannot be disabled
 - ✅ Runs independently
@@ -241,6 +242,7 @@ monitoring:
 ### Scenario 1: Launcher Process Crash | 啟動器進程崩潰
 
 **What Happens:**
+
 1. Launcher crashes (e.g., unhandled exception)
 2. Watchdog detects missing process (within 30s)
 3. Phoenix triggered immediately
@@ -253,6 +255,7 @@ monitoring:
 ### Scenario 2: Configuration Error | 配置錯誤
 
 **What Happens:**
+
 1. Bad config causes launcher to fail on startup
 2. Watchdog detects repeated failures
 3. Phoenix tries quick restart (fails)
@@ -266,6 +269,7 @@ monitoring:
 ### Scenario 3: Phoenix Agent Failure | Phoenix 代理故障
 
 **What Happens:**
+
 1. Phoenix agent crashes (rare)
 2. Watchdog detects Phoenix is down
 3. Watchdog restarts Phoenix directly
@@ -277,6 +281,7 @@ monitoring:
 ### Scenario 4: Complete System Failure | 完全系統故障
 
 **What Happens:**
+
 1. Multiple components fail
 2. Phoenix attempts all strategies (all fail)
 3. Phoenix escalates to Level 5
@@ -291,6 +296,7 @@ monitoring:
 ### Scenario 5: Watchdog + Phoenix Both Down | 看門狗和 Phoenix 都停止
 
 **What Happens:**
+
 1. Operator notices system issues
 2. Manually runs: `python emergency_recovery.py`
 3. Emergency recovery diagnoses system
@@ -343,6 +349,7 @@ Recovery Metrics:
 ### Phoenix Authority Limits | Phoenix 權限限制
 
 **Can Do:**
+
 - Restart processes
 - Rollback configurations
 - Restore backups
@@ -350,6 +357,7 @@ Recovery Metrics:
 - Create incidents
 
 **Cannot Do:**
+
 - Delete production data (requires approval)
 - Modify security policies
 - Change safety mechanisms
@@ -359,6 +367,7 @@ Recovery Metrics:
 ### Audit Trail | 審計追蹤
 
 Every Phoenix action is logged with:
+
 - Timestamp
 - Action taken
 - Reason

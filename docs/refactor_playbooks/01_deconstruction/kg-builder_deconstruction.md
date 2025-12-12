@@ -1,4 +1,5 @@
 # Knowledge Graph Builder Plugin - Deconstruction Analysis
+
 # 知識圖譜構建器插件 - 解構分析
 
 **解構日期 (Deconstruction Date)**: 2025-12-07  
@@ -12,7 +13,8 @@
 
 `_legacy_scratch/README.md` 包含一個完整的知識圖譜構建器插件規範（Knowledge Graph Builder Plugin），採用 Quantum-YAML 格式定義。該規範描述了一個企業級的語義處理系統，用於從文檔中提取三元組（triples）、構建本體（ontology）、並進行實體解析（entity resolution）。
 
-### 核心發現 (Key Findings):
+### 核心發現 (Key Findings)
+
 - **文件性質**: 插件規範模板（Plugin Specification Template）
 - **技術層次**: 企業級知識處理系統（Enterprise Knowledge Processing System）
 - **主要功能**: 三元組提取、本體生成、實體解析、語義索引
@@ -304,25 +306,30 @@ Configuration Categories:
 ### 10.2 應該遷移到正式位置的內容 (Content to Migrate)
 
 #### A. 架構文檔 (Architecture Documentation)
+
 - 知識圖譜構建流程 → `docs/ARCHITECTURE/knowledge-graph-processing.md`
 - 插件架構模式 → `docs/ARCHITECTURE/plugin-architecture-pattern.md`
 - 存儲架構設計 → `docs/ARCHITECTURE/storage-architecture.md`
 
 #### B. 配置規範 (Configuration Specifications)
+
 - 插件規範模板 → `config/templates/plugin-specification-template.yaml`
 - 向量嵌入配置 → `config/ai-models/vector-alignment-config.yaml`
 - 處理管線配置 → `config/processing/pipeline-config.yaml`
 
 #### C. 治理規則 (Governance Policies)
+
 - 插件質量門檻 → `governance/policies/plugin-quality-gates.yaml`
 - 數據隱私合規 → `governance/policies/data-privacy-policy.yaml`
 - 插件 JSON Schema → `governance/schemas/plugin-specification.schema.json`
 
 #### D. 部署模板 (Deployment Templates)
+
 - Kubernetes 部署模板 → `infrastructure/kubernetes/templates/knowledge-processor-deployment.yaml`
 - 資源配額模板 → `infrastructure/kubernetes/templates/resource-quota-template.yaml`
 
 #### E. 工具與腳本 (Tools & Scripts)
+
 - 插件驗證工具 → `tools/validate-plugin-spec.py`
 - 插件註冊工具 → `tools/register-plugin.py`
 - 性能基準測試 → `tools/benchmark-knowledge-processor.py`

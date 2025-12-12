@@ -10,11 +10,12 @@
 
 ---
 
-## 🤖 AI 代理？即時載入！ / AI Agent? Instant Load!
+## 🤖 AI 代理？即時載入！ / AI Agent? Instant Load
 
 **👉 [AUTONOMOUS_AGENT_STATE.md](./AUTONOMOUS_AGENT_STATE.md) - < 1 秒完整專案狀態**
 
 這份機器可讀的狀態清單包含:
+
 - ⚡ < 1 秒即時理解專案狀態
 - ✅ 機器可讀的 JSON/YAML 格式
 - 🚀 即時執行命令參考
@@ -88,12 +89,14 @@ Vision and Strategy Governance defines the overarching strategic direction, visi
 ## 🚀 Quick Start | 快速開始
 
 ### Validate Resources | 驗證資源
+
 ```bash
 cd governance/00-vision-strategy
 ./tests/deploy-local.sh
 ```
 
 ### Deploy to Kubernetes | 部署到 Kubernetes
+
 ```bash
 # See DEPLOYMENT.md for detailed instructions
 # 詳細說明請參閱 DEPLOYMENT.md
@@ -113,6 +116,7 @@ kubectl apply -k gitops/kustomization-instances.yaml
 ## 📚 Documentation | 文檔
 
 ### 🌟 Primary Entry Point / 主要入口
+
 - **[AUTONOMOUS_AGENT_STATE.md](./AUTONOMOUS_AGENT_STATE.md)** ⚡ **AI AGENTS START HERE**
   - < 1 second instant project state loading
   - Machine-readable JSON/YAML format
@@ -122,13 +126,16 @@ kubectl apply -k gitops/kustomization-instances.yaml
   - AI 代理 < 1 秒即時載入，立即執行
 
 ### Deployment / 部署
+
 - **[DEPLOYMENT.md](./DEPLOYMENT.md)** - Complete deployment guide | 完整部署指南
 
 ### Implementation Details / 實施細節
+
 - **[PHASE2_README.md](./PHASE2_README.md)** - Phase 2: Operational implementation | 階段 2：運營實施
 - **[PHASE3_README.md](./PHASE3_README.md)** - Phase 3: Automation & monitoring | 階段 3：自動化與監控
 
 ### Status & History / 狀態與歷史
+
 - **[PROJECT_STATE_SNAPSHOT.md](./PROJECT_STATE_SNAPSHOT.md)** - Complete project state | 完整項目狀態
 - **[README.gac-deployment.md](./README.gac-deployment.md)** - GaC deployment overview | GaC 部署概覽
 

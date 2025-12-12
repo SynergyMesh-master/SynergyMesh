@@ -1,4 +1,5 @@
 # Refactor Playbook Configuration Integration Guide
+
 # 重構劇本配置整合指南
 
 **Date:** 2025-12-06  
@@ -23,12 +24,14 @@
 ```
 
 **禁止**：
+
 - ❌ 直接掃描整個專案寫檔案
 - ❌ 在劇本中硬編碼路徑
 - ❌ 創建新的根目錄
 - ❌ 繞過 module map 定義的邊界
 
 **允許**：
+
 - ✅ 通過 cluster_id 查詢 module map
 - ✅ 只在 target_roots 定義的目錄中操作
 - ✅ 遵守 allow_new_subdirs 設定
@@ -289,6 +292,7 @@ core_platform:
 ```
 
 **結果**：
+
 - ✅ 可以修改 `core/unified_integration/` 和 `core/mind_matrix/` 中的現有檔案
 - ❌ 不能在這些目錄下創建新子目錄
 - ✅ PR 會自動指派給 `@core-owners` 審查
@@ -320,6 +324,7 @@ automation:
 ```
 
 **結果**：
+
 - ✅ 可以修改 `automation/autonomous/` 中的現有檔案
 - ❌ 不能創建新子目錄
 - ✅ PR 會自動指派給 `@automation-team` 審查

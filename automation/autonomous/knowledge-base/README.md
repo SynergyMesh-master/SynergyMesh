@@ -20,6 +20,7 @@ This skeleton handles knowledge organization, query interface, update strategies
 **主要指南**: `unmanned-engineer-ceo/60-machine-guides/70-architecture-skeletons/knowledge-base/`
 
 ### 指南文件結構
+
 ```
 knowledge-base/
 ├── overview.md              # 骨架簡介與應用場景
@@ -34,6 +35,7 @@ knowledge-base/
 ### 使用時機 / When to Use
 
 當您需要：
+
 - 構建系統知識庫
 - 實現語義搜索
 - 為 AI 提供上下文
@@ -166,18 +168,21 @@ knowledge_index:
 ### 搜索方式 / Search Methods
 
 1. **關鍵詞搜索 (Keyword Search)**
+
    ```python
    search("API governance", limit=10)
    # 返回相關文檔、代碼、配置
    ```
 
 2. **語義搜索 (Semantic Search)**
+
    ```python
    semantic_search("如何實現多租戶隔離？", limit=5)
    # 使用 embeddings 理解語義，返回相關知識
    ```
 
 3. **上下文查詢 (Context Query)**
+
    ```python
    context_query(
        task="設計新的 API",
@@ -347,17 +352,20 @@ health_report:
 ## 📞 支援與參考 / Support and References
 
 ### 相關文檔
+
 - [架構指南](../../unmanned-engineer-ceo/60-machine-guides/70-architecture-skeletons/knowledge-base/)
 - [Living Knowledge Base](../../docs/LIVING_KNOWLEDGE_BASE.md)
 - [Documentation Index](../../DOCUMENTATION_INDEX.md)
 - [Knowledge Graph](../../docs/knowledge-graph.yaml)
 
 ### 相關骨架
+
 - [Docs Governance Skeleton](../docs-examples/README.md)
 - [Nucleus Orchestrator Skeleton](../nucleus-orchestrator/README.md)
 - [API Governance Skeleton](../api-governance/README.md)
 
 ### 外部資源
+
 - [RAG (Retrieval-Augmented Generation)](https://arxiv.org/abs/2005.11401)
 - [Semantic Search with Transformers](https://www.sbert.net/)
 - [Knowledge Graph Construction](https://neo4j.com/developer/knowledge-graph/)

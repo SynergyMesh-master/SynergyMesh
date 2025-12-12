@@ -20,6 +20,7 @@ This skeleton defines SLA targets, capacity planning, failure recovery, and disa
 **主要指南**: `unmanned-engineer-ceo/60-machine-guides/70-architecture-skeletons/performance-reliability/`
 
 ### 指南文件結構
+
 ```
 performance-reliability/
 ├── overview.md              # 骨架簡介與應用場景
@@ -34,6 +35,7 @@ performance-reliability/
 ### 使用時機 / When to Use
 
 當您需要：
+
 - 定義系統 SLA 目標
 - 規劃容量和擴展策略
 - 設計高可用架構
@@ -108,11 +110,13 @@ performance-reliability/
 ### 服務級 SLA / Service-Level SLA
 
 #### 關鍵服務
+
 - **核心 API**: 99.95% 可用性, < 200ms 響應時間
 - **飛行控制器**: 99.99% 可用性, < 10ms 響應時間
 - **安全監控**: 99.9% 可用性, < 1ms 處理延遲
 
 #### 一般服務
+
 - **資料 API**: 99.5% 可用性, < 1s 響應時間
 - **報告生成**: 99% 可用性, < 5s 響應時間
 
@@ -161,16 +165,19 @@ performance-reliability/
 ### 擴展策略 / Scaling Strategy
 
 #### 垂直擴展 (Vertical Scaling)
+
 - 增加 CPU/記憶體
 - 適用於: 資料庫、有狀態服務
 - 限制: 硬體上限、停機時間
 
 #### 水平擴展 (Horizontal Scaling)
+
 - 增加服務實例數
 - 適用於: 無狀態服務、API
 - 優點: 無限擴展、高可用
 
 #### 自動擴展 (Auto Scaling)
+
 ```yaml
 auto_scaling:
   min_instances: 2
@@ -191,6 +198,7 @@ auto_scaling:
 ### 自動恢復 / Automatic Recovery
 
 #### 重試策略 (Retry Strategy)
+
 ```python
 # 指數退避重試
 max_retries = 3
@@ -200,6 +208,7 @@ backoff_multiplier = 2
 ```
 
 #### 斷路器模式 (Circuit Breaker Pattern)
+
 ```
 狀態: Closed → Open → Half-Open → Closed
 觸發條件: 錯誤率 > 50% (最近 10 次請求)
@@ -209,6 +218,7 @@ backoff_multiplier = 2
 ### 降級方案 / Degradation Strategy
 
 優先級順序:
+
 1. 🔴 **關鍵功能**: 始終可用 (飛行控制、安全監控)
 2. 🟡 **重要功能**: 有限降級 (資料查詢、報告)
 3. 🟢 **次要功能**: 完全降級 (推薦、統計)
@@ -224,6 +234,7 @@ backoff_multiplier = 2
 | 一般資料 | 每週 | 30 天 | RTO: 24h, RPO: 7d |
 
 **術語說明**:
+
 - **RTO (Recovery Time Objective)**: 恢復時間目標
 - **RPO (Recovery Point Objective)**: 恢復點目標
 
@@ -287,12 +298,14 @@ chaos_experiments:
 ### 關鍵指標 / Key Metrics
 
 **Golden Signals**:
+
 1. **延遲 (Latency)**: 響應時間分布
 2. **流量 (Traffic)**: 請求速率
 3. **錯誤 (Errors)**: 錯誤率
 4. **飽和度 (Saturation)**: 資源使用率
 
 **RED 方法**:
+
 - **Rate**: 請求速率
 - **Errors**: 錯誤數量
 - **Duration**: 請求延遲
@@ -300,12 +313,14 @@ chaos_experiments:
 ## 📞 支援與參考 / Support and References
 
 ### 相關文檔
+
 - [架構指南](../../unmanned-engineer-ceo/60-machine-guides/70-architecture-skeletons/performance-reliability/)
 - [Architecture Stability Skeleton](../architecture-stability/README.md)
 - [Security & Observability Skeleton](../security-observability/README.md)
 - [Testing Governance Skeleton](../testing-compatibility/README.md)
 
 ### 外部資源
+
 - [Site Reliability Engineering (SRE) Book](https://sre.google/books/)
 - [AWS Well-Architected Framework](https://aws.amazon.com/architecture/well-architected/)
 - [The Twelve-Factor App](https://12factor.net/)

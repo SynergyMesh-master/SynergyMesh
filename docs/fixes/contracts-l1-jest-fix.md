@@ -7,6 +7,7 @@
 ## Problem
 
 The `@synergymesh/contracts-l1` workspace had missing Jest dependencies:
+
 1. `ts-jest` was not installed (required for TypeScript test execution)
 2. `supertest` was not installed (required for API testing)
 3. Jest config was in TypeScript format (`jest.config.ts`)
@@ -24,6 +25,7 @@ Cannot find module 'supertest' from 'src/__tests__/assignment.test.ts'
 ## Root Cause
 
 The workspace had:
+
 - TypeScript Jest configuration file (`jest.config.ts`)
 - Missing `ts-jest` dependency in package.json devDependencies
 - Missing `supertest` dependency (used by multiple test files)
@@ -49,12 +51,14 @@ The workspace had:
 ## Validation
 
 ### Test Infrastructure
+
 - ✅ Jest can now find and execute tests
 - ✅ TypeScript test files compile and run
 - ✅ API tests can import supertest
 - ⚠️  Some tests have pre-existing failures unrelated to jest config (test logic issues)
 
 ### Configuration
+
 ```javascript
 /** @type {import('jest').Config} */
 const config = {
@@ -80,6 +84,7 @@ module.exports = config;
 ### Why `.cjs` extension?
 
 For consistency with the advisory-database fix and to avoid potential module resolution issues:
+
 - Explicit CommonJS syntax with `module.exports`
 - Works reliably across all Node.js module configurations
 - Standard approach for Jest configs in modern projects
@@ -87,6 +92,7 @@ For consistency with the advisory-database fix and to avoid potential module res
 ### Test Infrastructure Dependencies
 
 This fix reveals the importance of:
+
 1. **Explicit test dependencies**: Always declare test runners and assertion libraries
 2. **Complete test tooling**: Include all testing utilities (supertest, etc.)
 3. **Consistent configuration**: Use same config format across workspaces

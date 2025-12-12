@@ -1,4 +1,5 @@
 # Knowledge Graph Builder - Integration Planning
+
 # 知識圖譜構建器 - 集成規劃設計
 
 **規劃日期 (Planning Date)**: 2025-12-07  
@@ -430,22 +431,26 @@ logging:
 ### 10.1 遷移階段 (Migration Phases)
 
 #### Phase 1: 文檔與配置遷移 (P0)
+
 - 創建架構文檔 (`docs/ARCHITECTURE/`)
 - 創建配置模板 (`config/templates/`)
 - 創建治理規則 (`governance/policies/`, `governance/schemas/`)
 - **回滾**: 刪除新建文件，無影響現有系統
 
 #### Phase 2: 工具與腳本遷移 (P1)
+
 - 創建驗證工具 (`tools/validate-plugin-spec.py`)
 - 創建 CLI 工具 (`tools/cli/plugin-registry-cli.py`)
 - **回滾**: 刪除工具文件，不影響運行時
 
 #### Phase 3: 模組註冊遷移 (P1)
+
 - 更新 `config/system-module-map.yaml`
 - 創建知識處理工作流 (`knowledge/processing-workflows/`)
 - **回滾**: Git revert `system-module-map.yaml` 變更
 
 #### Phase 4: CI/CD 集成 (P2)
+
 - 創建 GitHub Actions workflow
 - 集成到現有 CI/CD pipeline
 - **回滾**: 禁用新 workflow，現有 CI 不受影響

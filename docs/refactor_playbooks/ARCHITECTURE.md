@@ -112,6 +112,7 @@ For each cluster in clusters:
 ### 3. 生成階段
 
 #### Stub Mode (Default)
+
 ```python
 generate_playbook_stub(cluster_name, cluster_score)
 ├── Build Markdown template
@@ -124,6 +125,7 @@ generate_playbook_stub(cluster_name, cluster_score)
 ```
 
 #### LLM Mode (--use-llm)
+
 ```python
 generate_cluster_prompt(cluster_name, cluster_score)
 ├── Build System Prompt (role definition)
@@ -172,6 +174,7 @@ class RefactorPlaybookGenerator:
 ### Prompt Templates
 
 #### System Prompt Structure
+
 ```
 角色定義
 ├── 首席軟體架構師
@@ -191,6 +194,7 @@ class RefactorPlaybookGenerator:
 ```
 
 #### User Prompt Structure
+
 ```
 [1] Cluster 基本資訊
     ├── Cluster 名稱
@@ -288,6 +292,7 @@ Language Governance Score
 ## 📊 資料模型
 
 ### Violation
+
 ```python
 {
     "file": "path/to/file.ext",
@@ -296,6 +301,7 @@ Language Governance Score
 ```
 
 ### Hotspot
+
 ```python
 {
     "file": "path/to/file.ext",
@@ -306,6 +312,7 @@ Language Governance Score
 ```
 
 ### Semgrep Issue
+
 ```python
 {
     "path": "path/to/file.ext",
@@ -318,6 +325,7 @@ Language Governance Score
 ```
 
 ### Migration Flow
+
 ```python
 {
     "source": "services:cpp",
@@ -328,6 +336,7 @@ Language Governance Score
 ```
 
 ### Cluster Info
+
 ```python
 {
     "score": 75,
@@ -340,24 +349,28 @@ Language Governance Score
 ## 🎯 設計決策
 
 ### 1. 為什麼使用 Python？
+
 - ✅ 豐富的資料處理能力（JSON, YAML, Markdown）
 - ✅ 與現有工具鏈一致（language-governance-analyzer.py）
 - ✅ 易於擴展和整合 LLM API
 - ✅ 良好的檔案系統操作支援
 
 ### 2. 為什麼分離 LLM 與 Stub 模式？
+
 - ✅ 可在無 LLM API 情況下運行
 - ✅ 降低 API 成本
 - ✅ Stub 提供結構化模板
 - ✅ 靈活整合外部 LLM（ChatGPT, Claude）
 
 ### 3. 為什麼使用 Markdown 輸出？
+
 - ✅ 人類可讀、易於編輯
 - ✅ 支援版本控制（Git diff）
 - ✅ 易於轉換為其他格式（HTML, PDF）
 - ✅ GitHub 原生支援
 
 ### 4. 為什麼設計 P0/P1/P2 優先級？
+
 - ✅ 明確執行順序
 - ✅ 資源分配優化
 - ✅ 風險管理
@@ -410,16 +423,19 @@ def generate_playbook_json(self, cluster_name: str) -> Dict:
 ## 📈 效能考量
 
 ### 載入優化
+
 - 延遲載入：只在需要時載入檔案
 - 快取機制：避免重複解析
 - 批次處理：一次載入所有資料
 
 ### 生成優化
+
 - 平行處理：可並行生成多個 playbooks
 - 增量更新：只重新生成變更的 clusters
 - 模板快取：重用 Markdown 模板
 
 ### 記憶體管理
+
 - 流式處理大檔案
 - 及時釋放不需要的資料
 - 使用 generator 減少記憶體占用

@@ -3,6 +3,7 @@
 ## 認證 (Authentication)
 
 ### 支援的認證方式
+
 1. **OAuth 2.0 / OpenID Connect**
    - 標準流程: Authorization Code Flow (with PKCE)
    - 用於: Web 應用、Mobile 應用
@@ -17,6 +18,7 @@
    - 機制: JWT with RS256
 
 ### Token 管理
+
 ```yaml
 access_token:
   lifetime: 1h
@@ -33,6 +35,7 @@ api_key:
 ## 授權 (Authorization)
 
 ### RBAC (Role-Based Access Control)
+
 ```yaml
 roles:
   - id: admin
@@ -53,6 +56,7 @@ roles:
 ```
 
 ### ABAC (Attribute-Based Access Control)
+
 ```yaml
 policies:
   - name: tenant-isolation
@@ -69,13 +73,16 @@ policies:
 ## 審計 (Audit)
 
 ### 審計事件
+
 所有以下操作必須記錄:
+
 - 資源的 CREATE / UPDATE / DELETE
 - 權限變更
 - 敏感資料存取
 - 認證失敗
 
 ### 審計日誌格式
+
 ```json
 {
   "timestamp": "2024-12-04T10:30:00Z",

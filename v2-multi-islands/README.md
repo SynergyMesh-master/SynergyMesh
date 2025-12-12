@@ -9,6 +9,7 @@
 ## 🏝️ 核心概念
 
 **無人島概念**比無人機更具抽象性和擴展性：
+
 - 🏝️ **無人島**：每個功能域都是獨立的自治島嶼
 - 🌊 **海洋連接**：島嶼間通過標準化協議通信
 - ⚡ **自主運行**：每個島嶼內部完全自動化運作
@@ -68,6 +69,7 @@ v2-multi-islands/
 ## 🚀 使用方式
 
 ### 直接執行
+
 ```bash
 # 從專案根目錄
 python3 v2-multi-islands/main.py --mode=auto
@@ -79,12 +81,14 @@ python3 v2-multi-islands/main.py --island=go
 ```
 
 ### 透過自動化入口
+
 ```bash
 ./tools/scripts/automation-entry.sh
 # 選擇選項 8: v2-multi-islands
 ```
 
 ### 作為 Python 模組導入
+
 ```python
 from v2_multi_islands.orchestrator import IslandOrchestrator
 from v2_multi_islands.islands import PythonIsland, RustIsland
@@ -147,6 +151,7 @@ python3 v2-multi-islands/validate_governance.py
 ```
 
 This will check:
+
 - Agent catalog registration
 - Health check configuration
 - RBAC permission alignment

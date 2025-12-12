@@ -1,4 +1,5 @@
 # 彈性命名規範完整學習手冊
+
 ## 從零開始到企業級實戰
 
 > **目標讀者**: 初學者到資深工程師  
@@ -11,18 +12,21 @@
 ## 🎯 學習路線圖
 
 ### 第一階段：基礎概念 (第1-2週)
+
 - 為什麼命名規範如此重要？
 - 命名規範的歷史與演進
 - 不同語言與平台的命名特色
 - 建立個人命名習慣
 
 ### 第二階段：工具與平台 (第3-4週)  
+
 - Git 版本控制命名
 - Docker 容器化命名
 - Kubernetes 雲原生命名  
 - CI/CD 自動化命名
 
 ### 第三階段：企業級實戰 (第5-6週)
+
 - 多團隊協作規範
 - 大型專案命名策略
 - 自動化驗證與治理
@@ -33,12 +37,14 @@
 ## 📚 完整學習大綱
 
 ### 第一章：命名規範基礎理論
+
 1.1 什麼是命名規範？為什麼重要？  
 1.2 命名規範的核心原則  
 1.3 常見的命名災難與解決方案  
 1.4 不同領域的命名特色分析  
 
 ### 第二章：程式設計語言命名
+
 2.1 多種語言命名規範對比  
 2.2 Go 語言命名最佳實踐  
 2.3 JavaScript/TypeScript 命名規範  
@@ -46,48 +52,56 @@
 2.5 跨語言專案的命名統一
 
 ### 第三章：版本控制系統命名
+
 3.1 Git 分支命名策略  
 3.2 Commit 訊息規範化  
 3.3 標籤與版本命名  
 3.4 Pull Request 與 Issue 命名
 
 ### 第四章：容器化與編排命名
+
 4.1 Docker 映像檔命名規範  
 4.2 容器名稱與標籤策略  
 4.3 Kubernetes 資源命名  
 4.4 命名空間設計與管理
 
 ### 第五章：基礎設施即程式碼
+
 5.1 Terraform 模組命名  
 5.2 雲端資源命名策略  
 5.3 環境隔離與命名  
 5.4 基礎設施版本管理
 
 ### 第六章：CI/CD 流水線命名
+
 6.1 工作流程命名規範  
 6.2 環境變數命名策略  
 6.3 部署階段命名  
 6.4 監控與警報命名
 
 ### 第七章：企業級命名治理
+
 7.1 大型組織命名策略  
 7.2 多團隊協作規範  
 7.3 自動化驗證工具  
 7.4 命名規範遷移策略
 
 ### 第八章：實戰項目演練
+
 8.1 電商平台命名設計  
 8.2 微服務架構命名  
 8.3 多雲環境命名策略  
 8.4 DevOps 工具鏈命名
 
 ### 第九章：工具與自動化
+
 9.1 命名驗證工具開發  
 9.2 IDE 外掛與整合  
 9.3 CI/CD 自動檢查  
 9.4 監控與報表系統
 
 ### 第十章：持續改進與維護
+
 10.1 命名規範版本管理  
 10.2 團隊培訓與推廣  
 10.3 效果評估與優化  
@@ -104,11 +118,13 @@
 ### 1.1 什麼是命名規範？為什麼重要？
 
 #### 命名規範的定義
+
 命名規範是一套統一的命名約定，用於確保程式碼、檔案、資源等的名稱具有一致性、可讀性和可維護性。它就像建築師的藍圖，為整個軟體系統提供清晰的結構指導。
 
 #### 為什麼命名規範如此重要？
 
 **1. 可讀性提升**
+
 ```bash
 # ❌ 糟糕的命名
 d1 = getUserData()
@@ -120,22 +136,27 @@ final_price = calculate_discounted_price(user_profile)
 ```
 
 **2. 維護成本降低**
+
 - 新團隊成員能快速理解專案結構
 - 減少 50% 的程式碼閱讀時間
 - 降低 Bug 發生率
 
 **3. 團隊協作效率**
+
 - 統一的理解基礎
 - 減少溝通成本
 - 提高程式碼審查效率
 
 #### 真實案例：Netflix 的命名災難
+
 2012年，Netflix 因為微服務命名不當，導致：
+
 - 服務依賴關係混亂
 - 部署失敗率增加 40%
 - 工程師需花費額外 30% 時間理解系統
 
 **解決方案**：實施統一命名規範後
+
 - 部署成功率提升至 99.9%
 - 新功能開發速度提升 25%
 - 系統故障恢復時間縮短 60%
@@ -143,6 +164,7 @@ final_price = calculate_discounted_price(user_profile)
 ### 1.2 命名規範的核心原則
 
 #### 原則一：清晰明確 (Clarity)
+
 ```yaml
 # ❌ 模糊不清
 svc: web
@@ -154,6 +176,7 @@ image: user-auth-api:v1.2.3
 ```
 
 #### 原則二：一致性 (Consistency)
+
 ```bash
 # ❌ 不一致
 create_user()
@@ -167,6 +190,7 @@ update_product()
 ```
 
 #### 原則三：簡潔性 (Conciseness)
+
 ```go
 // ❌ 冗長
 func GetAllActiveUserAccountInformationFromDatabase() {}
@@ -176,6 +200,7 @@ func GetActiveUsers() {}
 ```
 
 #### 原則四：可搜尋性 (Searchability)
+
 ```javascript
 // ❌ 難以搜尋
 const d = 86400; // 一天的秒數
@@ -187,6 +212,7 @@ const SECONDS_PER_DAY = 86400;
 ### 1.3 常見的命名災難與解決方案
 
 #### 災難類型一：神秘縮寫
+
 ```python
 # ❌ 神秘縮寫
 def calc_gst_amt(pr, rt):
@@ -198,6 +224,7 @@ def calculate_goods_service_tax_amount(price, tax_rate):
 ```
 
 #### 災難類型二：匈牙利記號法濫用
+
 ```csharp
 // ❌ 過時的匈牙利記號法
 string strUserName;
@@ -211,6 +238,7 @@ bool isActive;
 ```
 
 #### 災難類型三：文化差異問題
+
 ```bash
 # ❌ 文化特定命名
 git branch feature/lunar-new-year-sale
@@ -222,6 +250,7 @@ git branch feature/seasonal-promotion-q1
 ### 1.4 不同領域的命名特色分析
 
 #### 前端開發命名特色
+
 ```typescript
 // React 元件命名
 const UserProfileCard = () => {
@@ -235,6 +264,7 @@ const UserProfileCard = () => {
 ```
 
 #### 後端服務命名特色
+
 ```go
 // Go 服務命名
 type UserService interface {
@@ -249,6 +279,7 @@ user_authentication_tokens
 ```
 
 #### DevOps 基礎設施命名特色
+
 ```yaml
 # Kubernetes 資源命名
 apiVersion: apps/v1
@@ -263,12 +294,15 @@ metadata:
 ```
 
 #### 練習題 1.1
+
 請為以下場景設計合適的命名：
+
 1. 一個處理使用者註冊的微服務
 2. 存放用戶頭像的 S3 儲存桶
 3. 監控系統 CPU 使用率的 Prometheus 指標
 
 **參考答案**：
+
 1. `user-registration-service`
 2. `user-avatars-prod-us-west-2`
 3. `system_cpu_usage_percent`
@@ -293,6 +327,7 @@ metadata:
 ### 2.2 Go 語言命名最佳實踐
 
 #### 基本規則
+
 ```go
 // ✅ 正確的 Go 命名風格
 package userservice
@@ -332,6 +367,7 @@ func (r *userRepository) CreateUser(ctx context.Context, user *UserProfile) erro
 ```
 
 #### Go 專案結構命名
+
 ```
 project-root/
 ├── cmd/
@@ -357,6 +393,7 @@ project-root/
 ### 2.3 JavaScript/TypeScript 命名規範
 
 #### ES6+ 現代 JavaScript 命名
+
 ```javascript
 // ✅ 現代 JavaScript 命名規範
 const API_BASE_URL = 'https://api.example.com';
@@ -410,6 +447,7 @@ const withAuthentication = (component) => {
 ```
 
 #### TypeScript 特定命名規範
+
 ```typescript
 // ✅ TypeScript 命名最佳實踐
 interface UserProfile {
@@ -447,6 +485,7 @@ class UserRepository implements Repository<UserProfile> {
 ### 2.4 Python 命名慣例
 
 #### PEP 8 命名標準
+
 ```python
 # ✅ Python 命名規範 (PEP 8)
 import os
@@ -522,6 +561,7 @@ class InvalidUserDataError(ValueError):
 ### 2.5 跨語言專案的命名統一
 
 #### 統一的 API 設計
+
 ```yaml
 # REST API 路徑統一使用 kebab-case
 GET  /api/v1/user-profiles/{id}
@@ -541,6 +581,7 @@ query {
 ```
 
 #### 資料庫命名統一
+
 ```sql
 -- 表格名稱使用 snake_case 複數形式
 CREATE TABLE user_profiles (
@@ -559,9 +600,11 @@ CREATE INDEX idx_user_profiles_active_created ON user_profiles(is_active, create
 ```
 
 #### 練習題 2.1
+
 請將以下糟糕的命名改寫為符合各語言規範的良好命名：
 
 **JavaScript:**
+
 ```javascript
 // ❌ 需要改進
 var u = {};
@@ -574,6 +617,7 @@ class usrmgr {
 ```
 
 **Python:**
+
 ```python
 # ❌ 需要改進  
 def GetUserData(ID):
@@ -593,6 +637,7 @@ class UserMGR:
 ### 3.1 Git 分支命名策略
 
 #### Git Flow 分支命名規範
+
 ```bash
 # 主要分支 - 永續存在
 main                    # 主分支（生產環境）
@@ -613,6 +658,7 @@ release/v2.0.0-beta    # Beta 版本發布
 ```
 
 #### GitHub Flow 簡化分支策略
+
 ```bash
 # 主分支
 main
@@ -625,6 +671,7 @@ refactor-authentication-service
 ```
 
 #### 分支命名最佳實踐
+
 ```bash
 # ✅ 良好的分支命名
 feature/jira-123-user-profile-editing
@@ -642,6 +689,7 @@ temp-branch-delete-later
 ### 3.2 Commit 訊息規範化
 
 #### Conventional Commits 規範
+
 ```bash
 # 格式：<type>(<scope>): <description>
 #
@@ -671,6 +719,7 @@ BREAKING CHANGE: user API now returns different response structure
 ```
 
 #### 完整的 Commit 訊息範例
+
 ```bash
 feat(user-service): add email verification feature
 
@@ -684,6 +733,7 @@ Co-authored-by: Jane Smith <jane@example.com>
 ```
 
 #### commitlint 配置
+
 ```javascript
 // commitlint.config.js
 module.exports = {
@@ -716,6 +766,7 @@ module.exports = {
 ### 3.3 標籤與版本命名
 
 #### 語意化版本控制 (Semantic Versioning)
+
 ```bash
 # 版本格式：MAJOR.MINOR.PATCH[-PRERELEASE][+BUILD]
 
@@ -736,6 +787,7 @@ v1.2.0-beta.1+exp.sha.5114f85
 ```
 
 #### Git 標籤操作範例
+
 ```bash
 # 創建輕量標籤
 git tag v1.0.0
@@ -763,6 +815,7 @@ git show v1.0.0
 ### 3.4 Pull Request 與 Issue 命名
 
 #### Pull Request 命名規範
+
 ```bash
 # 格式：[TYPE] Description (#issue-number)
 
@@ -784,6 +837,7 @@ git show v1.0.0
 ```
 
 #### Issue 命名規範
+
 ```bash
 # Bug 報告
 [BUG] User login fails with special characters in password
@@ -802,6 +856,7 @@ git show v1.0.0
 ```
 
 #### GitHub Issue 範本
+
 ```markdown
 ---
 name: Bug Report
@@ -836,6 +891,7 @@ Add any other context about the problem here.
 ```
 
 #### 實戰演練 3.1
+
 請為以下情境設計合適的命名：
 
 1. **分支命名**：你正在開發一個新的使用者權限管理系統
@@ -844,6 +900,7 @@ Add any other context about the problem here.
 4. **Pull Request**：你重構了資料庫連接邏輯以提升效能
 
 **參考答案**：
+
 1. `feature/user-permission-management-system`
 2. `fix(payment): resolve transaction failure in checkout process`
 3. `v1.6.0`
@@ -856,12 +913,15 @@ Add any other context about the problem here.
 ### 4.1 Kubernetes 資源命名規範
 
 #### 基本命名原則
+
 Kubernetes 資源命名必須遵循 DNS-1123 標準：
+
 - 只能包含小寫字母、數字和連字號 (-)
 - 必須以字母或數字開頭和結尾
 - 最長 63 個字元
 
 #### Pod 與 Deployment 命名
+
 ```yaml
 # ✅ 良好的 Deployment 命名
 apiVersion: apps/v1
@@ -892,6 +952,7 @@ spec:
 ```
 
 #### Service 與 Ingress 命名
+
 ```yaml
 # Service 命名規範
 apiVersion: v1
@@ -937,6 +998,7 @@ spec:
 ```
 
 #### ConfigMap 與 Secret 命名
+
 ```yaml
 # ConfigMap 命名
 apiVersion: v1
@@ -965,6 +1027,7 @@ data:
 ### 4.2 Docker 映像檔命名策略
 
 #### 映像檔標籤命名規範
+
 ```bash
 # 基本格式：registry/namespace/repository:tag
 # 範例：registry.company.com/platform/user-auth-api:v1.2.3
@@ -989,6 +1052,7 @@ image:final-v2-really-final
 ```
 
 #### Dockerfile 多階段建置命名
+
 ```dockerfile
 # ✅ 良好的多階段建置命名
 FROM node:18-alpine AS base-dependencies
@@ -1015,6 +1079,7 @@ CMD ["npm", "start"]
 ### 4.3 雲端資源命名規範
 
 #### AWS 資源命名
+
 ```bash
 # S3 Bucket 命名（全球唯一）
 company-user-avatars-prod-us-west-2
@@ -1043,6 +1108,7 @@ networking-foundation-prod
 ```
 
 #### Azure 資源命名
+
 ```bash
 # Resource Group 命名
 rg-user-service-prod-eastus
@@ -1065,6 +1131,7 @@ app-admin-portal-staging-westus2
 ```
 
 #### Google Cloud Platform 資源命名
+
 ```bash
 # Project ID 命名
 company-user-service-prod
@@ -1090,6 +1157,7 @@ dev-data-transformation-pipeline
 ### 4.4 監控與日誌命名
 
 #### Prometheus 指標命名
+
 ```bash
 # 格式：<namespace>_<subsystem>_<name>_<unit>
 
@@ -1121,6 +1189,7 @@ user_service_cpu_usage_percent
 ```
 
 #### 日誌命名與結構化
+
 ```json
 {
   "timestamp": "2024-01-15T10:30:45Z",
@@ -1159,6 +1228,7 @@ user_service_cpu_usage_percent
 ### 4.5 CI/CD Pipeline 命名
 
 #### GitHub Actions Workflow 命名
+
 ```yaml
 # .github/workflows/user-service-ci-cd.yml
 name: User Service CI/CD Pipeline
@@ -1297,6 +1367,7 @@ pipeline {
 ```
 
 #### GitLab CI/CD Pipeline 命名
+
 ```yaml
 # .gitlab-ci.yml
 stages:
@@ -1409,6 +1480,7 @@ deploy-to-production:
 ### 4.6 Infrastructure as Code 命名
 
 #### Terraform 資源命名
+
 ```hcl
 # main.tf - AWS 資源命名範例
 
@@ -1572,6 +1644,7 @@ resource "random_string" "bucket_suffix" {
 ```
 
 #### Ansible Playbook 命名
+
 ```yaml
 # playbooks/deploy-user-service.yml
 ---
@@ -1676,6 +1749,7 @@ pipeline {
 ```
 
 #### GitLab CI/CD Pipeline 命名
+
 ```yaml
 # .gitlab-ci.yml
 stages:
@@ -1788,6 +1862,7 @@ deploy-to-production:
 ### 4.7 Infrastructure as Code 命名
 
 #### Terraform 資源命名
+
 ```hcl
 # main.tf - AWS 資源命名範例
 
@@ -1951,6 +2026,7 @@ resource "random_string" "bucket_suffix" {
 ```
 
 #### Ansible Playbook 命名
+
 ```yaml
 # playbooks/deploy-user-service.yml
 ---
@@ -2027,6 +2103,7 @@ resource "random_string" "bucket_suffix" {
 ```
 
 #### Helm Chart 命名
+
 ```yaml
 # charts/user-service/Chart.yaml
 apiVersion: v2
@@ -2144,6 +2221,7 @@ spec:
 ### 4.8 環境特定命名策略
 
 #### 多環境資源區分
+
 ```bash
 # 環境前綴命名策略
 # 格式：{environment}-{service}-{component}-{region}
@@ -2170,6 +2248,7 @@ prod-user-api-cache-us-west-2
 ```
 
 #### 環境變數命名
+
 ```bash
 # 應用程式環境變數命名
 # 格式：{SERVICE}_{CATEGORY}_{SPECIFIC_NAME}
@@ -2218,6 +2297,7 @@ USER_SERVICE_SENTRY_DSN=${USER_SERVICE_SENTRY_DSN}
 ### 4.9 災難復原與備份命名
 
 #### 備份資源命名
+
 ```bash
 # 資料庫備份命名
 # 格式：backup-{service}-{type}-{timestamp}
@@ -2236,6 +2316,7 @@ snap-user-service-app-volume-prod-20240115-030000
 ```
 
 #### 災難復原計畫命名
+
 ```yaml
 # disaster-recovery/user-service-dr-plan.yml
 apiVersion: v1
@@ -2262,6 +2343,7 @@ data:
 ### 4.10 安全與合規命名
 
 #### Security Group 與網路 ACL 命名
+
 ```bash
 # Security Group 命名慣例
 sg-web-tier-public-prod           # Web 層公用安全群組
@@ -2277,6 +2359,7 @@ nacl-database-subnet-prod         # 資料庫子網路 ACL
 ```
 
 #### 憑證與金鑰管理命名
+
 ```bash
 # SSL/TLS 憑證命名
 cert-api-company-com-prod         # API 域名憑證
@@ -2353,6 +2436,7 @@ cert-admin-company-com-prod       # 管理介
 ```
 
 #### Helm Chart 命名
+
 ```yaml
 # charts/user-service/Chart.yaml
 apiVersion: v2
@@ -2423,6 +2507,7 @@ autoscaling:
 ### 4.8 環境特定命名策略
 
 #### 多環境資源區分
+
 ```bash
 # 環境前綴命名策略
 # 格式：{environment}-{service}-{component}-{region}
@@ -2449,6 +2534,7 @@ prod-user-api-cache-us-west-2
 ```
 
 #### 環境變數命名
+
 ```bash
 # 應用程式環境變數命名
 # 格式：{SERVICE}_{CATEGORY}_{SPECIFIC_NAME}
@@ -2497,6 +2583,7 @@ USER_SERVICE_SENTRY_DSN=${USER_SERVICE_SENTRY_DSN}
 ### 4.9 災難復原與備份命名
 
 #### 備份資源命名
+
 ```bash
 # 資料庫備份命名
 # 格式：backup-{service}-{type}-{timestamp}
@@ -2515,6 +2602,7 @@ snap-user-service-app-volume-prod-20240115-030000
 ```
 
 #### 災難復原計畫命名
+
 ```yaml
 # disaster-recovery/user-service-dr-plan.yml
 apiVersion: v1
@@ -2541,6 +2629,7 @@ data:
 ### 4.10 安全與合規命名
 
 #### Security Group 與網路 ACL 命名
+
 ```bash
 # Security Group 命名慣例
 sg-web-tier-public-prod           # Web 層公用安全群組
@@ -2556,6 +2645,7 @@ nacl-database-subnet-prod         # 資料庫子網路 ACL
 ```
 
 #### 憑證與金鑰管理命名
+
 ```bash
 # SSL/TLS 憑證命名
 cert-api-company-com-prod         # API 域名憑證
@@ -2586,6 +2676,7 @@ secret-user-service-jwt-signing-key-prod
 在現代 DevOps 實踐中，「基礎設施即程式碼（Infrastructure as Code, IaC）」已成為管理與部署雲端基礎設施的標準手段。IaC 使得基礎設施的定義、部署和變更都能像傳統應用程式碼一樣，接受版本控制、審查、重複執行與自動化部署[43dcd9a7-70db-4a1f-b0ae-981daa162054](https://ithelp.ithome.com.tw/articles/10387507?citationMarker=43dcd9a7-70db-4a1f-b0ae-981daa162054 "1")。然而，隨著 IaC 規模擴大，資源命名不當會導致資源混淆、權限配置錯誤、狀態檔案損毀等嚴重後果。因此，命名規範直接影響到自動化與基礎設施的可維護性。
 
 一套良好的命名規範須兼顧以下原則：
+
 - **唯一性與可辨識性**：每個資源名稱必須在其命名空間內唯一且能高效溝通用途。
 - **一致性**：所有模組、資源、變數都應遵循統一的規則（如小寫字母加底線、單數/複數對映、不可混用大小寫）。
 - **描述性**：名稱需直接反映資源屬性，例如角色、用途、所屬環境。
@@ -2599,37 +2690,41 @@ secret-user-service-jwt-signing-key-prod
 Terraform 廣泛用於跨雲端平台的 IaC。有效的命名慣例可降低重構、環境隔離及多團隊協作的風險[43dcd9a7-70db-4a1f-b0ae-981daa162054](https://www.terraform-best-practices.com/zh/naming?citationMarker=43dcd9a7-70db-4a1f-b0ae-981daa162054 "2")[43dcd9a7-70db-4a1f-b0ae-981daa162054](https://blog.csdn.net/gitblog_00673/article/details/151257639?citationMarker=43dcd9a7-70db-4a1f-b0ae-981daa162054 "3")。
 
 **Terraform 命名實踐建議**：
+
 - **資源塊名稱（Resource Name）**：
-    - 格式：`resource "<provider>_<type>" "<logical_name>" { ... }`
-    - `<provider>_<type>`一律用小寫底線，如`aws_s3_bucket`。
-    - `<logical_name>`可用 single, plural, concise，建議不可冗餘（如`public`、`db`、`web` 而非`public_s3_bucket`）。
-    - **範例**：
+  - 格式：`resource "<provider>_<type>" "<logical_name>" { ... }`
+  - `<provider>_<type>`一律用小寫底線，如`aws_s3_bucket`。
+  - `<logical_name>`可用 single, plural, concise，建議不可冗餘（如`public`、`db`、`web` 而非`public_s3_bucket`）。
+  - **範例**：
+
       ```hcl
       resource "aws_route_table" "public" { ... }
       resource "aws_nat_gateway" "this" { ... }
       ```
 
 - **變數/輸出/資料源命名**：
-    - 變數名若型別為 list/map 要用複數。
-    - 必須加上`description`。
-    - 避免重複 provider/type，直接使用描述性命名如 `db_subnet_group`。
+  - 變數名若型別為 list/map 要用複數。
+  - 必須加上`description`。
+  - 避免重複 provider/type，直接使用描述性命名如 `db_subnet_group`。
 
 - **tags/labels**：
-    - AWS 支援時，統一在 blocks 最後，用 Name 與更具備分群、清理便捷性之標籤（可 include 環境、功能）。
-    - 範例：
+  - AWS 支援時，統一在 blocks 最後，用 Name 與更具備分群、清理便捷性之標籤（可 include 環境、功能）。
+  - 範例：
+
       ```hcl
       tags = { Name = "web-prod-api" }
       ```
 
 - **name vs name_prefix 的使用**：
-    - `name`：用於需穩定唯一名之永久資源（如 S3）。
-    - `name_prefix`：用於臨時、需大批量自動產生資源，避免名稱衝突。
-    - 不可同時指定兩者，否則編譯失敗。
+  - `name`：用於需穩定唯一名之永久資源（如 S3）。
+  - `name_prefix`：用於臨時、需大批量自動產生資源，避免名稱衝突。
+  - 不可同時指定兩者，否則編譯失敗。
 
 - **模組（Module）命名**：
-    - 標準為 `module "<logical_name>" { source = ... }`，命名建議帶上功能與環境，如 `vpc_prod`。
-    - 內部資源命名則帶入模組名，利於追蹤。
-    - **結構示例**：
+  - 標準為 `module "<logical_name>" { source = ... }`，命名建議帶上功能與環境，如 `vpc_prod`。
+  - 內部資源命名則帶入模組名，利於追蹤。
+  - **結構示例**：
+
       ```
       main.tf
       ├── resource "aws_nat_gateway" "this" {...}
@@ -2638,10 +2733,11 @@ Terraform 廣泛用於跨雲端平台的 IaC。有效的命名慣例可降低重
       ```
 
 - **專案與環境前綴**：
-    - 建議明示專案、功能、環境：
-      - `{project}-{env}-{component}`（如`ai-prod-redis`）
+  - 建議明示專案、功能、環境：
+    - `{project}-{env}-{component}`（如`ai-prod-redis`）
 
 **行業規範坑點與自動化補救**：
+
 - 禁用資源名稱的硬編碼與不一致大小寫/分隔符（建議 `_`）。
 - 利用 Lint 工具或 IDE 插件做靜態分析（如 Semgrep、帶有正規表示的特製 formatters）。
 - 以 Git pre-commit hook 強制格式檢查。
@@ -2652,26 +2748,29 @@ Terraform 廣泛用於跨雲端平台的 IaC。有效的命名慣例可降低重
 AWS CloudFormation 與 CDK 均可管理 AWS 基礎設施，命名規範有助於避免資源重覆、運維混淆及版本管理難題[43dcd9a7-70db-4a1f-b0ae-981daa162054](https://docs.aws.amazon.com/zh_tw/AWSCloudFormation/latest/TemplateReference/aws-properties-name.html?citationMarker=43dcd9a7-70db-4a1f-b0ae-981daa162054 "4")[43dcd9a7-70db-4a1f-b0ae-981daa162054](https://docs.aws.amazon.com/zh_tw/cdk/v2/guide/projects.html?citationMarker=43dcd9a7-70db-4a1f-b0ae-981daa162054 "5")。
 
 - **CloudFormation 命名特點**：
-    - 大多數資源可自訂名稱，預設則自動生成（如`Stack-Resource-randomid`）。
-    - 若自訂，需於範本中明確指定且不可重複；命名僅可用 ASCII 字母數字與中橫線，不可以中橫線結尾，且 63 字元內。
-    - yaml/json property 需要類似：
+  - 大多數資源可自訂名稱，預設則自動生成（如`Stack-Resource-randomid`）。
+  - 若自訂，需於範本中明確指定且不可重複；命名僅可用 ASCII 字母數字與中橫線，不可以中橫線結尾，且 63 字元內。
+  - yaml/json property 需要類似：
+
       ```yaml
       Properties:
         TableName: "orders-prod-v1"
       ```
 
 - **CDK 命名與專案結構**：
-    - 建議文件結構以專案為頂層 + stack 名稱，例如：
+  - 建議文件結構以專案為頂層 + stack 名稱，例如：
+
       ```
       /lib/my-cdk-ts-project-stack.ts
       /bin/my-cdk-ts-project.ts
       ```
-    - 二次開發時，Stack id 應明確列出如`MyCdkProdStack`。
-    - CDK 程式碼內資源識別通常帶有 stack/cluster/功能，便於 versioning 及資源查找。
+
+  - 二次開發時，Stack id 應明確列出如`MyCdkProdStack`。
+  - CDK 程式碼內資源識別通常帶有 stack/cluster/功能，便於 versioning 及資源查找。
 
 - **環境維度標註**：
-    - 利用 Stack 變數與 tags，在全區管理下可依照不同 Project/Env/System 維護資源唯一性。
-    - 建議所有重要資源皆加 `Environment`、`Project`、`Module` 標籤，提升搜尋與後期維護效率。
+  - 利用 Stack 變數與 tags，在全區管理下可依照不同 Project/Env/System 維護資源唯一性。
+  - 建議所有重要資源皆加 `Environment`、`Project`、`Module` 標籤，提升搜尋與後期維護效率。
 
 ### 5.4 實務建議與落地範例
 
@@ -2690,6 +2789,7 @@ AWS CloudFormation 與 CDK 均可管理 AWS 基礎設施，命名規範有助於
 CI/CD（Continuous Integration/Continuous Delivery）流水線貫穿於現代開發到部署的每個環節，良好的命名規範對於代碼回溯、異常定位、任務自動調度極為關鍵。命名隨著自動化深度提升，直接關係到團隊溝通、監控可追蹤性與流程治理效率。
 
 最核心原則有：
+
 - **語意明確、可識別**：名稱即行為，見名知義，讓新成員一眼能理解此觸發內容、所有階段功能。
 - **分層一致性**：根據專案、產品線、任務性質分層規劃；所有 pipeline、stage、job 均應統一命名規則。
 - **環境維度明示**：明確標註 target environment，如 dev/test/staging/prod。
@@ -2700,6 +2800,7 @@ CI/CD（Continuous Integration/Continuous Delivery）流水線貫穿於現代開
 Jenkins 是主流的自動化流程引擎，支持 declarative pipeline 及 scripted pipeline[43dcd9a7-70db-4a1f-b0ae-981daa162054](https://www.jenkins.io/zh/doc/book/pipeline/syntax/?citationMarker=43dcd9a7-70db-4a1f-b0ae-981daa162054 "6")[43dcd9a7-70db-4a1f-b0ae-981daa162054](https://zhuanlan.zhihu.com/p/583812704?citationMarker=43dcd9a7-70db-4a1f-b0ae-981daa162054 "7")[43dcd9a7-70db-4a1f-b0ae-981daa162054](https://blog.csdn.net/zero_open/article/details/137816238?citationMarker=43dcd9a7-70db-4a1f-b0ae-981daa162054 "8")。
 
 **命名規範建議**：
+
 - pipeline 名稱與專案或產品線一致（如 `AI Search API - Staging - Release`）。
 - stage：以動作為主語，首字大寫，明確說明功能，例如 `Build`、`Unit Test`、`Deploy to Prod`。
 - job 名稱遵從「動作-對象-環境」結構，如 `publish-image-dev`。
@@ -2708,6 +2809,7 @@ Jenkins 是主流的自動化流程引擎，支持 declarative pipeline 及 scri
 - 並行 stage：加入具體名稱區分，如 `Test-Chrome`、`Test-Firefox`。
 
 **範例**：
+
 ```groovy
 pipeline {
   agent any
@@ -2730,6 +2832,7 @@ pipeline {
 ### 6.3 GitLab CI/CD 與 GitHub Actions 工作流程命名
 
 **GitLab CI/CD**（`.gitlab-ci.yml`）規則建議[43dcd9a7-70db-4a1f-b0ae-981daa162054](https://hackmd.io/@CloudyWing/Hym3ZoBT1g?citationMarker=43dcd9a7-70db-4a1f-b0ae-981daa162054 "9")[43dcd9a7-70db-4a1f-b0ae-981daa162054](https://ithelp.ithome.com.tw/articles/10344451?citationMarker=43dcd9a7-70db-4a1f-b0ae-981daa162054 "10")[43dcd9a7-70db-4a1f-b0ae-981daa162054](https://blog.csdn.net/weixin_47877869/article/details/145616371?citationMarker=43dcd9a7-70db-4a1f-b0ae-981daa162054 "11")：
+
 - pipeline/workflow: 可定義整體標題，參數如 `workflow: name: "deploy-main-production"`。
 - stage: 推薦採用 `build`、`test`、`deploy`、`quality`、`notify` 等動詞性名稱，便於橫向比較及自動化擴展。
 - job: 跟 Jenkins 的 `動作-對象-環境`，如 `build-backend-image`、`test-e2e-staging`、`deploy-prod`.
@@ -2742,22 +2845,23 @@ pipeline {
 
 **GitHub Actions** 工作流命名規則相似，建議 workflows 以產品模組 + 流水線功能描述，如 `build-and-release-python-sdk.yml`；jobs 及 steps 也採直譯式語意。
 
- ### 6.4 命名規範保障實務
+### 6.4 命名規範保障實務
 
 - **命名治理流程**：
-    - 設定專案模板，強制每一條流水線從模板複製。
-    - 新增/變更 pipeline/job 做事前審覈，PR review check。
-    - 使用自動命名規則檢查（如淺入預設插件/腳本）。
-    - 定期審查、優化已上線 pipeline 與 job 名稱，淘汰舊有非標準命名。
-    - 文件化所有命名規範於專屬手冊並版本管理。
+  - 設定專案模板，強制每一條流水線從模板複製。
+  - 新增/變更 pipeline/job 做事前審覈，PR review check。
+  - 使用自動命名規則檢查（如淺入預設插件/腳本）。
+  - 定期審查、優化已上線 pipeline 與 job 名稱，淘汰舊有非標準命名。
+  - 文件化所有命名規範於專屬手冊並版本管理。
 
---- 
+---
 
 ## 第七章 企業級命名治理策略與框架
 
 ### 7.1 企業命名治理的挑戰
 
 企業在大規模 DevOps、雲端、微服務與資料治理背景下，命名規範必須升級為全組織協作框架。一旦命名混亂將造成以下問題[43dcd9a7-70db-4a1f-b0ae-981daa162054](https://zhuanlan.zhihu.com/p/502755740?citationMarker=43dcd9a7-70db-4a1f-b0ae-981daa162054 "12")[43dcd9a7-70db-4a1f-b0ae-981daa162054](https://www.esensoft.com/industry-news/dx-51865.html?citationMarker=43dcd9a7-70db-4a1f-b0ae-981daa162054 "13")[43dcd9a7-70db-4a1f-b0ae-981daa162054](https://blog.csdn.net/qq_20245171/article/details/145456548?citationMarker=43dcd9a7-70db-4a1f-b0ae-981daa162054 "14")：
+
 - 多團隊導致命名標準分歧，產生跨部門溝通失靈。
 - 自動化串接、資源掃描腳本與監控混亂，導致維護與查錯成本浮增。
 - 版本管理與數據追蹤困難，產生安全燈號遺漏、權限風險。
@@ -2765,6 +2869,7 @@ pipeline {
 ### 7.2 命名治理策略與執行框架
 
 **命名治理策略包含**：
+
 - **標準化框架（如 DAMA, DCMM）**：主框架需包括標準、流程、組織、工具與監督等機制。
 - **命名規範委員會**：包含開發、維運、資訊安全、合規與產品經理共同參與，定期審查並修訂規範。
 - **策略文件化**：所有命名規範皆需以規章、章則、實作建議文檔明文化，並加入知識庫。
@@ -2785,10 +2890,10 @@ pipeline {
 
 - 所有命名規範、樣板、範例須進行專案級或組織級版本控制，儲存在企業 Git/ConfigCenter。
 - 規則手冊需包含：
-    - 初始生效日期、歷次變更摘要、副本號。
-    - 主要命名慣例。
-    - 例外處理申請流程。
-    - 廢棄與變更命名流程/工具介紹。
+  - 初始生效日期、歷次變更摘要、副本號。
+  - 主要命名慣例。
+  - 例外處理申請流程。
+  - 廢棄與變更命名流程/工具介紹。
 - 每一年定期盤點與回顧，邀請團隊 feedback，有必要則重大版本升級並廣泛培訓。
 
 ### 7.4 行業框架與最佳實踐
@@ -2805,12 +2910,14 @@ pipeline {
 
 以微服務架構為例，微服務名、API endpoint、Database table、消息佇列等命名都應一致遵循組織規範，以利日後運維、部署與異常追蹤[43dcd9a7-70db-4a1f-b0ae-981daa162054](https://blog.csdn.net/fwk19840301/article/details/79488507?citationMarker=43dcd9a7-70db-4a1f-b0ae-981daa162054 "15")[43dcd9a7-70db-4a1f-b0ae-981daa162054](https://developer.aliyun.com/article/1279379?citationMarker=43dcd9a7-70db-4a1f-b0ae-981daa162054 "16")[43dcd9a7-70db-4a1f-b0ae-981daa162054](https://blogs.vmware.com/vmware-taiwan/2022/12/15/%e9%9b%b2%e5%8e%9f%e7%94%9f%e6%99%82%e4%bb%a3%e4%b8%8b%e5%be%ae%e6%9c%8d%e5%8b%99%e6%9e%b6%e6%a7%8b%e6%bc%94%e9%80%b2%e4%b9%8b%e8%b7%af-10/?citationMarker=43dcd9a7-70db-4a1f-b0ae-981daa162054 "17")。
 
-#### 實務建議：
+#### 實務建議
+
 - 微服務名結構：`<組織>-<業務線>-<功能模組>`，如 `ai-finance-billing`。
 - API 路徑： `/api/v1/{service}/{resource}`，結合版本與功能。
 - Database/Topic/Queue：同樣以三段式結構，保持小寫與底線分隔。
 
 **範例**：
+
 ```yaml
 service-name: ai-finance-billing
 api: /api/v1/ai-finance-billing/payments
@@ -2822,7 +2929,8 @@ mq-topic: ai-finance-billing-payments
 
 雲原生（Cloud Native）環境下所有資源如 Cluster、Pod、Ingress、Service、容器映像都應有命名準則[43dcd9a7-70db-4a1f-b0ae-981daa162054](https://s.itho.me/ccms_slides/2024/7/8/d52ab517-6cbf-4bec-af58-4f59b0501487.pdf?citationMarker=43dcd9a7-70db-4a1f-b0ae-981daa162054 "18")[43dcd9a7-70db-4a1f-b0ae-981daa162054](https://carger.tips/%e9%9b%b2%e5%8e%9f%e7%94%9f%e6%87%89%e7%94%a8%e9%96%8b%e7%99%bc%e5%85%a5%e9%96%80%e6%8c%87%e5%8d%97-docker-k8s-%e5%92%8c-service-mesh-%e6%9e%b6%e6%a7%8b%e8%a7%a3%e6%9e%90?citationMarker=43dcd9a7-70db-4a1f-b0ae-981daa162054 "19")[43dcd9a7-70db-4a1f-b0ae-981daa162054](https://docker.robertchang.me/images/?citationMarker=43dcd9a7-70db-4a1f-b0ae-981daa162054 "20")。
 
-#### Kubernetes 資源命名範例：
+#### Kubernetes 資源命名範例
+
 - Cluster: `open-data-cluster`
 - Namespace: `<product>-<env>` (如 `billing-prod`)
 - Pod: `<service>-app` (如 `ai-backend-app`)
@@ -2833,11 +2941,13 @@ mq-topic: ai-finance-billing-payments
 ### 8.3 CI/CD 流水線與觸發器命名演練
 
 實作時建議全流程使用「專案-模組-環境-功能」命名，例如：
+
 - Jenkinsfile: `ci-ai-backend-staging-build-release`
 - GitLab CI/CD workflow: `workflow: name: "ai-backend-staging-pipeline"`
 - Job: `test-e2e-prod`
 
 **實務演練要點**：
+
 - 主分支自動化流水線需明示用途。
 - 多環境部署時，由參數命名傳遞 ensure fully scoped（例：`$DEPLOY_ENV`）。
 - Artifacts/Cache 加入 pipeline hash 或分支標示。
@@ -2868,12 +2978,14 @@ mq-topic: ai-finance-billing-payments
 - **自動審查 CLI/IDE 插件**：如 VSCode、JetBrains Linter，不通過則拒絕 push/merge。
 - **企業級命名管理平台**：集中式管理所有命名規則、範本、範例、API 查詢，降低 onboarding 成本。
 - **比對篩檢腳本範例**（以 Bash for Kubernetes + Spinnaker）：
+
   ```bash
   function generate_resource_name() {
     env=$1; app=$2; env_type=$3
     echo "${env}-${app}-${env_type}-v${VERSION}"
   }
   ```
+
 - **Pipeline 命名安全網**：設計自動命名模板 + 規則變更快篩系統，降低人為誤差。
 
 ### 9.3 工具與命名規範對應表
@@ -2901,6 +3013,7 @@ mq-topic: ai-finance-billing-payments
 ### 10.1 持續改進理念與流程
 
 命名規範不可能一次到位，其最佳實踐來自持續優化迭代[43dcd9a7-70db-4a1f-b0ae-981daa162054](https://ahaslides.com/zh-TW/blog/continuous-improvement-examples/?citationMarker=43dcd9a7-70db-4a1f-b0ae-981daa162054 "23")[43dcd9a7-70db-4a1f-b0ae-981daa162054](https://www.managertoday.com.tw/articles/view/55730?citationMarker=43dcd9a7-70db-4a1f-b0ae-981daa162054 "24")。企業/團隊應參考 PDCA(R)（Plan-Do-Check-Act-Record）循環：
+
 - **Plan**：擬定命名規範、實作方案、驗證目標。
 - **Do**：落地執行、產出樣本、啟動自動化腳本。
 - **Check**：回顧執行結果、收集團隊反饋、審查例外狀況。

@@ -1,4 +1,5 @@
 # External API Contracts
+
 # 外部 API 合約定義
 
 > 外部 API 合約規格定義，包含 OpenAPI specs 和 JSON Schema。
@@ -49,6 +50,7 @@ contracts/
 ### external-api.json
 
 外部 API 合約定義，用於：
+
 - 與外部系統整合時的介面規格
 - API 驗證和測試
 - 文檔生成

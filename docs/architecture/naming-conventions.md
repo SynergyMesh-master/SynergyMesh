@@ -24,7 +24,7 @@ This document defines the naming conventions for all files, directories, and cod
 ### Technical Debt Acknowledgment / 技術債承認
 
 > ⚠️ **Important Note**
-> 
+>
 > 若現有程式碼尚未完全符合規範，視為「技術債」，逐步透過 Refactor Playbooks 與 Auto-Fix pipeline 清理。
 >
 > If existing code does not fully comply with these conventions, it is considered "technical debt" and will be gradually cleaned up through Refactor Playbooks and the Auto-Fix pipeline.
@@ -194,8 +194,9 @@ cargo fmt
 **Applies to:** `autonomous/`, `core/native_adapters/` **ONLY**
 
 > ⚠️ **Scope Limitation / 範圍限制**
-> 
+>
 > C++ is **ONLY** permitted in the following directories:
+>
 > - `automation/autonomous/`
 > - `core/native_adapters/`
 >
@@ -228,11 +229,13 @@ cargo fmt
 For autonomous/native subsystems, choose **ONE** convention per project and enforce it consistently:
 
 **Option A: Google C++ Style**
+
 - Functions: `PascalCase()`
 - Variables: `snake_case`
 - Constants: `kPascalCase`
 
 **Option B: ROS 2 Style**
+
 - Functions: `snake_case()`
 - Variables: `snake_case`
 - Constants: `SCREAMING_SNAKE_CASE`
@@ -311,7 +314,7 @@ graph LR
 每個 cluster 的 refactor playbook 在 **P2 持續重構** 階段包含：
 
 > 將本 cluster 內所有檔案/符號命名，對齊 `docs/architecture/naming-conventions.md`
-> 
+>
 > 不符合規範 → 由 Auto-Fix Bot 提出 rename 建議 PR
 
 ---

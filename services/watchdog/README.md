@@ -32,6 +32,7 @@ python system_watchdog.py stop
 ## Documentation
 
 See:
+
 - `docs/IMPROVED_ARCHITECTURE.md` - System architecture
 - `docs/RECOVERY_PLAYBOOK.md` - Recovery procedures
 - `config/recovery-system.yaml` - Configuration

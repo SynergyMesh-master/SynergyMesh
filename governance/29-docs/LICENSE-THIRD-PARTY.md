@@ -25,10 +25,10 @@ Copyright © 2020 Will McGugan
 
 See individual package documentation for complete license texts:
 
-- https://flask.palletsprojects.com/license/
-- https://click.palletsprojects.com/license/
-- https://pyyaml.org/wiki/PyYAML
-- https://github.com/Textualize/rich/blob/master/LICENSE
+- <https://flask.palletsprojects.com/license/>
+- <https://click.palletsprojects.com/license/>
+- <https://pyyaml.org/wiki/PyYAML>
+- <https://github.com/Textualize/rich/blob/master/LICENSE>
 
 ---
 

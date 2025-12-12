@@ -17,6 +17,7 @@ The Agent Coordinator is the foundational component of Island AI Stage 2, enabli
 The Agent Coordinator supports four collaboration strategies:
 
 #### **Sequential Execution** (`'sequential'`)
+
 ```typescript
 // Agents execute one after another
 // Each agent can see insights from previous agents
@@ -28,11 +29,13 @@ const collaboration: AgentCollaboration = {
 ```
 
 **Use Case:** Security vulnerability remediation workflow
+
 - Security Agent discovers vulnerabilities
 - Architect Agent evaluates architecture impact
 - DevOps Agent assesses deployment implications
 
 #### **Parallel Execution** (`'parallel'`)
+
 ```typescript
 // Agents execute simultaneously for faster results
 const collaboration: AgentCollaboration = {
@@ -43,10 +46,12 @@ const collaboration: AgentCollaboration = {
 ```
 
 **Use Case:** Performance analysis across multiple dimensions
+
 - Architecture analysis and ops monitoring run concurrently
 - Significantly reduces total execution time
 
 #### **Conditional Execution** (`'conditional'`)
+
 ```typescript
 // Execute agents only if certain conditions are met
 const shouldContinue = (reports: AgentReport[]) => {
@@ -64,11 +69,13 @@ const collaboration: AgentCollaboration = {
 ```
 
 **Use Case:** Progressive problem diagnosis
+
 - Start with quick check (Architect Agent)
 - Only proceed to deeper analysis if issues found
 - Saves resources when everything is healthy
 
 #### **Iterative Execution** (`'iterative'`)
+
 ```typescript
 // Repeat agent execution until condition is met or max iterations reached
 const isOptimized = (reports: AgentReport[]) => {
@@ -88,6 +95,7 @@ const collaboration: AgentCollaboration = {
 ```
 
 **Use Case:** Iterative code optimization
+
 - Run analysis repeatedly
 - Continue until quality threshold is met
 - Prevent infinite loops with max iterations
@@ -114,6 +122,7 @@ const architectKnowledge = coordinator.getSharedKnowledge('Architect Agent');
 ```
 
 **Benefits:**
+
 - Agents build on each other's findings
 - Reduces redundant analysis
 - Enables informed decision-making
@@ -141,6 +150,7 @@ await coordinator.waitForBarrier(barrier);
 ```
 
 **Use Case:** Coordinated deployment verification
+
 - Multiple agents check different aspects
 - All must complete before proceeding
 - Ensures consistency across checks
@@ -272,6 +282,7 @@ npm run test:coverage
 - **Coverage:** ~95% (core functionality)
 
 **Test Categories:**
+
 1. Sequential Execution (2 tests)
 2. Parallel Execution (2 tests)
 3. Conditional Execution (1 test)
@@ -412,44 +423,55 @@ const result = await coordinator.orchestrate({
 #### Methods
 
 ##### `orchestrate(collaboration, context): Promise<AggregatedReport>`
+
 Main orchestration method.
 
 **Parameters:**
+
 - `collaboration: AgentCollaboration` - Collaboration configuration
 - `context: AgentContext` - Execution context
 
 **Returns:** `Promise<AggregatedReport>` - Aggregated results
 
 ##### `shareInsights(source, targets, insights): Promise<void>`
+
 Share insights between agents.
 
 **Parameters:**
+
 - `source: string` - Source agent name
 - `targets: string[]` - Target agent names
 - `insights: AgentInsight[]` - Insights to share
 
 ##### `getSharedKnowledge(agentName): AgentKnowledge[]`
+
 Retrieve knowledge shared with an agent.
 
 **Parameters:**
+
 - `agentName: string` - Agent name
 
 **Returns:** `AgentKnowledge[]` - Shared knowledge items
 
 ##### `waitForBarrier(barrier): Promise<void>`
+
 Wait for synchronization barrier.
 
 **Parameters:**
+
 - `barrier: SyncBarrier` - Barrier configuration
 
 ##### `arriveAtBarrier(barrierId, agentName): Promise<void>`
+
 Mark agent arrival at barrier.
 
 **Parameters:**
+
 - `barrierId: string` - Barrier ID
 - `agentName: string` - Agent name
 
 ##### `clearKnowledge(): void`
+
 Clear knowledge base and barrier status.
 
 ---
@@ -457,6 +479,7 @@ Clear knowledge base and barrier status.
 ### Type Definitions
 
 #### `AgentCollaboration`
+
 ```typescript
 interface AgentCollaboration {
   coordinatorId: string;           // Unique collaboration ID
@@ -469,6 +492,7 @@ interface AgentCollaboration {
 ```
 
 #### `AggregatedReport`
+
 ```typescript
 interface AggregatedReport {
   coordinatorId: string;              // Collaboration ID
@@ -487,21 +511,25 @@ interface AggregatedReport {
 This MVP completes **Milestone 1** of Stage 2. Remaining milestones:
 
 ### M2: Trigger System (Planned)
+
 - [ ] Event-based agent activation
 - [ ] Pattern matching for triggers
 - [ ] Priority-based scheduling
 
 ### M3: Decision Engine (Planned)
+
 - [ ] Multi-objective optimization
 - [ ] Constraint solving
 - [ ] Automated decision-making
 
 ### M4: Inter-Agent Protocol (Planned)
+
 - [ ] Message broker
 - [ ] Pub/sub messaging
 - [ ] Real-time communication
 
 ### M5: Workflow Engine (Planned)
+
 - [ ] Workflow DSL
 - [ ] Task scheduling
 - [ ] Execution tracking
@@ -515,6 +543,7 @@ This MVP completes **Milestone 1** of Stage 2. Remaining milestones:
 **Maintainer:** Island AI Development Team
 
 For questions, issues, or contributions, refer to:
+
 - `island-ai/STAGE2_PLANNING.md` - Complete Stage 2 roadmap
 - `island-ai/examples/` - More usage examples
 - `island-ai/src/__tests__/` - Test cases as documentation

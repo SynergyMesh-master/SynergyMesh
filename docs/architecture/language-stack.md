@@ -21,8 +21,9 @@
 | Kernel-level tools       | C / Rust        | 安全性、效能、記憶體掌控          |
 
 > ⚠️ **C++ Scope Limitation / C++ 範圍限制**
-> 
+>
 > C++ is **ONLY** permitted in the following directories:
+>
 > - `automation/autonomous/` - Autonomous flight control and real-time systems
 > - `core/native_adapters/` - Native performance adapters
 >
@@ -38,7 +39,7 @@
 | Lifecycle / Registry / Safety | TypeScript              | 適合同步 + 非同步事件流     |
 
 > **底層性能模組（如需要）仍可用 C++，但必須有 TS/Python API 封裝。**
-
+>
 > **📘 詳細的 Core Engine 語言堆疊說明請參考：[Core Engine Language Stack](./core-engine-language-stack.md)**  
 > 此文件定義了 TypeScript（控制層）、Python（認知層）、C++（性能層）的明確分工與邊界。
 
@@ -239,20 +240,20 @@ mkdir -p docs/architecture
 
 你已正式擁有：
 
-* ✅ 統一的語言策略
-* ✅ 合法語言邊界
-* ✅ 禁止的反模式
-* ✅ 語言通訊矩陣
-* ✅ 分層語言架構圖
-* ✅ 最小骨架骨架
-* ✅ 可落地的 24 小時行動計畫
+- ✅ 統一的語言策略
+- ✅ 合法語言邊界
+- ✅ 禁止的反模式
+- ✅ 語言通訊矩陣
+- ✅ 分層語言架構圖
+- ✅ 最小骨架骨架
+- ✅ 可落地的 24 小時行動計畫
 
 這個版本可以：
 
-* 直接放進 repo
-* 給 AI / Copilot 當系統提示詞
-* 給工程師當治理規範
-* 給 CI 當語言治理策略基準
+- 直接放進 repo
+- 給 AI / Copilot 當系統提示詞
+- 給工程師當治理規範
+- 給 CI 當語言治理策略基準
 
 ---
 

@@ -5,6 +5,7 @@
 此文件展示 HLP Executor Core Plugin 整合後的目錄結構變化，只涵蓋受影響的範圍。
 
 **圖例**:
+
 - 📁 目錄
 - 📄 新建檔案（P0/P1/P2）
 - 📝 更新檔案
@@ -330,17 +331,20 @@ unmanned-island/
 ## 五、整合影響範圍分析
 
 ### 5.1 高影響模組（需要協調）
+
 - ✅ **config/system-module-map.yaml**: 影響服務發現
 - ✅ **governance/registry/**: 影響插件註冊系統
 - ✅ **infrastructure/kubernetes/**: 影響集群資源
 - ✅ **core/safety_mechanisms/**: 影響安全機制
 
 ### 5.2 中影響模組（需要通知）
+
 - ✅ **config/monitoring.yaml**: 影響日誌收集
 - ✅ **docs/DOCUMENTATION_INDEX.md**: 影響文件查找
 - ✅ **CHANGELOG.md**: 影響版本追蹤
 
 ### 5.3 低影響模組（獨立新增）
+
 - ✅ **tests/**: 新增測試，不影響現有測試
 - ✅ **templates/**: 新增模板，可選使用
 - ✅ **automation/intelligent/**: 新增工具，獨立運行
@@ -568,6 +572,7 @@ echo "⚠️  完全回滾完成，所有 HLP Executor 檔案已刪除"
 - ✅ **9 個系統模組**受影響
 
 整合完成後，系統將具備：
+
 - 強大的 DAG 編排能力
 - 精細的部分回滾機制
 - 完善的可觀測性

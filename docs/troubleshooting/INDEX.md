@@ -39,7 +39,7 @@ example, before handing the repo to another agent):
   npm run dev -- automation:setup
   ```
 
-2. Run the sample-friendly subset (safe for quick spot checks):
+1. Run the sample-friendly subset (safe for quick spot checks):
 
   ```bash
   npm run dev -- automation:run --sample
@@ -49,10 +49,10 @@ example, before handing the repo to another agent):
   `sample`, and automatically writes `reports/self-awareness-sample.md` plus
   `reports/self-awareness-sample.json`.
 
-3. Omit `--sample` to perform the full automation chain before deployments; the
+1. Omit `--sample` to perform the full automation chain before deployments; the
   CLI will emit `reports/self-awareness-full.*` with the stricter run.
 
-4. Need to re-run the reporter manually (for ad-hoc debugging)? Execute:
+2. Need to re-run the reporter manually (for ad-hoc debugging)? Execute:
 
   ```bash
   python automation/self_awareness_report.py \

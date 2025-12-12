@@ -13,18 +13,21 @@
 ## 目標與得分
 
 ### 語言治理健康度 (`language-governance`)
+
 - 指標：`language_violations_total`
 - 目前值：`0.0`，目標：`0`（lower_is_better）
 - 權重：0.4
 - 得分：**100.0/100**
 
 ### 安全掃描健康度 (`security`)
+
 - 指標：`semgrep_high_total`
 - 目前值：`0.0`，目標：`0`（lower_is_better）
 - 權重：0.3
 - 得分：**100.0/100**
 
 ### 重構劇本覆蓋率 (`refactor-playbook-coverage`)
+
 - 指標：`playbook_coverage_ratio`
 - 目前值：`1.0`，目標：`1.0`（higher_is_better）
 - 權重：0.3

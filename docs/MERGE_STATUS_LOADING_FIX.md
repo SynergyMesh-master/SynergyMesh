@@ -39,6 +39,7 @@ on:
 ```
 
 **問題點：**
+
 - 排程觸發（每 5 分鐘）會創建"幽靈"狀態檢查
 - 沒有正確的 PR 上下文時仍然執行
 - 導致大量無效的狀態檢查累積
@@ -47,11 +48,13 @@ on:
 ### 3. 缺少並發控制
 
 部分工作流程缺少 `concurrency` 設定：
+
 - `conftest-validation.yml`
 - `language-check.yml`
 - `monorepo-dispatch.yml`
 
 這會導致：
+
 - 多個相同工作流程同時執行
 - 產生重複的狀態檢查
 - 資源浪費並增加 UI 負擔
@@ -88,6 +91,7 @@ jobs:
 ```
 
 **效果：**
+
 - ✅ 移除每 5 分鐘的自動執行
 - ✅ 只在 PR 事件時執行
 - ✅ 添加明確的事件類型檢查
@@ -105,11 +109,13 @@ concurrency:
 ```
 
 **影響的檔案：**
+
 1. `.github/workflows/conftest-validation.yml`
 2. `.github/workflows/language-check.yml`
 3. `.github/workflows/monorepo-dispatch.yml`
 
 **效果：**
+
 - ✅ 同一 PR 的新提交會取消舊的工作流程執行
 - ✅ 減少重複的狀態檢查
 - ✅ 節省 CI/CD 資源
@@ -166,6 +172,7 @@ gh run list --workflow=autonomous-ci-guardian.yml --limit 10
 ```
 
 確認：
+
 - ✅ 只有 PR 事件觸發執行
 - ✅ 沒有排程觸發的執行
 - ✅ 執行次數大幅減少

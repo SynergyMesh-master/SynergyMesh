@@ -124,6 +124,7 @@
 | [knowledge/language-history.yaml](./knowledge/language-history.yaml)                            | 語言歷史事件             | 修復/掃描/違規時間軸               |
 
 **使用指引：**
+
 ```bash
 # 存取儀表板
 cd apps/web && npm run dev
@@ -171,6 +172,7 @@ curl http://localhost:8000/api/v1/language-governance
 | [03_refactor/templates/META_CONVENTIONS.md](./docs/refactor_playbooks/03_refactor/templates/META_CONVENTIONS.md) | 命名與格式規範 | 檔名規則、Cluster ID 格式 |
 
 **使用指引：**
+
 ```bash
 # 生成所有 clusters 的 playbooks
 python3 tools/generate-refactor-playbook.py --repo-root .
@@ -189,6 +191,7 @@ cat docs/refactor_playbooks/03_refactor/index.yaml
 ```
 
 **核心概念：**
+
 - **三階段流程**：解構 → 集成 → 重構
 - **舊資產管理**：實體隔離、知識保留、引用透明
 - **CI/CD 整合**：Auto-Fix Bot、違規映射、狀態追蹤
@@ -229,6 +232,7 @@ cat docs/refactor_playbooks/03_refactor/index.yaml
 | **Product Manager** | `island-ai/src/agents/product-manager/` | 產品優先級與路線圖 | KPI 追蹤、用戶反饋分析、功能排序 |
 
 **快速開始：**
+
 ```bash
 # 建置 Island AI
 npm run build -w island-ai
@@ -247,6 +251,7 @@ const reports = await runStageOne({
 ```
 
 **整合狀態：**
+
 - ✅ npm workspace 整合完成
 - ✅ TypeScript 建置配置完成
 - ✅ CI/CD 自動包含（透過 `--workspaces` 參數）
@@ -254,6 +259,7 @@ const reports = await runStageOne({
 - 🔄 Agent 協作機制（Stage 2 規劃）
 
 **下一階段（Stage 2）：**
+
 - 7 種 Agent 協作機制
 - 觸發器系統與決策引擎
 - 多 Agent 協調與同步屏障
@@ -474,6 +480,7 @@ AI 驅動的重構計畫生成系統，為每個目錄群集提供可執行的�
 | [apps/web/public/data/migration-flow.json](./apps/web/public/data/migration-flow.json) | 語言遷移流向           | 語言遷移建議與歷史               |
 
 **關鍵功能：**
+
 - 🤖 LLM 驅動的重構計畫生成（包含 System/User Prompt 模板）
 - 📊 整合語言治理、安全掃描、熱點分析數據
 - 🎯 分級重構計畫（P0/P1/P2）與明確的行動項目
@@ -481,6 +488,7 @@ AI 驅動的重構計畫生成系統，為每個目錄群集提供可執行的�
 - ✅ 驗收條件與成功指標定義
 
 **使用方式：**
+
 ```bash
 # 生成所有 clusters 的 playbooks
 python3 tools/generate-refactor-playbook.py

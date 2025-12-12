@@ -102,7 +102,7 @@ _待補充：從 `governance/language-governance-report.md` 提取 automation/au
 
 1. `automation:lua` → `automation:python` (建議遷移)
    - 行動：將 `flight_controller.lua` 改寫為 Python 或 C++
-   
+
 2. `automation:perl` → `removed` (建議移除)
    - 行動：檢查是否有 Perl 腳本需要清理
 
@@ -227,7 +227,7 @@ automation/autonomous/
     - 測試緊急停止機制的反應時間（< 100ms）
     - 確認 safety 骨架的故障切換邏輯
     - **預估時間**：4 小時
-    
+
 - 驗收條件：
   - ✅ automation/autonomous/ 目錄下無 Lua 檔案
   - ✅ Semgrep HIGH severity = 0

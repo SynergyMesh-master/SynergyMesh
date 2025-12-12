@@ -335,6 +335,7 @@ def is_allowed_extension(ext, allowed_languages):
 - **Auto-Fix 整合**：明確標註可自動修復項目
 
 **生成的 Playbooks：**
+
 - `docs/refactor_playbooks/core__playbook.md` - 核心平台層
 - `docs/refactor_playbooks/services__playbook.md` - 服務層
 - `docs/refactor_playbooks/automation__playbook.md` - 自動化層
@@ -345,6 +346,7 @@ def is_allowed_extension(ext, allowed_languages):
 - `docs/refactor_playbooks/infrastructure__playbook.md` - 基礎設施層
 
 **使用方式：**
+
 ```bash
 # 生成所有 cluster playbooks
 python3 tools/generate-refactor-playbook.py
@@ -357,6 +359,7 @@ python3 tools/generate-refactor-playbook.py --use-llm
 ```
 
 **詳細文檔：**
+
 - [Refactor Playbooks README](../refactor_playbooks/README.md)
 - [Implementation Summary](../refactor_playbooks/IMPLEMENTATION_SUMMARY.md)
 - [Architecture](../refactor_playbooks/ARCHITECTURE.md)
