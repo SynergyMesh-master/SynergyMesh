@@ -49,11 +49,11 @@ interface HotspotHeatmapProps {
  * - Rectangle color indicates severity level (red = critical, amber = moderate)
  * - File names and scores are displayed on sufficiently large rectangles
  *
- * Color Legend:
+ * Color Legend (as displayed in UI):
  * - Red (#dc2626): Critical (score 70-100)
  * - Amber (#f59e0b): High (score 40-69)
- * - Yellow (#fbbf24): Moderate (score 20-39)
- * - Light yellow (#fcd34d): Low (score 1-19)
+ * - Yellow (#fbbf24): Moderate (score 1-39)
+ *   (Moderate and Low are combined in the visual legend)
  *
  * Features:
  * - Canvas-based rendering for performance with many hotspots
