@@ -29,6 +29,9 @@
 import { Router, Request, Response } from 'express';
 import type { Router as RouterType } from 'express';
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const rateLimit = require('express-rate-limit');
+
 import { AssignmentController } from './controllers/assignment';
 import { EscalationController } from './controllers/escalation';
 import { ProvenanceController } from './controllers/provenance';
@@ -36,6 +39,14 @@ import { SLSAController } from './controllers/slsa';
 
 /** Express router instance for all API routes */
 const router: RouterType = Router();
+
+// Configure rate limiter: max 100 requests per 15 minutes per IP
+const limiter = rateLimit({
+    windowMs: 15 * 60 * 1000,
+    max: 100,
+    standardHeaders: true,
+    legacyHeaders: false,
+});
 
 /** Controller instances */
 const provenanceController = new ProvenanceController();
@@ -252,7 +263,7 @@ router.post('/api/v1/slsa/digest', slsaController.generateDigest);
 router.post('/api/v1/slsa/contracts', slsaController.createContractAttestation);
 
 /** @api {post} /api/v1/slsa/summary Get Attestation Summary */
-router.post('/api/v1/slsa/summary', slsaController.getAttestationSummary);
+router.post('/api/v1/slsa/summary', limiter, slsaController.getAttestationSummary);
 
 /* =============================================================================
  * ASSIGNMENT API ENDPOINTS
