@@ -84,7 +84,7 @@ jobs:
 
       - name: 🟢 Setup Node.js
         if: steps.validate.outputs.path_valid == 'true'
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: "npm"
