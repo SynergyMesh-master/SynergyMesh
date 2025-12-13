@@ -1,0 +1,333 @@
+# ═══════════════════════════════════════════════════════════════════════════════
+#                    Vocabulary Glossary
+#                    詞彙表 - 治理對齊的標準術語
+# ═══════════════════════════════════════════════════════════════════════════════
+#
+# Purpose: Standardize vocabulary and map legacy terms to governance-aligned
+#          canonical terms for consistent documentation and code
+# 用途: 標準化詞彙並將舊術語映射至治理對齊的標準術語
+#
+# Version: 1.0.0
+# Created: 2025-12-13
+# Owner: @governance-team
+# Reference: governance/00-governance-mapping-matrix.yaml
+# ═══════════════════════════════════════════════════════════════════════════════
+
+version: "1.0.0"
+id: "synergymesh.vocabulary-glossary"
+description: "Governance-aligned vocabulary standardization and term mapping"
+
+# ============================================================================
+# Canonical Terms Definition
+# ============================================================================
+
+canonical_terms:
+  module:
+    definition: "A self-contained unit of functionality within the SynergyMesh system"
+    governance_context: "Modules are mapped to governance dimensions via canonical namespaces"
+    namespace_pattern: "governance.[dimension-id].[module-name]"
+    attributes:
+      - name: "canonical_namespace"
+        description: "Governance-aligned namespace identifier"
+      - name: "governance_dimension"
+        description: "The governance dimension this module belongs to"
+      - name: "entry_point"
+        description: "Python import path for module initialization"
+      - name: "provides"
+        description: "List of capabilities this module exposes"
+      - name: "dependencies"
+        description: "Other modules required by this module"
+    examples:
+      - namespace: "governance.41-orchestration.unified_integration"
+        description: "Unified integration orchestration module"
+      - namespace: "governance.06-security.safety_mechanisms"
+        description: "Security and safety controls module"
+    synonyms_deprecated:
+      - "package"
+      - "component" # when referring to a top-level module
+      - "service" # when used interchangeably with module
+
+  dimension:
+    definition: "A governance category that groups related modules and concerns"
+    governance_context: "Dimensions form the second level of the namespace hierarchy"
+    identifier_pattern: "[0-9]{2}-[a-z-]+"
+    attributes:
+      - name: "id"
+        description: "Two-digit prefix with descriptive name"
+      - name: "description"
+        description: "Purpose and scope of this governance dimension"
+      - name: "modules"
+        description: "List of modules within this dimension"
+    examples:
+      - id: "41-orchestration"
+        description: "System orchestration and coordination"
+      - id: "06-security"
+        description: "Security controls and safety mechanisms"
+      - id: "30-agents"
+        description: "AI agents and expert systems"
+    synonyms_deprecated:
+      - "category"
+      - "domain" # when used for governance classification
+      - "pillar"
+      - "area"
+
+  capability:
+    definition: "A specific functionality or service that a module provides"
+    governance_context: "Capabilities enable discovery and selection of modules"
+    naming_convention: "PascalCase descriptive name"
+    attributes:
+      - name: "name"
+        description: "Unique identifier for the capability"
+      - name: "provider_module"
+        description: "Module that implements this capability"
+      - name: "interface"
+        description: "Contract/interface specification"
+    examples:
+      - name: "SystemBootstrap"
+        provider: "governance.41-orchestration.unified_integration"
+      - name: "CircuitBreaker"
+        provider: "governance.06-security.safety_mechanisms"
+      - name: "MetricsCollection"
+        provider: "governance.50-monitoring.monitoring_system"
+    synonyms_deprecated:
+      - "feature"
+      - "function" # when referring to module-level capability
+      - "service" # when referring to a capability
+
+  provider:
+    definition: "A module that implements and exposes one or more capabilities"
+    governance_context: "Providers are registered in the module registry"
+    relationship: "A provider IS-A module with registered capabilities"
+    attributes:
+      - name: "module"
+        description: "The underlying module"
+      - name: "capabilities"
+        description: "List of capabilities this provider exposes"
+      - name: "status"
+        description: "Provider availability status"
+    examples:
+      - module: "governance.41-orchestration.unified_integration"
+        capabilities: ["SystemBootstrap", "PhaseCoordination", "ServiceDiscovery"]
+      - module: "governance.30-agents.virtual_experts"
+        capabilities: ["ExpertKnowledge", "DomainAnalysis"]
+    synonyms_deprecated:
+      - "supplier"
+      - "source"
+      - "implementer"
+
+  contract:
+    definition: "A formal specification of behavior and interface between modules"
+    governance_context: "Contracts ensure interoperability and governance compliance"
+    governance_dimension: "60-contracts"
+    attributes:
+      - name: "id"
+        description: "Unique contract identifier"
+      - name: "version"
+        description: "Contract version for compatibility"
+      - name: "provider"
+        description: "Module providing this contract"
+      - name: "consumers"
+        description: "Modules depending on this contract"
+      - name: "schema"
+        description: "Interface schema definition"
+    examples:
+      - id: "orchestration.bootstrap.v1"
+        provider: "governance.41-orchestration.unified_integration"
+      - id: "monitoring.metrics.v1"
+        provider: "governance.50-monitoring.monitoring_system"
+    synonyms_deprecated:
+      - "interface" # when referring to formal contract
+      - "api" # when referring to module-to-module contract
+      - "specification"
+
+# ============================================================================
+# Term Mapping: Legacy to Canonical
+# ============================================================================
+
+term_mapping:
+  description: "Mapping from legacy/deprecated terms to canonical governance terms"
+  
+  mappings:
+    # Module-related mappings
+    package:
+      canonical: "module"
+      context: "When referring to a SynergyMesh functional unit"
+      migration_note: "Use 'module' with governance namespace"
+    
+    component:
+      canonical: "module"
+      context: "When referring to a top-level system component"
+      exception: "Retain 'component' for sub-module parts within a module"
+      migration_note: "Top-level components should be called modules"
+    
+    service:
+      canonical: "module"
+      context: "When referring to a module's identity"
+      exception: "Retain 'service' for external/network services"
+      migration_note: "Internal modules are 'modules', not 'services'"
+    
+    # Dimension-related mappings
+    category:
+      canonical: "dimension"
+      context: "When classifying governance concerns"
+      migration_note: "Use 'dimension' with dimension ID pattern"
+    
+    domain:
+      canonical: "dimension"
+      context: "When referring to governance classification"
+      exception: "Retain 'domain' for business domain concepts"
+      migration_note: "Governance domains are 'dimensions'"
+    
+    pillar:
+      canonical: "dimension"
+      context: "When referring to governance pillars"
+      migration_note: "Pillars are now 'dimensions'"
+    
+    area:
+      canonical: "dimension"
+      context: "When classifying system areas"
+      migration_note: "Use 'dimension' for governance classification"
+    
+    # Capability-related mappings
+    feature:
+      canonical: "capability"
+      context: "When referring to module-provided functionality"
+      exception: "Retain 'feature' for user-facing product features"
+      migration_note: "Module features are 'capabilities'"
+    
+    function:
+      canonical: "capability"
+      context: "When referring to module-level functionality"
+      exception: "Retain 'function' for code-level functions"
+      migration_note: "Module functions are 'capabilities'"
+    
+    # Provider-related mappings
+    supplier:
+      canonical: "provider"
+      context: "When referring to capability sources"
+      migration_note: "Use 'provider' for capability sources"
+    
+    implementer:
+      canonical: "provider"
+      context: "When referring to capability implementation"
+      migration_note: "Implementers are 'providers'"
+    
+    # Contract-related mappings
+    interface:
+      canonical: "contract"
+      context: "When referring to module-to-module agreements"
+      exception: "Retain 'interface' for code-level interfaces"
+      migration_note: "Module interfaces are 'contracts'"
+    
+    api:
+      canonical: "contract"
+      context: "When referring to internal module APIs"
+      exception: "Retain 'API' for external/HTTP APIs"
+      migration_note: "Internal APIs are 'contracts'"
+    
+    specification:
+      canonical: "contract"
+      context: "When referring to behavior specifications"
+      migration_note: "Specifications are 'contracts'"
+
+# ============================================================================
+# Additional Governance Terms
+# ============================================================================
+
+additional_terms:
+  registry:
+    definition: "A centralized catalog of modules, capabilities, or contracts"
+    governance_context: "Enables discovery and governance of system components"
+    examples:
+      - "MODULE_REGISTRY in core/modules/__init__.py"
+      - "governance/39-automation/registry/"
+    related_terms: ["module", "capability", "provider"]
+  
+  entry_point:
+    definition: "The Python import path for module initialization"
+    governance_context: "Used in MODULE_REGISTRY for module loading"
+    pattern: "governance.[dimension_python].[module].[init_module]"
+    examples:
+      - "governance.30_agents.mind_matrix.main"
+      - "governance.41_orchestration.execution_engine.executor"
+  
+  governance_namespace:
+    definition: "The canonical namespace following governance dimension structure"
+    pattern: "governance.[dimension-id].[module-name]"
+    examples:
+      - "governance.41-orchestration.unified_integration"
+      - "governance.06-security.safety_mechanisms"
+  
+  dimension_id:
+    definition: "The unique identifier for a governance dimension"
+    pattern: "[0-9]{2}-[a-z-]+"
+    examples:
+      - "41-orchestration"
+      - "06-security"
+      - "30-agents"
+  
+  canonical_path:
+    definition: "The standardized file system path for a module"
+    governance_context: "Used for module consolidation and migration"
+    examples:
+      - "core/modules/unified_integration/"
+      - "governance/39-automation/registry/"
+  
+  provides:
+    definition: "List of capabilities exposed by a module"
+    governance_context: "Enables capability-based module discovery"
+    type: "list[str]"
+    examples:
+      - ["SystemBootstrap", "PhaseCoordination", "ServiceDiscovery"]
+      - ["SafetyChecks", "RiskMitigation", "CircuitBreakers"]
+
+# ============================================================================
+# Usage Guidelines
+# ============================================================================
+
+usage_guidelines:
+  documentation:
+    - "Always use canonical terms in documentation"
+    - "When introducing a term, reference this glossary"
+    - "Avoid deprecated synonyms in new documentation"
+    - "Use governance namespace format when referencing modules"
+  
+  code:
+    - "Use canonical terms in variable/class/function names"
+    - "Add __governance_namespace__ to module __init__.py files"
+    - "Update MODULE_REGISTRY entries to use governance entry points"
+    - "Reference governance dimensions in docstrings"
+  
+  configuration:
+    - "Use canonical_namespace field in YAML configurations"
+    - "Include governance_dimension for dimension classification"
+    - "List capabilities in provides field"
+    - "Use $ref syntax for cross-references"
+
+# ============================================================================
+# Validation Rules
+# ============================================================================
+
+validation:
+  term_usage:
+    - rule: "canonical_term_required"
+      description: "Use canonical terms in new code and documentation"
+      severity: "warning"
+    
+    - rule: "deprecated_term_flagged"
+      description: "Flag usage of deprecated synonyms"
+      severity: "info"
+    
+    - rule: "namespace_format_valid"
+      description: "Validate governance namespace format"
+      pattern: "governance\\.[0-9]{2}-[a-z-]+\\.[a-z][a-z0-9_]+"
+      severity: "error"
+  
+  consistency:
+    - rule: "term_consistency"
+      description: "Use same term consistently within a file"
+      severity: "warning"
+    
+    - rule: "glossary_reference"
+      description: "Reference glossary for new terms"
+      severity: "info"

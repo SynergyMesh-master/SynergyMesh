@@ -3,9 +3,11 @@
 ## 概述 / Overview
 
 `config/` 目錄是所有系統配置的統一中心，包含業務、基礎設施、安全、監控等配置。
+配置按照治理維度組織成子目錄結構。
 
 The `config/` directory is the unified center for all system configurations,
 including business, infrastructure, security, and monitoring configurations.
+Configs are organized into subdirectories aligned with governance dimensions.
 
 ---
 
@@ -14,59 +16,58 @@ including business, infrastructure, security, and monitoring configurations.
 ```
 config/
 ├── README.md                           # 配置中心說明
+├── index.yaml                          # 配置索引與治理維度映射
 │
-├── 📋 主配置檔案 / Master Configs
-├── system-manifest.yaml                # 系統宣告清單
-├── unified-config-index.yaml           # 統一配置索引 v3.0.0
-├── system-module-map.yaml              # 模組映射
-├── environment.yaml                    # 環境配置
-├── dependencies.yaml                   # 依賴定義
+├── ⚖️ governance/                      # 治理與安全配置
+│   ├── ai-constitution.yaml            # AI 憲法 (三層體系)
+│   ├── language-policy.yaml            # 語言治理政策
+│   ├── safety-mechanisms.yaml          # 安全機制配置
+│   ├── security-network-config.yml     # 安全網絡配置
+│   └── tenant-tier-definitions.yaml    # 租戶層級定義
 │
-├── 🤖 AI 與決策 / AI & Decision
-├── ai-constitution.yaml                # AI 憲法 (三層體系)
-├── virtual-experts.yaml                # 虛擬專家團隊
-├── island-ai-runtime.yaml              # Island AI 執行時
+├── 📋 platform/                        # 平台與系統配置
+│   ├── system-manifest.yaml            # 系統宣告清單
+│   ├── system-module-map.yaml          # 模組映射
+│   ├── unified-config-index.yaml       # 統一配置索引
+│   ├── environment.yaml                # 環境配置
+│   ├── dependencies.yaml               # 依賴定義
+│   ├── island-ai-runtime.yaml          # Island AI 執行時
+│   ├── island-control.yml              # 控制配置
+│   ├── topology-mind-matrix.yaml       # 心智矩陣拓撲
+│   └── yaml-module-system.yaml         # YAML 模組系統
 │
-├── ⚖️ 治理與安全 / Governance & Security
-├── safety-mechanisms.yaml              # 安全機制配置
-├── cloud-agent-delegation.yml          # 雲端代理委派
-├── security-network-config.yml         # 安全網絡配置
-├── island-control.yml                  # 控制配置
+├── 🚀 operations/                      # 運維與 CI/CD 配置
+│   ├── ci-agent-config.yaml            # CI 代理配置
+│   ├── ci-config.yaml                  # CI 配置
+│   ├── ci-comprehensive-solution.yaml  # CI 綜合方案
+│   ├── ci-error-handler.yaml           # CI 錯誤處理
+│   ├── monitoring.yaml                 # 監控配置
+│   ├── prometheus-config.yml           # Prometheus 配置
+│   ├── prometheus-rules.yml            # Prometheus 告警規則
+│   ├── grafana-dashboard.json          # Grafana 儀表板
+│   ├── elasticsearch-config.sh         # Elasticsearch 設定
+│   ├── instant-execution-pipeline.yaml # 即時執行管線
+│   └── recovery-system.yaml            # 恢復系統配置
 │
-├── 🏗️ 基礎設施 / Infrastructure
-├── topology-mind-matrix.yaml           # 心智矩陣拓撲
-├── monitoring.yaml                     # 監控配置
-├── prometheus-config.yml               # Prometheus 配置
-├── prometheus-rules.yml                # Prometheus 告警規則
-├── grafana-dashboard.json              # Grafana 儀表板
-├── elasticsearch-config.sh             # Elasticsearch 設定
+├── 🤖 agents/                          # 代理配置
+│   ├── profiles/                       # 代理檔案
+│   ├── schemas/                        # 代理模式
+│   └── team/                           # 團隊配置
 │
-├── 🚀 自動化 / Automation
-├── auto-fix-bot.yml                    # Auto-Fix Bot 配置
-├── auto-fix-bot.prompt.yml             # Auto-Fix Prompt
-├── ci-error-handler.yaml               # CI 錯誤處理
-├── ci-comprehensive-solution.yaml      # CI 綜合方案
-│
-├── 🐳 容器 / Container Configuration
-├── docker/                             # Docker 配置
-│   ├── Dockerfile.prod
-│   ├── Dockerfile.dev
-│   └── docker-entrypoint.sh
-├── auto-scaffold.json                  # 自動生成腳本
-├── peachy-build.toml                   # 構建配置
-│
-├── 🔄 工具鏈 / Toolchain
-├── conftest/                           # Conftest 策略目錄
-│   ├── deployment.rego
-│   └── security.rego
-└── yaml-module-system.yaml             # YAML 模組系統
+├── 🔧 autofix/                         # 自動修復配置
+├── 🔄 automation/                      # 自動化配置
+├── 🐳 docker/                          # Docker 配置
+├── 🔗 integrations/                    # 整合配置
+├── 📊 pipelines/                       # 管線配置
+├── 📝 templates/                       # 配置模板
+└── conftest/                           # Conftest 策略目錄
 ```
 
 ---
 
 ## 🔑 主要配置檔案說明 / Key Configuration Files
 
-### 系統宣告 (system-manifest.yaml)
+### 系統宣告 (platform/system-manifest.yaml)
 
 定義系統的核心元件、依賴和服務聲明。
 
@@ -81,11 +82,11 @@ system:
       status: active
 ```
 
-### 統一配置索引 (unified-config-index.yaml)
+### 統一配置索引 (platform/unified-config-index.yaml)
 
 所有配置的集中索引，便於快速查找。
 
-### AI 憲法 (ai-constitution.yaml)
+### AI 憲法 (governance/ai-constitution.yaml)
 
 三層憲法體系：
 
@@ -93,13 +94,13 @@ system:
 - 第二層：業務規則
 - 第三層：實施指南
 
-### 安全機制 (safety-mechanisms.yaml)
+### 安全機制 (governance/safety-mechanisms.yaml)
 
 - 斷路器 (Circuit Breaker)
 - 緊急停止 (Emergency Stop)
 - 回滾策略 (Rollback Policy)
 
-### 監控配置 (monitoring.yaml)
+### 監控配置 (operations/monitoring.yaml)
 
 - Prometheus 指標收集
 - Grafana 儀表板定義
@@ -116,7 +117,7 @@ system:
 python3 tools/docs/validate_index.py --verbose
 
 # 驗證特定配置
-python3 tools/docs/validate_index.py --config config/system-manifest.yaml
+python3 tools/docs/validate_index.py --config config/platform/system-manifest.yaml
 ```
 
 ### 應用配置 / Apply Configuration

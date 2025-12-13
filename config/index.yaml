@@ -1,0 +1,364 @@
+# ═══════════════════════════════════════════════════════════════════════════════
+#                    Configuration Index
+#                    配置索引 - 治理維度映射
+# ═══════════════════════════════════════════════════════════════════════════════
+#
+# Purpose: Map all config files to their governance dimensions and provide
+#          centralized config discovery for the SynergyMesh system.
+#
+# Version: 1.0.0
+# Created: 2025-12-13
+# Structure: Governance-aligned subdirectory organization
+# ═══════════════════════════════════════════════════════════════════════════════
+
+version: "1.0.0"
+id: "synergymesh.config-index"
+description: "Configuration file index with governance dimension mapping"
+
+# ============================================================================
+# Directory Structure Overview
+# ============================================================================
+
+structure:
+  governance:
+    path: "config/governance/"
+    description: "Governance, policy, and security configurations"
+    governance_dimensions:
+      - "06-security"
+      - "10-policy"
+      - "05-compliance"
+      - "15-economic"
+
+  platform:
+    path: "config/platform/"
+    description: "Platform, system, and runtime configurations"
+    governance_dimensions:
+      - "01-architecture"
+      - "34-config"
+      - "11-tools-systems"
+      - "41-orchestration"
+
+  operations:
+    path: "config/operations/"
+    description: "CI/CD, deployment, monitoring, and infrastructure configurations"
+    governance_dimensions:
+      - "39-automation"
+      - "40-self-healing"
+      - "50-monitoring"
+      - "42-deployment"
+
+  agents:
+    path: "config/agents/"
+    description: "Agent profiles, schemas, and team configurations"
+    governance_dimensions:
+      - "30-agents"
+
+  autofix:
+    path: "config/autofix/"
+    description: "Auto-fix rules and automation"
+    governance_dimensions:
+      - "40-self-healing"
+
+  automation:
+    path: "config/automation/"
+    description: "Automation pipelines and workflows"
+    governance_dimensions:
+      - "39-automation"
+
+  docker:
+    path: "config/docker/"
+    description: "Docker and container configurations"
+    governance_dimensions:
+      - "42-deployment"
+
+  integrations:
+    path: "config/integrations/"
+    description: "Third-party integrations"
+    governance_dimensions:
+      - "11-tools-systems"
+
+  pipelines:
+    path: "config/pipelines/"
+    description: "Pipeline definitions"
+    governance_dimensions:
+      - "39-automation"
+
+  templates:
+    path: "config/templates/"
+    description: "Configuration templates"
+    governance_dimensions:
+      - "27-templates"
+
+# ============================================================================
+# Governance Config Files
+# ============================================================================
+
+governance_configs:
+  ai-constitution:
+    file: "config/governance/ai-constitution.yaml"
+    canonical_namespace: "governance.10-policy.ai_constitution"
+    governance_dimension: "10-policy"
+    description: "AI governance charter and ethical guidelines"
+    provides:
+      - "GovernancePolicies"
+      - "EthicalGuidelines"
+      - "AIGuardrails"
+
+  language-policy:
+    file: "config/governance/language-policy.yaml"
+    canonical_namespace: "governance.10-policy.language_policy"
+    governance_dimension: "10-policy"
+    description: "Language governance and naming conventions"
+    provides:
+      - "LanguageRules"
+      - "NamingConventions"
+
+  safety-mechanisms:
+    file: "config/governance/safety-mechanisms.yaml"
+    canonical_namespace: "governance.06-security.safety_mechanisms"
+    governance_dimension: "06-security"
+    description: "Safety mechanisms, circuit breakers, and failsafes"
+    provides:
+      - "SafetyChecks"
+      - "CircuitBreakers"
+      - "EmergencyStop"
+
+  security-network-config:
+    file: "config/governance/security-network-config.yml"
+    canonical_namespace: "governance.06-security.network_security"
+    governance_dimension: "06-security"
+    description: "Network security and access control"
+    provides:
+      - "NetworkPolicies"
+      - "AccessControl"
+
+  tenant-tier-definitions:
+    file: "config/governance/tenant-tier-definitions.yaml"
+    canonical_namespace: "governance.15-economic.tenant_tiers"
+    governance_dimension: "15-economic"
+    description: "Multi-tenant tier definitions and resource quotas"
+    provides:
+      - "TenantTiers"
+      - "ResourceQuotas"
+
+# ============================================================================
+# Platform Config Files
+# ============================================================================
+
+platform_configs:
+  system-manifest:
+    file: "config/platform/system-manifest.yaml"
+    canonical_namespace: "governance.01-architecture.system_manifest"
+    governance_dimension: "01-architecture"
+    description: "System declaration manifest"
+    provides:
+      - "SystemDeclaration"
+      - "ComponentRegistry"
+
+  system-module-map:
+    file: "config/platform/system-module-map.yaml"
+    canonical_namespace: "governance.01-architecture.module_map"
+    governance_dimension: "01-architecture"
+    description: "System module mapping and directory structure"
+    provides:
+      - "ModuleMapping"
+      - "DirectoryStructure"
+
+  unified-config-index:
+    file: "config/platform/unified-config-index.yaml"
+    canonical_namespace: "governance.34-config.unified_index"
+    governance_dimension: "34-config"
+    description: "Unified configuration index"
+    provides:
+      - "ConfigRegistry"
+      - "ConsolidationPlan"
+
+  environment:
+    file: "config/platform/environment.yaml"
+    canonical_namespace: "governance.34-config.environment"
+    governance_dimension: "34-config"
+    description: "Environment configuration"
+    provides:
+      - "EnvironmentSettings"
+
+  dependencies:
+    file: "config/platform/dependencies.yaml"
+    canonical_namespace: "governance.34-config.dependencies"
+    governance_dimension: "34-config"
+    description: "Dependency definitions"
+    provides:
+      - "DependencyManagement"
+
+  island-ai-runtime:
+    file: "config/platform/island-ai-runtime.yaml"
+    canonical_namespace: "governance.41-orchestration.island_ai_runtime"
+    governance_dimension: "41-orchestration"
+    description: "Island AI runtime configuration"
+    provides:
+      - "RuntimeConfig"
+      - "AgentOrchestration"
+
+  island-control:
+    file: "config/platform/island-control.yml"
+    canonical_namespace: "governance.41-orchestration.island_control"
+    governance_dimension: "41-orchestration"
+    description: "Island control and coordination"
+    provides:
+      - "ControlPlane"
+      - "IslandCoordination"
+
+  topology-mind-matrix:
+    file: "config/platform/topology-mind-matrix.yaml"
+    canonical_namespace: "governance.01-architecture.topology"
+    governance_dimension: "01-architecture"
+    description: "Mind matrix topology configuration"
+    provides:
+      - "TopologyDefinition"
+      - "MindMatrixConfig"
+
+  yaml-module-system:
+    file: "config/platform/yaml-module-system.yaml"
+    canonical_namespace: "governance.34-config.yaml_module_system"
+    governance_dimension: "34-config"
+    description: "YAML module system configuration"
+    provides:
+      - "YAMLValidation"
+      - "SchemaEnforcement"
+
+# ============================================================================
+# Operations Config Files
+# ============================================================================
+
+operations_configs:
+  ci-agent-config:
+    file: "config/operations/ci-agent-config.yaml"
+    canonical_namespace: "governance.39-automation.ci_agent"
+    governance_dimension: "39-automation"
+    description: "CI agent configuration"
+    provides:
+      - "CIAgentSettings"
+
+  ci-config:
+    file: "config/operations/ci-config.yaml"
+    canonical_namespace: "governance.39-automation.ci"
+    governance_dimension: "39-automation"
+    description: "CI pipeline configuration"
+    provides:
+      - "CIPipeline"
+
+  ci-comprehensive-solution:
+    file: "config/operations/ci-comprehensive-solution.yaml"
+    canonical_namespace: "governance.39-automation.ci_solution"
+    governance_dimension: "39-automation"
+    description: "Comprehensive CI/CD solution"
+    provides:
+      - "CISolution"
+      - "CDPipeline"
+
+  ci-error-handler:
+    file: "config/operations/ci-error-handler.yaml"
+    canonical_namespace: "governance.40-self-healing.ci_error_handler"
+    governance_dimension: "40-self-healing"
+    description: "CI error handling and auto-remediation"
+    provides:
+      - "ErrorHandling"
+      - "AutoRemediation"
+
+  monitoring:
+    file: "config/operations/monitoring.yaml"
+    canonical_namespace: "governance.50-monitoring.monitoring"
+    governance_dimension: "50-monitoring"
+    description: "Monitoring and observability configuration"
+    provides:
+      - "MetricsConfig"
+      - "AlertRules"
+
+  prometheus-config:
+    file: "config/operations/prometheus-config.yml"
+    canonical_namespace: "governance.50-monitoring.prometheus"
+    governance_dimension: "50-monitoring"
+    description: "Prometheus metrics configuration"
+    provides:
+      - "PrometheusConfig"
+      - "ScrapeTargets"
+
+  prometheus-rules:
+    file: "config/operations/prometheus-rules.yml"
+    canonical_namespace: "governance.50-monitoring.prometheus_rules"
+    governance_dimension: "50-monitoring"
+    description: "Prometheus alerting rules"
+    provides:
+      - "AlertRules"
+      - "RecordingRules"
+
+  grafana-dashboard:
+    file: "config/operations/grafana-dashboard.json"
+    canonical_namespace: "governance.54-dashboards.grafana"
+    governance_dimension: "54-dashboards"
+    description: "Grafana dashboard configuration"
+    provides:
+      - "DashboardPanels"
+      - "Visualizations"
+
+  elasticsearch-config:
+    file: "config/operations/elasticsearch-config.sh"
+    canonical_namespace: "governance.51-logging.elasticsearch"
+    governance_dimension: "51-logging"
+    description: "Elasticsearch logging configuration"
+    provides:
+      - "ElasticsearchSetup"
+      - "LoggingIndices"
+
+  instant-execution-pipeline:
+    file: "config/operations/instant-execution-pipeline.yaml"
+    canonical_namespace: "governance.39-automation.instant_pipeline"
+    governance_dimension: "39-automation"
+    description: "Instant execution pipeline"
+    provides:
+      - "InstantExecution"
+      - "PipelineConfig"
+
+  recovery-system:
+    file: "config/operations/recovery-system.yaml"
+    canonical_namespace: "governance.45-recovery.recovery_system"
+    governance_dimension: "45-recovery"
+    description: "Recovery and disaster recovery configuration"
+    provides:
+      - "RecoveryStrategies"
+      - "BackupPolicies"
+
+# ============================================================================
+# Legacy Path Mappings (for backward compatibility)
+# ============================================================================
+
+legacy_path_mappings:
+  # Governance files
+  "config/ai-constitution.yaml": "config/governance/ai-constitution.yaml"
+  "config/language-policy.yaml": "config/governance/language-policy.yaml"
+  "config/safety-mechanisms.yaml": "config/governance/safety-mechanisms.yaml"
+  "config/security-network-config.yml": "config/governance/security-network-config.yml"
+  "config/tenant-tier-definitions.yaml": "config/governance/tenant-tier-definitions.yaml"
+
+  # Platform files
+  "config/system-manifest.yaml": "config/platform/system-manifest.yaml"
+  "config/system-module-map.yaml": "config/platform/system-module-map.yaml"
+  "config/unified-config-index.yaml": "config/platform/unified-config-index.yaml"
+  "config/environment.yaml": "config/platform/environment.yaml"
+  "config/dependencies.yaml": "config/platform/dependencies.yaml"
+  "config/island-ai-runtime.yaml": "config/platform/island-ai-runtime.yaml"
+  "config/island-control.yml": "config/platform/island-control.yml"
+  "config/topology-mind-matrix.yaml": "config/platform/topology-mind-matrix.yaml"
+  "config/yaml-module-system.yaml": "config/platform/yaml-module-system.yaml"
+
+  # Operations files
+  "config/ci-agent-config.yaml": "config/operations/ci-agent-config.yaml"
+  "config/ci-config.yaml": "config/operations/ci-config.yaml"
+  "config/ci-comprehensive-solution.yaml": "config/operations/ci-comprehensive-solution.yaml"
+  "config/ci-error-handler.yaml": "config/operations/ci-error-handler.yaml"
+  "config/monitoring.yaml": "config/operations/monitoring.yaml"
+  "config/prometheus-config.yml": "config/operations/prometheus-config.yml"
+  "config/prometheus-rules.yml": "config/operations/prometheus-rules.yml"
+  "config/grafana-dashboard.json": "config/operations/grafana-dashboard.json"
+  "config/elasticsearch-config.sh": "config/operations/elasticsearch-config.sh"
+  "config/instant-execution-pipeline.yaml": "config/operations/instant-execution-pipeline.yaml"
+  "config/recovery-system.yaml": "config/operations/recovery-system.yaml"

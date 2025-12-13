@@ -1,0 +1,174 @@
+---
+apiVersion: governance.synergymesh.io/v2
+kind: AgentSkill
+metadata:
+  id: base44
+  name: "Base44 Encoding/Decoding"
+  name_zh: "Base44 編碼/解碼"
+  version: "1.0.0"
+  description: "Compact binary-to-text encoding scheme for efficient data processing and transmission"
+  created_at: "2025-12-13"
+  updated_at: "2025-12-13"
+  owner: "Data Processing Team"
+
+spec:
+  category: transformation
+  subcategory: encoding
+  risk_level: low
+
+  capabilities:
+    - encode_data
+    - decode_data
+    - validate_encoding
+    - batch_transform
+
+  description_detailed: |
+    Base44 is a binary-to-text encoding scheme that uses 44 ASCII characters
+    to represent binary data. It provides a more compact representation than
+    Base64 for certain use cases, particularly when transmitting data through
+    systems that support a limited character set.
+    
+    This skill enables AI agents to:
+    - Encode binary data for safe transmission
+    - Decode Base44 encoded strings back to original data
+    - Validate encoding integrity
+    - Process batch encoding/decoding operations
+
+  inputs:
+    - name: data
+      type: string | bytes
+      required: true
+      description: "Raw data to encode or Base44 string to decode"
+
+    - name: operation
+      type: enum
+      values: [encode, decode, validate]
+      required: true
+      description: "Operation to perform"
+
+    - name: options
+      type: object
+      required: false
+      properties:
+        chunk_size:
+          type: integer
+          default: 1024
+          description: "Size of chunks for batch processing"
+        validate_output:
+          type: boolean
+          default: true
+          description: "Validate output after transformation"
+        error_handling:
+          type: enum
+          values: [strict, lenient, skip]
+          default: strict
+          description: "How to handle encoding/decoding errors"
+
+  outputs:
+    - name: result
+      type: string | bytes
+      description: "Encoded or decoded result"
+
+    - name: metadata
+      type: object
+      properties:
+        operation:
+          type: string
+        input_length:
+          type: integer
+        output_length:
+          type: integer
+        compression_ratio:
+          type: number
+        valid:
+          type: boolean
+
+    - name: errors
+      type: array
+      items:
+        type: object
+        properties:
+          position: integer
+          message: string
+
+  providers:
+    - name: "core-encoding-service"
+      path: "core/encoding/"
+      type: library
+      language: python
+      priority: 1
+
+    - name: "mcp-data-transformer"
+      path: "mcp-servers/"
+      type: mcp-server
+      priority: 2
+
+  governance_dimensions:
+    - id: "06-security"
+      relevance: medium
+      controls:
+        - data_integrity
+        - secure_encoding
+
+    - id: "05-compliance"
+      relevance: low
+      controls:
+        - data_handling
+
+    - id: "62-provenance"
+      relevance: medium
+      controls:
+        - data_lineage
+
+  constraints:
+    max_input_size_mb: 100
+    encoding_timeout_seconds: 30
+    requires_validation: true
+
+  monitoring:
+    metrics:
+      - name: encoding_operations_total
+        type: counter
+        description: "Total encoding operations performed"
+      - name: decoding_operations_total
+        type: counter
+        description: "Total decoding operations performed"
+      - name: encoding_duration_seconds
+        type: histogram
+        description: "Duration of encoding operations"
+
+  examples:
+    - name: "Basic Encoding"
+      description: "Encode a simple string to Base44"
+      input:
+        data: "Hello, World!"
+        operation: encode
+      expected_output:
+        result: "Kj7HxZ2..."
+        metadata:
+          operation: encode
+          valid: true
+
+    - name: "Batch Decoding"
+      description: "Decode multiple Base44 strings"
+      input:
+        data: ["Kj7HxZ2...", "Lm9NyQ4..."]
+        operation: decode
+        options:
+          error_handling: lenient
+      expected_output:
+        result: ["Hello, World!", "Test data"]
+        metadata:
+          operation: decode
+          valid: true
+
+    - name: "Validation Check"
+      description: "Validate Base44 encoded string"
+      input:
+        data: "InvalidBase44String@#$"
+        operation: validate
+      expected_output:
+        result: false
+        errors:
+          - position: 18
+            message: "Invalid character '@' at position 18"

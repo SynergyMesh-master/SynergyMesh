@@ -17,7 +17,7 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 PIPELINE_SCRIPT="$REPO_ROOT/automation/pipelines/instant_execution_pipeline.py"
-CONFIG_FILE="$REPO_ROOT/config/instant-execution-pipeline.yaml"
+CONFIG_FILE="$REPO_ROOT/config/operations/instant-execution-pipeline.yaml"
 LOG_DIR="$REPO_ROOT/.automation_logs"
 
 # Default values

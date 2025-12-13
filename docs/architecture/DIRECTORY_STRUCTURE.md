@@ -10,6 +10,8 @@
 
 > **重要**: 完整的目錄分類與元件映射請參閱
 > [`config/system-module-map.yaml`](../../config/system-module-map.yaml)
+> **Governance Alignment / 治理對齊**: 根目錄移動請遵循
+> [`ROOT_GOVERNANCE_ALIGNMENT.md`](./ROOT_GOVERNANCE_ALIGNMENT.md) 中的規範
 
 該配置提供:
 

@@ -209,7 +209,7 @@ Engines initialize in dependency order ensuring all prerequisites are available.
 ## 🗂️ File Structure
 
 ```
-governance/automation/
+governance/39-automation/
 ├── README.md                             # Main documentation
 ├── SYSTEM_OVERVIEW.md                    # This file
 ├── governance_automation_launcher.py     # Main launcher (18.4 KB)
@@ -241,7 +241,7 @@ governance/automation/
 ### 1. Initialize All Components
 
 ```bash
-cd governance/automation
+cd governance/39-automation
 python3 integrated_launcher.py
 ```
 

@@ -1,0 +1,322 @@
+# ═══════════════════════════════════════════════════════════════════════════════
+#                    Namespace Conventions
+#                    命名空間規範 - 治理對齊的命名標準
+# ═══════════════════════════════════════════════════════════════════════════════
+#
+# Purpose: Define canonical namespace format and import conventions for
+#          governance-aligned module references across all languages
+# 用途: 定義治理對齊模組引用的標準命名空間格式與各語言導入規範
+#
+# Version: 1.0.0
+# Created: 2025-12-13
+# Owner: @governance-team
+# Reference: governance/00-governance-mapping-matrix.yaml
+# ═══════════════════════════════════════════════════════════════════════════════
+
+version: "1.0.0"
+id: "synergymesh.namespace-conventions"
+description: "Governance-aligned namespace format and import conventions"
+
+# ============================================================================
+# Namespace Format Definition
+# ============================================================================
+
+namespace_format:
+  pattern: "governance.[dimension-id].[module-name].[component]"
+  description: "Hierarchical namespace following governance dimension structure"
+  
+  segments:
+    root:
+      value: "governance"
+      description: "Root namespace indicating governance alignment"
+      required: true
+    
+    dimension_id:
+      pattern: "[0-9]{2}-[a-z-]+"
+      description: "Two-digit prefix with dimension name from governance folder"
+      examples:
+        - "00-vision-strategy"
+        - "01-architecture"
+        - "06-security"
+        - "10-policy"
+        - "30-agents"
+        - "39-automation"
+        - "41-orchestration"
+        - "50-monitoring"
+        - "60-contracts"
+        - "62-provenance"
+        - "73-learning"
+      required: true
+    
+    module_name:
+      pattern: "[a-z][a-z0-9_]*"
+      description: "Snake_case module identifier from core/"
+      examples:
+        - "unified_integration"
+        - "safety_mechanisms"
+        - "slsa_provenance"
+        - "monitoring_system"
+      required: true
+    
+    component:
+      pattern: "[a-z][a-z0-9_]*"
+      description: "Optional component within module"
+      examples:
+        - "bootstrap"
+        - "registry"
+        - "validator"
+      required: false
+
+  examples:
+    full_namespace:
+      - "governance.41-orchestration.unified_integration"
+      - "governance.06-security.safety_mechanisms"
+      - "governance.62-provenance.slsa_provenance"
+      - "governance.50-monitoring.monitoring_system"
+      - "governance.10-policy.ai_constitution"
+      - "governance.30-agents.virtual_experts"
+      - "governance.39-automation.main_system"
+      - "governance.40-self-healing.ci_error_handler"
+    
+    with_component:
+      - "governance.41-orchestration.unified_integration.bootstrap"
+      - "governance.39-automation.registry.selector"
+      - "governance.06-security.safety_mechanisms.circuit_breaker"
+
+# ============================================================================
+# Python Import Conventions
+# ============================================================================
+
+python_conventions:
+  description: "Python import patterns for governance-aligned modules"
+  
+  standard_import:
+    pattern: "from governance.[dimension].[module] import [component]"
+    examples:
+      - "from governance.41_orchestration.unified_integration import SystemBootstrap"
+      - "from governance.06_security.safety_mechanisms import CircuitBreaker"
+      - "from governance.30_agents.virtual_experts import ExpertTeam"
+    note: "Replace hyphens with underscores for Python module names"
+  
+  aliased_import:
+    pattern: "import governance.[dimension].[module] as [alias]"
+    examples:
+      - "import governance.41_orchestration.unified_integration as orchestration"
+      - "import governance.50_monitoring.monitoring_system as monitoring"
+    recommended_aliases:
+      unified_integration: "orchestration"
+      safety_mechanisms: "security"
+      monitoring_system: "monitoring"
+      ai_constitution: "policy"
+      execution_engine: "execution"
+  
+  namespace_translation:
+    yaml_to_python:
+      description: "Convert YAML namespace to Python import path"
+      rules:
+        - replace: { pattern: "-", replacement: "_" }
+        - convert: "dot notation remains as-is"
+      example:
+        yaml: "governance.41-orchestration.unified_integration"
+        python: "governance.41_orchestration.unified_integration"
+  
+  module_registry_entry_point:
+    pattern: "governance.[dimension_python].[module].[entry_module]"
+    examples:
+      - entry_point: "governance.30_agents.mind_matrix.main"
+        module: "mind_matrix"
+        dimension: "30-agents"
+      - entry_point: "governance.41_orchestration.execution_engine.executor"
+        module: "execution_engine"
+        dimension: "41-orchestration"
+
+# ============================================================================
+# TypeScript Import Alias Conventions
+# ============================================================================
+
+typescript_conventions:
+  description: "TypeScript import patterns with path aliases"
+  
+  path_aliases:
+    description: "Recommended tsconfig.json path aliases"
+    mappings:
+      "@governance/*": ["governance/*"]
+      "@governance/orchestration/*": ["governance/41-orchestration/*"]
+      "@governance/security/*": ["governance/06-security/*"]
+      "@governance/monitoring/*": ["governance/50-monitoring/*"]
+      "@governance/agents/*": ["governance/30-agents/*"]
+      "@governance/automation/*": ["governance/39-automation/*"]
+      "@governance/policy/*": ["governance/10-policy/*"]
+      "@governance/contracts/*": ["governance/60-contracts/*"]
+  
+  import_patterns:
+    aliased:
+      pattern: "import { Component } from '@governance/[dimension]/[module]'"
+      examples:
+        - "import { SystemBootstrap } from '@governance/orchestration/unified-integration'"
+        - "import { CircuitBreaker } from '@governance/security/safety-mechanisms'"
+        - "import { MetricsCollector } from '@governance/monitoring/monitoring-system'"
+    
+    relative:
+      pattern: "import { Component } from '../../governance/[dimension]/[module]'"
+      note: "Use path aliases when available for cleaner imports"
+  
+  naming_conventions:
+    modules: "kebab-case for directory names"
+    components: "PascalCase for exported classes/interfaces"
+    utilities: "camelCase for exported functions"
+    types: "PascalCase with 'I' prefix for interfaces"
+
+# ============================================================================
+# Configuration Reference Conventions
+# ============================================================================
+
+configuration_conventions:
+  description: "How to reference namespaces in YAML/JSON configuration files"
+  
+  namespace_reference:
+    pattern: "governance.[dimension-id].[module-name]"
+    note: "Use original hyphenated dimension IDs in configuration files"
+    examples:
+      - "governance.41-orchestration.unified_integration"
+      - "governance.06-security.safety_mechanisms"
+  
+  module_map_entries:
+    structure:
+      canonical_namespace: "governance.[dimension-id].[module-name]"
+      governance_dimension: "[dimension-id]"
+      source_path: "[physical-path]"
+      provides: ["capability1", "capability2"]
+    example:
+      canonical_namespace: "governance.41-orchestration.unified_integration"
+      governance_dimension: "41-orchestration"
+      source_path: "core/unified_integration/"
+      provides:
+        - "SystemBootstrap"
+        - "PhaseCoordination"
+        - "ServiceDiscovery"
+  
+  cross_references:
+    description: "Referencing related namespaces within configuration"
+    pattern: "$ref: governance.[dimension-id].[module-name]"
+    examples:
+      - "$ref: governance.30-agents.virtual_experts"
+      - "$ref: governance.73-learning.training_system"
+
+# ============================================================================
+# Dimension ID Reference
+# ============================================================================
+
+dimension_catalog:
+  description: "Complete catalog of governance dimension IDs"
+  
+  dimensions:
+    "00-vision-strategy":
+      description: "Vision and strategic planning"
+      short_alias: "vision"
+    "01-architecture":
+      description: "System architecture and design patterns"
+      short_alias: "arch"
+    "02-decision":
+      description: "Decision frameworks and governance"
+      short_alias: "decision"
+    "03-change":
+      description: "Change management"
+      short_alias: "change"
+    "04-risk":
+      description: "Risk assessment and management"
+      short_alias: "risk"
+    "05-compliance":
+      description: "Compliance and validation"
+      short_alias: "compliance"
+    "06-security":
+      description: "Security controls and safety mechanisms"
+      short_alias: "security"
+    "07-audit":
+      description: "Audit and accountability"
+      short_alias: "audit"
+    "08-process":
+      description: "Process definition and management"
+      short_alias: "process"
+    "09-performance":
+      description: "Performance optimization"
+      short_alias: "perf"
+    "10-policy":
+      description: "Policy enforcement and AI constitution"
+      short_alias: "policy"
+    "11-tools-systems":
+      description: "Tools and system integration"
+      short_alias: "tools"
+    "25-principles":
+      description: "Core principles and conventions"
+      short_alias: "principles"
+    "27-templates":
+      description: "Template management and scaffolding"
+      short_alias: "templates"
+    "30-agents":
+      description: "AI agents and expert systems"
+      short_alias: "agents"
+    "34-config":
+      description: "Configuration management"
+      short_alias: "config"
+    "39-automation":
+      description: "Automation pipelines and workflows"
+      short_alias: "automation"
+    "40-self-healing":
+      description: "Self-healing and auto-remediation"
+      short_alias: "healing"
+    "41-orchestration":
+      description: "System orchestration and coordination"
+      short_alias: "orchestration"
+    "50-monitoring":
+      description: "Observability and monitoring"
+      short_alias: "monitoring"
+    "60-contracts":
+      description: "Contract management and governance"
+      short_alias: "contracts"
+    "62-provenance":
+      description: "Provenance and attestation"
+      short_alias: "provenance"
+    "73-learning":
+      description: "Knowledge and learning systems"
+      short_alias: "learning"
+
+# ============================================================================
+# Migration Guide
+# ============================================================================
+
+migration:
+  description: "Guidelines for migrating existing code to governance namespaces"
+  
+  steps:
+    - step: 1
+      action: "Identify current module location"
+      example: "core/unified_integration/"
+    
+    - step: 2
+      action: "Look up canonical namespace in governance-mapping-matrix.yaml"
+      example: "governance.41-orchestration.unified_integration"
+    
+    - step: 3
+      action: "Update imports to use governance namespace pattern"
+      before: "from core.unified_integration import SystemBootstrap"
+      after: "from governance.41_orchestration.unified_integration import SystemBootstrap"
+    
+    - step: 4
+      action: "Update configuration references"
+      before: "entry_point: core.unified_integration.main"
+      after: "entry_point: governance.41_orchestration.unified_integration.main"
+    
+    - step: 5
+      action: "Add namespace metadata to module __init__.py"
+      example: |
+        __governance_namespace__ = "governance.41-orchestration.unified_integration"
+        __governance_dimension__ = "41-orchestration"
+
+  validation:
+    description: "Validate namespace compliance"
+    checks:
+      - "Namespace matches pattern: governance.[dimension-id].[module-name]"
+      - "Dimension ID exists in dimension_catalog"
+      - "Module name follows snake_case convention"
+      - "Entry points updated in MODULE_REGISTRY"

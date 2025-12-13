@@ -1,0 +1,314 @@
+---
+apiVersion: governance.synergymesh.io/v2
+kind: AgentSkill
+metadata:
+  id: refactoring
+  name: "Code Refactoring"
+  name_zh: "代碼重構"
+  version: "1.0.0"
+  description: "Intelligent code refactoring with AST transformation, pattern-based improvements, and ML-assisted suggestions"
+  created_at: "2025-12-13"
+  updated_at: "2025-12-13"
+  owner: "Code Quality Team"
+
+spec:
+  category: transformation
+  subcategory: code_modification
+  risk_level: medium
+
+  capabilities:
+    - ast_transformation
+    - rule_based_refactoring
+    - ml_assisted_refactoring
+    - extract_method
+    - rename_symbol
+    - inline_variable
+    - move_to_module
+    - introduce_interface
+    - remove_duplication
+    - simplify_conditionals
+
+  description_detailed: |
+    Code refactoring capability enables AI agents to improve code structure
+    while preserving behavior:
+    
+    - Rule-based refactoring using predefined patterns
+    - AST-based transformations for precise code modifications
+    - ML-assisted suggestions for complex refactoring scenarios
+    - Automatic test validation after refactoring
+    - Rollback mechanism for failed refactorings
+    
+    Supports security fixes, performance optimizations, and code quality improvements.
+
+  inputs:
+    - name: code
+      type: string
+      required: true
+      description: "Source code to refactor"
+
+    - name: file_path
+      type: string
+      required: false
+      description: "Path to source file for context"
+
+    - name: refactoring_type
+      type: enum
+      values:
+        - extract_method
+        - rename
+        - inline
+        - move
+        - extract_interface
+        - simplify
+        - security_fix
+        - performance_fix
+        - auto
+      required: true
+      description: "Type of refactoring to apply"
+
+    - name: target
+      type: object
+      required: false
+      properties:
+        line_start:
+          type: integer
+        line_end:
+          type: integer
+        symbol_name:
+          type: string
+        new_name:
+          type: string
+
+    - name: options
+      type: object
+      required: false
+      properties:
+        strategy:
+          type: enum
+          values: [rule_based, ast_based, ml_based, auto]
+          default: auto
+        auto_apply:
+          type: boolean
+          default: false
+        run_tests:
+          type: boolean
+          default: true
+        require_review:
+          type: boolean
+          default: true
+        rollback_on_failure:
+          type: boolean
+          default: true
+        confidence_threshold:
+          type: number
+          default: 0.85
+          description: "Minimum confidence for ML-based suggestions"
+
+  outputs:
+    - name: refactored_code
+      type: string
+      description: "Refactored source code"
+
+    - name: changes
+      type: object
+      properties:
+        files_modified: integer
+        lines_added: integer
+        lines_removed: integer
+        diff: string
+
+    - name: validation
+      type: object
+      properties:
+        tests_passed: boolean
+        security_scan_passed: boolean
+        performance_check_passed: boolean
+        test_results:
+          type: object
+
+    - name: metadata
+      type: object
+      properties:
+        strategy_used: string
+        confidence: number
+        refactoring_type: string
+        rollback_available: boolean
+
+  providers:
+    - name: "auto-repair-agent"
+      path: "agent/auto-repair/"
+      type: agent
+      language: python
+      priority: 1
+      capabilities:
+        - rule_based_refactoring
+        - ast_transformation
+        - ml_assisted_refactoring
+
+    - name: "architect-repair-engine"
+      path: "automation/architect/core/repair/"
+      type: library
+      language: python
+      priority: 2
+      capabilities:
+        - ast_transformation
+        - rule_based_refactoring
+      components:
+        - ast_transformer
+        - rule_engine
+        - repair_verifier
+
+    - name: "mcp-code-analyzer"
+      path: "mcp-servers/code-analyzer.js"
+      type: mcp-server
+      priority: 3
+      capabilities:
+        - suggest_improvements
+
+    - name: "virtual-expert-alex"
+      path: "core/virtual_experts/"
+      type: virtual_expert
+      expert: DrAlexChen
+      priority: 4
+      specialization: "AI architecture and code transformation"
+
+  governance_dimensions:
+    - id: "03-change"
+      relevance: high
+      controls:
+        - change_management
+        - code_review
+        - rollback_procedures
+
+    - id: "06-security"
+      relevance: high
+      controls:
+        - security_fix_validation
+        - vulnerability_remediation
+
+    - id: "09-performance"
+      relevance: medium
+      controls:
+        - performance_optimization
+        - regression_testing
+
+    - id: "07-audit"
+      relevance: medium
+      controls:
+        - change_tracking
+        - evidence_collection
+
+  constraints:
+    max_file_size_mb: 5
+    refactoring_timeout_seconds: 300
+    max_concurrent_refactorings: 4
+    require_test_coverage: 70
+
+  monitoring:
+    metrics:
+      - name: refactorings_total
+        type: counter
+        labels: [type, strategy, status]
+      - name: refactoring_duration_seconds
+        type: histogram
+        buckets: [1, 5, 10, 30, 60, 120, 300]
+      - name: refactoring_success_rate
+        type: gauge
+        labels: [type]
+      - name: test_pass_rate
+        type: gauge
+        labels: [refactoring_type]
+
+  examples:
+    - name: "SQL Injection Fix"
+      description: "Fix SQL injection vulnerability"
+      input:
+        code: |
+          def get_user(user_id):
+              query = "SELECT * FROM users WHERE id = " + user_id
+              cursor.execute(query)
+              return cursor.fetchone()
+        refactoring_type: security_fix
+        options:
+          strategy: rule_based
+          run_tests: true
+      expected_output:
+        refactored_code: |
+          def get_user(user_id):
+              query = "SELECT * FROM users WHERE id = ?"
+              cursor.execute(query, (user_id,))
+              return cursor.fetchone()
+        changes:
+          lines_added: 2
+          lines_removed: 2
+        validation:
+          security_scan_passed: true
+
+    - name: "Extract Method"
+      description: "Extract repeated code into a separate method"
+      input:
+        code: |
+          def process_order(order):
+              # Calculate total
+              total = 0
+              for item in order.items:
+                  total += item.price * item.quantity
+              
+              # Apply discount
+              if order.discount_code:
+                  discount = get_discount(order.discount_code)
+                  total = total * (1 - discount)
+              
+              return total
+        refactoring_type: extract_method
+        target:
+          line_start: 3
+          line_end: 5
+          new_name: "calculate_subtotal"
+        options:
+          strategy: ast_based
+      expected_output:
+        refactored_code: |
+          def calculate_subtotal(items):
+              total = 0
+              for item in items:
+                  total += item.price * item.quantity
+              return total
+          
+          def process_order(order):
+              total = calculate_subtotal(order.items)
+              
+              if order.discount_code:
+                  discount = get_discount(order.discount_code)
+                  total = total * (1 - discount)
+              
+              return total
+
+    - name: "Performance Optimization"
+      description: "Fix N+1 query issue"
+      input:
+        code: |
+          def get_orders_with_items(user_id):
+              orders = Order.query.filter_by(user_id=user_id).all()
+              for order in orders:
+                  order.items = Item.query.filter_by(order_id=order.id).all()
+              return orders
+        refactoring_type: performance_fix
+        options:
+          strategy: ml_based
+          confidence_threshold: 0.80
+      expected_output:
+        refactored_code: |
+          def get_orders_with_items(user_id):
+              orders = Order.query.filter_by(user_id=user_id).all()
+              order_ids = [o.id for o in orders]
+              items = Item.query.filter(Item.order_id.in_(order_ids)).all()
+              items_by_order = {}
+              for item in items:
+                  items_by_order.setdefault(item.order_id, []).append(item)
+              for order in orders:
+                  order.items = items_by_order.get(order.id, [])
+              return orders
+        metadata:
+          strategy_used: ml_based
+          confidence: 0.92

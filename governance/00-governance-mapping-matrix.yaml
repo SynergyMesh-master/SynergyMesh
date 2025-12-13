@@ -1,0 +1,799 @@
+# ═══════════════════════════════════════════════════════════════════════════════
+#                    Governance Mapping Matrix
+#                    治理映射矩陣 - 核心模組與治理維度對照
+# ═══════════════════════════════════════════════════════════════════════════════
+#
+# Purpose: Map core/ and config/ assets to governance dimensions with canonical
+#          namespaces for unified governance and module consolidation
+# 用途: 將 core/ 與 config/ 資產映射至治理維度，使用標準命名空間進行統一治理
+#
+# Version: 1.0.0
+# Created: 2025-12-13
+# Owner: @governance-team
+# ═══════════════════════════════════════════════════════════════════════════════
+
+version: "1.0.0"
+id: "synergymesh.governance-mapping-matrix"
+description: "Core module to governance dimension mapping with canonical namespaces"
+
+# ============================================================================
+# Canonical Namespace Format Definition
+# ============================================================================
+
+namespace_format:
+  pattern: "governance.[dimension-id].[module-name]"
+  examples:
+    - "governance.41-orchestration.unified_integration"
+    - "governance.06-security.safety_mechanisms"
+    - "governance.62-provenance.slsa_provenance"
+  rules:
+    - dimension_id: "Two-digit prefix from governance folder names (00-80)"
+    - module_name: "Snake_case module identifier from core/"
+    - separator: "Dot notation for namespace hierarchy"
+
+# ============================================================================
+# Core Module to Governance Dimension Mapping
+# ============================================================================
+
+core_module_mapping:
+  # ─────────────────────────────────────────────────────────────────────────
+  # Orchestration & Integration Layer (維度 41-orchestration)
+  # ─────────────────────────────────────────────────────────────────────────
+  unified_integration:
+    source_path: "core/unified_integration/"
+    canonical_namespace: "governance.41-orchestration.unified_integration"
+    governance_dimension: "41-orchestration"
+    dimension_rationale: "Central orchestration point for system coordination"
+    provides:
+      - "SystemBootstrap"
+      - "PhaseCoordination"
+      - "ServiceDiscovery"
+      - "WorkflowManagement"
+      - "CognitiveProcessing"
+    spec_reference: "governance/36-modules/core.unified_integration.yaml"
+    status: "active"
+
+  # ─────────────────────────────────────────────────────────────────────────
+  # Security & Safety Layer (維度 06-security)
+  # ─────────────────────────────────────────────────────────────────────────
+  safety_mechanisms:
+    source_path: "core/safety_mechanisms/"
+    canonical_namespace: "governance.06-security.safety_mechanisms"
+    governance_dimension: "06-security"
+    dimension_rationale: "Security controls, safety checks, and risk mitigation"
+    provides:
+      - "SafetyChecks"
+      - "RiskMitigation"
+      - "CircuitBreakers"
+      - "FailsafeOperations"
+    status: "active"
+
+  # ─────────────────────────────────────────────────────────────────────────
+  # Provenance & Attestation Layer (維度 62-provenance)
+  # ─────────────────────────────────────────────────────────────────────────
+  slsa_provenance:
+    source_path: "core/slsa_provenance/"
+    canonical_namespace: "governance.62-provenance.slsa_provenance"
+    governance_dimension: "62-provenance"
+    dimension_rationale: "SLSA supply chain security and build attestation"
+    provides:
+      - "Attestation"
+      - "SignatureVerification"
+      - "ProvenanceGeneration"
+      - "SLSACompliance"
+    status: "active"
+
+  # ─────────────────────────────────────────────────────────────────────────
+  # Monitoring Layer (維度 50-monitoring)
+  # ─────────────────────────────────────────────────────────────────────────
+  monitoring_system:
+    source_path: "core/monitoring_system/"
+    canonical_namespace: "governance.50-monitoring.monitoring_system"
+    governance_dimension: "50-monitoring"
+    dimension_rationale: "Observability, metrics, and system health monitoring"
+    provides:
+      - "MetricsCollection"
+      - "AlertManagement"
+      - "AutoDiagnostics"
+      - "AnomalyDetection"
+    duplicate_in_modules: true
+    status: "active"
+
+  # ─────────────────────────────────────────────────────────────────────────
+  # AI Constitution Layer (維度 10-policy)
+  # ─────────────────────────────────────────────────────────────────────────
+  ai_constitution:
+    source_path: "core/ai_constitution/"
+    canonical_namespace: "governance.10-policy.ai_constitution"
+    governance_dimension: "10-policy"
+    dimension_rationale: "AI governance policies, ethical guidelines, guardrails"
+    provides:
+      - "GovernancePolicies"
+      - "EthicalGuidelines"
+      - "AIGuardrails"
+      - "ConstitutionalRules"
+    duplicate_in_modules: true
+    status: "active"
+
+  # ─────────────────────────────────────────────────────────────────────────
+  # Execution Layer (維度 41-orchestration)
+  # ─────────────────────────────────────────────────────────────────────────
+  execution_engine:
+    source_path: "core/execution_engine/"
+    canonical_namespace: "governance.41-orchestration.execution_engine"
+    governance_dimension: "41-orchestration"
+    dimension_rationale: "Core task execution and action processing"
+    provides:
+      - "ActionExecution"
+      - "Rollback"
+      - "ResultProcessing"
+    duplicate_in_modules: true
+    status: "active"
+
+  execution_architecture:
+    source_path: "core/execution_architecture/"
+    canonical_namespace: "governance.01-architecture.execution_architecture"
+    governance_dimension: "01-architecture"
+    dimension_rationale: "Defines execution patterns and architectural blueprints"
+    provides:
+      - "FullExecutionPipeline"
+      - "AgentOrchestration"
+      - "ToolSystemIntegration"
+    duplicate_in_modules: true
+    status: "active"
+
+  # ─────────────────────────────────────────────────────────────────────────
+  # HLP Executor (維度 41-orchestration)
+  # ─────────────────────────────────────────────────────────────────────────
+  hlp_executor:
+    source_path: "core/hlp_executor/"
+    canonical_namespace: "governance.41-orchestration.hlp_executor"
+    governance_dimension: "41-orchestration"
+    dimension_rationale: "Hard Logic Plugin async DAG orchestration engine"
+    provides:
+      - "DAGOrchestration"
+      - "StateMachineManagement"
+      - "PartialRollback"
+      - "RetryPolicies"
+    status: "active"
+
+  # ─────────────────────────────────────────────────────────────────────────
+  # Knowledge & Training Layer (維度 73-learning)
+  # ─────────────────────────────────────────────────────────────────────────
+  virtual_experts:
+    source_path: "core/virtual_experts/"
+    canonical_namespace: "governance.30-agents.virtual_experts"
+    governance_dimension: "30-agents"
+    dimension_rationale: "Virtual expert agents and domain knowledge systems"
+    provides:
+      - "ExpertKnowledge"
+      - "DomainAnalysis"
+      - "ExpertTeamCoordination"
+    duplicate_in_modules: true
+    status: "active"
+
+  training_system:
+    source_path: "core/training_system/"
+    canonical_namespace: "governance.73-learning.training_system"
+    governance_dimension: "73-learning"
+    dimension_rationale: "Knowledge base and skill training systems"
+    provides:
+      - "KnowledgeTraining"
+      - "SkillDevelopment"
+      - "KnowledgeBase"
+    duplicate_in_modules: true
+    status: "active"
+
+  # ─────────────────────────────────────────────────────────────────────────
+  # Additional Core Modules
+  # ─────────────────────────────────────────────────────────────────────────
+  ci_error_handler:
+    source_path: "core/ci_error_handler/"
+    canonical_namespace: "governance.40-self-healing.ci_error_handler"
+    governance_dimension: "40-self-healing"
+    dimension_rationale: "Automated error detection and remediation in CI"
+    provides:
+      - "ErrorDetection"
+      - "AutoRemediation"
+      - "StateTracking"
+    duplicate_in_modules: true
+    status: "active"
+
+  cloud_agent_delegation:
+    source_path: "core/cloud_agent_delegation/"
+    canonical_namespace: "governance.30-agents.cloud_agent_delegation"
+    governance_dimension: "30-agents"
+    dimension_rationale: "Agent task delegation and cloud integration"
+    provides:
+      - "AgentDelegation"
+      - "LoadBalancing"
+      - "TaskRouting"
+    duplicate_in_modules: true
+    status: "active"
+
+  main_system:
+    source_path: "core/main_system/"
+    canonical_namespace: "governance.39-automation.main_system"
+    governance_dimension: "39-automation"
+    dimension_rationale: "Main automation pipeline and phase orchestration"
+    provides:
+      - "AutomationPipeline"
+      - "PhaseOrchestration"
+      - "SystemCoordination"
+    duplicate_in_modules: true
+    status: "active"
+
+  mcp_servers_enhanced:
+    source_path: "core/mcp_servers_enhanced/"
+    canonical_namespace: "governance.11-tools-systems.mcp_servers_enhanced"
+    governance_dimension: "11-tools-systems"
+    dimension_rationale: "Enhanced MCP protocol servers and tool registration"
+    provides:
+      - "MCPProtocol"
+      - "ServerCapabilities"
+      - "ToolRegistration"
+      - "WorkflowOrchestration"
+    duplicate_in_modules: true
+    status: "active"
+
+  tech_stack:
+    source_path: "core/tech_stack/"
+    canonical_namespace: "governance.11-tools-systems.tech_stack"
+    governance_dimension: "11-tools-systems"
+    dimension_rationale: "Technology stack configuration and framework integration"
+    provides:
+      - "StackConfiguration"
+      - "ToolIntegration"
+      - "FrameworkCoordination"
+    duplicate_in_modules: true
+    status: "active"
+
+  yaml_module_system:
+    source_path: "core/yaml_module_system/"
+    canonical_namespace: "governance.34-config.yaml_module_system"
+    governance_dimension: "34-config"
+    dimension_rationale: "YAML-based configuration and schema enforcement"
+    provides:
+      - "YAMLValidation"
+      - "SchemaEnforcement"
+      - "ConfigDrivenLoading"
+    duplicate_in_modules: true
+    status: "active"
+
+  # ─────────────────────────────────────────────────────────────────────────
+  # Core Standalone Modules (No Duplicates)
+  # ─────────────────────────────────────────────────────────────────────────
+  contract_service:
+    source_path: "core/contract_service/"
+    canonical_namespace: "governance.60-contracts.contract_service"
+    governance_dimension: "60-contracts"
+    dimension_rationale: "L1 contract management and provenance attestation"
+    provides:
+      - "ContractManagement"
+      - "ProvenanceAttestation"
+    status: "active"
+
+  project_factory:
+    source_path: "core/project_factory/"
+    canonical_namespace: "governance.27-templates.project_factory"
+    governance_dimension: "27-templates"
+    dimension_rationale: "Project generation templates and scaffolding"
+    provides:
+      - "ProjectGeneration"
+      - "TemplateManagement"
+    status: "active"
+
+  validators:
+    source_path: "core/validators/"
+    canonical_namespace: "governance.05-compliance.validators"
+    governance_dimension: "05-compliance"
+    dimension_rationale: "Validation and compliance checking"
+    provides:
+      - "InputValidation"
+      - "SchemaValidation"
+    status: "active"
+
+  island_ai_runtime:
+    source_path: "core/island_ai_runtime/"
+    canonical_namespace: "governance.30-agents.island_ai_runtime"
+    governance_dimension: "30-agents"
+    dimension_rationale: "AI agent runtime environment"
+    provides:
+      - "AgentRuntime"
+      - "IslandExecution"
+    status: "active"
+
+  advisory_database:
+    source_path: "core/advisory-database/"
+    canonical_namespace: "governance.04-risk.advisory_database"
+    governance_dimension: "04-risk"
+    dimension_rationale: "Security advisory and vulnerability database"
+    provides:
+      - "AdvisoryLookup"
+      - "VulnerabilityTracking"
+    status: "active"
+
+# ============================================================================
+# Modules in core/modules/ - MODULE_REGISTRY Reference
+# ============================================================================
+
+module_registry_mapping:
+  mind_matrix:
+    source_path: "core/modules/mind_matrix/"
+    canonical_namespace: "governance.30-agents.mind_matrix"
+    governance_dimension: "30-agents"
+    dimension_rationale: "Cognitive stack and multi-agent hypergraph"
+    entry_point: "core.modules.mind_matrix.main"
+    dependencies:
+      - "training_system"
+      - "virtual_experts"
+    status: "active"
+
+  drone_system:
+    source_path: "core/modules/drone_system/"
+    canonical_namespace: "governance.39-automation.drone_system"
+    governance_dimension: "39-automation"
+    dimension_rationale: "UAV/drone automation systems"
+    status: "active"
+
+# ============================================================================
+# Duplicate Module Analysis
+# ============================================================================
+
+duplicate_modules:
+  description: "Modules that exist in both core/* and core/modules/*"
+  consolidation_recommendation: "Merge into core/modules/ as the canonical location"
+
+  duplicates:
+    - module: "ai_constitution"
+      locations:
+        - "core/ai_constitution/"
+        - "core/modules/ai_constitution/"
+      canonical_path: "core/modules/ai_constitution/"
+      canonical_namespace: "governance.10-policy.ai_constitution"
+      migration_status: "pending"
+
+    - module: "ci_error_handler"
+      locations:
+        - "core/ci_error_handler/"
+        - "core/modules/ci_error_handler/"
+      canonical_path: "core/modules/ci_error_handler/"
+      canonical_namespace: "governance.40-self-healing.ci_error_handler"
+      migration_status: "pending"
+
+    - module: "cloud_agent_delegation"
+      locations:
+        - "core/cloud_agent_delegation/"
+        - "core/modules/cloud_agent_delegation/"
+      canonical_path: "core/modules/cloud_agent_delegation/"
+      canonical_namespace: "governance.30-agents.cloud_agent_delegation"
+      migration_status: "pending"
+
+    - module: "execution_architecture"
+      locations:
+        - "core/execution_architecture/"
+        - "core/modules/execution_architecture/"
+      canonical_path: "core/modules/execution_architecture/"
+      canonical_namespace: "governance.01-architecture.execution_architecture"
+      migration_status: "pending"
+
+    - module: "execution_engine"
+      locations:
+        - "core/execution_engine/"
+        - "core/modules/execution_engine/"
+      canonical_path: "core/modules/execution_engine/"
+      canonical_namespace: "governance.41-orchestration.execution_engine"
+      migration_status: "pending"
+
+    - module: "main_system"
+      locations:
+        - "core/main_system/"
+        - "core/modules/main_system/"
+      canonical_path: "core/modules/main_system/"
+      canonical_namespace: "governance.39-automation.main_system"
+      migration_status: "pending"
+
+    - module: "mcp_servers_enhanced"
+      locations:
+        - "core/mcp_servers_enhanced/"
+        - "core/modules/mcp_servers_enhanced/"
+      canonical_path: "core/modules/mcp_servers_enhanced/"
+      canonical_namespace: "governance.11-tools-systems.mcp_servers_enhanced"
+      migration_status: "pending"
+
+    - module: "monitoring_system"
+      locations:
+        - "core/monitoring_system/"
+        - "core/modules/monitoring_system/"
+      canonical_path: "core/modules/monitoring_system/"
+      canonical_namespace: "governance.50-monitoring.monitoring_system"
+      migration_status: "pending"
+
+    - module: "tech_stack"
+      locations:
+        - "core/tech_stack/"
+        - "core/modules/tech_stack/"
+      canonical_path: "core/modules/tech_stack/"
+      canonical_namespace: "governance.11-tools-systems.tech_stack"
+      migration_status: "pending"
+
+    - module: "training_system"
+      locations:
+        - "core/training_system/"
+        - "core/modules/training_system/"
+      canonical_path: "core/modules/training_system/"
+      canonical_namespace: "governance.73-learning.training_system"
+      migration_status: "pending"
+
+    - module: "virtual_experts"
+      locations:
+        - "core/virtual_experts/"
+        - "core/modules/virtual_experts/"
+      canonical_path: "core/modules/virtual_experts/"
+      canonical_namespace: "governance.30-agents.virtual_experts"
+      migration_status: "pending"
+
+    - module: "yaml_module_system"
+      locations:
+        - "core/yaml_module_system/"
+        - "core/modules/yaml_module_system/"
+      canonical_path: "core/modules/yaml_module_system/"
+      canonical_namespace: "governance.34-config.yaml_module_system"
+      migration_status: "pending"
+
+# ============================================================================
+# Config Files to Governance Dimension Mapping
+# ============================================================================
+
+config_mapping:
+  # ─────────────────────────────────────────────────────────────────────────
+  # System Configuration (維度 34-config)
+  # ─────────────────────────────────────────────────────────────────────────
+  system_configs:
+    governance_dimension: "34-config"
+    files:
+      - file: "config/system-manifest.yaml"
+        canonical_namespace: "governance.34-config.system_manifest"
+        description: "Primary system declaration manifest"
+
+      - file: "config/system-module-map.yaml"
+        canonical_namespace: "governance.34-config.system_module_map"
+        description: "System module directory mapping"
+
+      - file: "config/unified-config-index.yaml"
+        canonical_namespace: "governance.34-config.unified_config_index"
+        description: "Phase 2 unified configuration index"
+
+      - file: "config/environment.yaml"
+        canonical_namespace: "governance.34-config.environment"
+        description: "Environment configuration"
+
+      - file: "config/dependencies.yaml"
+        canonical_namespace: "governance.34-config.dependencies"
+        description: "Dependency configuration"
+
+      - file: "config/synergymesh.config.yaml"
+        canonical_namespace: "governance.34-config.synergymesh_config"
+        description: "Main SynergyMesh configuration"
+
+  # ─────────────────────────────────────────────────────────────────────────
+  # AI & Agent Configuration (維度 30-agents)
+  # ─────────────────────────────────────────────────────────────────────────
+  agent_configs:
+    governance_dimension: "30-agents"
+    files:
+      - file: "config/ai-constitution.yaml"
+        canonical_namespace: "governance.30-agents.ai_constitution_config"
+        description: "AI constitution and governance rules"
+
+      - file: "config/ci-agent-config.yaml"
+        canonical_namespace: "governance.30-agents.ci_agent_config"
+        description: "CI agent configuration"
+
+      - file: "config/cloud-agent-delegation.yml"
+        canonical_namespace: "governance.30-agents.cloud_agent_delegation_config"
+        description: "Cloud agent delegation settings"
+
+      - file: "config/island-ai-runtime.yaml"
+        canonical_namespace: "governance.30-agents.island_ai_runtime_config"
+        description: "Island AI runtime configuration"
+
+      - file: "config/builder-system-prompt.yaml"
+        canonical_namespace: "governance.30-agents.builder_system_prompt"
+        description: "Builder system prompt configuration"
+
+  # ─────────────────────────────────────────────────────────────────────────
+  # Automation & Pipeline Configuration (維度 39-automation)
+  # ─────────────────────────────────────────────────────────────────────────
+  automation_configs:
+    governance_dimension: "39-automation"
+    files:
+      - file: "config/instant-execution-pipeline.yaml"
+        canonical_namespace: "governance.39-automation.instant_execution_pipeline"
+        description: "Instant execution pipeline configuration"
+
+      - file: "config/auto-fix-bot.yml"
+        canonical_namespace: "governance.39-automation.auto_fix_bot"
+        description: "Auto-fix bot configuration"
+
+      - file: "config/ci-comprehensive-solution.yaml"
+        canonical_namespace: "governance.39-automation.ci_comprehensive_solution"
+        description: "Comprehensive CI solution configuration"
+
+      - file: "config/drone-config.yml"
+        canonical_namespace: "governance.39-automation.drone_config"
+        description: "Drone system configuration"
+
+  # ─────────────────────────────────────────────────────────────────────────
+  # Security Configuration (維度 06-security)
+  # ─────────────────────────────────────────────────────────────────────────
+  security_configs:
+    governance_dimension: "06-security"
+    files:
+      - file: "config/safety-mechanisms.yaml"
+        canonical_namespace: "governance.06-security.safety_mechanisms_config"
+        description: "Safety mechanisms configuration"
+
+      - file: "config/security-network-config.yml"
+        canonical_namespace: "governance.06-security.network_config"
+        description: "Security network configuration"
+
+  # ─────────────────────────────────────────────────────────────────────────
+  # Monitoring Configuration (維度 50-monitoring)
+  # ─────────────────────────────────────────────────────────────────────────
+  monitoring_configs:
+    governance_dimension: "50-monitoring"
+    files:
+      - file: "config/monitoring.yaml"
+        canonical_namespace: "governance.50-monitoring.monitoring_config"
+        description: "Monitoring system configuration"
+
+      - file: "config/prometheus-config.yml"
+        canonical_namespace: "governance.50-monitoring.prometheus_config"
+        description: "Prometheus monitoring configuration"
+
+      - file: "config/prometheus-rules.yml"
+        canonical_namespace: "governance.50-monitoring.prometheus_rules"
+        description: "Prometheus alerting rules"
+
+      - file: "config/grafana-dashboard.json"
+        canonical_namespace: "governance.54-dashboards.grafana_dashboard"
+        description: "Grafana dashboard configuration"
+
+  # ─────────────────────────────────────────────────────────────────────────
+  # Integration Configuration (維度 11-tools-systems)
+  # ─────────────────────────────────────────────────────────────────────────
+  integration_configs:
+    governance_dimension: "11-tools-systems"
+    files:
+      - file: "config/integrations-index.yaml"
+        canonical_namespace: "governance.11-tools-systems.integrations_index"
+        description: "Integration systems index"
+
+      - file: "config/yaml-module-system.yaml"
+        canonical_namespace: "governance.11-tools-systems.yaml_module_system_config"
+        description: "YAML module system configuration"
+
+  # ─────────────────────────────────────────────────────────────────────────
+  # Recovery & Self-Healing Configuration (維度 40-self-healing)
+  # ─────────────────────────────────────────────────────────────────────────
+  recovery_configs:
+    governance_dimension: "40-self-healing"
+    files:
+      - file: "config/recovery-system.yaml"
+        canonical_namespace: "governance.40-self-healing.recovery_system"
+        description: "Recovery system configuration"
+
+      - file: "config/ci-error-handler.yaml"
+        canonical_namespace: "governance.40-self-healing.ci_error_handler_config"
+        description: "CI error handler configuration"
+
+  # ─────────────────────────────────────────────────────────────────────────
+  # Evolution & Improvement Configuration (維度 75-evolution)
+  # ─────────────────────────────────────────────────────────────────────────
+  evolution_configs:
+    governance_dimension: "75-evolution"
+    files:
+      - file: "config/refactor-evolution.yaml"
+        canonical_namespace: "governance.75-evolution.refactor_evolution"
+        description: "Refactoring evolution configuration"
+
+      - file: "config/system-evolution.yaml"
+        canonical_namespace: "governance.75-evolution.system_evolution"
+        description: "System evolution configuration"
+
+# ============================================================================
+# Governance Dimension Summary
+# ============================================================================
+
+governance_dimensions_used:
+  - id: "01-architecture"
+    modules:
+      - "execution_architecture"
+    description: "Architectural blueprints and patterns"
+
+  - id: "04-risk"
+    modules:
+      - "advisory_database"
+    description: "Risk assessment and vulnerability tracking"
+
+  - id: "05-compliance"
+    modules:
+      - "validators"
+    description: "Compliance validation"
+
+  - id: "06-security"
+    modules:
+      - "safety_mechanisms"
+    configs:
+      - "safety-mechanisms.yaml"
+      - "security-network-config.yml"
+    description: "Security controls and safety mechanisms"
+
+  - id: "10-policy"
+    modules:
+      - "ai_constitution"
+    description: "AI governance policies"
+
+  - id: "11-tools-systems"
+    modules:
+      - "mcp_servers_enhanced"
+      - "tech_stack"
+    configs:
+      - "integrations-index.yaml"
+      - "yaml-module-system.yaml"
+    description: "Tools and system integration"
+
+  - id: "27-templates"
+    modules:
+      - "project_factory"
+    description: "Project templates and scaffolding"
+
+  - id: "30-agents"
+    modules:
+      - "virtual_experts"
+      - "cloud_agent_delegation"
+      - "island_ai_runtime"
+      - "mind_matrix"
+    configs:
+      - "ai-constitution.yaml"
+      - "ci-agent-config.yaml"
+      - "cloud-agent-delegation.yml"
+    description: "Agent systems and delegation"
+
+  - id: "34-config"
+    modules:
+      - "yaml_module_system"
+    configs:
+      - "system-manifest.yaml"
+      - "system-module-map.yaml"
+      - "environment.yaml"
+    description: "Configuration management"
+
+  - id: "39-automation"
+    modules:
+      - "main_system"
+      - "drone_system"
+    configs:
+      - "instant-execution-pipeline.yaml"
+      - "auto-fix-bot.yml"
+    description: "Automation pipelines"
+
+  - id: "40-self-healing"
+    modules:
+      - "ci_error_handler"
+    configs:
+      - "recovery-system.yaml"
+    description: "Self-healing and error recovery"
+
+  - id: "41-orchestration"
+    modules:
+      - "unified_integration"
+      - "execution_engine"
+      - "hlp_executor"
+    description: "Workflow orchestration"
+
+  - id: "50-monitoring"
+    modules:
+      - "monitoring_system"
+    configs:
+      - "monitoring.yaml"
+      - "prometheus-config.yml"
+    description: "System monitoring"
+
+  - id: "54-dashboards"
+    configs:
+      - "grafana-dashboard.json"
+    description: "Visualization dashboards"
+
+  - id: "60-contracts"
+    modules:
+      - "contract_service"
+    description: "Contract management"
+
+  - id: "62-provenance"
+    modules:
+      - "slsa_provenance"
+    description: "Supply chain provenance"
+
+  - id: "73-learning"
+    modules:
+      - "training_system"
+    description: "Learning and training"
+
+  - id: "75-evolution"
+    configs:
+      - "refactor-evolution.yaml"
+      - "system-evolution.yaml"
+    description: "System evolution"
+
+# ============================================================================
+# Migration Notes for Consolidation
+# ============================================================================
+
+migration_notes:
+  priority: "high"
+  description: "Consolidation plan for duplicate modules and namespace alignment"
+
+  phase_1_duplicate_resolution:
+    target_date: "2025-Q1"
+    actions:
+      - action: "Audit duplicate module contents"
+        description: "Compare files in core/* and core/modules/* for each duplicate"
+        status: "pending"
+
+      - action: "Merge to canonical location"
+        description: "Consolidate all duplicates into core/modules/"
+        status: "pending"
+
+      - action: "Update import paths"
+        description: "Update all references to use core.modules.* paths"
+        status: "pending"
+
+      - action: "Create module spec files"
+        description: "Generate governance/36-modules/*.yaml for each module"
+        template: "governance/36-modules/core.unified_integration.yaml"
+        status: "pending"
+
+  phase_2_namespace_standardization:
+    target_date: "2025-Q2"
+    actions:
+      - action: "Implement namespace registry"
+        description: "Create governance/24-registry/namespace-registry.yaml"
+        status: "pending"
+
+      - action: "Update MODULE_REGISTRY"
+        description: "Add canonical_namespace field to core/modules/__init__.py"
+        status: "pending"
+
+      - action: "Cross-reference validation"
+        description: "Ensure config files reference canonical namespaces"
+        status: "pending"
+
+  phase_3_config_consolidation:
+    target_date: "2025-Q2"
+    actions:
+      - action: "Move configs to governance dimensions"
+        description: "Migrate config/*.yaml to governance/[dimension]/config/"
+        status: "pending"
+
+      - action: "Update config references"
+        description: "Update all system references to new config locations"
+        status: "pending"
+
+  recommendations:
+    - "Keep core/modules/ as the single source for all core modules"
+    - "Create governance dimension spec files for each module"
+    - "Use canonical namespaces in all cross-references"
+    - "Implement automated namespace validation in CI"
+    - "Add deprecation warnings for old import paths"
+
+# ============================================================================
+# References
+# ============================================================================
+
+references:
+  module_registry: "core/modules/__init__.py"
+  system_module_map: "config/system-module-map.yaml"
+  module_spec_template: "governance/36-modules/core.unified_integration.yaml"
+  governance_structure: "governance/29-docs/GOVERNANCE_STRUCTURE_INDEX.md"

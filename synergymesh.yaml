@@ -28,21 +28,21 @@ system:
 # ============================================================================
 # All detailed configs are referenced here - single source of truth
 configs:
-  manifest: "config/system-manifest.yaml"
-  modules: "config/system-module-map.yaml"
-  index: "config/unified-config-index.yaml"
-  environment: "config/environment.yaml"
-  dependencies: "config/dependencies.yaml"
+  manifest: "config/platform/system-manifest.yaml"
+  modules: "config/platform/system-module-map.yaml"
+  index: "config/platform/unified-config-index.yaml"
+  environment: "config/platform/environment.yaml"
+  dependencies: "config/platform/dependencies.yaml"
 
   # Mind Matrix & AI
-  mind_matrix: "config/topology-mind-matrix.yaml"
-  ai_constitution: "config/ai-constitution.yaml"
+  mind_matrix: "config/platform/topology-mind-matrix.yaml"
+  ai_constitution: "config/governance/ai-constitution.yaml"
   virtual_experts: "config/agents/team/virtual-experts.yaml"
-  safety_mechanisms: "config/safety-mechanisms.yaml"
+  safety_mechanisms: "config/governance/safety-mechanisms.yaml"
 
   # Operations
-  monitoring: "config/monitoring.yaml"
-  ci_error_handler: "config/ci-error-handler.yaml"
+  monitoring: "config/operations/monitoring.yaml"
+  ci_error_handler: "config/operations/ci-error-handler.yaml"
   auto_fix_bot: "config/auto-fix-bot.yml"
 
 # ============================================================================

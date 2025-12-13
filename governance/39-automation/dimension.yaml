@@ -15,11 +15,11 @@ metadata:
 spec:
   description: Automation Governance dimension for SynergyMesh governance framework
   schema:
-    path: ./schema.json
+    path: ../dimensions/39-automation/schema.json
     format: json-schema
     validation: optional
   policy:
-    path: ./policy.rego
+    path: ../dimensions/39-automation/policy.rego
     engine: opa
     enforcement: required
   dependencies:

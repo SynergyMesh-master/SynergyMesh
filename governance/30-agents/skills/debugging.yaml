@@ -1,0 +1,353 @@
+---
+apiVersion: governance.synergymesh.io/v2
+kind: AgentSkill
+metadata:
+  id: debugging
+  name: "Debugging"
+  name_zh: "調試"
+  version: "1.0.0"
+  description: "Intelligent debugging with root cause analysis, log interpretation, and automated fix suggestions"
+  created_at: "2025-12-13"
+  updated_at: "2025-12-13"
+  owner: "Development Tools Team"
+
+spec:
+  category: analysis
+  subcategory: troubleshooting
+  risk_level: low
+
+  capabilities:
+    - error_analysis
+    - stack_trace_parsing
+    - log_interpretation
+    - root_cause_analysis
+    - fix_suggestion
+    - runtime_behavior_analysis
+    - memory_analysis
+    - performance_profiling
+    - dependency_conflict_detection
+
+  description_detailed: |
+    Debugging capability enables AI agents to analyze and resolve software issues:
+    
+    - Parse and interpret error messages and stack traces
+    - Analyze logs to identify patterns and anomalies
+    - Perform root cause analysis on failures
+    - Suggest fixes based on error patterns and context
+    - Detect runtime issues, memory leaks, and performance bottlenecks
+    
+    Integrates with various debugging tools and supports multiple languages.
+
+  inputs:
+    - name: error
+      type: object
+      required: false
+      properties:
+        message:
+          type: string
+          description: "Error message"
+        stack_trace:
+          type: string
+          description: "Full stack trace"
+        type:
+          type: string
+          description: "Error type/class"
+
+    - name: logs
+      type: string | array
+      required: false
+      description: "Log entries or log file content"
+
+    - name: context
+      type: object
+      required: false
+      properties:
+        file_path:
+          type: string
+        line_number:
+          type: integer
+        code_snippet:
+          type: string
+        environment:
+          type: object
+          properties:
+            os: string
+            language_version: string
+            dependencies: array
+
+    - name: debug_type
+      type: enum
+      values:
+        - error_analysis
+        - log_analysis
+        - performance_profiling
+        - memory_analysis
+        - dependency_conflict
+        - auto
+      required: false
+      default: auto
+      description: "Type of debugging analysis"
+
+    - name: options
+      type: object
+      required: false
+      properties:
+        max_log_entries:
+          type: integer
+          default: 1000
+        include_suggestions:
+          type: boolean
+          default: true
+        search_similar_issues:
+          type: boolean
+          default: true
+        severity_filter:
+          type: enum
+          values: [all, error, warning, info]
+          default: all
+
+  outputs:
+    - name: analysis
+      type: object
+      properties:
+        error_type: string
+        root_cause: string
+        confidence: number
+        affected_components:
+          type: array
+          items:
+            type: string
+
+    - name: stack_trace_analysis
+      type: object
+      properties:
+        frames:
+          type: array
+          items:
+            type: object
+            properties:
+              file: string
+              line: integer
+              function: string
+              is_user_code: boolean
+              relevance: enum[high, medium, low]
+        origin:
+          type: object
+          properties:
+            file: string
+            line: integer
+            code: string
+
+    - name: suggestions
+      type: array
+      items:
+        type: object
+        properties:
+          type: enum[code_fix, config_change, dependency_update, environment_fix]
+          priority: enum[high, medium, low]
+          description: string
+          fix_code: string
+          confidence: number
+          references:
+            type: array
+            items:
+              type: string
+
+    - name: similar_issues
+      type: array
+      items:
+        type: object
+        properties:
+          source: string
+          title: string
+          url: string
+          relevance_score: number
+
+    - name: log_analysis
+      type: object
+      properties:
+        error_count: integer
+        warning_count: integer
+        patterns:
+          type: array
+          items:
+            type: object
+            properties:
+              pattern: string
+              count: integer
+              severity: string
+        timeline:
+          type: array
+          items:
+            type: object
+            properties:
+              timestamp: string
+              event: string
+              severity: string
+
+  providers:
+    - name: "code-analyzer-agent"
+      path: "agent/code-analyzer/"
+      type: agent
+      language: python
+      priority: 1
+      capabilities:
+        - error_analysis
+        - stack_trace_parsing
+
+    - name: "vulnerability-detector-agent"
+      path: "agent/vulnerability-detector/"
+      type: agent
+      language: python
+      priority: 2
+      capabilities:
+        - dependency_conflict_detection
+
+    - name: "mcp-logic-validator"
+      path: "mcp-servers/logic-validator.js"
+      type: mcp-server
+      priority: 3
+      capabilities:
+        - error_analysis
+        - root_cause_analysis
+
+    - name: "mcp-performance-analyzer"
+      path: "mcp-servers/performance-analyzer.js"
+      type: mcp-server
+      priority: 4
+      capabilities:
+        - performance_profiling
+
+    - name: "virtual-expert-emma"
+      path: "core/virtual_experts/"
+      type: virtual_expert
+      expert: EmmaThompson
+      priority: 5
+      specialization: "DevOps and system debugging"
+
+  governance_dimensions:
+    - id: "56-incidents"
+      relevance: high
+      controls:
+        - incident_analysis
+        - resolution_tracking
+
+    - id: "51-logging"
+      relevance: high
+      controls:
+        - log_analysis
+        - pattern_detection
+
+    - id: "52-tracing"
+      relevance: medium
+      controls:
+        - distributed_tracing
+        - request_correlation
+
+    - id: "57-postmortems"
+      relevance: medium
+      controls:
+        - root_cause_documentation
+        - lessons_learned
+
+  constraints:
+    max_log_size_mb: 100
+    analysis_timeout_seconds: 120
+    max_stack_frames: 100
+    max_similar_issues: 10
+
+  monitoring:
+    metrics:
+      - name: debug_sessions_total
+        type: counter
+        labels: [debug_type, language]
+      - name: debug_duration_seconds
+        type: histogram
+        buckets: [1, 5, 10, 30, 60]
+      - name: root_cause_found_rate
+        type: gauge
+      - name: suggestion_acceptance_rate
+        type: gauge
+
+  examples:
+    - name: "Python Exception Analysis"
+      description: "Analyze a Python exception with stack trace"
+      input:
+        error:
+          message: "KeyError: 'user_id'"
+          type: "KeyError"
+          stack_trace: |
+            Traceback (most recent call last):
+              File "/app/handlers/user.py", line 42, in get_user
+                user_id = request.data['user_id']
+            KeyError: 'user_id'
+        context:
+          file_path: "/app/handlers/user.py"
+          line_number: 42
+      expected_output:
+        analysis:
+          error_type: "KeyError"
+          root_cause: "Missing required key 'user_id' in request data"
+          confidence: 0.95
+        suggestions:
+          - type: code_fix
+            priority: high
+            description: "Use .get() method with default or validate request data"
+            fix_code: |
+              user_id = request.data.get('user_id')
+              if user_id is None:
+                  raise ValueError("user_id is required")
+            confidence: 0.92
+
+    - name: "Log Pattern Analysis"
+      description: "Analyze application logs for error patterns"
+      input:
+        logs: |
+          2025-12-13 10:00:01 ERROR Database connection timeout
+          2025-12-13 10:00:02 ERROR Database connection timeout
+          2025-12-13 10:00:03 WARN Retrying database connection
+          2025-12-13 10:00:05 ERROR Database connection failed
+        debug_type: log_analysis
+      expected_output:
+        log_analysis:
+          error_count: 3
+          warning_count: 1
+          patterns:
+            - pattern: "Database connection timeout"
+              count: 2
+              severity: error
+            - pattern: "Database connection failed"
+              count: 1
+              severity: error
+        analysis:
+          root_cause: "Database connectivity issues - possible network problem or database overload"
+        suggestions:
+          - type: config_change
+            priority: high
+            description: "Increase connection timeout and implement exponential backoff"
+
+    - name: "Dependency Conflict"
+      description: "Detect and resolve dependency conflicts"
+      input:
+        error:
+          message: "ImportError: cannot import name 'json_loads' from 'utils'"
+          type: "ImportError"
+        context:
+          environment:
+            language_version: "python3.11"
+            dependencies:
+              - "requests==2.28.0"
+              - "urllib3==2.0.0"
+        debug_type: dependency_conflict
+      expected_output:
+        analysis:
+          error_type: "Dependency Conflict"
+          root_cause: "Version mismatch between requests and urllib3"
+          affected_components: ["requests", "urllib3"]
+        suggestions:
+          - type: dependency_update
+            priority: high
+            description: "Update requests to version compatible with urllib3 2.0"
+            fix_code: "pip install 'requests>=2.31.0'"
+            references:
+              - "https://github.com/psf/requests/issues/6432"

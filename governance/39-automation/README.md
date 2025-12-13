@@ -53,7 +53,7 @@ framework that:
 ## 📁 Directory Structure
 
 ```
-governance/automation/
+governance/39-automation/
 ├── __init__.py                           # Package initialization
 ├── README.md                             # This file
 ├── governance_automation_launcher.py     # Main launcher (14 engines)
@@ -83,7 +83,7 @@ governance/automation/
 
 ```bash
 # Deploy automation engines to all 14 dimensions
-python3 governance/automation/deploy_dimension_engines.py
+python3 governance/39-automation/deploy_dimension_engines.py
 ```
 
 This will create `automation_engine.py` in each dimension directory.
@@ -92,14 +92,14 @@ This will create `automation_engine.py` in each dimension directory.
 
 ```bash
 # Run the integrated automation system
-python3 governance/automation/integrated_launcher.py
+python3 governance/39-automation/integrated_launcher.py
 ```
 
 ### 3. Run Tests
 
 ```bash
 # Test all components
-python3 governance/automation/test_automation_system.py
+python3 governance/39-automation/test_automation_system.py
 ```
 
 ## 🎯 Core Components
