@@ -15,6 +15,39 @@ const SAFE_ROOT =
     : path.resolve(process.cwd(), 'safefiles');
 
 /**
+ * Checks if a path is within the allowed root directory.
+ */
+function isPathContained(targetPath: string, rootPath: string): boolean {
+  const relative = path.relative(rootPath, targetPath);
+  return !relative.startsWith('..') && !path.isAbsolute(relative);
+}
+
+/**
+ * Checks if a path is within the system temp directory in test mode.
+ */
+function isInTestTmpDir(targetPath: string, systemTmpDir: string): boolean {
+  return (
+    process.env.NODE_ENV === 'test' &&
+    (targetPath === systemTmpDir || targetPath.startsWith(systemTmpDir + path.sep))
+  );
+}
+
+/**
+ * Resolves a file path based on whether it's absolute and in test environment.
+ */
+function resolveFilePath(filePath: string, safeRoot: string, systemTmpDir: string): string {
+  if (!path.isAbsolute(filePath)) {
+    return path.resolve(safeRoot, filePath);
+  }
+
+  if (isInTestTmpDir(filePath, systemTmpDir)) {
+    return path.resolve(systemTmpDir, path.relative(systemTmpDir, filePath));
+  }
+
+  return path.resolve(safeRoot, path.relative('/', filePath));
+}
+
+/**
  * Validates and normalizes a file path to prevent path traversal attacks.
  * Ensures the resolved path is within the SAFE_ROOT directory or is an absolute path
  * within allowed system directories (for testing only).
@@ -32,67 +65,35 @@ async function validateAndNormalizePath(
     throw new Error('Invalid file path: Path must be a non-empty string');
   }
 
-  // Handle absolute paths: always resolve against the intended root; never use user-provided absolute path directly
-  let resolvedPath: string;
   const systemTmpDir = tmpdir();
-  if (path.isAbsolute(filePath)) {
-    if (
-      process.env.NODE_ENV === 'test' &&
-      (filePath === systemTmpDir || filePath.startsWith(systemTmpDir + path.sep))
-    ) {
-      // In test environment, resolve path relative to system tmpdir to avoid direct use of untrusted absolute paths
-      resolvedPath = path.resolve(systemTmpDir, path.relative(systemTmpDir, filePath));
-    } else {
-      // In production (or outside tmpdir), resolve against safeRoot to prevent escaping
-      resolvedPath = path.resolve(safeRoot, path.relative('/', filePath));
-    }
-  } else {
-    // Resolve relative paths against safeRoot
-    resolvedPath = path.resolve(safeRoot, filePath);
-  }
+  const resolvedPath = resolveFilePath(filePath, safeRoot, systemTmpDir);
 
   try {
-    // Use realpath to resolve symbolic links and get the canonical path
     const canonicalPath = await realpath(resolvedPath);
 
-    // Ensure the canonical path is within its expected root
-    // Inside tmpdir for test environment, OK
-    if (
-      process.env.NODE_ENV === 'test' &&
-      (canonicalPath === systemTmpDir || canonicalPath.startsWith(systemTmpDir + path.sep))
-    ) {
+    if (isInTestTmpDir(canonicalPath, systemTmpDir)) {
       return canonicalPath;
     }
-    // Always enforce containment in safeRoot otherwise
-    const relative = path.relative(safeRoot, canonicalPath);
-    if (relative.startsWith('..') || path.isAbsolute(relative)) {
+
+    if (!isPathContained(canonicalPath, safeRoot)) {
       throw new Error('Invalid file path: Access outside of allowed directory is not permitted');
     }
+
     return canonicalPath;
   } catch (error) {
-    // If realpath fails (e.g., file doesn't exist), validate the normalized path
     const normalizedPath = path.normalize(resolvedPath);
 
-    // In test environment, allow temp directory paths even if file doesn't exist yet
-    if (
-      process.env.NODE_ENV === 'test' &&
-      (normalizedPath.startsWith(systemTmpDir + path.sep) || normalizedPath === systemTmpDir)
-    ) {
-      // Ensure still within tmpdir after normalization (defense-in-depth)
-      const relativeTmp = path.relative(systemTmpDir, normalizedPath);
-      if (relativeTmp.startsWith('..') || path.isAbsolute(relativeTmp)) {
+    if (isInTestTmpDir(normalizedPath, systemTmpDir)) {
+      if (!isPathContained(normalizedPath, systemTmpDir)) {
         throw new Error('Invalid file path: Access outside of allowed directory is not permitted');
       }
       throw error;
     }
 
-    // Ensure the normalized path is within safeRoot using robust relative check
-    const relative = path.relative(safeRoot, normalizedPath);
-    if (relative.startsWith('..') || path.isAbsolute(relative)) {
+    if (!isPathContained(normalizedPath, safeRoot)) {
       throw new Error('Invalid file path: Access outside of allowed directory is not permitted');
     }
 
-    // Re-throw the original error if it's a file system error (e.g., ENOENT)
     throw error;
   }
 }
@@ -193,9 +194,9 @@ export class ProvenanceService {
       throw new Error(`Subject path must be a file: ${subjectPath}`);
     }
 
-    const content = await readFile(resolvedPath);
+    const content = await readFile(validatedPath);
     const subject = this.slsaService.createSubjectFromContent(
-      path.relative(process.cwd(), resolvedPath),
+      path.relative(process.cwd(), validatedPath),
       content
     );
 
