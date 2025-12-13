@@ -22,6 +22,7 @@ dependency management, and explicit language boundaries.
 - **[📂 Deep Analysis: Governance Structure](./DEEP_ANALYSIS_GOVERNANCE_STRUCTURE.md)** - 目錄結構深度分析
 - **[📄 File Content Structure Analysis](./FILE_CONTENT_STRUCTURE_ANALYSIS.md)** - 檔案內容結構分析
 - **[🆕 Missing Dimensions Analysis](./MISSING_DIMENSIONS_ANALYSIS.md)** - 缺失維度分析與擴展建議
+- **[🔄 CI Refactoring Guide](./CI_REFACTORING_GUIDE.md)** - CI 管線重構指南 (NEW!)
 
 > **⚡ 更新 (2025-12-12)**: 已實施完整 81 個治理維度 (00-80)，達成 100% 完整覆蓋率！
 
@@ -287,6 +288,78 @@ governance/
 | ------------ | ---------------------- |
 | 任何實作代碼 | 治理應獨立於實作       |
 | `runtime/`   | 治理定義不應依賴運行時 |
+
+## 🔧 Governance Tools & Validation 治理工具與驗證
+
+### Scanner & Validation Tools 掃描器與驗證工具
+
+SynergyMesh provides comprehensive governance tooling for structure validation, scanning, and maintenance:
+
+#### **Governance Directory Scanner** ⭐ NEW
+
+Comprehensive scanner for governance directory structure analysis:
+
+```bash
+# Interactive scan with summary
+make scan-governance
+
+# Generate detailed YAML report
+make scan-governance-report
+
+# Generate JSON report
+make scan-governance-json
+
+# Full governance validation + scan
+make governance-full-check
+```
+
+**Features**:
+- ✅ Full 00-80 dimension scan
+- ✅ File completeness verification (dimension.yaml, README.md, framework.yaml)
+- ✅ Naming convention validation
+- ✅ Orphaned directory detection
+- ✅ Dependency graph analysis
+- ✅ Coverage reporting (100% dimension coverage)
+- ✅ Detailed statistics and recommendations
+
+**Documentation**: See [35-scripts/README-SCANNER.md](./35-scripts/README-SCANNER.md)
+
+#### **Structure Validator**
+
+Validates governance structure against `governance-map.yaml`:
+
+```bash
+make validate-governance-structure
+```
+
+#### **Governance Matrix Validator**
+
+Validates architecture governance matrix completeness:
+
+```bash
+make validate-governance
+```
+
+### Available Make Targets 可用的 Make 目標
+
+| Target                           | Purpose 目的                |
+| -------------------------------- | -------------------------- |
+| `make scan-governance`           | 治理目錄掃描                |
+| `make scan-governance-report`    | 生成 YAML 掃描報告          |
+| `make scan-governance-json`      | 生成 JSON 掃描報告          |
+| `make validate-governance-structure` | 結構驗證                |
+| `make validate-governance`       | 矩陣驗證                   |
+| `make governance-full-check`     | 完整治理驗證與掃描          |
+
+### Script Documentation 腳本文檔
+
+All governance scripts are documented in [35-scripts/README.md](./35-scripts/README.md):
+
+- **scan-governance-directory.py** - Comprehensive governance scanner
+- **validate-governance-structure.py** - Structure validation
+- **intelligent-file-router.py** - Content-based file routing
+- **logical-consistency-engine.py** - Logical consistency analysis
+- **extreme-problem-identifier.py** - Multi-dimensional problem detection
 
 ## 📖 Related Documentation 相關文檔
 

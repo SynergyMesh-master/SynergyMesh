@@ -22,6 +22,8 @@
 - **[docs/API_REFERENCE.md](docs/API_REFERENCE.md)** - API documentation
 - **[docs/VALIDATION_GUIDE.md](docs/VALIDATION_GUIDE.md)** - Validation system
   guide
+- **[governance/CI_REFACTORING_GUIDE.md](governance/CI_REFACTORING_GUIDE.md)** -
+  CI Pipeline Refactoring Guide (NEW!)
 
 ## 🗂️ File Organization | 文件組織
 

@@ -26,16 +26,61 @@
  * @see {@link https://slsa.dev/} SLSA Framework
  */
 
+import { randomUUID } from 'crypto';
+
 import { Router, Request, Response } from 'express';
 import type { Router as RouterType } from 'express';
+import rateLimit, { type RateLimitRequestHandler } from 'express-rate-limit';
+import { Redis } from 'ioredis';
+import rateLimitRedisStore from 'rate-limit-redis';
 
 import { AssignmentController } from './controllers/assignment';
 import { EscalationController } from './controllers/escalation';
 import { ProvenanceController } from './controllers/provenance';
 import { SLSAController } from './controllers/slsa';
+import { ErrorCode } from './errors';
+
+/**
+ * Factory function to create a rate limiter middleware with isolated state.
+ * This allows tests to create independent rate limiter instances.
+ *
+ * Rate limiter configuration: limits each IP to 100 requests per 15-minute window.
+ *
+ * Rationale: These limits are intended to balance normal user activity with protection
+ * against abuse (e.g., brute-force or denial-of-service attacks). Adjust `max` and
+ * `windowMs` below as needed for your deployment or traffic patterns.
+ *
+ * @returns A configured rate limiter middleware instance
+ */
+export function createRateLimiter(): RateLimitRequestHandler {
+  return rateLimit({
+    windowMs: 15 * 60 * 1000,
+    max: 100,
+    standardHeaders: true,
+    legacyHeaders: false,
+    handler: (req: Request, res: Response /*, next: NextFunction*/) => {
+      const traceId = req.traceId || randomUUID();
+      res.status(429).json({
+        error: {
+          code: ErrorCode.RATE_LIMIT,
+          message: 'Too many requests, please try again later.',
+          status: 429,
+          traceId,
+          timestamp: new Date().toISOString(),
+        },
+      });
+    },
+  });
+}
 
 /** Express router instance for all API routes */
 const router: RouterType = Router();
+
+/**
+ * Rate limiter middleware: limits each IP to 100 requests per 15-minute window.
+ * Uses the shared rate limiter instance for production.
+ */
+const limiter = createRateLimiter();
 
 /** Controller instances */
 const provenanceController = new ProvenanceController();
@@ -167,8 +212,8 @@ router.get('/status', (_req: Request, res: Response) => {
  * @apiSuccess {Object} attestation The created attestation object
  * @apiError {Object} error Error details with code and message
  */
-router.post('/api/v1/provenance/attestations', provenanceController.createAttestation);
-router.post('/api/v1/provenance/attest', provenanceController.createAttestation); // Alias for tests
+router.post('/api/v1/provenance/attestations', limiter, provenanceController.createAttestation);
+router.post('/api/v1/provenance/attest', limiter, provenanceController.createAttestation); // Alias for tests
 
 /**
  * @api {post} /api/v1/provenance/verify Verify Attestation
@@ -184,7 +229,7 @@ router.post('/api/v1/provenance/attest', provenanceController.createAttestation)
  * @apiSuccess {Boolean} valid Whether the attestation is valid
  * @apiSuccess {String} attestationId ID of the verified attestation
  */
-router.post('/api/v1/provenance/verify', provenanceController.verifyAttestation);
+router.post('/api/v1/provenance/verify', limiter, provenanceController.verifyAttestation);
 
 /**
  * @api {post} /api/v1/provenance/import Import Attestation
@@ -196,8 +241,8 @@ router.post('/api/v1/provenance/verify', provenanceController.verifyAttestation)
  *
  * @apiBody {String} attestationJson JSON string of the attestation to import
  */
-router.post('/api/v1/provenance/import', provenanceController.importAttestation);
-router.post('/api/v1/provenance/digest', provenanceController.getFileDigest); // POST for tests
+router.post('/api/v1/provenance/import', limiter, provenanceController.importAttestation);
+router.post('/api/v1/provenance/digest', limiter, provenanceController.getFileDigest); // POST for tests
 
 /**
  * @api {get} /api/v1/provenance/digest/:filePath Get File Digest
@@ -240,19 +285,19 @@ router.get('/api/v1/provenance/export/:id', provenanceController.exportAttestati
  * @apiDescription Creates an SLSA-compliant build attestation following the
  * in-toto attestation framework.
  */
-router.post('/api/v1/slsa/attestations', slsaController.createAttestation);
+router.post('/api/v1/slsa/attestations', limiter, slsaController.createAttestation);
 
 /** @api {post} /api/v1/slsa/verify Verify SLSA Attestation */
-router.post('/api/v1/slsa/verify', slsaController.verifyAttestation);
+router.post('/api/v1/slsa/verify', limiter, slsaController.verifyAttestation);
 
 /** @api {post} /api/v1/slsa/digest Generate SLSA Digest */
-router.post('/api/v1/slsa/digest', slsaController.generateDigest);
+router.post('/api/v1/slsa/digest', limiter, slsaController.generateDigest);
 
 /** @api {post} /api/v1/slsa/contracts Create Contract Attestation */
-router.post('/api/v1/slsa/contracts', slsaController.createContractAttestation);
+router.post('/api/v1/slsa/contracts', limiter, slsaController.createContractAttestation);
 
 /** @api {post} /api/v1/slsa/summary Get Attestation Summary */
-router.post('/api/v1/slsa/summary', slsaController.getAttestationSummary);
+router.post('/api/v1/slsa/summary', limiter, slsaController.getAttestationSummary);
 
 /* =============================================================================
  * ASSIGNMENT API ENDPOINTS
@@ -277,7 +322,7 @@ router.post('/api/v1/slsa/summary', slsaController.getAttestationSummary);
  * @apiSuccess {Object} assignment Created assignment details
  * @apiSuccess {Object} incident The incident that was created
  */
-router.post('/api/v1/assignment/assign', assignmentController.assignResponsibility);
+router.post('/api/v1/assignment/assign', limiter, assignmentController.assignResponsibility);
 
 /**
  * @api {post} /api/v1/assignment/status/:id Update Assignment Status
@@ -288,7 +333,7 @@ router.post('/api/v1/assignment/assign', assignmentController.assignResponsibili
  * @apiParam {String} id Assignment identifier
  * @apiBody {String="ASSIGNED","ACKNOWLEDGED","IN_PROGRESS","ESCALATED","RESOLVED"} status New status
  */
-router.post('/api/v1/assignment/status/:id', assignmentController.updateStatus);
+router.post('/api/v1/assignment/status/:id', limiter, assignmentController.updateStatus);
 
 /** @api {get} /api/v1/assignment/status/:id Get Assignment Status */
 router.get('/api/v1/assignment/status/:id', assignmentController.getAssignmentStatus);
@@ -297,10 +342,10 @@ router.get('/api/v1/assignment/status/:id', assignmentController.getAssignmentSt
 router.get('/api/v1/assignment/workload', assignmentController.getWorkload);
 
 /** @api {post} /api/v1/assignment/reassign/:id Reassign to Different Owner */
-router.post('/api/v1/assignment/reassign/:id', assignmentController.reassign);
+router.post('/api/v1/assignment/reassign/:id', limiter, assignmentController.reassign);
 
 /** @api {post} /api/v1/assignment/escalate/:id Escalate Assignment */
-router.post('/api/v1/assignment/escalate/:id', assignmentController.escalate);
+router.post('/api/v1/assignment/escalate/:id', limiter, assignmentController.escalate);
 
 /** @api {get} /api/v1/assignment/all Get All Assignments */
 router.get('/api/v1/assignment/all', assignmentController.getAllAssignments);
@@ -324,6 +369,7 @@ router.get('/api/v1/assignment/report', assignmentController.getPerformanceRepor
  */
 router.post(
   '/api/v1/escalation/create',
+  limiter,
   escalationController.createEscalation.bind(escalationController)
 );
 
@@ -342,18 +388,21 @@ router.get(
 /** @api {post} /api/v1/escalation/:escalationId/status Update Escalation Status */
 router.post(
   '/api/v1/escalation/:escalationId/status',
+  limiter,
   escalationController.updateEscalationStatus.bind(escalationController)
 );
 
 /** @api {post} /api/v1/escalation/:escalationId/resolve Resolve Escalation */
 router.post(
   '/api/v1/escalation/:escalationId/resolve',
+  limiter,
   escalationController.resolveEscalation.bind(escalationController)
 );
 
 /** @api {post} /api/v1/escalation/:escalationId/escalate Escalate Further */
 router.post(
   '/api/v1/escalation/:escalationId/escalate',
+  limiter,
   escalationController.escalateFurther.bind(escalationController)
 );
 

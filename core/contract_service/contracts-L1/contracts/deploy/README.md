@@ -93,6 +93,7 @@ deploy/
 - Sigstore 配置
 - 安全設定
 - 監控配置
+- **Redis 配置（速率限制）** - 生產環境多實例部署必須啟用
 
 ### docker-compose.production.yml
 
@@ -244,17 +245,94 @@ kubectl rollout undo deployment/contracts-l1 -n synergymesh
 kubectl rollout status deployment/contracts-l1 -n synergymesh
 ```
 
+## 🔧 Redis 配置（速率限制）
+
+**重要：生產環境多實例部署必須配置 Redis！**
+
+### 為什麼需要 Redis？
+
+速率限制需要在所有服務實例間共享狀態。預設的記憶體儲存 (in-memory store) 只能在單一實例內運作，無法在多個 Pod 或容器間同步限制計數器。
+
+### 配置步驟
+
+1. **部署 Redis 實例**
+
+   ```bash
+   # Kubernetes - 使用 Bitnami Helm Chart
+   helm repo add bitnami https://charts.bitnami.com/bitnami
+   helm install redis bitnami/redis \
+     --namespace synergymesh \
+     --set auth.password=your-redis-password \
+     --set master.persistence.enabled=true \
+     --set replica.replicaCount=2
+
+   # 或使用 Docker Compose（已包含在 docker-compose.production.yml）
+   docker-compose -f docker-compose.production.yml up -d redis
+   ```
+
+2. **設定環境變數**
+
+   在 `.env.production` 或 Kubernetes ConfigMap/Secret 中設定：
+
+   ```bash
+   REDIS_RATE_LIMIT_ENABLED=true
+   REDIS_HOST=redis-master.synergymesh.svc.cluster.local  # K8s 服務名稱
+   REDIS_PORT=6379
+   REDIS_PASSWORD=your-redis-password                      # 建議使用 Secret
+   REDIS_DB=0
+   REDIS_TLS_ENABLED=false                                 # AWS ElastiCache/Azure Cache 需設為 true
+   ```
+
+3. **驗證連線**
+
+   查看服務日誌，確認 Redis 連線成功：
+
+   ```bash
+   # Kubernetes
+   kubectl logs -n synergymesh -l app=contracts-l1 | grep -i redis
+
+   # 應該看到:
+   # Redis client connected for rate limiting
+   # Redis client ready for rate limiting
+   ```
+
+### 管理式 Redis 服務
+
+生產環境建議使用管理式 Redis 服務：
+
+- **AWS ElastiCache for Redis**: 自動備份、高可用、自動故障轉移
+- **Azure Cache for Redis**: 企業級 SLA、進階安全功能
+- **Google Cloud Memorystore**: 完全管理、高效能
+
+使用管理式服務時，記得：
+- 設定 `REDIS_TLS_ENABLED=true`
+- 配置 VPC/VNet 網路訪問
+- 使用密鑰管理服務儲存 Redis 密碼
+
+### 監控 Redis
+
+```bash
+# 連線到 Redis 查看速率限制鍵
+kubectl exec -it redis-master-0 -n synergymesh -- redis-cli
+> AUTH your-redis-password
+> KEYS rl:*                    # 查看所有速率限制鍵
+> TTL rl:127.0.0.1              # 查看某個 IP 的限制剩餘時間
+> GET rl:127.0.0.1              # 查看當前請求計數
+```
+
 ## 🔒 安全最佳實踐
 
 1. **密鑰管理**
    - ❌ 不要將密鑰提交到 Git
    - ✅ 使用外部密鑰管理（AWS Secrets Manager, Azure Key Vault）
    - ✅ 定期輪換密鑰
+   - ✅ Redis 密碼必須使用 Kubernetes Secret
 
 2. **網路安全**
    - ✅ 使用 NetworkPolicy 限制 Pod 間通訊
    - ✅ 僅暴露必要的端口
    - ✅ 啟用 HTTPS/TLS
+   - ✅ Redis 應只允許服務 Pod 訪問（不對外暴露）
 
 3. **容器安全**
    - ✅ 使用非 root 使用者運行
@@ -266,6 +344,11 @@ kubectl rollout status deployment/contracts-l1 -n synergymesh
    - ✅ 使用 RBAC 限制權限
    - ✅ 不要自動掛載 ServiceAccount Token
    - ✅ 啟用 Pod Security Standards
+
+5. **速率限制 (Rate Limiting)**
+   - ✅ 生產環境必須啟用 Redis 儲存
+   - ✅ 配置適當的速率限制閾值
+   - ✅ 監控速率限制觸發次數
 
 ## 📊 監控與告警
 
@@ -321,6 +404,35 @@ kubectl top pods -n synergymesh -l app=contracts-l1
 
 # 查看 HPA 狀態
 kubectl get hpa -n synergymesh
+```
+
+### Redis 連線問題
+
+```bash
+# 檢查服務日誌中的 Redis 錯誤
+kubectl logs -n synergymesh -l app=contracts-l1 | grep -i "redis\|rate limit"
+
+# 常見錯誤訊息:
+# "Redis client error: connect ECONNREFUSED"
+#   -> 檢查 REDIS_HOST 和 REDIS_PORT 是否正確
+#   -> 確認 Redis Pod 是否正在運行
+
+# "Redis client error: NOAUTH Authentication required"
+#   -> 確認 REDIS_PASSWORD 設定正確
+
+# "Rate limiting will fail open if Redis is unavailable"
+#   -> 正常警告，當 Redis 暫時不可用時，速率限制會允許請求通過
+
+# 測試 Redis 連線
+kubectl run redis-client --rm -it --restart=Never \
+  --image=redis:7-alpine \
+  --namespace=synergymesh \
+  -- redis-cli -h redis-master -a your-redis-password ping
+# 應該返回: PONG
+
+# 檢查 Redis Pod 狀態
+kubectl get pods -n synergymesh -l app.kubernetes.io/name=redis
+kubectl describe pod -n synergymesh redis-master-0
 ```
 
 ## 📚 相關文件

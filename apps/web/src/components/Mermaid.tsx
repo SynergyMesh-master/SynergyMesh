@@ -54,13 +54,13 @@ interface MermaidProps {
  *
  * This component accepts a Mermaid diagram definition string and renders
  * it as SVG using Mermaid.js. It handles:
- * - Secure rendering with cryptographically random element IDs
+ * - Secure rendering with unique element IDs (cryptographically random when possible)
  * - Automatic re-rendering when the chart prop changes
  * - Error handling with fallback message display
  *
  * Security Features:
- * - Uses crypto.randomUUID() for unique IDs (prevents ID collision attacks)
- * - Falls back to timestamp-based IDs if crypto API unavailable
+ * - Prefers crypto.randomUUID() for unique IDs (prevents ID collision attacks when available)
+ * - Falls back to timestamp-based IDs if the crypto API is unavailable (not cryptographically secure)
  * - Strict security level prevents script execution in diagrams
  *
  * @param props - Component props

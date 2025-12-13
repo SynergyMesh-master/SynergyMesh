@@ -625,6 +625,7 @@ CLI 工具與腳本文檔。
 | [docs/COPILOT_SETUP.md](./docs/COPILOT_SETUP.md)                 | Copilot 設置      | GitHub Copilot 整合   |
 | [docs/ADMIN_COPILOT_CLI.md](./docs/ADMIN_COPILOT_CLI.md)         | Admin Copilot CLI | CLI 完整文檔          |
 | [docs/CLOUD_DELEGATION.md](./docs/CLOUD_DELEGATION.md)           | 雲端委派          | 分散式任務處理        |
+| [docs/API_DOCUMENTATION_GAP_CLOSURE.md](./docs/API_DOCUMENTATION_GAP_CLOSURE.md) | API 文檔增補       | 30 個未記錄/不清項目詳細說明 |
 | [docs/LIVING_KNOWLEDGE_BASE.md](./docs/LIVING_KNOWLEDGE_BASE.md) | 活體知識庫        | 系統自我感知設計      |
 | [docs/PROJECT_STRUCTURE.md](./docs/PROJECT_STRUCTURE.md)         | 專案結構          | 目錄說明              |
 | [docs/project-manifest.md](./docs/project-manifest.md)           | 自述守則          | 變更範圍、禁行清單    |

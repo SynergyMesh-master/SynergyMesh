@@ -1,6 +1,6 @@
 # =============================================================================
 # SynergyMesh Governance - SLO SLI Governance Policy Tests
-# Dimension: 55-slo-sli
+# Dimension: 55-sli-slo
 # =============================================================================
 
 package governance.slo_sli_test

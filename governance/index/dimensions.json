@@ -5,7 +5,7 @@
   "metadata": {
     "name": "Governance Dimensions DAG",
     "description": "Directed Acyclic Graph of all governance dimensions with dependencies",
-    "total_dimensions": 81,
+    "total_dimensions": 82,
     "layers": 5
   },
   "dag_validation": {
@@ -40,10 +40,10 @@
       "dimensions": ["50", "51", "52", "53", "54", "55", "56", "57", "58", "59", "60", "61", "62", "63", "64", "65", "66", "67", "68", "69"]
     },
     "feedback": {
-      "id": "70-80",
+      "id": "70-81",
       "name": "Feedback & Optimization",
-      "description": "Audit trails, feedback loops, optimization, learning, evolution",
-      "dimensions": ["70", "71", "72", "73", "74", "75", "76", "77", "78", "79", "80"]
+      "description": "Audit trails, feedback loops, optimization, learning, evolution, auto-comment",
+      "dimensions": ["70", "71", "72", "73", "74", "75", "76", "77", "78", "79", "80", "81"]
     }
   },
   "dimensions": [
@@ -332,6 +332,21 @@
       "status": "production",
       "events": ["feedback-collected", "feedback-analyzed", "optimization-recommended"],
       "closes_loop_to": "10"
+    },
+    {
+      "id": "81",
+      "name": "auto-comment",
+      "path": "81-auto-comment",
+      "depends_on": ["39", "71"],
+      "execution": "required",
+      "layer": "feedback",
+      "priority": 2,
+      "tech_debt": false,
+      "status": "active",
+      "frameworks": ["NIST-AI-RMF", "ISO-42001", "DevOps", "GitOps"],
+      "events": ["auto-comment.triggered", "auto-comment.generated", "auto-comment.posted", "auto-fix.triggered", "auto-fix.completed"],
+      "qa_required": true,
+      "closes_loop_to": "71"
     }
   ],
   "core_governance_flow": {

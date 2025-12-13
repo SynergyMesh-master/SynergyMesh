@@ -103,7 +103,7 @@ const convertToError = (err: unknown): Error => {
  *     "message": "Human-readable message",
  *     "status": 400,
  *     "traceId": "uuid-v4",
- *     "timestamp": "2024-01-01T00:00:00.000Z",
+ *     "timestamp": "2025-12-01T00:00:00.000Z",
  *     "details": {} // Optional validation errors
  *   }
  * }
@@ -211,7 +211,7 @@ export const errorMiddleware = (
  *     "code": "NOT_FOUND",
  *     "message": "Route GET /undefined-path not found",
  *     "traceId": "uuid-v4",
- *     "timestamp": "2024-01-01T00:00:00.000Z"
+ *     "timestamp": "2025-12-01T00:00:00.000Z"
  *   }
  * }
  * ```
