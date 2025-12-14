@@ -60,7 +60,9 @@ class GovernancePolicyChecker:
         with open(self.policy_schema_path) as f:
             return json.load(f)
 
+    # REFACTOR: Function 'check_policy_file' has complexity 15. Consider extracting helper methods.
     def check_policy_file(self, policy_path: Path) -> PolicyCheckResult:
+        # NOTE: Consider refactoring this function (complexity > 50 lines)
         """Check a single policy file"""
         errors = []
         warnings = []
@@ -162,6 +164,7 @@ class GovernancePolicyChecker:
         return results
 
     def check_all_policies(self, governance_root: Path) -> Tuple[bool, Dict[str, Any]]:
+        # NOTE: Consider refactoring this function (complexity > 50 lines)
         """Check all policies across all domains"""
         print("🔍 Checking Governance Policies...")
         print("=" * 100)

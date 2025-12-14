@@ -2,7 +2,8 @@
 
 ## 📋 Overview
 
-This guide explains how to deploy and run the Unmanned Island System on Replit, specifically for the "Unmanned-Island-3" project.
+This guide explains how to deploy and run the Unmanned Island System on Replit,
+specifically for the "Unmanned-Island-3" project.
 
 **Status:** ✅ **READY FOR DEPLOYMENT**  
 **Date:** December 2025  
@@ -41,6 +42,7 @@ npm run dev
 ```
 
 The app will be available at:
+
 - **Replit Preview:** `https://<your-repl>.replit.dev`
 - **Local:** `http://localhost:5000`
 
@@ -78,6 +80,7 @@ Unmanned-Island/
 ### `.replit` File
 
 The project is configured to:
+
 - Use **Node.js 20** runtime
 - Run on **port 5000** (frontend)
 - Use **esbuild** for fast bundling
@@ -106,7 +109,8 @@ externalPort = 80
 
 ### Environment Variables
 
-No environment variables are required for basic operation. Optional configurations:
+No environment variables are required for basic operation. Optional
+configurations:
 
 ```bash
 # .env (optional)
@@ -126,6 +130,7 @@ npm run dev
 ```
 
 **What happens:**
+
 - Starts esbuild in watch mode
 - Bundles React app to `main.js` and `main.css`
 - Serves on `http://0.0.0.0:5000`
@@ -139,6 +144,7 @@ npm run build
 ```
 
 **Output:**
+
 - `dist/index.html` - Main HTML file
 - `dist/main.js` - Bundled JavaScript (~2.9 MB)
 - `dist/main.css` - Bundled CSS (~71 KB)
@@ -149,7 +155,8 @@ npm run build
 
 ### Frontend Tests
 
-Currently, the frontend doesn't have specific tests. Integration tests are in Island AI.
+Currently, the frontend doesn't have specific tests. Integration tests are in
+Island AI.
 
 ### Island AI Tests
 
@@ -160,6 +167,7 @@ npm test
 ```
 
 **Expected Output:**
+
 ```
 Test Suites: 2 passed, 2 total
 Tests:       38 passed, 38 total
@@ -168,6 +176,7 @@ Time:        ~4s
 ```
 
 **Test Coverage:**
+
 - Stage 1 Agents: 25 tests
 - Stage 2 Coordinator: 13 tests
 
@@ -178,6 +187,7 @@ Time:        ~4s
 ### Frontend (`apps/web`)
 
 **Key Dependencies:**
+
 - `react` ^18.3.1
 - `react-router` ^7.9.6
 - `lucide-react` ^0.556.0 (icons)
@@ -186,6 +196,7 @@ Time:        ~4s
 - `@radix-ui/*` (UI components)
 
 **Dev Dependencies:**
+
 - `esbuild` 0.27.1
 - `tailwindcss` ^3.4.18
 - `postcss` ^8.5.3
@@ -193,6 +204,7 @@ Time:        ~4s
 ### Island AI (`island-ai`)
 
 **Dev Dependencies:**
+
 - `typescript` ^5.4.0
 - `jest` ^29.7.0
 - `ts-jest` ^29.1.2
@@ -204,6 +216,7 @@ Time:        ~4s
 ### Issue: Build fails with "Cannot find module 'esbuild'"
 
 **Solution:**
+
 ```bash
 cd apps/web
 rm -rf node_modules package-lock.json
@@ -214,6 +227,7 @@ npm run build
 ### Issue: Port 5000 already in use
 
 **Solution:**
+
 ```bash
 # Kill existing process
 lsof -ti:5000 | xargs kill -9
@@ -225,6 +239,7 @@ lsof -ti:5000 | xargs kill -9
 ### Issue: Island AI tests fail
 
 **Solution:**
+
 ```bash
 cd island-ai
 rm -rf node_modules package-lock.json
@@ -234,8 +249,8 @@ npm test
 
 ### Issue: "React is not defined" error
 
-**Solution:**
-Check that `main.tsx` imports React:
+**Solution:** Check that `main.tsx` imports React:
+
 ```typescript
 import React from 'react';
 import { createRoot } from 'react-dom/client';
@@ -243,8 +258,8 @@ import { createRoot } from 'react-dom/client';
 
 ### Issue: Routes not working (404 errors)
 
-**Solution:**
-Ensure `HashRouter` is used (not `BrowserRouter`):
+**Solution:** Ensure `HashRouter` is used (not `BrowserRouter`):
+
 ```typescript
 import { HashRouter } from 'react-router';
 // ... use <HashRouter> in App.tsx
@@ -288,20 +303,20 @@ npm run build
 
 ### Build Times
 
-| Operation | Time |
-|-----------|------|
-| First install | ~20s |
-| Dev server start | ~3s |
-| Production build | ~5s |
-| Hot reload | <1s |
+| Operation        | Time |
+| ---------------- | ---- |
+| First install    | ~20s |
+| Dev server start | ~3s  |
+| Production build | ~5s  |
+| Hot reload       | <1s  |
 
 ### Bundle Sizes
 
-| File | Size | Gzipped |
-|------|------|---------|
-| `main.js` | 2.9 MB | ~600 KB |
-| `main.css` | 71 KB | ~15 KB |
-| **Total** | **2.97 MB** | **~615 KB** |
+| File       | Size        | Gzipped     |
+| ---------- | ----------- | ----------- |
+| `main.js`  | 2.9 MB      | ~600 KB     |
+| `main.css` | 71 KB       | ~15 KB      |
+| **Total**  | **2.97 MB** | **~615 KB** |
 
 ### Runtime Performance
 
@@ -358,6 +373,7 @@ npm run build
 **Repository:** [SynergyMesh-admin/Unmanned-Island](https://github.com/SynergyMesh-admin/Unmanned-Island)
 
 For issues or questions:
+
 1. Check this deployment guide
 2. Review the troubleshooting section
 3. Check the related documentation

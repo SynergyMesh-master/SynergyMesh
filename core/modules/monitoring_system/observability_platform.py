@@ -6,11 +6,11 @@ Unified observability with metrics, logs, and traces
 Reference: Uber's uMonitor - AI anomaly detection pinpoints faulty services in real-time [10]
 """
 
-import uuid
 from dataclasses import dataclass, field
 from datetime import datetime
 from enum import Enum
-from typing import Any
+from typing import Any, Dict, List, Optional
+import uuid
 
 
 class LogLevel(Enum):
@@ -49,11 +49,11 @@ class LogEntry:
     service: str = ""
     component: str = ""
     timestamp: datetime = field(default_factory=datetime.now)
-    trace_id: str | None = None
-    span_id: str | None = None
-    attributes: dict[str, Any] = field(default_factory=dict)
-
-    def to_dict(self) -> dict[str, Any]:
+    trace_id: Optional[str] = None
+    span_id: Optional[str] = None
+    attributes: Dict[str, Any] = field(default_factory=dict)
+    
+    def to_dict(self) -> Dict[str, Any]:
         return {
             'log_id': self.log_id,
             'level': self.level.value,
@@ -72,36 +72,36 @@ class TraceSpan:
     """A trace span"""
     span_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     trace_id: str = field(default_factory=lambda: str(uuid.uuid4()))
-    parent_span_id: str | None = None
+    parent_span_id: Optional[str] = None
     name: str = ""
     service: str = ""
     operation: str = ""
     start_time: datetime = field(default_factory=datetime.now)
-    end_time: datetime | None = None
+    end_time: Optional[datetime] = None
     status: TraceStatus = TraceStatus.UNSET
-    attributes: dict[str, Any] = field(default_factory=dict)
-    events: list[dict[str, Any]] = field(default_factory=list)
-
+    attributes: Dict[str, Any] = field(default_factory=dict)
+    events: List[Dict[str, Any]] = field(default_factory=list)
+    
     def end(self, status: TraceStatus = TraceStatus.OK) -> None:
         """End the span"""
         self.end_time = datetime.now()
         self.status = status
-
-    def duration_ms(self) -> float | None:
+    
+    def duration_ms(self) -> Optional[float]:
         """Get duration in milliseconds"""
         if not self.end_time:
             return None
         return (self.end_time - self.start_time).total_seconds() * 1000
-
-    def add_event(self, name: str, attributes: dict[str, Any] | None = None) -> None:
+    
+    def add_event(self, name: str, attributes: Optional[Dict[str, Any]] = None) -> None:
         """Add an event to the span"""
         self.events.append({
             'name': name,
             'timestamp': datetime.now().isoformat(),
             'attributes': attributes or {}
         })
-
-    def to_dict(self) -> dict[str, Any]:
+    
+    def to_dict(self) -> Dict[str, Any]:
         return {
             'span_id': self.span_id,
             'trace_id': self.trace_id,
@@ -128,13 +128,13 @@ class CorrelatedEvent:
     source: str = ""
     severity: str = "info"
     timestamp: datetime = field(default_factory=datetime.now)
-    related_services: list[str] = field(default_factory=list)
-    related_logs: list[str] = field(default_factory=list)
-    related_traces: list[str] = field(default_factory=list)
-    related_metrics: list[str] = field(default_factory=list)
-    metadata: dict[str, Any] = field(default_factory=dict)
-
-    def to_dict(self) -> dict[str, Any]:
+    related_services: List[str] = field(default_factory=list)
+    related_logs: List[str] = field(default_factory=list)
+    related_traces: List[str] = field(default_factory=list)
+    related_metrics: List[str] = field(default_factory=list)
+    metadata: Dict[str, Any] = field(default_factory=dict)
+    
+    def to_dict(self) -> Dict[str, Any]:
         return {
             'event_id': self.event_id,
             'type': self.event_type.value,
@@ -156,16 +156,16 @@ class CorrelationEngine:
     
     Correlates events across metrics, logs, and traces
     """
-
+    
     def __init__(self, time_window_seconds: int = 300):
         self._time_window = time_window_seconds
-        self._events: list[CorrelatedEvent] = []
-
+        self._events: List[CorrelatedEvent] = []
+    
     def correlate_by_time(
         self,
-        logs: list[LogEntry],
-        traces: list[TraceSpan],
-        metric_names: list[str],
+        logs: List[LogEntry],
+        traces: List[TraceSpan],
+        metric_names: List[str],
         reference_time: datetime
     ) -> CorrelatedEvent:
         """Correlate events by time proximity"""
@@ -174,7 +174,7 @@ class CorrelationEngine:
             title="Time-correlated event",
             timestamp=reference_time
         )
-
+        
         # Find logs within time window
         for log in logs:
             time_diff = abs((log.timestamp - reference_time).total_seconds())
@@ -182,7 +182,7 @@ class CorrelationEngine:
                 event.related_logs.append(log.log_id)
                 if log.service and log.service not in event.related_services:
                     event.related_services.append(log.service)
-
+        
         # Find traces within time window
         for trace in traces:
             time_diff = abs((trace.start_time - reference_time).total_seconds())
@@ -190,16 +190,16 @@ class CorrelationEngine:
                 event.related_traces.append(trace.trace_id)
                 if trace.service and trace.service not in event.related_services:
                     event.related_services.append(trace.service)
-
+        
         event.related_metrics = metric_names
-
+        
         self._events.append(event)
         return event
-
+    
     def correlate_by_trace(
         self,
-        logs: list[LogEntry],
-        traces: list[TraceSpan],
+        logs: List[LogEntry],
+        traces: List[TraceSpan],
         trace_id: str
     ) -> CorrelatedEvent:
         """Correlate events by trace ID"""
@@ -207,7 +207,7 @@ class CorrelationEngine:
             event_type=EventType.INCIDENT,
             title=f"Trace-correlated event: {trace_id}"
         )
-
+        
         # Find all spans in trace
         trace_spans = [t for t in traces if t.trace_id == trace_id]
         for span in trace_spans:
@@ -215,16 +215,16 @@ class CorrelationEngine:
                 event.related_traces.append(span.span_id)
             if span.service and span.service not in event.related_services:
                 event.related_services.append(span.service)
-
+        
         # Find logs with matching trace ID
         for log in logs:
             if log.trace_id == trace_id:
                 event.related_logs.append(log.log_id)
-
+        
         self._events.append(event)
         return event
-
-    def get_correlated_events(self) -> list[CorrelatedEvent]:
+    
+    def get_correlated_events(self) -> List[CorrelatedEvent]:
         """Get all correlated events"""
         return self._events.copy()
 
@@ -237,29 +237,29 @@ class ObservabilityPlatform:
     
     Reference: Uber's uMonitor for real-time AI anomaly detection [10]
     """
-
+    
     def __init__(self):
-        self._logs: list[LogEntry] = []
-        self._traces: dict[str, list[TraceSpan]] = {}  # trace_id -> spans
-        self._events: list[CorrelatedEvent] = []
+        self._logs: List[LogEntry] = []
+        self._traces: Dict[str, List[TraceSpan]] = {}  # trace_id -> spans
+        self._events: List[CorrelatedEvent] = []
         self._correlation_engine = CorrelationEngine()
         self._max_retention = 10000  # Max entries to retain
-
+    
     @property
     def correlation_engine(self) -> CorrelationEngine:
         return self._correlation_engine
-
+    
     # === Logging ===
-
+    
     def log(
         self,
         level: LogLevel,
         message: str,
         service: str = "",
         component: str = "",
-        trace_id: str | None = None,
-        span_id: str | None = None,
-        attributes: dict[str, Any] | None = None
+        trace_id: Optional[str] = None,
+        span_id: Optional[str] = None,
+        attributes: Optional[Dict[str, Any]] = None
     ) -> LogEntry:
         """Log a message"""
         entry = LogEntry(
@@ -274,47 +274,47 @@ class ObservabilityPlatform:
         self._logs.append(entry)
         self._cleanup_logs()
         return entry
-
+    
     def log_info(self, message: str, **kwargs) -> LogEntry:
         return self.log(LogLevel.INFO, message, **kwargs)
-
+    
     def log_warning(self, message: str, **kwargs) -> LogEntry:
         return self.log(LogLevel.WARNING, message, **kwargs)
-
+    
     def log_error(self, message: str, **kwargs) -> LogEntry:
         return self.log(LogLevel.ERROR, message, **kwargs)
-
+    
     def get_logs(
         self,
-        service: str | None = None,
-        level: LogLevel | None = None,
-        since: datetime | None = None
-    ) -> list[LogEntry]:
+        service: Optional[str] = None,
+        level: Optional[LogLevel] = None,
+        since: Optional[datetime] = None
+    ) -> List[LogEntry]:
         """Get logs with optional filters"""
         logs = self._logs
-
+        
         if service:
             logs = [l for l in logs if l.service == service]
         if level:
             logs = [l for l in logs if l.level == level]
         if since:
             logs = [l for l in logs if l.timestamp >= since]
-
+        
         return logs
-
+    
     def _cleanup_logs(self) -> None:
         """Clean up old logs"""
         if len(self._logs) > self._max_retention:
             self._logs = self._logs[-self._max_retention:]
-
+    
     # === Tracing ===
-
+    
     def start_trace(
         self,
         name: str,
         service: str = "",
         operation: str = "",
-        attributes: dict[str, Any] | None = None
+        attributes: Optional[Dict[str, Any]] = None
     ) -> TraceSpan:
         """Start a new trace"""
         span = TraceSpan(
@@ -323,13 +323,13 @@ class ObservabilityPlatform:
             operation=operation,
             attributes=attributes or {}
         )
-
+        
         if span.trace_id not in self._traces:
             self._traces[span.trace_id] = []
         self._traces[span.trace_id].append(span)
-
+        
         return span
-
+    
     def start_span(
         self,
         trace_id: str,
@@ -337,7 +337,7 @@ class ObservabilityPlatform:
         name: str,
         service: str = "",
         operation: str = "",
-        attributes: dict[str, Any] | None = None
+        attributes: Optional[Dict[str, Any]] = None
     ) -> TraceSpan:
         """Start a child span"""
         span = TraceSpan(
@@ -348,33 +348,33 @@ class ObservabilityPlatform:
             operation=operation,
             attributes=attributes or {}
         )
-
+        
         if trace_id not in self._traces:
             self._traces[trace_id] = []
         self._traces[trace_id].append(span)
-
+        
         return span
-
+    
     def end_span(self, span: TraceSpan, status: TraceStatus = TraceStatus.OK) -> None:
         """End a span"""
         span.end(status)
-
-    def get_trace(self, trace_id: str) -> list[TraceSpan]:
+    
+    def get_trace(self, trace_id: str) -> List[TraceSpan]:
         """Get all spans in a trace"""
         return self._traces.get(trace_id, [])
-
-    def get_slow_traces(self, threshold_ms: float = 1000) -> list[TraceSpan]:
+    
+    def get_slow_traces(self, threshold_ms: float = 1000) -> List[TraceSpan]:
         """Get traces slower than threshold"""
         slow = []
-        for _trace_id, spans in self._traces.items():
+        for trace_id, spans in self._traces.items():
             # Find root span
             root = next((s for s in spans if s.parent_span_id is None), None)
             if root and root.duration_ms() and root.duration_ms() > threshold_ms:
                 slow.append(root)
         return slow
-
+    
     # === Events ===
-
+    
     def record_event(
         self,
         event_type: EventType,
@@ -382,8 +382,8 @@ class ObservabilityPlatform:
         description: str = "",
         source: str = "",
         severity: str = "info",
-        related_services: list[str] | None = None,
-        metadata: dict[str, Any] | None = None
+        related_services: Optional[List[str]] = None,
+        metadata: Optional[Dict[str, Any]] = None
     ) -> CorrelatedEvent:
         """Record an event"""
         event = CorrelatedEvent(
@@ -397,51 +397,51 @@ class ObservabilityPlatform:
         )
         self._events.append(event)
         return event
-
+    
     def get_events(
         self,
-        event_type: EventType | None = None,
-        since: datetime | None = None
-    ) -> list[CorrelatedEvent]:
+        event_type: Optional[EventType] = None,
+        since: Optional[datetime] = None
+    ) -> List[CorrelatedEvent]:
         """Get events with optional filters"""
         events = self._events
-
+        
         if event_type:
             events = [e for e in events if e.event_type == event_type]
         if since:
             events = [e for e in events if e.timestamp >= since]
-
+        
         return events
-
+    
     # === Analysis ===
-
-    def get_service_health(self, service: str) -> dict[str, Any]:
+    
+    def get_service_health(self, service: str) -> Dict[str, Any]:
         """Get health summary for a service"""
         # Count error logs
         error_logs = self.get_logs(service=service, level=LogLevel.ERROR)
         warning_logs = self.get_logs(service=service, level=LogLevel.WARNING)
-
+        
         # Get traces for service
         service_traces = []
-        for _trace_id, spans in self._traces.items():
+        for trace_id, spans in self._traces.items():
             for span in spans:
                 if span.service == service:
                     service_traces.append(span)
                     break
-
+        
         error_traces = [t for t in service_traces if t.status == TraceStatus.ERROR]
-
+        
         # Calculate health score
         total_traces = len(service_traces)
         error_rate = len(error_traces) / total_traces if total_traces > 0 else 0
-
+        
         if error_rate > 0.1 or len(error_logs) > 10:
             status = "UNHEALTHY"
         elif error_rate > 0.05 or len(warning_logs) > 10:
             status = "DEGRADED"
         else:
             status = "HEALTHY"
-
+        
         return {
             'service': service,
             'status': status,
@@ -452,8 +452,8 @@ class ObservabilityPlatform:
             'error_rate': error_rate,
             'timestamp': datetime.now().isoformat()
         }
-
-    def get_platform_summary(self) -> dict[str, Any]:
+    
+    def get_platform_summary(self) -> Dict[str, Any]:
         """Get overall platform summary"""
         services = set()
         for spans in self._traces.values():
@@ -463,7 +463,7 @@ class ObservabilityPlatform:
         for log in self._logs:
             if log.service:
                 services.add(log.service)
-
+        
         return {
             'total_logs': len(self._logs),
             'total_traces': len(self._traces),

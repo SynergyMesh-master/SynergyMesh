@@ -2,7 +2,8 @@
 
 ## 🎯 Purpose / 目的
 
-This guide provides instructions for deploying the Governance-as-Code (GaC) resources to a Kubernetes cluster.  
+This guide provides instructions for deploying the Governance-as-Code (GaC)
+resources to a Kubernetes cluster.  
 本指南提供將治理即代碼 (GaC) 資源部署到 Kubernetes 集群的說明。
 
 ---
@@ -10,12 +11,14 @@ This guide provides instructions for deploying the Governance-as-Code (GaC) reso
 ## 📋 Prerequisites / 先決條件
 
 ### Required / 必需
+
 - Kubernetes cluster (v1.20+)  
   Kubernetes 集群 (v1.20+)
 - `kubectl` configured to access your cluster  
   已配置 `kubectl` 以訪問您的集群
 
 ### Optional (for full features) / 可選（完整功能）
+
 - **Argo CD** - For GitOps automation  
   **Argo CD** - 用於 GitOps 自動化
 - **OPA Gatekeeper** - For policy enforcement  
@@ -63,6 +66,7 @@ kubectl get visionstatements,strategicobjectives,governancecharters -n governanc
 ```
 
 **Validation / 驗證:**
+
 ```bash
 # Check all GaC resources
 kubectl get visionstatements,strategicobjectives,governancecharters,alignmentframeworks,riskregisters,implementationroadmaps,communicationplans,metricsdashboards,changeprotocols -n governance
@@ -79,6 +83,7 @@ This uses Argo CD to automatically deploy and sync GaC resources.
 這使用 Argo CD 自動部署和同步 GaC 資源。
 
 #### Prerequisites / 先決條件
+
 ```bash
 # Install Argo CD (if not already installed)
 kubectl create namespace argocd
@@ -92,6 +97,7 @@ kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.pas
 ```
 
 #### Deploy GaC with Argo CD / 使用 Argo CD 部署 GaC
+
 ```bash
 # Deploy ApplicationSet
 kubectl apply -f governance/00-vision-strategy/gitops/applicationset.yaml
@@ -112,6 +118,7 @@ kubectl wait --for=condition=synced --timeout=300s application/gac-governance-in
 ```
 
 **Monitoring / 監控:**
+
 ```bash
 # Access Argo CD UI
 kubectl port-forward svc/argocd-server -n argocd 8080:443
@@ -171,6 +178,7 @@ kubectl get constraints
 ```
 
 **Test policy enforcement / 測試策略執行:**
+
 ```bash
 # Try to create an invalid VisionStatement (should fail)
 cat <<EOF | kubectl apply -f -
@@ -267,15 +275,18 @@ echo "Total should be: 9"
 
 ## 🔄 Continuous Deployment / 持續部署
 
-Once deployed with GitOps (Option 2), changes to strategic YAMLs will automatically trigger updates:  
+Once deployed with GitOps (Option 2), changes to strategic YAMLs will
+automatically trigger updates:  
 一旦使用 GitOps（選項 2）部署，對戰略 YAML 的更改將自動觸發更新：
 
 1. **Edit strategic YAML** / 編輯戰略 YAML
+
    ```bash
    vim governance/00-vision-strategy/vision-statement.yaml
    ```
 
 2. **Commit and push** / 提交並推送
+
    ```bash
    git add governance/00-vision-strategy/vision-statement.yaml
    git commit -m "Update vision statement"
@@ -328,7 +339,8 @@ kubectl delete namespace governance --ignore-not-found
 ## 📚 References / 參考資料
 
 - **Phase 3 README**: `governance/00-vision-strategy/PHASE3_README.md`
-- **Architecture Blueprint**: `governance/00-vision-strategy/gac-architecture.yaml`
+- **Architecture Blueprint**:
+  `governance/00-vision-strategy/gac-architecture.yaml`
 - **Project State**: `governance/00-vision-strategy/PROJECT_STATE_SNAPSHOT.md`
 
 ---

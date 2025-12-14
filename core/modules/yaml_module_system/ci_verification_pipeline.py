@@ -6,14 +6,13 @@ CI/CD Verification Pipeline (CI/CD 驗證流程)
 Reference: DevSecOps pipeline best practices [3] [4] [5]
 """
 
-import hashlib
-import json
-import uuid
-from collections.abc import Callable
+from enum import Enum
+from typing import Dict, List, Any, Optional, Callable
 from dataclasses import dataclass, field
 from datetime import datetime
-from enum import Enum
-from typing import Any
+import uuid
+import json
+import hashlib
 
 
 class PipelineStageType(Enum):
@@ -45,14 +44,14 @@ class StageResult:
     stage_type: PipelineStageType
     status: StageStatus
     started_at: datetime
-    completed_at: datetime | None = None
-    duration_ms: int | None = None
-    outputs: dict[str, Any] = field(default_factory=dict)
-    errors: list[str] = field(default_factory=list)
-    warnings: list[str] = field(default_factory=list)
-    evidence: dict[str, Any] = field(default_factory=dict)
-
-    def to_dict(self) -> dict[str, Any]:
+    completed_at: Optional[datetime] = None
+    duration_ms: Optional[int] = None
+    outputs: Dict[str, Any] = field(default_factory=dict)
+    errors: List[str] = field(default_factory=list)
+    warnings: List[str] = field(default_factory=list)
+    evidence: Dict[str, Any] = field(default_factory=dict)
+    
+    def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary"""
         return {
             'stage_id': self.stage_id,
@@ -75,14 +74,14 @@ class PipelineStage:
     name: str
     stage_type: PipelineStageType
     description: str
-    executor: Callable[[Any, dict], StageResult] | None = None
+    executor: Optional[Callable[[Any, Dict], StageResult]] = None
     required: bool = True
-    depends_on: list[str] = field(default_factory=list)
+    depends_on: List[str] = field(default_factory=list)
     timeout_ms: int = 300000  # 5 minutes default
     retry_count: int = 0
-    environment: dict[str, str] = field(default_factory=dict)
-
-    def execute(self, data: Any, context: dict[str, Any]) -> StageResult:
+    environment: Dict[str, str] = field(default_factory=dict)
+    
+    def execute(self, data: Any, context: Dict[str, Any]) -> StageResult:
         """執行階段"""
         result = StageResult(
             stage_id=self.id,
@@ -90,7 +89,7 @@ class PipelineStage:
             status=StageStatus.RUNNING,
             started_at=datetime.now(),
         )
-
+        
         try:
             if self.executor:
                 result = self.executor(data, context)
@@ -103,11 +102,11 @@ class PipelineStage:
         except Exception as e:
             result.status = StageStatus.FAILED
             result.errors.append(str(e))
-
+        
         result.completed_at = datetime.now()
         if result.started_at:
             result.duration_ms = int((result.completed_at - result.started_at).total_seconds() * 1000)
-
+        
         return result
 
 
@@ -121,14 +120,14 @@ class Evidence:
     data: Any
     hash: str
     collected_at: datetime = field(default_factory=datetime.now)
-    source: str | None = None
-
+    source: Optional[str] = None
+    
     @classmethod
-    def create(cls, type: str, name: str, description: str, data: Any, source: str | None = None) -> 'Evidence':
+    def create(cls, type: str, name: str, description: str, data: Any, source: Optional[str] = None) -> 'Evidence':
         """創建證據"""
         data_str = json.dumps(data, sort_keys=True) if isinstance(data, (dict, list)) else str(data)
         data_hash = hashlib.sha256(data_str.encode()).hexdigest()
-
+        
         return cls(
             id=str(uuid.uuid4()),
             type=type,
@@ -138,8 +137,8 @@ class Evidence:
             hash=data_hash,
             source=source,
         )
-
-    def to_dict(self) -> dict[str, Any]:
+    
+    def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary"""
         return {
             'id': self.id,
@@ -159,36 +158,36 @@ class EvidenceCollector:
     
     收集和管理驗證流程中的所有證據。
     """
-
+    
     def __init__(self):
-        self._evidence: list[Evidence] = []
-
-    def collect(self, type: str, name: str, description: str, data: Any,
-                source: str | None = None) -> Evidence:
+        self._evidence: List[Evidence] = []
+    
+    def collect(self, type: str, name: str, description: str, data: Any, 
+                source: Optional[str] = None) -> Evidence:
         """收集證據"""
         evidence = Evidence.create(type, name, description, data, source)
         self._evidence.append(evidence)
         return evidence
-
-    def get_all(self) -> list[Evidence]:
+    
+    def get_all(self) -> List[Evidence]:
         """獲取所有證據"""
         return self._evidence.copy()
-
-    def get_by_type(self, type: str) -> list[Evidence]:
+    
+    def get_by_type(self, type: str) -> List[Evidence]:
         """按類型獲取證據"""
         return [e for e in self._evidence if e.type == type]
-
-    def get_summary(self) -> dict[str, Any]:
+    
+    def get_summary(self) -> Dict[str, Any]:
         """獲取證據摘要"""
         return {
             'total_count': len(self._evidence),
             'by_type': {
                 type: len([e for e in self._evidence if e.type == type])
-                for type in {e.type for e in self._evidence}
+                for type in set(e.type for e in self._evidence)
             },
             'collected_at': datetime.now().isoformat(),
         }
-
+    
     def clear(self) -> None:
         """清除所有證據"""
         self._evidence.clear()
@@ -202,23 +201,23 @@ class VerificationReport:
     module_id: str
     module_version: str
     status: StageStatus
-    stages: list[StageResult]
-    evidence: list[Evidence]
+    stages: List[StageResult]
+    evidence: List[Evidence]
     started_at: datetime
-    completed_at: datetime | None = None
-    total_duration_ms: int | None = None
-
+    completed_at: Optional[datetime] = None
+    total_duration_ms: Optional[int] = None
+    
     @property
     def passed(self) -> bool:
         """是否全部通過"""
         return all(s.status == StageStatus.PASSED for s in self.stages if s.status != StageStatus.SKIPPED)
-
+    
     @property
-    def failed_stages(self) -> list[StageResult]:
+    def failed_stages(self) -> List[StageResult]:
         """失敗的階段"""
         return [s for s in self.stages if s.status == StageStatus.FAILED]
-
-    def to_dict(self) -> dict[str, Any]:
+    
+    def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary"""
         return {
             'id': self.id,
@@ -234,21 +233,21 @@ class VerificationReport:
             'total_duration_ms': self.total_duration_ms,
             'failed_stages': [s.stage_id for s in self.failed_stages],
         }
-
+    
     def generate_summary(self) -> str:
         """生成摘要報告"""
         lines = [
-            "# Verification Report",
-            "",
+            f"# Verification Report",
+            f"",
             f"- **Pipeline ID**: {self.pipeline_id}",
             f"- **Module**: {self.module_id} v{self.module_version}",
             f"- **Status**: {'✅ PASSED' if self.passed else '❌ FAILED'}",
             f"- **Duration**: {self.total_duration_ms}ms" if self.total_duration_ms else "",
-            "",
-            "## Stages",
-            "",
+            f"",
+            f"## Stages",
+            f"",
         ]
-
+        
         for stage in self.stages:
             status_icon = {
                 StageStatus.PASSED: "✅",
@@ -258,20 +257,20 @@ class VerificationReport:
                 StageStatus.RUNNING: "🔄",
                 StageStatus.CANCELLED: "🚫",
             }.get(stage.status, "❓")
-
+            
             lines.append(f"- {status_icon} **{stage.stage_type.value}**: {stage.status.value}")
-
+            
             if stage.errors:
                 for error in stage.errors:
                     lines.append(f"  - Error: {error}")
-
+        
         lines.extend([
-            "",
-            "## Evidence",
-            "",
+            f"",
+            f"## Evidence",
+            f"",
             f"- Total evidence collected: {len(self.evidence)}",
         ])
-
+        
         return "\n".join(lines)
 
 
@@ -283,17 +282,17 @@ class CIVerificationPipeline:
     
     參考：DevSecOps 管道最佳實踐 [3] [4] [5]
     """
-
-    def __init__(self, pipeline_id: str | None = None, name: str = "default"):
+    
+    def __init__(self, pipeline_id: Optional[str] = None, name: str = "default"):
         self.pipeline_id = pipeline_id or str(uuid.uuid4())
         self.name = name
-        self._stages: list[PipelineStage] = []
+        self._stages: List[PipelineStage] = []
         self._evidence_collector = EvidenceCollector()
-
+    
     def add_stage(self, stage: PipelineStage) -> None:
         """添加階段"""
         self._stages.append(stage)
-
+    
     def remove_stage(self, stage_id: str) -> bool:
         """移除階段"""
         for i, stage in enumerate(self._stages):
@@ -301,16 +300,16 @@ class CIVerificationPipeline:
                 del self._stages[i]
                 return True
         return False
-
-    def get_stage(self, stage_id: str) -> PipelineStage | None:
+    
+    def get_stage(self, stage_id: str) -> Optional[PipelineStage]:
         """獲取階段"""
         for stage in self._stages:
             if stage.id == stage_id:
                 return stage
         return None
-
+    
     def run(self, data: Any, module_id: str, module_version: str,
-            context: dict[str, Any] | None = None) -> VerificationReport:
+            context: Optional[Dict[str, Any]] = None) -> VerificationReport:
         """
         執行驗證管道
         
@@ -327,11 +326,11 @@ class CIVerificationPipeline:
         context['pipeline_id'] = self.pipeline_id
         context['module_id'] = module_id
         context['module_version'] = module_version
-
+        
         started_at = datetime.now()
-        stage_results: list[StageResult] = []
-        completed_stages: dict[str, StageResult] = {}
-
+        stage_results: List[StageResult] = []
+        completed_stages: Dict[str, StageResult] = {}
+        
         # 按順序執行階段
         for stage in self._stages:
             # 檢查依賴
@@ -339,7 +338,7 @@ class CIVerificationPipeline:
                 dep in completed_stages and completed_stages[dep].status == StageStatus.PASSED
                 for dep in stage.depends_on
             )
-
+            
             if not dependencies_met:
                 if stage.required:
                     result = StageResult(
@@ -361,7 +360,7 @@ class CIVerificationPipeline:
             else:
                 # 執行階段
                 result = stage.execute(data, context)
-
+                
                 # 收集證據
                 self._evidence_collector.collect(
                     type=f"stage_{stage.stage_type.value}",
@@ -370,10 +369,10 @@ class CIVerificationPipeline:
                     data=result.to_dict(),
                     source=stage.id,
                 )
-
+            
             stage_results.append(result)
             completed_stages[stage.id] = result
-
+            
             # 如果必需階段失敗，停止執行
             if stage.required and result.status == StageStatus.FAILED:
                 # 標記剩餘階段為跳過
@@ -387,17 +386,17 @@ class CIVerificationPipeline:
                         errors=['Previous required stage failed'],
                     ))
                 break
-
+        
         completed_at = datetime.now()
         total_duration_ms = int((completed_at - started_at).total_seconds() * 1000)
-
+        
         # 確定最終狀態
         final_status = StageStatus.PASSED
         for result in stage_results:
             if result.status == StageStatus.FAILED:
                 final_status = StageStatus.FAILED
                 break
-
+        
         return VerificationReport(
             id=str(uuid.uuid4()),
             pipeline_id=self.pipeline_id,
@@ -410,14 +409,14 @@ class CIVerificationPipeline:
             completed_at=completed_at,
             total_duration_ms=total_duration_ms,
         )
-
+    
     @classmethod
     def create_default_pipeline(cls) -> 'CIVerificationPipeline':
         """創建默認驗證管道"""
         pipeline = cls(name="default-verification")
-
+        
         # Lint 階段
-        def lint_executor(data: Any, context: dict) -> StageResult:
+        def lint_executor(data: Any, context: Dict) -> StageResult:
             result = StageResult(
                 stage_id="lint",
                 stage_type=PipelineStageType.LINT,
@@ -428,7 +427,7 @@ class CIVerificationPipeline:
             if isinstance(data, dict):
                 result.outputs = {'files_checked': 1, 'issues': 0}
             return result
-
+        
         pipeline.add_stage(PipelineStage(
             id="lint",
             name="Lint Check",
@@ -436,9 +435,9 @@ class CIVerificationPipeline:
             description="Check code style and formatting",
             executor=lint_executor,
         ))
-
+        
         # Validate 階段
-        def validate_executor(data: Any, context: dict) -> StageResult:
+        def validate_executor(data: Any, context: Dict) -> StageResult:
             result = StageResult(
                 stage_id="validate",
                 stage_type=PipelineStageType.VALIDATE,
@@ -449,7 +448,7 @@ class CIVerificationPipeline:
                 result.status = StageStatus.FAILED
                 result.errors.append("Data must be a dictionary")
             return result
-
+        
         pipeline.add_stage(PipelineStage(
             id="validate",
             name="Schema Validation",
@@ -458,9 +457,9 @@ class CIVerificationPipeline:
             executor=validate_executor,
             depends_on=["lint"],
         ))
-
+        
         # Test 階段
-        def test_executor(data: Any, context: dict) -> StageResult:
+        def test_executor(data: Any, context: Dict) -> StageResult:
             result = StageResult(
                 stage_id="test",
                 stage_type=PipelineStageType.TEST,
@@ -469,7 +468,7 @@ class CIVerificationPipeline:
             )
             result.outputs = {'tests_run': 0, 'tests_passed': 0, 'tests_failed': 0}
             return result
-
+        
         pipeline.add_stage(PipelineStage(
             id="test",
             name="Test Execution",
@@ -478,9 +477,9 @@ class CIVerificationPipeline:
             executor=test_executor,
             depends_on=["validate"],
         ))
-
+        
         # Security 階段
-        def security_executor(data: Any, context: dict) -> StageResult:
+        def security_executor(data: Any, context: Dict) -> StageResult:
             result = StageResult(
                 stage_id="security",
                 stage_type=PipelineStageType.SECURITY,
@@ -489,7 +488,7 @@ class CIVerificationPipeline:
             )
             result.outputs = {'vulnerabilities': 0, 'secrets_detected': 0}
             return result
-
+        
         pipeline.add_stage(PipelineStage(
             id="security",
             name="Security Scan",
@@ -498,5 +497,5 @@ class CIVerificationPipeline:
             executor=security_executor,
             depends_on=["test"],
         ))
-
+        
         return pipeline

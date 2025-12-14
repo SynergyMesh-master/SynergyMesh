@@ -1,0 +1,481 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://synergymesh.io/governance/dimensions/81-auto-comment/schema.json",
+  "title": "Auto Comment Governance Schema",
+  "description": "自動評論引擎、CI 失敗診斷、即時反饋與自動修復機制",
+  "type": "object",
+  "definitions": {
+    "workflow_context": {
+      "type": "object",
+      "description": "CI Workflow 執行上下文",
+      "properties": {
+        "workflow": {
+          "type": "string",
+          "description": "Workflow 名稱",
+          "minLength": 1
+        },
+        "run_id": {
+          "type": "string",
+          "description": "Workflow 執行 ID",
+          "minLength": 1
+        },
+        "commit": {
+          "type": "string",
+          "description": "觸發的 commit SHA",
+          "pattern": "^[a-f0-9]{7,40}$"
+        },
+        "branch": {
+          "type": "string",
+          "description": "分支名稱"
+        },
+        "pr_number": {
+          "type": ["string", "integer", "null"],
+          "description": "PR 編號（如適用）"
+        },
+        "repository": {
+          "type": "string",
+          "description": "Repository 全名"
+        },
+        "actor": {
+          "type": "string",
+          "description": "觸發者"
+        }
+      },
+      "required": ["workflow", "run_id", "commit"]
+    },
+    "error_classification": {
+      "type": "object",
+      "description": "錯誤分類資訊",
+      "properties": {
+        "type": {
+          "type": "string",
+          "description": "錯誤類型",
+          "enum": ["typescript", "eslint", "prettier", "yamllint", "markdownlint", "test_failure", "security", "build_failure", "unknown"]
+        },
+        "category": {
+          "type": "string",
+          "description": "錯誤類別",
+          "enum": ["type_error", "lint_error", "format_error", "test_error", "security_error", "build_error", "unknown"]
+        },
+        "auto_fixable": {
+          "type": "boolean",
+          "description": "是否可自動修復",
+          "default": false
+        },
+        "fix_command": {
+          "type": ["string", "null"],
+          "description": "自動修復命令"
+        },
+        "description": {
+          "type": "string",
+          "description": "錯誤描述"
+        },
+        "pattern": {
+          "type": "string",
+          "description": "錯誤匹配模式（正則表達式）"
+        }
+      },
+      "required": ["type", "category", "auto_fixable"]
+    },
+    "comment": {
+      "type": "object",
+      "description": "生成的評論",
+      "properties": {
+        "format": {
+          "type": "string",
+          "description": "評論格式",
+          "enum": ["markdown", "plain"],
+          "default": "markdown"
+        },
+        "content": {
+          "type": "string",
+          "description": "評論內容",
+          "minLength": 1,
+          "maxLength": 65536
+        },
+        "template": {
+          "type": "string",
+          "description": "使用的模板名稱",
+          "enum": ["ci-failure", "pr-review", "issue-feedback"]
+        },
+        "sections": {
+          "type": "object",
+          "description": "評論各區段內容",
+          "properties": {
+            "summary": {
+              "type": "string"
+            },
+            "error_details": {
+              "type": "string"
+            },
+            "fix_status": {
+              "type": "string"
+            },
+            "suggestions": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "docs": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string"
+                  },
+                  "url": {
+                    "type": "string",
+                    "format": "uri"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "required": ["format", "content"]
+    },
+    "auto_fix_result": {
+      "type": "object",
+      "description": "自動修復結果",
+      "properties": {
+        "attempted": {
+          "type": "boolean",
+          "description": "是否嘗試自動修復"
+        },
+        "success": {
+          "type": "boolean",
+          "description": "自動修復是否成功"
+        },
+        "fix_type": {
+          "type": "string",
+          "description": "修復類型"
+        },
+        "fix_command": {
+          "type": "string",
+          "description": "執行的修復命令"
+        },
+        "commit_sha": {
+          "type": ["string", "null"],
+          "description": "修復提交的 SHA"
+        },
+        "files_changed": {
+          "type": "array",
+          "description": "修改的檔案列表",
+          "items": {
+            "type": "string"
+          }
+        },
+        "error_message": {
+          "type": ["string", "null"],
+          "description": "修復失敗時的錯誤訊息"
+        }
+      },
+      "required": ["attempted", "success"]
+    },
+    "event_record": {
+      "type": "object",
+      "description": "事件記錄（寫入 registry.json）",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "事件唯一識別碼",
+          "pattern": "^auto-comment-[0-9]+-[a-z0-9]+$"
+        },
+        "type": {
+          "type": "string",
+          "description": "事件類型",
+          "const": "auto-comment"
+        },
+        "dimension": {
+          "type": "string",
+          "description": "治理維度",
+          "const": "81-auto-comment"
+        },
+        "workflow": {
+          "type": "string",
+          "description": "觸發的 workflow"
+        },
+        "commit": {
+          "type": "string",
+          "description": "相關 commit SHA"
+        },
+        "branch": {
+          "type": ["string", "null"],
+          "description": "分支名稱"
+        },
+        "pr_number": {
+          "type": ["string", "integer", "null"],
+          "description": "PR 編號"
+        },
+        "status": {
+          "type": "string",
+          "description": "處理狀態",
+          "enum": ["failure", "auto-fixed", "manual-required", "success"]
+        },
+        "auto_fixed": {
+          "type": "boolean",
+          "description": "是否已自動修復"
+        },
+        "error_type": {
+          "type": ["string", "null"],
+          "description": "錯誤類型"
+        },
+        "fix_type": {
+          "type": ["string", "null"],
+          "description": "修復類型"
+        },
+        "timestamp": {
+          "type": "string",
+          "description": "事件時間戳",
+          "format": "date-time"
+        },
+        "metadata": {
+          "type": "object",
+          "description": "額外元資料",
+          "properties": {
+            "generated_by": {
+              "type": "string"
+            },
+            "version": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "required": ["id", "type", "workflow", "commit", "status", "auto_fixed", "timestamp"]
+    },
+    "config": {
+      "type": "object",
+      "description": "Auto Comment 配置",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "description": "是否啟用自動評論",
+          "default": true
+        },
+        "mode": {
+          "type": "string",
+          "description": "運作模式",
+          "enum": ["strict", "permissive", "audit"],
+          "default": "strict"
+        },
+        "auto_fix": {
+          "type": "object",
+          "description": "自動修復配置",
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "default": true
+            },
+            "protected_branches": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "default": ["main", "master", "production"]
+            },
+            "allowed_fix_types": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "default": ["eslint", "prettier", "yamllint", "markdownlint"]
+            }
+          }
+        },
+        "rate_limiting": {
+          "type": "object",
+          "description": "速率限制配置",
+          "properties": {
+            "max_comments_per_pr": {
+              "type": "integer",
+              "default": 10
+            },
+            "time_window_minutes": {
+              "type": "integer",
+              "default": 60
+            }
+          }
+        },
+        "templates": {
+          "type": "object",
+          "description": "模板配置",
+          "properties": {
+            "ci_failure": {
+              "type": "string",
+              "default": "./templates/ci-failure.md"
+            },
+            "pr_review": {
+              "type": "string",
+              "default": "./templates/pr-review.md"
+            },
+            "issue_feedback": {
+              "type": "string",
+              "default": "./templates/issue-feedback.md"
+            }
+          }
+        }
+      },
+      "required": ["enabled"]
+    },
+    "context": {
+      "type": "object",
+      "description": "執行上下文",
+      "properties": {
+        "trace_id": {
+          "type": "string",
+          "description": "分散式追蹤 ID"
+        },
+        "actor": {
+          "type": "object",
+          "description": "執行者資訊",
+          "properties": {
+            "type": {
+              "type": "string",
+              "enum": ["human", "ai_agent", "system", "ci_bot"]
+            },
+            "id": {
+              "type": "string"
+            }
+          }
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "result": {
+      "type": "object",
+      "description": "操作結果",
+      "properties": {
+        "success": {
+          "type": "boolean",
+          "description": "操作是否成功"
+        },
+        "comment_generated": {
+          "type": "boolean",
+          "description": "評論是否已生成"
+        },
+        "comment_posted": {
+          "type": "boolean",
+          "description": "評論是否已發布"
+        },
+        "event_registered": {
+          "type": "boolean",
+          "description": "事件是否已記錄"
+        },
+        "auto_fix_performed": {
+          "type": "boolean",
+          "description": "是否執行了自動修復"
+        },
+        "data": {
+          "type": "object",
+          "description": "結果資料"
+        },
+        "errors": {
+          "type": "array",
+          "description": "錯誤詳情",
+          "items": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string",
+                "pattern": "^E81[0-9]{3}$"
+              },
+              "message": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "required": ["success"]
+    },
+    "audit_log": {
+      "type": "object",
+      "description": "審計日誌條目",
+      "properties": {
+        "log_id": {
+          "type": "string",
+          "description": "唯一日誌識別碼"
+        },
+        "trace_id": {
+          "type": "string",
+          "description": "分散式追蹤 ID"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "dimension": {
+          "type": "string",
+          "const": "81-auto-comment"
+        },
+        "action": {
+          "type": "string",
+          "description": "執行的操作",
+          "enum": ["comment.generate", "comment.post", "auto_fix.execute", "event.register", "policy.check"]
+        },
+        "actor": {
+          "$ref": "#/definitions/context/properties/actor"
+        },
+        "outcome": {
+          "type": "string",
+          "enum": ["success", "failure", "partial", "blocked"]
+        },
+        "details": {
+          "type": "object"
+        }
+      },
+      "required": ["log_id", "timestamp", "dimension", "action", "outcome"]
+    }
+  },
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "資源識別碼",
+      "pattern": "^81-auto-comment-[a-z0-9-]+$"
+    },
+    "name": {
+      "type": "string",
+      "description": "資源名稱"
+    },
+    "config": {
+      "$ref": "#/definitions/config"
+    },
+    "status": {
+      "type": "string",
+      "description": "當前狀態",
+      "enum": ["pending", "active", "inactive", "error", "deprecated"]
+    },
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "version": {
+          "type": "string",
+          "pattern": "^\\d+\\.\\d+\\.\\d+$"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "required": ["id", "status"],
+  "additionalProperties": false
+}

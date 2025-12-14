@@ -6,13 +6,12 @@ Self-healing capabilities with predefined playbooks
 Reference: Self-healing infrastructure - Detect → Auto Diagnose → Execute Fix → Verify → Log [9]
 """
 
-import asyncio
-import uuid
-from collections.abc import Callable
 from dataclasses import dataclass, field
 from datetime import datetime
 from enum import Enum
-from typing import Any, Optional
+from typing import Any, Callable, Dict, List, Optional
+import uuid
+import asyncio
 
 
 class RemediationStatus(Enum):
@@ -44,13 +43,13 @@ class RemediationAction:
     name: str = ""
     action_type: RemediationType = RemediationType.CUSTOM
     target: str = ""
-    parameters: dict[str, Any] = field(default_factory=dict)
+    parameters: Dict[str, Any] = field(default_factory=dict)
     timeout_seconds: int = 300
     rollback_action: Optional['RemediationAction'] = None
-    pre_conditions: list[Callable[[], bool]] = field(default_factory=list)
-    post_conditions: list[Callable[[], bool]] = field(default_factory=list)
-
-    def to_dict(self) -> dict[str, Any]:
+    pre_conditions: List[Callable[[], bool]] = field(default_factory=list)
+    post_conditions: List[Callable[[], bool]] = field(default_factory=list)
+    
+    def to_dict(self) -> Dict[str, Any]:
         return {
             'action_id': self.action_id,
             'name': self.name,
@@ -68,14 +67,14 @@ class RemediationPlaybook:
     playbook_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     name: str = ""
     description: str = ""
-    trigger_conditions: list[str] = field(default_factory=list)
-    actions: list[RemediationAction] = field(default_factory=list)
+    trigger_conditions: List[str] = field(default_factory=list)
+    actions: List[RemediationAction] = field(default_factory=list)
     enabled: bool = True
     priority: int = 0
     max_retries: int = 3
     cooldown_seconds: int = 300
-    last_executed: datetime | None = None
-
+    last_executed: Optional[datetime] = None
+    
     def is_in_cooldown(self) -> bool:
         """Check if playbook is in cooldown period"""
         if not self.last_executed:
@@ -91,14 +90,14 @@ class RemediationResult:
     playbook_id: str = ""
     anomaly_id: str = ""
     status: RemediationStatus = RemediationStatus.PENDING
-    actions_executed: list[str] = field(default_factory=list)
-    actions_failed: list[str] = field(default_factory=list)
+    actions_executed: List[str] = field(default_factory=list)
+    actions_failed: List[str] = field(default_factory=list)
     verification_passed: bool = False
     execution_time_ms: int = 0
     error_message: str = ""
     timestamp: datetime = field(default_factory=datetime.now)
-
-    def to_dict(self) -> dict[str, Any]:
+    
+    def to_dict(self) -> Dict[str, Any]:
         return {
             'result_id': self.result_id,
             'playbook_id': self.playbook_id,
@@ -119,11 +118,11 @@ class RemediationExecutor:
     
     Executes remediation actions safely
     """
-
+    
     def __init__(self):
-        self._action_handlers: dict[RemediationType, Callable] = {}
+        self._action_handlers: Dict[RemediationType, Callable] = {}
         self._register_default_handlers()
-
+    
     def _register_default_handlers(self) -> None:
         """Register default action handlers"""
         self._action_handlers[RemediationType.RESTART] = self._handle_restart
@@ -131,7 +130,7 @@ class RemediationExecutor:
         self._action_handlers[RemediationType.CLEAR_CACHE] = self._handle_clear_cache
         self._action_handlers[RemediationType.NOTIFY] = self._handle_notify
         self._action_handlers[RemediationType.CUSTOM] = self._handle_custom
-
+    
     def register_handler(
         self,
         action_type: RemediationType,
@@ -139,60 +138,60 @@ class RemediationExecutor:
     ) -> None:
         """Register a custom action handler"""
         self._action_handlers[action_type] = handler
-
+    
     async def _handle_restart(self, action: RemediationAction) -> bool:
         """Handle restart action"""
         # Simulate restart
         await asyncio.sleep(0.1)
         return True
-
+    
     async def _handle_scale(self, action: RemediationAction) -> bool:
         """Handle scale action"""
         # Simulate scaling
         await asyncio.sleep(0.1)
         return True
-
+    
     async def _handle_clear_cache(self, action: RemediationAction) -> bool:
         """Handle cache clearing"""
         # Simulate cache clearing
         await asyncio.sleep(0.05)
         return True
-
+    
     async def _handle_notify(self, action: RemediationAction) -> bool:
         """Handle notification"""
         # Simulate notification
         return True
-
+    
     async def _handle_custom(self, action: RemediationAction) -> bool:
         """Handle custom action"""
         # Custom actions need specific handlers
         return True
-
+    
     async def execute(self, action: RemediationAction) -> bool:
         """Execute a remediation action"""
         # Check pre-conditions
         for condition in action.pre_conditions:
             if not condition():
                 return False
-
+        
         # Get handler
         handler = self._action_handlers.get(action.action_type, self._handle_custom)
-
+        
         try:
             # Execute with timeout
             result = await asyncio.wait_for(
                 handler(action),
                 timeout=action.timeout_seconds
             )
-
+            
             if result:
                 # Check post-conditions
                 for condition in action.post_conditions:
                     if not condition():
                         return False
-
+            
             return result
-        except TimeoutError:
+        except asyncio.TimeoutError:
             return False
         except Exception:
             return False
@@ -207,26 +206,26 @@ class AutoRemediationEngine:
     
     Reference: 4 minutes, zero human involvement - Detect → Diagnose → Fix → Verify → Log [9]
     """
-
+    
     def __init__(self):
-        self._playbooks: dict[str, RemediationPlaybook] = {}
+        self._playbooks: Dict[str, RemediationPlaybook] = {}
         self._executor = RemediationExecutor()
-        self._history: list[RemediationResult] = []
+        self._history: List[RemediationResult] = []
         self._dry_run = False
-
+    
     def set_dry_run(self, enabled: bool) -> None:
         """Enable/disable dry run mode"""
         self._dry_run = enabled
-
+    
     def register_playbook(self, playbook: RemediationPlaybook) -> None:
         """Register a remediation playbook"""
         self._playbooks[playbook.playbook_id] = playbook
-
-    def get_playbook(self, playbook_id: str) -> RemediationPlaybook | None:
+    
+    def get_playbook(self, playbook_id: str) -> Optional[RemediationPlaybook]:
         """Get a playbook by ID"""
         return self._playbooks.get(playbook_id)
-
-    def find_matching_playbooks(self, trigger: str) -> list[RemediationPlaybook]:
+    
+    def find_matching_playbooks(self, trigger: str) -> List[RemediationPlaybook]:
         """Find playbooks matching a trigger condition"""
         matching = []
         for playbook in self._playbooks.values():
@@ -238,11 +237,11 @@ class AutoRemediationEngine:
                 if condition.lower() in trigger.lower() or trigger.lower() in condition.lower():
                     matching.append(playbook)
                     break
-
+        
         # Sort by priority
         matching.sort(key=lambda p: p.priority, reverse=True)
         return matching
-
+    
     async def execute_playbook(
         self,
         playbook: RemediationPlaybook,
@@ -255,87 +254,87 @@ class AutoRemediationEngine:
         """
         import time
         start_time = time.time()
-
+        
         result = RemediationResult(
             playbook_id=playbook.playbook_id,
             anomaly_id=anomaly_id,
             status=RemediationStatus.IN_PROGRESS
         )
-
+        
         if self._dry_run:
             result.status = RemediationStatus.COMPLETED
             result.verification_passed = True
             result.actions_executed = [a.name for a in playbook.actions]
             return result
-
+        
         try:
             # Execute each action in sequence
             for action in playbook.actions:
                 success = await self._executor.execute(action)
-
+                
                 if success:
                     result.actions_executed.append(action.name)
                 else:
                     result.actions_failed.append(action.name)
-
+                    
                     # Try rollback if available
                     if action.rollback_action:
                         await self._executor.execute(action.rollback_action)
-
+                    
                     result.status = RemediationStatus.FAILED
                     result.error_message = f"Action {action.name} failed"
                     break
-
+            
             if result.status != RemediationStatus.FAILED:
                 # Verification phase
                 result.status = RemediationStatus.VERIFYING
-
+                
                 # Simple verification - check if all actions completed
                 if len(result.actions_failed) == 0:
                     result.verification_passed = True
                     result.status = RemediationStatus.COMPLETED
                 else:
                     result.status = RemediationStatus.FAILED
-
+            
             # Update playbook last executed
             playbook.last_executed = datetime.now()
-
+            
         except Exception as e:
             result.status = RemediationStatus.FAILED
             result.error_message = str(e)
-
+        
         result.execution_time_ms = int((time.time() - start_time) * 1000)
         self._history.append(result)
-
+        
         return result
-
+    
     async def auto_remediate(
         self,
         trigger: str,
         anomaly_id: str = ""
-    ) -> RemediationResult | None:
+    ) -> Optional[RemediationResult]:
         """
         Automatically find and execute matching playbook
         
         The core of self-healing - zero human intervention
         """
         playbooks = self.find_matching_playbooks(trigger)
-
+        
         if not playbooks:
             return None
-
+        
         # Execute first matching playbook
         return await self.execute_playbook(playbooks[0], anomaly_id)
-
-    def get_history(self) -> list[RemediationResult]:
+    
+    def get_history(self) -> List[RemediationResult]:
         """Get remediation history"""
         return self._history.copy()
-
+    
     def create_restart_playbook(
         self,
         name: str,
         target: str,
-        triggers: list[str]
+        triggers: List[str]
     ) -> RemediationPlaybook:
         """Create a simple restart playbook"""
         playbook = RemediationPlaybook(
@@ -353,13 +352,13 @@ class AutoRemediationEngine:
         )
         self.register_playbook(playbook)
         return playbook
-
+    
     def create_scale_playbook(
         self,
         name: str,
         target: str,
         scale_factor: int,
-        triggers: list[str]
+        triggers: List[str]
     ) -> RemediationPlaybook:
         """Create a scaling playbook"""
         playbook = RemediationPlaybook(

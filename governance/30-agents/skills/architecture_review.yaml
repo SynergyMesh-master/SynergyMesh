@@ -1,0 +1,269 @@
+---
+apiVersion: governance.synergymesh.io/v2
+kind: AgentSkill
+metadata:
+  id: architecture-review
+  name: "Architecture Review"
+  name_zh: "架構審查"
+  version: "1.0.0"
+  description: "Comprehensive architecture analysis for dependency management, coupling detection, and design pattern validation"
+  created_at: "2025-12-13"
+  updated_at: "2025-12-13"
+  owner: "Architecture Team"
+
+spec:
+  category: analysis
+  subcategory: architecture
+  risk_level: low
+
+  capabilities:
+    - dependency_analysis
+    - coupling_detection
+    - circular_dependency_detection
+    - module_boundary_validation
+    - design_pattern_recognition
+    - layer_violation_detection
+    - scalability_assessment
+    - maintainability_scoring
+
+  description_detailed: |
+    Architecture review capability enables AI agents to analyze software 
+    architecture for structural issues and design quality:
+    
+    - Detect circular dependencies and coupling issues
+    - Validate module boundaries and layer separations
+    - Identify design pattern usage and anti-patterns
+    - Assess scalability and maintainability characteristics
+    - Generate architecture improvement recommendations
+    
+    Supports project-wide analysis across multiple modules and languages.
+
+  inputs:
+    - name: project_path
+      type: string
+      required: true
+      description: "Root path of the project to analyze"
+
+    - name: scope
+      type: enum
+      values: [full, module, component, layer]
+      required: false
+      default: full
+      description: "Scope of architecture analysis"
+
+    - name: target_modules
+      type: array
+      items:
+        type: string
+      required: false
+      description: "Specific modules to analyze (if scope is module)"
+
+    - name: options
+      type: object
+      required: false
+      properties:
+        check_dependencies:
+          type: boolean
+          default: true
+        check_coupling:
+          type: boolean
+          default: true
+        check_layers:
+          type: boolean
+          default: true
+        check_patterns:
+          type: boolean
+          default: true
+        max_depth:
+          type: integer
+          default: 10
+          description: "Maximum depth for dependency traversal"
+        ignore_paths:
+          type: array
+          items:
+            type: string
+          description: "Paths to ignore during analysis"
+
+  outputs:
+    - name: architecture_score
+      type: number
+      range: [0, 100]
+      description: "Overall architecture quality score"
+
+    - name: dependency_graph
+      type: object
+      properties:
+        nodes:
+          type: array
+          items:
+            type: object
+            properties:
+              id: string
+              type: string
+              path: string
+        edges:
+          type: array
+          items:
+            type: object
+            properties:
+              from: string
+              to: string
+              type: string
+
+    - name: issues
+      type: array
+      items:
+        type: object
+        properties:
+          type: enum[circular_dependency, high_coupling, layer_violation, anti_pattern, boundary_violation]
+          severity: enum[critical, high, medium, low]
+          message: string
+          components: array
+          recommendation: string
+
+    - name: metrics
+      type: object
+      properties:
+        module_count: integer
+        dependency_count: integer
+        coupling_index: number
+        cohesion_index: number
+        instability_ratio: number
+        abstractness_ratio: number
+
+    - name: patterns_detected
+      type: array
+      items:
+        type: object
+        properties:
+          pattern: string
+          location: string
+          quality: enum[good, acceptable, poor]
+
+  providers:
+    - name: "architecture-analyzer"
+      path: "automation/architect/core/analysis/architecture_analyzer.py"
+      type: library
+      language: python
+      priority: 1
+      capabilities:
+        - dependency_analysis
+        - coupling_detection
+        - circular_dependency_detection
+
+    - name: "virtual-expert-james"
+      path: "core/virtual_experts/"
+      type: virtual_expert
+      expert: JamesMiller
+      priority: 2
+      specialization: "System architecture and design patterns"
+
+    - name: "dependency-manager-agent"
+      path: "agent/dependency-manager/"
+      type: agent
+      language: python
+      priority: 3
+      capabilities:
+        - dependency_analysis
+
+    - name: "mcp-deployment-validator"
+      path: "mcp-servers/deployment-validator.js"
+      type: mcp-server
+      priority: 4
+      capabilities:
+        - layer_violation_detection
+
+  governance_dimensions:
+    - id: "01-architecture"
+      relevance: high
+      controls:
+        - architectural_integrity
+        - design_principles
+        - modularity
+
+    - id: "04-risk"
+      relevance: medium
+      controls:
+        - technical_debt_assessment
+        - dependency_risk
+
+    - id: "09-performance"
+      relevance: medium
+      controls:
+        - scalability_assessment
+
+    - id: "14-improvement"
+      relevance: high
+      controls:
+        - architecture_evolution
+        - refactoring_recommendations
+
+  constraints:
+    max_project_size_gb: 5
+    analysis_timeout_minutes: 30
+    max_modules: 1000
+    max_dependency_depth: 20
+
+  monitoring:
+    metrics:
+      - name: architecture_reviews_total
+        type: counter
+        labels: [scope, project]
+      - name: review_duration_seconds
+        type: histogram
+        buckets: [10, 30, 60, 120, 300, 600]
+      - name: issues_by_type
+        type: counter
+        labels: [issue_type, severity]
+      - name: architecture_score
+        type: gauge
+        labels: [project]
+
+  examples:
+    - name: "Circular Dependency Detection"
+      description: "Detect circular dependencies in a microservices project"
+      input:
+        project_path: "/app/services"
+        scope: full
+        options:
+          check_dependencies: true
+      expected_output:
+        architecture_score: 72
+        issues:
+          - type: circular_dependency
+            severity: high
+            message: "Circular dependency detected: service-a → service-b → service-c → service-a"
+            components: ["service-a", "service-b", "service-c"]
+            recommendation: "Introduce an abstraction layer or event-driven communication"
+
+    - name: "Layer Violation Check"
+      description: "Validate clean architecture layer boundaries"
+      input:
+        project_path: "/app"
+        options:
+          check_layers: true
+      expected_output:
+        issues:
+          - type: layer_violation
+            severity: medium
+            message: "Domain layer directly imports from infrastructure"
+            components: ["domain/user.py", "infrastructure/database.py"]
+            recommendation: "Use dependency injection and interfaces"
+
+    - name: "Coupling Analysis"
+      description: "Analyze module coupling and cohesion"
+      input:
+        project_path: "/app/core"
+        scope: module
+        options:
+          check_coupling: true
+      expected_output:
+        metrics:
+          coupling_index: 0.35
+          cohesion_index: 0.78
+          instability_ratio: 0.42
+        issues:
+          - type: high_coupling
+            severity: medium
+            message: "Module 'utils' has high afferent coupling (12 dependents)"
+            recommendation: "Consider splitting into smaller, focused modules"

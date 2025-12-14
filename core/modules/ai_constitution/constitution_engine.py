@@ -14,23 +14,29 @@ for unified verdicts
 自成閉環：本檔案是憲章系統的核心，統一管理所有裁決
 """
 
-import hashlib
 from dataclasses import dataclass, field
-from datetime import datetime
 from enum import Enum
-from typing import Any
+from typing import Dict, List, Optional, Any, Callable, Awaitable
+from datetime import datetime
+import asyncio
+import hashlib
+import json
 
-from .adaptive_guidelines import (
-    AdaptiveGuidelineEngine,
-)
 from .fundamental_laws import (
     FundamentalLaws,
-    LawVerificationResult,
     ProposedAction,
+    LawVerificationResult,
+    EnforcementLevel,
 )
 from .operational_rules import (
     OperationalRuleEngine,
+    RuleCategory,
     RuleCheckResult,
+    RuleSeverity,
+)
+from .adaptive_guidelines import (
+    AdaptiveGuidelineEngine,
+    GuidelineEvaluation,
 )
 
 
@@ -62,22 +68,22 @@ class ConstitutionVerdict:
     action_id: str
     verdict_type: VerdictType
     priority: VerdictPriority
-
+    
     # 三層驗證結果
-    fundamental_law_results: dict[str, LawVerificationResult] = field(default_factory=dict)
-    operational_rule_results: dict[str, RuleCheckResult] = field(default_factory=dict)
-    guideline_recommendations: dict[str, Any] = field(default_factory=dict)
-
+    fundamental_law_results: Dict[str, LawVerificationResult] = field(default_factory=dict)
+    operational_rule_results: Dict[str, RuleCheckResult] = field(default_factory=dict)
+    guideline_recommendations: Dict[str, Any] = field(default_factory=dict)
+    
     # 裁決詳情
-    violations: list[str] = field(default_factory=list)
-    conditions: list[str] = field(default_factory=list)
-    modifications_required: list[str] = field(default_factory=list)
-    recommendations: list[str] = field(default_factory=list)
-
+    violations: List[str] = field(default_factory=list)
+    conditions: List[str] = field(default_factory=list)
+    modifications_required: List[str] = field(default_factory=list)
+    recommendations: List[str] = field(default_factory=list)
+    
     # 自動修正
-    auto_corrections_applied: list[str] = field(default_factory=list)
-    corrected_action: dict[str, Any] | None = None
-
+    auto_corrections_applied: List[str] = field(default_factory=list)
+    corrected_action: Optional[Dict[str, Any]] = None
+    
     # 元數據
     confidence: float = 1.0
     reasoning: str = ""
@@ -95,13 +101,13 @@ class ActionProposal:
     action_type: str
     description: str
     target: str
-    parameters: dict[str, Any] = field(default_factory=dict)
+    parameters: Dict[str, Any] = field(default_factory=dict)
     requestor: str = "system"
-    context: dict[str, Any] = field(default_factory=dict)
+    context: Dict[str, Any] = field(default_factory=dict)
     priority: str = "normal"
     requires_confirmation: bool = False
     timestamp: str = field(default_factory=lambda: datetime.utcnow().isoformat())
-
+    
     def to_proposed_action(self) -> ProposedAction:
         """轉換為 ProposedAction"""
         return ProposedAction(
@@ -135,18 +141,18 @@ class ConstitutionEngine:
     4. Applying auto-corrections
     5. Recording all decisions
     """
-
+    
     VERSION = "1.0.0"
-
+    
     def __init__(self):
         # 三層規則系統
         self.fundamental_laws = FundamentalLaws()
         self.operational_rules = OperationalRuleEngine()
         self.adaptive_guidelines = AdaptiveGuidelineEngine()
-
+        
         # 裁決歷史
-        self._verdict_history: list[ConstitutionVerdict] = []
-
+        self._verdict_history: List[ConstitutionVerdict] = []
+        
         # 統計數據
         self._statistics = {
             "total_verdicts": 0,
@@ -156,7 +162,7 @@ class ConstitutionEngine:
             "escalated": 0,
             "auto_corrections": 0,
         }
-
+        
         # 配置
         self._config = {
             "auto_correction_enabled": True,
@@ -164,7 +170,7 @@ class ConstitutionEngine:
             "logging_enabled": True,
             "max_retry_attempts": 3,
         }
-
+    
     async def evaluate(self, proposal: ActionProposal) -> ConstitutionVerdict:
         """
         評估行動提案並生成裁決
@@ -173,19 +179,19 @@ class ConstitutionEngine:
         這是憲章引擎的主要入口點
         """
         start_time = datetime.utcnow()
-
+        
         # 生成裁決 ID
         verdict_id = self._generate_verdict_id(proposal)
-
+        
         # 轉換為 ProposedAction
         proposed_action = proposal.to_proposed_action()
-
+        
         # 第一層：驗證根本法則
         fundamental_results = await self.fundamental_laws.verify_all(proposed_action)
-
+        
         # 檢查是否有絕對違規
         absolute_violations = self._check_absolute_violations(fundamental_results)
-
+        
         if absolute_violations:
             # 根本法則違規，立即拒絕
             verdict = self._create_denial_verdict(
@@ -197,7 +203,7 @@ class ConstitutionEngine:
         else:
             # 第二層：檢查操作規則
             operational_results = self._check_operational_rules(proposal)
-
+            
             # 第三層：評估自適應指南
             guideline_recommendations = self.adaptive_guidelines.evaluate_for_operation(
                 {
@@ -207,7 +213,7 @@ class ConstitutionEngine:
                 },
                 proposal.context
             )
-
+            
             # 綜合裁決
             verdict = self._synthesize_verdict(
                 verdict_id=verdict_id,
@@ -216,41 +222,41 @@ class ConstitutionEngine:
                 operational_results=operational_results,
                 guideline_recommendations=guideline_recommendations,
             )
-
+        
         # 計算處理時間
         end_time = datetime.utcnow()
         verdict.processing_time_ms = (end_time - start_time).total_seconds() * 1000
-
+        
         # 記錄裁決
         self._record_verdict(verdict)
-
+        
         return verdict
-
+    
     def _generate_verdict_id(self, proposal: ActionProposal) -> str:
         """生成裁決 ID"""
         data = f"{proposal.proposal_id}{datetime.utcnow().isoformat()}"
         return f"VERDICT_{hashlib.sha256(data.encode()).hexdigest()[:12]}"
-
+    
     def _check_absolute_violations(
         self,
-        results: dict[str, LawVerificationResult]
-    ) -> list[str]:
+        results: Dict[str, LawVerificationResult]
+    ) -> List[str]:
         """檢查是否有絕對違規"""
         violations = []
-
-        for _law_id, result in results.items():
+        
+        for law_id, result in results.items():
             if not result.passed:
                 violations.extend(result.violations)
-
+        
         return violations
-
+    
     def _check_operational_rules(
         self,
         proposal: ActionProposal
-    ) -> dict[str, RuleCheckResult]:
+    ) -> Dict[str, RuleCheckResult]:
         """檢查操作規則"""
         results = {}
-
+        
         # 構建操作描述
         operation = {
             "type": proposal.action_type,
@@ -263,59 +269,59 @@ class ConstitutionEngine:
             "access_logged": proposal.parameters.get("access_logged", False),
             "authorization_verified": proposal.parameters.get("authorization_verified", False),
         }
-
+        
         # 檢查所有適用規則
         all_results = self.operational_rules.check_all_applicable(operation)
-
+        
         for category, result in all_results.items():
             results[category.value] = result
-
+        
         return results
-
+    
     def _synthesize_verdict(
         self,
         verdict_id: str,
         proposal: ActionProposal,
-        fundamental_results: dict[str, LawVerificationResult],
-        operational_results: dict[str, RuleCheckResult],
-        guideline_recommendations: dict[str, Any],
+        fundamental_results: Dict[str, LawVerificationResult],
+        operational_results: Dict[str, RuleCheckResult],
+        guideline_recommendations: Dict[str, Any],
     ) -> ConstitutionVerdict:
         """綜合所有驗證結果生成裁決"""
-
+        
         violations = []
         conditions = []
         modifications = []
         recommendations = []
         auto_corrections = []
-
+        
         # 收集所有違規
         for result in fundamental_results.values():
             violations.extend(result.violations)
             recommendations.extend(result.recommendations)
-
+        
         for result in operational_results.values():
             for v in result.violations:
                 violations.append(v.description)
             recommendations.extend(result.warnings)
-
+            
             # 收集自動修正
             if self._config["auto_correction_enabled"]:
                 auto_corrections.extend(result.auto_corrections)
-
+        
         # 從指南中提取建議
         final_recs = guideline_recommendations.get("final_recommendations", {})
         for key, value in final_recs.items():
             recommendations.append(f"建議 {key}: {value}")
-
+        
         # 決定裁決類型
         verdict_type = self._determine_verdict_type(
             violations=violations,
             auto_corrections=auto_corrections,
         )
-
+        
         # 決定優先級
         priority = self._determine_priority(proposal, verdict_type)
-
+        
         # 應用自動修正
         corrected_action = None
         if auto_corrections and self._config["auto_correction_enabled"]:
@@ -325,7 +331,7 @@ class ConstitutionEngine:
             )
             verdict_type = VerdictType.APPROVED_WITH_CONDITIONS
             conditions.append("已應用自動修正")
-
+        
         # 生成推理說明
         reasoning = self._generate_reasoning(
             proposal=proposal,
@@ -333,13 +339,13 @@ class ConstitutionEngine:
             violations=violations,
             auto_corrections=auto_corrections,
         )
-
+        
         # 計算信心度
         confidence = self._calculate_confidence(
             fundamental_results=fundamental_results,
             operational_results=operational_results,
         )
-
+        
         return ConstitutionVerdict(
             verdict_id=verdict_id,
             action_id=proposal.proposal_id,
@@ -357,13 +363,13 @@ class ConstitutionEngine:
             confidence=confidence,
             reasoning=reasoning,
         )
-
+    
     def _create_denial_verdict(
         self,
         verdict_id: str,
         action_id: str,
-        fundamental_results: dict[str, LawVerificationResult],
-        violations: list[str],
+        fundamental_results: Dict[str, LawVerificationResult],
+        violations: List[str],
     ) -> ConstitutionVerdict:
         """創建拒絕裁決"""
         return ConstitutionVerdict(
@@ -376,11 +382,11 @@ class ConstitutionEngine:
             confidence=1.0,
             reasoning=f"行動違反根本法則，被絕對禁止。違規: {', '.join(violations)}",
         )
-
+    
     def _determine_verdict_type(
         self,
-        violations: list[str],
-        auto_corrections: list[str],
+        violations: List[str],
+        auto_corrections: List[str],
     ) -> VerdictType:
         """決定裁決類型"""
         if not violations:
@@ -391,7 +397,7 @@ class ConstitutionEngine:
             return VerdictType.REQUIRES_MODIFICATION
         else:
             return VerdictType.DENIED
-
+    
     def _determine_priority(
         self,
         proposal: ActionProposal,
@@ -400,7 +406,7 @@ class ConstitutionEngine:
         """決定執行優先級"""
         if verdict_type == VerdictType.DENIED:
             return VerdictPriority.IMMEDIATE
-
+        
         priority_map = {
             "critical": VerdictPriority.IMMEDIATE,
             "high": VerdictPriority.HIGH,
@@ -408,14 +414,14 @@ class ConstitutionEngine:
             "low": VerdictPriority.LOW,
             "background": VerdictPriority.DEFERRED,
         }
-
+        
         return priority_map.get(proposal.priority, VerdictPriority.NORMAL)
-
+    
     def _apply_auto_corrections(
         self,
         proposal: ActionProposal,
-        corrections: list[str]
-    ) -> dict[str, Any]:
+        corrections: List[str]
+    ) -> Dict[str, Any]:
         """應用自動修正"""
         corrected = {
             "proposal_id": proposal.proposal_id,
@@ -425,7 +431,7 @@ class ConstitutionEngine:
             "parameters": proposal.parameters.copy(),
             "corrections_applied": corrections,
         }
-
+        
         # 應用具體修正
         for correction in corrections:
             if correction == "auto_encrypt_data":
@@ -439,59 +445,59 @@ class ConstitutionEngine:
             elif correction.startswith("reduce_to_"):
                 amount = correction.split("_")[-1]
                 corrected["parameters"]["resource_amount"] = float(amount)
-
+        
         self._statistics["auto_corrections"] += len(corrections)
-
+        
         return corrected
-
+    
     def _generate_reasoning(
         self,
         proposal: ActionProposal,
         verdict_type: VerdictType,
-        violations: list[str],
-        auto_corrections: list[str],
+        violations: List[str],
+        auto_corrections: List[str],
     ) -> str:
         """生成裁決推理說明"""
         reasoning_parts = []
-
+        
         reasoning_parts.append(f"行動類型: {proposal.action_type}")
         reasoning_parts.append(f"目標: {proposal.target}")
         reasoning_parts.append(f"裁決: {verdict_type.value}")
-
+        
         if violations:
             reasoning_parts.append(f"違規數: {len(violations)}")
-
+        
         if auto_corrections:
             reasoning_parts.append(f"自動修正: {len(auto_corrections)} 項")
-
+        
         return " | ".join(reasoning_parts)
-
+    
     def _calculate_confidence(
         self,
-        fundamental_results: dict[str, LawVerificationResult],
-        operational_results: dict[str, RuleCheckResult],
+        fundamental_results: Dict[str, LawVerificationResult],
+        operational_results: Dict[str, RuleCheckResult],
     ) -> float:
         """計算裁決信心度"""
         confidences = []
-
+        
         for result in fundamental_results.values():
             confidences.append(result.confidence)
-
+        
         # 操作規則的信心度基於是否通過
         for result in operational_results.values():
             confidences.append(0.9 if result.passed else 0.95)
-
+        
         if confidences:
             return round(sum(confidences) / len(confidences), 2)
         return 0.8
-
+    
     def _record_verdict(self, verdict: ConstitutionVerdict):
         """記錄裁決"""
         self._verdict_history.append(verdict)
-
+        
         # 更新統計
         self._statistics["total_verdicts"] += 1
-
+        
         if verdict.verdict_type == VerdictType.APPROVED:
             self._statistics["approved"] += 1
         elif verdict.verdict_type == VerdictType.DENIED:
@@ -503,30 +509,30 @@ class ConstitutionEngine:
             self._statistics["modified"] += 1
         elif verdict.verdict_type == VerdictType.ESCALATED:
             self._statistics["escalated"] += 1
-
+    
     # ========== 查詢方法 ==========
-
+    
     def get_verdict_history(
         self,
         limit: int = 100
-    ) -> list[ConstitutionVerdict]:
+    ) -> List[ConstitutionVerdict]:
         """獲取裁決歷史"""
         return self._verdict_history[-limit:]
-
+    
     def get_verdict_by_id(
         self,
         verdict_id: str
-    ) -> ConstitutionVerdict | None:
+    ) -> Optional[ConstitutionVerdict]:
         """根據 ID 獲取裁決"""
         for verdict in self._verdict_history:
             if verdict.verdict_id == verdict_id:
                 return verdict
         return None
-
-    def get_statistics(self) -> dict[str, Any]:
+    
+    def get_statistics(self) -> Dict[str, Any]:
         """獲取統計數據"""
         stats = self._statistics.copy()
-
+        
         if stats["total_verdicts"] > 0:
             stats["approval_rate"] = round(
                 (stats["approved"] + stats["modified"]) / stats["total_verdicts"] * 100,
@@ -539,29 +545,29 @@ class ConstitutionEngine:
         else:
             stats["approval_rate"] = 0
             stats["denial_rate"] = 0
-
+        
         return stats
-
-    def get_law_summary(self) -> list[dict[str, Any]]:
+    
+    def get_law_summary(self) -> List[Dict[str, Any]]:
         """獲取所有法則摘要"""
         return self.fundamental_laws.get_law_summary()
-
+    
     # ========== 配置方法 ==========
-
+    
     def set_config(self, key: str, value: Any):
         """設定配置"""
         if key in self._config:
             self._config[key] = value
-
-    def get_config(self) -> dict[str, Any]:
+    
+    def get_config(self) -> Dict[str, Any]:
         """獲取配置"""
         return self._config.copy()
-
+    
     def enable_strict_mode(self):
         """啟用嚴格模式"""
         self._config["strict_mode"] = True
         self._config["auto_correction_enabled"] = False
-
+    
     def disable_strict_mode(self):
         """停用嚴格模式"""
         self._config["strict_mode"] = False

@@ -43,12 +43,12 @@ describe('Error Middleware', () => {
         mockNext
       );
 
-      expect(statusMock).toHaveBeenCalledWith(400);
+      expect(statusMock).toHaveBeenCalledWith(422);
       expect(jsonMock).toHaveBeenCalledWith(
         expect.objectContaining({
           error: expect.objectContaining({
             message: 'Invalid input',
-            status: 400,
+            status: 422,
           }),
         })
       );
@@ -279,7 +279,7 @@ describe('Error Middleware', () => {
         mockNext
       );
 
-      expect(statusMock).toHaveBeenCalledWith(400);
+      expect(statusMock).toHaveBeenCalledWith(422);
       expect(jsonMock).toHaveBeenCalled();
     });
   });

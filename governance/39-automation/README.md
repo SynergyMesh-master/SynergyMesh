@@ -1,12 +1,15 @@
 # 🤖 SynergyMesh Governance Automation System
 
-> Enterprise-Grade Autonomous Governance Automation with 14-Dimensional Engine Architecture
+> Enterprise-Grade Autonomous Governance Automation with 14-Dimensional Engine
+> Architecture
 
 ## 📋 Overview
 
-The Governance Automation System is a comprehensive, multi-layered automation framework that:
+The Governance Automation System is a comprehensive, multi-layered automation
+framework that:
 
-1. **Orchestrates 14 autonomous governance engines** - one for each governance dimension
+1. **Orchestrates 14 autonomous governance engines** - one for each governance
+   dimension
 2. **Coordinates inter-engine communication** - through a central coordinator
 3. **Integrates with existing systems** - mind_matrix and other launchers
 4. **Provides metrics and health monitoring** - real-time system status
@@ -50,7 +53,7 @@ The Governance Automation System is a comprehensive, multi-layered automation fr
 ## 📁 Directory Structure
 
 ```
-governance/automation/
+governance/39-automation/
 ├── __init__.py                           # Package initialization
 ├── README.md                             # This file
 ├── governance_automation_launcher.py     # Main launcher (14 engines)
@@ -80,7 +83,7 @@ governance/automation/
 
 ```bash
 # Deploy automation engines to all 14 dimensions
-python3 governance/automation/deploy_dimension_engines.py
+python3 governance/39-automation/deploy_dimension_engines.py
 ```
 
 This will create `automation_engine.py` in each dimension directory.
@@ -89,14 +92,14 @@ This will create `automation_engine.py` in each dimension directory.
 
 ```bash
 # Run the integrated automation system
-python3 governance/automation/integrated_launcher.py
+python3 governance/39-automation/integrated_launcher.py
 ```
 
 ### 3. Run Tests
 
 ```bash
 # Test all components
-python3 governance/automation/test_automation_system.py
+python3 governance/39-automation/test_automation_system.py
 ```
 
 ## 🎯 Core Components
@@ -424,7 +427,5 @@ Part of SynergyMesh project. See LICENSE file.
 
 ---
 
-**Version**: 1.0.0
-**Status**: Active
-**Last Updated**: 2025-12-09
+**Version**: 1.0.0 **Status**: Active **Last Updated**: 2025-12-09
 **Maintainer**: SynergyMesh Team

@@ -9,11 +9,11 @@ Defines the recommended technology stack for SynergyMesh:
 Reference: Python supports 80% of AI agent implementations [4]
 """
 
-import uuid
 from dataclasses import dataclass, field
-from datetime import datetime
 from enum import Enum
-from typing import Any
+from typing import Dict, List, Optional, Any
+from datetime import datetime
+import uuid
 
 
 class LanguageType(Enum):
@@ -55,12 +55,12 @@ class LanguageConfig:
     name: str
     version: str
     language_type: LanguageType
-    primary_use_cases: list[str]
-    strengths: list[str]
-    weaknesses: list[str]
+    primary_use_cases: List[str]
+    strengths: List[str]
+    weaknesses: List[str]
     adoption_rate: float  # 0-100%
     ecosystem_maturity: str  # "emerging", "mature", "established"
-
+    
     def is_suitable_for(self, use_case: str) -> bool:
         """Check if language is suitable for a use case"""
         return use_case.lower() in [uc.lower() for uc in self.primary_use_cases]
@@ -78,13 +78,13 @@ class FrameworkConfig:
     category: FrameworkCategory
     language: LanguageType
     description: str
-    features: list[str]
-    use_cases: list[str]
-    dependencies: list[str]
+    features: List[str]
+    use_cases: List[str]
+    dependencies: List[str]
     integration_complexity: str  # "low", "medium", "high"
     documentation_url: str
     is_recommended: bool = True
-
+    
     def get_install_command(self) -> str:
         """Get installation command for the framework"""
         if self.language == LanguageType.PYTHON:
@@ -102,10 +102,10 @@ class LayerConfig:
     """
     layer: ArchitectureLayer
     primary_language: LanguageType
-    secondary_languages: list[LanguageType]
-    frameworks: list[str]
-    responsibilities: list[str]
-    communication_protocols: list[str]
+    secondary_languages: List[LanguageType]
+    frameworks: List[str]
+    responsibilities: List[str]
+    communication_protocols: List[str]
     scaling_strategy: str
 
 
@@ -124,22 +124,22 @@ class TechStackConfig:
     name: str = "SynergyMesh Tech Stack"
     version: str = "1.0.0"
     created_at: datetime = field(default_factory=datetime.now)
-
+    
     # Language configurations
-    languages: dict[str, LanguageConfig] = field(default_factory=dict)
-
+    languages: Dict[str, LanguageConfig] = field(default_factory=dict)
+    
     # Framework configurations
-    frameworks: dict[str, FrameworkConfig] = field(default_factory=dict)
-
+    frameworks: Dict[str, FrameworkConfig] = field(default_factory=dict)
+    
     # Layer configurations
-    layers: dict[str, LayerConfig] = field(default_factory=dict)
-
+    layers: Dict[str, LayerConfig] = field(default_factory=dict)
+    
     # Architecture metadata
     architecture_type: str = "hybrid"
     primary_pattern: str = "microservices"
     communication_pattern: str = "event-driven"
-
-    def get_frameworks_for_layer(self, layer: ArchitectureLayer) -> list[FrameworkConfig]:
+    
+    def get_frameworks_for_layer(self, layer: ArchitectureLayer) -> List[FrameworkConfig]:
         """Get all frameworks recommended for a specific layer"""
         if layer.value not in self.layers:
             return []
@@ -149,25 +149,25 @@ class TechStackConfig:
             for fw_id in layer_config.frameworks
             if fw_id in self.frameworks
         ]
-
-    def get_frameworks_by_category(self, category: FrameworkCategory) -> list[FrameworkConfig]:
+    
+    def get_frameworks_by_category(self, category: FrameworkCategory) -> List[FrameworkConfig]:
         """Get all frameworks in a specific category"""
         return [
             fw for fw in self.frameworks.values()
             if fw.category == category
         ]
-
-    def validate(self) -> dict[str, Any]:
+    
+    def validate(self) -> Dict[str, Any]:
         """Validate the tech stack configuration"""
         issues = []
         warnings = []
-
+        
         # Check for required layers
         required_layers = [ArchitectureLayer.AI_CORE, ArchitectureLayer.ORCHESTRATION]
         for layer in required_layers:
             if layer.value not in self.layers:
                 issues.append(f"Missing required layer: {layer.value}")
-
+        
         # Check for Python in AI core
         if ArchitectureLayer.AI_CORE.value in self.layers:
             ai_layer = self.layers[ArchitectureLayer.AI_CORE.value]
@@ -175,7 +175,7 @@ class TechStackConfig:
                 warnings.append(
                     "AI core layer should use Python (80% of AI agents use Python)"
                 )
-
+        
         return {
             "valid": len(issues) == 0,
             "issues": issues,
@@ -194,7 +194,7 @@ def get_recommended_stack() -> TechStackConfig:
     - TypeScript for type-safe orchestration
     """
     config = TechStackConfig()
-
+    
     # Configure languages
     config.languages = {
         "python": LanguageConfig(
@@ -250,7 +250,7 @@ def get_recommended_stack() -> TechStackConfig:
             ecosystem_maturity="mature"
         )
     }
-
+    
     # Configure frameworks
     config.frameworks = {
         # AI Agent Frameworks (Python)
@@ -458,7 +458,7 @@ def get_recommended_stack() -> TechStackConfig:
             is_recommended=True
         )
     }
-
+    
     # Configure layers
     config.layers = {
         ArchitectureLayer.AI_CORE.value: LayerConfig(
@@ -522,18 +522,18 @@ def get_recommended_stack() -> TechStackConfig:
             scaling_strategy="data_partitioning"
         )
     }
-
+    
     return config
 
 
 # Convenience function to get stack summary
-def get_stack_summary() -> dict[str, Any]:
+def get_stack_summary() -> Dict[str, Any]:
     """Get a summary of the recommended tech stack
     
     獲取技術棧摘要
     """
     stack = get_recommended_stack()
-
+    
     return {
         "name": stack.name,
         "version": stack.version,

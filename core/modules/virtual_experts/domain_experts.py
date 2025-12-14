@@ -6,29 +6,34 @@ Specialized virtual expert implementations for different domains.
 參考：AI 代理需要專業化分工 [1]
 """
 
-from typing import Any
+from typing import Dict, List, Optional, Any
 
 try:
-    from . import expert_base as eb
+    from .expert_base import (
+        VirtualExpert,
+        ExpertPersonality,
+        ExpertKnowledge,
+        WorkStyle,
+        CommunicationStyle,
+        ExpertiseLevel,
+    )
 except ImportError:
-    import expert_base as eb  # type: ignore[import-not-found,no-redef]
-
-# Import type aliases for convenience
-CommunicationStyle = eb.CommunicationStyle
-ExpertiseLevel = eb.ExpertiseLevel
-ExpertKnowledge = eb.ExpertKnowledge
-ExpertPersonality = eb.ExpertPersonality
-VirtualExpert = eb.VirtualExpert
-WorkStyle = eb.WorkStyle
+    from expert_base import (
+        VirtualExpert,
+        ExpertPersonality,
+        ExpertKnowledge,
+        WorkStyle,
+        CommunicationStyle,
+        ExpertiseLevel,
+    )
 
 
 # ============ Factory Functions for Domain Experts ============
 
-
 def DrAlexChen() -> VirtualExpert:
     """
     Create Dr. Alex Chen - AI 架構師
-
+    
     首席 AI 決策引擎架構師，專注於構建智能系統。
     """
     expert = VirtualExpert(
@@ -52,7 +57,7 @@ def DrAlexChen() -> VirtualExpert:
                 "先理論後實踐",
                 "數據驅動決策",
                 "迭代式優化",
-            ],
+            ]
         ),
         knowledge=ExpertKnowledge(
             primary_domains=[
@@ -82,7 +87,7 @@ def DrAlexChen() -> VirtualExpert:
                 "scikit-learn": ExpertiseLevel.EXPERT,
                 "ONNX": ExpertiseLevel.EXPERT,
             },
-            methodologies=["MLOps", "AutoML", "Experiment Tracking"],
+            methodologies=["MLOps", "AutoML", "Experiment Tracking"]
         ),
         work_style=WorkStyle(
             methodology="data-driven",
@@ -100,21 +105,20 @@ def DrAlexChen() -> VirtualExpert:
             preferred_format="structured",
         ),
     )
-
+    
     # Add custom methods
-    def provide_guidance(topic: str, context: dict[str, Any]) -> dict[str, Any]:
-        guidance: dict[str, Any] = {
+    def provide_guidance(topic: str, context: Dict[str, Any]) -> Dict[str, Any]:
+        guidance = {
             "expert": expert.name,
             "topic": topic,
             "perspective": "AI Architecture",
         }
-
+        
         topic_lower = topic.lower()
-
+        
         if "decision" in topic_lower:
-            guidance.update(
-                {
-                    "guidance": """
+            guidance.update({
+                "guidance": """
 決策引擎設計的關鍵原則：
 
 1. **明確決策邊界**
@@ -133,23 +137,21 @@ def DrAlexChen() -> VirtualExpert:
    - 追蹤決策結果
    - 持續優化決策模型
 """,
-                    "recommendations": [
-                        "使用規則引擎 + ML 的混合方法",
-                        "實施 A/B 測試驗證決策效果",
-                        "建立決策審計日誌",
-                    ],
-                    "best_practices": [
-                        "決策閾值應該可配置",
-                        "高風險決策需要多重驗證",
-                        "保留人工覆蓋的能力",
-                    ],
-                }
-            )
-
+                "recommendations": [
+                    "使用規則引擎 + ML 的混合方法",
+                    "實施 A/B 測試驗證決策效果",
+                    "建立決策審計日誌",
+                ],
+                "best_practices": [
+                    "決策閾值應該可配置",
+                    "高風險決策需要多重驗證",
+                    "保留人工覆蓋的能力",
+                ],
+            })
+        
         elif "model" in topic_lower or "performance" in topic_lower:
-            guidance.update(
-                {
-                    "guidance": """
+            guidance.update({
+                "guidance": """
 模型性能優化策略：
 
 1. **數據優化**
@@ -165,48 +167,41 @@ def DrAlexChen() -> VirtualExpert:
    - 批處理推理
    - 模型蒸餾
 """,
-                    "recommendations": [
-                        "使用模型基準測試",
-                        "監控推理延遲分佈",
-                        "考慮邊緣計算場景",
-                    ],
-                }
-            )
-
+                "recommendations": [
+                    "使用模型基準測試",
+                    "監控推理延遲分佈",
+                    "考慮邊緣計算場景",
+                ],
+            })
+        
         return guidance
-
-    def review_code(code: str, language: str) -> dict[str, Any]:
+    
+    def review_code(code: str, language: str) -> Dict[str, Any]:
         issues = []
         suggestions = []
-
+        
         code_lower = code.lower()
-
+        
         if "predict" in code_lower and "try" not in code_lower:
-            issues.append(
-                {
-                    "severity": "medium",
-                    "type": "error_handling",
-                    "message": "模型預測應該有錯誤處理",
-                }
-            )
-
+            issues.append({
+                "severity": "medium",
+                "type": "error_handling",
+                "message": "模型預測應該有錯誤處理",
+            })
+        
         if "model.fit" in code_lower and "validation" not in code_lower:
-            issues.append(
-                {
-                    "severity": "medium",
-                    "type": "validation",
-                    "message": "建議使用驗證集監控訓練過程",
-                }
-            )
-
+            issues.append({
+                "severity": "medium",
+                "type": "validation",
+                "message": "建議使用驗證集監控訓練過程",
+            })
+        
         if "random" in code_lower and "seed" not in code_lower:
-            suggestions.append(
-                {
-                    "type": "reproducibility",
-                    "message": "設置隨機種子以確保結果可重現",
-                }
-            )
-
+            suggestions.append({
+                "type": "reproducibility",
+                "message": "設置隨機種子以確保結果可重現",
+            })
+        
         return {
             "expert": expert.name,
             "language": language,
@@ -214,18 +209,18 @@ def DrAlexChen() -> VirtualExpert:
             "suggestions": suggestions,
             "quality_score": 1.0 - (len(issues) * 0.1),
         }
-
-    # Attach methods using object.__setattr__ to bypass dataclass restrictions
-    object.__setattr__(expert, "provide_guidance", provide_guidance)
-    object.__setattr__(expert, "review_code", review_code)
-
+    
+    # Attach methods
+    expert.provide_guidance = provide_guidance
+    expert.review_code = review_code
+    
     return expert
 
 
 def SarahWong() -> VirtualExpert:
     """
     Create Sarah Wong - 自然語言處理專家
-
+    
     NLP 專家，專注於讓系統理解人類語言。
     """
     expert = VirtualExpert(
@@ -278,20 +273,19 @@ def SarahWong() -> VirtualExpert:
             explanation_style="example-based",
         ),
     )
-
-    def provide_guidance(topic: str, context: dict[str, Any]) -> dict[str, Any]:
-        guidance: dict[str, Any] = {
+    
+    def provide_guidance(topic: str, context: Dict[str, Any]) -> Dict[str, Any]:
+        guidance = {
             "expert": expert.name,
             "topic": topic,
             "perspective": "NLP",
         }
-
+        
         topic_lower = topic.lower()
-
+        
         if "intent" in topic_lower or "意圖" in topic:
-            guidance.update(
-                {
-                    "guidance": """
+            guidance.update({
+                "guidance": """
 意圖識別最佳實踐：
 
 1. **定義清晰的意圖分類**
@@ -310,26 +304,24 @@ def SarahWong() -> VirtualExpert:
    - 考慮中英文混合
    - 處理翻譯差異
 """,
-                    "recommendations": [
-                        "使用預訓練模型作為基礎",
-                        "實施主動學習收集難例",
-                        "建立意圖混淆矩陣",
-                    ],
-                }
-            )
-
+                "recommendations": [
+                    "使用預訓練模型作為基礎",
+                    "實施主動學習收集難例",
+                    "建立意圖混淆矩陣",
+                ],
+            })
+        
         return guidance
-
-    # Attach method using object.__setattr__ to bypass dataclass restrictions
-    object.__setattr__(expert, "provide_guidance", provide_guidance)
-
+    
+    expert.provide_guidance = provide_guidance
+    
     return expert
 
 
 def MarcusJohnson() -> VirtualExpert:
     """
     Create Marcus Johnson - 安全架構師
-
+    
     資深安全專家，專注於應用程序安全。
     """
     expert = VirtualExpert(
@@ -383,20 +375,19 @@ def MarcusJohnson() -> VirtualExpert:
             feedback_style="direct",
         ),
     )
-
-    def provide_guidance(topic: str, context: dict[str, Any]) -> dict[str, Any]:
-        guidance: dict[str, Any] = {
+    
+    def provide_guidance(topic: str, context: Dict[str, Any]) -> Dict[str, Any]:
+        guidance = {
             "expert": expert.name,
             "topic": topic,
-            "perspective": "Security Expert",
+            "perspective": "Security",
         }
-
+        
         topic_lower = topic.lower()
-
+        
         if "password" in topic_lower or "密碼" in topic:
-            guidance.update(
-                {
-                    "guidance": """
+            guidance.update({
+                "guidance": """
 密碼安全最佳實踐：
 
 ⚠️ **絕對不要**：
@@ -415,28 +406,26 @@ import bcrypt
 
 def hash_password(password: str) -> str:
     return bcrypt.hashpw(
-        password.encode(),
+        password.encode(), 
         bcrypt.gensalt(rounds=12)
     ).decode()
 
 def verify_password(password: str, hashed: str) -> bool:
     return bcrypt.checkpw(
-        password.encode(),
+        password.encode(), 
         hashed.encode()
     )
 ```
 """,
-                    "warnings": [
-                        "密碼洩露是最常見的安全事件",
-                        "弱哈希可以被彩虹表破解",
-                    ],
-                }
-            )
-
+                "warnings": [
+                    "密碼洩露是最常見的安全事件",
+                    "弱哈希可以被彩虹表破解",
+                ],
+            })
+        
         elif "injection" in topic_lower or "注入" in topic:
-            guidance.update(
-                {
-                    "guidance": """
+            guidance.update({
+                "guidance": """
 防止注入攻擊：
 
 1. **SQL 注入防護**
@@ -454,58 +443,49 @@ def verify_password(password: str, hashed: str) -> bool:
    - Content-Security-Policy
    - HttpOnly cookies
 """,
-                    "warnings": [
-                        "注入攻擊是 OWASP Top 10 第一名",
-                        "一個漏洞可能導致整個數據庫洩露",
-                    ],
-                }
-            )
-
+                "warnings": [
+                    "注入攻擊是 OWASP Top 10 第一名",
+                    "一個漏洞可能導致整個數據庫洩露",
+                ],
+            })
+        
         return guidance
-
-    def review_code(code: str, language: str) -> dict[str, Any]:
+    
+    def review_code(code: str, language: str) -> Dict[str, Any]:
         issues = []
-
+        
         code_lower = code.lower()
-
+        
         if "password" in code_lower:
             if "md5" in code_lower or "sha1" in code_lower:
-                issues.append(
-                    {
-                        "severity": "critical",
-                        "type": "weak_hashing",
-                        "message": "使用弱哈希算法處理密碼！使用 bcrypt 或 argon2",
-                    }
-                )
-
+                issues.append({
+                    "severity": "critical",
+                    "type": "weak_hashing",
+                    "message": "使用弱哈希算法處理密碼！使用 bcrypt 或 argon2",
+                })
+            
             if "= password" in code_lower or "=password" in code_lower:
-                issues.append(
-                    {
-                        "severity": "critical",
-                        "type": "plaintext_password",
-                        "message": "可能存在明文密碼存儲",
-                    }
-                )
-
+                issues.append({
+                    "severity": "critical",
+                    "type": "plaintext_password",
+                    "message": "可能存在明文密碼存儲",
+                })
+        
         if "execute" in code_lower or "query" in code_lower:
             if "f'" in code or 'f"' in code or ".format" in code:
-                issues.append(
-                    {
-                        "severity": "critical",
-                        "type": "sql_injection",
-                        "message": "可能存在 SQL 注入漏洞！使用參數化查詢",
-                    }
-                )
-
-        if "eval(" in code_lower or "exec(" in code_lower:
-            issues.append(
-                {
+                issues.append({
                     "severity": "critical",
-                    "type": "code_injection",
-                    "message": "使用 eval/exec 可能導致代碼注入",
-                }
-            )
-
+                    "type": "sql_injection",
+                    "message": "可能存在 SQL 注入漏洞！使用參數化查詢",
+                })
+        
+        if "eval(" in code_lower or "exec(" in code_lower:
+            issues.append({
+                "severity": "critical",
+                "type": "code_injection",
+                "message": "使用 eval/exec 可能導致代碼注入",
+            })
+        
         return {
             "expert": expert.name,
             "language": language,
@@ -513,18 +493,17 @@ def verify_password(password: str, hashed: str) -> bool:
             "suggestions": [],
             "quality_score": 1.0 - (len(issues) * 0.2),
         }
-
-    # Attach methods using object.__setattr__ to bypass dataclass restrictions
-    object.__setattr__(expert, "provide_guidance", provide_guidance)
-    object.__setattr__(expert, "review_code", review_code)
-
+    
+    expert.provide_guidance = provide_guidance
+    expert.review_code = review_code
+    
     return expert
 
 
 def LiWei() -> VirtualExpert:
     """
     Create Li Wei - 數據庫專家
-
+    
     資深 DBA，專注於數據庫設計和優化。
     """
     expert = VirtualExpert(
@@ -574,20 +553,19 @@ def LiWei() -> VirtualExpert:
             attention_to_detail="high",
         ),
     )
-
-    def provide_guidance(topic: str, context: dict[str, Any]) -> dict[str, Any]:
-        guidance: dict[str, Any] = {
+    
+    def provide_guidance(topic: str, context: Dict[str, Any]) -> Dict[str, Any]:
+        guidance = {
             "expert": expert.name,
             "topic": topic,
-            "perspective": "Database Expert",
+            "perspective": "Database",
         }
-
+        
         topic_lower = topic.lower()
-
+        
         if "n+1" in topic_lower or "query" in topic_lower:
-            guidance.update(
-                {
-                    "guidance": """
+            guidance.update({
+                "guidance": """
 N+1 查詢問題解決方案：
 
 **問題識別**：
@@ -609,23 +587,21 @@ orders = db.orders.find_many(where={'user_id': {'in': user_ids}})
 
 3. **JOIN 查詢**
 ```sql
-SELECT u.*, o.*
-FROM users u
+SELECT u.*, o.* 
+FROM users u 
 LEFT JOIN orders o ON u.id = o.user_id
 ```
 """,
-                    "best_practices": [
-                        "總是檢查 ORM 生成的 SQL",
-                        "使用 EXPLAIN 分析查詢",
-                        "設置查詢日誌監控",
-                    ],
-                }
-            )
-
+                "best_practices": [
+                    "總是檢查 ORM 生成的 SQL",
+                    "使用 EXPLAIN 分析查詢",
+                    "設置查詢日誌監控",
+                ],
+            })
+        
         elif "index" in topic_lower or "索引" in topic:
-            guidance.update(
-                {
-                    "guidance": """
+            guidance.update({
+                "guidance": """
 索引設計原則：
 
 1. **選擇正確的列**
@@ -645,21 +621,19 @@ LEFT JOIN orders o ON u.id = o.user_id
    - 包含查詢所需的所有列
    - 避免回表查詢
 """,
-                }
-            )
-
+            })
+        
         return guidance
-
-    # Attach method using object.__setattr__ to bypass dataclass restrictions
-    object.__setattr__(expert, "provide_guidance", provide_guidance)
-
+    
+    expert.provide_guidance = provide_guidance
+    
     return expert
 
 
 def EmmaThompson() -> VirtualExpert:
     """
     Create Emma Thompson - DevOps 專家
-
+    
     資深 DevOps 工程師，專注於自動化和可靠性。
     """
     expert = VirtualExpert(
@@ -709,20 +683,19 @@ def EmmaThompson() -> VirtualExpert:
             collaboration_style="team-oriented",
         ),
     )
-
-    def provide_guidance(topic: str, context: dict[str, Any]) -> dict[str, Any]:
-        guidance: dict[str, Any] = {
+    
+    def provide_guidance(topic: str, context: Dict[str, Any]) -> Dict[str, Any]:
+        guidance = {
             "expert": expert.name,
             "topic": topic,
-            "perspective": "DevOps Expert",
+            "perspective": "DevOps",
         }
-
+        
         topic_lower = topic.lower()
-
+        
         if "deploy" in topic_lower or "部署" in topic:
-            guidance.update(
-                {
-                    "guidance": """
+            guidance.update({
+                "guidance": """
 部署最佳實踐：
 
 1. **部署策略選擇**
@@ -740,26 +713,24 @@ def EmmaThompson() -> VirtualExpert:
    - 設置異常告警
    - 準備回滾計劃
 """,
-                    "recommendations": [
-                        "使用 GitOps 方法",
-                        "實施漸進式發布",
-                        "自動化冒煙測試",
-                    ],
-                }
-            )
-
+                "recommendations": [
+                    "使用 GitOps 方法",
+                    "實施漸進式發布",
+                    "自動化冒煙測試",
+                ],
+            })
+        
         return guidance
-
-    # Attach method using object.__setattr__ to bypass dataclass restrictions
-    object.__setattr__(expert, "provide_guidance", provide_guidance)
-
+    
+    expert.provide_guidance = provide_guidance
+    
     return expert
 
 
 def JamesMiller() -> VirtualExpert:
     """
     Create James Miller - 系統架構師
-
+    
     資深架構師，專注於系統設計和可擴展性。
     """
     expert = VirtualExpert(
@@ -803,20 +774,19 @@ def JamesMiller() -> VirtualExpert:
             decision_making="analytical",
         ),
     )
-
-    def provide_guidance(topic: str, context: dict[str, Any]) -> dict[str, Any]:
-        guidance: dict[str, Any] = {
+    
+    def provide_guidance(topic: str, context: Dict[str, Any]) -> Dict[str, Any]:
+        guidance = {
             "expert": expert.name,
             "topic": topic,
-            "perspective": "Architecture Expert",
+            "perspective": "Architecture",
         }
-
+        
         topic_lower = topic.lower()
-
+        
         if "microservice" in topic_lower or "微服務" in topic:
-            guidance.update(
-                {
-                    "guidance": """
+            guidance.update({
+                "guidance": """
 微服務架構決策：
 
 **何時使用微服務**：
@@ -832,17 +802,15 @@ def JamesMiller() -> VirtualExpert:
 **建議**：
 從模塊化單體開始，按需演進到微服務。
 """,
-                    "recommendations": [
-                        "先定義清晰的領域邊界",
-                        "使用 API 合約優先設計",
-                        "考慮運維複雜度",
-                    ],
-                }
-            )
-
+                "recommendations": [
+                    "先定義清晰的領域邊界",
+                    "使用 API 合約優先設計",
+                    "考慮運維複雜度",
+                ],
+            })
+        
         return guidance
-
-    # Attach method using object.__setattr__ to bypass dataclass restrictions
-    object.__setattr__(expert, "provide_guidance", provide_guidance)
-
+    
+    expert.provide_guidance = provide_guidance
+    
     return expert

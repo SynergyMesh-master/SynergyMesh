@@ -4,7 +4,8 @@
 
 ## 📊 System Architecture
 
-The Governance Automation System is a sophisticated, multi-tier architecture comprising:
+The Governance Automation System is a sophisticated, multi-tier architecture
+comprising:
 
 ### Tier 1: Main Orchestrator Layer
 
@@ -208,7 +209,7 @@ Engines initialize in dependency order ensuring all prerequisites are available.
 ## 🗂️ File Structure
 
 ```
-governance/automation/
+governance/39-automation/
 ├── README.md                             # Main documentation
 ├── SYSTEM_OVERVIEW.md                    # This file
 ├── governance_automation_launcher.py     # Main launcher (18.4 KB)
@@ -240,7 +241,7 @@ governance/automation/
 ### 1. Initialize All Components
 
 ```bash
-cd governance/automation
+cd governance/39-automation
 python3 integrated_launcher.py
 ```
 
@@ -368,7 +369,8 @@ async def custom_health_check():
 
 - **README.md** - Comprehensive usage guide
 - **SYSTEM_OVERVIEW.md** - This architecture document
-- **AUTOMATION_ENGINE_README.md** - Per-dimension engine documentation (in each dimension)
+- **AUTOMATION_ENGINE_README.md** - Per-dimension engine documentation (in each
+  dimension)
 - **GOVERNANCE_STRUCTURE_INDEX.md** - Overall governance framework
 - **COMPLETENESS_REPORT.md** - Implementation status
 
@@ -452,4 +454,5 @@ For questions, issues, or suggestions:
 
 ---
 
-**The Governance Automation System is production-ready and fully operational.** ✅
+**The Governance Automation System is production-ready and fully operational.**
+✅

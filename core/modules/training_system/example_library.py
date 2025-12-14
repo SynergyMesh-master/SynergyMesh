@@ -11,7 +11,9 @@ Provides practical examples for AI learning including:
 
 from dataclasses import dataclass, field
 from enum import Enum
-from typing import Any
+from typing import Dict, List, Optional, Any
+from datetime import datetime
+import uuid
 
 
 class ExampleCategory(Enum):
@@ -37,30 +39,30 @@ class CodeExample:
     name: str
     category: ExampleCategory
     description: str
-
+    
     # Code samples
     language: str  # python, typescript, sql, etc.
     bad_code: str = ""
     good_code: str = ""
-
+    
     # Explanation
-    why_bad: list[str] = field(default_factory=list)
-    why_good: list[str] = field(default_factory=list)
-
+    why_bad: List[str] = field(default_factory=list)
+    why_good: List[str] = field(default_factory=list)
+    
     # Context
     scenario: str = ""
-    common_mistakes: list[str] = field(default_factory=list)
-
+    common_mistakes: List[str] = field(default_factory=list)
+    
     # Learning points
-    key_takeaways: list[str] = field(default_factory=list)
-
+    key_takeaways: List[str] = field(default_factory=list)
+    
     # Related
-    related_concepts: list[str] = field(default_factory=list)
-    related_practices: list[str] = field(default_factory=list)
-
+    related_concepts: List[str] = field(default_factory=list)
+    related_practices: List[str] = field(default_factory=list)
+    
     # Metadata
     difficulty: str = "intermediate"
-    tags: list[str] = field(default_factory=list)
+    tags: List[str] = field(default_factory=list)
 
 
 @dataclass
@@ -73,32 +75,32 @@ class ScenarioExample:
     id: str
     name: str
     category: ExampleCategory
-
+    
     # Scenario description
     context: str
     problem_statement: str
-    constraints: list[str] = field(default_factory=list)
-
+    constraints: List[str] = field(default_factory=list)
+    
     # Analysis process
-    analysis_steps: list[str] = field(default_factory=list)
-    considerations: list[str] = field(default_factory=list)
-
+    analysis_steps: List[str] = field(default_factory=list)
+    considerations: List[str] = field(default_factory=list)
+    
     # Solution
     recommended_solution: str = ""
-    alternative_solutions: list[str] = field(default_factory=list)
-
+    alternative_solutions: List[str] = field(default_factory=list)
+    
     # Implementation
-    implementation_steps: list[str] = field(default_factory=list)
-    code_snippets: list[dict[str, str]] = field(default_factory=list)
-
+    implementation_steps: List[str] = field(default_factory=list)
+    code_snippets: List[Dict[str, str]] = field(default_factory=list)
+    
     # Lessons
-    lessons_learned: list[str] = field(default_factory=list)
-    pitfalls_to_avoid: list[str] = field(default_factory=list)
-
+    lessons_learned: List[str] = field(default_factory=list)
+    pitfalls_to_avoid: List[str] = field(default_factory=list)
+    
     # Metadata
     difficulty: str = "intermediate"
     estimated_time_minutes: int = 30
-    tags: list[str] = field(default_factory=list)
+    tags: List[str] = field(default_factory=list)
 
 
 @dataclass
@@ -111,34 +113,34 @@ class DecisionExample:
     id: str
     name: str
     category: ExampleCategory
-
+    
     # Decision context
     situation: str
-    stakeholders: list[str] = field(default_factory=list)
-    constraints: list[str] = field(default_factory=list)
-
+    stakeholders: List[str] = field(default_factory=list)
+    constraints: List[str] = field(default_factory=list)
+    
     # Options
-    options: list[dict[str, Any]] = field(default_factory=list)
+    options: List[Dict[str, Any]] = field(default_factory=list)
     # Each option: {name, description, pros, cons, risks, costs}
-
+    
     # Decision process
-    evaluation_criteria: list[str] = field(default_factory=list)
+    evaluation_criteria: List[str] = field(default_factory=list)
     analysis_process: str = ""
-
+    
     # Decision
     recommended_decision: str = ""
     rationale: str = ""
-
+    
     # Impact
-    expected_outcomes: list[str] = field(default_factory=list)
-    monitoring_points: list[str] = field(default_factory=list)
-
+    expected_outcomes: List[str] = field(default_factory=list)
+    monitoring_points: List[str] = field(default_factory=list)
+    
     # Lessons
-    decision_principles: list[str] = field(default_factory=list)
-
+    decision_principles: List[str] = field(default_factory=list)
+    
     # Metadata
     difficulty: str = "advanced"
-    tags: list[str] = field(default_factory=list)
+    tags: List[str] = field(default_factory=list)
 
 
 class ExampleLibrary:
@@ -155,20 +157,20 @@ class ExampleLibrary:
     
     參考：示例驅動學習展示如何自動化複雜任務 [4]
     """
-
+    
     def __init__(self):
-        self.code_examples: dict[str, CodeExample] = {}
-        self.scenario_examples: dict[str, ScenarioExample] = {}
-        self.decision_examples: dict[str, DecisionExample] = {}
-
+        self.code_examples: Dict[str, CodeExample] = {}
+        self.scenario_examples: Dict[str, ScenarioExample] = {}
+        self.decision_examples: Dict[str, DecisionExample] = {}
+        
         # Initialize with built-in examples
         self._initialize_code_examples()
         self._initialize_scenario_examples()
         self._initialize_decision_examples()
-
+    
     def _initialize_code_examples(self) -> None:
         """Initialize built-in code examples."""
-
+        
         # N+1 Query Problem Example
         n_plus_one = CodeExample(
             id="ex_n_plus_one",
@@ -261,7 +263,7 @@ async def get_users_with_orders_batch():
             tags=["performance", "database", "n+1", "optimization"],
         )
         self.code_examples[n_plus_one.id] = n_plus_one
-
+        
         # SQL Injection Prevention Example
         sql_injection = CodeExample(
             id="ex_sql_injection",
@@ -281,8 +283,8 @@ def get_user_by_email(email: str):
 
 def login(username: str, password: str):
     query = f\"\"\"
-    SELECT * FROM users
-    WHERE username = '{username}'
+    SELECT * FROM users 
+    WHERE username = '{username}' 
     AND password = '{password}'
     \"\"\"
     return db.execute(query)
@@ -347,7 +349,7 @@ def get_users_by_status(status: str):
             tags=["security", "sql", "injection", "authentication"],
         )
         self.code_examples[sql_injection.id] = sql_injection
-
+        
         # Password Hashing Example
         password_hashing = CodeExample(
             id="ex_password_hashing",
@@ -474,7 +476,7 @@ class UserService:
             tags=["security", "password", "hashing", "bcrypt", "argon2"],
         )
         self.code_examples[password_hashing.id] = password_hashing
-
+        
         # Transaction Usage Example
         transaction_example = CodeExample(
             id="ex_transaction",
@@ -570,10 +572,10 @@ async def safe_transfer(from_account: int, to_account: int, amount: float):
             tags=["database", "transaction", "consistency", "acid"],
         )
         self.code_examples[transaction_example.id] = transaction_example
-
+    
     def _initialize_scenario_examples(self) -> None:
         """Initialize scenario-based examples."""
-
+        
         # API Performance Optimization Scenario
         api_optimization = ScenarioExample(
             id="scenario_api_optimization",
@@ -651,7 +653,7 @@ async def get_products_optimized(cursor: str, limit: int = 20):
             tags=["performance", "api", "optimization", "database"],
         )
         self.scenario_examples[api_optimization.id] = api_optimization
-
+        
         # Security Incident Response Scenario
         security_incident = ScenarioExample(
             id="scenario_security_incident",
@@ -689,10 +691,10 @@ async def get_products_optimized(cursor: str, limit: int = 20):
             tags=["security", "incident", "sql_injection"],
         )
         self.scenario_examples[security_incident.id] = security_incident
-
+    
     def _initialize_decision_examples(self) -> None:
         """Initialize decision-making examples."""
-
+        
         # Microservices vs Monolith Decision
         architecture_decision = DecisionExample(
             id="decision_microservices",
@@ -803,27 +805,27 @@ async def get_products_optimized(cursor: str, limit: int = 20):
             tags=["architecture", "microservices", "monolith", "decision"],
         )
         self.decision_examples[architecture_decision.id] = architecture_decision
-
+    
     # Query Methods
-
-    def get_code_example(self, example_id: str) -> CodeExample | None:
+    
+    def get_code_example(self, example_id: str) -> Optional[CodeExample]:
         """Get a code example by ID."""
         return self.code_examples.get(example_id)
-
-    def get_scenario_example(self, example_id: str) -> ScenarioExample | None:
+    
+    def get_scenario_example(self, example_id: str) -> Optional[ScenarioExample]:
         """Get a scenario example by ID."""
         return self.scenario_examples.get(example_id)
-
-    def get_decision_example(self, example_id: str) -> DecisionExample | None:
+    
+    def get_decision_example(self, example_id: str) -> Optional[DecisionExample]:
         """Get a decision example by ID."""
         return self.decision_examples.get(example_id)
-
+    
     def search_examples(
-        self,
-        query: str,
-        category: ExampleCategory | None = None,
+        self, 
+        query: str, 
+        category: Optional[ExampleCategory] = None,
         max_results: int = 5
-    ) -> dict[str, list[Any]]:
+    ) -> Dict[str, List[Any]]:
         """
         Search for relevant examples.
         
@@ -835,12 +837,12 @@ async def get_products_optimized(cursor: str, limit: int = 20):
             "scenario_examples": [],
             "decision_examples": [],
         }
-
+        
         # Search code examples
         for example in self.code_examples.values():
             if category and example.category != category:
                 continue
-
+            
             score = self._calculate_relevance(
                 query_lower,
                 example.name,
@@ -849,16 +851,16 @@ async def get_products_optimized(cursor: str, limit: int = 20):
             )
             if score > 0:
                 results["code_examples"].append((example, score))
-
+        
         results["code_examples"] = [
             e for e, _ in sorted(results["code_examples"], key=lambda x: x[1], reverse=True)[:max_results]
         ]
-
+        
         # Search scenario examples
         for example in self.scenario_examples.values():
             if category and example.category != category:
                 continue
-
+            
             score = self._calculate_relevance(
                 query_lower,
                 example.name,
@@ -867,16 +869,16 @@ async def get_products_optimized(cursor: str, limit: int = 20):
             )
             if score > 0:
                 results["scenario_examples"].append((example, score))
-
+        
         results["scenario_examples"] = [
             e for e, _ in sorted(results["scenario_examples"], key=lambda x: x[1], reverse=True)[:max_results]
         ]
-
+        
         # Search decision examples
         for example in self.decision_examples.values():
             if category and example.category != category:
                 continue
-
+            
             score = self._calculate_relevance(
                 query_lower,
                 example.name,
@@ -885,24 +887,24 @@ async def get_products_optimized(cursor: str, limit: int = 20):
             )
             if score > 0:
                 results["decision_examples"].append((example, score))
-
+        
         results["decision_examples"] = [
             e for e, _ in sorted(results["decision_examples"], key=lambda x: x[1], reverse=True)[:max_results]
         ]
-
+        
         return results
-
+    
     def _calculate_relevance(
-        self,
-        query: str,
-        name: str,
-        description: str,
-        tags: list[str]
+        self, 
+        query: str, 
+        name: str, 
+        description: str, 
+        tags: List[str]
     ) -> float:
         """Calculate relevance score."""
         score = 0.0
         query_words = set(query.split())
-
+        
         for word in query_words:
             if word in name.lower():
                 score += 3.0
@@ -910,30 +912,30 @@ async def get_products_optimized(cursor: str, limit: int = 20):
                 score += 1.0
             if word in [t.lower() for t in tags]:
                 score += 2.0
-
+        
         return score
-
-    def get_examples_for_category(self, category: ExampleCategory) -> dict[str, list[Any]]:
+    
+    def get_examples_for_category(self, category: ExampleCategory) -> Dict[str, List[Any]]:
         """Get all examples for a category."""
         return {
             "code_examples": [e for e in self.code_examples.values() if e.category == category],
             "scenario_examples": [e for e in self.scenario_examples.values() if e.category == category],
             "decision_examples": [e for e in self.decision_examples.values() if e.category == category],
         }
-
+    
     def add_code_example(self, example: CodeExample) -> None:
         """Add a new code example."""
         self.code_examples[example.id] = example
-
+    
     def add_scenario_example(self, example: ScenarioExample) -> None:
         """Add a new scenario example."""
         self.scenario_examples[example.id] = example
-
+    
     def add_decision_example(self, example: DecisionExample) -> None:
         """Add a new decision example."""
         self.decision_examples[example.id] = example
-
-    def get_stats(self) -> dict[str, int]:
+    
+    def get_stats(self) -> Dict[str, int]:
         """Get example library statistics."""
         return {
             "code_examples": len(self.code_examples),

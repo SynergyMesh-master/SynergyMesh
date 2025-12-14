@@ -6,11 +6,11 @@ YAML Module Definition System (YAML 模組定義系統)
 Reference: Schema validation best practices [8]
 """
 
-import uuid
+from enum import Enum
+from typing import Dict, List, Any, Optional
 from dataclasses import dataclass, field
 from datetime import datetime
-from enum import Enum
-from typing import Any
+import uuid
 
 
 class LifecycleState(Enum):
@@ -36,9 +36,9 @@ class TestVectorType(Enum):
 class ModuleOwner:
     """模組所有者資訊"""
     team: str
-    contacts: list[str]
-    approvers: list[str] = field(default_factory=list)
-    escalation_path: list[str] = field(default_factory=list)
+    contacts: List[str]
+    approvers: List[str] = field(default_factory=list)
+    escalation_path: List[str] = field(default_factory=list)
 
 
 @dataclass
@@ -46,12 +46,12 @@ class ModuleMetadata:
     """模組元數據"""
     created_at: datetime
     updated_at: datetime
-    labels: list[str] = field(default_factory=list)
-    compliance_tags: list[str] = field(default_factory=list)
-    pipeline_id: str | None = None
-    commit_sha: str | None = None
-    environment: str | None = None
-    region: str | None = None
+    labels: List[str] = field(default_factory=list)
+    compliance_tags: List[str] = field(default_factory=list)
+    pipeline_id: Optional[str] = None
+    commit_sha: Optional[str] = None
+    environment: Optional[str] = None
+    region: Optional[str] = None
 
 
 @dataclass
@@ -61,12 +61,12 @@ class TestVector:
     name: str
     type: TestVectorType
     description: str
-    input_data: dict[str, Any]
+    input_data: Dict[str, Any]
     expected_result: Any
-    tags: list[str] = field(default_factory=list)
+    tags: List[str] = field(default_factory=list)
     timeout_ms: int = 5000
-
-    def to_dict(self) -> dict[str, Any]:
+    
+    def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary"""
         return {
             'id': self.id,
@@ -86,12 +86,12 @@ class ChangelogEntry:
     version: str
     date: datetime
     author: str
-    changes: list[str]
+    changes: List[str]
     breaking: bool = False
     security_impact: bool = False
-    reviewed_by: str | None = None
-
-    def to_dict(self) -> dict[str, Any]:
+    reviewed_by: Optional[str] = None
+    
+    def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary"""
         return {
             'version': self.version,
@@ -108,14 +108,14 @@ class ChangelogEntry:
 class ModuleLifecycle:
     """模組生命週期管理"""
     state: LifecycleState
-    state_history: list[dict[str, Any]] = field(default_factory=list)
-    approved_at: datetime | None = None
-    approved_by: str | None = None
-    deprecated_at: datetime | None = None
-    deprecation_reason: str | None = None
-    sunset_date: datetime | None = None
-
-    def transition_to(self, new_state: LifecycleState, actor: str, reason: str | None = None) -> bool:
+    state_history: List[Dict[str, Any]] = field(default_factory=list)
+    approved_at: Optional[datetime] = None
+    approved_by: Optional[str] = None
+    deprecated_at: Optional[datetime] = None
+    deprecation_reason: Optional[str] = None
+    sunset_date: Optional[datetime] = None
+    
+    def transition_to(self, new_state: LifecycleState, actor: str, reason: Optional[str] = None) -> bool:
         """狀態轉換"""
         valid_transitions = {
             LifecycleState.DRAFT: [LifecycleState.REVIEW],
@@ -125,10 +125,10 @@ class ModuleLifecycle:
             LifecycleState.DEPRECATED: [LifecycleState.ARCHIVED],
             LifecycleState.ARCHIVED: [],
         }
-
+        
         if new_state not in valid_transitions.get(self.state, []):
             return False
-
+        
         self.state_history.append({
             'from_state': self.state.value,
             'to_state': new_state.value,
@@ -136,16 +136,16 @@ class ModuleLifecycle:
             'reason': reason,
             'timestamp': datetime.now().isoformat(),
         })
-
+        
         self.state = new_state
-
+        
         if new_state == LifecycleState.APPROVED:
             self.approved_at = datetime.now()
             self.approved_by = actor
         elif new_state == LifecycleState.DEPRECATED:
             self.deprecated_at = datetime.now()
             self.deprecation_reason = reason
-
+        
         return True
 
 
@@ -163,39 +163,39 @@ class YAMLModuleDefinition:
     description: str
     owner: ModuleOwner
     metadata: ModuleMetadata
-    schema: dict[str, Any]  # JSON Schema
-    test_vectors: list[TestVector] = field(default_factory=list)
+    schema: Dict[str, Any]  # JSON Schema
+    test_vectors: List[TestVector] = field(default_factory=list)
     lifecycle: ModuleLifecycle = field(default_factory=lambda: ModuleLifecycle(state=LifecycleState.DRAFT))
-    changelog: list[ChangelogEntry] = field(default_factory=list)
-    dependencies: list[str] = field(default_factory=list)
-    examples: list[dict[str, Any]] = field(default_factory=list)
-
+    changelog: List[ChangelogEntry] = field(default_factory=list)
+    dependencies: List[str] = field(default_factory=list)
+    examples: List[Dict[str, Any]] = field(default_factory=list)
+    
     def __post_init__(self):
         """Initialize with generated ID if not provided"""
         if not self.id:
             self.id = str(uuid.uuid4())
-
+    
     def add_test_vector(self, test_vector: TestVector) -> None:
         """添加測試向量"""
         self.test_vectors.append(test_vector)
-
+    
     def add_changelog_entry(self, entry: ChangelogEntry) -> None:
         """添加變更日誌"""
         self.changelog.append(entry)
-
-    def get_test_vectors_by_type(self, vector_type: TestVectorType) -> list[TestVector]:
+    
+    def get_test_vectors_by_type(self, vector_type: TestVectorType) -> List[TestVector]:
         """按類型獲取測試向量"""
         return [tv for tv in self.test_vectors if tv.type == vector_type]
-
+    
     def is_approved(self) -> bool:
         """檢查模組是否已批准"""
         return self.lifecycle.state in [LifecycleState.APPROVED, LifecycleState.ACTIVE]
-
+    
     def is_active(self) -> bool:
         """檢查模組是否活躍"""
         return self.lifecycle.state == LifecycleState.ACTIVE
-
-    def to_dict(self) -> dict[str, Any]:
+    
+    def to_dict(self) -> Dict[str, Any]:
         """轉換為字典格式"""
         return {
             'id': self.id,
@@ -227,16 +227,16 @@ class YAMLModuleDefinition:
             'dependencies': self.dependencies,
             'examples': self.examples,
         }
-
+    
     @classmethod
-    def from_dict(cls, data: dict[str, Any]) -> 'YAMLModuleDefinition':
+    def from_dict(cls, data: Dict[str, Any]) -> 'YAMLModuleDefinition':
         """從字典創建模組定義"""
         owner = ModuleOwner(
             team=data['owner']['team'],
             contacts=data['owner']['contacts'],
             approvers=data['owner'].get('approvers', []),
         )
-
+        
         metadata = ModuleMetadata(
             created_at=datetime.fromisoformat(data['metadata']['created_at']),
             updated_at=datetime.fromisoformat(data['metadata']['updated_at']),
@@ -245,7 +245,7 @@ class YAMLModuleDefinition:
             pipeline_id=data['metadata'].get('pipeline_id'),
             commit_sha=data['metadata'].get('commit_sha'),
         )
-
+        
         test_vectors = [
             TestVector(
                 id=tv['id'],
@@ -259,13 +259,13 @@ class YAMLModuleDefinition:
             )
             for tv in data.get('test_vectors', [])
         ]
-
+        
         lifecycle = ModuleLifecycle(
             state=LifecycleState(data['lifecycle']['state']),
             approved_at=datetime.fromisoformat(data['lifecycle']['approved_at']) if data['lifecycle'].get('approved_at') else None,
             approved_by=data['lifecycle'].get('approved_by'),
         )
-
+        
         changelog = [
             ChangelogEntry(
                 version=ce['version'],
@@ -277,7 +277,7 @@ class YAMLModuleDefinition:
             )
             for ce in data.get('changelog', [])
         ]
-
+        
         return cls(
             id=data['id'],
             kind=data['kind'],

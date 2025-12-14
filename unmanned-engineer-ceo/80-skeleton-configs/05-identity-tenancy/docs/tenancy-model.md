@@ -5,6 +5,7 @@
 ### 隔離層級
 
 #### 1. Shared (共享)
+
 - **適用**: Free tier 用戶
 - **資料庫**: 共享資料庫,用 tenant_id 區分
 - **運算**: 共享容器/Pod
@@ -13,6 +14,7 @@
 - **隔離性**: 低
 
 #### 2. Dedicated (專用)
+
 - **適用**: Standard tier 用戶
 - **資料庫**: 專用資料庫 schema
 - **運算**: 專用容器 pool
@@ -21,6 +23,7 @@
 - **隔離性**: 中
 
 #### 3. Isolated (隔離)
+
 - **適用**: Enterprise tier 用戶
 - **資料庫**: 專用資料庫實例
 - **運算**: 專用 Kubernetes namespace

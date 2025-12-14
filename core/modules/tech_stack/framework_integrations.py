@@ -10,14 +10,13 @@ Provides integration layers for the recommended AI agent frameworks:
 Reference: Top 7 frameworks for building AI agents in 2025 [2]
 """
 
-import asyncio
-import uuid
 from abc import ABC, abstractmethod
-from collections.abc import Callable
 from dataclasses import dataclass, field
-from datetime import datetime
 from enum import Enum
-from typing import Any
+from typing import Dict, List, Optional, Any, Callable, Union
+from datetime import datetime
+import uuid
+import asyncio
 
 
 class FrameworkStatus(Enum):
@@ -40,10 +39,10 @@ class AgentType(Enum):
 @dataclass
 class FrameworkCredentials:
     """Credentials for framework authentication"""
-    api_key: str | None = None
-    api_secret: str | None = None
-    endpoint: str | None = None
-    additional_config: dict[str, Any] = field(default_factory=dict)
+    api_key: Optional[str] = None
+    api_secret: Optional[str] = None
+    endpoint: Optional[str] = None
+    additional_config: Dict[str, Any] = field(default_factory=dict)
 
 
 @dataclass
@@ -59,20 +58,20 @@ class AgentConfig:
     temperature: float = 0.7
     max_tokens: int = 4096
     system_prompt: str = ""
-    tools: list[str] = field(default_factory=list)
+    tools: List[str] = field(default_factory=list)
     memory_enabled: bool = True
     verbose: bool = False
 
 
-@dataclass
+@dataclass 
 class TaskResult:
     """Result from a task execution"""
     task_id: str
     success: bool
     result: Any
-    error: str | None = None
+    error: Optional[str] = None
     execution_time: float = 0.0
-    metadata: dict[str, Any] = field(default_factory=dict)
+    metadata: Dict[str, Any] = field(default_factory=dict)
 
 
 class FrameworkIntegration(ABC):
@@ -82,17 +81,17 @@ class FrameworkIntegration(ABC):
     
     所有框架整合都必須實現這些方法
     """
-
+    
     def __init__(self, name: str, version: str):
         self.id = str(uuid.uuid4())
         self.name = name
         self.version = version
         self.status = FrameworkStatus.DISCONNECTED
-        self.credentials: FrameworkCredentials | None = None
-        self.agents: dict[str, AgentConfig] = {}
+        self.credentials: Optional[FrameworkCredentials] = None
+        self.agents: Dict[str, AgentConfig] = {}
         self.created_at = datetime.now()
         self._initialized = False
-
+    
     @abstractmethod
     async def initialize(self, credentials: FrameworkCredentials) -> bool:
         """Initialize the framework connection
@@ -100,7 +99,7 @@ class FrameworkIntegration(ABC):
         初始化框架連接
         """
         pass
-
+    
     @abstractmethod
     async def create_agent(self, config: AgentConfig) -> str:
         """Create a new agent
@@ -111,15 +110,15 @@ class FrameworkIntegration(ABC):
             Agent ID
         """
         pass
-
+    
     @abstractmethod
-    async def execute_task(self, agent_id: str, task: str, context: dict | None = None) -> TaskResult:
+    async def execute_task(self, agent_id: str, task: str, context: Optional[Dict] = None) -> TaskResult:
         """Execute a task using an agent
         
         使用代理執行任務
         """
         pass
-
+    
     @abstractmethod
     async def shutdown(self) -> bool:
         """Shutdown the framework connection
@@ -127,8 +126,8 @@ class FrameworkIntegration(ABC):
         關閉框架連接
         """
         pass
-
-    def get_status(self) -> dict[str, Any]:
+    
+    def get_status(self) -> Dict[str, Any]:
         """Get framework status"""
         return {
             "id": self.id,
@@ -154,51 +153,51 @@ class LangChainIntegration(FrameworkIntegration):
     - Tool integration
     - Memory management
     """
-
+    
     def __init__(self):
         super().__init__("LangChain", "0.1.0")
-        self.chains: dict[str, Any] = {}
-        self.tools: dict[str, Any] = {}
-        self.memory_stores: dict[str, Any] = {}
-
+        self.chains: Dict[str, Any] = {}
+        self.tools: Dict[str, Any] = {}
+        self.memory_stores: Dict[str, Any] = {}
+    
     async def initialize(self, credentials: FrameworkCredentials) -> bool:
         """Initialize LangChain with API credentials"""
         try:
             self.status = FrameworkStatus.CONNECTING
             self.credentials = credentials
-
+            
             # Simulate LangChain initialization
             # In production: from langchain.llms import OpenAI
             # self.llm = OpenAI(api_key=credentials.api_key)
-
+            
             await asyncio.sleep(0.1)  # Simulate connection
-
+            
             self.status = FrameworkStatus.CONNECTED
             self._initialized = True
             return True
-        except Exception:
+        except Exception as e:
             self.status = FrameworkStatus.ERROR
             return False
-
+    
     async def create_agent(self, config: AgentConfig) -> str:
         """Create a LangChain agent"""
         if not self._initialized:
             raise RuntimeError("LangChain not initialized")
-
+        
         # Store agent configuration
         self.agents[config.id] = config
-
+        
         # In production: Create actual LangChain agent
         # from langchain.agents import initialize_agent, Tool
         # agent = initialize_agent(tools, llm, agent_type, ...)
-
+        
         return config.id
-
+    
     async def create_chain(
         self,
         chain_id: str,
         chain_type: str,
-        steps: list[dict[str, Any]]
+        steps: List[Dict[str, Any]]
     ) -> str:
         """Create a LangChain chain
         
@@ -214,7 +213,7 @@ class LangChainIntegration(FrameworkIntegration):
         }
         self.chains[chain_id] = chain_config
         return chain_id
-
+    
     async def register_tool(
         self,
         tool_id: str,
@@ -234,16 +233,16 @@ class LangChainIntegration(FrameworkIntegration):
         }
         self.tools[tool_id] = tool_config
         return tool_id
-
+    
     async def execute_task(
         self,
         agent_id: str,
         task: str,
-        context: dict | None = None
+        context: Optional[Dict] = None
     ) -> TaskResult:
         """Execute a task using LangChain agent"""
         start_time = datetime.now()
-
+        
         if agent_id not in self.agents:
             return TaskResult(
                 task_id=str(uuid.uuid4()),
@@ -251,17 +250,17 @@ class LangChainIntegration(FrameworkIntegration):
                 result=None,
                 error=f"Agent {agent_id} not found"
             )
-
+        
         try:
             # In production: Execute actual LangChain agent
             # result = await agent.arun(task)
-
+            
             # Simulate execution
             await asyncio.sleep(0.1)
             result = f"LangChain executed: {task}"
-
+            
             execution_time = (datetime.now() - start_time).total_seconds()
-
+            
             return TaskResult(
                 task_id=str(uuid.uuid4()),
                 success=True,
@@ -280,7 +279,7 @@ class LangChainIntegration(FrameworkIntegration):
                 result=None,
                 error=str(e)
             )
-
+    
     async def shutdown(self) -> bool:
         """Shutdown LangChain connection"""
         self.status = FrameworkStatus.DISCONNECTED
@@ -304,34 +303,34 @@ class CrewAIIntegration(FrameworkIntegration):
     - Process orchestration
     - Inter-agent communication
     """
-
+    
     def __init__(self):
         super().__init__("CrewAI", "0.28.0")
-        self.crews: dict[str, dict] = {}
-        self.tasks: dict[str, dict] = {}
-
+        self.crews: Dict[str, Dict] = {}
+        self.tasks: Dict[str, Dict] = {}
+    
     async def initialize(self, credentials: FrameworkCredentials) -> bool:
         """Initialize CrewAI"""
         try:
             self.status = FrameworkStatus.CONNECTING
             self.credentials = credentials
-
+            
             # In production: from crewai import Agent, Task, Crew
-
+            
             await asyncio.sleep(0.1)
-
+            
             self.status = FrameworkStatus.CONNECTED
             self._initialized = True
             return True
         except Exception:
             self.status = FrameworkStatus.ERROR
             return False
-
+    
     async def create_agent(self, config: AgentConfig) -> str:
         """Create a CrewAI agent with role"""
         if not self._initialized:
             raise RuntimeError("CrewAI not initialized")
-
+        
         # CrewAI agents have roles
         agent_config = {
             **vars(config),
@@ -340,14 +339,14 @@ class CrewAIIntegration(FrameworkIntegration):
             "backstory": f"Expert {config.name} agent"
         }
         self.agents[config.id] = agent_config
-
+        
         return config.id
-
+    
     async def create_crew(
         self,
         crew_id: str,
         name: str,
-        agent_ids: list[str],
+        agent_ids: List[str],
         process: str = "sequential"  # sequential, hierarchical
     ) -> str:
         """Create a crew of agents
@@ -367,7 +366,7 @@ class CrewAIIntegration(FrameworkIntegration):
         }
         self.crews[crew_id] = crew_config
         return crew_id
-
+    
     async def create_task(
         self,
         task_id: str,
@@ -387,18 +386,18 @@ class CrewAIIntegration(FrameworkIntegration):
         }
         self.tasks[task_id] = task_config
         return task_id
-
+    
     async def execute_crew(
         self,
         crew_id: str,
-        task_ids: list[str]
+        task_ids: List[str]
     ) -> TaskResult:
         """Execute a crew with tasks
         
         執行團隊任務
         """
         start_time = datetime.now()
-
+        
         if crew_id not in self.crews:
             return TaskResult(
                 task_id=crew_id,
@@ -406,13 +405,13 @@ class CrewAIIntegration(FrameworkIntegration):
                 result=None,
                 error=f"Crew {crew_id} not found"
             )
-
+        
         try:
             # In production: crew.kickoff()
             await asyncio.sleep(0.2)
-
+            
             execution_time = (datetime.now() - start_time).total_seconds()
-
+            
             return TaskResult(
                 task_id=crew_id,
                 success=True,
@@ -431,23 +430,23 @@ class CrewAIIntegration(FrameworkIntegration):
                 result=None,
                 error=str(e)
             )
-
+    
     async def execute_task(
         self,
         agent_id: str,
         task: str,
-        context: dict | None = None
+        context: Optional[Dict] = None
     ) -> TaskResult:
         """Execute a single task"""
         # Create a temporary crew for single task execution
         crew_id = f"temp_crew_{uuid.uuid4()}"
         await self.create_crew(crew_id, "Temporary Crew", [agent_id])
-
+        
         task_id = f"task_{uuid.uuid4()}"
         await self.create_task(task_id, task, agent_id, "Task result")
-
+        
         return await self.execute_crew(crew_id, [task_id])
-
+    
     async def shutdown(self) -> bool:
         """Shutdown CrewAI"""
         self.status = FrameworkStatus.DISCONNECTED
@@ -472,35 +471,35 @@ class AutoGenIntegration(FrameworkIntegration):
     - Group chat
     - Customizable agents
     """
-
+    
     def __init__(self):
         super().__init__("AutoGen", "0.2.0")
-        self.group_chats: dict[str, dict] = {}
-        self.conversations: dict[str, list] = {}
-
+        self.group_chats: Dict[str, Dict] = {}
+        self.conversations: Dict[str, List] = {}
+    
     async def initialize(self, credentials: FrameworkCredentials) -> bool:
         """Initialize AutoGen"""
         try:
             self.status = FrameworkStatus.CONNECTING
             self.credentials = credentials
-
+            
             # In production: import autogen
             # config_list = autogen.config_list_from_json(...)
-
+            
             await asyncio.sleep(0.1)
-
+            
             self.status = FrameworkStatus.CONNECTED
             self._initialized = True
             return True
         except Exception:
             self.status = FrameworkStatus.ERROR
             return False
-
+    
     async def create_agent(self, config: AgentConfig) -> str:
         """Create an AutoGen conversable agent"""
         if not self._initialized:
             raise RuntimeError("AutoGen not initialized")
-
+        
         agent_config = {
             **vars(config),
             "is_termination_msg": lambda x: x.get("content", "").endswith("TERMINATE"),
@@ -508,13 +507,13 @@ class AutoGenIntegration(FrameworkIntegration):
             "code_execution_config": {"work_dir": "/tmp/autogen"}
         }
         self.agents[config.id] = agent_config
-
+        
         return config.id
-
+    
     async def create_group_chat(
         self,
         chat_id: str,
-        agent_ids: list[str],
+        agent_ids: List[str],
         max_round: int = 10
     ) -> str:
         """Create a group chat for multi-agent conversation
@@ -530,7 +529,7 @@ class AutoGenIntegration(FrameworkIntegration):
         }
         self.group_chats[chat_id] = chat_config
         return chat_id
-
+    
     async def initiate_chat(
         self,
         initiator_id: str,
@@ -542,16 +541,16 @@ class AutoGenIntegration(FrameworkIntegration):
         發起雙代理對話
         """
         start_time = datetime.now()
-
+        
         conversation_id = f"conv_{uuid.uuid4()}"
         self.conversations[conversation_id] = [
             {"sender": initiator_id, "content": message, "timestamp": datetime.now().isoformat()}
         ]
-
+        
         try:
             # In production: initiator.initiate_chat(recipient, message=message)
             await asyncio.sleep(0.15)
-
+            
             # Simulate response
             response = f"Response to: {message}"
             self.conversations[conversation_id].append({
@@ -559,9 +558,9 @@ class AutoGenIntegration(FrameworkIntegration):
                 "content": response,
                 "timestamp": datetime.now().isoformat()
             })
-
+            
             execution_time = (datetime.now() - start_time).total_seconds()
-
+            
             return TaskResult(
                 task_id=conversation_id,
                 success=True,
@@ -580,12 +579,12 @@ class AutoGenIntegration(FrameworkIntegration):
                 result=None,
                 error=str(e)
             )
-
+    
     async def execute_task(
         self,
         agent_id: str,
         task: str,
-        context: dict | None = None
+        context: Optional[Dict] = None
     ) -> TaskResult:
         """Execute a task using AutoGen agent"""
         # Create a temporary assistant for task execution
@@ -595,9 +594,9 @@ class AutoGenIntegration(FrameworkIntegration):
             name="AssistantAgent",
             agent_type=AgentType.TASK_ORIENTED
         ))
-
+        
         return await self.initiate_chat(agent_id, assistant_id, task)
-
+    
     async def shutdown(self) -> bool:
         """Shutdown AutoGen"""
         self.status = FrameworkStatus.DISCONNECTED
@@ -622,42 +621,42 @@ class LangGraphIntegration(FrameworkIntegration):
     - Human-in-the-loop
     - Streaming
     """
-
+    
     def __init__(self):
         super().__init__("LangGraph", "0.0.1")
-        self.graphs: dict[str, dict] = {}
-        self.states: dict[str, dict] = {}
-
+        self.graphs: Dict[str, Dict] = {}
+        self.states: Dict[str, Dict] = {}
+    
     async def initialize(self, credentials: FrameworkCredentials) -> bool:
         """Initialize LangGraph"""
         try:
             self.status = FrameworkStatus.CONNECTING
             self.credentials = credentials
-
+            
             # In production: from langgraph.graph import StateGraph
-
+            
             await asyncio.sleep(0.1)
-
+            
             self.status = FrameworkStatus.CONNECTED
             self._initialized = True
             return True
         except Exception:
             self.status = FrameworkStatus.ERROR
             return False
-
+    
     async def create_agent(self, config: AgentConfig) -> str:
         """Create a LangGraph agent (node)"""
         if not self._initialized:
             raise RuntimeError("LangGraph not initialized")
-
+        
         self.agents[config.id] = config
         return config.id
-
+    
     async def create_graph(
         self,
         graph_id: str,
-        nodes: list[dict[str, Any]],
-        edges: list[dict[str, str]],
+        nodes: List[Dict[str, Any]],
+        edges: List[Dict[str, str]],
         entry_point: str
     ) -> str:
         """Create a state graph
@@ -679,13 +678,13 @@ class LangGraphIntegration(FrameworkIntegration):
         }
         self.graphs[graph_id] = graph_config
         return graph_id
-
+    
     async def add_conditional_edge(
         self,
         graph_id: str,
         source: str,
         condition_func: Callable,
-        destinations: dict[str, str]
+        destinations: Dict[str, str]
     ) -> bool:
         """Add a conditional edge to a graph
         
@@ -693,7 +692,7 @@ class LangGraphIntegration(FrameworkIntegration):
         """
         if graph_id not in self.graphs:
             return False
-
+        
         self.graphs[graph_id]["edges"].append({
             "source": source,
             "type": "conditional",
@@ -701,18 +700,18 @@ class LangGraphIntegration(FrameworkIntegration):
             "destinations": destinations
         })
         return True
-
+    
     async def execute_graph(
         self,
         graph_id: str,
-        initial_state: dict[str, Any]
+        initial_state: Dict[str, Any]
     ) -> TaskResult:
         """Execute a graph with initial state
         
         執行圖並返回最終狀態
         """
         start_time = datetime.now()
-
+        
         if graph_id not in self.graphs:
             return TaskResult(
                 task_id=graph_id,
@@ -720,11 +719,11 @@ class LangGraphIntegration(FrameworkIntegration):
                 result=None,
                 error=f"Graph {graph_id} not found"
             )
-
+        
         try:
             # In production: result = await graph.ainvoke(initial_state)
             await asyncio.sleep(0.15)
-
+            
             # Simulate graph execution
             final_state = {
                 **initial_state,
@@ -732,9 +731,9 @@ class LangGraphIntegration(FrameworkIntegration):
                 "nodes_visited": list(self.graphs[graph_id]["nodes"].keys())
             }
             self.states[graph_id] = final_state
-
+            
             execution_time = (datetime.now() - start_time).total_seconds()
-
+            
             return TaskResult(
                 task_id=graph_id,
                 success=True,
@@ -752,12 +751,12 @@ class LangGraphIntegration(FrameworkIntegration):
                 result=None,
                 error=str(e)
             )
-
+    
     async def execute_task(
         self,
         agent_id: str,
         task: str,
-        context: dict | None = None
+        context: Optional[Dict] = None
     ) -> TaskResult:
         """Execute a task using LangGraph"""
         # Create a simple single-node graph
@@ -768,9 +767,9 @@ class LangGraphIntegration(FrameworkIntegration):
             edges=[],
             entry_point=agent_id
         )
-
+        
         return await self.execute_graph(graph_id, {"task": task, "context": context})
-
+    
     async def shutdown(self) -> bool:
         """Shutdown LangGraph"""
         self.status = FrameworkStatus.DISCONNECTED
@@ -789,11 +788,11 @@ class FrameworkOrchestrator:
     This class provides a unified interface to work with multiple
     AI agent frameworks simultaneously.
     """
-
+    
     def __init__(self):
-        self.frameworks: dict[str, FrameworkIntegration] = {}
-        self.default_framework: str | None = None
-
+        self.frameworks: Dict[str, FrameworkIntegration] = {}
+        self.default_framework: Optional[str] = None
+    
     def register_framework(
         self,
         framework: FrameworkIntegration,
@@ -807,11 +806,11 @@ class FrameworkOrchestrator:
         if set_as_default or self.default_framework is None:
             self.default_framework = framework.name.lower()
         return framework.id
-
+    
     async def initialize_all(
         self,
-        credentials: dict[str, FrameworkCredentials]
-    ) -> dict[str, bool]:
+        credentials: Dict[str, FrameworkCredentials]
+    ) -> Dict[str, bool]:
         """Initialize all registered frameworks
         
         初始化所有註冊的框架
@@ -823,19 +822,19 @@ class FrameworkOrchestrator:
             else:
                 results[name] = False
         return results
-
-    def get_framework(self, name: str | None = None) -> FrameworkIntegration | None:
+    
+    def get_framework(self, name: Optional[str] = None) -> Optional[FrameworkIntegration]:
         """Get a framework by name or default"""
         if name is None:
             name = self.default_framework
         return self.frameworks.get(name.lower()) if name else None
-
+    
     async def execute_task(
         self,
         task: str,
-        framework_name: str | None = None,
-        agent_id: str | None = None,
-        context: dict | None = None
+        framework_name: Optional[str] = None,
+        agent_id: Optional[str] = None,
+        context: Optional[Dict] = None
     ) -> TaskResult:
         """Execute a task using specified or default framework
         
@@ -849,7 +848,7 @@ class FrameworkOrchestrator:
                 result=None,
                 error="No framework available"
             )
-
+        
         # Use first agent if none specified
         if agent_id is None and framework.agents:
             agent_id = list(framework.agents.keys())[0]
@@ -857,10 +856,10 @@ class FrameworkOrchestrator:
             # Create a default agent
             config = AgentConfig(name="DefaultAgent")
             agent_id = await framework.create_agent(config)
-
+        
         return await framework.execute_task(agent_id, task, context)
-
-    async def shutdown_all(self) -> dict[str, bool]:
+    
+    async def shutdown_all(self) -> Dict[str, bool]:
         """Shutdown all frameworks
         
         關閉所有框架
@@ -869,8 +868,8 @@ class FrameworkOrchestrator:
         for name, framework in self.frameworks.items():
             results[name] = await framework.shutdown()
         return results
-
-    def get_all_status(self) -> dict[str, dict[str, Any]]:
+    
+    def get_all_status(self) -> Dict[str, Dict[str, Any]]:
         """Get status of all frameworks
         
         獲取所有框架的狀態

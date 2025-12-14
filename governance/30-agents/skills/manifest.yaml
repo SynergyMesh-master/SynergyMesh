@@ -1,0 +1,123 @@
+---
+apiVersion: governance.synergymesh.io/v2
+kind: SkillManifest
+metadata:
+  id: agent-skills-manifest
+  name: "AI Agent Skills Registry"
+  name_zh: "AI 代理技能註冊表"
+  version: "1.0.0"
+  description: "Master manifest of all AI agent skills and capabilities"
+  created_at: "2025-12-13"
+  updated_at: "2025-12-13"
+  owner: "AI Agent Governance Team"
+
+spec:
+  skills:
+    - id: base44
+      name: "Base44 Encoding/Decoding"
+      file: "./base44.yaml"
+      category: transformation
+      status: active
+
+    - id: code-analysis
+      name: "Code Analysis"
+      file: "./code_analysis.yaml"
+      category: analysis
+      status: active
+
+    - id: architecture-review
+      name: "Architecture Review"
+      file: "./architecture_review.yaml"
+      category: analysis
+      status: active
+
+    - id: refactoring
+      name: "Code Refactoring"
+      file: "./refactoring.yaml"
+      category: transformation
+      status: active
+
+    - id: debugging
+      name: "Debugging"
+      file: "./debugging.yaml"
+      category: analysis
+      status: active
+
+    - id: governance-check
+      name: "Governance Validation"
+      file: "./governance_check.yaml"
+      category: validation
+      status: active
+
+  categories:
+    analysis:
+      description: "Skills for analyzing code, architecture, and system behavior"
+      risk_level: low
+      permissions_required:
+        - "code.read"
+        - "metrics.collect"
+
+    transformation:
+      description: "Skills for transforming, encoding, or modifying data and code"
+      risk_level: medium
+      permissions_required:
+        - "code.read"
+        - "code.write"
+
+    validation:
+      description: "Skills for validating compliance, governance, and policies"
+      risk_level: low
+      permissions_required:
+        - "governance.read"
+        - "policy.validate"
+
+  provider_registry:
+    agent:
+      path: "agent/"
+      components:
+        - auto-repair
+        - code-analyzer
+        - dependency-manager
+        - orchestrator
+        - vulnerability-detector
+
+    virtual_experts:
+      path: "core/virtual_experts/"
+      components:
+        - DrAlexChen
+        - SarahWong
+        - MarcusJohnson
+        - LiWei
+        - EmmaThompson
+        - JamesMiller
+
+    automation_architect:
+      path: "automation/architect/"
+      components:
+        - architecture_analyzer
+        - performance_analyzer
+        - security_scanner
+        - static_analyzer
+
+    mcp_servers:
+      path: "mcp-servers/"
+      components:
+        - code-analyzer
+        - security-scanner
+        - performance-analyzer
+        - logic-validator
+        - comprehensive-validator
+        - deployment-validator
+
+  governance_integration:
+    framework: "governance/30-agents/framework.yaml"
+    capability_matrix: "governance/30-agents/registry/capability-matrix.yaml"
+    compliance:
+      - ISO-42001
+      - NIST-AI-RMF
+      - EU-AI-Act
+
+  versioning:
+    strategy: semantic
+    auto_increment: true
+    changelog_required: true

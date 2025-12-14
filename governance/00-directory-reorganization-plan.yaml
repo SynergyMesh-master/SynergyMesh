@@ -1,0 +1,994 @@
+# ═══════════════════════════════════════════════════════════════════════════════
+#                    Directory Reorganization Plan
+#                    目錄重組計畫 - 標準化頂層結構
+# ═══════════════════════════════════════════════════════════════════════════════
+#
+# Purpose: Consolidate fragmented top-level directories into a canonical layout
+# 用途: 將分散的頂層目錄整合為標準化布局
+#
+# Version: 1.0.0
+# Created: 2025-12-13
+# Status: PLANNING (Do NOT execute moves until approved)
+# Owner: @platform-team
+# ═══════════════════════════════════════════════════════════════════════════════
+
+version: "1.0.0"
+id: "synergymesh.directory-reorganization-plan"
+description: "Comprehensive plan for consolidating top-level directories"
+
+# ============================================================================
+# Target Canonical Structure (目標標準結構)
+# ============================================================================
+
+target_structure:
+  description: "Six primary top-level directories plus support directories"
+  root_level_directories:
+    - name: "governance/"
+      purpose: "Policy, compliance, security, and organizational governance"
+      status: "keep"
+      
+    - name: "platform/"
+      purpose: "Core platform services, agents, AI, and automation systems"
+      status: "new"
+      
+    - name: "operations/"
+      purpose: "Infrastructure, deployment, monitoring, and ops tooling"
+      status: "new"
+      
+    - name: "knowledge/"
+      purpose: "Documentation, examples, and knowledge base"
+      status: "consolidate"
+      
+    - name: "tooling/"
+      purpose: "Developer tools, scripts, and utilities"
+      status: "new"
+      
+    - name: "apps/"
+      purpose: "Application code (web, mobile, CLI)"
+      status: "keep"
+
+  support_directories:
+    - name: "tests/"
+      purpose: "Test suites (integration, unit, e2e)"
+      status: "keep"
+      
+    - name: "_legacy/"
+      purpose: "Archived/deprecated code for reference"
+      status: "consolidate"
+
+# ============================================================================
+# Directory Mapping - Platform Consolidation
+# ============================================================================
+
+platform_consolidation:
+  target: "platform/"
+  description: "Consolidate agent, AI, and automation systems"
+  
+  mappings:
+    # ─────────────────────────────────────────────────────────────────────────
+    - source: "agent/"
+      target: "platform/agents/agent/"
+      action: "move"
+      rationale: "Core agent implementations (auto-repair, code-analyzer, etc.)"
+      preserve:
+        - "auto-repair/"
+        - "code-analyzer/"
+        - "dependency-manager/"
+        - "orchestrator/"
+        - "vulnerability-detector/"
+        - "runbook-executor.sh"
+      archive: []
+      dependencies_to_update:
+        - "config/agents/"
+        - "services/agents/"
+        - "infrastructure/kubernetes/*/05-core-services/"
+      notes: "Primary agent implementations"
+      
+    # ─────────────────────────────────────────────────────────────────────────
+    - source: "ai/"
+      target: "platform/ai/"
+      action: "move"
+      rationale: "AI-specific modules and configurations"
+      preserve:
+        - "README.md"
+        - all_contents
+      archive: []
+      dependencies_to_update:
+        - "core/ai_constitution/"
+        - "island-ai/"
+      notes: "AI module namespace"
+      
+    # ─────────────────────────────────────────────────────────────────────────
+    - source: "automation/"
+      target: "platform/automation/"
+      action: "move"
+      rationale: "Automation frameworks (architect, hyperautomation, intelligent)"
+      preserve:
+        - "architect/"
+        - "architecture-skeletons/"
+        - "autonomous/"
+        - "hyperautomation/"
+        - "intelligent/"
+        - "pipelines/"
+      archive:
+        - "_scratch/" -> "_legacy/automation/_scratch/"
+      dependencies_to_update:
+        - "config/automation/"
+        - "governance/39-automation/"
+        - "tests/automation/"
+      notes: "Major automation subsystem"
+      
+    # ─────────────────────────────────────────────────────────────────────────
+    - source: "autonomous/"
+      target: "platform/automation/autonomous-root/"
+      action: "move"
+      rationale: "Standalone autonomous directory duplicates automation/autonomous"
+      preserve:
+        - all_contents
+      archive: []
+      dependencies_to_update:
+        - "automation/autonomous/"
+      notes: "Evaluate for merge with automation/autonomous/"
+      deduplication_candidate: true
+      
+    # ─────────────────────────────────────────────────────────────────────────
+    - source: "core/"
+      target: "platform/core/"
+      action: "move"
+      rationale: "Core platform modules and services"
+      preserve:
+        - "advisory-database/"
+        - "ai_constitution/"
+        - "ci_error_handler/"
+        - "cloud_agent_delegation/"
+        - "contract_service/"
+        - "execution_architecture/"
+        - "execution_engine/"
+        - "hlp_executor/"
+        - "island_ai_runtime/"
+        - "main_system/"
+        - "mcp_servers_enhanced/"
+        - "modules/"
+        - "monitoring_system/"
+        - "project_factory/"
+        - "safety_mechanisms/"
+        - "slsa_provenance/"
+        - "tech_stack/"
+        - "training_system/"
+        - "unified_integration/"
+        - "validators/"
+        - "virtual_experts/"
+        - "yaml_module_system/"
+      archive:
+        - "_scratch/" -> "_legacy/core/_scratch/"
+      dependencies_to_update:
+        - "config/platform/"
+        - "governance/00-governance-mapping-matrix.yaml"
+        - "runtime/"
+      notes: "Central platform core"
+      
+    # ─────────────────────────────────────────────────────────────────────────
+    - source: "island-ai/"
+      target: "platform/island-ai/"
+      action: "move"
+      rationale: "Island AI agent collaboration system"
+      preserve:
+        - "examples/"
+        - "src/"
+      archive: []
+      dependencies_to_update:
+        - "core/island_ai_runtime/"
+      notes: "Multi-agent collaboration framework"
+      
+    # ─────────────────────────────────────────────────────────────────────────
+    - source: "runtime/"
+      target: "platform/runtime/"
+      action: "move"
+      rationale: "Runtime execution modules (mind_matrix)"
+      preserve:
+        - "mind_matrix/"
+      archive: []
+      dependencies_to_update:
+        - "core/modules/mind_matrix/"
+      notes: "Runtime execution environment"
+      
+    # ─────────────────────────────────────────────────────────────────────────
+    - source: "services/"
+      target: "platform/services/"
+      action: "move"
+      rationale: "Microservices and service implementations"
+      preserve:
+        - "agents/"
+        - "mcp/"
+        - "watchdog/"
+      archive:
+        - "_scratch/" -> "_legacy/services/_scratch/"
+      dependencies_to_update:
+        - "infrastructure/kubernetes/"
+        - "config/platform/"
+      notes: "Service layer implementations"
+      
+    # ─────────────────────────────────────────────────────────────────────────
+    - source: "mcp-servers/"
+      target: "platform/mcp-servers/"
+      action: "move"
+      rationale: "MCP server implementations"
+      preserve:
+        - "deploy/"
+        - all_contents
+      archive: []
+      dependencies_to_update:
+        - "services/mcp/"
+        - "core/mcp_servers_enhanced/"
+      notes: "Model Context Protocol servers"
+      
+    # ─────────────────────────────────────────────────────────────────────────
+    - source: "bridges/"
+      target: "platform/bridges/"
+      action: "move"
+      rationale: "Cross-system bridge implementations"
+      preserve:
+        - all_contents
+      archive: []
+      dependencies_to_update: []
+      notes: "Integration bridges"
+      
+    # ─────────────────────────────────────────────────────────────────────────
+    - source: "contracts/"
+      target: "platform/contracts/"
+      action: "move"
+      rationale: "Contract definitions and interfaces"
+      preserve:
+        - all_contents
+      archive: []
+      dependencies_to_update:
+        - "core/contract_service/"
+        - "governance/60-contracts/"
+      notes: "Contract specifications"
+      
+    # ─────────────────────────────────────────────────────────────────────────
+    - source: "shared/"
+      target: "platform/shared/"
+      action: "move"
+      rationale: "Shared utilities, constants, and configurations"
+      preserve:
+        - "config/"
+        - "constants/"
+        - "utils/"
+      archive: []
+      dependencies_to_update:
+        - "config/"
+      notes: "Cross-module shared code"
+      
+    # ─────────────────────────────────────────────────────────────────────────
+    - source: "supply-chain/"
+      target: "platform/supply-chain/"
+      action: "move"
+      rationale: "Supply chain security and SBOM"
+      preserve:
+        - "sbom/"
+      archive: []
+      dependencies_to_update:
+        - "governance/38-sbom/"
+        - "core/slsa_provenance/"
+      notes: "Supply chain security assets"
+
+# ============================================================================
+# Directory Mapping - Operations Consolidation
+# ============================================================================
+
+operations_consolidation:
+  target: "operations/"
+  description: "Consolidate infrastructure, deployment, and ops tooling"
+  
+  mappings:
+    # ─────────────────────────────────────────────────────────────────────────
+    - source: "infra/"
+      target: "operations/infra/"
+      action: "move"
+      rationale: "Infrastructure configuration subset"
+      preserve:
+        - "config/"
+        - "infrastructure/"
+      archive:
+        - "_scratch/" -> "_legacy/infra/_scratch/"
+      dependencies_to_update:
+        - "infrastructure/"
+      notes: "May merge with infrastructure/"
+      deduplication_candidate: true
+      
+    # ─────────────────────────────────────────────────────────────────────────
+    - source: "infrastructure/"
+      target: "operations/infrastructure/"
+      action: "move"
+      rationale: "Primary infrastructure definitions (Kubernetes, monitoring)"
+      preserve:
+        - "canary/"
+        - "drift/"
+        - "kubernetes/"
+        - "monitoring/"
+      archive: []
+      dependencies_to_update:
+        - "infra/infrastructure/"
+        - "deployment/"
+        - "config/operations/"
+      notes: "Primary infrastructure directory"
+      
+    # ─────────────────────────────────────────────────────────────────────────
+    - source: "deployment/"
+      target: "operations/deployment/"
+      action: "move"
+      rationale: "Deployment configurations (Docker, Kubernetes)"
+      preserve:
+        - "docker/"
+        - "kubernetes/"
+      archive: []
+      dependencies_to_update:
+        - "infrastructure/kubernetes/"
+        - "docker-compose.yml"
+      notes: "Deployment manifests"
+      
+    # ─────────────────────────────────────────────────────────────────────────
+    - source: "docker-templates/"
+      target: "operations/docker-templates/"
+      action: "move"
+      rationale: "Docker template files"
+      preserve:
+        - all_contents
+      archive: []
+      dependencies_to_update:
+        - "deployment/docker/"
+      notes: "Docker scaffolding templates"
+      
+    # ─────────────────────────────────────────────────────────────────────────
+    - source: "ops/"
+      target: "operations/ops/"
+      action: "move"
+      rationale: "Operational artifacts and runbooks"
+      preserve:
+        - "artifacts/"
+        - "migration/"
+        - "onboarding/"
+        - "reports/"
+        - "runbooks/"
+      archive: []
+      dependencies_to_update:
+        - "docs/operations/"
+      notes: "Operational procedures"
+      
+    # ─────────────────────────────────────────────────────────────────────────
+    - source: "config/"
+      target: "operations/config/"
+      action: "move"
+      rationale: "System-wide configuration files"
+      preserve:
+        - "agents/"
+        - "autofix/"
+        - "automation/"
+        - "conftest/"
+        - "docker/"
+        - "governance/"
+        - "integrations/"
+        - "operations/"
+        - "pipelines/"
+        - "platform/"
+        - "templates/"
+      archive: []
+      dependencies_to_update:
+        - "governance/"
+        - "core/"
+        - "automation/"
+      notes: "Central configuration hub"
+
+# ============================================================================
+# Directory Mapping - Knowledge Consolidation
+# ============================================================================
+
+knowledge_consolidation:
+  target: "knowledge/"
+  description: "Consolidate documentation, examples, and knowledge assets"
+  
+  mappings:
+    # ─────────────────────────────────────────────────────────────────────────
+    - source: "docs/"
+      target: "knowledge/docs/"
+      action: "move"
+      rationale: "Primary documentation directory"
+      preserve:
+        - "agents/"
+        - "architecture/"
+        - "automation/"
+        - "ci-cd/"
+        - "evolution/"
+        - "examples/"
+        - "fixes/"
+        - "generated/"
+        - "issues/"
+        - "mndoc/"
+        - "operations/"
+        - "refactor_playbooks/"
+        - "reports/"
+        - "scratch/"
+        - "security/"
+        - "troubleshooting/"
+      archive: []
+      dependencies_to_update:
+        - "README.md"
+        - "governance/29-docs/"
+      notes: "Main documentation"
+      
+    # ─────────────────────────────────────────────────────────────────────────
+    - source: "knowledge/"
+      target: "knowledge/"
+      action: "keep_and_merge"
+      rationale: "Already exists as knowledge base - merge incoming content"
+      preserve:
+        - all_contents
+      archive: []
+      dependencies_to_update: []
+      notes: "Target directory for knowledge consolidation"
+      
+    # ─────────────────────────────────────────────────────────────────────────
+    - source: "examples/"
+      target: "knowledge/examples/"
+      action: "move"
+      rationale: "Example code and reference implementations"
+      preserve:
+        - all_contents
+      archive: []
+      dependencies_to_update:
+        - "docs/examples/"
+      notes: "Code examples and samples"
+      
+    # ─────────────────────────────────────────────────────────────────────────
+    - source: "reports/"
+      target: "knowledge/reports/"
+      action: "move"
+      rationale: "Generated reports and evolution logs"
+      preserve:
+        - "refactor-evolution/"
+      archive: []
+      dependencies_to_update:
+        - "ops/reports/"
+      notes: "Report outputs"
+      
+    # ─────────────────────────────────────────────────────────────────────────
+    - source: "experiments/"
+      target: "knowledge/experiments/"
+      action: "move"
+      rationale: "Experimental code and prototypes"
+      preserve:
+        - all_contents
+      archive: []
+      dependencies_to_update: []
+      notes: "R&D experiments"
+      
+    # ─────────────────────────────────────────────────────────────────────────
+    - source: "unmanned-engineer-ceo/"
+      target: "knowledge/unmanned-engineer-ceo/"
+      action: "move"
+      rationale: "Training curriculum and knowledge frameworks"
+      preserve:
+        - "00-foundation/"
+        - "01-advanced-engineering/"
+        - "02-enterprise-capabilities/"
+        - "03-intelligence/"
+        - "04-systems-thinking/"
+        - "10-traits-matrix/"
+        - "20-roadmap/"
+        - "30-assessment/"
+        - "40-simulations/"
+        - "50-org-implementation/"
+        - "60-machine-guides/"
+        - "70-architecture-skeletons/"
+        - "80-skeleton-configs/"
+        - "99-meta/"
+      archive: []
+      dependencies_to_update: []
+      notes: "Engineer CEO training program"
+
+# ============================================================================
+# Directory Mapping - Tooling Consolidation
+# ============================================================================
+
+tooling_consolidation:
+  target: "tooling/"
+  description: "Consolidate developer tools, scripts, and utilities"
+  
+  mappings:
+    # ─────────────────────────────────────────────────────────────────────────
+    - source: "tools/"
+      target: "tooling/tools/"
+      action: "move"
+      rationale: "Developer tools and utilities"
+      preserve:
+        - "ai/"
+        - "automation/"
+        - "ci/"
+        - "cli/"
+        - "docs/"
+        - "evolution/"
+        - "generators/"
+        - "governance/"
+        - "refactor/"
+        - "scripts/"
+        - "utilities/"
+      archive:
+        - "_scratch/" -> "_legacy/tools/_scratch/"
+      dependencies_to_update:
+        - "governance/26-tools/"
+      notes: "Primary tools directory"
+      
+    # ─────────────────────────────────────────────────────────────────────────
+    - source: "scripts/"
+      target: "tooling/scripts/"
+      action: "move"
+      rationale: "Shell scripts and automation scripts"
+      preserve:
+        - "hooks/"
+        - "k8s/"
+        - "naming/"
+        - "sync/"
+      archive: []
+      dependencies_to_update:
+        - "governance/35-scripts/"
+      notes: "Operational scripts"
+      
+    # ─────────────────────────────────────────────────────────────────────────
+    - source: "templates/"
+      target: "tooling/templates/"
+      action: "move"
+      rationale: "Code generation and project templates"
+      preserve:
+        - "git-hooks/"
+        - "github/"
+        - "root/"
+        - "sync/"
+        - "yaml-patterns/"
+      archive: []
+      dependencies_to_update:
+        - "core/project_factory/templates/"
+        - "governance/27-templates/"
+      notes: "Template library"
+
+# ============================================================================
+# Directories to Keep at Root Level
+# ============================================================================
+
+root_level_keep:
+  - directory: "governance/"
+    action: "keep"
+    rationale: "Top-level governance is canonical and well-structured"
+    notes: "Already follows numbered dimension pattern"
+    
+  - directory: "apps/"
+    action: "keep"
+    rationale: "Application code belongs at root level"
+    notes: "Contains web, web-backend, and scratch apps"
+    
+  - directory: "tests/"
+    action: "keep"
+    rationale: "Test suites are standard at root level"
+    notes: "Contains automation, integration, performance, unit tests"
+    
+  - directory: "frontend/"
+    action: "evaluate"
+    rationale: "May merge with apps/ or keep separate"
+    recommendation: "Move to apps/frontend/ for consistency"
+    notes: "Contains UI components separate from apps/web/"
+
+# ============================================================================
+# Directories to Archive to _legacy/
+# ============================================================================
+
+legacy_archive:
+  target: "_legacy/"
+  description: "Archive deprecated, duplicate, or historical code"
+  
+  mappings:
+    # ─────────────────────────────────────────────────────────────────────────
+    - source: "legacy/"
+      target: "_legacy/legacy/"
+      action: "move"
+      rationale: "Already marked as legacy content"
+      preserve:
+        - "v1-python-drones/"
+        - "v2-multi-islands/"
+      notes: "Historical implementations"
+      
+    # ─────────────────────────────────────────────────────────────────────────
+    - source: "v1-python-drones/"
+      target: "_legacy/v1-python-drones/"
+      action: "move"
+      rationale: "Duplicate of legacy/v1-python-drones"
+      deduplication_candidate: true
+      notes: "Remove duplicate after verification"
+      
+    # ─────────────────────────────────────────────────────────────────────────
+    - source: "v2-multi-islands/"
+      target: "_legacy/v2-multi-islands/"
+      action: "move"
+      rationale: "Duplicate of legacy/v2-multi-islands"
+      deduplication_candidate: true
+      notes: "Remove duplicate after verification"
+      
+    # ─────────────────────────────────────────────────────────────────────────
+    - source: "synergymesh.egg-info/"
+      target: "_legacy/synergymesh.egg-info/"
+      action: "delete_or_regenerate"
+      rationale: "Build artifact - should be in .gitignore"
+      notes: "Add to .gitignore and remove"
+      
+    # ─────────────────────────────────────────────────────────────────────────
+    - source: "_codeql_detected_source_root"
+      target: "_legacy/_codeql_detected_source_root"
+      action: "delete"
+      rationale: "CodeQL artifact - should not be committed"
+      notes: "Add to .gitignore"
+
+# ============================================================================
+# Root-Level Files Assessment
+# ============================================================================
+
+root_files_assessment:
+  keep:
+    - file: "README.md"
+      rationale: "Project entry point"
+    - file: "README.en.md"
+      rationale: "English documentation"
+    - file: "LICENSE"
+      rationale: "License file"
+    - file: "CONTRIBUTING.md"
+      rationale: "Contribution guidelines"
+    - file: "SECURITY.md"
+      rationale: "Security policy"
+    - file: "CHANGELOG.md"
+      rationale: "Release history"
+    - file: "CODE_OF_CONDUCT.md"
+      rationale: "Community guidelines"
+    - file: "package.json"
+      rationale: "Node.js configuration"
+    - file: "pyproject.toml"
+      rationale: "Python configuration"
+    - file: "Cargo.toml"
+      rationale: "Rust configuration"
+    - file: "go.work"
+      rationale: "Go workspace"
+    - file: "tsconfig.json"
+      rationale: "TypeScript configuration"
+    - file: "docker-compose.yml"
+      rationale: "Docker orchestration"
+    - file: "docker-compose.dev.yml"
+      rationale: "Dev Docker orchestration"
+    - file: "Dockerfile"
+      rationale: "Container definition"
+    - file: "Makefile"
+      rationale: "Build automation"
+    - file: ".gitignore"
+      rationale: "Git configuration"
+    - file: "replit.md"
+      rationale: "Replit configuration"
+      
+  move_to_knowledge:
+    - file: "ARCHITECTURE_IMPLEMENTATION_SUMMARY.md"
+      target: "knowledge/docs/architecture/"
+    - file: "BUILD.md"
+      target: "knowledge/docs/"
+    - file: "COMPLETION_REPORT.md"
+      target: "knowledge/reports/"
+    - file: "COMPLETION_SUMMARY.md"
+      target: "knowledge/reports/"
+    - file: "CONFIGURATION_TEMPLATES.md"
+      target: "knowledge/docs/configuration/"
+    - file: "CONTRIBUTION_GUIDE.md"
+      target: "knowledge/docs/"
+    - file: "DEPLOYMENT_CHECKLIST.md"
+      target: "knowledge/docs/operations/"
+    - file: "DEPLOYMENT_GUIDE.md"
+      target: "knowledge/docs/operations/"
+    - file: "DEPLOYMENT_INTEGRATION_SUMMARY.md"
+      target: "knowledge/docs/operations/"
+    - file: "DEPLOYMENT_MANIFEST.md"
+      target: "knowledge/docs/operations/"
+    - file: "DEPLOYMENT_VALIDATION_REPORT.md"
+      target: "knowledge/reports/"
+    - file: "DEVCONTAINER_RUNBOOK.txt"
+      target: "knowledge/docs/operations/"
+    - file: "DOCUMENTATION_INDEX.md"
+      target: "knowledge/docs/"
+    - file: "ENGINEER_CORE_FILES_GUIDE.md"
+      target: "knowledge/docs/"
+    - file: "enterprise_copilot_prompt_system.md"
+      target: "knowledge/docs/ai/"
+    - file: "enterprise_copilot_prompt_system (1).md"
+      target: "_legacy/"
+    - file: "EXTRACTION_COMPLETION_REPORT.md"
+      target: "knowledge/reports/"
+    - file: "FINAL_DELIVERY_REPORT.md"
+      target: "knowledge/reports/"
+    - file: "FINAL_SUMMARY.txt"
+      target: "knowledge/reports/"
+    - file: "first_push_checklist.md"
+      target: "knowledge/docs/"
+    - file: "github_sync_workflow.txt"
+      target: "knowledge/docs/"
+    - file: "GLOBAL_TECH_REVIEW.txt"
+      target: "knowledge/reports/"
+    - file: "IMPLEMENTATION_REPORT_AUTO_REFACTOR.md"
+      target: "knowledge/reports/"
+    - file: "INSTALL.md"
+      target: "knowledge/docs/"
+    - file: "INSTANT_EXECUTION_COMPLETION_REPORT.md"
+      target: "knowledge/reports/"
+    - file: "INSTANT_EXECUTION_SUMMARY.md"
+      target: "knowledge/reports/"
+    - file: "island-ai.md"
+      target: "knowledge/docs/island-ai/"
+    - file: "island-ai-readme.md"
+      target: "knowledge/docs/island-ai/"
+    - file: "island-ai-phases.txt"
+      target: "knowledge/docs/island-ai/"
+    - file: "LANGUAGE_GOVERNANCE_FIX_REPORT.md"
+      target: "knowledge/reports/"
+    - file: "LEGACY_REFACTORING_EVOLUTION_REPORT.md"
+      target: "knowledge/reports/"
+    - file: "PR10_CONTINUATION_SUMMARY.md"
+      target: "knowledge/reports/"
+    - file: "PROJECT_DELIVERY_CHECKLIST.md"
+      target: "knowledge/docs/"
+    - file: "PROJECT_GENERATION_IMPLEMENTATION_SUMMARY.md"
+      target: "knowledge/reports/"
+    - file: "PYTHON_VALIDATION_COMPLETION_REPORT.md"
+      target: "knowledge/reports/"
+    - file: "QUICK_START.production.md"
+      target: "knowledge/docs/"
+    - file: "QUICK_START_INSTANT_EXECUTION.md"
+      target: "knowledge/docs/"
+    - file: "REFERENCE_VALIDATION_REPORT.md"
+      target: "knowledge/reports/"
+    - file: "RELEASE.md"
+      target: "knowledge/docs/"
+    - file: "REPLIT_SYNC_VERIFICATION.md"
+      target: "knowledge/reports/"
+    - file: "stage0_implementation.md"
+      target: "knowledge/docs/"
+    - file: "STRICT_MODE_UPGRADE_SUMMARY.md"
+      target: "knowledge/reports/"
+    - file: "SYSTEM_DIAGNOSTICS.md"
+      target: "knowledge/docs/"
+    - file: "WORKFLOW_FILES_CREATED.md"
+      target: "knowledge/docs/"
+    - file: "WORKFLOW_INDEX.md"
+      target: "knowledge/docs/"
+    - file: "WORKFLOW_INTEGRATION_SUMMARY.md"
+      target: "knowledge/docs/"
+    - file: "WORKFLOW_README.md"
+      target: "knowledge/docs/"
+    - file: "WORKFLOW_SYSTEM_SUMMARY.md"
+      target: "knowledge/docs/"
+      
+  move_to_tooling:
+    - file: "automation_launcher.py"
+      target: "tooling/scripts/"
+    - file: "deploy.sh"
+      target: "tooling/scripts/"
+    - file: "emergency_recovery.py"
+      target: "tooling/scripts/"
+    - file: "post_commit_hook.sh"
+      target: "tooling/scripts/hooks/"
+      
+  move_to_operations:
+    - file: "synergymesh.yaml"
+      target: "operations/config/"
+    - file: "island.bootstrap.stage0.yaml"
+      target: "operations/config/"
+    - file: "nginx.conf"
+      target: "operations/config/"
+    - file: "pom.xml"
+      target: "operations/config/"
+    - file: "requirements-workflow.txt"
+      target: "operations/config/"
+      
+  archive_to_legacy:
+    - file: "auto-fix-bot-dashboard.html"
+      target: "_legacy/"
+    - file: "auto-fix-bot.yml"
+      target: "_legacy/"
+    - file: "auto_sync_flow.mermaid.txt"
+      target: "_legacy/"
+    - file: "billion_dollar_automation_plan.md"
+      target: "_legacy/"
+    - file: "system_interconnection.mermaid.txt"
+      target: "_legacy/"
+    - file: "Island-AI 專案目錄結構圖譜註解.docx"
+      target: "_legacy/"
+    - file: "Island-AI 專案目錄結構圖譜註解.pdf"
+      target: "_legacy/"
+    - file: "Unmanned-Island-main (2).zip"
+      target: "_legacy/"
+
+# ============================================================================
+# Deduplication Candidates
+# ============================================================================
+
+deduplication_analysis:
+  description: "Directories with potential duplicates requiring merge analysis"
+  
+  candidates:
+    - name: "infrastructure-duplicates"
+      directories:
+        - "infra/"
+        - "infrastructure/"
+        - "infra/infrastructure/"
+      action: "merge_to_operations/infrastructure/"
+      analysis_required: true
+      
+    - name: "legacy-duplicates"
+      directories:
+        - "legacy/"
+        - "v1-python-drones/"
+        - "v2-multi-islands/"
+        - "legacy/v1-python-drones/"
+        - "legacy/v2-multi-islands/"
+      action: "consolidate_to__legacy/"
+      analysis_required: true
+      
+    - name: "autonomous-duplicates"
+      directories:
+        - "autonomous/"
+        - "automation/autonomous/"
+      action: "merge_to_platform/automation/autonomous/"
+      analysis_required: true
+      
+    - name: "frontend-apps-overlap"
+      directories:
+        - "frontend/"
+        - "apps/web/"
+      action: "evaluate_merge_to_apps/"
+      analysis_required: true
+
+# ============================================================================
+# Migration Dependencies
+# ============================================================================
+
+migration_dependencies:
+  description: "Files and configurations requiring updates after directory moves"
+  
+  import_paths:
+    - pattern: "from core."
+      update_to: "from platform.core."
+      files_affected: "*.py"
+      
+    - pattern: "from automation."
+      update_to: "from platform.automation."
+      files_affected: "*.py"
+      
+    - pattern: "from agent."
+      update_to: "from platform.agents.agent."
+      files_affected: "*.py"
+      
+    - pattern: "@/services"
+      update_to: "@/platform/services"
+      files_affected: "*.ts, *.tsx"
+      
+  configuration_files:
+    - file: "pyproject.toml"
+      updates:
+        - section: "tool.setuptools.packages.find"
+          change: "Update package discovery paths"
+          
+    - file: "tsconfig.json"
+      updates:
+        - section: "compilerOptions.paths"
+          change: "Update path aliases"
+          
+    - file: "package.json"
+      updates:
+        - section: "workspaces"
+          change: "Update workspace paths"
+          
+    - file: "pnpm-workspace.yaml"
+      updates:
+        - section: "packages"
+          change: "Update package glob patterns"
+          
+  kubernetes_manifests:
+    - pattern: "infrastructure/kubernetes/**/*.yaml"
+      updates:
+        - "Update image paths"
+        - "Update ConfigMap references"
+        - "Update volume mounts"
+        
+  cicd_pipelines:
+    - pattern: ".github/workflows/*.yaml"
+      updates:
+        - "Update working-directory paths"
+        - "Update build paths"
+
+# ============================================================================
+# Execution Plan Phases
+# ============================================================================
+
+execution_phases:
+  phase_1:
+    name: "Preparation"
+    tasks:
+      - "Create target directory structure"
+      - "Update .gitignore for build artifacts"
+      - "Create migration scripts"
+      - "Backup current state"
+      
+  phase_2:
+    name: "Platform Consolidation"
+    tasks:
+      - "Move core/ to platform/core/"
+      - "Move agent/ to platform/agents/agent/"
+      - "Move automation/ to platform/automation/"
+      - "Move services/ to platform/services/"
+      - "Update Python imports"
+      
+  phase_3:
+    name: "Operations Consolidation"
+    tasks:
+      - "Move infrastructure/ to operations/infrastructure/"
+      - "Move deployment/ to operations/deployment/"
+      - "Move config/ to operations/config/"
+      - "Update Kubernetes manifests"
+      
+  phase_4:
+    name: "Knowledge Consolidation"
+    tasks:
+      - "Move docs/ to knowledge/docs/"
+      - "Move examples/ to knowledge/examples/"
+      - "Move root markdown files to knowledge/"
+      
+  phase_5:
+    name: "Tooling Consolidation"
+    tasks:
+      - "Move tools/ to tooling/tools/"
+      - "Move scripts/ to tooling/scripts/"
+      - "Move templates/ to tooling/templates/"
+      
+  phase_6:
+    name: "Legacy Archive"
+    tasks:
+      - "Move legacy directories to _legacy/"
+      - "Remove duplicates"
+      - "Clean build artifacts"
+      
+  phase_7:
+    name: "Validation"
+    tasks:
+      - "Run all tests"
+      - "Validate imports"
+      - "Check CI/CD pipelines"
+      - "Verify documentation links"
+
+# ============================================================================
+# Post-Migration Validation
+# ============================================================================
+
+validation_checklist:
+  - name: "Import Validation"
+    command: "grep -r 'from core\\.' --include='*.py' | wc -l"
+    expected: "0 (all updated to platform.core)"
+    
+  - name: "Test Suite"
+    command: "pytest tests/"
+    expected: "All tests pass"
+    
+  - name: "TypeScript Build"
+    command: "npm run build"
+    expected: "No errors"
+    
+  - name: "Kubernetes Manifests"
+    command: "kubectl apply --dry-run=client -f operations/infrastructure/kubernetes/"
+    expected: "All manifests valid"
+    
+  - name: "Documentation Links"
+    command: "markdown-link-check knowledge/**/*.md"
+    expected: "No broken links"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# End of Directory Reorganization Plan
+# ═══════════════════════════════════════════════════════════════════════════════

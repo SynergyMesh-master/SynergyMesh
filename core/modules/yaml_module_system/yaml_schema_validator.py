@@ -6,11 +6,11 @@ JSON Schema 驗證系統，用於驗證 YAML 模組的結構和內容。
 Reference: Schema validation best practices [8]
 """
 
-import json
-import re
+from typing import Dict, List, Any, Optional
 from dataclasses import dataclass, field
 from enum import Enum
-from typing import Any
+import re
+import json
 
 
 class ValidationErrorType(Enum):
@@ -34,9 +34,9 @@ class ValidationError:
     message: str
     expected: Any = None
     actual: Any = None
-    suggestion: str | None = None
-
-    def to_dict(self) -> dict[str, Any]:
+    suggestion: Optional[str] = None
+    
+    def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary"""
         return {
             'path': self.path,
@@ -52,21 +52,21 @@ class ValidationError:
 class ValidationResult:
     """驗證結果"""
     valid: bool
-    errors: list[ValidationError] = field(default_factory=list)
-    warnings: list[str] = field(default_factory=list)
-    validated_at: str | None = None
-    schema_version: str | None = None
-
+    errors: List[ValidationError] = field(default_factory=list)
+    warnings: List[str] = field(default_factory=list)
+    validated_at: Optional[str] = None
+    schema_version: Optional[str] = None
+    
     def add_error(self, error: ValidationError) -> None:
         """添加錯誤"""
         self.errors.append(error)
         self.valid = False
-
+    
     def add_warning(self, warning: str) -> None:
         """添加警告"""
         self.warnings.append(warning)
-
-    def to_dict(self) -> dict[str, Any]:
+    
+    def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary"""
         return {
             'valid': self.valid,
@@ -83,39 +83,39 @@ class SchemaRegistry:
     
     管理和存儲所有 JSON Schema 定義。
     """
-
+    
     def __init__(self):
-        self._schemas: dict[str, dict[str, Any]] = {}
-        self._schema_versions: dict[str, list[str]] = {}
-
-    def register(self, schema_id: str, schema: dict[str, Any], version: str = "1.0.0") -> None:
+        self._schemas: Dict[str, Dict[str, Any]] = {}
+        self._schema_versions: Dict[str, List[str]] = {}
+    
+    def register(self, schema_id: str, schema: Dict[str, Any], version: str = "1.0.0") -> None:
         """註冊 Schema"""
         full_id = f"{schema_id}@{version}"
         self._schemas[full_id] = schema
-
+        
         if schema_id not in self._schema_versions:
             self._schema_versions[schema_id] = []
         self._schema_versions[schema_id].append(version)
-
-    def get(self, schema_id: str, version: str | None = None) -> dict[str, Any] | None:
+    
+    def get(self, schema_id: str, version: Optional[str] = None) -> Optional[Dict[str, Any]]:
         """獲取 Schema"""
         if version:
             full_id = f"{schema_id}@{version}"
             return self._schemas.get(full_id)
-
+        
         # 獲取最新版本
         versions = self._schema_versions.get(schema_id, [])
         if not versions:
             return None
-
+        
         latest_version = sorted(versions)[-1]
         return self._schemas.get(f"{schema_id}@{latest_version}")
-
-    def list_schemas(self) -> list[str]:
+    
+    def list_schemas(self) -> List[str]:
         """列出所有 Schema"""
         return list(self._schema_versions.keys())
-
-    def get_versions(self, schema_id: str) -> list[str]:
+    
+    def get_versions(self, schema_id: str) -> List[str]:
         """獲取 Schema 的所有版本"""
         return self._schema_versions.get(schema_id, [])
 
@@ -126,7 +126,7 @@ class YAMLSchemaValidator:
     
     使用 JSON Schema 驗證 YAML 模組的結構和內容。
     """
-
+    
     # 內建類型映射
     TYPE_MAP = {
         'string': str,
@@ -137,7 +137,7 @@ class YAMLSchemaValidator:
         'object': dict,
         'null': type(None),
     }
-
+    
     # 格式驗證正則表達式
     FORMAT_PATTERNS = {
         'email': r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
@@ -147,16 +147,16 @@ class YAMLSchemaValidator:
         'uuid': r'^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$',
         'semver': r'^\d+\.\d+\.\d+(-[a-zA-Z0-9.]+)?(\+[a-zA-Z0-9.]+)?$',
     }
-
-    def __init__(self, registry: SchemaRegistry | None = None):
+    
+    def __init__(self, registry: Optional[SchemaRegistry] = None):
         self.registry = registry or SchemaRegistry()
-        self._custom_validators: dict[str, callable] = {}
-
+        self._custom_validators: Dict[str, callable] = {}
+    
     def register_custom_validator(self, name: str, validator: callable) -> None:
         """註冊自定義驗證器"""
         self._custom_validators[name] = validator
-
-    def validate(self, data: Any, schema: dict[str, Any], path: str = "$") -> ValidationResult:
+    
+    def validate(self, data: Any, schema: Dict[str, Any], path: str = "$") -> ValidationResult:
         """
         驗證數據是否符合 Schema
         
@@ -170,48 +170,49 @@ class YAMLSchemaValidator:
         """
         result = ValidationResult(valid=True)
         result.schema_version = schema.get('$schema', 'unknown')
-
+        
         self._validate_node(data, schema, path, result)
-
+        
         return result
-
-    def _validate_node(self, data: Any, schema: dict[str, Any], path: str, result: ValidationResult) -> None:
+    
+    def _validate_node(self, data: Any, schema: Dict[str, Any], path: str, result: ValidationResult) -> None:
         """驗證單個節點"""
-
+        
         # 檢查類型
         if 'type' in schema:
             self._validate_type(data, schema['type'], path, result)
-
+        
         # 檢查 enum
         if 'enum' in schema:
             self._validate_enum(data, schema['enum'], path, result)
-
+        
         # 檢查 const
-        if 'const' in schema and data != schema['const']:
-            result.add_error(ValidationError(
-                path=path,
-                error_type=ValidationErrorType.ENUM_VIOLATION,
-                message=f"Value must be exactly {schema['const']}",
-                expected=schema['const'],
-                actual=data,
-            ))
-
+        if 'const' in schema:
+            if data != schema['const']:
+                result.add_error(ValidationError(
+                    path=path,
+                    error_type=ValidationErrorType.ENUM_VIOLATION,
+                    message=f"Value must be exactly {schema['const']}",
+                    expected=schema['const'],
+                    actual=data,
+                ))
+        
         # 字符串驗證
         if isinstance(data, str):
             self._validate_string(data, schema, path, result)
-
+        
         # 數字驗證
         if isinstance(data, (int, float)) and not isinstance(data, bool):
             self._validate_number(data, schema, path, result)
-
+        
         # 數組驗證
         if isinstance(data, list):
             self._validate_array(data, schema, path, result)
-
+        
         # 對象驗證
         if isinstance(data, dict):
             self._validate_object(data, schema, path, result)
-
+        
         # 自定義驗證
         if 'x-custom-validator' in schema:
             validator_name = schema['x-custom-validator']
@@ -224,16 +225,16 @@ class YAMLSchemaValidator:
                         error_type=ValidationErrorType.CUSTOM_VALIDATION_FAILED,
                         message=f"Custom validator '{validator_name}' failed: {str(e)}",
                     ))
-
+    
     def _validate_type(self, data: Any, expected_type: str, path: str, result: ValidationResult) -> None:
         """驗證類型"""
         if expected_type == 'any':
             return
-
+        
         expected_python_type = self.TYPE_MAP.get(expected_type)
         if expected_python_type is None:
             return
-
+        
         # 特殊處理：boolean 不應該是 int
         if expected_type == 'boolean' and isinstance(data, bool):
             return
@@ -246,7 +247,7 @@ class YAMLSchemaValidator:
                 actual=type(data).__name__,
             ))
             return
-
+        
         if not isinstance(data, expected_python_type):
             result.add_error(ValidationError(
                 path=path,
@@ -255,8 +256,8 @@ class YAMLSchemaValidator:
                 expected=expected_type,
                 actual=type(data).__name__,
             ))
-
-    def _validate_enum(self, data: Any, enum_values: list[Any], path: str, result: ValidationResult) -> None:
+    
+    def _validate_enum(self, data: Any, enum_values: List[Any], path: str, result: ValidationResult) -> None:
         """驗證 enum"""
         if data not in enum_values:
             result.add_error(ValidationError(
@@ -266,8 +267,8 @@ class YAMLSchemaValidator:
                 expected=enum_values,
                 actual=data,
             ))
-
-    def _validate_string(self, data: str, schema: dict[str, Any], path: str, result: ValidationResult) -> None:
+    
+    def _validate_string(self, data: str, schema: Dict[str, Any], path: str, result: ValidationResult) -> None:
         """驗證字符串"""
         # 最小長度
         if 'minLength' in schema and len(data) < schema['minLength']:
@@ -278,7 +279,7 @@ class YAMLSchemaValidator:
                 expected=f">= {schema['minLength']}",
                 actual=len(data),
             ))
-
+        
         # 最大長度
         if 'maxLength' in schema and len(data) > schema['maxLength']:
             result.add_error(ValidationError(
@@ -288,17 +289,18 @@ class YAMLSchemaValidator:
                 expected=f"<= {schema['maxLength']}",
                 actual=len(data),
             ))
-
+        
         # 模式匹配
-        if 'pattern' in schema and not re.match(schema['pattern'], data):
-            result.add_error(ValidationError(
-                path=path,
-                error_type=ValidationErrorType.PATTERN_MISMATCH,
-                message=f"String does not match pattern {schema['pattern']}",
-                expected=schema['pattern'],
-                actual=data,
-            ))
-
+        if 'pattern' in schema:
+            if not re.match(schema['pattern'], data):
+                result.add_error(ValidationError(
+                    path=path,
+                    error_type=ValidationErrorType.PATTERN_MISMATCH,
+                    message=f"String does not match pattern {schema['pattern']}",
+                    expected=schema['pattern'],
+                    actual=data,
+                ))
+        
         # 格式驗證
         if 'format' in schema:
             format_name = schema['format']
@@ -311,8 +313,8 @@ class YAMLSchemaValidator:
                         expected=format_name,
                         actual=data,
                     ))
-
-    def _validate_number(self, data: float, schema: dict[str, Any], path: str, result: ValidationResult) -> None:
+    
+    def _validate_number(self, data: float, schema: Dict[str, Any], path: str, result: ValidationResult) -> None:
         """驗證數字"""
         # 最小值
         if 'minimum' in schema:
@@ -333,7 +335,7 @@ class YAMLSchemaValidator:
                     expected=f">= {schema['minimum']}",
                     actual=data,
                 ))
-
+        
         # 最大值
         if 'maximum' in schema:
             if 'exclusiveMaximum' in schema and schema['exclusiveMaximum']:
@@ -353,18 +355,19 @@ class YAMLSchemaValidator:
                     expected=f"<= {schema['maximum']}",
                     actual=data,
                 ))
-
+        
         # 倍數
-        if 'multipleOf' in schema and data % schema['multipleOf'] != 0:
-            result.add_error(ValidationError(
-                path=path,
-                error_type=ValidationErrorType.VALUE_OUT_OF_RANGE,
-                message=f"Value {data} is not a multiple of {schema['multipleOf']}",
-                expected=f"multiple of {schema['multipleOf']}",
-                actual=data,
-            ))
-
-    def _validate_array(self, data: list, schema: dict[str, Any], path: str, result: ValidationResult) -> None:
+        if 'multipleOf' in schema:
+            if data % schema['multipleOf'] != 0:
+                result.add_error(ValidationError(
+                    path=path,
+                    error_type=ValidationErrorType.VALUE_OUT_OF_RANGE,
+                    message=f"Value {data} is not a multiple of {schema['multipleOf']}",
+                    expected=f"multiple of {schema['multipleOf']}",
+                    actual=data,
+                ))
+    
+    def _validate_array(self, data: list, schema: Dict[str, Any], path: str, result: ValidationResult) -> None:
         """驗證數組"""
         # 最小項目數
         if 'minItems' in schema and len(data) < schema['minItems']:
@@ -375,7 +378,7 @@ class YAMLSchemaValidator:
                 expected=f">= {schema['minItems']} items",
                 actual=len(data),
             ))
-
+        
         # 最大項目數
         if 'maxItems' in schema and len(data) > schema['maxItems']:
             result.add_error(ValidationError(
@@ -385,7 +388,7 @@ class YAMLSchemaValidator:
                 expected=f"<= {schema['maxItems']} items",
                 actual=len(data),
             ))
-
+        
         # 唯一性
         if schema.get('uniqueItems', False):
             seen = []
@@ -400,14 +403,14 @@ class YAMLSchemaValidator:
                     ))
                     break
                 seen.append(item_json)
-
+        
         # 項目驗證
         if 'items' in schema:
             for i, item in enumerate(data):
                 item_path = f"{path}[{i}]"
                 self._validate_node(item, schema['items'], item_path, result)
-
-    def _validate_object(self, data: dict, schema: dict[str, Any], path: str, result: ValidationResult) -> None:
+    
+    def _validate_object(self, data: dict, schema: Dict[str, Any], path: str, result: ValidationResult) -> None:
         """驗證對象"""
         # 必需屬性
         if 'required' in schema:
@@ -419,20 +422,20 @@ class YAMLSchemaValidator:
                         message=f"Required property '{required_prop}' is missing",
                         expected=required_prop,
                     ))
-
+        
         # 屬性驗證
         if 'properties' in schema:
             for prop_name, prop_schema in schema['properties'].items():
                 if prop_name in data:
                     prop_path = f"{path}.{prop_name}"
                     self._validate_node(data[prop_name], prop_schema, prop_path, result)
-
+        
         # 額外屬性
         if schema.get('additionalProperties') is False:
             allowed_props = set(schema.get('properties', {}).keys())
             allowed_props.update(schema.get('patternProperties', {}).keys())
-
-            for prop_name in data:
+            
+            for prop_name in data.keys():
                 if prop_name not in allowed_props:
                     result.add_error(ValidationError(
                         path=f"{path}.{prop_name}",
@@ -440,7 +443,7 @@ class YAMLSchemaValidator:
                         message=f"Additional property '{prop_name}' is not allowed",
                         actual=prop_name,
                     ))
-
+        
         # 屬性數量
         if 'minProperties' in schema and len(data) < schema['minProperties']:
             result.add_error(ValidationError(
@@ -450,7 +453,7 @@ class YAMLSchemaValidator:
                 expected=f">= {schema['minProperties']} properties",
                 actual=len(data),
             ))
-
+        
         if 'maxProperties' in schema and len(data) > schema['maxProperties']:
             result.add_error(ValidationError(
                 path=path,

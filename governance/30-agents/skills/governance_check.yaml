@@ -1,0 +1,374 @@
+---
+apiVersion: governance.synergymesh.io/v2
+kind: AgentSkill
+metadata:
+  id: governance-check
+  name: "Governance Validation"
+  name_zh: "治理驗證"
+  version: "1.0.0"
+  description: "Comprehensive governance validation for compliance, policy enforcement, and regulatory requirements"
+  created_at: "2025-12-13"
+  updated_at: "2025-12-13"
+  owner: "Governance Team"
+
+spec:
+  category: validation
+  subcategory: compliance
+  risk_level: low
+
+  capabilities:
+    - policy_validation
+    - compliance_checking
+    - security_governance
+    - audit_trail_validation
+    - contract_enforcement
+    - regulatory_compliance
+    - sbom_validation
+    - license_compliance
+    - permission_validation
+
+  description_detailed: |
+    Governance validation capability enables AI agents to ensure compliance
+    with organizational policies and regulatory requirements:
+    
+    - Validate code and configurations against governance policies
+    - Check compliance with ISO-42001, NIST AI RMF, EU AI Act
+    - Enforce AI behavior contracts
+    - Validate SBOM (Software Bill of Materials)
+    - Audit license compliance
+    - Verify permission and access control policies
+    
+    Integrates with the SynergyMesh governance framework (80 dimensions).
+
+  inputs:
+    - name: target
+      type: object
+      required: true
+      properties:
+        type:
+          type: enum
+          values: [code, config, deployment, agent, sbom, license, contract]
+        path:
+          type: string
+          description: "Path to artifact to validate"
+        content:
+          type: string
+          description: "Content to validate (if not using path)"
+
+    - name: validation_scope
+      type: array
+      items:
+        type: enum
+        values:
+          - policy
+          - compliance
+          - security
+          - audit
+          - contract
+          - license
+          - sbom
+          - permissions
+          - all
+      required: false
+      default: [all]
+      description: "Scope of governance validation"
+
+    - name: frameworks
+      type: array
+      items:
+        type: string
+      required: false
+      default: ["ISO-42001", "NIST-AI-RMF"]
+      description: "Compliance frameworks to validate against"
+
+    - name: options
+      type: object
+      required: false
+      properties:
+        strict_mode:
+          type: boolean
+          default: false
+          description: "Fail on any violation"
+        include_recommendations:
+          type: boolean
+          default: true
+        generate_report:
+          type: boolean
+          default: true
+        dimensions:
+          type: array
+          items:
+            type: string
+          description: "Specific governance dimensions to check"
+
+  outputs:
+    - name: validation_result
+      type: object
+      properties:
+        passed: boolean
+        score: number
+        grade: enum[A, B, C, D, F]
+
+    - name: violations
+      type: array
+      items:
+        type: object
+        properties:
+          dimension: string
+          rule_id: string
+          severity: enum[critical, high, medium, low, info]
+          message: string
+          location: string
+          remediation: string
+          framework: string
+
+    - name: compliance_status
+      type: object
+      properties:
+        frameworks:
+          type: array
+          items:
+            type: object
+            properties:
+              name: string
+              status: enum[compliant, partial, non_compliant]
+              coverage: number
+              gaps:
+                type: array
+                items:
+                  type: string
+
+    - name: recommendations
+      type: array
+      items:
+        type: object
+        properties:
+          priority: enum[high, medium, low]
+          dimension: string
+          recommendation: string
+          effort: enum[low, medium, high]
+
+    - name: audit_evidence
+      type: object
+      properties:
+        timestamp: string
+        validator_id: string
+        artifact_hash: string
+        result_hash: string
+        attestation: string
+
+  providers:
+    - name: "governance-policy-engine"
+      path: "governance/10-policy/"
+      type: library
+      language: rego
+      priority: 1
+      capabilities:
+        - policy_validation
+
+    - name: "mcp-comprehensive-validator"
+      path: "mcp-servers/comprehensive-validator.js"
+      type: mcp-server
+      priority: 2
+      capabilities:
+        - compliance_checking
+        - policy_validation
+
+    - name: "mcp-security-scanner"
+      path: "mcp-servers/security-scanner.js"
+      type: mcp-server
+      priority: 3
+      capabilities:
+        - security_governance
+
+    - name: "mcp-slsa-validator"
+      path: "mcp-servers/slsa-validator.js"
+      type: mcp-server
+      priority: 4
+      capabilities:
+        - sbom_validation
+        - audit_trail_validation
+
+    - name: "contract-registry"
+      path: "governance/60-contracts/"
+      type: library
+      priority: 5
+      capabilities:
+        - contract_enforcement
+
+    - name: "virtual-expert-marcus"
+      path: "core/virtual_experts/"
+      type: virtual_expert
+      expert: MarcusJohnson
+      priority: 6
+      specialization: "Security architecture and compliance"
+
+  governance_dimensions:
+    - id: "05-compliance"
+      relevance: high
+      controls:
+        - regulatory_compliance
+        - audit_readiness
+
+    - id: "06-security"
+      relevance: high
+      controls:
+        - security_policies
+        - access_control
+
+    - id: "07-audit"
+      relevance: high
+      controls:
+        - audit_trail
+        - evidence_collection
+
+    - id: "10-policy"
+      relevance: high
+      controls:
+        - policy_enforcement
+        - rule_validation
+
+    - id: "37-behavior-contracts"
+      relevance: high
+      controls:
+        - contract_validation
+        - behavior_compliance
+
+    - id: "38-sbom"
+      relevance: medium
+      controls:
+        - supply_chain_security
+        - component_tracking
+
+    - id: "60-contracts"
+      relevance: high
+      controls:
+        - module_contracts
+        - interface_compliance
+
+    - id: "64-attestation"
+      relevance: medium
+      controls:
+        - verification_attestation
+        - compliance_certification
+
+  constraints:
+    max_artifact_size_mb: 50
+    validation_timeout_seconds: 180
+    max_concurrent_validations: 8
+    supported_frameworks:
+      - ISO-42001
+      - NIST-AI-RMF
+      - EU-AI-Act
+      - SOC2
+      - GDPR
+
+  monitoring:
+    metrics:
+      - name: governance_validations_total
+        type: counter
+        labels: [target_type, scope, framework]
+      - name: validation_duration_seconds
+        type: histogram
+        buckets: [1, 5, 10, 30, 60, 120]
+      - name: compliance_score
+        type: gauge
+        labels: [framework, dimension]
+      - name: violations_total
+        type: counter
+        labels: [severity, dimension]
+
+  examples:
+    - name: "Agent Compliance Check"
+      description: "Validate an AI agent against governance framework"
+      input:
+        target:
+          type: agent
+          path: "agent/auto-repair/"
+        validation_scope: [all]
+        frameworks: ["ISO-42001", "NIST-AI-RMF"]
+        options:
+          strict_mode: false
+          generate_report: true
+      expected_output:
+        validation_result:
+          passed: true
+          score: 87
+          grade: B
+        compliance_status:
+          frameworks:
+            - name: "ISO-42001"
+              status: compliant
+              coverage: 92
+            - name: "NIST-AI-RMF"
+              status: partial
+              coverage: 78
+              gaps:
+                - "AI risk documentation incomplete"
+        recommendations:
+          - priority: medium
+            dimension: "04-risk"
+            recommendation: "Add comprehensive risk assessment documentation"
+
+    - name: "SBOM Validation"
+      description: "Validate Software Bill of Materials"
+      input:
+        target:
+          type: sbom
+          path: "sbom.json"
+        validation_scope: [sbom, license]
+        options:
+          strict_mode: true
+      expected_output:
+        validation_result:
+          passed: false
+          score: 65
+          grade: D
+        violations:
+          - dimension: "38-sbom"
+            rule_id: "SBOM-001"
+            severity: high
+            message: "Missing license information for 3 components"
+            remediation: "Add license field to package declarations"
+          - dimension: "38-sbom"
+            rule_id: "SBOM-002"
+            severity: medium
+            message: "Outdated SBOM format (CycloneDX 1.3, expected 1.5)"
+
+    - name: "Security Policy Check"
+      description: "Validate code against security governance policies"
+      input:
+        target:
+          type: code
+          path: "src/auth/login.py"
+        validation_scope: [security, policy]
+        options:
+          dimensions: ["06-security"]
+      expected_output:
+        validation_result:
+          passed: true
+          score: 95
+          grade: A
+        violations: []
+        audit_evidence:
+          timestamp: "2025-12-13T10:00:00Z"
+          artifact_hash: "sha256:abc123..."
+          attestation: "Security validation passed"
+
+    - name: "Contract Enforcement"
+      description: "Validate module against behavior contracts"
+      input:
+        target:
+          type: contract
+          path: "governance/60-contracts/registry/module-contracts/"
+        validation_scope: [contract]
+      expected_output:
+        validation_result:
+          passed: true
+          score: 100
+          grade: A
+        compliance_status:
+          frameworks:
+            - name: "Behavior Contracts"
+              status: compliant
+              coverage: 100

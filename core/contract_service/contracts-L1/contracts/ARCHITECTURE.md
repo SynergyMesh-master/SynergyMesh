@@ -2,7 +2,10 @@
 
 ## Overview
 
-Contracts-L1 is a core service of the SynergyMesh platform that provides **build provenance tracking**, **SLSA attestation**, and **automated responsibility assignment** capabilities. The service follows a **clean layered architecture** pattern to ensure maintainability, testability, and scalability.
+Contracts-L1 is a core service of the SynergyMesh platform that provides **build
+provenance tracking**, **SLSA attestation**, and **automated responsibility
+assignment** capabilities. The service follows a **clean layered architecture**
+pattern to ensure maintainability, testability, and scalability.
 
 ## Architecture Pattern
 
@@ -32,27 +35,35 @@ The service implements a **3-tier layered architecture**:
 **Purpose:** Handles HTTP request/response cycle, input validation, and routing.
 
 **Components:**
-- **Controllers** (`controllers/`): Handle HTTP requests, orchestrate service calls, format responses
+
+- **Controllers** (`controllers/`): Handle HTTP requests, orchestrate service
+  calls, format responses
 - **Routes** (`routes.ts`): Define API endpoints and map them to controllers
-- **Middleware** (`middleware/`): Cross-cutting concerns (logging, validation, error handling, rate limiting)
+- **Middleware** (`middleware/`): Cross-cutting concerns (logging, validation,
+  error handling, rate limiting)
 
 **Key Principles:**
+
 - Controllers should be thin - only handle request/response
 - No business logic in controllers
 - All input validation via Zod schemas
 - Use middleware for cross-cutting concerns
 
 **Example:**
+
 ```typescript
 // controllers/provenance.ts
 export class ProvenanceController {
   async createAttestation(req: Request, res: Response): Promise<void> {
     // 1. Extract validated data from request
     const { filePath, builder } = req.body;
-    
+
     // 2. Call service layer
-    const attestation = await provenanceService.createAttestation(filePath, builder);
-    
+    const attestation = await provenanceService.createAttestation(
+      filePath,
+      builder
+    );
+
     // 3. Format and send response
     sendSuccess(res, attestation, { status: 201 });
   }
@@ -61,15 +72,21 @@ export class ProvenanceController {
 
 #### 2. Business Logic Layer (`services/`)
 
-**Purpose:** Contains core business logic, orchestrates workflows, enforces business rules.
+**Purpose:** Contains core business logic, orchestrates workflows, enforces
+business rules.
 
 **Components:**
-- **Attestation Service** (`services/attestation.ts`): Handles Sigstore attestation creation/verification
-- **Provenance Service** (`services/provenance.ts`): Manages build provenance tracking
-- **Assignment Engine** (`services/assignment/`): Automated responsibility assignment system
+
+- **Attestation Service** (`services/attestation.ts`): Handles Sigstore
+  attestation creation/verification
+- **Provenance Service** (`services/provenance.ts`): Manages build provenance
+  tracking
+- **Assignment Engine** (`services/assignment/`): Automated responsibility
+  assignment system
 - **Escalation Engine** (`services/escalation/`): Incident escalation workflows
 
 **Key Principles:**
+
 - Services contain all business logic
 - Services are framework-agnostic (no Express/HTTP dependencies)
 - Services can call other services
@@ -77,10 +94,14 @@ export class ProvenanceController {
 - Testable without HTTP layer
 
 **Example:**
+
 ```typescript
 // services/provenance.ts
 export class ProvenanceService {
-  async createAttestation(filePath: string, builder: BuilderInfo): Promise<Attestation> {
+  async createAttestation(
+    filePath: string,
+    builder: BuilderInfo
+  ): Promise<Attestation> {
     // Business logic:
     // 1. Validate file exists
     // 2. Calculate digest
@@ -97,17 +118,20 @@ export class ProvenanceService {
 **Purpose:** Defines data structures, validation schemas, and type definitions.
 
 **Components:**
+
 - **Models** (`models/`): Zod schemas for data validation and TypeScript types
 - **Types** (`types/`): TypeScript type definitions and interfaces
 - **Errors** (`errors/`): Custom error types
 
 **Key Principles:**
+
 - All data structures validated with Zod
 - Strong typing throughout
 - Models are immutable
 - Clear separation of input/output types
 
 **Example:**
+
 ```typescript
 // models/provenance.model.ts
 export const createAttestationSchema = z.object({
@@ -228,7 +252,9 @@ Services are instantiated in controllers and can be injected for testing:
 
 ```typescript
 export class ProvenanceController {
-  constructor(private provenanceService: ProvenanceService = new ProvenanceService()) {}
+  constructor(
+    private provenanceService: ProvenanceService = new ProvenanceService()
+  ) {}
 }
 ```
 
@@ -372,7 +398,12 @@ const createError = {
 Centralized error handling ensures consistent error responses:
 
 ```typescript
-export const errorMiddleware = (err: Error, req: Request, res: Response, next: NextFunction) => {
+export const errorMiddleware = (
+  err: Error,
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   if (err instanceof AppError) {
     res.status(err.statusCode).json({
       error: {
@@ -387,7 +418,10 @@ export const errorMiddleware = (err: Error, req: Request, res: Response, next: N
     res.status(500).json({
       error: {
         code: 'INTERNAL_ERROR',
-        message: config.NODE_ENV === 'production' ? 'Internal server error' : err.message,
+        message:
+          config.NODE_ENV === 'production'
+            ? 'Internal server error'
+            : err.message,
         traceId: req.traceId,
         timestamp: new Date().toISOString(),
       },
@@ -426,6 +460,7 @@ export const errorMiddleware = (err: Error, req: Request, res: Response, next: N
 ### Middleware Order
 
 Middleware ordered for optimal performance:
+
 1. Logging (fast, needed for all requests)
 2. Body parsing (fast)
 3. Rate limiting (fast, protects expensive operations)
@@ -517,5 +552,4 @@ For questions or contributions, refer to the main repository documentation.
 
 ---
 
-**Last Updated:** 2024-12-09
-**Version:** 1.0.0
+**Last Updated:** 2024-12-09 **Version:** 1.0.0

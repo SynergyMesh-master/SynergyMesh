@@ -248,7 +248,7 @@ class GovernanceAutomationLauncher:
     - Integration with existing launchers
     """
 
-    def __init__(self, governance_root: Path = None):
+    def __init__(self, governance_root: Path | None = None):
         """Initialize the governance automation launcher."""
         self.governance_root = governance_root or Path(__file__).parent.parent
         self.logger = self._setup_logger()

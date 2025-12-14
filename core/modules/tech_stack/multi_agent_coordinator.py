@@ -8,14 +8,13 @@ Reference: AI agents need specialization and clear role positioning [1]
 Reference: Building reliable AI agents requires domain-specific expertise [1]
 """
 
-import asyncio
-import uuid
-from collections import defaultdict
-from collections.abc import Callable
 from dataclasses import dataclass, field
-from datetime import datetime
 from enum import Enum
-from typing import Any
+from typing import Dict, List, Optional, Any, Callable, Set
+from datetime import datetime
+import uuid
+import asyncio
+from collections import defaultdict
 
 
 class AgentRole(Enum):
@@ -29,7 +28,7 @@ class AgentRole(Enum):
     EXECUTOR = "executor"               # 執行者：執行具體任務
     VALIDATOR = "validator"             # 驗證者：驗證結果
     CRITIC = "critic"                   # 評論者：提供反饋
-
+    
     # Specialized roles
     RESEARCHER = "researcher"           # 研究員：收集信息
     CODER = "coder"                     # 編碼者：編寫代碼
@@ -51,19 +50,19 @@ class AgentCapability(Enum):
     CODE_REVIEW = "code_review"
     CODE_REFACTORING = "code_refactoring"
     CODE_DEBUGGING = "code_debugging"
-
+    
     # Analysis capabilities
     DATA_ANALYSIS = "data_analysis"
     SECURITY_ANALYSIS = "security_analysis"
     PERFORMANCE_ANALYSIS = "performance_analysis"
     ARCHITECTURE_ANALYSIS = "architecture_analysis"
-
+    
     # Execution capabilities
     TASK_EXECUTION = "task_execution"
     API_INTEGRATION = "api_integration"
     DATABASE_OPERATIONS = "database_operations"
     DEPLOYMENT = "deployment"
-
+    
     # Communication capabilities
     NATURAL_LANGUAGE = "natural_language"
     DOCUMENTATION = "documentation"
@@ -100,7 +99,7 @@ class AgentMessage:
     sender_id: str = ""
     receiver_id: str = ""  # Empty for broadcast
     content: Any = None
-    metadata: dict[str, Any] = field(default_factory=dict)
+    metadata: Dict[str, Any] = field(default_factory=dict)
     timestamp: datetime = field(default_factory=datetime.now)
     requires_response: bool = False
     response_timeout: float = 30.0  # seconds
@@ -115,20 +114,20 @@ class AgentDefinition:
     id: str = field(default_factory=lambda: str(uuid.uuid4()))
     name: str = ""
     role: AgentRole = AgentRole.EXECUTOR
-    capabilities: list[AgentCapability] = field(default_factory=list)
+    capabilities: List[AgentCapability] = field(default_factory=list)
     description: str = ""
     model: str = "gpt-4"
     system_prompt: str = ""
     max_concurrent_tasks: int = 3
     priority: int = 0
     is_active: bool = True
-    metadata: dict[str, Any] = field(default_factory=dict)
-
+    metadata: Dict[str, Any] = field(default_factory=dict)
+    
     def has_capability(self, capability: AgentCapability) -> bool:
         """Check if agent has a specific capability"""
         return capability in self.capabilities
-
-    def can_handle_task(self, required_capabilities: list[AgentCapability]) -> bool:
+    
+    def can_handle_task(self, required_capabilities: List[AgentCapability]) -> bool:
         """Check if agent can handle a task with required capabilities"""
         return all(cap in self.capabilities for cap in required_capabilities)
 
@@ -142,17 +141,17 @@ class TeamTask:
     id: str = field(default_factory=lambda: str(uuid.uuid4()))
     title: str = ""
     description: str = ""
-    required_capabilities: list[AgentCapability] = field(default_factory=list)
+    required_capabilities: List[AgentCapability] = field(default_factory=list)
     priority: TaskPriority = TaskPriority.MEDIUM
-    assigned_agents: list[str] = field(default_factory=list)
-    dependencies: list[str] = field(default_factory=list)
+    assigned_agents: List[str] = field(default_factory=list)
+    dependencies: List[str] = field(default_factory=list)
     status: str = "pending"
     result: Any = None
-    error: str | None = None
+    error: Optional[str] = None
     created_at: datetime = field(default_factory=datetime.now)
-    started_at: datetime | None = None
-    completed_at: datetime | None = None
-    metadata: dict[str, Any] = field(default_factory=dict)
+    started_at: Optional[datetime] = None
+    completed_at: Optional[datetime] = None
+    metadata: Dict[str, Any] = field(default_factory=dict)
 
 
 class AgentCommunicationBus:
@@ -163,35 +162,35 @@ class AgentCommunicationBus:
     Provides publish/subscribe messaging and direct messaging
     between agents in the multi-agent system.
     """
-
+    
     def __init__(self):
-        self.subscribers: dict[str, list[Callable]] = defaultdict(list)
+        self.subscribers: Dict[str, List[Callable]] = defaultdict(list)
         self.message_queue: asyncio.Queue = asyncio.Queue()
-        self.message_history: list[AgentMessage] = []
-        self.pending_responses: dict[str, asyncio.Future] = {}
+        self.message_history: List[AgentMessage] = []
+        self.pending_responses: Dict[str, asyncio.Future] = {}
         self._running = False
-
+    
     async def start(self) -> None:
         """Start the communication bus"""
         self._running = True
         asyncio.create_task(self._process_messages())
-
+    
     async def stop(self) -> None:
         """Stop the communication bus"""
         self._running = False
-
+    
     def subscribe(self, topic: str, callback: Callable) -> None:
         """Subscribe to a topic
         
         訂閱主題
         """
         self.subscribers[topic].append(callback)
-
+    
     def unsubscribe(self, topic: str, callback: Callable) -> None:
         """Unsubscribe from a topic"""
         if callback in self.subscribers[topic]:
             self.subscribers[topic].remove(callback)
-
+    
     async def publish(self, topic: str, message: AgentMessage) -> None:
         """Publish a message to a topic
         
@@ -199,19 +198,19 @@ class AgentCommunicationBus:
         """
         await self.message_queue.put((topic, message))
         self.message_history.append(message)
-
+    
     async def send_direct(
         self,
         message: AgentMessage,
         wait_for_response: bool = False
-    ) -> AgentMessage | None:
+    ) -> Optional[AgentMessage]:
         """Send a direct message to an agent
         
         直接發送消息給代理
         """
         topic = f"agent:{message.receiver_id}"
         await self.publish(topic, message)
-
+        
         if wait_for_response and message.requires_response:
             future = asyncio.Future()
             self.pending_responses[message.id] = future
@@ -220,12 +219,12 @@ class AgentCommunicationBus:
                     future,
                     timeout=message.response_timeout
                 )
-            except TimeoutError:
+            except asyncio.TimeoutError:
                 del self.pending_responses[message.id]
                 return None
-
+        
         return None
-
+    
     async def broadcast(self, message: AgentMessage) -> None:
         """Broadcast a message to all agents
         
@@ -233,7 +232,7 @@ class AgentCommunicationBus:
         """
         message.message_type = MessageType.BROADCAST
         await self.publish("broadcast", message)
-
+    
     async def respond_to(self, original_message_id: str, response: AgentMessage) -> None:
         """Respond to a message
         
@@ -242,7 +241,7 @@ class AgentCommunicationBus:
         if original_message_id in self.pending_responses:
             self.pending_responses[original_message_id].set_result(response)
             del self.pending_responses[original_message_id]
-
+    
     async def _process_messages(self) -> None:
         """Process messages from the queue"""
         while self._running:
@@ -251,7 +250,7 @@ class AgentCommunicationBus:
                     self.message_queue.get(),
                     timeout=1.0
                 )
-
+                
                 for callback in self.subscribers.get(topic, []):
                     try:
                         if asyncio.iscoroutinefunction(callback):
@@ -260,8 +259,8 @@ class AgentCommunicationBus:
                             callback(message)
                     except Exception:
                         pass  # Log error in production
-
-            except TimeoutError:
+                
+            except asyncio.TimeoutError:
                 continue
             except Exception:
                 break
@@ -278,12 +277,12 @@ class TaskRouter:
     - Task priority
     - Load balancing
     """
-
+    
     def __init__(self):
-        self.agents: dict[str, AgentDefinition] = {}
-        self.agent_load: dict[str, int] = defaultdict(int)
-        self.routing_rules: list[dict[str, Any]] = []
-
+        self.agents: Dict[str, AgentDefinition] = {}
+        self.agent_load: Dict[str, int] = defaultdict(int)
+        self.routing_rules: List[Dict[str, Any]] = []
+    
     def register_agent(self, agent: AgentDefinition) -> None:
         """Register an agent for routing
         
@@ -291,18 +290,18 @@ class TaskRouter:
         """
         self.agents[agent.id] = agent
         self.agent_load[agent.id] = 0
-
+    
     def unregister_agent(self, agent_id: str) -> None:
         """Unregister an agent"""
         if agent_id in self.agents:
             del self.agents[agent_id]
             del self.agent_load[agent_id]
-
+    
     def add_routing_rule(
         self,
         name: str,
         condition: Callable[[TeamTask], bool],
-        target_roles: list[AgentRole],
+        target_roles: List[AgentRole],
         priority: int = 0
     ) -> None:
         """Add a custom routing rule
@@ -316,29 +315,29 @@ class TaskRouter:
             "priority": priority
         })
         self.routing_rules.sort(key=lambda x: x["priority"])
-
+    
     def find_suitable_agents(
         self,
         task: TeamTask,
         max_agents: int = 1
-    ) -> list[AgentDefinition]:
+    ) -> List[AgentDefinition]:
         """Find agents suitable for a task
         
         找到適合任務的代理
         """
         suitable_agents = []
-
+        
         # Check custom routing rules first
         for rule in self.routing_rules:
             if rule["condition"](task):
                 for agent in self.agents.values():
-                    if (agent.is_active and
+                    if (agent.is_active and 
                         agent.role in rule["target_roles"] and
                         self.agent_load[agent.id] < agent.max_concurrent_tasks):
                         suitable_agents.append(agent)
                 if suitable_agents:
                     break
-
+        
         # Fallback to capability-based routing
         if not suitable_agents:
             for agent in self.agents.values():
@@ -346,15 +345,15 @@ class TaskRouter:
                     agent.can_handle_task(task.required_capabilities) and
                     self.agent_load[agent.id] < agent.max_concurrent_tasks):
                     suitable_agents.append(agent)
-
+        
         # Sort by priority and load
         suitable_agents.sort(
             key=lambda a: (a.priority, self.agent_load[a.id])
         )
-
+        
         return suitable_agents[:max_agents]
-
-    def route_task(self, task: TeamTask) -> AgentDefinition | None:
+    
+    def route_task(self, task: TeamTask) -> Optional[AgentDefinition]:
         """Route a task to the best available agent
         
         將任務路由到最佳可用代理
@@ -365,13 +364,13 @@ class TaskRouter:
             self.agent_load[agent.id] += 1
             return agent
         return None
-
+    
     def release_agent(self, agent_id: str) -> None:
         """Release an agent from a task"""
         if agent_id in self.agent_load and self.agent_load[agent_id] > 0:
             self.agent_load[agent_id] -= 1
-
-    def get_load_status(self) -> dict[str, dict[str, Any]]:
+    
+    def get_load_status(self) -> Dict[str, Dict[str, Any]]:
         """Get load status for all agents"""
         return {
             agent_id: {
@@ -394,34 +393,34 @@ class AgentTeam:
     id: str = field(default_factory=lambda: str(uuid.uuid4()))
     name: str = ""
     description: str = ""
-    agents: dict[str, AgentDefinition] = field(default_factory=dict)
-    leader_id: str | None = None
+    agents: Dict[str, AgentDefinition] = field(default_factory=dict)
+    leader_id: Optional[str] = None
     created_at: datetime = field(default_factory=datetime.now)
-    metadata: dict[str, Any] = field(default_factory=dict)
-
+    metadata: Dict[str, Any] = field(default_factory=dict)
+    
     def add_agent(self, agent: AgentDefinition) -> None:
         """Add an agent to the team"""
         self.agents[agent.id] = agent
-
+    
     def remove_agent(self, agent_id: str) -> None:
         """Remove an agent from the team"""
         if agent_id in self.agents:
             del self.agents[agent_id]
             if self.leader_id == agent_id:
                 self.leader_id = None
-
+    
     def set_leader(self, agent_id: str) -> bool:
         """Set the team leader"""
         if agent_id in self.agents:
             self.leader_id = agent_id
             return True
         return False
-
-    def get_agents_by_role(self, role: AgentRole) -> list[AgentDefinition]:
+    
+    def get_agents_by_role(self, role: AgentRole) -> List[AgentDefinition]:
         """Get all agents with a specific role"""
         return [a for a in self.agents.values() if a.role == role]
-
-    def get_agents_with_capability(self, capability: AgentCapability) -> list[AgentDefinition]:
+    
+    def get_agents_with_capability(self, capability: AgentCapability) -> List[AgentDefinition]:
         """Get all agents with a specific capability"""
         return [a for a in self.agents.values() if a.has_capability(capability)]
 
@@ -440,15 +439,15 @@ class MultiAgentCoordinator:
     3. 通信管理：代理間的消息傳遞
     4. 團隊協作：組織代理成團隊
     """
-
+    
     def __init__(self):
-        self.agents: dict[str, AgentDefinition] = {}
-        self.teams: dict[str, AgentTeam] = {}
-        self.tasks: dict[str, TeamTask] = {}
+        self.agents: Dict[str, AgentDefinition] = {}
+        self.teams: Dict[str, AgentTeam] = {}
+        self.tasks: Dict[str, TeamTask] = {}
         self.communication_bus = AgentCommunicationBus()
         self.task_router = TaskRouter()
         self._started = False
-
+    
     async def start(self) -> None:
         """Start the coordinator
         
@@ -456,7 +455,7 @@ class MultiAgentCoordinator:
         """
         await self.communication_bus.start()
         self._started = True
-
+    
     async def stop(self) -> None:
         """Stop the coordinator
         
@@ -464,7 +463,7 @@ class MultiAgentCoordinator:
         """
         await self.communication_bus.stop()
         self._started = False
-
+    
     def register_agent(self, agent: AgentDefinition) -> str:
         """Register a new agent
         
@@ -472,15 +471,15 @@ class MultiAgentCoordinator:
         """
         self.agents[agent.id] = agent
         self.task_router.register_agent(agent)
-
+        
         # Subscribe agent to its own channel
         self.communication_bus.subscribe(
             f"agent:{agent.id}",
             lambda msg: self._handle_agent_message(agent.id, msg)
         )
-
+        
         return agent.id
-
+    
     def unregister_agent(self, agent_id: str) -> bool:
         """Unregister an agent
         
@@ -491,42 +490,42 @@ class MultiAgentCoordinator:
             self.task_router.unregister_agent(agent_id)
             return True
         return False
-
+    
     def create_team(
         self,
         name: str,
-        agent_ids: list[str],
-        leader_id: str | None = None
+        agent_ids: List[str],
+        leader_id: Optional[str] = None
     ) -> AgentTeam:
         """Create a team of agents
         
         創建代理團隊
         """
         team = AgentTeam(name=name, description=f"Team: {name}")
-
+        
         for agent_id in agent_ids:
             if agent_id in self.agents:
                 team.add_agent(self.agents[agent_id])
-
+        
         if leader_id and leader_id in team.agents:
             team.set_leader(leader_id)
-
+        
         self.teams[team.id] = team
         return team
-
+    
     async def submit_task(self, task: TeamTask) -> str:
         """Submit a task for execution
         
         提交任務以執行
         """
         self.tasks[task.id] = task
-
+        
         # Route task to appropriate agent
         agent = self.task_router.route_task(task)
         if agent:
             task.assigned_agents.append(agent.id)
             task.status = "assigned"
-
+            
             # Notify agent
             await self.communication_bus.send_direct(
                 AgentMessage(
@@ -539,45 +538,45 @@ class MultiAgentCoordinator:
             )
         else:
             task.status = "unassigned"
-
+        
         return task.id
-
-    async def execute_task(self, task_id: str) -> TeamTask | None:
+    
+    async def execute_task(self, task_id: str) -> Optional[TeamTask]:
         """Execute a task
         
         執行任務
         """
         if task_id not in self.tasks:
             return None
-
+        
         task = self.tasks[task_id]
         task.status = "running"
         task.started_at = datetime.now()
-
+        
         try:
             # In production: Actually execute via framework integrations
             await asyncio.sleep(0.1)  # Simulate execution
-
+            
             task.result = f"Task {task.title} completed successfully"
             task.status = "completed"
             task.completed_at = datetime.now()
-
+            
             # Release agents
             for agent_id in task.assigned_agents:
                 self.task_router.release_agent(agent_id)
-
+            
         except Exception as e:
             task.status = "failed"
             task.error = str(e)
             task.completed_at = datetime.now()
-
+        
         return task
-
+    
     async def execute_workflow(
         self,
-        tasks: list[TeamTask],
+        tasks: List[TeamTask],
         parallel: bool = False
-    ) -> list[TeamTask]:
+    ) -> List[TeamTask]:
         """Execute a workflow of tasks
         
         執行任務工作流
@@ -585,9 +584,9 @@ class MultiAgentCoordinator:
         # Submit all tasks
         for task in tasks:
             await self.submit_task(task)
-
+        
         results = []
-
+        
         if parallel:
             # Execute tasks in parallel
             coroutines = [self.execute_task(t.id) for t in tasks]
@@ -597,19 +596,19 @@ class MultiAgentCoordinator:
             for task in tasks:
                 result = await self.execute_task(task.id)
                 results.append(result)
-
+        
         return results
-
+    
     def _handle_agent_message(self, agent_id: str, message: AgentMessage) -> None:
         """Handle a message received by an agent"""
         # In production: Process message and potentially trigger actions
         pass
-
-    def get_agent_status(self, agent_id: str) -> dict[str, Any] | None:
+    
+    def get_agent_status(self, agent_id: str) -> Optional[Dict[str, Any]]:
         """Get status of a specific agent"""
         if agent_id not in self.agents:
             return None
-
+        
         agent = self.agents[agent_id]
         return {
             "id": agent.id,
@@ -623,8 +622,8 @@ class MultiAgentCoordinator:
             ],
             "load": self.task_router.agent_load.get(agent_id, 0)
         }
-
-    def get_all_status(self) -> dict[str, Any]:
+    
+    def get_all_status(self) -> Dict[str, Any]:
         """Get status of the entire coordinator
         
         獲取整個協調器的狀態

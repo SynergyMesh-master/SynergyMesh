@@ -1,0 +1,141 @@
+apiVersion: governance.synergymesh.io/v1
+kind: ModuleRegistry
+metadata:
+  name: module-registry
+  version: 1.0.0
+  created_at: "2025-12-13T00:00:00Z"
+  owner: governance-bot
+  description: Module Registry configuration for auto-selection capability
+
+spec:
+  discovery:
+    sources:
+      - path: governance/36-modules
+        type: yaml
+        pattern: "*.yaml"
+        exclude:
+          - dimension.yaml
+          - schema.json
+      
+      - path: governance/37-behavior-contracts
+        type: yaml
+        pattern: "*.yaml"
+        exclude:
+          - dimension.yaml
+          - schema.json
+      
+      - path: core/modules/__init__.py
+        type: python
+        import: core.modules.MODULE_REGISTRY
+
+    refresh_interval_seconds: 300
+    cache_enabled: true
+
+  resolution:
+    strategy: topological_sort
+    circular_dependency_action: reject
+    missing_dependency_action: warn
+    include_optional_by_default: false
+
+  selection:
+    prefer_active_modules: true
+    fallback_to_deprecated: false
+    max_modules_per_capability: 1
+
+module_priority:
+  system-bootstrap:
+    - core.unified_integration
+  
+  service-discovery:
+    - core.unified_integration
+  
+  health-monitoring:
+    - core.unified_integration
+    - core.monitoring_system
+  
+  dependency-resolution:
+    - core.unified_integration
+  
+  config-management:
+    - core.unified_integration
+  
+  workflow-management:
+    - core.unified_integration
+  
+  cognitive-reasoning:
+    - core.unified_integration
+    - mind_matrix
+  
+  message-routing:
+    - core.unified_integration
+  
+  event-pubsub:
+    - core.unified_integration
+
+capability_matrix:
+  orchestration:
+    - system-bootstrap
+    - phase-coordination
+    - workflow-management
+    - task-scheduling
+  
+  integration:
+    - service-discovery
+    - dependency-resolution
+    - message-routing
+    - event-pubsub
+  
+  monitoring:
+    - health-monitoring
+    - drift-detection
+  
+  configuration:
+    - config-management
+    - secret-management
+    - config-validation
+  
+  ai:
+    - cognitive-perception
+    - cognitive-reasoning
+    - cognitive-execution
+    - cognitive-proof
+  
+  security:
+    - secret-management
+
+forbidden_combinations:
+  - [deprecated_module_a, deprecated_module_b]
+
+required_combinations:
+  - modules: [security-governance, compliance-governance]
+    reason: "Security requires compliance validation"
+
+governance_checks:
+  pre_selection:
+    - check_module_status
+    - check_deprecation_policy
+    - check_security_clearance
+  
+  post_selection:
+    - validate_dependencies
+    - check_forbidden_combinations
+    - validate_governance_policies
+
+policies:
+  allow_deprecated: false
+  require_active_status: true
+  enforce_version_constraints: true
+  max_dependency_depth: 10
+
+logging:
+  level: INFO
+  format: structured
+  include_selection_trace: true
+
+metrics:
+  enabled: true
+  namespace: governance.registry
+  labels:
+    - capability
+    - module_name
+    - selection_status

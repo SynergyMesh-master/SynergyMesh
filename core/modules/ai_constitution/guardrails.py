@@ -15,12 +15,14 @@ Ensures AI operations are always predictable, safe, and compliant
 自成閉環：本檔案獨立管理所有護欄的定義和執行
 """
 
-import re
-from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
-from datetime import datetime
 from enum import Enum
-from typing import Any
+from typing import Dict, List, Optional, Any, Callable, Union
+from datetime import datetime
+import re
+import hashlib
+import json
+from abc import ABC, abstractmethod
 
 
 class GuardrailType(Enum):
@@ -53,17 +55,17 @@ class GuardrailResult:
     guardrail_type: GuardrailType
     passed: bool
     severity: GuardrailSeverity
-
+    
     # 詳細資訊
     message: str = ""
-    violations: list[str] = field(default_factory=list)
-    recommendations: list[str] = field(default_factory=list)
-
+    violations: List[str] = field(default_factory=list)
+    recommendations: List[str] = field(default_factory=list)
+    
     # 修正資訊
     auto_correctable: bool = False
     correction_applied: bool = False
-    corrected_content: str | None = None
-
+    corrected_content: Optional[str] = None
+    
     # 元數據
     confidence: float = 1.0
     checked_at: str = field(default_factory=lambda: datetime.utcnow().isoformat())
@@ -77,7 +79,7 @@ class Guardrail(ABC):
     
     所有護欄必須繼承此類
     """
-
+    
     def __init__(
         self,
         guardrail_id: str,
@@ -91,23 +93,23 @@ class Guardrail(ABC):
         self.guardrail_type = guardrail_type
         self.severity = severity
         self.enabled = enabled
-
+        
         # 統計
         self.check_count = 0
         self.pass_count = 0
         self.fail_count = 0
-
+    
     @abstractmethod
-    def check(self, content: Any, context: dict[str, Any] = None) -> GuardrailResult:
+    def check(self, content: Any, context: Dict[str, Any] = None) -> GuardrailResult:
         """執行護欄檢查"""
         pass
-
+    
     def _create_result(
         self,
         passed: bool,
         message: str = "",
-        violations: list[str] = None,
-        recommendations: list[str] = None,
+        violations: List[str] = None,
+        recommendations: List[str] = None,
         **kwargs
     ) -> GuardrailResult:
         """創建檢查結果"""
@@ -116,7 +118,7 @@ class Guardrail(ABC):
             self.pass_count += 1
         else:
             self.fail_count += 1
-
+        
         return GuardrailResult(
             guardrail_id=self.guardrail_id,
             guardrail_type=self.guardrail_type,
@@ -136,7 +138,7 @@ class SafetyGuardrail(Guardrail):
     
     防止生成有害、危險或不安全的內容
     """
-
+    
     # 有害內容模式
     HARMFUL_PATTERNS = {
         "violence": [
@@ -156,7 +158,7 @@ class SafetyGuardrail(Guardrail):
             r"how to (bypass|circumvent) security",
         ],
     }
-
+    
     # 安全替換建議
     SAFE_ALTERNATIVES = {
         "violence": "請考慮使用和平、建設性的方式解決問題。",
@@ -164,7 +166,7 @@ class SafetyGuardrail(Guardrail):
         "illegal": "請遵守法律法規，選擇合法的替代方案。",
         "dangerous": "這類資訊可能造成危害，建議諮詢專業人士。",
     }
-
+    
     def __init__(
         self,
         guardrail_id: str = "SAFETY_001",
@@ -177,18 +179,18 @@ class SafetyGuardrail(Guardrail):
             guardrail_type=GuardrailType.SAFETY,
             severity=severity,
         )
-
-    def check(self, content: Any, context: dict[str, Any] = None) -> GuardrailResult:
+    
+    def check(self, content: Any, context: Dict[str, Any] = None) -> GuardrailResult:
         """檢查內容安全性"""
         start_time = datetime.utcnow()
-
+        
         if not isinstance(content, str):
             content = str(content)
-
+        
         content_lower = content.lower()
         violations = []
         recommendations = []
-
+        
         # 檢查所有有害模式
         for category, patterns in self.HARMFUL_PATTERNS.items():
             for pattern in patterns:
@@ -196,13 +198,13 @@ class SafetyGuardrail(Guardrail):
                     violations.append(f"偵測到 {category} 類型的潛在有害內容")
                     recommendations.append(self.SAFE_ALTERNATIVES.get(category, ""))
                     break  # 每個類別只報告一次
-
+        
         # 移除重複的建議
-        recommendations = list({r for r in recommendations if r})
-
+        recommendations = list(set(r for r in recommendations if r))
+        
         end_time = datetime.utcnow()
         processing_time = (end_time - start_time).total_seconds() * 1000
-
+        
         return self._create_result(
             passed=len(violations) == 0,
             message="內容安全檢查" + ("通過" if not violations else "未通過"),
@@ -219,7 +221,7 @@ class ComplianceGuardrail(Guardrail):
     
     確保符合各種法規和標準
     """
-
+    
     # 合規檢查規則
     COMPLIANCE_RULES = {
         "gdpr": {
@@ -258,13 +260,13 @@ class ComplianceGuardrail(Guardrail):
             ],
         },
     }
-
+    
     def __init__(
         self,
         guardrail_id: str = "COMPLIANCE_001",
         name: str = "合規護欄",
         severity: GuardrailSeverity = GuardrailSeverity.HIGH,
-        enabled_standards: list[str] = None,
+        enabled_standards: List[str] = None,
     ):
         super().__init__(
             guardrail_id=guardrail_id,
@@ -272,39 +274,39 @@ class ComplianceGuardrail(Guardrail):
             guardrail_type=GuardrailType.COMPLIANCE,
             severity=severity,
         )
-
+        
         self.enabled_standards = enabled_standards or list(self.COMPLIANCE_RULES.keys())
-
-    def check(self, content: Any, context: dict[str, Any] = None) -> GuardrailResult:
+    
+    def check(self, content: Any, context: Dict[str, Any] = None) -> GuardrailResult:
         """檢查合規性"""
         start_time = datetime.utcnow()
-
+        
         if not isinstance(content, str):
             content = str(content)
-
+        
         violations = []
         recommendations = []
-
+        
         # 檢查所有啟用的合規標準
         for standard in self.enabled_standards:
             if standard not in self.COMPLIANCE_RULES:
                 continue
-
+            
             rule = self.COMPLIANCE_RULES[standard]
-
+            
             for pattern_name, pattern in rule["patterns"].items():
                 if re.search(pattern, content, re.IGNORECASE):
                     violations.append(
                         f"[{rule['name']}] 偵測到 {pattern_name} 違規"
                     )
                     recommendations.extend(rule["requirements"])
-
+        
         # 移除重複的建議
         recommendations = list(set(recommendations))
-
+        
         end_time = datetime.utcnow()
         processing_time = (end_time - start_time).total_seconds() * 1000
-
+        
         return self._create_result(
             passed=len(violations) == 0,
             message="合規檢查" + ("通過" if not violations else "發現違規"),
@@ -321,7 +323,7 @@ class EthicsGuardrail(Guardrail):
     
     確保 AI 行為符合倫理標準
     """
-
+    
     # 倫理原則
     ETHICS_PRINCIPLES = {
         "fairness": {
@@ -357,7 +359,7 @@ class EthicsGuardrail(Guardrail):
             "guidance": "尊重用戶的自主決策權",
         },
     }
-
+    
     def __init__(
         self,
         guardrail_id: str = "ETHICS_001",
@@ -370,19 +372,19 @@ class EthicsGuardrail(Guardrail):
             guardrail_type=GuardrailType.ETHICS,
             severity=severity,
         )
-
-    def check(self, content: Any, context: dict[str, Any] = None) -> GuardrailResult:
+    
+    def check(self, content: Any, context: Dict[str, Any] = None) -> GuardrailResult:
         """檢查倫理合規性"""
         start_time = datetime.utcnow()
-
+        
         if not isinstance(content, str):
             content = str(content)
-
+        
         violations = []
         recommendations = []
-
+        
         # 檢查所有倫理原則
-        for _principle_id, principle in self.ETHICS_PRINCIPLES.items():
+        for principle_id, principle in self.ETHICS_PRINCIPLES.items():
             for indicator in principle["indicators"]:
                 if re.search(indicator, content, re.IGNORECASE):
                     violations.append(
@@ -390,13 +392,13 @@ class EthicsGuardrail(Guardrail):
                     )
                     recommendations.append(principle["guidance"])
                     break  # 每個原則只報告一次
-
+        
         # 移除重複的建議
         recommendations = list(set(recommendations))
-
+        
         end_time = datetime.utcnow()
         processing_time = (end_time - start_time).total_seconds() * 1000
-
+        
         return self._create_result(
             passed=len(violations) == 0,
             message="倫理檢查" + ("通過" if not violations else "發現問題"),
@@ -413,7 +415,7 @@ class ContentGuardrail(Guardrail):
     
     過濾不當或低品質內容
     """
-
+    
     # 內容過濾規則
     CONTENT_FILTERS = {
         "profanity": {
@@ -438,7 +440,7 @@ class ContentGuardrail(Guardrail):
             "action": "warn",
         },
     }
-
+    
     def __init__(
         self,
         guardrail_id: str = "CONTENT_001",
@@ -451,17 +453,17 @@ class ContentGuardrail(Guardrail):
             guardrail_type=GuardrailType.CONTENT,
             severity=severity,
         )
-
-    def check(self, content: Any, context: dict[str, Any] = None) -> GuardrailResult:
+    
+    def check(self, content: Any, context: Dict[str, Any] = None) -> GuardrailResult:
         """檢查內容品質"""
         start_time = datetime.utcnow()
-
+        
         if not isinstance(content, str):
             content = str(content)
-
+        
         violations = []
         recommendations = []
-
+        
         # 檢查所有內容過濾規則
         for filter_type, filter_config in self.CONTENT_FILTERS.items():
             for pattern in filter_config["patterns"]:
@@ -470,10 +472,10 @@ class ContentGuardrail(Guardrail):
                         violations.append(f"偵測到 {filter_type} 內容")
                     else:
                         recommendations.append(f"建議改善: {filter_type}")
-
+        
         end_time = datetime.utcnow()
         processing_time = (end_time - start_time).total_seconds() * 1000
-
+        
         return self._create_result(
             passed=len(violations) == 0,
             message="內容檢查" + ("通過" if not violations else "需要修改"),
@@ -495,14 +497,14 @@ class GuardrailSystem:
     
     自成閉環：完整管理所有護欄的註冊、執行和統計
     """
-
+    
     def __init__(self):
-        self._guardrails: dict[str, Guardrail] = {}
-        self._execution_log: list[dict[str, Any]] = []
-
+        self._guardrails: Dict[str, Guardrail] = {}
+        self._execution_log: List[Dict[str, Any]] = []
+        
         # 初始化預設護欄
         self._initialize_default_guardrails()
-
+    
     def _initialize_default_guardrails(self):
         """初始化預設護欄"""
         default_guardrails = [
@@ -511,66 +513,66 @@ class GuardrailSystem:
             EthicsGuardrail(),
             ContentGuardrail(),
         ]
-
+        
         for guardrail in default_guardrails:
             self.register_guardrail(guardrail)
-
+    
     def register_guardrail(self, guardrail: Guardrail):
         """註冊護欄"""
         self._guardrails[guardrail.guardrail_id] = guardrail
-
+    
     def unregister_guardrail(self, guardrail_id: str):
         """取消註冊護欄"""
         if guardrail_id in self._guardrails:
             del self._guardrails[guardrail_id]
-
+    
     def check_all(
         self,
         content: Any,
-        context: dict[str, Any] = None,
-        guardrail_types: list[GuardrailType] = None,
-    ) -> dict[str, GuardrailResult]:
+        context: Dict[str, Any] = None,
+        guardrail_types: List[GuardrailType] = None,
+    ) -> Dict[str, GuardrailResult]:
         """執行所有護欄檢查"""
         results = {}
-
+        
         for guardrail_id, guardrail in self._guardrails.items():
             # 檢查是否啟用
             if not guardrail.enabled:
                 continue
-
+            
             # 檢查類型過濾
             if guardrail_types and guardrail.guardrail_type not in guardrail_types:
                 continue
-
+            
             # 執行檢查
             result = guardrail.check(content, context)
             results[guardrail_id] = result
-
+            
             # 記錄執行
             self._log_execution(guardrail_id, result)
-
+            
             # 如果是 CRITICAL 級別且未通過，可以提前返回
             if not result.passed and result.severity == GuardrailSeverity.CRITICAL:
                 break
-
+        
         return results
-
+    
     def check_single(
         self,
         guardrail_id: str,
         content: Any,
-        context: dict[str, Any] = None,
-    ) -> GuardrailResult | None:
+        context: Dict[str, Any] = None,
+    ) -> Optional[GuardrailResult]:
         """執行單一護欄檢查"""
         guardrail = self._guardrails.get(guardrail_id)
-
+        
         if guardrail and guardrail.enabled:
             result = guardrail.check(content, context)
             self._log_execution(guardrail_id, result)
             return result
-
+        
         return None
-
+    
     def _log_execution(self, guardrail_id: str, result: GuardrailResult):
         """記錄執行"""
         self._execution_log.append({
@@ -580,57 +582,57 @@ class GuardrailSystem:
             "violation_count": len(result.violations),
             "timestamp": result.checked_at,
         })
-
+    
     def is_safe(
         self,
         content: Any,
-        context: dict[str, Any] = None,
+        context: Dict[str, Any] = None,
     ) -> bool:
         """快速安全檢查"""
         results = self.check_all(content, context, [GuardrailType.SAFETY])
         return all(r.passed for r in results.values())
-
+    
     def is_compliant(
         self,
         content: Any,
-        context: dict[str, Any] = None,
+        context: Dict[str, Any] = None,
     ) -> bool:
         """快速合規檢查"""
         results = self.check_all(content, context, [GuardrailType.COMPLIANCE])
         return all(r.passed for r in results.values())
-
+    
     def is_ethical(
         self,
         content: Any,
-        context: dict[str, Any] = None,
+        context: Dict[str, Any] = None,
     ) -> bool:
         """快速倫理檢查"""
         results = self.check_all(content, context, [GuardrailType.ETHICS])
         return all(r.passed for r in results.values())
-
-    def get_guardrail(self, guardrail_id: str) -> Guardrail | None:
+    
+    def get_guardrail(self, guardrail_id: str) -> Optional[Guardrail]:
         """獲取護欄"""
         return self._guardrails.get(guardrail_id)
-
-    def get_all_guardrails(self) -> list[Guardrail]:
+    
+    def get_all_guardrails(self) -> List[Guardrail]:
         """獲取所有護欄"""
         return list(self._guardrails.values())
-
+    
     def enable_guardrail(self, guardrail_id: str):
         """啟用護欄"""
         if guardrail_id in self._guardrails:
             self._guardrails[guardrail_id].enabled = True
-
+    
     def disable_guardrail(self, guardrail_id: str):
         """停用護欄"""
         if guardrail_id in self._guardrails:
             self._guardrails[guardrail_id].enabled = False
-
-    def get_execution_log(self, limit: int = 100) -> list[dict[str, Any]]:
+    
+    def get_execution_log(self, limit: int = 100) -> List[Dict[str, Any]]:
         """獲取執行記錄"""
         return self._execution_log[-limit:]
-
-    def get_statistics(self) -> dict[str, Any]:
+    
+    def get_statistics(self) -> Dict[str, Any]:
         """獲取統計數據"""
         stats = {
             "total_guardrails": len(self._guardrails),
@@ -642,7 +644,7 @@ class GuardrailSystem:
             "total_passes": 0,
             "total_failures": 0,
         }
-
+        
         for guardrail in self._guardrails.values():
             # 按類型統計
             type_key = guardrail.guardrail_type.value
@@ -653,16 +655,16 @@ class GuardrailSystem:
                     "passes": 0,
                     "failures": 0,
                 }
-
+            
             stats["by_type"][type_key]["count"] += 1
             stats["by_type"][type_key]["checks"] += guardrail.check_count
             stats["by_type"][type_key]["passes"] += guardrail.pass_count
             stats["by_type"][type_key]["failures"] += guardrail.fail_count
-
+            
             stats["total_checks"] += guardrail.check_count
             stats["total_passes"] += guardrail.pass_count
             stats["total_failures"] += guardrail.fail_count
-
+        
         if stats["total_checks"] > 0:
             stats["pass_rate"] = round(
                 stats["total_passes"] / stats["total_checks"] * 100,
@@ -670,14 +672,14 @@ class GuardrailSystem:
             )
         else:
             stats["pass_rate"] = 0
-
+        
         return stats
-
+    
     def reset_statistics(self):
         """重置統計數據"""
         for guardrail in self._guardrails.values():
             guardrail.check_count = 0
             guardrail.pass_count = 0
             guardrail.fail_count = 0
-
+        
         self._execution_log = []

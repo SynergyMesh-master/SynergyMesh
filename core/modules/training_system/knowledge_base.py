@@ -10,9 +10,10 @@ Provides comprehensive domain knowledge for AI agents including:
 """
 
 from dataclasses import dataclass, field
-from datetime import datetime
 from enum import Enum
-from typing import Any
+from typing import Dict, List, Optional, Any, Set
+from datetime import datetime
+import uuid
 
 
 class KnowledgeCategory(Enum):
@@ -43,23 +44,23 @@ class ConceptDefinition:
     category: KnowledgeCategory
     definition: str
     description: str
-
+    
     # Detailed information
-    key_points: list[str] = field(default_factory=list)
-    related_concepts: list[str] = field(default_factory=list)
-
+    key_points: List[str] = field(default_factory=list)
+    related_concepts: List[str] = field(default_factory=list)
+    
     # Usage guidance
-    when_to_use: list[str] = field(default_factory=list)
-    when_not_to_use: list[str] = field(default_factory=list)
-
+    when_to_use: List[str] = field(default_factory=list)
+    when_not_to_use: List[str] = field(default_factory=list)
+    
     # Examples
-    code_examples: list[dict[str, str]] = field(default_factory=list)
-    real_world_examples: list[str] = field(default_factory=list)
-
+    code_examples: List[Dict[str, str]] = field(default_factory=list)
+    real_world_examples: List[str] = field(default_factory=list)
+    
     # Metadata
     difficulty_level: str = "intermediate"  # beginner, intermediate, advanced, expert
-    tags: list[str] = field(default_factory=list)
-    references: list[str] = field(default_factory=list)
+    tags: List[str] = field(default_factory=list)
+    references: List[str] = field(default_factory=list)
     last_updated: datetime = field(default_factory=datetime.now)
 
 
@@ -73,28 +74,28 @@ class BestPractice:
     id: str
     name: str
     category: KnowledgeCategory
-
+    
     # Core content
     principle: str
     rationale: str
-    benefits: list[str]
-
+    benefits: List[str]
+    
     # Implementation
-    implementation_steps: list[str] = field(default_factory=list)
+    implementation_steps: List[str] = field(default_factory=list)
     code_example_correct: str = ""
     code_example_incorrect: str = ""
-
+    
     # Context
-    applicable_scenarios: list[str] = field(default_factory=list)
-    exceptions: list[str] = field(default_factory=list)
-
+    applicable_scenarios: List[str] = field(default_factory=list)
+    exceptions: List[str] = field(default_factory=list)
+    
     # Impact
-    impact_areas: list[str] = field(default_factory=list)
+    impact_areas: List[str] = field(default_factory=list)
     priority: str = "medium"  # low, medium, high, critical
-
+    
     # Metadata
-    tags: list[str] = field(default_factory=list)
-    related_practices: list[str] = field(default_factory=list)
+    tags: List[str] = field(default_factory=list)
+    related_practices: List[str] = field(default_factory=list)
 
 
 @dataclass
@@ -107,29 +108,29 @@ class AntiPattern:
     id: str
     name: str
     category: KnowledgeCategory
-
+    
     # Core content
     description: str
     why_its_bad: str
-    symptoms: list[str]
-    consequences: list[str]
-
+    symptoms: List[str]
+    consequences: List[str]
+    
     # Examples
     bad_code_example: str = ""
     good_code_example: str = ""
-
+    
     # Solution
     solution: str = ""
-    alternative_approaches: list[str] = field(default_factory=list)
-    refactoring_steps: list[str] = field(default_factory=list)
-
+    alternative_approaches: List[str] = field(default_factory=list)
+    refactoring_steps: List[str] = field(default_factory=list)
+    
     # Detection
-    detection_patterns: list[str] = field(default_factory=list)
-    common_causes: list[str] = field(default_factory=list)
-
+    detection_patterns: List[str] = field(default_factory=list)
+    common_causes: List[str] = field(default_factory=list)
+    
     # Metadata
     severity: str = "medium"  # low, medium, high, critical
-    tags: list[str] = field(default_factory=list)
+    tags: List[str] = field(default_factory=list)
 
 
 @dataclass
@@ -142,20 +143,20 @@ class DomainKnowledge:
     domain: KnowledgeCategory
     name: str
     description: str
-
+    
     # Knowledge content
-    concepts: dict[str, ConceptDefinition] = field(default_factory=dict)
-    best_practices: dict[str, BestPractice] = field(default_factory=dict)
-    anti_patterns: dict[str, AntiPattern] = field(default_factory=dict)
-
+    concepts: Dict[str, ConceptDefinition] = field(default_factory=dict)
+    best_practices: Dict[str, BestPractice] = field(default_factory=dict)
+    anti_patterns: Dict[str, AntiPattern] = field(default_factory=dict)
+    
     # Quick references
-    terminology: dict[str, str] = field(default_factory=dict)
-    common_mistakes: list[str] = field(default_factory=list)
-    tips: list[str] = field(default_factory=list)
-
+    terminology: Dict[str, str] = field(default_factory=dict)
+    common_mistakes: List[str] = field(default_factory=list)
+    tips: List[str] = field(default_factory=list)
+    
     # Learning path
-    prerequisites: list[str] = field(default_factory=list)
-    learning_order: list[str] = field(default_factory=list)
+    prerequisites: List[str] = field(default_factory=list)
+    learning_order: List[str] = field(default_factory=list)
 
 
 class KnowledgeBase:
@@ -171,20 +172,20 @@ class KnowledgeBase:
     4. 反模式檢測 - Anti-pattern detection
     5. 知識關聯分析 - Knowledge relationship analysis
     """
-
+    
     def __init__(self):
-        self.domains: dict[KnowledgeCategory, DomainKnowledge] = {}
-        self.concepts: dict[str, ConceptDefinition] = {}
-        self.best_practices: dict[str, BestPractice] = {}
-        self.anti_patterns: dict[str, AntiPattern] = {}
-        self._concept_index: dict[str, set[str]] = {}  # tag -> concept_ids
-
+        self.domains: Dict[KnowledgeCategory, DomainKnowledge] = {}
+        self.concepts: Dict[str, ConceptDefinition] = {}
+        self.best_practices: Dict[str, BestPractice] = {}
+        self.anti_patterns: Dict[str, AntiPattern] = {}
+        self._concept_index: Dict[str, Set[str]] = {}  # tag -> concept_ids
+        
         # Initialize with built-in knowledge
         self._initialize_database_knowledge()
         self._initialize_security_knowledge()
         self._initialize_architecture_knowledge()
         self._initialize_performance_knowledge()
-
+    
     def _initialize_database_knowledge(self) -> None:
         """Initialize database domain knowledge."""
         domain = DomainKnowledge(
@@ -214,7 +215,7 @@ class KnowledgeBase:
                 "定期分析和優化查詢",
             ]
         )
-
+        
         # Add indexing concept
         indexing_concept = ConceptDefinition(
             id="db_indexing",
@@ -256,7 +257,7 @@ class KnowledgeBase:
         )
         domain.concepts["indexing"] = indexing_concept
         self.concepts["db_indexing"] = indexing_concept
-
+        
         # Add N+1 query anti-pattern
         n_plus_one = AntiPattern(
             id="n_plus_one_query",
@@ -302,7 +303,7 @@ SELECT u.*, o.* FROM users u LEFT JOIN orders o ON u.id = o.user_id
         )
         domain.anti_patterns["n_plus_one"] = n_plus_one
         self.anti_patterns["n_plus_one_query"] = n_plus_one
-
+        
         # Add transaction best practice
         transaction_practice = BestPractice(
             id="use_transactions",
@@ -344,9 +345,9 @@ await db.audit_log.create(data={'action': 'user_created', 'user_id': user.id})
         )
         domain.best_practices["use_transactions"] = transaction_practice
         self.best_practices["use_transactions"] = transaction_practice
-
+        
         self.domains[KnowledgeCategory.DATABASE] = domain
-
+    
     def _initialize_security_knowledge(self) -> None:
         """Initialize security domain knowledge."""
         domain = DomainKnowledge(
@@ -377,7 +378,7 @@ await db.audit_log.create(data={'action': 'user_created', 'user_id': user.id})
                 "使用 HTTPS",
             ]
         )
-
+        
         # Password handling best practice
         password_practice = BestPractice(
             id="secure_password_handling",
@@ -422,7 +423,7 @@ hashed = hashlib.md5(password.encode()).hexdigest()  # MD5 太弱了！
         )
         domain.best_practices["secure_password"] = password_practice
         self.best_practices["secure_password_handling"] = password_practice
-
+        
         # SQL injection anti-pattern
         sql_injection = AntiPattern(
             id="sql_injection_vulnerability",
@@ -461,9 +462,9 @@ user = db.users.find_first(where={'email': email})
         )
         domain.anti_patterns["sql_injection"] = sql_injection
         self.anti_patterns["sql_injection_vulnerability"] = sql_injection
-
+        
         self.domains[KnowledgeCategory.SECURITY] = domain
-
+    
     def _initialize_architecture_knowledge(self) -> None:
         """Initialize architecture domain knowledge."""
         domain = DomainKnowledge(
@@ -491,9 +492,9 @@ user = db.users.find_first(where={'email': email})
                 "監控和可觀測性優先",
             ]
         )
-
+        
         self.domains[KnowledgeCategory.ARCHITECTURE] = domain
-
+    
     def _initialize_performance_knowledge(self) -> None:
         """Initialize performance domain knowledge."""
         domain = DomainKnowledge(
@@ -520,164 +521,164 @@ user = db.users.find_first(where={'email': email})
                 "考慮異步處理",
             ]
         )
-
+        
         self.domains[KnowledgeCategory.PERFORMANCE] = domain
-
+    
     # Query Methods
-
-    def get_concept(self, concept_id: str) -> ConceptDefinition | None:
+    
+    def get_concept(self, concept_id: str) -> Optional[ConceptDefinition]:
         """Get a specific concept by ID."""
         return self.concepts.get(concept_id)
-
-    def search_concepts(self, query: str, category: KnowledgeCategory | None = None) -> list[ConceptDefinition]:
+    
+    def search_concepts(self, query: str, category: Optional[KnowledgeCategory] = None) -> List[ConceptDefinition]:
         """Search concepts by keyword."""
         query_lower = query.lower()
         results = []
-
+        
         for concept in self.concepts.values():
             if category and concept.category != category:
                 continue
-
+            
             if (query_lower in concept.name.lower() or
                 query_lower in concept.definition.lower() or
                 any(query_lower in tag.lower() for tag in concept.tags)):
                 results.append(concept)
-
+        
         return results
-
-    def get_best_practice(self, practice_id: str) -> BestPractice | None:
+    
+    def get_best_practice(self, practice_id: str) -> Optional[BestPractice]:
         """Get a specific best practice by ID."""
         return self.best_practices.get(practice_id)
-
-    def get_best_practices_for_category(self, category: KnowledgeCategory) -> list[BestPractice]:
+    
+    def get_best_practices_for_category(self, category: KnowledgeCategory) -> List[BestPractice]:
         """Get all best practices for a category."""
         return [
             practice for practice in self.best_practices.values()
             if practice.category == category
         ]
-
-    def get_anti_pattern(self, pattern_id: str) -> AntiPattern | None:
+    
+    def get_anti_pattern(self, pattern_id: str) -> Optional[AntiPattern]:
         """Get a specific anti-pattern by ID."""
         return self.anti_patterns.get(pattern_id)
-
-    def get_anti_patterns_for_category(self, category: KnowledgeCategory) -> list[AntiPattern]:
+    
+    def get_anti_patterns_for_category(self, category: KnowledgeCategory) -> List[AntiPattern]:
         """Get all anti-patterns for a category."""
         return [
             pattern for pattern in self.anti_patterns.values()
             if pattern.category == category
         ]
-
-    def get_domain_knowledge(self, category: KnowledgeCategory) -> DomainKnowledge | None:
+    
+    def get_domain_knowledge(self, category: KnowledgeCategory) -> Optional[DomainKnowledge]:
         """Get complete domain knowledge."""
         return self.domains.get(category)
-
+    
     def add_concept(self, concept: ConceptDefinition) -> None:
         """Add a new concept to the knowledge base."""
         self.concepts[concept.id] = concept
-
+        
         # Update domain if exists
         if concept.category in self.domains:
             self.domains[concept.category].concepts[concept.id] = concept
-
+        
         # Update tag index
         for tag in concept.tags:
             if tag not in self._concept_index:
                 self._concept_index[tag] = set()
             self._concept_index[tag].add(concept.id)
-
+    
     def add_best_practice(self, practice: BestPractice) -> None:
         """Add a new best practice."""
         self.best_practices[practice.id] = practice
-
+        
         if practice.category in self.domains:
             self.domains[practice.category].best_practices[practice.id] = practice
-
+    
     def add_anti_pattern(self, pattern: AntiPattern) -> None:
         """Add a new anti-pattern."""
         self.anti_patterns[pattern.id] = pattern
-
+        
         if pattern.category in self.domains:
             self.domains[pattern.category].anti_patterns[pattern.id] = pattern
-
-    def get_relevant_knowledge(self, context: str, max_results: int = 5) -> dict[str, Any]:
+    
+    def get_relevant_knowledge(self, context: str, max_results: int = 5) -> Dict[str, Any]:
         """
         Get relevant knowledge based on context.
         
         根據上下文獲取相關知識
         """
         context_lower = context.lower()
-
+        
         relevant = {
             "concepts": [],
             "best_practices": [],
             "anti_patterns": [],
             "tips": [],
         }
-
+        
         # Find relevant concepts
         for concept in self.concepts.values():
             score = self._calculate_relevance(context_lower, concept.name, concept.definition, concept.tags)
             if score > 0:
                 relevant["concepts"].append((concept, score))
-
+        
         relevant["concepts"] = [
             c for c, _ in sorted(relevant["concepts"], key=lambda x: x[1], reverse=True)[:max_results]
         ]
-
+        
         # Find relevant best practices
         for practice in self.best_practices.values():
             score = self._calculate_relevance(context_lower, practice.name, practice.principle, practice.tags)
             if score > 0:
                 relevant["best_practices"].append((practice, score))
-
+        
         relevant["best_practices"] = [
             p for p, _ in sorted(relevant["best_practices"], key=lambda x: x[1], reverse=True)[:max_results]
         ]
-
+        
         # Find relevant anti-patterns
         for pattern in self.anti_patterns.values():
             score = self._calculate_relevance(context_lower, pattern.name, pattern.description, pattern.tags)
             if score > 0:
                 relevant["anti_patterns"].append((pattern, score))
-
+        
         relevant["anti_patterns"] = [
             p for p, _ in sorted(relevant["anti_patterns"], key=lambda x: x[1], reverse=True)[:max_results]
         ]
-
+        
         # Collect tips from relevant domains
         for domain in self.domains.values():
             for tip in domain.tips:
                 if any(word in tip.lower() for word in context_lower.split()):
                     relevant["tips"].append(tip)
-
+        
         return relevant
-
-    def _calculate_relevance(self, context: str, name: str, description: str, tags: list[str]) -> float:
+    
+    def _calculate_relevance(self, context: str, name: str, description: str, tags: List[str]) -> float:
         """Calculate relevance score for knowledge item."""
         score = 0.0
         context_words = set(context.split())
-
+        
         # Name matching (high weight)
         name_lower = name.lower()
         for word in context_words:
             if word in name_lower:
                 score += 3.0
-
+        
         # Description matching (medium weight)
         description_lower = description.lower()
         for word in context_words:
             if word in description_lower:
                 score += 1.0
-
+        
         # Tag matching (high weight)
         tags_lower = [t.lower() for t in tags]
         for word in context_words:
             if word in tags_lower:
                 score += 2.0
-
+        
         return score
-
-    def get_stats(self) -> dict[str, int]:
+    
+    def get_stats(self) -> Dict[str, int]:
         """Get knowledge base statistics."""
         return {
             "domains": len(self.domains),

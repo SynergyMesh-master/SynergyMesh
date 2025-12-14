@@ -1,0 +1,270 @@
+---
+apiVersion: governance.synergymesh.io/v2
+kind: AgentSkill
+metadata:
+  id: code-analysis
+  name: "Code Analysis"
+  name_zh: "代碼分析"
+  version: "1.0.0"
+  description: "Enterprise-grade code analysis with quality metrics, issue detection, and improvement suggestions"
+  created_at: "2025-12-13"
+  updated_at: "2025-12-13"
+  owner: "Code Quality Team"
+
+spec:
+  category: analysis
+  subcategory: code_quality
+  risk_level: low
+
+  capabilities:
+    - static_analysis
+    - dynamic_analysis
+    - security_analysis
+    - performance_analysis
+    - complexity_analysis
+    - code_smell_detection
+    - best_practice_validation
+
+  description_detailed: |
+    Comprehensive code analysis capability that enables AI agents to:
+    - Perform multi-dimensional code quality assessment
+    - Detect security vulnerabilities and code smells
+    - Measure complexity and maintainability metrics
+    - Suggest improvements based on best practices
+    - Support multiple programming languages
+    
+    Integrates with industry-standard tools: SonarQube, ESLint, Pylint, Clippy, Golangci-lint
+
+  inputs:
+    - name: code
+      type: string
+      required: true
+      description: "Source code to analyze"
+
+    - name: file_path
+      type: string
+      required: false
+      description: "Path to source file for context"
+
+    - name: language
+      type: enum
+      values: [python, typescript, javascript, go, rust, java]
+      required: false
+      default: auto
+      description: "Programming language (auto-detected if not specified)"
+
+    - name: options
+      type: object
+      required: false
+      properties:
+        check_complexity:
+          type: boolean
+          default: true
+        check_security:
+          type: boolean
+          default: true
+        check_performance:
+          type: boolean
+          default: true
+        check_best_practices:
+          type: boolean
+          default: true
+        severity_threshold:
+          type: enum
+          values: [critical, high, medium, low, info]
+          default: medium
+
+  outputs:
+    - name: analysis_result
+      type: object
+      properties:
+        quality_score:
+          type: number
+          range: [0, 100]
+          description: "Overall code quality score"
+        language:
+          type: string
+        metrics:
+          type: object
+          properties:
+            total_lines: integer
+            code_lines: integer
+            comment_lines: integer
+            blank_lines: integer
+            cyclomatic_complexity: number
+            maintainability_index: number
+
+    - name: issues
+      type: array
+      items:
+        type: object
+        properties:
+          id: string
+          type: enum[SECURITY, PERFORMANCE, QUALITY, STYLE]
+          severity: enum[critical, high, medium, low, info]
+          line: integer
+          column: integer
+          message: string
+          suggestion: string
+          rule_id: string
+
+    - name: suggestions
+      type: array
+      items:
+        type: object
+        properties:
+          type: string
+          priority: enum[high, medium, low]
+          description: string
+          before: string
+          after: string
+
+  providers:
+    - name: "code-analyzer-agent"
+      path: "agent/code-analyzer/"
+      type: agent
+      language: python
+      priority: 1
+      capabilities:
+        - static_analysis
+        - security_analysis
+        - performance_analysis
+
+    - name: "mcp-code-analyzer"
+      path: "mcp-servers/code-analyzer.js"
+      type: mcp-server
+      language: javascript
+      priority: 2
+      capabilities:
+        - static_analysis
+        - code_smell_detection
+
+    - name: "architect-static-analyzer"
+      path: "automation/architect/core/analysis/static_analyzer.py"
+      type: library
+      language: python
+      priority: 3
+      capabilities:
+        - static_analysis
+        - complexity_analysis
+
+    - name: "virtual-expert-sarah"
+      path: "core/virtual_experts/"
+      type: virtual_expert
+      expert: SarahWong
+      priority: 4
+      specialization: "NLP and code understanding"
+
+  governance_dimensions:
+    - id: "06-security"
+      relevance: high
+      controls:
+        - vulnerability_detection
+        - secure_coding_standards
+
+    - id: "09-performance"
+      relevance: medium
+      controls:
+        - performance_analysis
+        - efficiency_metrics
+
+    - id: "05-compliance"
+      relevance: medium
+      controls:
+        - code_standards
+        - regulatory_compliance
+
+    - id: "01-architecture"
+      relevance: medium
+      controls:
+        - code_structure
+        - modularity
+
+  constraints:
+    max_file_size_mb: 10
+    analysis_timeout_seconds: 120
+    max_concurrent_analyses: 16
+    supported_languages:
+      - python
+      - typescript
+      - javascript
+      - go
+      - rust
+      - java
+
+  monitoring:
+    metrics:
+      - name: analyses_total
+        type: counter
+        labels: [language, analysis_type]
+      - name: analysis_duration_seconds
+        type: histogram
+        buckets: [0.1, 0.5, 1, 5, 10, 30, 60]
+      - name: issues_detected_total
+        type: counter
+        labels: [severity, type]
+      - name: quality_score
+        type: gauge
+        labels: [language]
+
+  examples:
+    - name: "Python Security Analysis"
+      description: "Detect security vulnerabilities in Python code"
+      input:
+        code: |
+          def login(username, password):
+              query = f"SELECT * FROM users WHERE username='{username}'"
+              cursor.execute(query)
+              return cursor.fetchone()
+        language: python
+        options:
+          check_security: true
+      expected_output:
+        quality_score: 45
+        issues:
+          - id: "SEC-002"
+            type: SECURITY
+            severity: critical
+            line: 2
+            message: "SQL injection vulnerability detected"
+            suggestion: "Use parameterized queries"
+
+    - name: "JavaScript Complexity Check"
+      description: "Analyze code complexity"
+      input:
+        code: |
+          function processData(data) {
+            if (data) {
+              for (let i = 0; i < data.length; i++) {
+                if (data[i].type === 'A') {
+                  // nested logic...
+                }
+              }
+            }
+          }
+        language: javascript
+        options:
+          check_complexity: true
+      expected_output:
+        metrics:
+          cyclomatic_complexity: 4
+        suggestions:
+          - type: "refactor"
+            priority: medium
+            description: "Consider extracting nested conditions into separate functions"
+
+    - name: "Full Code Review"
+      description: "Comprehensive code analysis with all checks"
+      input:
+        file_path: "src/main.py"
+        options:
+          check_complexity: true
+          check_security: true
+          check_performance: true
+          check_best_practices: true
+      expected_output:
+        quality_score: 85
+        metrics:
+          total_lines: 250
+          cyclomatic_complexity: 8
+        issues: []

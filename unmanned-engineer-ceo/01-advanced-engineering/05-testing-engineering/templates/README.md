@@ -5,6 +5,7 @@
 - **Chaos Experiment Sheet**：穩態指標、假設、注入方式、觀測資料。
 
 > 建議使用 Markdown front matter，方便活體知識庫解析；範例：
+
 ```
 ---
 id: tc-contract-001
