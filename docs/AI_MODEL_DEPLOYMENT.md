@@ -1,6 +1,4 @@
-# 🤖 AI 模型部署指南
-
-# AI Model Deployment Guide
+# 🤖 AI 模型部署指南 | AI Model Deployment Guide
 
 **文档版本**: 1.0.0  
 **最后更新**: 2025-12-14  
@@ -64,7 +62,7 @@ tensor_parallel_size: 1  # 单卡部署
 **GPU 要求**:
 
 - **显存**: 30GB 或以上
-- **推荐卡型**: 
+- **推荐卡型**:
   - NVIDIA A100 (40GB/80GB)
   - NVIDIA H100 (80GB)
   - NVIDIA H800
@@ -403,7 +401,7 @@ models:
 
 **症状**:
 
-```
+```text
 RuntimeError: CUDA out of memory
 ```
 
@@ -427,7 +425,7 @@ RuntimeError: CUDA out of memory
 
 **症状**:
 
-```
+```text
 RuntimeError: No CUDA GPUs are available
 ```
 
@@ -454,7 +452,7 @@ pip install vllm-cuda121  # CUDA 12.1
 
 **症状**:
 
-```
+```text
 OSError: Can't load tokenizer for 'model_name'
 ```
 
@@ -503,7 +501,7 @@ python benchmark.py \
 
 **症状**:
 
-```
+```text
 docker: Error response from daemon: could not select device driver
 ```
 
