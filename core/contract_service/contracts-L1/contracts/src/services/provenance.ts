@@ -1,11 +1,13 @@
 import { createHash, randomUUID } from 'crypto';
 import { readFile, stat } from 'fs/promises';
-import { relative, resolve } from 'path';
+import { tmpdir } from 'os';
+import { relative, resolve, sep } from 'path';
 
 import { SLSAAttestationService, SLSAProvenance, BuildMetadata } from './attestation';
 
-// Define safe root directory for file operations to prevent path traversal attacks
+// Define safe root directories for file operations to prevent path traversal attacks
 const SAFE_ROOT = resolve(process.cwd());
+const TEMP_ROOT = resolve(tmpdir());
 
 export interface BuildAttestation {
   id: string;
@@ -79,18 +81,15 @@ export class ProvenanceService {
   private validatePath(filePath: string): string {
     const resolvedPath = resolve(filePath);
 
-    // For relative paths, ensure they resolve within the safe root
-    // For absolute paths, allow them but still check for traversal patterns
-    const normalizedInput = filePath.replace(/\\/g, '/');
+    // Check if the resolved path is within allowed directories
+    // This prevents both relative path traversal (../) and absolute path attacks
+    const isWithinSafeRoot = resolvedPath.startsWith(SAFE_ROOT + sep) || resolvedPath === SAFE_ROOT;
+    const isWithinTempRoot = resolvedPath.startsWith(TEMP_ROOT + sep) || resolvedPath === TEMP_ROOT;
 
-    // Check for path traversal patterns that try to escape directories
-    if (normalizedInput.includes('../') || normalizedInput.includes('..\\')) {
-      // If the path contains .. but resolves within safe root, it's okay
-      if (!resolvedPath.startsWith(SAFE_ROOT)) {
-        throw new Error(
-          `Path traversal detected: ${filePath} attempts to access files outside the safe directory`
-        );
-      }
+    if (!isWithinSafeRoot && !isWithinTempRoot) {
+      throw new Error(
+        `Path traversal detected: ${filePath} attempts to access files outside the safe directory`
+      );
     }
 
     return resolvedPath;
