@@ -102,7 +102,7 @@ analysis:
           auto_fix: true
         - type: "code_injection"
           description: "檢測代碼注入風險 (Alert #37)"
-          patterns: ["eval\\s*\\(", "exec\\s*\\(", "__import__\\s*\\("]
+          patterns: ["\\beval\\s*\\(", "\\bexec\\s*\\(", "\\b__import__\\s*\\("]
           auto_fix: true
       
     # 性能分析 (Performance Analysis)
@@ -211,9 +211,11 @@ fix:
           validation_template: |
             safe_root = Path(SAFE_ROOT).resolve()
             safe_path = (safe_root / user_input).resolve()
-            # Compatible with Python 3.6+
-            if not str(safe_path).startswith(str(safe_root)):
-              raise ValueError('Access denied')
+            # Robust path validation - works with Python 3.6+
+            try:
+                safe_path.relative_to(safe_root)
+            except ValueError:
+                raise ValueError('Access denied: path outside safe root')
     
     # Alert #53: 調試模式修復
     debug_mode:
@@ -248,11 +250,11 @@ fix:
       enabled: true
       strategy: "replace_or_sanitize"
       patterns:
-        - from: "eval\\s*\\("
+        - from: "\\beval\\s*\\("
           to: "# SECURITY: eval() removed - use safe alternatives"
           action: "comment_and_remove"
           regex: true
-        - from: "exec\\s*\\("
+        - from: "\\bexec\\s*\\("
           to: "# SECURITY: exec() removed - use safe alternatives"
           action: "comment_and_remove"
           regex: true
@@ -877,3 +879,14 @@ validation:
                               # 2. 驗證多語言支援的完整性
                               # 3. 確認不會產生誤報或錯誤修復
                               # 4. 在暫存環境運行完整測試套件
+    
+    # 部署建議 (Deployment Recommendations)
+    deployment_strategy: |
+      建議使用環境變量覆蓋機制來控制不同環境的行為：
+      - Development: 啟用詳細日志，禁用自動修復
+      - Staging: 啟用自動修復，但需要人工審核 PR
+      - Production: 僅在充分測試後啟用，建議分階段推出
+      
+      可通過 environment 配置段或環境變量來控制：
+      AUTO_FIX_BOT_ENABLED=false  # 完全禁用
+      AUTO_FIX_BOT_AUTO_FIX=false # 僅檢測不修復
