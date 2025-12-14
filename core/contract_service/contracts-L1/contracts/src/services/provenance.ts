@@ -28,10 +28,15 @@ function isPathContained(targetPath: string, rootPath: string): boolean {
  * which could indicate a path normalization bypass attempt.
  * This check is performed after path normalization to avoid false positives
  * on Windows UNC paths or legitimate URLs.
+ * 
+ * Note: After path.normalize() or fs.realpath(), consecutive separators should
+ * already be collapsed. This check serves as a defense-in-depth measure to detect
+ * any bypass attempts that might have evaded normalization.
  */
 function hasConsecutiveSeparators(normalizedPath: string): boolean {
-  // Check for consecutive forward slashes (Unix) or backslashes (Windows)
-  return normalizedPath.includes('//') || normalizedPath.includes('\\\\');
+  // Check for consecutive platform-specific path separators
+  const doubleSep = path.sep + path.sep;
+  return normalizedPath.includes(doubleSep);
 }
 
 /**
