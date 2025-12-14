@@ -76,7 +76,7 @@ async function validateAndNormalizePath(
   // If you need multi-directory paths, reject obvious traversal
   if (
     filePath.includes('\0') ||
-    filePath.includes('..') ||
+    filePath.split(path.sep).includes('..') ||
     filePath.includes('//') ||
     path.isAbsolute(filePath)
   ) {
