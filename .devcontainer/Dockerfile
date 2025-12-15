@@ -38,7 +38,8 @@ RUN npm install -g \
     pm2 \
     nodemon \
     typescript \
-    ts-node
+    ts-node \
+    replit
 
 # Switch back to root for Python setup
 USER root
