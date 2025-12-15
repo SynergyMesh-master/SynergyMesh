@@ -85,7 +85,7 @@ export class ProvenanceService {
     const realAbsPath = await realpath(absPath);
     const rel = relative(ProvenanceService.SAFE_ROOT, realAbsPath);
     if (rel.startsWith('..') || rel === '' || rel.includes('..' + require('path').sep) || rel === '..') {
-      throw new Error('Access to the specified file path is not allowed');
+      throw new Error(`Access to file path '${userInputPath}' (resolved as '${realAbsPath}') is not allowed - path must be within ${ProvenanceService.SAFE_ROOT}`);
     }
     return realAbsPath;
   }
