@@ -166,7 +166,7 @@ export const errorMiddleware = (
 };
 
 export const notFoundMiddleware = (req: Request, res: Response, _next: NextFunction): void => {
-  const error = createError.notFound(`Route ${req.method} ${req.url}`);
+  const error = createError.notFound(`Route ${req.method} ${req.url} not found`);
   const traceId = req.traceId || randomUUID();
 
   res.status(404).json({

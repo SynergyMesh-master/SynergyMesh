@@ -42,6 +42,14 @@ class Colors:
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
 
+# Global secret patterns to help sanitize log messages (defense-in-depth)
+SECRET_REGEXES = [
+    re.compile(r'password\s*=\s*["\'].*["\']', re.IGNORECASE),
+    re.compile(r'api[_-]?key\s*=\s*["\'].*["\']', re.IGNORECASE),
+    re.compile(r'secret\s*=\s*["\'].*["\']', re.IGNORECASE),
+    re.compile(r'token\s*=\s*["\'].*["\']', re.IGNORECASE),
+]
+
 class ProblemSeverity:
     CRITICAL = "CRITICAL"
     HIGH = "HIGH"
@@ -83,18 +91,19 @@ class ExtremeProblemIdentifier:
         self.stats = defaultdict(int)
         
     def log(self, message: str, level: str = "info"):
-        """Log message with color"""
+        """Log message with color. Sanitizes message to avoid accidental sensitive data leaks."""
+        sanitized_message = self._sanitize_log_message(message)
         if level == "critical":
-            print(f"{Colors.FAIL}🔴 CRITICAL: {message}{Colors.ENDC}")
+            print(f"{Colors.FAIL}🔴 CRITICAL: {sanitized_message}{Colors.ENDC}")
         elif level == "error":
-            print(f"{Colors.FAIL}❌ HIGH: {message}{Colors.ENDC}")
+            print(f"{Colors.FAIL}❌ HIGH: {sanitized_message}{Colors.ENDC}")
         elif level == "warning":
-            print(f"{Colors.WARNING}⚠️  MEDIUM: {message}{Colors.ENDC}")
+            print(f"{Colors.WARNING}⚠️  MEDIUM: {sanitized_message}{Colors.ENDC}")
         elif level == "info":
             if self.verbose:
-                print(f"{Colors.OKBLUE}ℹ️  INFO: {message}{Colors.ENDC}")
+                print(f"{Colors.OKBLUE}ℹ️  INFO: {sanitized_message}{Colors.ENDC}")
         elif level == "success":
-            print(f"{Colors.OKGREEN}✅ {message}{Colors.ENDC}")
+            print(f"{Colors.OKGREEN}✅ {sanitized_message}{Colors.ENDC}")
     
     def add_problem(self, problem: Problem):
         """Add identified problem"""
@@ -110,6 +119,23 @@ class ExtremeProblemIdentifier:
             if problem.severity == ProblemSeverity.CRITICAL:
                 self.log(f"[{problem.category}] {problem.title} @ {problem.location}", "critical")
             elif problem.severity == ProblemSeverity.HIGH:
+    @staticmethod
+    def _sanitize_log_message(message: str) -> str:
+        """Redacts possible credentials in a log message."""
+        # Redact values that may look like key='...' or key="..."
+        redacted = re.sub(
+            r'([Pp]assword|[Tt]oken|[Ss]ecret|API[_-]?key)\s*=\s*["\'][^"\']+["\']',
+            r'\1=***REDACTED***',
+            message,
+        )
+        # Extra precaution: if it looks like a very long token-like string, mask it
+        redacted = re.sub(
+            r'([A-Za-z0-9_\-]{16,})',
+            lambda m: "***REDACTED***" if len(m.group(1)) > 20 else m.group(1),
+            redacted,
+        )
+        return redacted
+
                 self.log(f"[{problem.category}] {problem.title} @ {problem.location}", "error")
             elif problem.severity == ProblemSeverity.MEDIUM:
                 self.log(f"[{problem.category}] {problem.title} @ {problem.location}", "warning")

@@ -1,6 +1,7 @@
 import { createHash, randomUUID } from 'crypto';
 import { readFile, stat, realpath } from 'fs/promises';
 import { relative, resolve, sep } from 'path';
+import { tmpdir } from 'os';
 
 import { SLSAAttestationService, SLSAProvenance, BuildMetadata } from './attestation';
 
@@ -84,7 +85,14 @@ export class ProvenanceService {
   private async resolveSafePath(userInputPath: string): Promise<string> {
     const safeRoot = ProvenanceService.getSafeRoot();
     // Canonicalize SAFE_ROOT and the resolved path, and check that the path stays strictly within SAFE_ROOT.
-    const canonicalRoot = await realpath(safeRoot);
+    let canonicalRoot: string;
+    try {
+      canonicalRoot = await realpath(safeRoot);
+    } catch (err: any) {
+      throw new Error(
+        `SAFE_ROOT directory '${safeRoot}' does not exist or is invalid. Please ensure the directory exists and is accessible. Original error: ${err && err.message ? err.message : err}`
+      );
+    }
     const absPath = resolve(canonicalRoot, userInputPath);
     const realAbsPath = await realpath(absPath);
     // Ensure the realAbsPath is strictly under canonicalRoot (not equal nor outside)
