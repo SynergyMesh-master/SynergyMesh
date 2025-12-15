@@ -28,7 +28,7 @@ const SAFE_ERROR_PATTERNS = [
  * Patterns that indicate sensitive information that should be removed
  */
 const SENSITIVE_PATTERNS = [
-  /at\s+[^\n:]+:\d+:\d+/gi, // Stack trace locations (at file.ts:10:5)
+  /at\s+[^\n:]+:\d+(?::\d+)?/gi, // Stack trace locations (at file.ts:10:5 or at file.ts:10)
   /\/(?:[\w\-.]+\/)+[\w\-.]+\.(?:js|ts|py|java|go|rb|json|yaml|yml|env|config)/gi, // Unix file paths (require at least one directory)
   /(?:[a-zA-Z]:)?\\(?:[\w\-.]+\\)+[\w\-.]+\.(?:js|ts|py|java|go|rb|json|yaml|yml|env|config)/gi, // Windows file paths (require drive or UNC and at least one directory)
   /\/(?:etc|proc|var|usr|home)\/[^\s]*/gi, // System paths

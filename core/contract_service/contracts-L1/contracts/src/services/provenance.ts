@@ -1,13 +1,9 @@
 import { createHash, randomUUID } from 'crypto';
 import { readFile, stat, realpath } from 'fs/promises';
-import { relative, resolve, sep } from 'path';
 import { tmpdir } from 'os';
+import { relative, resolve, sep } from 'path';
 
 import { SLSAAttestationService, SLSAProvenance, BuildMetadata } from './attestation';
-
-// Define safe root directories for file operations to prevent path traversal attacks
-const SAFE_ROOT = resolve(process.cwd());
-const TEMP_ROOT = resolve(tmpdir());
 
 export interface BuildAttestation {
   id: string;
@@ -69,7 +65,7 @@ export interface Dependency {
 
 export class ProvenanceService {
   private slsaService: SLSAAttestationService;
-  
+
   // Define the root directory for allowed files. Change as needed for your project needs
   // Use a fixed absolute path or environment variable for SAFE_ROOT
   private static getSafeRoot(): string {
@@ -99,12 +95,9 @@ export class ProvenanceService {
     }
     const absPath = resolve(canonicalRoot, userInputPath);
     const realAbsPath = await realpath(absPath);
-    // Ensure the realAbsPath is strictly under canonicalRoot (not equal nor outside)
-    if (
-      realAbsPath.length <= canonicalRoot.length ||    // Must not be root itself
-      realAbsPath.slice(0, canonicalRoot.length) !== canonicalRoot ||
-      (realAbsPath.length > canonicalRoot.length && realAbsPath[canonicalRoot.length] !== sep)
-    ) {
+    // Ensure the realAbsPath is strictly under canonicalRoot using path.relative
+    const rel = relative(canonicalRoot, realAbsPath);
+    if (rel.startsWith('..') || rel === '' || rel.includes('\0')) {
       throw new Error(`Access to file path '${userInputPath}' (resolved as '${realAbsPath}') is not allowed - path must be strictly within ${canonicalRoot}`);
     }
 
@@ -131,7 +124,7 @@ export class ProvenanceService {
     metadata: Partial<MetadataInfo> = {}
   ): Promise<BuildAttestation> {
     // Validate path to prevent directory traversal attacks
-    const validatedPath = this.validatePath(subjectPath);
+    const validatedPath = await this.resolveSafePath(subjectPath);
 
     const stats = await stat(validatedPath);
     if (!stats.isFile()) {

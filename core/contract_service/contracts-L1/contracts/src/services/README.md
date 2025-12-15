@@ -149,8 +149,9 @@ export class SomeService {
 - `exportAttestation(id)` - Export attestation
 - `generateFileDigest(filePath)` - Calculate file digest with path validation
 - `buildSLSAProvenance(file, builder)` - Build SLSA provenance
-- `resolveSafePath(userInputPath)` - Private: Validate paths against SAFE_ROOT
 
+**Private Methods:**
+- `resolveSafePath(userInputPath)` - Validate paths against SAFE_ROOT
 **Security Enhancements (PR #351):**
 - **Policy SEC-PATH-001**: Path traversal prevention using SAFE_ROOT validation
 - **Environment Variable**: `SAFE_ROOT_PATH` defines allowed directory for file operations
