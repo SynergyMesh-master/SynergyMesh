@@ -1,6 +1,6 @@
 import { createHash, randomUUID } from 'crypto';
 import { readFile, stat } from 'fs/promises';
-import { relative, resolve } from 'path';
+import { relative, resolve, sep } from 'path';
 import { realpath } from 'fs/promises';
 
 import { SLSAAttestationService, SLSAProvenance, BuildMetadata } from './attestation';
@@ -80,12 +80,17 @@ export class ProvenanceService {
    * Throws an error if the check fails.
    */
   private async resolveSafePath(userInputPath: string): Promise<string> {
-    // Resolve the user input to an absolute path within SAFE_ROOT
-    const absPath = resolve(ProvenanceService.SAFE_ROOT, userInputPath);
+    // Canonicalize SAFE_ROOT and the resolved path, and check that the path stays strictly within SAFE_ROOT.
+    const canonicalRoot = await realpath(ProvenanceService.SAFE_ROOT);
+    const absPath = resolve(canonicalRoot, userInputPath);
     const realAbsPath = await realpath(absPath);
-    const rel = relative(ProvenanceService.SAFE_ROOT, realAbsPath);
-    if (rel.startsWith('..') || rel === '' || rel.includes('..' + require('path').sep) || rel === '..') {
-      throw new Error('Access to the specified file path is not allowed');
+    // Ensure the realAbsPath is strictly under canonicalRoot (not equal nor outside)
+    if (
+      realAbsPath.length <= canonicalRoot.length ||    // Must not be root itself
+      realAbsPath.slice(0, canonicalRoot.length) !== canonicalRoot ||
+      (realAbsPath.length > canonicalRoot.length && realAbsPath[canonicalRoot.length] !== sep)
+    ) {
+      throw new Error(`Access to file path '${userInputPath}' (resolved as '${realAbsPath}') is not allowed - path must be strictly within ${canonicalRoot}`);
     }
     return realAbsPath;
   }
