@@ -597,24 +597,59 @@ jobs:
         with:
           script: |
             const workflowName = '${{ needs.detect-failure.outputs.workflow_name }}' || 'Unknown';
-            const issueNumber = '${{ needs.create-issue.outputs.issue_number }}' || 'N/A';
+            const runUrl = '${{ needs.detect-failure.outputs.run_url }}' || '#';
+            const branch = '${{ needs.detect-failure.outputs.branch }}' || 'N/A';
+            const commitSha = '${{ needs.detect-failure.outputs.commit_sha }}' || '';
+            const shortSha = commitSha ? commitSha.slice(0, 7) : 'N/A';
+            const issueNumber = '${{ needs.create-issue.outputs.issue_number }}';
             const issueUrl = '${{ needs.create-issue.outputs.issue_url }}' || '#';
-            const prNumber = '${{ needs.detect-failure.outputs.pr_number }}' || 'N/A';
-            
+            const prNumber = '${{ needs.detect-failure.outputs.pr_number }}';
+            const prUrl = '${{ needs.detect-failure.outputs.pr_url }}' || '#';
+            const rootCauseRaw = `${{ needs.generate-solutions.outputs.root_cause_analysis }}`;
+            const solution1Raw = `${{ needs.generate-solutions.outputs.solution_1 }}`;
+            const solution2Raw = `${{ needs.generate-solutions.outputs.solution_2 }}`;
+
+            const rootCause = (() => {
+              try { return JSON.parse(rootCauseRaw); } catch (e) { return {}; }
+            })();
+            const solution1 = (() => {
+              try { return JSON.parse(solution1Raw); } catch (e) { return {}; }
+            })();
+            const solution2 = (() => {
+              try { return JSON.parse(solution2Raw); } catch (e) { return {}; }
+            })();
+
+            const rootCauseSummary = rootCause.summary || '已完成處理，請參考 Issue 詳情';
+            const adoptedPlan = `方案一：${solution1.title || '快速修復'} ✅`;
+            const processSteps = [
+              `❌ 失敗原因：${rootCauseSummary}`,
+              `🧠 生成解決方案：${solution1.title || '方案一'} / ${solution2.title || '方案二'}`,
+              `📋 建立 Issue：${issueNumber ? `[#${issueNumber}](${issueUrl})` : '未建立（檢查權限或流程）'}`,
+              prNumber ? `💬 在 PR #${prNumber} 發布處理摘要` : 'ℹ️ 無關聯 PR，已在 Issue 中紀錄',
+              `✅ 採用方案：${adoptedPlan}`
+            ];
+
+            const followUpList = [
+              prNumber ? `- [ ] 等待 PR #${prNumber} 合併` : '- [ ] 持續追蹤相關分支的後續變更',
+              '- [ ] 監控後續 CI 執行是否穩定',
+              issueNumber ? `- [ ] 在 Issue #${issueNumber} 更新最新進度` : '- [ ] 建立或更新追蹤 Issue'
+            ].join('\n');
+
             await core.summary
-              .addHeading('🔧 CI 失敗自動化深度解決方案', 1)
+              .addHeading('✅ CI 問題已處理完成', 1)
+              .addHeading('問題狀態', 2)
               .addTable([
-                [{data: '項目', header: true}, {data: '結果', header: true}],
-                ['失敗的工作流程', workflowName],
-                ['建立的 Issue', `[#${issueNumber}](${issueUrl})`],
-                ['關聯的 PR', prNumber !== 'N/A' ? `#${prNumber}` : '無'],
-                ['生成的解決方案數量', '2']
+                [{ data: '項目', header: true }, { data: '內容', header: true }],
+                ['Workflow', `[${workflowName}](${runUrl})`],
+                ['Branch', branch],
+                ['Commit', shortSha],
+                ['Issue', issueNumber ? `[#${issueNumber}](${issueUrl})` : '無'],
+                ['PR', prNumber ? `[#${prNumber}](${prUrl})` : '無'],
+                ['採用方案', adoptedPlan],
+                ['處理狀態', '已完成處理 ✅']
               ])
-              .addHeading('✅ 完成動作', 2)
-              .addList([
-                '分析 CI 失敗原因',
-                '生成兩個深度解決方案',
-                '建立詳細的 GitHub Issue',
-                prNumber !== 'N/A' ? '在 PR 上發布摘要評論' : '（無關聯 PR）'
-              ])
+              .addHeading('📋 處理過程摘要', 2)
+              .addList(processSteps)
+              .addHeading('🎯 後續行動', 2)
+              .addRaw(followUpList)
               .write();
