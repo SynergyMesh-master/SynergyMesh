@@ -421,8 +421,8 @@ describe('Error Middleware', () => {
     });
 
     it('should reuse precompiled cleanup regex patterns', () => {
-      const first = ErrorCleanupPatterns.getAnsiEscapePattern();
-      const second = ErrorCleanupPatterns.getAnsiEscapePattern();
+      const first = ErrorCleanupPatterns.ansiEscapePattern;
+      const second = ErrorCleanupPatterns.ansiEscapePattern;
 
       expect(first).toBe(second);
     });

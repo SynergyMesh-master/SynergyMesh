@@ -18,25 +18,18 @@ import { Request, Response, NextFunction } from 'express';
 import config from '../config';
 import { AppError, ErrorCode, createError } from '../errors';
 
+const UNKNOWN_ERROR_FALLBACK = 'Unknown error';
+
 /**
  * Centralized holder for regex patterns used by the error middleware.
  * Ensures patterns are compiled once and reused.
  */
 export class ErrorCleanupPatterns {
-  private static readonly ansiEscapePattern: RegExp =
-    ErrorCleanupPatterns.compileAnsiEscapePattern();
-
-  private static compileAnsiEscapePattern(): RegExp {
-    return /\x1B\[[0-?]*[ -/]*[@-~]/g;
-  }
-
-  public static getAnsiEscapePattern(): RegExp {
-    return ErrorCleanupPatterns.ansiEscapePattern;
-  }
+  public static readonly ansiEscapePattern: RegExp = /\x1B\[[0-?]*[ -/]*[@-~]/g;
 
   public static sanitizeMessage(message: string): string {
     const sanitized = message.replace(ErrorCleanupPatterns.ansiEscapePattern, '').trim();
-    return sanitized || message;
+    return sanitized || UNKNOWN_ERROR_FALLBACK;
   }
 }
 
@@ -79,7 +72,7 @@ const convertToError = (err: unknown): Error => {
     return err;
   }
   if (err === null || err === undefined) {
-    return new Error('Unknown error');
+    return new Error(UNKNOWN_ERROR_FALLBACK);
   }
   // Safely convert to string for non-Error types
   let message: string;
@@ -165,7 +158,7 @@ export const errorMiddleware = (
     const errorResponse = {
       error: {
         code: err.code,
-        message: ErrorCleanupPatterns.sanitizeMessage(err.message || 'Unknown error'),
+        message: ErrorCleanupPatterns.sanitizeMessage(err.message || ''),
         status: err.statusCode,
         traceId: err.traceId,
         timestamp: err.timestamp,
@@ -177,9 +170,7 @@ export const errorMiddleware = (
     }
     res.status(err.statusCode).json(errorResponse);
   } else {
-    const sanitizedMessage = ErrorCleanupPatterns.sanitizeMessage(
-      safeError.message || 'Unknown error'
-    );
+    const sanitizedMessage = ErrorCleanupPatterns.sanitizeMessage(safeError.message || '');
     const errorResponse = {
       error: {
         code: ErrorCode.INTERNAL_ERROR,
@@ -197,7 +188,9 @@ export const errorMiddleware = (
     traceId,
     error: {
       name: safeError.name,
-      message: ErrorCleanupPatterns.sanitizeMessage(safeError.message || 'Unknown error'),
+      message: ErrorCleanupPatterns.sanitizeMessage(
+        safeError.message || ''
+      ),
       code: isAppError ? err.code : ErrorCode.INTERNAL_ERROR,
       stack: config.NODE_ENV !== 'production' ? safeError.stack : undefined,
     },
