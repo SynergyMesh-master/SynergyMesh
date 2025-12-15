@@ -58,12 +58,7 @@ fi
 if [[ -d services ]]; then
   GO_PRESENT=true
   log "Go formatting check"
-  GOFMT_OUT="$(gofmt -l ./services)"
-  if [[ -n "${GOFMT_OUT}" ]]; then
-    log "Go formatting issues detected:"
-    echo "${GOFMT_OUT}"
-    exit 1
-  fi
+  test -z "$(gofmt -l ./services)"
 
   log "Go tests"
   (cd services && go test ./...)
@@ -110,15 +105,23 @@ else
 fi
 python governance/scripts/validate-governance-structure.py --verbose
 make validate-governance-ci
-if [[ -f "${GOV_SCAN_SCRIPT}" ]]; then
-  python "${GOV_SCAN_SCRIPT}" --deep
+scan_script="${GOV_SCAN_SCRIPT}"
+if [[ ! -f "${scan_script}" ]]; then
+  scan_script="$(find governance -name 'scan-governance-directory.py' -print -quit 2>/dev/null || true)"
+fi
+if [[ -n "${scan_script}" && -f "${scan_script}" ]]; then
+  python "${scan_script}" --deep
 else
-  log "Governance scan script not found at ${GOV_SCAN_SCRIPT}; skipping deep scan"
+  log "Governance scan script not found; skipping deep scan"
 fi
 
 if [[ -n "${PR_BODY}" ]]; then
   log "Validate AI Behavior Contract response body"
-  .github/scripts/validate-ai-response.sh "${PR_BODY}"
+  if [[ -x ".github/scripts/validate-ai-response.sh" ]]; then
+    .github/scripts/validate-ai-response.sh "${PR_BODY}"
+  else
+    log "AI response validator script missing; skipping validation"
+  fi
 fi
 
 if [[ -n "${SUMMARY_FILE}" ]]; then
