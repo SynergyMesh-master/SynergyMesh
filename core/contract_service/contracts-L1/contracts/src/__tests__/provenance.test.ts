@@ -1,6 +1,6 @@
 import { ProvenanceService } from '../services/provenance';
-import { writeFile, unlink, mkdir } from 'fs/promises';
-import { join } from 'path';
+import { writeFile, unlink, mkdir, rmdir } from 'fs/promises';
+import { join, relative } from 'path';
 import { tmpdir } from 'os';
 
 describe('ProvenanceService', () => {
@@ -103,12 +103,27 @@ describe('ProvenanceService', () => {
     });
 
     it('should reject directories', async () => {
-      await expect(
-        service.createBuildAttestation(tmpdir(), {
-          id: 'test-builder',
-          version: '1.0.0',
-        })
-      ).rejects.toThrow('Subject path must be a file');
+      // Create a test directory within SAFE_ROOT
+      const testDir = join(tmpdir(), 'test-dir-' + Date.now());
+      await mkdir(testDir);
+      
+      try {
+        // Use relative path from SAFE_ROOT
+        const relativePath = relative(tmpdir(), testDir);
+        await expect(
+          service.createBuildAttestation(relativePath, {
+            id: 'test-builder',
+            version: '1.0.0',
+          })
+        ).rejects.toThrow('Subject path must be a file');
+      } finally {
+        // Clean up
+        try {
+          await rmdir(testDir);
+        } catch {
+          // Directory might not exist or can't be removed
+        }
+      }
     });
   });
 
@@ -187,6 +202,64 @@ describe('ProvenanceService', () => {
     it('should reject JSON without required fields', () => {
       const invalidJson = JSON.stringify({ invalid: 'data' });
       expect(() => service.importAttestation(invalidJson)).toThrow('Invalid attestation format');
+    });
+  });
+
+  describe('SAFE_ROOT_PATH edge cases', () => {
+    afterEach(() => {
+      // Restore original SAFE_ROOT_PATH after each edge case test
+      if (originalSafeRoot !== undefined) {
+        process.env.SAFE_ROOT_PATH = originalSafeRoot;
+      } else {
+        delete process.env.SAFE_ROOT_PATH;
+      }
+    });
+
+    it('should throw error when SAFE_ROOT_PATH does not exist', async () => {
+      // Set SAFE_ROOT_PATH to a non-existent directory
+      const nonExistentPath = join(tmpdir(), 'non-existent-dir-' + Date.now());
+      process.env.SAFE_ROOT_PATH = nonExistentPath;
+      
+      const serviceWithInvalidRoot = new ProvenanceService();
+      
+      await expect(
+        serviceWithInvalidRoot.generateFileDigest('test.txt')
+      ).rejects.toThrow(/does not exist or is invalid/);
+    });
+
+    it('should throw error when SAFE_ROOT_PATH is a file instead of a directory', async () => {
+      // Create a file to use as SAFE_ROOT_PATH
+      const filePath = join(tmpdir(), 'not-a-directory-' + Date.now());
+      await writeFile(filePath, 'this is a file, not a directory');
+      
+      process.env.SAFE_ROOT_PATH = filePath;
+      const serviceWithFileAsRoot = new ProvenanceService();
+      
+      try {
+        await expect(
+          serviceWithFileAsRoot.generateFileDigest('test.txt')
+        ).rejects.toThrow(/not a directory|does not exist or is invalid/);
+      } finally {
+        // Clean up the test file
+        await unlink(filePath);
+      }
+    });
+
+    it('should throw error when SAFE_ROOT_PATH is invalid or malformed', async () => {
+      // Test with various invalid path scenarios
+      const invalidPaths = [
+        '\0invalid', // null byte
+        'relative/path/without/resolution', // relative path that doesn't exist
+      ];
+
+      for (const invalidPath of invalidPaths) {
+        process.env.SAFE_ROOT_PATH = invalidPath;
+        const serviceWithInvalidPath = new ProvenanceService();
+        
+        await expect(
+          serviceWithInvalidPath.generateFileDigest('test.txt')
+        ).rejects.toThrow();
+      }
     });
   });
 });
