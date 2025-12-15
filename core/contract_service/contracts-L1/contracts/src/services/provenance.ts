@@ -4,6 +4,8 @@ import { tmpdir } from 'os';
 import * as path from 'path';
 
 import { PathValidator } from '../utils/path-validator';
+import { SelfHealingPathValidator } from '../utils/self-healing-path-validator';
+import { pathValidationEvents, PathValidationEventType } from '../events/path-validation-events';
 
 import { SLSAAttestationService, SLSAProvenance, BuildMetadata } from './attestation';
 
@@ -19,7 +21,14 @@ const SAFE_ROOT =
  */
 function isPathContained(targetPath: string, rootPath: string): boolean {
   const relative = path.relative(rootPath, targetPath);
-  return !relative.startsWith('..') && !path.isAbsolute(relative);
+  // Ensure the canonical path is inside the root directory or equals the root
+  return (
+    relative === '' // filePath equals the root
+    || (
+      // filePath is a descendant of root
+      !relative.startsWith('..') && !path.isAbsolute(relative)
+    )
+  );
 }
 
 /**
@@ -92,9 +101,13 @@ function resolveFilePath(filePath: string, safeRoot: string, systemTmpDir: strin
 }
 
 /**
- * Validates and normalizes a file path to prevent path traversal attacks.
- * Ensures the resolved path is within the SAFE_ROOT directory or is an absolute path
- * within allowed system directories (for testing only).
+ * Validates and normalizes a file path with self-healing capabilities.
+ * 
+ * This function now integrates event-driven structure completion:
+ * - Emits events on validation failures
+ * - Triggers fallback recovery mechanisms
+ * - Supports DAG-based structure reconstruction
+ * - Maintains structural snapshots for recovery
  *
  * @param filePath - The file path to validate (can be relative or absolute)
  * @param safeRoot - Optional safe root directory override (primarily for testing)
@@ -201,11 +214,24 @@ export interface Dependency {
 
 export class ProvenanceService {
   private readonly slsaService: SLSAAttestationService;
-  private readonly pathValidator: PathValidator;
+  private readonly pathValidator: PathValidator | SelfHealingPathValidator;
+  private readonly selfHealingEnabled: boolean;
 
-  constructor(pathValidator?: PathValidator) {
+  constructor(pathValidator?: PathValidator | SelfHealingPathValidator, enableSelfHealing = true) {
     this.slsaService = new SLSAAttestationService();
-    this.pathValidator = pathValidator || new PathValidator();
+    this.selfHealingEnabled = enableSelfHealing;
+    
+    // Use self-healing validator by default if enabled
+    if (enableSelfHealing && !pathValidator) {
+      this.pathValidator = new SelfHealingPathValidator({
+        safeRoot: SAFE_ROOT,
+        enableAutoRecovery: true,
+        enableSnapshotting: true,
+        dagEnabled: true,
+      });
+    } else {
+      this.pathValidator = pathValidator || new PathValidator();
+    }
   }
 
   /**

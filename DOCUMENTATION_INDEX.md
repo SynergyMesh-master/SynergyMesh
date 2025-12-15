@@ -403,6 +403,20 @@ const reports = await runStageOne({
 | [docs/operations/MONITORING_GUIDE.md](./docs/operations/MONITORING_GUIDE.md)         | 監控指南 | 監控設置     |
 | [docs/operations/PRODUCTION_READINESS.md](./docs/operations/PRODUCTION_READINESS.md) | 生產就緒 | 上線檢查清單 |
 
+### AI 模型部署文檔 ⭐ **NEW**
+
+| 文件路徑                                                       | 說明           | 操作指引                               |
+| -------------------------------------------------------------- | -------------- | -------------------------------------- |
+| [docs/AI_MODEL_DEPLOYMENT.md](./docs/AI_MODEL_DEPLOYMENT.md) | AI 模型部署指南 | GPU 要求、vLLM 部署、配置優化、故障排查 |
+
+**關鍵內容：**
+
+- 硬件要求：最低 24GB GPU (RTX 4090) / 推薦 30GB+ GPU (A100/H100)
+- vLLM Docker 部署：`docker pull vllm/vllm-openai:v0.12.0`
+- 配置建議：最低配置 max_len 12500-14000，推薦配置完整長度
+- 性能優化：量化、批處理、前綴緩存
+- 故障排查：OOM 錯誤、CUDA 配置、模型加載問題
+
 ### CI 治理框架 (`config/`, `scripts/hooks/`)
 
 > **新增於 PR
