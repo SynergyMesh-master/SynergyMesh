@@ -1,7 +1,7 @@
 import { createHash, randomUUID } from 'crypto';
 import { readFile, stat, realpath } from 'fs/promises';
-import { relative, resolve, sep } from 'path';
 import { tmpdir } from 'os';
+import { relative, resolve, sep } from 'path';
 
 import { SLSAAttestationService, SLSAProvenance, BuildMetadata } from './attestation';
 
@@ -71,7 +71,7 @@ export class ProvenanceService {
   private static getSafeRoot(): string {
     return process.env.SAFE_ROOT_PATH
       ? resolve(process.env.SAFE_ROOT_PATH)
-      : resolve(__dirname, '../../safefiles');
+      : resolve(process.cwd(), 'safefiles');
   }
 
   constructor() {
@@ -95,15 +95,10 @@ export class ProvenanceService {
     }
     const absPath = resolve(canonicalRoot, userInputPath);
     const realAbsPath = await realpath(absPath);
-    // Ensure the realAbsPath is strictly under canonicalRoot (not equal nor outside)
-    if (
-      realAbsPath.length <= canonicalRoot.length || // Must not be root itself
-      realAbsPath.slice(0, canonicalRoot.length) !== canonicalRoot ||
-      (realAbsPath.length > canonicalRoot.length && realAbsPath[canonicalRoot.length] !== sep)
-    ) {
-      throw new Error(
-        `Access to file path '${userInputPath}' (resolved as '${realAbsPath}') is not allowed - path must be strictly within ${canonicalRoot}`
-      );
+    // Ensure the realAbsPath is strictly under canonicalRoot using path.relative
+    const rel = relative(canonicalRoot, realAbsPath);
+    if (rel.startsWith('..') || rel === '' || rel.includes('\0')) {
+      throw new Error(`Access to file path '${userInputPath}' (resolved as '${realAbsPath}') is not allowed - path must be strictly within ${canonicalRoot}`);
     }
 
     return realAbsPath;
