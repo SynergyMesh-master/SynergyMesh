@@ -1,5 +1,5 @@
 import { ProvenanceService } from '../services/provenance';
-import { writeFile, unlink, mkdir, rmdir } from 'fs/promises';
+import { writeFile, unlink, mkdir } from 'fs/promises';
 import { join, relative } from 'path';
 import { tmpdir } from 'os';
 
@@ -36,7 +36,7 @@ describe('ProvenanceService', () => {
   describe('generateFileDigest', () => {
     it('should generate correct SHA256 digest', async () => {
       // Use relative path from SAFE_ROOT (tmpdir in tests)
-      const relativePath = testFilePath.replace(tmpdir(), '').substring(1);
+      const relativePath = relative(tmpdir(), testFilePath);
       const digest = await service.generateFileDigest(relativePath);
       expect(digest).toMatch(/^sha256:[a-f0-9]{64}$/);
     });
@@ -60,7 +60,7 @@ describe('ProvenanceService', () => {
       };
 
       // Use relative path from SAFE_ROOT
-      const relativePath = testFilePath.replace(tmpdir(), '').substring(1);
+      const relativePath = relative(tmpdir(), testFilePath);
       const attestation = await service.createBuildAttestation(relativePath, builder);
 
       expect(attestation).toMatchObject({
@@ -95,7 +95,7 @@ describe('ProvenanceService', () => {
         buildInvocationId: 'test-build-123',
       };
 
-      const relativePath = testFilePath.replace(tmpdir(), '').substring(1);
+      const relativePath = relative(tmpdir(), testFilePath);
       const attestation = await service.createBuildAttestation(relativePath, builder, metadata);
 
       expect(attestation.predicate.metadata.reproducible).toBe(true);
