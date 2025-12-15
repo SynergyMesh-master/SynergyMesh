@@ -108,7 +108,7 @@ export class ProvenanceService {
    * 生成文件的 SHA256 摘要
    */
   async generateFileDigest(filePath: string): Promise<string> {
-    const validatedPath = this.validatePath(filePath);
+    const validatedPath = await this.resolveSafePath(filePath);
     const content = await readFile(validatedPath);
     const hash = createHash('sha256');
     hash.update(content);
