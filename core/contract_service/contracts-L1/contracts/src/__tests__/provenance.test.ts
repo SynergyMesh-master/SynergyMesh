@@ -60,7 +60,7 @@ describe('ProvenanceService', () => {
       };
 
       // Use relative path from SAFE_ROOT
-      const relativePath = testFilePath.replace(tmpdir(), '').substring(1);
+      const relativePath = relative(tmpdir(), testFilePath);
       const attestation = await service.createBuildAttestation(relativePath, builder);
 
       expect(attestation).toMatchObject({
@@ -95,7 +95,7 @@ describe('ProvenanceService', () => {
         buildInvocationId: 'test-build-123',
       };
 
-      const relativePath = testFilePath.replace(tmpdir(), '').substring(1);
+      const relativePath = relative(tmpdir(), testFilePath);
       const attestation = await service.createBuildAttestation(relativePath, builder, metadata);
 
       expect(attestation.predicate.metadata.reproducible).toBe(true);
