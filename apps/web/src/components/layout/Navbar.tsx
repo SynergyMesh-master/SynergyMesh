@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router';
-import { Menu, X, Terminal, Code2, Server, Layers, Mail, Activity } from 'lucide-react';
+import { Menu, X, Terminal, Code2, Server, Layers, Mail, Activity, LayoutDashboard } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 export default function Navbar() {
@@ -21,6 +21,7 @@ export default function Navbar() {
 
   const navItems = [
     { name: '首頁', path: '/', icon: Terminal },
+    { name: '控制台', path: '/dashboard', icon: LayoutDashboard },
     { name: '系統架構', path: '/architecture', icon: Layers },
     { name: '前端技術', path: '/frontend', icon: Code2 },
     { name: '後端實現', path: '/backend', icon: Server },

@@ -2,6 +2,7 @@
 import { HashRouter, Route, Routes } from 'react-router';
 import { Toaster } from 'sonner';
 import Home from './pages/Home';
+import Dashboard from './pages/Dashboard';
 import Architecture from './pages/Architecture';
 import Frontend from './pages/Frontend';
 import Backend from './pages/Backend';
@@ -14,6 +15,7 @@ export default function App() {
       <Toaster position="top-center" richColors theme="dark" />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/architecture" element={<Architecture />} />
         <Route path="/frontend" element={<Frontend />} />
         <Route path="/backend" element={<Backend />} />
