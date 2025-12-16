@@ -226,7 +226,7 @@ class RepoSyncer:
         with open(metadata_file, 'w') as f:
             json.dump(metadata, f, indent=2)
 
-    def sync_all(self, core_only: bool = False, dry_run: bool = False):
+    def sync_all(self, core_only: bool = False, exclude_core: bool = False, dry_run: bool = False):
         """Sync all repositories"""
         log_info("=" * 60)
         log_info("Multi-Repository Sync Tool")
@@ -241,6 +241,10 @@ class RepoSyncer:
         if core_only:
             repos_to_sync = self.config.get('core_repositories', [])
             log_info(f"Syncing {len(repos_to_sync)} CORE repositories only")
+        elif exclude_core:
+            # Exclude core repositories (for hybrid mode)
+            repos_to_sync = self.config.get('sync_repositories', [])
+            log_info(f"Syncing {len(repos_to_sync)} REGULAR repositories (excluding core)")
         else:
             core_repos = self.config.get('core_repositories', [])
             sync_repos = self.config.get('sync_repositories', [])
@@ -326,6 +330,11 @@ def main():
         help='Sync core repositories only'
     )
     parser.add_argument(
+        '--exclude-core',
+        action='store_true',
+        help='Exclude core repositories (sync regular repos only, for hybrid mode)'
+    )
+    parser.add_argument(
         '--repo',
         type=str,
         help='Sync single repository by name'
@@ -345,7 +354,11 @@ def main():
     if args.repo:
         syncer.sync_single(args.repo, dry_run=args.dry_run)
     else:
-        syncer.sync_all(core_only=args.core_only, dry_run=args.dry_run)
+        syncer.sync_all(
+            core_only=args.core_only,
+            exclude_core=args.exclude_core,
+            dry_run=args.dry_run
+        )
 
 if __name__ == '__main__':
     main()
