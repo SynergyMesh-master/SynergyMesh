@@ -123,7 +123,56 @@ class BaseEvaluator:
         return []
     
     def evaluate(self, data: Dict[str, Any]) -> DimensionScore:
-        raise NotImplementedError
+        """Evaluate data based on configured criteria
+
+        Args:
+            data: Data to evaluate
+
+        Returns:
+            DimensionScore with evaluation results
+        """
+        if not self.dimension:
+            raise ValueError("Dimension must be set in subclass")
+
+        sub_scores = {}
+        evidences = []
+
+        # Evaluate each criterion
+        for criterion in self.criteria:
+            try:
+                score = self._evaluate_criterion(criterion, data)
+                sub_scores[criterion.name] = score
+
+                # Collect evidence
+                if score < criterion.threshold:
+                    evidences.append(f"{criterion.name}: {score:.2f} (below threshold {criterion.threshold})")
+            except Exception as e:
+                logger.error(f"Error evaluating criterion {criterion.name}: {e}")
+                sub_scores[criterion.name] = 0.0
+
+        # Calculate overall score
+        overall_score = self._calculate_score(sub_scores)
+
+        return DimensionScore(
+            dimension=self.dimension.value,
+            score=overall_score,
+            max_score=1.0,
+            sub_scores=sub_scores,
+            evidences=evidences
+        )
+
+    def _evaluate_criterion(self, criterion: EvaluationCriteria, data: Dict[str, Any]) -> float:
+        """Evaluate a single criterion - override in subclass for custom logic
+
+        Args:
+            criterion: Criterion to evaluate
+            data: Data to evaluate
+
+        Returns:
+            Score between 0.0 and 1.0
+        """
+        # Default implementation - subclasses should override
+        return 1.0
     
     def _calculate_score(self, sub_scores: Dict[str, float]) -> float:
         if not sub_scores:
