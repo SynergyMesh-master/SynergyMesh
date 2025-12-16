@@ -1,0 +1,104 @@
+# Kubernetes Namespace for Phase 1 Services
+# Phase: 2 (Q2 2026) - Pre-designed for distributed deployment
+# Description: Creates isolated namespace for application services
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: keystone-ai
+  labels:
+    app.kubernetes.io/name: keystone-ai
+    app.kubernetes.io/part-of: unmanned-island-system
+    environment: production
+    phase: "1"
+  annotations:
+    description: "Phase 1 services: Dashboard, API Gateway, and Scheduler"
+    owner: "platform-team@example.com"
+    created-by: "infrastructure"
+---
+# Resource Quotas for the namespace
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: keystone-ai-quota
+  namespace: keystone-ai
+spec:
+  hard:
+    requests.cpu: "20"
+    requests.memory: "40Gi"
+    limits.cpu: "40"
+    limits.memory: "80Gi"
+    persistentvolumeclaims: "10"
+    services.loadbalancers: "2"
+    services.nodeports: "5"
+---
+# Limit Ranges for pods
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: keystone-ai-limits
+  namespace: keystone-ai
+spec:
+  limits:
+    - max:
+        cpu: "4"
+        memory: "8Gi"
+      min:
+        cpu: "100m"
+        memory: "128Mi"
+      default:
+        cpu: "500m"
+        memory: "1Gi"
+      defaultRequest:
+        cpu: "250m"
+        memory: "512Mi"
+      type: Container
+---
+# Network Policy - Default deny all
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: default-deny-all
+  namespace: keystone-ai
+spec:
+  podSelector: {}
+  policyTypes:
+    - Ingress
+    - Egress
+---
+# Network Policy - Allow DNS
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-dns
+  namespace: keystone-ai
+spec:
+  podSelector: {}
+  policyTypes:
+    - Egress
+  egress:
+    - to:
+        - namespaceSelector:
+            matchLabels:
+              name: kube-system
+      ports:
+        - protocol: UDP
+          port: 53
+---
+# Network Policy - Allow within namespace
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-same-namespace
+  namespace: keystone-ai
+spec:
+  podSelector: {}
+  policyTypes:
+    - Ingress
+    - Egress
+  ingress:
+    - from:
+        - podSelector: {}
+  egress:
+    - to:
+        - podSelector: {}
