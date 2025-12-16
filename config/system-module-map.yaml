@@ -43,6 +43,129 @@ language_governance:
     note: "C++ is ONLY permitted in autonomous and native adapter subsystems"
 
 # ============================================================================
+# Root Directory Restructuring (根層目錄重構)
+# ============================================================================
+# Reference: docs/architecture/ROOT_DIRECTORY_RESTRUCTURING.md
+root_directory_restructuring:
+  documentation_reference: "docs/architecture/ROOT_DIRECTORY_RESTRUCTURING.md"
+  status: "planning"
+  
+  # Hidden directories (technical/tool configurations)
+  hidden_directories_policy:
+    description: "隱藏目錄（.前綴）代表技術/工具配置"
+    directories:
+      - path: ".config/"
+        purpose: "Configuration test files (conftest)"
+        status: "keep"
+      - path: ".devcontainer/"
+        purpose: "VS Code Dev Container configuration"
+        status: "keep"
+      - path: ".github/"
+        purpose: "GitHub Actions workflows and configs"
+        status: "keep"
+      - path: ".github-private/"
+        purpose: "Private GitHub configurations"
+        status: "keep"
+      - path: ".vscode/"
+        purpose: "VS Code workspace settings"
+        status: "keep"
+      - path: ".refactor-backups/"
+        purpose: "Refactoring backup files"
+        status: "keep"
+  
+  # Naming conflict resolution
+  naming_conflict_resolution:
+    - conflict: "config/ vs .config/"
+      recommendation: "Rename config/ to app-configs/ for clarity"
+      rationale: "Distinguish application configs from tool/test configs"
+    - conflict: "infra/ vs infrastructure/"
+      recommendation: "Consolidate to infrastructure/"
+      rationale: "Avoid functional overlap"
+
+# ============================================================================
+# Standardized Subdirectory Framework (標準化子目錄框架)
+# ============================================================================
+# All major functional modules should follow this standard skeleton
+standardized_subdirectory_framework:
+  documentation_reference: "docs/architecture/ROOT_DIRECTORY_RESTRUCTURING.md"
+  
+  # Standard module skeleton
+  standard_skeleton:
+    description: "標準模組骨架 - 所有主要功能模組應遵循此結構"
+    required_directories:
+      - name: "src/"
+        description: "Source code (核心源代碼)"
+        mandatory_level: "HIGH"
+        purpose: "Store core application source code"
+        rule: "No source code should reside directly in module root"
+      - name: "tests/"
+        description: "Test suite (測試套件)"
+        mandatory_level: "HIGH"
+        purpose: "Unit tests, integration tests, E2E tests"
+        structure:
+          - "unit/"
+          - "integration/"
+          - "e2e/"
+          - "fixtures/"
+          - "mocks/"
+      - name: "docs/"
+        description: "Documentation (文檔)"
+        mandatory_level: "HIGH"
+        purpose: "Module-specific documentation"
+        contents:
+          - "README.md"
+          - "API.md"
+          - "DESIGN.md"
+    recommended_directories:
+      - name: "config/"
+        description: "Module configuration (模組配置)"
+        mandatory_level: "MEDIUM-HIGH"
+        purpose: "Module-specific configurations"
+        distinction: "Different from root app-configs/ (global configs)"
+  
+  # Module skeleton template
+  module_skeleton_template: |
+    {module_name}/
+    ├── README.md                 # Module entry documentation
+    ├── src/                      # 📝 Source Code [HIGH]
+    │   ├── index.ts              # Entry point
+    │   ├── types.ts              # Type definitions
+    │   ├── services/             # Service layer
+    │   └── utils/                # Utility functions
+    ├── tests/                    # 🧪 Tests [HIGH]
+    │   ├── unit/                 # Unit tests
+    │   ├── integration/          # Integration tests
+    │   ├── e2e/                  # End-to-end tests
+    │   └── fixtures/             # Test fixtures
+    ├── docs/                     # 📚 Documentation [HIGH]
+    │   ├── README.md             # Module overview
+    │   ├── API.md                # API reference
+    │   └── DESIGN.md             # Design decisions
+    └── config/                   # ⚙️ Configuration [MEDIUM-HIGH]
+        ├── defaults.yaml         # Default settings
+        └── schemas/              # Config schemas
+  
+  # Modules requiring skeleton implementation
+  target_modules:
+    priority_1:
+      - module: "core/"
+        reason: "Central platform, highest impact"
+        current_structure: "Mixed Python modules"
+      - module: "agent/"
+        reason: "Active development, clear boundaries"
+        current_structure: "Agent subdirectories without standard skeleton"
+    priority_2:
+      - module: "automation/"
+        reason: "Multiple submodules need structure"
+      - module: "services/"
+        reason: "Service implementations need standard"
+    priority_3:
+      - module: "mcp-servers/"
+        reason: "Tool endpoints need consistency"
+      - module: "frontend/"
+        reason: "UI components need structure"
+
+# ============================================================================
 # Directory Categories (目錄分類)
 # ============================================================================
 directory_categories:

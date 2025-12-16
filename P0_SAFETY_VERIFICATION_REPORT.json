@@ -1,0 +1,79 @@
+{
+  "summary": {
+    "total": 5,
+    "passed": 5,
+    "failed": 0,
+    "warnings": 0,
+    "skipped": 0,
+    "pass_rate": "100.0%"
+  },
+  "results": [
+    {
+      "item": "緊急停止按鈕實現",
+      "status": "PASS",
+      "message": "緊急停止機制已實現 (2 個文件)",
+      "details": {
+        "files": [
+          "/home/user/keystone-ai/core/safety_mechanisms/emergency_stop.py",
+          "/home/user/keystone-ai/agent/dependency-manager/src/crossplatform/emergency_response.py"
+        ]
+      },
+      "timestamp": "2025-12-16T10:47:16.710733"
+    },
+    {
+      "item": "安全機制配置",
+      "status": "PASS",
+      "message": "所有安全機制已啟用",
+      "details": {
+        "config_file": "/home/user/keystone-ai/config/safety-mechanisms.yaml",
+        "checks": {
+          "safety.enabled": true,
+          "circuit_breaker.enabled": true,
+          "escalation_ladder.enabled": true
+        }
+      },
+      "timestamp": "2025-12-16T10:47:16.726155"
+    },
+    {
+      "item": "監控配置",
+      "status": "PASS",
+      "message": "監控配置已存在 (0 個 Prometheus 配置)",
+      "details": {
+        "prometheus_files": [],
+        "monitoring_dirs": [
+          "/home/user/keystone-ai/infrastructure/monitoring"
+        ]
+      },
+      "timestamp": "2025-12-16T10:47:17.102214"
+    },
+    {
+      "item": "測試覆蓋率目標",
+      "status": "PASS",
+      "message": "覆蓋率目標已設置: 80%",
+      "details": {
+        "target": 80,
+        "config": "/home/user/keystone-ai/pyproject.toml"
+      },
+      "timestamp": "2025-12-16T10:47:17.102966"
+    },
+    {
+      "item": "CI/CD 配置",
+      "status": "PASS",
+      "message": "所有關鍵 CI/CD workflows 已配置 (3 個文件)",
+      "details": {
+        "workflows": {
+          "build": true,
+          "test": true,
+          "lint": true
+        },
+        "files": [
+          "minimal-ci.yml",
+          "03-build.yml",
+          "release.yml"
+        ]
+      },
+      "timestamp": "2025-12-16T10:47:17.104930"
+    }
+  ],
+  "generated_at": "2025-12-16T10:47:17.105183"
+}

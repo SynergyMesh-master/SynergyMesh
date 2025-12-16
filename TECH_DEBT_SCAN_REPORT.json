@@ -1,0 +1,220 @@
+{
+  "summary": {
+    "total_items": 690,
+    "target_reduction": 345,
+    "by_type": {
+      "TODO": 60,
+      "HIGH_COMPLEXITY": 619,
+      "DEPRECATED": 9,
+      "XXX": 2
+    },
+    "by_severity": {
+      "LOW": 68,
+      "MEDIUM": 622
+    },
+    "by_directory": {
+      "root": 21,
+      "v2-multi-islands": 1,
+      "tools": 93,
+      "scripts": 1,
+      "core": 180,
+      "governance": 108,
+      "agent": 59,
+      "apps": 10,
+      "tests": 32,
+      "automation": 59,
+      "docs": 27,
+      "bridges": 1,
+      "frontend": 6,
+      "infra": 1,
+      "shared": 1,
+      "services": 88,
+      ".github": 1,
+      "config": 1
+    }
+  },
+  "high_priority": [],
+  "medium_priority": [
+    {
+      "file": "automation_launcher.py",
+      "line": 124,
+      "type": "HIGH_COMPLEXITY",
+      "message": "Function '__init__' has 248 lines (threshold: 100)"
+    },
+    {
+      "file": "automation_launcher.py",
+      "line": 194,
+      "type": "HIGH_COMPLEXITY",
+      "message": "Function 'stop' has 194 lines (threshold: 100)"
+    },
+    {
+      "file": "automation_launcher.py",
+      "line": 212,
+      "type": "HIGH_COMPLEXITY",
+      "message": "Function '_heartbeat_loop' has 181 lines (threshold: 100)"
+    },
+    {
+      "file": "automation_launcher.py",
+      "line": 235,
+      "type": "HIGH_COMPLEXITY",
+      "message": "Function 'run_forever' has 165 lines (threshold: 100)"
+    },
+    {
+      "file": "automation_launcher.py",
+      "line": 310,
+      "type": "HIGH_COMPLEXITY",
+      "message": "Function 'main' has 103 lines (threshold: 100)"
+    },
+    {
+      "file": "emergency_recovery.py",
+      "line": 75,
+      "type": "HIGH_COMPLEXITY",
+      "message": "Function '__init__' has 336 lines (threshold: 100)"
+    },
+    {
+      "file": "emergency_recovery.py",
+      "line": 85,
+      "type": "HIGH_COMPLEXITY",
+      "message": "Function 'log' has 329 lines (threshold: 100)"
+    },
+    {
+      "file": "emergency_recovery.py",
+      "line": 136,
+      "type": "HIGH_COMPLEXITY",
+      "message": "Function 'diagnose_system' has 294 lines (threshold: 100)"
+    },
+    {
+      "file": "emergency_recovery.py",
+      "line": 184,
+      "type": "HIGH_COMPLEXITY",
+      "message": "Function 'check_processes' has 257 lines (threshold: 100)"
+    },
+    {
+      "file": "emergency_recovery.py",
+      "line": 229,
+      "type": "HIGH_COMPLEXITY",
+      "message": "Function 'check_python_environment' has 221 lines (threshold: 100)"
+    },
+    {
+      "file": "emergency_recovery.py",
+      "line": 247,
+      "type": "HIGH_COMPLEXITY",
+      "message": "Function 'repair_critical_components' has 206 lines (threshold: 100)"
+    },
+    {
+      "file": "emergency_recovery.py",
+      "line": 268,
+      "type": "HIGH_COMPLEXITY",
+      "message": "Function 'repair_missing_directory' has 190 lines (threshold: 100)"
+    },
+    {
+      "file": "emergency_recovery.py",
+      "line": 290,
+      "type": "HIGH_COMPLEXITY",
+      "message": "Function 'repair_missing_module' has 170 lines (threshold: 100)"
+    },
+    {
+      "file": "emergency_recovery.py",
+      "line": 326,
+      "type": "HIGH_COMPLEXITY",
+      "message": "Function 'recover_services' has 137 lines (threshold: 100)"
+    },
+    {
+      "file": "emergency_recovery.py",
+      "line": 345,
+      "type": "HIGH_COMPLEXITY",
+      "message": "Function 'start_automation_launcher' has 125 lines (threshold: 100)"
+    },
+    {
+      "file": "v2-multi-islands/governance_integration.py",
+      "line": 27,
+      "type": "HIGH_COMPLEXITY",
+      "message": "Function '__init__' has 214 lines (threshold: 100)"
+    },
+    {
+      "file": "tools/validate-refactor-index.py",
+      "line": 22,
+      "type": "HIGH_COMPLEXITY",
+      "message": "Function '__init__' has 130 lines (threshold: 100)"
+    },
+    {
+      "file": "tools/ai-refactor-review.py",
+      "line": 269,
+      "type": "HIGH_COMPLEXITY",
+      "message": "Function 'load_all_reports' has 163 lines (threshold: 100)"
+    },
+    {
+      "file": "tools/scan_tech_debt.py",
+      "line": 40,
+      "type": "HIGH_COMPLEXITY",
+      "message": "Function '__init__' has 161 lines (threshold: 100)"
+    },
+    {
+      "file": "tools/scan_tech_debt.py",
+      "line": 78,
+      "type": "HIGH_COMPLEXITY",
+      "message": "Function '_iter_files' has 135 lines (threshold: 100)"
+    },
+    {
+      "file": "tools/scan_tech_debt.py",
+      "line": 89,
+      "type": "HIGH_COMPLEXITY",
+      "message": "Function '_scan_file' has 127 lines (threshold: 100)"
+    },
+    {
+      "file": "tools/generate-refactor-playbook.py",
+      "line": 211,
+      "type": "HIGH_COMPLEXITY",
+      "message": "Function '__init__' has 450 lines (threshold: 100)"
+    },
+    {
+      "file": "tools/generate-refactor-playbook.py",
+      "line": 226,
+      "type": "HIGH_COMPLEXITY",
+      "message": "Function 'load_governance_data' has 438 lines (threshold: 100)"
+    },
+    {
+      "file": "tools/generate-refactor-playbook.py",
+      "line": 364,
+      "type": "HIGH_COMPLEXITY",
+      "message": "Function '_save_to_cache' has 332 lines (threshold: 100)"
+    },
+    {
+      "file": "tools/generate-refactor-playbook.py",
+      "line": 382,
+      "type": "HIGH_COMPLEXITY",
+      "message": "Function '_parse_governance_report' has 316 lines (threshold: 100)"
+    },
+    {
+      "file": "tools/generate-refactor-playbook.py",
+      "line": 663,
+      "type": "HIGH_COMPLEXITY",
+      "message": "Function 'generate_all_playbooks' has 130 lines (threshold: 100)"
+    },
+    {
+      "file": "tools/verify_p0_safety.py",
+      "line": 35,
+      "type": "HIGH_COMPLEXITY",
+      "message": "Function '__init__' has 300 lines (threshold: 100)"
+    },
+    {
+      "file": "tools/verify_p0_safety.py",
+      "line": 60,
+      "type": "HIGH_COMPLEXITY",
+      "message": "Function '_verify_emergency_stop' has 288 lines (threshold: 100)"
+    },
+    {
+      "file": "tools/verify_p0_safety.py",
+      "line": 112,
+      "type": "HIGH_COMPLEXITY",
+      "message": "Function '_verify_safety_mechanisms' has 245 lines (threshold: 100)"
+    },
+    {
+      "file": "tools/verify_p0_safety.py",
+      "line": 175,
+      "type": "HIGH_COMPLEXITY",
+      "message": "Function '_verify_monitoring_config' has 192 lines (threshold: 100)"
+    }
+  ],
+  "low_priority_count": 68
+}

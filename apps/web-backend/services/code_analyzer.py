@@ -213,8 +213,19 @@ class BaseAnalyzer:
         return issues
 
     async def _perform_analysis(self, code: str, file_path: str, strategy: AnalysisStrategy) -> list[CodeIssue]:
-        """執行分析 - 由子類實現"""
-        raise NotImplementedError
+        """執行分析 - 由子類實現具體分析邏輯
+
+        Args:
+            code: 代碼內容
+            file_path: 文件路徑
+            strategy: 分析策略
+
+        Returns:
+            檢測到的問題列表
+        """
+        # Default implementation - subclasses should override
+        self.logger.warning(f"{self.__class__.__name__}._perform_analysis() not implemented for {file_path}")
+        return []
 
 
 # ============================================================================

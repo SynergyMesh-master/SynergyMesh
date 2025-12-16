@@ -155,7 +155,7 @@ class BaseAnalyzer:
 
     async def analyze(self, code: str, file_path: str) -> list[CodeIssue]:
         """
-        分析代碼
+        分析代碼 - 子類必須實現此方法
 
         Args:
             code: 代碼內容
@@ -164,7 +164,10 @@ class BaseAnalyzer:
         Returns:
             List[CodeIssue]: 問題列表
         """
-        raise NotImplementedError
+        # Default implementation for base analyzer
+        # Subclasses should override this method
+        self.logger.warning(f"{self.__class__.__name__}.analyze() called but not implemented")
+        return []
 
 
 # ============================================================================

@@ -1,6 +1,16 @@
 name: Architecture Governance Policy
 description: Defines architecture governance rules and standards
 version: "1.0"
+skeleton:
+  id: "architecture-stability"
+  source_of_truth:
+    base: "repo://unmanned-engineer-ceo/80-skeleton-configs/01-architecture-stability/"
+    files:
+      invariants: "docs/invariants.md"
+      layering_rules: "docs/layering-rules.md"
+      dependency_rules: "docs/dependency-rules.md"
+      linter_config: "tools/arch-lint.config.yml"
+    implementation: "repo://automation/autonomous/architecture-stability/"
 
 enforcement: strict
 

@@ -251,5 +251,38 @@ class TemplateBuilder:
         Args:
             name: Template name
         """
-        # TODO: Implement template registration
-        logger.info(f"Template '{name}' registered")
+        import json
+        from datetime import datetime
+
+        # Define registry path
+        registry_dir = Path.home() / ".synergymesh" / "templates"
+        registry_file = registry_dir / "registry.json"
+        template_dir = registry_dir / name
+
+        # Save template files to registry
+        self.save(template_dir)
+
+        # Load or create registry metadata
+        registry_data = {}
+        if registry_file.exists():
+            try:
+                with open(registry_file, 'r', encoding='utf-8') as f:
+                    registry_data = json.load(f)
+            except Exception as e:
+                logger.warning(f"Failed to load registry: {e}")
+
+        # Add this template to registry
+        registry_data[name] = {
+            "name": name,
+            "path": str(template_dir),
+            "files": list(self.files.keys()),
+            "registered_at": datetime.utcnow().isoformat(),
+            "file_count": len(self.files)
+        }
+
+        # Save updated registry
+        registry_dir.mkdir(parents=True, exist_ok=True)
+        with open(registry_file, 'w', encoding='utf-8') as f:
+            json.dump(registry_data, f, indent=2, ensure_ascii=False)
+
+        logger.info(f"Template '{name}' registered to {registry_file}")

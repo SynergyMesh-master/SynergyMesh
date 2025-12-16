@@ -19,7 +19,14 @@
    - 快速決策指南
    - 不變量規則
 
-2. **[API 演化文件](./api-evolution/)** ⭐ 新增
+2. **[根層目錄重構與標準化子目錄框架](./ROOT_DIRECTORY_RESTRUCTURING.md)** ⭐ 新增
+   - 根層目錄重構原則與方案
+   - 命名衝突解決（config/ vs .config/）
+   - 標準化子目錄骨架（src/, tests/, docs/, config/）
+   - 模組遷移檢查清單
+   - 實施指南
+
+3. **[API 演化文件](./api-evolution/)** ⭐ 新增
    - [API 演化標準模板](./api-evolution/TEMPLATE.md) - 可複用的 API 演化計畫模板
    - [L1 Core + Automation 任務](./api-evolution/L1_core_and_automation_tasks.md) - 當前階段的 API 演化實施計畫
    - 18 個新 endpoints 定義與驗證規範

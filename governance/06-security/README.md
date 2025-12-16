@@ -66,6 +66,13 @@ This governance domain integrates with:
 - **compliance-governance**: Compliance with regulatory auth requirements
 - **audit-governance**: Authentication and authorization auditing
 
+### skeleton alignment (skeleton #4: security-observability)
+
+- **Source of truth**: `repo://unmanned-engineer-ceo/80-skeleton-configs/04-security-observability/`
+- **Governance policy**: [`config/security-observability-policy.yaml`](./config/security-observability-policy.yaml)
+- **Key assets**: `config/rbac-policies.yaml`, `config/log-schema.json`, `config/trace-config.yaml`
+- **Tooling hooks**: `tools/security-scan.ts`, `tools/log-validator.ts` (run via `npx ts-node ...`)
+
 ---
 
 **Status**: Core Governance Domain

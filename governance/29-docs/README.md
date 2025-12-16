@@ -84,6 +84,10 @@ This governance domain integrates with:
 - **data-governance**: Data schema documentation
 - **testing-governance**: Test plan and results documentation
 
+## 📑 Reports
+
+- [Governance Structure Analysis](./GOVERNANCE_STRUCTURE_ANALYSIS.md) — Inferred assessment of the 80+ governance subdirectories, key gaps, and recommendations.
+
 ---
 
 **Status**: Core Governance Domain

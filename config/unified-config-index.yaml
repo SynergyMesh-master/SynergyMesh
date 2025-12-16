@@ -37,9 +37,69 @@ master_configs:
   unified_index:
     file: "config/unified-config-index.yaml"
     purpose: "配置整合與目錄合併指南"
+  
+  # Root directory restructuring guide - 根層目錄重構指南
+  root_directory_restructuring:
+    file: "docs/architecture/ROOT_DIRECTORY_RESTRUCTURING.md"
+    purpose: "根層目錄重構與標準化子目錄框架"
+    status: "planning"
 
 # ============================================================================
-# Directory Consolidation Plan (目錄合併計畫)
+# Root Directory Restructuring (根層目錄重構) - Phase 3
+# ============================================================================
+# 根層目錄重構計畫，解決命名衝突與建立標準化子目錄框架
+# Reference: docs/architecture/ROOT_DIRECTORY_RESTRUCTURING.md
+root_directory_restructuring_plan:
+  status: "planning"
+  documentation: "docs/architecture/ROOT_DIRECTORY_RESTRUCTURING.md"
+  
+  # Naming conflict resolutions
+  naming_conflict_resolutions:
+    config_conflict:
+      issue: "config/ vs .config/ naming overlap"
+      recommendation: "Rename config/ to app-configs/"
+      rationale: "Distinguish application configs from tool/test configs"
+      status: "planning"
+    
+    infrastructure_conflict:
+      issue: "infra/ and infrastructure/ functional overlap"
+      recommendation: "Consolidate to infrastructure/"
+      status: "planning"
+  
+  # Standardized subdirectory framework
+  standardized_subdirectories:
+    description: "Standard module skeleton for all major functional modules"
+    required_directories:
+      - name: "src/"
+        mandatory_level: "HIGH"
+        purpose: "Source code - no source should reside in module root"
+      - name: "tests/"
+        mandatory_level: "HIGH"
+        purpose: "Unit, integration, and E2E tests"
+        structure: ["unit/", "integration/", "e2e/", "fixtures/"]
+      - name: "docs/"
+        mandatory_level: "HIGH"
+        purpose: "Module-specific documentation"
+        contents: ["README.md", "API.md", "DESIGN.md"]
+    recommended_directories:
+      - name: "config/"
+        mandatory_level: "MEDIUM-HIGH"
+        purpose: "Module-specific configurations"
+  
+  # Module migration priority
+  module_migration_priority:
+    priority_1:
+      - "core/"
+      - "agent/"
+    priority_2:
+      - "automation/"
+      - "services/"
+    priority_3:
+      - "mcp-servers/"
+      - "frontend/"
+
+# ============================================================================
+# Directory Consolidation Plan (目錄合併計畫) - Phase 2
 # ============================================================================
 # 減少根目錄子目錄數量，將相關目錄合併
 # STATUS: COMPLETED - All directories have been consolidated

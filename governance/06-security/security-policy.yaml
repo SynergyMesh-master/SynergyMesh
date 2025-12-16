@@ -24,3 +24,7 @@ data_classification:
   - "Internal"
   - "Confidential"
   - "Restricted"
+
+skeleton_alignment:
+  id: "security-observability"
+  policy: "./config/security-observability-policy.yaml"
