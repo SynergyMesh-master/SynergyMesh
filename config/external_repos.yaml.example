@@ -1,0 +1,193 @@
+# External Repositories Configuration | 外部倉庫配置
+# ================================================
+#
+# 將你的近100個倉庫配置在這裡
+# Configure your ~100 repositories here
+#
+# 使用方法 | Usage:
+#   1. 複製此文件: cp config/external_repos.yaml.example config/external_repos.yaml
+#   2. 填入你的倉庫資訊
+#   3. 執行同步: python tools/sync_external_repos.py
+
+# ============================================================================
+# 核心倉庫 (10-20個) - 使用 Git Subtree 完全整合
+# Core Repositories - Fully integrate with Git Subtree
+# ============================================================================
+core_repositories:
+  # 範例 1: 認證服務
+  - name: authentication-service
+    url: https://github.com/keystone-api/auth-service.git
+    branch: main
+    priority: high
+    description: "核心認證服務 - 處理用戶登入和授權"
+
+  # 範例 2: 數據管道
+  - name: data-pipeline
+    url: https://github.com/keystone-api/data-pipeline.git
+    branch: main
+    priority: high
+    description: "數據處理管道 - ETL 和數據轉換"
+
+  # 範例 3: API 閘道
+  - name: api-gateway
+    url: https://github.com/keystone-api/gateway.git
+    branch: main
+    priority: high
+    description: "API 閘道 - 路由和負載均衡"
+
+  # 添加你的核心倉庫 (建議 10-20 個)
+  # Add your core repositories here (recommended 10-20)
+
+# ============================================================================
+# 普通倉庫 (80-90個) - 使用自動同步
+# Regular Repositories - Auto-sync periodically
+# ============================================================================
+sync_repositories:
+  # 範例: Legacy 系統
+  - name: legacy-system-v1
+    url: https://github.com/keystone-api/legacy-v1.git
+    branch: master
+    priority: medium
+    description: "舊版系統 v1 - 逐步遷移中"
+
+  - name: legacy-system-v2
+    url: https://github.com/keystone-api/legacy-v2.git
+    branch: master
+    priority: medium
+    description: "舊版系統 v2 - 維護模式"
+
+  # 範例: 微服務
+  - name: user-service
+    url: https://github.com/keystone-api/user-service.git
+    branch: main
+    priority: medium
+    description: "用戶管理服務"
+
+  - name: notification-service
+    url: https://github.com/keystone-api/notification-service.git
+    branch: main
+    priority: low
+    description: "通知發送服務"
+
+  # 範例: 工具和腳本
+  - name: deployment-scripts
+    url: https://github.com/keystone-api/deploy-scripts.git
+    branch: main
+    priority: low
+    description: "部署腳本集合"
+
+  # ===================================================================
+  # 在此添加你的其餘 80-90 個倉庫
+  # Add your remaining 80-90 repositories below
+  # ===================================================================
+
+  # 模板格式 | Template format:
+  # - name: repo-name                # 倉庫名稱（將作為 external/ 下的目錄名）
+  #   url: https://github.com/...    # Git URL
+  #   branch: main                   # 分支名稱
+  #   priority: medium               # 優先級: high/medium/low
+  #   description: "描述"            # 簡短描述
+
+# ============================================================================
+# 同步選項
+# Sync Options
+# ============================================================================
+sync_options:
+  # 排除模式 - 這些文件/目錄不會被同步
+  # Exclude patterns - these files/directories won't be synced
+  exclude_patterns:
+    - "*.pyc"
+    - "*.pyo"
+    - "__pycache__"
+    - "node_modules"
+    - ".git"
+    - ".gitignore"
+    - ".env"
+    - ".env.local"
+    - "*.log"
+    - ".DS_Store"
+    - "dist/"
+    - "build/"
+    - "*.egg-info"
+    - ".pytest_cache"
+    - ".coverage"
+    - "venv/"
+    - ".venv/"
+
+  # 只包含這些路徑（可選）
+  # Only include these paths (optional)
+  include_paths:
+    - "src/"
+    - "lib/"
+    - "config/"
+    - "scripts/"
+    # 留空則包含所有內容
+    # Leave empty to include everything
+
+  # 保留文件權限
+  # Preserve file permissions
+  preserve_permissions: true
+
+  # 定時同步設定（用於 CI/CD）
+  # Schedule settings (for CI/CD)
+  schedule:
+    enabled: true
+    cron: "0 2 * * *"  # 每天凌晨 2 點 | Daily at 2 AM
+    timezone: "Asia/Taipei"
+
+# ============================================================================
+# Git Subtree 配置（針對核心倉庫）
+# Git Subtree Configuration (for core repositories)
+# ============================================================================
+subtree_options:
+  # 是否壓縮提交歷史
+  # Squash commit history
+  squash: true
+
+  # 目標目錄前綴
+  # Target directory prefix
+  prefix: "external/"
+
+  # 提交訊息模板
+  # Commit message template
+  commit_message_template: |
+    chore: sync {repo_name} from external repository
+
+    Source: {repo_url}
+    Branch: {branch}
+    Synced at: {timestamp}
+
+# ============================================================================
+# 通知設定（可選）
+# Notification Settings (optional)
+# ============================================================================
+notifications:
+  enabled: false
+
+  # Slack webhook (可選)
+  slack:
+    webhook_url: ""
+    channel: "#integrations"
+
+  # Email (可選)
+  email:
+    smtp_server: ""
+    from: ""
+    to: []
+
+# ============================================================================
+# 統計和報告
+# Statistics and Reporting
+# ============================================================================
+reporting:
+  # 生成同步報告
+  # Generate sync report
+  enabled: true
+
+  # 報告輸出路徑
+  # Report output path
+  output_path: ".automation_logs/sync_reports/"
+
+  # 報告格式
+  # Report format
+  format: "json"  # json | markdown | html
