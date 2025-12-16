@@ -1,7 +1,7 @@
 {
   "name": "island-ai",
   "version": "0.1.0",
-  "description": "Stage 1 agent framework for Island AI multi-agent system.",
+  "description": "Stage 1-4 multi-agent framework with productionized collaboration for Island AI.",
   "license": "MIT",
   "type": "module",
   "main": "dist/index.js",

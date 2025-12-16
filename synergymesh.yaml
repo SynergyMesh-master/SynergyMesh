@@ -185,49 +185,83 @@ capabilities:
         "orchestrator",
       ]
 
-  # Island AI Multi-Agent System (Stage 1: 智能診斷代理)
+  # Island AI Multi-Agent System (Stages 1-4 consolidated: 協作、自學習、生產化)
   island_ai:
-    provider: "island-ai/dist/index.js"
+    provider: "island-ai/src/index.ts"
+    provider_artifact: "island-ai/dist/index.js"
     version: "0.1.0"
-    stage: 1
+    stage: 4  # Stages 1-3 completed; Stage 4 productionized
+    stages_completed: [1, 2, 3, 4]
     agents:
       architect:
         name: "Architect Agent"
-        path: "island-ai/dist/agents/architect/index.js"
+        path: "island-ai/src/agents/architect/index.ts"
+        artifact: "island-ai/dist/agents/architect/index.js"
         capabilities: ["system_analysis", "pattern_recommendation", "optimization"]
         integration: "synergymesh_core"
       security:
         name: "Security Agent"
-        path: "island-ai/dist/agents/security/index.js"
+        path: "island-ai/src/agents/security/index.ts"
+        artifact: "island-ai/dist/agents/security/index.js"
         capabilities: ["vulnerability_scan", "owasp_check", "cwe_check", "auto_patch"]
         integration: "security_scanner"
       devops:
         name: "DevOps Agent"
-        path: "island-ai/dist/agents/devops/index.js"
+        path: "island-ai/src/agents/devops/index.ts"
+        artifact: "island-ai/dist/agents/devops/index.js"
         capabilities: ["deployment", "monitoring", "scaling", "ci_cd_pipeline"]
         integration: "ci_error_handler"
       qa:
         name: "QA Agent"
-        path: "island-ai/dist/agents/qa/index.js"
+        path: "island-ai/src/agents/qa/index.ts"
+        artifact: "island-ai/dist/agents/qa/index.js"
         capabilities: ["unit_test", "integration_test", "e2e_test", "validation"]
         integration: "test_framework"
       data_scientist:
         name: "Data Scientist Agent"
-        path: "island-ai/dist/agents/data-scientist/index.js"
+        path: "island-ai/src/agents/data-scientist/index.ts"
+        artifact: "island-ai/dist/agents/data-scientist/index.js"
         capabilities: ["data_analysis", "modeling", "prediction", "ml_pipeline"]
         integration: "analytics_engine"
       product_manager:
         name: "Product Manager Agent"
-        path: "island-ai/dist/agents/product-manager/index.js"
+        path: "island-ai/src/agents/product-manager/index.ts"
+        artifact: "island-ai/dist/agents/product-manager/index.js"
         capabilities: ["prioritization", "roadmap", "feedback_analysis", "kpi_tracking"]
         integration: "mind_matrix"
     orchestration:
-      enabled: false  # Stage 2 feature
-      coordinator: "TBD"  # 待 Stage 2 實現
+      enabled: true  # Stage 2 feature (productionized)
+      coordinator: "island-ai/src/collaboration/agent-coordinator.ts"
+      coordinator_artifact: "island-ai/dist/collaboration/agent-coordinator.js"
+      strategies:
+        - sequential
+        - parallel
+        - conditional
+        - iterative
     next_stages:
-      stage_2: "Multi-agent collaboration + decision engine"
-      stage_3: "Self-learning + governance framework"
-      stage_4: "Production support + observability"
+      stage_5:
+        status: "in_progress"
+        kickoff: "2025-12-16"
+        multi_tenancy:
+          status: "in_progress"
+          owner: "platform"
+          acceptance: "Multi-tenant isolation with org-level policy controls"
+        ha_deployment:
+          status: "in_progress"
+          owner: "devops"
+          acceptance: "High-availability deployment patterns"
+        advanced_iam:
+          status: "in_progress"
+          owner: "security"
+          acceptance: "Advanced identity with OIDC/SAML + fine-grained RBAC"
+        cost_dashboard:
+          status: "in_progress"
+          owner: "finops"
+          acceptance: "Cost management dashboard"
+        sla_monitoring:
+          status: "in_progress"
+          owner: "observability"
+          acceptance: "SLA monitoring and automated reporting"
 
   # Actuators (執行器能力)
   actuators:
