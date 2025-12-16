@@ -1,64 +1,51 @@
-# 📦 API Governance
+# 🏛️ 架構治理 | Architecture Governance (Skeleton #1: architecture-stability)
 
-> API Design & Versioning Guidelines - Governance for API contracts, design standards, and backward compatibility
+> Aligns governance with the Architecture Stability skeleton rules, invariants, and layer boundaries.
 
 ## 📋 Overview
 
-API Governance ensures:
+Architecture Governance enforces:
 
-- Consistent API design standards
-- Versioning and backward compatibility
-- API contract specifications
-- REST/gRPC conventions
+- Layered isolation and one-way dependencies (per skeleton #1 invariants)
+- Core-to-platform-to-services guardrails mapped to SynergyMesh layers
+- Architecture linting and exemptions tracking
+- Integration of autonomous implementation (`automation/autonomous/architecture-stability`) with governance source-of-truth configs
 
 ## 📁 Structure
 
 ```
-api-governance/
-├── docs/
-│   └── API_Governance_Guidelines.md    # API design standards, versioning, naming
+01-architecture/
 ├── config/
-│   └── api-policy.yaml                 # API governance policies (RESTful, versioning)
+│   ├── architecture-policy.yaml   # Skeleton #1 governance policy & source-of-truth mapping
+│   ├── layers-domains.yaml        # Layer/domain definitions and validation rules
+│   └── api-policy.yaml            # Legacy API policy (kept for backward references; deprecation review scheduled for 2026-03-31)
 ├── schemas/
-│   └── openapi.schema.json             # OpenAPI/JSON Schema definitions
-├── tools/
-│   └── api_contract_linter.py          # API contract validation tool
-└── tests/
-    └── api_governance_tests.rego       # Conftest policies for API checks
+│   └── architecture-schema.json   # Architecture metadata schema
+├── governance-standards.md        # Bilingual governance standards
+├── governance-framework.yaml      # Integrated governance dimensions
+└── README.md                      # This file
 ```
 
-## 🎯 Key Components
+## 🔗 Skeleton #1 (Architecture Stability) Links
 
-### 1. API Design Guidelines
+All paths below use the `repo://` prefix to denote repository-root-relative references.
 
-- REST conventions and best practices
-- Versioning strategy (semantic versioning)
-- Naming conventions for endpoints and models
-- Rate limiting and pagination standards
+- **Governance Source of Truth** (`repo://` prefix): `repo://unmanned-engineer-ceo/80-skeleton-configs/01-architecture-stability/`
+  - Invariants: `repo://unmanned-engineer-ceo/80-skeleton-configs/01-architecture-stability/docs/invariants.md`
+  - Layer rules: `repo://unmanned-engineer-ceo/80-skeleton-configs/01-architecture-stability/docs/layering-rules.md`
+  - Dependency rules: `repo://unmanned-engineer-ceo/80-skeleton-configs/01-architecture-stability/docs/dependency-rules.md`
+  - Linter config: `repo://unmanned-engineer-ceo/80-skeleton-configs/01-architecture-stability/tools/arch-lint.config.yml`
+  - Linter implementation: `repo://unmanned-engineer-ceo/80-skeleton-configs/01-architecture-stability/tools/arch-lint.ts`
+- **Implementation (operational layer)**: `repo://automation/autonomous/architecture-stability/` (Layer 0 runtime + ROS2 flight control)
 
-### 2. API Policies
+## 🎯 Governance Scope
 
-- Breaking change prevention rules
-- Deprecation policies
-- Security headers requirements
-- Response format standards
+- Enforce skeleton #1 guardrails across SynergyMesh layers and domains (see `config/layers-domains.yaml`)
+- Validate architecture changes against invariants and dependency matrix
+- Coordinate with CI agents that run Architecture Lint using the skeleton configs
 
-### 3. API Validation
+## ✅ Status
 
-- OpenAPI/Swagger specifications
-- Contract testing
-- Backward compatibility checks
-
-## 🔗 Integration
-
-This governance domain integrates with:
-
-- **testing-governance**: API contract testing
-- **security-governance**: API security policies
-- **architecture-governance**: API-level architecture rules
-- **automation**: Automated API validation
-
----
-
-**Status**: Core Governance Domain
-**Last Updated**: 2025-12-09
+- Governance domain: **Active**
+- Skeleton alignment: **architecture-stability (production)**
+- Last Updated: 2025-12-16
