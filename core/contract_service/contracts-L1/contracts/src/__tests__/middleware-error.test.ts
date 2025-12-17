@@ -60,20 +60,13 @@ describe('Error Middleware', () => {
 
       errorMiddleware(error, mockRequest as Request, mockResponse as Response, mockNext);
 
-      expect(statusMock).toHaveBeenCalledWith(400);
+      expect(statusMock).toHaveBeenCalledWith(422);
       expect(jsonMock).toHaveBeenCalledWith(
         expect.objectContaining({
           error: expect.objectContaining({
             message: 'Invalid input',
-<<<<<<< HEAD
-<<<<<<< HEAD
-            status: 422,
-=======
             code: ErrorCode.VALIDATION_ERROR,
->>>>>>> origin/alert-autofix-37
-=======
-            status: 400,
->>>>>>> origin/copilot/sub-pr-402
+            status: 422,
           }),
         })
       );
@@ -248,7 +241,7 @@ describe('Error Middleware', () => {
 
       errorMiddleware(error, mockRequest as Request, mockResponse as Response, mockNext);
 
-      expect(statusMock).toHaveBeenCalledWith(400);
+      expect(statusMock).toHaveBeenCalledWith(422);
       expect(jsonMock).toHaveBeenCalled();
     });
   });

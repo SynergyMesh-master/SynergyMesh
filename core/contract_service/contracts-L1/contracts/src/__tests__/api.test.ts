@@ -180,18 +180,8 @@ describe('Provenance API Endpoints', () => {
     });
 
     it('should return 404 for non-existent file', async () => {
-<<<<<<< HEAD
-<<<<<<< HEAD
-      const encodedPath = encodeURIComponent('non/existent/file.txt');
-=======
-      const encodedPath = encodeURIComponent('/non/existent/file.txt');
->>>>>>> origin/copilot/sub-pr-402
-      const response = await request(app)
-        .get(`/api/v1/provenance/digest/${encodedPath}`);
-=======
       const encodedPath = encodeURIComponent('/non/existent/file.txt');
       const response = await request(app).get(`/api/v1/provenance/digest/${encodedPath}`);
->>>>>>> origin/alert-autofix-37
 
       expect(response.status).toBe(404);
       expect(response.body.success).toBe(false);

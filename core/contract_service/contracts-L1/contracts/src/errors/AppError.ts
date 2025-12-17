@@ -72,7 +72,7 @@ export class ValidationError extends AppError {
  */
 export class NotFoundError extends AppError {
   constructor(message: string) {
-    super(message, ErrorCode.NOT_FOUND, 404);
+    super(`${message} not found`, ErrorCode.NOT_FOUND, 404);
     Object.setPrototypeOf(this, NotFoundError.prototype);
   }
 }

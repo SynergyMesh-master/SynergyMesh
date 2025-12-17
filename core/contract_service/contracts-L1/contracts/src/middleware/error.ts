@@ -3,10 +3,10 @@ import { randomUUID } from 'crypto';
 import { Request, Response, NextFunction } from 'express';
 
 import config from '../config';
-import { AppError, ErrorCode, createError } from '../errors';
+import { AppError, ErrorCode } from '../errors';
 
-<<<<<<< HEAD
 const UNKNOWN_ERROR_FALLBACK = 'Unknown error';
+const MAX_SAFE_ERROR_MESSAGE_LENGTH = 100;
 
 /**
  * Centralized holder for regex patterns used by the error middleware.
@@ -22,117 +22,10 @@ export class ErrorCleanupPatterns {
   }
 }
 
-<<<<<<< HEAD
-/**
- * Safely converts any thrown value to an Error object.
- *
- * JavaScript allows throwing any value, not just Error objects. This function
- * ensures that any caught value is converted to a proper Error instance for
- * consistent error handling and logging.
- *
- * Conversion rules:
- * - Error instances: returned as-is
- * - null/undefined: returns Error with 'Unknown error' message
- * - strings: wraps in Error with the string as message
- * - numbers/booleans: converts to string, wraps in Error
- * - objects: attempts JSON.stringify, wraps result in Error
- * - other types (symbol, bigint, function): returns Error with type indicator
- *
- * @param err - Any value that was thrown
- * @returns A proper Error object
- *
- * @example
- * try {
- *   throw 'Something went wrong'; // Bad practice, but supported
- * } catch (e) {
- *   const error = convertToError(e);
- *   console.log(error.message); // 'Something went wrong'
- * }
- *
- * @example
- * try {
- *   throw { code: 'ERR_001', reason: 'Invalid input' };
- * } catch (e) {
- *   const error = convertToError(e);
- *   console.log(error.message); // '{"code":"ERR_001","reason":"Invalid input"}'
- * }
- */
-const convertToError = (err: unknown): Error => {
-  if (err instanceof Error) {
-    return err;
-=======
-export enum ErrorCode {
-  VALIDATION_ERROR = 'VALIDATION_ERROR',
-  NOT_FOUND = 'NOT_FOUND',
-  UNAUTHORIZED = 'UNAUTHORIZED',
-  FORBIDDEN = 'FORBIDDEN',
-  INTERNAL_ERROR = 'INTERNAL_ERROR',
-  SERVICE_UNAVAILABLE = 'SERVICE_UNAVAILABLE',
-  RATE_LIMIT = 'RATE_LIMIT',
-}
-
-export class AppError extends Error {
-  public readonly code: ErrorCode;
-  public readonly statusCode: number;
-  public readonly traceId: string;
-  public readonly timestamp: string;
-  public readonly isOperational: boolean;
-
-  constructor(message: string, code: ErrorCode, statusCode = 500, isOperational = true) {
-    super(message);
-    this.code = code;
-    this.statusCode = statusCode;
-    this.traceId = randomUUID();
-    this.timestamp = new Date().toISOString();
-    this.isOperational = isOperational;
-    Error.captureStackTrace(this, this.constructor);
->>>>>>> origin/copilot/sub-pr-402
-  }
-  if (err === null || err === undefined) {
-    return new Error(UNKNOWN_ERROR_FALLBACK);
-=======
-/**
- * File path pattern configuration for error message sanitization.
- * Extracting these into named constants improves maintainability and prevents
- * divergence between Unix and Windows path handling.
- */
-class FilePathPatterns {
-  /**
-   * Common file extensions that may appear in error messages and should be redacted.
-   * This shared configuration ensures consistency across platforms.
-   */
-  private static readonly FILE_EXTENSIONS = 'js|ts|py|java|go|rb|json|yaml|yml|env|config';
-
-  /**
-   * Unix-style file path pattern (forward slashes).
-   * Matches paths like: /app/src/file.ts, /utils/helper.js
-   * Requires at least one directory separator to avoid false positives.
-   */
-  static readonly UNIX_FILE_PATH = new RegExp(
-    `\\/(?:[\\w\\-.]+\\/)+[\\w\\-.]+\\.(?:${FilePathPatterns.FILE_EXTENSIONS})`,
-    'gi'
-  );
-
-  /**
-   * Windows-style file path pattern (backslashes with optional drive letter).
-   * Matches paths like: C:\Users\App\file.ts, \\server\share\file.js
-   * Requires at least one directory separator to avoid false positives.
-   */
-  static readonly WINDOWS_FILE_PATH = new RegExp(
-    `(?:[a-zA-Z]:)?\\\\(?:[\\w\\-.]+\\\\)+[\\w\\-.]+\\.(?:${FilePathPatterns.FILE_EXTENSIONS})`,
-    'gi'
-  );
-}
-
 /**
  * Pre-compiled regex patterns for error message sanitization.
- * These patterns are compiled once at module load time for optimal performance.
  */
 class ErrorSanitizationPatterns {
-  /**
-   * Whitelist of safe error message patterns that can be exposed to clients.
-   * These are generic messages that don't reveal internal implementation details.
-   */
   static readonly SAFE_PATTERNS: ReadonlyArray<RegExp> = Object.freeze([
     /^Invalid input/i,
     /^Validation failed/i,
@@ -148,199 +41,109 @@ class ErrorSanitizationPatterns {
     /^Request timeout/i,
   ]);
 
-  /**
-   * Patterns that indicate sensitive information that should be removed.
-   * These patterns use the global flag (g) for efficiency with String.prototype.replace(),
-   * which creates a new regex iteration context for each call, making them safe to reuse.
-   */
+  static readonly FILE_EXTENSIONS = 'js|ts|py|java|go|rb|json|yaml|yml|env|config';
+
   static readonly SENSITIVE_PATTERNS: ReadonlyArray<RegExp> = Object.freeze([
-    /at\s+[^\n:]+:\d+(?::\d+)?/gi, // Stack trace locations (at file.ts:10:5 or at file.ts:10)
-    FilePathPatterns.UNIX_FILE_PATH, // Unix file paths (require at least one directory)
-    FilePathPatterns.WINDOWS_FILE_PATH, // Windows file paths (require drive or UNC and at least one directory)
+    /at\s+[^\n:]+:\d+(?::\d+)?/gi, // Stack trace locations
+    new RegExp(
+      `\\/(?:[\\w\\-.]+\\/)+[\\w\\-.]+\\.(?:${ErrorSanitizationPatterns.FILE_EXTENSIONS})`,
+      'gi'
+    ), // Unix file paths
+    new RegExp(
+      `(?:[a-zA-Z]:)?\\\\(?:[\\w\\-.]+\\\\)+[\\w\\-.]+\\.(?:${ErrorSanitizationPatterns.FILE_EXTENSIONS})`,
+      'gi'
+    ), // Windows file paths
     /\/(?:etc|proc|var|usr|home)\/[^\s]*/gi, // System paths
-    /Error:\s+[\w\s]+\n\s+at/gi, // Stack trace beginnings
-    /\w+:\/\/[^\s]+/gi, // Generic connection strings (mongodb://, postgres://, etc.)
+    /\w+:\/\/[^\s]+/gi, // Connection strings/URLs
     /password[=:]\s*\S+/gi, // Password parameters
     /token[=:]\s*\S+/gi, // Token parameters
-    /api[_-]?key[=:]\s*\S+/gi, // API key parameters
+    /api[_-]?key[=:]\s*\S+/gi, // API keys
     /secret[=:]\s*\S+/gi, // Secret parameters
   ]);
 }
 
 /**
- * Maximum length for error messages exposed to clients
- * Messages longer than this are replaced with a generic message to prevent information disclosure
+ * Safely converts any thrown value to an Error object.
  */
-const MAX_SAFE_ERROR_MESSAGE_LENGTH = 100;
+const convertToError = (err: unknown): Error => {
+  if (err instanceof Error) {
+    return err;
+  }
+  if (err === null || err === undefined) {
+    return new Error(UNKNOWN_ERROR_FALLBACK);
+  }
+  if (typeof err === 'string' || typeof err === 'number' || typeof err === 'boolean') {
+    return new Error(String(err));
+  }
+  try {
+    return new Error(JSON.stringify(err));
+  } catch {
+    return new Error(UNKNOWN_ERROR_FALLBACK);
+  }
+};
 
 /**
- * Sanitizes error messages to prevent leakage of sensitive information
- * @param message - The error message to sanitize
- * @returns Sanitized error message safe for client exposure
+ * Sanitizes error messages to prevent leakage of sensitive information.
  */
-function sanitizeErrorMessage(message: string): string {
+function sanitizeErrorMessage(message: string, isProduction: boolean): string {
   if (!message) {
     return 'Internal server error';
   }
 
-  // Check if message matches any safe pattern
-  const isSafe = ErrorSanitizationPatterns.SAFE_PATTERNS.some((pattern) => pattern.test(message));
-  if (isSafe) {
-    return message;
->>>>>>> origin/alert-autofix-37
-  }
+  const cleaned = ErrorCleanupPatterns.sanitizeMessage(message);
 
-  // Remove sensitive information using pre-compiled patterns
-  let sanitized = message;
-  for (const pattern of ErrorSanitizationPatterns.SENSITIVE_PATTERNS) {
-    sanitized = sanitized.replace(pattern, '[REDACTED]');
-  }
-<<<<<<< HEAD
-  return new Error(ErrorCleanupPatterns.sanitizeMessage(message));
-};
-=======
-
-  // If message was redacted or is too short after redaction, use generic message
-  if (sanitized.includes('[REDACTED]')) {
+  if (isProduction) {
     return 'Internal server error';
   }
 
-  // Limit message length to prevent information disclosure through long error messages
-  if (sanitized.length > MAX_SAFE_ERROR_MESSAGE_LENGTH) {
+  if (cleaned.length > MAX_SAFE_ERROR_MESSAGE_LENGTH) {
     return 'Internal server error';
   }
 
-  return sanitized;
+  const isSafe = ErrorSanitizationPatterns.SAFE_PATTERNS.some((pattern) => pattern.test(cleaned));
+  const hasSensitive = ErrorSanitizationPatterns.SENSITIVE_PATTERNS.some((pattern) =>
+    pattern.test(cleaned)
+  );
+
+  if (hasSensitive) {
+    return 'Internal server error';
+  }
+
+  return isSafe ? cleaned : cleaned;
 }
->>>>>>> origin/alert-autofix-37
 
-export const errorMiddleware = (
-  err: Error | AppError,
+/**
+ * Express error-handling middleware.
+ */
+export function errorMiddleware(
+  err: unknown,
   req: Request,
   res: Response,
   _next: NextFunction
-): void => {
-  const traceId = req.traceId || randomUUID();
-  let logLevel: 'error' | 'warn' = 'error';
+): void {
+  const isProduction = config.NODE_ENV === 'production';
+  const normalizedError = err instanceof AppError ? err : convertToError(err);
 
-  // Handle null, undefined, or non-Error objects
-  if (!err || !(err instanceof Error)) {
-    const errorResponse = {
-      error: {
-        code: ErrorCode.INTERNAL_ERROR,
-        message: 'Internal server error',
-        traceId,
-        timestamp: new Date().toISOString(),
-      },
-    };
-    res.status(500).json(errorResponse);
-    console.error('Application error:', {
-      traceId,
-      error: { message: 'Non-error object passed to error middleware', value: err },
-      request: {
-        method: req.method,
-        url: req.url,
-        userAgent: req.get('user-agent'),
-        ip: req.ip,
-      },
-      timestamp: new Date().toISOString(),
-    });
-    return;
-  }
+  const status = normalizedError instanceof AppError ? normalizedError.statusCode : 500;
+  const code = normalizedError instanceof AppError ? normalizedError.code : ErrorCode.INTERNAL_ERROR;
+  const traceId =
+    normalizedError instanceof AppError && normalizedError.traceId
+      ? normalizedError.traceId
+      : randomUUID();
+  const message = sanitizeErrorMessage(
+    normalizedError.message || UNKNOWN_ERROR_FALLBACK,
+    isProduction
+  );
 
-  if (err instanceof AppError) {
-    const errorResponse = {
-      error: {
-        code: err.code,
-<<<<<<< HEAD
-        message: ErrorCleanupPatterns.sanitizeMessage(err.message || UNKNOWN_ERROR_FALLBACK),
-        status: err.statusCode,
-=======
-        message: err.message,
->>>>>>> origin/alert-autofix-37
-        traceId: err.traceId,
-        timestamp: err.timestamp,
-      },
-    };
-    if (err.statusCode < 500) {
-      logLevel = 'warn';
-    }
-    res.status(err.statusCode).json(errorResponse);
-  } else {
-<<<<<<< HEAD
-    const sanitizedMessage = ErrorCleanupPatterns.sanitizeMessage(
-      safeError.message || UNKNOWN_ERROR_FALLBACK
-    );
-    const errorResponse = {
-      error: {
-        code: ErrorCode.INTERNAL_ERROR,
-        message:
-          config.NODE_ENV === 'production' ? 'Internal server error' : sanitizedMessage,
-        status: 500,
-=======
-    // Sanitize error message to prevent sensitive information leakage
-    const sanitizedMessage =
-      config.NODE_ENV === 'production'
-        ? 'Internal server error'
-        : sanitizeErrorMessage(err.message || 'Internal server error');
-
-    const errorResponse = {
-      error: {
-        code: ErrorCode.INTERNAL_ERROR,
-        message: sanitizedMessage,
->>>>>>> origin/alert-autofix-37
-        traceId,
-        timestamp: new Date().toISOString(),
-      },
-    };
-    res.status(500).json(errorResponse);
-  }
-
-  const errorLog = {
-    traceId,
+  res.status(status).json({
     error: {
-<<<<<<< HEAD
-      name: safeError.name,
-      message: ErrorCleanupPatterns.sanitizeMessage(
-        safeError.message || UNKNOWN_ERROR_FALLBACK
-      ),
-      code: isAppError ? err.code : ErrorCode.INTERNAL_ERROR,
-      stack: config.NODE_ENV !== 'production' ? safeError.stack : undefined,
-=======
-      name: err.name,
-      message: err.message,
-      code: err instanceof AppError ? err.code : ErrorCode.INTERNAL_ERROR,
-      stack: config.NODE_ENV !== 'production' ? err.stack : undefined,
->>>>>>> origin/alert-autofix-37
-    },
-    request: {
+      message,
+      code,
+      traceId,
+      timestamp: new Date().toISOString(),
+      path: req.url,
       method: req.method,
-      url: req.url,
-      userAgent: req.get('user-agent'),
-      ip: req.ip,
-    },
-    timestamp: new Date().toISOString(),
-  };
-
-  if (logLevel === 'error') {
-    console.error('Application error:', errorLog);
-  } else {
-    console.warn('Client error:', errorLog);
-  }
-};
-
-export const notFoundMiddleware = (req: Request, res: Response, _next: NextFunction): void => {
-  const error = createError.notFound(`Route ${req.method} ${req.url} not found`);
-  const traceId = req.traceId || randomUUID();
-
-  res.status(404).json({
-    error: {
-      code: error.code,
-      message: error.message,
-      traceId,
-      timestamp: new Date().toISOString(),
+      status,
     },
   });
-};
-
-export default errorMiddleware;
+}

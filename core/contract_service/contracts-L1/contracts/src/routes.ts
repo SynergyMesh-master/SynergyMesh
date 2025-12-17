@@ -1,10 +1,5 @@
 import { Router, Request, Response } from 'express';
 import type { Router as RouterType } from 'express';
-<<<<<<< HEAD
-import rateLimit, { type RateLimitRequestHandler } from 'express-rate-limit';
-=======
-
->>>>>>> origin/copilot/sub-pr-402
 import { AssignmentController } from './controllers/assignment';
 import { EscalationController } from './controllers/escalation';
 import { ProvenanceController } from './controllers/provenance';

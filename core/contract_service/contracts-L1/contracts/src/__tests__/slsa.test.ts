@@ -3,9 +3,8 @@ import express from 'express';
 import routes from '../routes';
 import { loggingMiddleware } from '../middleware/logging';
 import { errorMiddleware } from '../middleware/error';
-import { writeFile, unlink } from 'fs/promises';
-import { join } from 'path';
-import { tmpdir } from 'os';
+import { writeFile, unlink, mkdir } from 'fs/promises';
+import { join, resolve } from 'path';
 
 // Create standalone test application
 const createTestApp = () => {
