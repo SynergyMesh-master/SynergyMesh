@@ -19,6 +19,15 @@ TEST_NAMESPACE_PREFIX = "test-ns"
 KUBECTL_TIMEOUT = 30
 
 
+def kubectl_available() -> bool:
+    """檢查 kubectl 是否可用"""
+    return subprocess.run(["which", "kubectl"], capture_output=True).returncode == 0
+
+
+# 模組級別的 kubectl 可用性檢查
+pytestmark = pytest.mark.skipif(not kubectl_available(), reason="kubectl 未安裝")
+
+
 class KubectlError(Exception):
     """Kubectl 命令執行錯誤"""
 
@@ -105,8 +114,6 @@ def cleanup_namespaces():
 class TestNamespaceCreation:
     """命名空間創建測試類"""
 
-    @pytest.mark.skipif(not subprocess.run(["which", "kubectl"], capture_output=True).returncode == 0,
-                        reason="kubectl 未安裝")
     def test_create_basic_namespace(self, test_namespace):
         """測試創建基本命名空間"""
         # 創建命名空間
@@ -120,8 +127,6 @@ class TestNamespaceCreation:
         assert ns["metadata"]["name"] == test_namespace
         assert ns["status"]["phase"] == "Active"
 
-    @pytest.mark.skipif(not subprocess.run(["which", "kubectl"], capture_output=True).returncode == 0,
-                        reason="kubectl 未安裝")
     def test_create_namespace_with_labels(self, test_namespace):
         """測試創建帶標籤的命名空間"""
         labels = {"environment": "test", "team": "testing", "purpose": "unit-test"}
@@ -135,8 +140,6 @@ class TestNamespaceCreation:
             assert key in ns_labels, f"標籤 {key} 應該存在"
             assert ns_labels[key] == value, f"標籤 {key} 應該為 {value}"
 
-    @pytest.mark.skipif(not subprocess.run(["which", "kubectl"], capture_output=True).returncode == 0,
-                        reason="kubectl 未安裝")
     def test_namespace_naming_convention(self, cleanup_namespaces):
         """測試命名空間命名規範"""
         # 有效的命名
@@ -156,8 +159,6 @@ class TestNamespaceCreation:
             except (subprocess.CalledProcessError, KubectlError):
                 pytest.fail(f"有效命名 {full_name} 創建失敗")
 
-    @pytest.mark.skipif(not subprocess.run(["which", "kubectl"], capture_output=True).returncode == 0,
-                        reason="kubectl 未安裝")
     def test_invalid_namespace_names(self):
         """測試無效的命名空間名稱"""
         invalid_names = [
@@ -172,8 +173,6 @@ class TestNamespaceCreation:
             with pytest.raises((subprocess.CalledProcessError, KubectlError)):
                 create_namespace(name)
 
-    @pytest.mark.skipif(not subprocess.run(["which", "kubectl"], capture_output=True).returncode == 0,
-                        reason="kubectl 未安裝")
     def test_duplicate_namespace_creation(self, test_namespace):
         """測試重複創建命名空間"""
         # 第一次創建
@@ -184,8 +183,6 @@ class TestNamespaceCreation:
         create_namespace(test_namespace)
         assert namespace_exists(test_namespace)
 
-    @pytest.mark.skipif(not subprocess.run(["which", "kubectl"], capture_output=True).returncode == 0,
-                        reason="kubectl 未安裝")
     def test_namespace_deletion(self, cleanup_namespaces):
         """測試命名空間刪除"""
         name = f"{TEST_NAMESPACE_PREFIX}-delete-{int(time.time())}"
@@ -211,8 +208,6 @@ class TestNamespaceCreation:
 class TestNamespaceLabelsAndAnnotations:
     """命名空間標籤和註解測試"""
 
-    @pytest.mark.skipif(not subprocess.run(["which", "kubectl"], capture_output=True).returncode == 0,
-                        reason="kubectl 未安裝")
     def test_environment_labels(self, test_namespace):
         """測試環境標籤"""
         labels = {
@@ -226,8 +221,6 @@ class TestNamespaceLabelsAndAnnotations:
         assert ns["metadata"]["labels"]["environment"] == "development"
         assert ns["metadata"]["labels"]["tier"] == "backend"
 
-    @pytest.mark.skipif(not subprocess.run(["which", "kubectl"], capture_output=True).returncode == 0,
-                        reason="kubectl 未安裝")
     def test_label_selectors(self, cleanup_namespaces):
         """測試標籤選擇器"""
         # 創建多個帶標籤的命名空間

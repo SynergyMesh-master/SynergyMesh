@@ -31,6 +31,7 @@ INTERVAL=10
 MONITOR_ALL=false
 OUTPUT_FORMAT="table"
 WATCH_MODE=false
+WARNING_THRESHOLD=80
 
 # 顯示幫助
 show_help() {
@@ -205,7 +206,8 @@ calculate_usage_percentage() {
         return
     fi
     
-    echo "scale=1; ($used_val / $hard_val) * 100" | bc 2>/dev/null || echo "N/A"
+    # 使用 awk 進行浮點數計算（更可移植）
+    awk "BEGIN {printf \"%.1f\", ($used_val / $hard_val) * 100}" 2>/dev/null || echo "N/A"
 }
 
 # 輸出表格格式

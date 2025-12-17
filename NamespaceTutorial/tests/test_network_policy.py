@@ -19,6 +19,15 @@ TEST_NAMESPACE_PREFIX = "test-netpol"
 KUBECTL_TIMEOUT = 60
 
 
+def kubectl_available() -> bool:
+    """檢查 kubectl 是否可用"""
+    return subprocess.run(["which", "kubectl"], capture_output=True).returncode == 0
+
+
+# 模組級別的 kubectl 可用性檢查
+pytestmark = pytest.mark.skipif(not kubectl_available(), reason="kubectl 未安裝")
+
+
 class KubectlError(Exception):
     """Kubectl 命令執行錯誤"""
 
@@ -135,8 +144,8 @@ def two_namespaces():
 class TestNetworkPolicyCreation:
     """網路策略創建測試"""
 
-    @pytest.mark.skipif(not subprocess.run(["which", "kubectl"], capture_output=True).returncode == 0,
-                        reason="kubectl 未安裝")
+    
+
     def test_create_deny_all_ingress_policy(self, test_namespace):
         """測試創建拒絕所有入站流量的策略"""
         policy = {
@@ -154,8 +163,8 @@ class TestNetworkPolicyCreation:
         assert policies[0]["metadata"]["name"] == "deny-all-ingress"
         assert policies[0]["spec"]["policyTypes"] == ["Ingress"]
 
-    @pytest.mark.skipif(not subprocess.run(["which", "kubectl"], capture_output=True).returncode == 0,
-                        reason="kubectl 未安裝")
+    
+
     def test_create_deny_all_egress_policy(self, test_namespace):
         """測試創建拒絕所有出站流量的策略"""
         policy = {
@@ -171,8 +180,8 @@ class TestNetworkPolicyCreation:
         policy_names = [p["metadata"]["name"] for p in policies]
         assert "deny-all-egress" in policy_names
 
-    @pytest.mark.skipif(not subprocess.run(["which", "kubectl"], capture_output=True).returncode == 0,
-                        reason="kubectl 未安裝")
+    
+
     def test_create_allow_same_namespace_policy(self, test_namespace):
         """測試創建允許同命名空間通訊的策略"""
         policy = {
@@ -210,8 +219,8 @@ class TestNetworkPolicyCreation:
 class TestNetworkPolicyRules:
     """網路策略規則測試"""
 
-    @pytest.mark.skipif(not subprocess.run(["which", "kubectl"], capture_output=True).returncode == 0,
-                        reason="kubectl 未安裝")
+    
+
     def test_pod_selector_policy(self, test_namespace):
         """測試 Pod 選擇器策略"""
         policy = {
@@ -241,8 +250,8 @@ class TestNetworkPolicyRules:
         assert backend_policy["spec"]["podSelector"]["matchLabels"]["app"] == "backend"
         assert backend_policy["spec"]["ingress"][0]["ports"][0]["port"] == 8080
 
-    @pytest.mark.skipif(not subprocess.run(["which", "kubectl"], capture_output=True).returncode == 0,
-                        reason="kubectl 未安裝")
+    
+
     def test_namespace_selector_policy(self, two_namespaces):
         """測試命名空間選擇器策略"""
         source_ns, target_ns = two_namespaces
@@ -274,8 +283,8 @@ class TestNetworkPolicyRules:
         )
         assert allow_policy is not None
 
-    @pytest.mark.skipif(not subprocess.run(["which", "kubectl"], capture_output=True).returncode == 0,
-                        reason="kubectl 未安裝")
+    
+
     def test_port_specific_policy(self, test_namespace):
         """測試端口特定策略"""
         policy = {
@@ -312,8 +321,8 @@ class TestNetworkPolicyRules:
 class TestNetworkPolicyValidation:
     """網路策略驗證測試"""
 
-    @pytest.mark.skipif(not subprocess.run(["which", "kubectl"], capture_output=True).returncode == 0,
-                        reason="kubectl 未安裝")
+    
+
     def test_policy_with_cidr_block(self, test_namespace):
         """測試 CIDR 區塊策略"""
         policy = {
@@ -344,8 +353,8 @@ class TestNetworkPolicyValidation:
         assert ip_block["cidr"] == "10.0.0.0/8"
         assert "10.0.0.0/24" in ip_block["except"]
 
-    @pytest.mark.skipif(not subprocess.run(["which", "kubectl"], capture_output=True).returncode == 0,
-                        reason="kubectl 未安裝")
+    
+
     def test_multiple_policies_same_namespace(self, test_namespace):
         """測試同一命名空間多個策略"""
         policies = [
@@ -372,8 +381,8 @@ class TestNetworkPolicyValidation:
 class TestDNSPolicy:
     """DNS 策略測試"""
 
-    @pytest.mark.skipif(not subprocess.run(["which", "kubectl"], capture_output=True).returncode == 0,
-                        reason="kubectl 未安裝")
+    
+
     def test_allow_dns_egress(self, test_namespace):
         """測試允許 DNS 出站流量"""
         policy = {

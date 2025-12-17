@@ -3,11 +3,13 @@
 #
 # 此檔案展示 Docker 和 Docker Compose 中的命名空間概念
 # This file demonstrates namespace concepts in Docker and Docker Compose
+# 
+# 注意：使用較新的 Compose 格式，不需要指定版本號
+# Note: Using newer Compose format without version specification
 
 ---
 # Docker Compose 範例：網路命名空間隔離
 # Docker Compose Example: Network Namespace Isolation
-version: '3.8'
 
 # 服務定義
 services:
@@ -184,7 +186,7 @@ secrets:
 # Multi-environment Configuration Example
 
 # development.yml
-version: '3.8'
+# 使用較新的 Compose 格式，不需要指定版本號
 services:
   app:
     image: myapp:dev
@@ -201,7 +203,6 @@ networks:
 
 ---
 # staging.yml
-version: '3.8'
 services:
   app:
     image: myapp:staging
@@ -218,7 +219,6 @@ networks:
 
 ---
 # production.yml
-version: '3.8'
 services:
   app:
     image: myapp:prod
