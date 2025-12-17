@@ -7,6 +7,10 @@ import { AppError, ErrorCode } from '../errors';
 
 const UNKNOWN_ERROR_FALLBACK = 'Unknown error';
 const MAX_SAFE_ERROR_MESSAGE_LENGTH = 100;
+const testPattern = (pattern: RegExp, value: string): boolean => {
+  pattern.lastIndex = 0;
+  return pattern.test(value);
+};
 
 /**
  * Centralized holder for regex patterns used by the error middleware.
@@ -101,7 +105,7 @@ function sanitizeErrorMessage(message: string, isProduction: boolean): string {
   }
 
   const hasSensitive = ErrorSanitizationPatterns.SENSITIVE_PATTERNS.some((pattern) =>
-    pattern.test(cleaned)
+    testPattern(pattern, cleaned)
   );
 
   if (hasSensitive) {

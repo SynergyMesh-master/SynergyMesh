@@ -9,7 +9,7 @@
  */
 
 import { createHash } from 'crypto';
-import { realpath, mkdir } from 'fs/promises';
+import { realpath, mkdir, access } from 'fs/promises';
 import * as path from 'path';
 
 import {
@@ -90,6 +90,18 @@ export class SelfHealingPathValidator extends PathValidator {
   async validateAndResolvePath(filePath: string): Promise<string> {
     const attemptKey = filePath;
     const attempts = this.recoveryAttempts.get(attemptKey) || 0;
+    const safeRoot = this.config.safeRoot || process.cwd();
+
+    try {
+      const candidatePath = path.resolve(safeRoot, filePath);
+      await access(candidatePath);
+    } catch {
+      pathValidationEvents.emitStructureMissing({
+        filePath,
+        safeRoot,
+        error: 'ENOENT',
+      });
+    }
 
     try {
       // Attempt normal validation
@@ -116,14 +128,15 @@ export class SelfHealingPathValidator extends PathValidator {
       pathValidationEvents.emitValidationFailed(eventData);
 
       // Emit structure missing only for missing/invalid structure to drive recovery flows
-      pathValidationEvents.emitStructureMissing(eventData);
+      const isStructureMissing =
+        (error instanceof Error &&
+          'code' in error &&
+          (error as Error & { code: string }).code === 'ENOENT') ||
+        error instanceof PathValidationError;
 
-      // Check if this is a structure missing error (ENOENT)
-      if (
-        error instanceof Error &&
-        'code' in error &&
-        (error as Error & { code: string }).code === 'ENOENT'
-      ) {
+      if (isStructureMissing) {
+        pathValidationEvents.emitStructureMissing(eventData);
+
         // Attempt recovery if enabled and within retry limits
         if (this.config.enableAutoRecovery && attempts < (this.config.maxRecoveryAttempts || 3)) {
           this.recoveryAttempts.set(attemptKey, attempts + 1);

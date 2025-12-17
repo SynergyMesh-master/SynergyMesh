@@ -45,9 +45,11 @@ async function resolveSafePath(userInputPath: string): Promise<string> {
   assertPathValid(userInputPath);
 
   const safeRoot = getSafeRoot();
-  const resolvedCandidate = path.isAbsolute(userInputPath)
-    ? path.resolve(safeRoot, path.relative('/', userInputPath))
-    : path.resolve(safeRoot, userInputPath);
+  const normalizedInput = path.normalize(userInputPath);
+  const absoluteSanitized = normalizedInput.replace(/^([A-Za-z]:)?[\\/]+/, '');
+  const resolvedCandidate = path.isAbsolute(normalizedInput)
+    ? path.resolve(safeRoot, absoluteSanitized)
+    : path.resolve(safeRoot, normalizedInput);
 
   let canonicalPath: string;
   let canonicalSafeRoot: string;
