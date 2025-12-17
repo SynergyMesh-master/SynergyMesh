@@ -17,8 +17,9 @@ include RELEASE.md
 include TROUBLESHOOTING.md
 
 # Include configuration files
-include synergymesh.yaml
+include machinenativeops.yaml
 include machine-native-ops.yaml
+include synergymesh.yaml
 include pyproject.toml
 include setup.py
 

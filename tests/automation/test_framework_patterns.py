@@ -210,12 +210,12 @@ class TestSuiteRunner:
         """Test configuration files existence"""
         try:
             required_configs = [
-                'machine-native-ops.yaml',
+                'machinenativeops.yaml',
                 'package.json',
                 'pyproject.toml'
             ]
             legacy_aliases = {
-                'machine-native-ops.yaml': ['synergymesh.yaml'],
+                'machinenativeops.yaml': ['machine-native-ops.yaml', 'synergymesh.yaml'],
             }
             
             missing_configs = []

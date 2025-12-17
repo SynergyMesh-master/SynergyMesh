@@ -55,7 +55,7 @@ platform that integrates three core subsystems:
 
 | Principle                 | Description                                                                |
 | ------------------------- | -------------------------------------------------------------------------- |
-| **Single Entry Point**    | machine-native-ops.yaml as the single source of truth (synergymesh.yaml kept as a compatibility symlink)     |
+| **Single Entry Point**    | machinenativeops.yaml as the single source of truth (compatibility links: machine-native-ops.yaml, synergymesh.yaml)     |
 | **Modular Design**        | Three subsystems operate independently, collaborate via unified interfaces |
 | **Zero-Trust Security**   | SLSA L3 provenance + Sigstore signing + policy gate validation             |
 | **Autonomous Operations** | AI-driven auto-repair, intelligent assignment, escalation management       |
