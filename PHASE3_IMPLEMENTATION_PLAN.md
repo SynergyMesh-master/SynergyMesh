@@ -152,7 +152,7 @@ Update all code references throughout the project to use new, consistent paths.
 find . -type f \( -name "*.ts" -o -name "*.tsx" -o -name "*.js" -o -name "*.jsx" \) | \
   xargs sed -i \
     -e 's/@synergymesh\//@machinenativeops\//g' \
-    -e 's|from .synergymesh/|from @machinenativeops/|g' \
+    -e 's|from @synergymesh/|from @machinenativeops/|g' \
     -e "s|from 'synergymesh|from '@machinenativeops|g" \
     -e 's|require.*synergymesh|require("@machinenativeops|g'
 
