@@ -22,16 +22,15 @@ Architecture layers:
 """
 
 from datetime import datetime
-from pathlib import Path
 from typing import Any, Optional
 
 import yaml
 
 # Support both absolute and relative imports
 try:
-    from runtime.mind_matrix.main import MindMatrix
+    from runtime.mind_matrix.main import MindMatrix, resolve_topology_path
 except ImportError:
-    from main import MindMatrix
+    from main import MindMatrix, resolve_topology_path
 
 
 class ExecutiveAutoController:
@@ -83,18 +82,7 @@ class ExecutiveAutoController:
                           Defaults to "config/topology-mind-matrix.yaml".
             max_heal_attempts: Maximum number of self-healing attempts before escalation.
         """
-        if topology_file is None:
-            # Try to find config relative to current directory or module location
-            possible_paths = [
-                Path("config/topology-mind-matrix.yaml"),
-                Path(__file__).parent.parent.parent / "config" / "topology-mind-matrix.yaml",
-            ]
-            for path in possible_paths:
-                if path.exists():
-                    topology_file = str(path)
-                    break
-            else:
-                topology_file = "config/topology-mind-matrix.yaml"
+        topology_file = resolve_topology_path(topology_file)
 
         try:
             with open(topology_file, encoding="utf-8") as f:

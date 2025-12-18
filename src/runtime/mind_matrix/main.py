@@ -18,6 +18,39 @@ import yaml
 from pydantic import BaseModel, Field, ValidationError
 
 
+# ------------ Helpers ------------
+
+
+def resolve_topology_path(topology_file: Optional[str] = None) -> str:
+    """
+    解析拓撲檔案路徑 (Resolve topology file path).
+
+    Searches for the topology file across known config locations to keep
+    tests and runtime aligned.
+
+    Args:
+        topology_file: Optional user-provided path.
+
+    Returns:
+        First existing path or the default string for downstream error handling.
+    """
+    if topology_file:
+        return topology_file
+
+    base_dir = Path(__file__).parent.parent.parent
+    for candidate in [
+        Path("config/topology-mind-matrix.yaml"),
+        base_dir / "config" / "topology-mind-matrix.yaml",
+        Path("config/governance/topology-mind-matrix.yaml"),
+        base_dir / "config" / "governance" / "topology-mind-matrix.yaml",
+        base_dir / "autonomous" / "infrastructure" / "config" / "topology-mind-matrix.yaml",
+    ]:
+        if candidate.exists():
+            return str(candidate)
+
+    return "config/topology-mind-matrix.yaml"
+
+
 # ------------ Pydantic Schemas (嚴格 Schema 驗證) ------------
 
 
@@ -295,19 +328,7 @@ class MindMatrix:
             AssertionError: When self-checks fail.
             FileNotFoundError: When config file is not found.
         """
-        if config_path is None:
-            # Try to find config relative to current directory or module location
-            possible_paths = [
-                Path("config/topology-mind-matrix.yaml"),
-                Path(__file__).parent.parent.parent / "config" / "topology-mind-matrix.yaml",
-            ]
-            for path in possible_paths:
-                if path.exists():
-                    config_path = str(path)
-                    break
-            else:
-                config_path = "config/topology-mind-matrix.yaml"
-
+        config_path = resolve_topology_path(config_path)
         with open(config_path, encoding="utf-8") as f:
             topology = yaml.safe_load(f)
 
