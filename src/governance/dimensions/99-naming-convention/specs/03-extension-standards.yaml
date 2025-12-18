@@ -1,0 +1,80 @@
+# =============================================================================
+# 副檔名規範 (File Extension Standards)
+# Spec ID: 03-extension-standards
+# URN: urn:machinenativeops:governance:naming-spec:extension:v1
+# =============================================================================
+
+apiVersion: governance.machinenativeops.io/v2
+kind: NamingSpec
+metadata:
+  id: "extension-standards"
+  name: "副檔名規範"
+  name_en: "File Extension Standards"
+  version: "1.0.0"
+  urn: "urn:machinenativeops:governance:naming-spec:extension:v1"
+  parent: "99-naming-convention"
+
+spec:
+  description: |
+    此規範定義 MachineNativeOps 專案中副檔名的使用標準。
+
+  content_type_mapping:
+    configuration:
+      preferred: ".yaml"
+      alternatives: [".yml", ".json", ".toml"]
+      mime_type: "application/yaml"
+
+    typescript:
+      preferred: ".ts"
+      alternatives: [".tsx"]
+      mime_type: "application/typescript"
+
+    javascript:
+      preferred: ".js"
+      alternatives: [".jsx", ".mjs", ".cjs"]
+      mime_type: "application/javascript"
+
+    python:
+      preferred: ".py"
+      mime_type: "text/x-python"
+
+    go:
+      preferred: ".go"
+      mime_type: "text/x-go"
+
+    rust:
+      preferred: ".rs"
+      mime_type: "text/x-rust"
+
+    markdown:
+      preferred: ".md"
+      mime_type: "text/markdown"
+
+    rego_policy:
+      preferred: ".rego"
+      mime_type: "text/x-rego"
+
+    shell:
+      preferred: ".sh"
+      mime_type: "application/x-sh"
+
+    docker:
+      preferred: "Dockerfile"
+      alternatives: [".dockerfile"]
+
+  forbidden_extensions:
+    - extension: ".bak"
+      reason: "備份檔不應提交"
+    - extension: ".tmp"
+      reason: "臨時檔不應提交"
+    - extension: ".old"
+      reason: "舊版檔不應提交"
+    - extension: ".orig"
+      reason: "原始檔不應提交"
+    - extension: ".swp"
+      reason: "編輯器暫存檔"
+
+  preferences:
+    yaml_over_yml: true
+    typescript_over_javascript: true
+    reason: "一致性與可讀性"

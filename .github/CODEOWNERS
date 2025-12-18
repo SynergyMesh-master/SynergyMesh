@@ -1,0 +1,80 @@
+# CODEOWNERS - Code Ownership Configuration
+# This file defines code reviewers for different parts of the repository
+# When a PR modifies these files, the corresponding reviewers are automatically requested
+
+# ====================================================================
+# SynergyMesh Team Structure
+# ====================================================================
+# @SynergyMesh/core-team          - Core development team
+# @SynergyMesh/frontend-team      - Frontend team
+# @SynergyMesh/backend-team       - Backend team
+# @SynergyMesh/devops-team        - DevOps team
+# @SynergyMesh/security-team      - Security team
+# @SynergyMesh/docs-team          - Documentation team
+# @SynergyMesh/community-mods     - Community moderators
+# @SynergyMesh/maintainers        - Project maintainers
+# ====================================================================
+
+# Default owners - All files not explicitly specified
+* @SynergyMesh/maintainers
+
+# Security-related configurations - Requires security team review
+/.github/workflows/codeql-advanced.yml @SynergyMesh/security-team
+/.github/workflows/pr-security-gate.yml @SynergyMesh/security-team
+/.github/workflows/secret-*.yml @SynergyMesh/security-team
+/.github/workflows/auto-vulnerability-fix.yml @SynergyMesh/security-team
+/.github/security-policy.yml @SynergyMesh/security-team
+/.github/secret-scanning/ @SynergyMesh/security-team
+/.github/codeql/ @SynergyMesh/security-team
+/config/security-network-config.yml @SynergyMesh/security-team
+/config/prometheus-rules.yml @SynergyMesh/security-team @SynergyMesh/devops-team
+/SECURITY.md @SynergyMesh/security-team
+
+# Scripts and automation - Requires DevOps team review
+/scripts/ @SynergyMesh/devops-team @SynergyMesh/security-team
+/config/elasticsearch-config.sh @SynergyMesh/devops-team
+/config/prometheus-config.yml @SynergyMesh/devops-team
+
+# GitHub Actions workflows - DevOps team responsible
+/.github/workflows/setup-runner.yml @SynergyMesh/devops-team
+/.github/workflows/validate-*.yml @SynergyMesh/devops-team
+
+# Documentation - Technical writers and domain experts
+/docs/ @SynergyMesh/docs-team
+/docs/GHAS_*.md @SynergyMesh/security-team @SynergyMesh/docs-team
+/docs/CODEQL_SETUP.md @SynergyMesh/security-team @SynergyMesh/docs-team
+/docs/SECRET_SCANNING.md @SynergyMesh/security-team @SynergyMesh/docs-team
+/docs/VULNERABILITY_MANAGEMENT.md @SynergyMesh/security-team @SynergyMesh/docs-team
+/README.md @SynergyMesh/docs-team
+
+# Dependabot configuration - Security and DevOps teams jointly responsible
+/.github/dependabot.yml @SynergyMesh/security-team @SynergyMesh/devops-team
+
+# Core application code
+/core/ @SynergyMesh/backend-team
+/core/contracts/ @SynergyMesh/backend-team @SynergyMesh/security-team
+/mcp-servers/ @SynergyMesh/backend-team
+
+# Advanced system source - Requires senior developer review
+/advanced-system-src/ @SynergyMesh/core-team @SynergyMesh/security-team
+
+# Intelligent automation - AI/ML team
+/intelligent-automation/ @SynergyMesh/core-team
+
+# Autonomous systems - Critical safety components
+/autonomous-system/ @SynergyMesh/core-team @SynergyMesh/security-team
+
+# Testing and architecture - QA and development teams
+/test-vectors/ @SynergyMesh/core-team
+/schemas/ @SynergyMesh/backend-team
+
+# Important configuration files - Requires multiple team reviews
+/package.json @SynergyMesh/backend-team @SynergyMesh/devops-team
+/tsconfig.json @SynergyMesh/backend-team
+/.gitignore @SynergyMesh/devops-team
+
+# Community and governance files
+/CODE_OF_CONDUCT.md @SynergyMesh/community-mods
+/CONTRIBUTING.md @SynergyMesh/docs-team @SynergyMesh/community-mods
+/.github/ISSUE_TEMPLATE/ @SynergyMesh/community-mods
+/.github/PULL_REQUEST_TEMPLATE.md @SynergyMesh/community-mods

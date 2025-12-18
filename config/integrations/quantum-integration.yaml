@@ -1,0 +1,151 @@
+# ═══════════════════════════════════════════════════════════════════════════════
+#                    Quantum Backend Integration Configuration
+#                    量子後端整合配置
+# ═══════════════════════════════════════════════════════════════════════════════
+
+quantum_integration:
+  version: "1.0.0"
+  enabled: false  # Default disabled until quantum backend is ready
+  
+  # Quantum Scheduler Endpoint
+  scheduler_endpoint: "quantum-scheduler.unmanned-island-system.svc.cluster.local:8888"
+  
+  # Quantum Circuit Optimizer Endpoint
+  circuit_optimizer: "quantum-circuit-optimizer.unmanned-island-system.svc.cluster.local:8889"
+  
+  # Fallback Mode
+  fallback_mode: "classical"  # Gracefully degrade to classical computation
+  
+  # Connection Settings
+  connection:
+    timeout_ms: 5000
+    retry_attempts: 3
+    keepalive: true
+    pool_size: 10
+  
+  # Quantum Resources
+  resources:
+    qubits:
+      min_required: 5
+      preferred: 50
+      max_available: 127
+    
+    circuit_depth:
+      min: 1
+      max: 100
+      optimal: 50
+    
+    gate_fidelity:
+      threshold: 0.99
+      target: 0.999
+  
+  # Optimization Settings
+  optimization:
+    enabled: true
+    strategies:
+      - "gate_reduction"
+      - "qubit_mapping"
+      - "circuit_rewriting"
+      - "error_mitigation"
+    
+    error_mitigation:
+      enabled: true
+      methods:
+        - "zero_noise_extrapolation"
+        - "measurement_error_mitigation"
+        - "dynamical_decoupling"
+  
+  # Scheduling Policies
+  scheduling:
+    priority_levels:
+      - name: "critical"
+        weight: 10
+        max_queue_time_ms: 1000
+      - name: "high"
+        weight: 5
+        max_queue_time_ms: 5000
+      - name: "normal"
+        weight: 1
+        max_queue_time_ms: 30000
+      - name: "low"
+        weight: 0.5
+        max_queue_time_ms: 300000
+    
+    queue_management:
+      max_queue_size: 1000
+      fairness_policy: "weighted_round_robin"
+      starvation_prevention: true
+  
+  # Monitoring
+  monitoring:
+    enabled: true
+    metrics:
+      - "circuit_execution_time"
+      - "qubit_utilization"
+      - "gate_error_rate"
+      - "queue_depth"
+      - "fallback_rate"
+    
+    alerts:
+      - name: "high_error_rate"
+        condition: "gate_error_rate > 0.1"
+        severity: "critical"
+      - name: "queue_full"
+        condition: "queue_depth > 900"
+        severity: "warning"
+      - name: "fallback_threshold"
+        condition: "fallback_rate > 0.5"
+        severity: "warning"
+  
+  # Security
+  security:
+    authentication:
+      enabled: true
+      method: "mutual_tls"
+      cert_path: "/etc/quantum/certs"
+    
+    encryption:
+      in_transit: true
+      at_rest: false  # Quantum states are ephemeral
+    
+    quantum_safe:
+      enabled: true
+      algorithms:
+        - "ML-KEM-768"
+        - "ML-DSA-65"
+  
+  # Graceful Degradation
+  degradation:
+    detect_unavailability: true
+    auto_fallback: true
+    notify_on_fallback: true
+    
+    fallback_triggers:
+      - "connection_timeout"
+      - "high_error_rate"
+      - "resource_unavailable"
+      - "circuit_too_complex"
+    
+    classical_simulation:
+      enabled: true
+      max_qubits: 20  # Classical simulation limit
+      approximation_methods:
+        - "stabilizer_simulation"
+        - "tensor_network"
+        - "monte_carlo"
+  
+  # Integration with HLP Executor
+  hlp_executor:
+    enabled: true
+    use_cases:
+      - "task_scheduling_optimization"
+      - "dag_optimization"
+      - "resource_allocation"
+    
+    quantum_advantage_threshold: 0.8  # Use quantum only if advantage > 80%
+    
+    hybrid_workflow:
+      enabled: true
+      classical_preprocessing: true
+      quantum_core: true
+      classical_postprocessing: true

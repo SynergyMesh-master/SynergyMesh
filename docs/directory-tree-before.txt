@@ -1,0 +1,2390 @@
+.
+├── CNAME
+├── Cargo.toml
+├── MANIFEST.in
+├── Makefile
+├── README.md
+├── archive
+│   ├── experiments
+│   │   └── README.md
+│   ├── infrastructure
+│   │   ├── README.md
+│   │   ├── canary
+│   │   │   └── policy-sim-plan.yaml
+│   │   ├── drift
+│   │   │   ├── rules.yaml
+│   │   │   └── scan-cronjob.yaml
+│   │   ├── kubernetes
+│   │   │   ├── README.md
+│   │   │   ├── baseline
+│   │   │   ├── cache
+│   │   │   ├── configmap.yaml
+│   │   │   ├── database
+│   │   │   ├── deployments
+│   │   │   ├── hpa
+│   │   │   ├── hpa.yaml
+│   │   │   ├── ingress
+│   │   │   ├── kustomization.yaml
+│   │   │   ├── manifests
+│   │   │   ├── monitoring
+│   │   │   ├── namespace.yaml
+│   │   │   ├── network-policies
+│   │   │   ├── overlays
+│   │   │   ├── phase2
+│   │   │   ├── rbac
+│   │   │   ├── secrets.yaml
+│   │   │   ├── services
+│   │   │   └── storage
+│   │   └── monitoring
+│   │       ├── alerts
+│   │       ├── grafana-dashboard.json
+│   │       ├── prometheus
+│   │       └── prometheus.yml
+│   ├── legacy
+│   │   ├── v1-python-drones
+│   │   │   ├── README.md
+│   │   │   ├── __init__.py
+│   │   │   ├── config
+│   │   │   ├── drones
+│   │   │   ├── main.py
+│   │   │   └── utils
+│   │   └── v2-multi-islands
+│   │       ├── README.md
+│   │       ├── __init__.py
+│   │       ├── bridges
+│   │       ├── config
+│   │       ├── islands
+│   │       ├── main.py
+│   │       ├── orchestrator
+│   │       └── utils
+│   ├── unmanned-engineer-ceo
+│   │   ├── 00-foundation
+│   │   │   ├── 01-distributed-systems
+│   │   │   ├── 02-system-architecture
+│   │   │   └── 03-data-structures-algorithms
+│   │   ├── 01-advanced-engineering
+│   │   │   ├── 04-code-quality
+│   │   │   ├── 05-testing-engineering
+│   │   │   └── 06-versioning-collaboration
+│   │   ├── 02-enterprise-capabilities
+│   │   │   ├── 07-ci-cd-devops
+│   │   │   ├── 08-observability
+│   │   │   ├── 09-security-compliance
+│   │   │   └── 10-performance-engineering
+│   │   ├── 03-intelligence
+│   │   │   ├── 11-ml-ai
+│   │   │   ├── 12-causal-reasoning
+│   │   │   ├── 13-quantum-computing
+│   │   │   └── 14-knowledge-graphs
+│   │   ├── 04-systems-thinking
+│   │   │   ├── 15-system-dynamics
+│   │   │   ├── 16-complexity-science
+│   │   │   └── 17-org-process-design
+│   │   ├── 10-traits-matrix
+│   │   │   ├── behavior
+│   │   │   ├── cognition-modes
+│   │   │   ├── cognitive
+│   │   │   ├── personality
+│   │   │   └── self-transcendence
+│   │   ├── 20-roadmap
+│   │   │   ├── monthly-missions
+│   │   │   ├── org-playbook.md
+│   │   │   └── stages
+│   │   ├── 30-assessment
+│   │   │   ├── 360-feedback-forms
+│   │   │   ├── manager-assessment-forms
+│   │   │   ├── scoring-guide.md
+│   │   │   ├── self-assessment-forms
+│   │   │   ├── skill-matrix.yaml
+│   │   │   └── trait-matrix.yaml
+│   │   ├── 40-simulations
+│   │   │   ├── incident-game-days
+│   │   │   ├── innovation-challenges
+│   │   │   └── system-design-scenarios
+│   │   ├── 50-org-implementation
+│   │   │   ├── career-ladder.md
+│   │   │   ├── culture-and-incentives.md
+│   │   │   ├── hiring-guide.md
+│   │   │   └── training-programs.md
+│   │   ├── 60-machine-guides
+│   │   │   ├── 70-architecture-skeletons
+│   │   │   └── ENGINEER_CORE_FILES_GUIDE.md
+│   │   ├── 70-architecture-skeletons
+│   │   │   ├── README.md
+│   │   │   ├── architecture-stability
+│   │   │   ├── cost-management
+│   │   │   ├── identity-tenancy
+│   │   │   ├── knowledge-base
+│   │   │   ├── nucleus-orchestrator
+│   │   │   ├── performance-reliability
+│   │   │   ├── security-observability
+│   │   │   └── skeletons-index.yaml
+│   │   ├── 80-skeleton-configs
+│   │   │   ├── 01-architecture-stability
+│   │   │   ├── 04-security-observability
+│   │   │   ├── 05-identity-tenancy
+│   │   │   ├── INTEGRATION_REPORT.md
+│   │   │   ├── README.md
+│   │   │   ├── package.json
+│   │   │   └── tsconfig.json
+│   │   ├── 99-meta
+│   │   │   ├── knowledge-index.yaml
+│   │   │   ├── mapping-to-unmanned-system.md
+│   │   │   └── metrics-and-roi.md
+│   │   ├── README.md
+│   │   ├── manifest.yaml
+│   │   └── tsconfig.json
+│   ├── v1-python-drones
+│   │   ├── README.md
+│   │   ├── __init__.py
+│   │   ├── config
+│   │   │   ├── __init__.py
+│   │   │   └── drone_config.py
+│   │   ├── drones
+│   │   │   ├── __init__.py
+│   │   │   ├── autopilot_drone.py
+│   │   │   ├── base_drone.py
+│   │   │   ├── coordinator_drone.py
+│   │   │   └── deployment_drone.py
+│   │   ├── main.py
+│   │   └── utils
+│   │       ├── __init__.py
+│   │       └── helpers.py
+│   └── v2-multi-islands
+│       ├── README.md
+│       ├── __init__.py
+│       ├── bridges
+│       │   ├── __init__.py
+│       │   └── language_bridge.py
+│       ├── config
+│       │   ├── __init__.py
+│       │   └── island_config.py
+│       ├── governance-config.yaml
+│       ├── governance_integration.py
+│       ├── islands
+│       │   ├── __init__.py
+│       │   ├── base_island.py
+│       │   ├── go_island.py
+│       │   ├── java_island.py
+│       │   ├── python_island.py
+│       │   ├── rust_island.py
+│       │   └── typescript_island.py
+│       ├── main.py
+│       ├── orchestrator
+│       │   ├── __init__.py
+│       │   └── island_orchestrator.py
+│       ├── utils
+│       │   ├── __init__.py
+│       │   └── helpers.py
+│       └── validate_governance.py
+├── auto-fix-bot.yml
+├── config
+│   ├── Dockerfile
+│   ├── README.md
+│   ├── agents
+│   │   ├── README.md
+│   │   ├── profiles
+│   │   │   └── recovery_expert.yaml
+│   │   ├── schemas
+│   │   │   └── virtual-experts.schema.json
+│   │   └── team
+│   │       └── virtual-experts.yaml
+│   ├── ai-constitution.yaml
+│   ├── auto-fix-bot .prompt.yml
+│   ├── auto-fix-bot.prompt.yml
+│   ├── auto-fix-bot.yml
+│   ├── auto-scaffold.json
+│   ├── autofix
+│   │   ├── config.json
+│   │   └── rules
+│   │       ├── performance-rules.yaml
+│   │       └── security-rules.yaml
+│   ├── automation
+│   │   ├── automation.yaml
+│   │   └── pipelines
+│   │       ├── integration_pipeline.yaml
+│   │       └── refactor_pipeline.yaml
+│   ├── brand-mapping.yaml
+│   ├── builder-system-prompt.yaml
+│   ├── ci-agent-config.yaml
+│   ├── ci-comprehensive-solution.yaml
+│   ├── ci-config.yaml
+│   ├── ci-error-handler.yaml
+│   ├── cloud-agent-delegation.yml
+│   ├── components.json
+│   ├── conftest
+│   │   └── README.md
+│   ├── dependencies.yaml
+│   ├── dev
+│   │   ├── CHANGELOG.md
+│   │   ├── COMPLETION_REPORT.md
+│   │   ├── Dockerfile
+│   │   ├── KB.md
+│   │   ├── KIND_CLUSTER_README.md
+│   │   ├── QUICK_REFERENCE.md
+│   │   ├── QUICK_START.md
+│   │   ├── README.md
+│   │   ├── SOLUTION_SUMMARY.md
+│   │   ├── TEST-GUIDE.md
+│   │   ├── TRANSFORMATION_REPORT.md
+│   │   ├── VALIDATION_CHECKLIST.md
+│   │   ├── automation
+│   │   │   ├── auto-pilot.js
+│   │   │   ├── code-generator.ts
+│   │   │   ├── deployment-drone.sh
+│   │   │   └── drone-coordinator.py
+│   │   ├── devcontainer-v2.json
+│   │   ├── devcontainer.json
+│   │   ├── docker-compose.dev.yml
+│   │   ├── docker-compose.yml
+│   │   ├── environments
+│   │   │   ├── development.env
+│   │   │   ├── production.env
+│   │   │   └── staging.env
+│   │   ├── grafana
+│   │   │   └── provisioning
+│   │   ├── init-db
+│   │   │   └── 01-init-life-system.sql
+│   │   ├── install-optional-tools.sh
+│   │   ├── kind-cluster-config.yaml
+│   │   ├── life-system-README.md
+│   │   ├── post-create.sh
+│   │   ├── post-start-v2.sh
+│   │   ├── post-start.sh
+│   │   ├── prometheus.yml
+│   │   ├── requirements.txt
+│   │   ├── scripts
+│   │   │   ├── health-check.sh
+│   │   │   ├── health-monitor.sh
+│   │   │   ├── multi-cluster-manager.sh
+│   │   │   ├── run-tests.sh
+│   │   │   ├── setup-gitops.sh
+│   │   │   ├── setup-helm-charts.sh
+│   │   │   ├── setup-kind-cluster.sh
+│   │   │   └── start-life-system.sh
+│   │   ├── setup.sh
+│   │   ├── start-dev-server.sh
+│   │   └── templates
+│   │       ├── connector-template
+│   │       ├── docker
+│   │       ├── integration-template
+│   │       └── service-template
+│   ├── docker
+│   │   ├── compose.architect.yaml
+│   │   ├── compose.base.yaml
+│   │   ├── compose.dev.yaml
+│   │   ├── compose.devcontainer.yaml
+│   │   ├── compose.example.yaml
+│   │   └── index.yaml
+│   ├── docker-compose.dev.yml
+│   ├── docker-compose.phase1.yml
+│   ├── docker-compose.yml
+│   ├── drizzle.config.ts
+│   ├── drone-config.yml
+│   ├── elasticsearch-config.sh
+│   ├── environment.yaml
+│   ├── eslint.config.js
+│   ├── external_repos.yaml.example
+│   ├── governance-manifest.yaml
+│   ├── grafana-dashboard.json
+│   ├── instant-execution-pipeline.yaml
+│   ├── integrations
+│   │   ├── README.md
+│   │   ├── jira-integration.py
+│   │   ├── knowledge-graph-integration.yaml
+│   │   ├── matechat
+│   │   │   └── config.yaml
+│   │   ├── quantum-integration.yaml
+│   │   └── slack-webhook.sh
+│   ├── integrations-index.yaml
+│   ├── island-ai-runtime.yaml
+│   ├── island-control.yml
+│   ├── jest.config.js
+│   ├── language-policy.yaml
+│   ├── machinenativeops-restructure-spec.json
+│   ├── monitoring.yaml
+│   ├── nginx.conf
+│   ├── peachy-build.toml
+│   ├── pipelines
+│   │   └── refactor-evolution-pipeline.yaml
+│   ├── postcss.config.js
+│   ├── prometheus-config.yml
+│   ├── prometheus-rules.yml
+│   ├── recovery-system.yaml
+│   ├── refactor-evolution.yaml
+│   ├── safety-mechanisms.yaml
+│   ├── security-network-config.yml
+│   ├── subdirectory-restructure-spec.json
+│   ├── sync-refactor-config.yaml
+│   ├── synergymesh.config.yaml
+│   ├── system-evolution.yaml
+│   ├── system-manifest.yaml
+│   ├── system-module-map.example.yaml
+│   ├── system-module-map.yaml
+│   ├── tailwind.config.ts
+│   ├── templates
+│   │   └── plugin-specification-template.yaml
+│   ├── tenant-tier-definitions.yaml
+│   ├── topology-mind-matrix.yaml
+│   ├── tsconfig.json
+│   ├── unified-config-index.yaml
+│   ├── vite.config.ts
+│   └── yaml-module-system.yaml
+├── docs
+│   ├── 00-VISION-STRATEGY-ANALYSIS.md
+│   ├── ADMIN_COPILOT_CLI.md
+│   ├── ADVANCED_ESCALATION_SYSTEM.md
+│   ├── ADVANCED_FEATURES_SUMMARY.md
+│   ├── AGENT_CONSOLIDATION_SUMMARY.md
+│   ├── AI_MODEL_DEPLOYMENT.md
+│   ├── API_REFERENCE.md
+│   ├── ARCHITECTURE_DETAILED.md
+│   ├── ARCHITECTURE_HEALTH_REPORT.md
+│   ├── ARCHITECTURE_IMPLEMENTATION_SUMMARY.md
+│   ├── ARCHITECTURE_OPTIMIZATION_DASHBOARD.md
+│   ├── ARCHITECTURE_RESTRUCTURING_PLAN.md
+│   ├── ARCHITECTURE_SKELETON_ANALYSIS.md
+│   ├── AUTO_ASSIGNMENT_API.md
+│   ├── AUTO_ASSIGNMENT_DEMO.md
+│   ├── AUTO_ASSIGNMENT_SUMMARY.md
+│   ├── AUTO_ASSIGNMENT_SYSTEM.md
+│   ├── AUTO_FIX_BOT_V2_GUIDE.md
+│   ├── AUTO_MERGE.md
+│   ├── AUTO_REFACTOR_EVOLUTION.md
+│   ├── AUTO_REVIEW_MERGE.md
+│   ├── BUILD.md
+│   ├── BUILD_COMPAT.md
+│   ├── CHANGELOG.md
+│   ├── CI_AUTO_COMMENT_SYSTEM.md
+│   ├── CI_BATCH_UPGRADE_SUMMARY.md
+│   ├── CI_CONSOLIDATED_REPORT.md
+│   ├── CI_CONSOLIDATED_REPORT_MIGRATION_GUIDE.md
+│   ├── CI_DEPLOYMENT_UPGRADE_PLAN.md
+│   ├── CI_GLOBAL_STATUS_FIX.md
+│   ├── CI_HARDENING_COMPLETION.md
+│   ├── CI_HARDENING_NEXT_STEPS.md
+│   ├── CI_HARDENING_RECOMMENDATIONS.md
+│   ├── CLOUD_DELEGATION.md
+│   ├── CODEQL_SETUP.md
+│   ├── CODESPACE_SETUP.md
+│   ├── CODE_OF_CONDUCT.md
+│   ├── COMPLETION_REPORT.md
+│   ├── COMPLETION_SUMMARY.md
+│   ├── CONFIGURATION_TEMPLATES.md
+│   ├── CONTRACT.md
+│   ├── CONTRIBUTING.md
+│   ├── CONTRIBUTION_GUIDE.md
+│   ├── COPILOT_SETUP.md
+│   ├── CURSOR_2_2_VISUAL_EDITOR.md
+│   ├── DEEP_WORKFLOW_ANALYSIS.md
+│   ├── DEPLOYMENT_ASSESSMENT.md
+│   ├── DEPLOYMENT_CHECKLIST.md
+│   ├── DEPLOYMENT_GUIDE.md
+│   ├── DEPLOYMENT_INTEGRATION_SUMMARY.md
+│   ├── DEPLOYMENT_MANIFEST.md
+│   ├── DEPLOYMENT_VALIDATION_REPORT.md
+│   ├── DEVCONTAINER_RUNBOOK.txt
+│   ├── DIRECTORY_TREE.md
+│   ├── DISASTER_RECOVERY.md
+│   ├── DOCUMENTATION_INDEX.md
+│   ├── DOCUMENTATION_SYNC_REPORT.md
+│   ├── DYNAMIC_CI_ASSISTANT.md
+│   ├── EFFICIENCY_METRICS.md
+│   ├── ENGINEER_CORE_FILES_GUIDE.md
+│   ├── EXAMPLES.md
+│   ├── EXTRACTION_COMPLETION_REPORT.md
+│   ├── FINAL_COMPLETION_SUMMARY.md
+│   ├── FINAL_DELIVERY_REPORT.md
+│   ├── FINAL_SUMMARY.txt
+│   ├── GHAS_COMPLETE_GUIDE.md
+│   ├── GHAS_DEPLOYMENT.md
+│   ├── GLOBAL_TECH_REVIEW.txt
+│   ├── GOVERNANCE_FRAMEWORK.md
+│   ├── GOVERNANCE_INTEGRATION_NOTE.md
+│   ├── HOTSPOT_HEATMAP.md
+│   ├── IMPLEMENTATION_PROGRESS.md
+│   ├── IMPLEMENTATION_REPORT_AUTO_REFACTOR.md
+│   ├── IMPLEMENTATION_SUMMARY_CI_CONSOLIDATED_REPORT.md
+│   ├── IMPROVED_ARCHITECTURE.md
+│   ├── INCOMPLETE_TASKS_SCAN_REPORT.md
+│   ├── INSTALL.md
+│   ├── INSTANT_EXECUTION_COMPLETION_REPORT.md
+│   ├── INSTANT_EXECUTION_INTEGRATION_MAP.md
+│   ├── INSTANT_EXECUTION_SUMMARY.md
+│   ├── INSTANT_FIX_TEMPLATE_UPDATE.md
+│   ├── INTEGRATION_DEPLOYMENT_SCAN_REPORT.md
+│   ├── INTEGRATION_GUIDE.md
+│   ├── INTELLIGENT_AUTOMATION_INTEGRATION.md
+│   ├── INTERACTIVE_CI_UPGRADE_GUIDE.md
+│   ├── ISLAND_AI_SETUP.md
+│   ├── ISSUE_RESOLUTION_SUMMARY.md
+│   ├── Island-AI 專案目錄結構圖譜註解.docx
+│   ├── Island-AI 專案目錄結構圖譜註解.pdf
+│   ├── KNOWLEDGE_HEALTH.md
+│   ├── LANGUAGE_GOVERNANCE_DASHBOARD.md
+│   ├── LANGUAGE_GOVERNANCE_FIX_REPORT.md
+│   ├── LANGUAGE_GOVERNANCE_IMPLEMENTATION.md
+│   ├── LAYER0_OPTIMIZATION_SUMMARY.md
+│   ├── LEGACY_EXTRACTION_SUMMARY.md
+│   ├── LEGACY_REFACTORING_EVOLUTION_REPORT.md
+│   ├── LICENSE
+│   ├── LIVING_KNOWLEDGE_BASE.md
+│   ├── MATECHAT_INTEGRATION_SUMMARY.md
+│   ├── MERGE_BLOCKED_FIX.md
+│   ├── MERGE_STATUS_LOADING_FIX.md
+│   ├── MIGRATION.md
+│   ├── MIGRATION_FLOW.md
+│   ├── MIGRATION_GUIDE.md
+│   ├── MULTI_REPO_INTEGRATION_GUIDE.md
+│   ├── MULTI_REPO_QUICKSTART.md
+│   ├── NAMING_GUIDELINES_MANUAL.md
+│   ├── P0_SAFETY_VERIFICATION_REPORT.json
+│   ├── PERMISSION_SIMPLIFICATION.md
+│   ├── PHASE1_ARCHITECTURE.md
+│   ├── PHASE1_COMPLETE_CHECKLIST.md
+│   ├── PHASE1_COMPLETION.md
+│   ├── PHASE1_DELIVERY_COMPARISON.md
+│   ├── PHASE1_IMPLEMENTATION_SUMMARY.md
+│   ├── PHASE1_SETUP_GUIDE.md
+│   ├── PHASE3_COMPLETION.md
+│   ├── PHASE3_IMPLEMENTATION_PLAN.md
+│   ├── PHASE3_TRIGGER_ANALYSIS.md
+│   ├── PHASE4_COMPLETION.md
+│   ├── PHASE5_COMPLETION.md
+│   ├── PHASE_1_6_COMPLETION_REPORT.md
+│   ├── PHOENIX_AGENT.md
+│   ├── PR106_STRUCTURE_ANALYSIS.md
+│   ├── PR10_CONTINUATION_SUMMARY.md
+│   ├── PR110_COMPLETION_SUMMARY.md
+│   ├── PR110_DEPLOYMENT_COMPLETION.md
+│   ├── PR1_DEEP_ANALYSIS.md
+│   ├── PR351_COMPLETION_REPORT.md
+│   ├── PR351_CONSISTENCY_SUMMARY.md
+│   ├── PR49_WORKFLOW_FAILURE_ANALYSIS.md
+│   ├── PRODUCT_OVERVIEW.md
+│   ├── PROJECT_DELIVERY_CHECKLIST.md
+│   ├── PROJECT_GENERATION_IMPLEMENTATION_SUMMARY.md
+│   ├── PROJECT_STRUCTURE.md
+│   ├── PR_491_COMPLETION_REPORT.md
+│   ├── PR_ANALYSIS_AND_ACTION_PLAN.md
+│   ├── PYTHON_VALIDATION_COMPLETION_REPORT.md
+│   ├── QUICK_START.md
+│   ├── QUICK_START.production.md
+│   ├── QUICK_START_INSTANT_EXECUTION.md
+│   ├── README.en.md
+│   ├── README.md
+│   ├── README_STRUCTURE_CHECK.md
+│   ├── RECOVERY_PLAYBOOK.md
+│   ├── RECOVERY_SYSTEM_SUMMARY.md
+│   ├── REFACTOR_PLAYBOOK_NEXT_STEPS.md
+│   ├── REFERENCE_VALIDATION_REPORT.md
+│   ├── RELEASE.md
+│   ├── REPLIT_DEPLOYMENT.md
+│   ├── REPLIT_SYNC_VERIFICATION.md
+│   ├── REPOSITORY_SYNC_INTEGRATION_SCAN.md
+│   ├── RESTRUCTURE_COMPLETION_REPORT.md
+│   ├── RESTRUCTURE_PHASE2_STATUS.md
+│   ├── RESTRUCTURE_SUMMARY.txt
+│   ├── RESTRUCTURING_COMPLETE.md
+│   ├── RESTRUCTURING_SUMMARY.md
+│   ├── ROOT_README.md
+│   ├── SECRET_SCANNING.md
+│   ├── SECURITY.md
+│   ├── SECURITY_TRAINING.md
+│   ├── SESSION_CONTINUATION_SUMMARY.md
+│   ├── SKELETON_INTEGRATION_COMPLETION.md
+│   ├── SKIPPED_WORKFLOWS_ANALYSIS.md
+│   ├── STRUCTURE_ANALYSIS_REPORT.md
+│   ├── STRUCTURE_FIX_COMPLETION_REPORT.md
+│   ├── SUBDIRECTORY_RESTRUCTURE_CHECKLIST.md
+│   ├── SUBDIRECTORY_RESTRUCTURE_GUIDE.md
+│   ├── SUBDIRECTORY_RESTRUCTURE_SUMMARY.md
+│   ├── SYNC_REFACTOR_MIGRATION_GUIDE.md
+│   ├── SYNC_REFACTOR_OPTIMIZATION.md
+│   ├── SYSTEM_ARCHITECTURE.md
+│   ├── SYSTEM_BRIDGING_ASSESSMENT.md
+│   ├── SYSTEM_DIAGNOSTICS.md
+│   ├── SYSTEM_EVOLUTION_REPORT.md
+│   ├── TECH_DEBT_SCAN_REPORT.json
+│   ├── TIER1_CONTRACTS_L1_DEPLOYMENT_PLAN.md
+│   ├── VALIDATION_GUIDE.md
+│   ├── VERSION_MANAGEMENT.md
+│   ├── VISION-STRATEGY-ALIGNMENT-SUMMARY.md
+│   ├── VISUAL_ELEMENTS.md
+│   ├── VULNERABILITY_MANAGEMENT.md
+│   ├── WORKFLOW_FAILURE_ANALYSIS.md
+│   ├── WORKFLOW_FILES_CREATED.md
+│   ├── WORKFLOW_INDEX.md
+│   ├── WORKFLOW_INTEGRATION_GUIDE.md
+│   ├── WORKFLOW_INTEGRATION_SUMMARY.md
+│   ├── WORKFLOW_README.md
+│   ├── WORKFLOW_SYSTEM.md
+│   ├── WORKFLOW_SYSTEM_SUMMARY.md
+│   ├── _config.yml
+│   ├── _fix_structure.sh
+│   ├── agents
+│   │   ├── CLOUD_AGENT_ROLE.md
+│   │   ├── LIFECYCLE.md
+│   │   ├── cli
+│   │   │   └── CLI.md
+│   │   ├── mcp
+│   │   │   └── MCP.md
+│   │   └── virtual-experts
+│   │       └── VIRTUAL_EXPERTS.md
+│   ├── api
+│   │   └── examples
+│   │       ├── README.md
+│   │       ├── create-resource.http
+│   │       ├── login.http
+│   │       ├── monitoring.http
+│   │       └── schedule-job.http
+│   ├── architecture
+│   │   ├── ADVANCED_SYSTEM_INTEGRATION.md
+│   │   ├── CHECKPOINT_STRATEGY.md
+│   │   ├── CODE_QUALITY_CHECKS.md
+│   │   ├── CROSS_LANG_COMM.md
+│   │   ├── DELEGATION_WORKFLOW.md
+│   │   ├── DEPLOYMENT_INFRASTRUCTURE.md
+│   │   ├── DIRECTORY_STRUCTURE.md
+│   │   ├── EXECUTION_MODEL.md
+│   │   ├── FILE_MANIFEST.txt
+│   │   ├── FileDescription.md
+│   │   ├── MULTILANG_STRATEGY.md
+│   │   ├── PR351_ARCHITECTURE_EVOLUTION.md
+│   │   ├── README.md
+│   │   ├── RECOVERY_MODE.md
+│   │   ├── REPOSITORY_INTEGRATION_ASSESSMENT.md
+│   │   ├── ROOT_DIRECTORY_RESTRUCTURING.md
+│   │   ├── SECURITY_CONFIG_CHECKS.md
+│   │   ├── SYSTEM_ARCHITECTURE.md
+│   │   ├── UNIFIED_TOOLCHAIN.md
+│   │   ├── api-evolution
+│   │   │   ├── L1_core_and_automation_tasks.md
+│   │   │   ├── README.md
+│   │   │   └── TEMPLATE.md
+│   │   ├── components
+│   │   │   ├── AUTOMATION_OVERVIEW.md
+│   │   │   ├── DECISION_ENGINE.md
+│   │   │   ├── GOVERNANCE_PIPELINE.md
+│   │   │   └── LIVING_KNOWLEDGE_BASE.md
+│   │   ├── configuration
+│   │   │   ├── README.md
+│   │   │   ├── docker
+│   │   │   ├── jenkins
+│   │   │   ├── kubernetes
+│   │   │   ├── monitoring
+│   │   │   ├── python
+│   │   │   ├── scripts
+│   │   │   └── sonar-project.properties.example
+│   │   ├── core-engine-language-stack.md
+│   │   ├── knowledge-graph-processing.md
+│   │   ├── language-governance.md
+│   │   ├── language-stack.md
+│   │   ├── layers.md
+│   │   ├── matechat-integration.md
+│   │   ├── naming-conventions.md
+│   │   ├── plugin-architecture-pattern.md
+│   │   ├── repo-map.md
+│   │   └── storage-architecture.md
+│   ├── architecture.zh.md
+│   ├── automation
+│   │   ├── AUTO_FIX_BOT.md
+│   │   ├── AUTO_FIX_BOT_GUIDE.md
+│   │   ├── autonomous-docs
+│   │   │   ├── FRAMEWORK.md
+│   │   │   ├── ISLAND_SYSTEM.md
+│   │   │   └── UAV_CONFIG.md
+│   │   ├── copilot
+│   │   │   ├── CLI.md
+│   │   │   ├── MCP.md
+│   │   │   ├── PROMPT_SYSTEM.md
+│   │   │   └── VIRTUAL_EXPERTS.md
+│   │   └── self-awareness-dashboard.md
+│   ├── autonomous-ci-compliance.md
+│   ├── billion_dollar_automation_plan.md
+│   ├── ci-cd
+│   │   ├── IMPLEMENTATION_SUMMARY.md
+│   │   ├── README.md
+│   │   ├── stage-1-basic-ci.md
+│   │   └── workflow-coordination.md
+│   ├── ci-troubleshooting.md
+│   ├── configuration
+│   │   └── CONFIGURATION_TEMPLATES.md
+│   ├── deep-integration-guide.zh.md
+│   ├── deployment
+│   │   ├── DEPLOYMENT_CHECKLIST.md
+│   │   ├── DEPLOYMENT_GUIDE.md
+│   │   ├── DEPLOYMENT_INTEGRATION_SUMMARY.md
+│   │   ├── DEPLOYMENT_MANIFEST.md
+│   │   └── DEPLOYMENT_VALIDATION_REPORT.md
+│   ├── design_guidelines.md
+│   ├── directory-tree-before.txt
+│   ├── docs-index.json
+│   ├── enterprise_copilot_prompt_system (1).md
+│   ├── enterprise_copilot_prompt_system.md
+│   ├── evolution
+│   │   ├── CURRENT_ACTION_PLAN.md
+│   │   ├── ORCHESTRATOR_INTEGRATION.md
+│   │   ├── README.md
+│   │   └── orchestrator-prompt-template.md
+│   ├── examples
+│   │   ├── README.md
+│   │   ├── ci-consolidated-report-example.yml
+│   │   ├── configuration
+│   │   │   ├── README.md
+│   │   │   ├── docker
+│   │   │   ├── jenkins
+│   │   │   ├── kubernetes
+│   │   │   ├── monitoring
+│   │   │   ├── python
+│   │   │   ├── scripts
+│   │   │   └── sonar-project.properties.example
+│   │   └── project-generation
+│   │       └── example-microservice.yaml
+│   ├── first_push_checklist.md
+│   ├── fixes
+│   │   ├── PROJECT_SCAN_SUMMARY.md
+│   │   ├── advisory-database-jest-fix.md
+│   │   └── contracts-l1-jest-fix.md
+│   ├── generated
+│   │   ├── generated-mndoc.yaml
+│   │   ├── knowledge-graph.yaml
+│   │   └── superroot-entities.yaml
+│   ├── governance
+│   │   ├── 02-org-adoption-lifecycle.md
+│   │   ├── 03-role-based-training.md
+│   │   ├── 04-canonical-naming-governance.md
+│   │   ├── 04-naming-standards.md
+│   │   ├── 05-change-management.md
+│   │   ├── 06-metrics-and-audit.md
+│   │   ├── 07-exception-handling.md
+│   │   ├── 08-observability-validation.md
+│   │   ├── 09-security-compliance.md
+│   │   ├── 10-cross-team-governance.md
+│   │   ├── GOVERNANCE_FRAMEWORK.md
+│   │   ├── GOVERNANCE_INTEGRATION_NOTE.md
+│   │   └── README.md
+│   ├── index.md
+│   ├── island-ai-phases.txt
+│   ├── island-ai-readme.md
+│   ├── island-ai.md
+│   ├── island.bootstrap.stage0.yaml
+│   ├── issues
+│   │   └── known-failures.md
+│   ├── knowledge
+│   │   ├── README.md
+│   │   ├── evolution-state.yaml
+│   │   └── language-history.yaml
+│   ├── knowledge_index.yaml
+│   ├── mndoc
+│   │   ├── components
+│   │   │   └── core-components.yaml
+│   │   ├── governance-pipeline.yaml
+│   │   ├── index.yaml
+│   │   ├── subsystems
+│   │   │   ├── autonomous-framework.yaml
+│   │   │   ├── structural-governance.yaml
+│   │   │   └── synergymesh-core.yaml
+│   │   └── system.yaml
+│   ├── operations
+│   │   ├── DeploymentGuide.md
+│   │   ├── MONITORING_GUIDE.md
+│   │   ├── PRODUCTION_READINESS.md
+│   │   ├── deployment
+│   │   │   ├── HLP_EXECUTOR_DEPLOYMENT_CHECKLIST.md
+│   │   │   ├── ci_cd.md
+│   │   │   ├── docker.md
+│   │   │   ├── installation.md
+│   │   │   └── kubernetes.md
+│   │   ├── runbooks
+│   │   │   ├── HLP_EXECUTOR_EMERGENCY.md
+│   │   │   ├── HLP_EXECUTOR_ERROR_HANDLING.md
+│   │   │   └── HLP_EXECUTOR_MAINTENANCE.md
+│   │   └── slo
+│   │       └── HLP_EXECUTOR_SLO.md
+│   ├── policies
+│   │   ├── change-management
+│   │   │   └── change-policy.yaml
+│   │   ├── exception
+│   │   │   └── exception-policy.yaml
+│   │   ├── gatekeeper
+│   │   │   └── namespace-constraints.yaml
+│   │   ├── migration
+│   │   │   └── naming-migration-policy.yaml
+│   │   ├── naming
+│   │   │   ├── api-naming.yaml
+│   │   │   ├── canonical-regex.policy.yaml
+│   │   │   ├── k8s-deployment-naming.yaml
+│   │   │   ├── pipeline-naming.yaml
+│   │   │   └── required-labels.policy.yaml
+│   │   ├── observability
+│   │   │   └── naming-metrics-policy.yaml
+│   │   ├── security
+│   │   │   └── info-security-policy-reference.yaml
+│   │   └── validation
+│   │       └── ci-validation-policy.yaml
+│   ├── production-deployment-guide.zh.md
+│   ├── project-manifest.md
+│   ├── refactor_playbooks
+│   │   ├── 01_deconstruction
+│   │   │   ├── HLP_EXECUTOR_CORE_DECONSTRUCTION.md
+│   │   │   ├── README.md
+│   │   │   ├── core
+│   │   │   ├── kg-builder_deconstruction.md
+│   │   │   └── legacy_assets_index.yaml
+│   │   ├── 02_integration
+│   │   │   ├── BASELINE_YAML_INTEGRATION_PLAN.md
+│   │   │   ├── HLP_EXECUTOR_CORE_INTEGRATION_MAPPING.md
+│   │   │   ├── P0_COMPLETION_REPORT.md
+│   │   │   ├── README.md
+│   │   │   ├── core
+│   │   │   ├── k8s
+│   │   │   └── kg-builder_integration.md
+│   │   ├── 03_refactor
+│   │   │   ├── HLP_EXECUTOR_CORE_ACTION_PLAN.md
+│   │   │   ├── HLP_EXECUTOR_CORE_DIRECTORY_BLUEPRINT.md
+│   │   │   ├── HLP_EXECUTOR_CORE_INTEGRATION_SUMMARY.md
+│   │   │   ├── HLP_EXECUTOR_CORE_LEGACY_CLEANUP.md
+│   │   │   ├── IMPLEMENTATION_SUMMARY.md
+│   │   │   ├── INDEX.md
+│   │   │   ├── README.md
+│   │   │   ├── apps
+│   │   │   ├── automation
+│   │   │   ├── autonomous
+│   │   │   ├── axiom
+│   │   │   ├── core
+│   │   │   ├── index.yaml
+│   │   │   ├── infrastructure
+│   │   │   ├── kg-builder
+│   │   │   ├── kg-builder_refactor.md
+│   │   │   ├── meta
+│   │   │   ├── misc
+│   │   │   ├── quantum
+│   │   │   ├── services
+│   │   │   ├── templates
+│   │   │   └── tools
+│   │   ├── ARCHITECTURE.md
+│   │   ├── CONFIG_INTEGRATION_GUIDE.md
+│   │   ├── HLP_EXECUTOR_CORE_INDEX.md
+│   │   ├── IMPLEMENTATION_SUMMARY.md
+│   │   ├── INTEGRATION_REPORT.md
+│   │   ├── KG_BUILDER_INTEGRATION_SUMMARY.md
+│   │   ├── LEGACY_ANALYSIS_REPORT.md
+│   │   ├── NEXT_STEPS_PLAN.md
+│   │   ├── PHASE1_COMPLETION_SUMMARY.md
+│   │   ├── README.md
+│   │   ├── _legacy_scratch
+│   │   ├── apps__playbook.md
+│   │   ├── automation__playbook.md
+│   │   ├── autonomous__playbook.md
+│   │   ├── config
+│   │   │   ├── execution-scripts.yaml
+│   │   │   ├── integration-processor.yaml
+│   │   │   ├── legacy-scratch-processor.yaml
+│   │   │   └── refactor-engine-config.yaml
+│   │   ├── core__playbook.md
+│   │   ├── governance__playbook.md
+│   │   ├── infrastructure__playbook.md
+│   │   ├── services__playbook.md
+│   │   ├── templates
+│   │   │   ├── ANALYSIS_REPORT_TEMPLATE.md
+│   │   │   ├── Dockerfile (1)
+│   │   │   ├── IMPROVED_ARCHITECTURE.md
+│   │   │   ├── RECOVERY_PLAYBOOK.md
+│   │   │   ├── application-level.yaml
+│   │   │   ├── contract-engine.py
+│   │   │   ├── contract-generator.py
+│   │   │   ├── emergency_recovery.py
+│   │   │   ├── main-config.yaml
+│   │   │   ├── multi-layer-validator.py
+│   │   │   ├── plugin-registry.yaml
+│   │   │   └── security-gates.yaml
+│   │   └── tools__playbook.md
+│   ├── references
+│   │   ├── canonical-naming-governance.yaml
+│   │   ├── observability-validation-migration.yaml
+│   │   └── references.yaml
+│   ├── replit.md
+│   ├── reports
+│   │   ├── ARCHITECTURE_IMPLEMENTATION_SUMMARY.md
+│   │   ├── COMPLETION_REPORT.md
+│   │   ├── COMPLETION_SUMMARY.md
+│   │   ├── COMPREHENSIVE_IMPLEMENTATION_REPORT.md
+│   │   ├── EXTRACTION_COMPLETION_REPORT.md
+│   │   ├── FINAL_DELIVERY_REPORT.md
+│   │   ├── IMPLEMENTATION_PROGRESS.md
+│   │   ├── LEGACY_REFACTORING_EVOLUTION_REPORT.md
+│   │   ├── PHASE1_COMPLETE_CHECKLIST.md
+│   │   ├── PHASE1_COMPLETION.md
+│   │   ├── PHASE1_IMPLEMENTATION_SUMMARY.md
+│   │   ├── PHASE1_VALIDATION_REPORT.md
+│   │   ├── PHASE_1_6_COMPLETION_REPORT.md
+│   │   ├── PR10_CONTINUATION_SUMMARY.md
+│   │   ├── PR351_COMPLETION_REPORT.md
+│   │   ├── PR351_CONSISTENCY_AUDIT.md
+│   │   ├── PR351_CONSISTENCY_SUMMARY.md
+│   │   ├── PR351_FINAL_CONSISTENCY_REPORT.md
+│   │   ├── PR73_ARCHITECTURAL_INTEGRATION_ANALYSIS.md
+│   │   ├── PR73_CI_GOVERNANCE_ANALYSIS.md
+│   │   ├── PROJECT_DELIVERY_CHECKLIST.md
+│   │   ├── PYTHON_VALIDATION_COMPLETION_REPORT.md
+│   │   ├── REFERENCE_VALIDATION_REPORT.md
+│   │   ├── SESSION_CONTINUATION_SUMMARY.md
+│   │   ├── implementation
+│   │   │   ├── IMPLEMENTATION_REPORT_AUTO_REFACTOR.md
+│   │   │   ├── IMPLEMENTATION_SUMMARY_CI_CONSOLIDATED_REPORT.md
+│   │   │   └── PROJECT_GENERATION_IMPLEMENTATION_SUMMARY.md
+│   │   ├── refactor-evolution
+│   │   │   ├── README.md
+│   │   │   ├── logs
+│   │   │   └── plans
+│   │   ├── self-awareness-full.json
+│   │   ├── self-awareness-full.md
+│   │   ├── self-awareness-sample.json
+│   │   └── self-awareness-sample.md
+│   ├── reports-analysis.md
+│   ├── roadmap-2026.md
+│   ├── roadmap-2026.yaml
+│   ├── runbook.zh.md
+│   ├── scheduler
+│   │   └── data-model.md
+│   ├── scratch
+│   │   └── README.md
+│   ├── security
+│   │   ├── GHAS_IMPLEMENTATION_SUMMARY.md
+│   │   ├── PR351_SECURITY_ENHANCEMENTS.md
+│   │   └── SECURITY_SUMMARY.md
+│   ├── stage0_implementation.md
+│   ├── troubleshooting
+│   │   ├── INDEX.md
+│   │   ├── github-copilot-agent-fix.md
+│   │   └── island-ai-agent-fix.md
+│   ├── ui
+│   │   ├── dashboard-layout-diagram.md
+│   │   └── dashboard-spec.md
+│   ├── unmanned-island.mndoc.yaml
+│   └── workflows
+│       ├── WORKFLOW_FILES_CREATED.md
+│       ├── WORKFLOW_INDEX.md
+│       ├── WORKFLOW_INTEGRATION_SUMMARY.md
+│       ├── WORKFLOW_README.md
+│       └── WORKFLOW_SYSTEM_SUMMARY.md
+├── examples
+│   ├── README.md
+│   ├── governance
+│   │   ├── change-management
+│   │   │   ├── CHG-2025-001.yaml
+│   │   │   └── rollback-scenario.md
+│   │   └── naming
+│   │       ├── good-vs-bad-naming.yaml
+│   │       ├── sample-ci-violations.yaml
+│   │       ├── sample-k8s-deployment.yaml
+│   │       ├── sample-namespace.yaml
+│   │       └── sample-naming-modes.yaml
+│   └── namespace-tutorial
+│       ├── README.md
+│       ├── docs
+│       │   ├── core_features.md
+│       │   ├── design_principles.md
+│       │   ├── introduction.md
+│       │   ├── technology_stacks.md
+│       │   ├── troubleshooting.md
+│       │   └── use_cases.md
+│       ├── examples
+│       │   ├── docker_namespaces.yaml
+│       │   ├── kubernetes_namespaces.yaml
+│       │   └── rbac_roles.yaml
+│       ├── scripts
+│       │   ├── cleanup_namespaces.sh
+│       │   └── monitor_resources.sh
+│       └── tests
+│           ├── test_namespace_creation.py
+│           ├── test_network_policy.py
+│           └── test_resource_quota.py
+├── go.work
+├── governance
+│   └── policies
+│       ├── change-management
+│       │   └── change-policy.yaml
+│       ├── exception
+│       │   └── exception-policy.yaml
+│       ├── gatekeeper
+│       │   └── namespace-constraints.yaml
+│       ├── migration
+│       │   └── naming-migration-policy.yaml
+│       ├── naming
+│       │   ├── api-naming.yaml
+│       │   ├── canonical-regex.policy.yaml
+│       │   ├── k8s-deployment-naming.yaml
+│       │   ├── pipeline-naming.yaml
+│       │   └── required-labels.policy.yaml
+│       ├── observability
+│       │   └── naming-metrics-policy.yaml
+│       ├── security
+│       │   └── info-security-policy-reference.yaml
+│       └── validation
+│           └── ci-validation-policy.yaml
+├── machinenativeops.yaml
+├── package-lock.json
+├── package.json
+├── pnpm-lock.yaml
+├── pnpm-workspace.yaml
+├── pom.xml
+├── pyproject.toml
+├── requirements-workflow.txt
+├── scripts
+│   ├── README.md
+│   ├── auto_sync_flow.mermaid.txt
+│   ├── automation_launcher.py
+│   ├── bootstrap-from-manifest.sh
+│   ├── brand-migration.sh
+│   ├── brand-replacer.py
+│   ├── build.ts
+│   ├── ci
+│   │   └── governed-build.sh
+│   ├── comprehensive-deploy.sh
+│   ├── deploy.sh
+│   ├── emergency_recovery.py
+│   ├── fix-island-ai.sh
+│   ├── github_sync_workflow.txt
+│   ├── hooks
+│   │   ├── install-hooks.sh
+│   │   ├── pre-commit
+│   │   └── pre-push
+│   ├── k8s
+│   │   └── deploy-baselines.sh
+│   ├── naming
+│   │   ├── language-checker.mjs
+│   │   └── standardize-project-name.sh
+│   ├── ops
+│   │   ├── artifacts
+│   │   │   └── reports
+│   │   ├── migration
+│   │   │   ├── README.md
+│   │   │   ├── __init__.py
+│   │   │   ├── migrator.py
+│   │   │   ├── scripts
+│   │   │   └── templates
+│   │   ├── onboarding
+│   │   │   └── pr-template.md
+│   │   ├── reports
+│   │   │   ├── language-compliance.json
+│   │   │   └── schema
+│   │   └── runbooks
+│   │       └── ng-degrade.json
+│   ├── post_commit_hook.sh
+│   ├── run-instant-execution.sh
+│   ├── start-automation-engine.sh
+│   ├── start-synergymesh-dev.sh
+│   ├── sync
+│   │   └── watch-and-sync.sh
+│   └── system_interconnection.mermaid.txt
+├── setup.py
+├── src
+│   ├── ai
+│   │   ├── README.md
+│   │   ├── __tests__
+│   │   │   ├── agents.test.ts
+│   │   │   └── collaboration.test.ts
+│   │   ├── agents
+│   │   │   ├── README.md
+│   │   │   ├── architect
+│   │   │   ├── auto-repair
+│   │   │   ├── base-agent.ts
+│   │   │   ├── code-analyzer
+│   │   │   ├── data-scientist
+│   │   │   ├── dependency-manager
+│   │   │   ├── devops
+│   │   │   ├── examples
+│   │   │   ├── index.ts
+│   │   │   ├── orchestrator
+│   │   │   ├── product-manager
+│   │   │   ├── qa
+│   │   │   ├── scripts
+│   │   │   ├── security
+│   │   │   └── vulnerability-detector
+│   │   ├── collaboration
+│   │   │   ├── agent-coordinator.ts
+│   │   │   └── index.ts
+│   │   ├── examples
+│   │   │   ├── basic-usage.ts
+│   │   │   └── multi-agent-collaboration.ts
+│   │   ├── index.ts
+│   │   ├── island-ai-README.md
+│   │   ├── island-ai.package.json.backup
+│   │   └── types.ts
+│   ├── apps
+│   │   ├── README.md
+│   │   ├── _scratch
+│   │   │   └── README.md
+│   │   ├── web
+│   │   │   ├── PHASE2_IMPROVEMENTS.md
+│   │   │   ├── README.md
+│   │   │   ├── deploy
+│   │   │   ├── index.html
+│   │   │   ├── k8s
+│   │   │   ├── package-lock.json
+│   │   │   ├── package.json
+│   │   │   ├── public
+│   │   │   ├── scripts
+│   │   │   ├── src
+│   │   │   ├── tailwind.config.ts
+│   │   │   └── tsconfig.json
+│   │   └── web-backend
+│   │       ├── analyzers
+│   │       ├── pytest.ini
+│   │       ├── requirements.txt
+│   │       ├── services
+│   │       └── tests
+│   ├── automation
+│   │   ├── README.md
+│   │   ├── _scratch
+│   │   │   └── README.md
+│   │   ├── architect
+│   │   │   ├── Dockerfile
+│   │   │   ├── README.md
+│   │   │   ├── config
+│   │   │   ├── core
+│   │   │   ├── docker-compose.yml
+│   │   │   ├── docs
+│   │   │   ├── examples
+│   │   │   ├── frameworks
+│   │   │   ├── frameworks-popular
+│   │   │   ├── requirements.txt
+│   │   │   ├── scenarios
+│   │   │   └── tests
+│   │   ├── architecture-skeletons
+│   │   │   ├── README.md
+│   │   │   ├── mapping.yaml
+│   │   │   └── unified-index.yaml
+│   │   ├── autonomous
+│   │   │   ├── INTEGRATION_SUMMARY.md
+│   │   │   ├── README.md
+│   │   │   ├── architecture-stability
+│   │   │   ├── cost-management
+│   │   │   ├── docs-examples
+│   │   │   ├── identity-tenancy
+│   │   │   ├── knowledge-base
+│   │   │   ├── nucleus-orchestrator
+│   │   │   ├── performance-reliability
+│   │   │   ├── security-observability
+│   │   │   └── testing-compatibility
+│   │   ├── hyperautomation
+│   │   │   ├── CHANGELOG.md
+│   │   │   ├── QUICK_REFERENCE.md
+│   │   │   ├── README.md
+│   │   │   ├── contracts
+│   │   │   ├── docs
+│   │   │   ├── policies
+│   │   │   └── templates
+│   │   ├── intelligent
+│   │   │   ├── AUTO_UPGRADE.md
+│   │   │   ├── README.md
+│   │   │   ├── __init__.py
+│   │   │   ├── agents
+│   │   │   ├── auto_upgrade_env.py
+│   │   │   ├── examples
+│   │   │   ├── pipeline_service.py
+│   │   │   ├── py.typed
+│   │   │   ├── pyrightconfig.json
+│   │   │   ├── pytest.ini
+│   │   │   ├── requirements.txt
+│   │   │   ├── synergymesh_core
+│   │   │   ├── test-vectors
+│   │   │   └── tests
+│   │   ├── pipelines
+│   │   │   ├── README.md
+│   │   │   ├── __init__.py
+│   │   │   └── instant_execution_pipeline.py
+│   │   ├── self_awareness_report.py
+│   │   └── zero_touch_deployment.py
+│   ├── autonomous
+│   │   ├── core
+│   │   │   └── README.md
+│   │   ├── deployment
+│   │   │   ├── docker
+│   │   │   ├── k8s
+│   │   │   └── kubernetes
+│   │   ├── infrastructure
+│   │   │   ├── README.md
+│   │   │   ├── _scratch
+│   │   │   ├── config
+│   │   │   └── infrastructure
+│   │   └── ops
+│   │       ├── artifacts
+│   │       ├── migration
+│   │       ├── onboarding
+│   │       ├── reports
+│   │       └── runbooks
+│   ├── bridges
+│   │   └── language_bridges.py
+│   ├── canonical
+│   │   ├── CHANGELOG.md
+│   │   ├── README.md
+│   │   └── machine-spec.yaml
+│   ├── client
+│   │   ├── index.html
+│   │   ├── public
+│   │   │   └── favicon.png
+│   │   └── src
+│   │       ├── App.tsx
+│   │       ├── components
+│   │       ├── hooks
+│   │       ├── index.css
+│   │       ├── lib
+│   │       ├── main.tsx
+│   │       └── pages
+│   ├── contracts
+│   │   ├── README.md
+│   │   └── external-api.json
+│   ├── core
+│   │   ├── README.md
+│   │   ├── __init__.py
+│   │   ├── _scratch
+│   │   │   └── README.md
+│   │   ├── advisory-database
+│   │   │   ├── README.md
+│   │   │   ├── jest.config.cjs
+│   │   │   ├── jest.config.js
+│   │   │   ├── package.json
+│   │   │   ├── src
+│   │   │   └── tsconfig.json
+│   │   ├── ai_constitution
+│   │   │   ├── __init__.py
+│   │   │   ├── adaptive_guidelines.py
+│   │   │   ├── constitution_engine.py
+│   │   │   ├── fundamental_laws.py
+│   │   │   ├── guardrails.py
+│   │   │   ├── operational_rules.py
+│   │   │   └── policy_as_prompt.py
+│   │   ├── ai_decision_engine.py
+│   │   ├── auto_bug_detector.py
+│   │   ├── auto_governance_hub.py
+│   │   ├── autonomous_trust_engine.py
+│   │   ├── ci_error_handler
+│   │   │   ├── __init__.py
+│   │   │   ├── auto_fix_engine.py
+│   │   │   ├── ci_error_analyzer.py
+│   │   │   ├── fix_status_tracker.py
+│   │   │   └── issue_manager.py
+│   │   ├── cloud_agent_delegation
+│   │   │   ├── __init__.py
+│   │   │   ├── cloud_provider_adapter.py
+│   │   │   ├── delegation_manager.py
+│   │   │   ├── load_balancer.py
+│   │   │   └── task_router.py
+│   │   ├── context_understanding_engine.py
+│   │   ├── contract_engine.py
+│   │   ├── contract_service
+│   │   │   ├── README.md
+│   │   │   ├── contracts-L1
+│   │   │   └── external
+│   │   ├── execution_architecture
+│   │   │   ├── README.md
+│   │   │   ├── __init__.py
+│   │   │   ├── agent_orchestration.py
+│   │   │   ├── function_calling.py
+│   │   │   ├── langchain_integration.py
+│   │   │   ├── mcp_integration.py
+│   │   │   └── tool_system.py
+│   │   ├── execution_engine
+│   │   │   ├── README.md
+│   │   │   ├── __init__.py
+│   │   │   ├── action_executor.py
+│   │   │   ├── capability_registry.py
+│   │   │   ├── connector_manager.py
+│   │   │   ├── execution_engine.py
+│   │   │   ├── rollback_manager.py
+│   │   │   └── verification_engine.py
+│   │   ├── hallucination_detector.py
+│   │   ├── hlp_executor
+│   │   │   ├── README.md
+│   │   │   ├── __init__.py
+│   │   │   ├── dag_engine.py
+│   │   │   ├── partial_rollback.py
+│   │   │   └── state_machine.py
+│   │   ├── island_ai_runtime
+│   │   │   ├── __init__.py
+│   │   │   ├── agent_framework.py
+│   │   │   ├── knowledge_engine.py
+│   │   │   ├── model_gateway.py
+│   │   │   ├── runtime.py
+│   │   │   ├── safety_constitution.py
+│   │   │   ├── session_memory.py
+│   │   │   └── tool_executor.py
+│   │   ├── main_system
+│   │   │   ├── __init__.py
+│   │   │   ├── automation_pipeline.py
+│   │   │   ├── phase_orchestrator.py
+│   │   │   ├── synergymesh_core.py
+│   │   │   └── system_bootstrap.py
+│   │   ├── mcp_servers_enhanced
+│   │   │   ├── __init__.py
+│   │   │   ├── mcp_server_manager.py
+│   │   │   ├── realtime_connector.py
+│   │   │   ├── tool_registry.py
+│   │   │   └── workflow_orchestrator.py
+│   │   ├── modules
+│   │   │   ├── __init__.py
+│   │   │   ├── ai_constitution
+│   │   │   ├── ci_error_handler
+│   │   │   ├── cloud_agent_delegation
+│   │   │   ├── drone_system
+│   │   │   ├── execution_architecture
+│   │   │   ├── execution_engine
+│   │   │   ├── main_system
+│   │   │   ├── mcp_servers_enhanced
+│   │   │   ├── mind_matrix
+│   │   │   ├── monitoring_system
+│   │   │   ├── tech_stack
+│   │   │   ├── training_system
+│   │   │   ├── virtual_experts
+│   │   │   └── yaml_module_system
+│   │   ├── monitoring_system
+│   │   │   ├── __init__.py
+│   │   │   ├── auto_diagnosis.py
+│   │   │   ├── auto_remediation.py
+│   │   │   ├── intelligent_monitoring.py
+│   │   │   ├── observability_platform.py
+│   │   │   ├── self_learning.py
+│   │   │   └── smart_anomaly_detector.py
+│   │   ├── plugin_system.py
+│   │   ├── project_factory
+│   │   │   ├── README.md
+│   │   │   ├── __init__.py
+│   │   │   ├── cli.py
+│   │   │   ├── factory.py
+│   │   │   ├── generator.py
+│   │   │   ├── spec.py
+│   │   │   ├── templates.py
+│   │   │   └── validator.py
+│   │   ├── safety_mechanisms
+│   │   │   ├── __init__.py
+│   │   │   ├── anomaly_detector.py
+│   │   │   ├── checkpoint_manager.py
+│   │   │   ├── circuit_breaker.py
+│   │   │   ├── emergency_stop.py
+│   │   │   ├── escalation_ladder.py
+│   │   │   ├── partial_rollback.py
+│   │   │   ├── retry_policies.py
+│   │   │   ├── rollback_system.py
+│   │   │   └── safety_net.py
+│   │   ├── slsa_provenance
+│   │   │   ├── __init__.py
+│   │   │   ├── artifact_verifier.py
+│   │   │   ├── attestation_manager.py
+│   │   │   ├── plugins
+│   │   │   ├── provenance_generator.py
+│   │   │   └── signature_verifier.py
+│   │   ├── tech_stack
+│   │   │   ├── __init__.py
+│   │   │   ├── architecture_config.py
+│   │   │   ├── framework_integrations.py
+│   │   │   ├── multi_agent_coordinator.py
+│   │   │   └── python_bridge.py
+│   │   ├── training_system
+│   │   │   ├── __init__.py
+│   │   │   ├── example_library.py
+│   │   │   ├── knowledge_base.py
+│   │   │   └── skills_training.py
+│   │   ├── unified_integration
+│   │   │   ├── __init__.py
+│   │   │   ├── cli_bridge.py
+│   │   │   ├── cognitive_processor.py
+│   │   │   ├── configuration_manager.py
+│   │   │   ├── configuration_optimizer.py
+│   │   │   ├── deep_execution_system.py
+│   │   │   ├── integration_hub.py
+│   │   │   ├── service_registry.py
+│   │   │   ├── system_orchestrator.py
+│   │   │   ├── unified_controller.py
+│   │   │   └── work_configuration_manager.py
+│   │   ├── validators
+│   │   │   ├── __init__.py
+│   │   │   ├── multi_layer_validator.py
+│   │   │   ├── security_validator.py
+│   │   │   ├── semantic_validator.py
+│   │   │   └── syntax_validator.py
+│   │   ├── virtual_experts
+│   │   │   ├── __init__.py
+│   │   │   ├── domain_experts.py
+│   │   │   ├── expert_base.py
+│   │   │   └── expert_team.py
+│   │   └── yaml_module_system
+│   │       ├── __init__.py
+│   │       ├── audit_trail.py
+│   │       ├── ci_verification_pipeline.py
+│   │       ├── policy_gate.py
+│   │       ├── slsa_compliance.py
+│   │       ├── yaml_module_definition.py
+│   │       └── yaml_schema_validator.py
+│   ├── docker-templates
+│   │   ├── NODEJS_USER_SETUP.md
+│   │   ├── README.md
+│   │   └── validate-dockerfiles.sh
+│   ├── frontend
+│   │   └── ui
+│   │       ├── Dockerfile
+│   │       ├── Dockerfile.api
+│   │       ├── PHASE2_IMPROVEMENTS.md
+│   │       ├── README.md
+│   │       ├── core
+│   │       ├── deploy
+│   │       ├── docker-compose.api.yml
+│   │       ├── index.html
+│   │       ├── k8s
+│   │       ├── package.json
+│   │       ├── pytest.ini
+│   │       ├── requirements.txt
+│   │       ├── scripts
+│   │       ├── services
+│   │       ├── src
+│   │       ├── tailwind.config.js
+│   │       ├── tests
+│   │       └── tsconfig.json
+│   ├── governance
+│   │   ├── 00-vision-strategy
+│   │   │   ├── AI-BEHAVIOR-CONTRACT.md
+│   │   │   ├── AUTONOMOUS_AGENT_STATE.md
+│   │   │   ├── DEPLOYMENT.md
+│   │   │   ├── INSTANT-EXECUTION-MANIFEST.yaml
+│   │   │   ├── PHASE2_README.md
+│   │   │   ├── PHASE3_README.md
+│   │   │   ├── PHASE4_README.md
+│   │   │   ├── PHASE5_README.md
+│   │   │   ├── PROJECT_EVOLUTION_ANALYSIS.md
+│   │   │   ├── PROJECT_STATE_SNAPSHOT.md
+│   │   │   ├── README.gac-deployment.md
+│   │   │   ├── README.md
+│   │   │   ├── alignment-framework.yaml
+│   │   │   ├── communication-plan.yaml
+│   │   │   ├── crd
+│   │   │   ├── dimension.yaml
+│   │   │   ├── gac-architecture.yaml
+│   │   │   ├── gac-templates
+│   │   │   ├── gatekeeper
+│   │   │   ├── gitops
+│   │   │   ├── governance-charter.yaml
+│   │   │   ├── implementation-roadmap.yaml
+│   │   │   ├── k8s
+│   │   │   ├── monitoring
+│   │   │   ├── policy
+│   │   │   ├── risk-register.yaml
+│   │   │   ├── strategic-objectives.yaml
+│   │   │   ├── success-metrics-dashboard.yaml
+│   │   │   ├── tests
+│   │   │   └── vision-statement.yaml
+│   │   ├── 01-architecture
+│   │   │   ├── AUTOMATION_ENGINE_README.md
+│   │   │   ├── README.md
+│   │   │   ├── __init__.py
+│   │   │   ├── automation_engine.py
+│   │   │   ├── config
+│   │   │   ├── dimension.yaml
+│   │   │   ├── governance-entities.yaml
+│   │   │   ├── governance-framework.yaml
+│   │   │   ├── governance-model.yaml
+│   │   │   ├── governance-principles.yaml
+│   │   │   ├── governance-standards.md
+│   │   │   ├── organizational-structure.yaml
+│   │   │   ├── roles-and-responsibilities.yaml
+│   │   │   └── schemas
+│   │   ├── 02-decision
+│   │   │   ├── AUTOMATION_ENGINE_README.md
+│   │   │   ├── README.md
+│   │   │   ├── __init__.py
+│   │   │   ├── automation_engine.py
+│   │   │   ├── decision-audit.yaml
+│   │   │   ├── decision-authority-matrix.yaml
+│   │   │   ├── decision-framework.yaml
+│   │   │   ├── decision-processes.yaml
+│   │   │   ├── decision-review-criteria.yaml
+│   │   │   ├── decision-templates.yaml
+│   │   │   ├── decision-tracking.yaml
+│   │   │   └── dimension.yaml
+│   │   ├── 03-change
+│   │   │   ├── AUTOMATION_ENGINE_README.md
+│   │   │   ├── README.md
+│   │   │   ├── __init__.py
+│   │   │   ├── automation_engine.py
+│   │   │   ├── change-approval-workflow.yaml
+│   │   │   ├── change-classification.yaml
+│   │   │   ├── change-control-matrix.yaml
+│   │   │   ├── change-policy.yaml
+│   │   │   ├── change-processes.yaml
+│   │   │   ├── change-rollback-procedures.yaml
+│   │   │   ├── change-tracking.yaml
+│   │   │   └── dimension.yaml
+│   │   ├── 04-risk
+│   │   │   ├── AUTOMATION_ENGINE_README.md
+│   │   │   ├── README.md
+│   │   │   ├── __init__.py
+│   │   │   ├── automation_engine.py
+│   │   │   ├── dimension.yaml
+│   │   │   ├── risk-assessment-framework.yaml
+│   │   │   ├── risk-classification.yaml
+│   │   │   ├── risk-maturity-model.yaml
+│   │   │   ├── risk-monitoring.yaml
+│   │   │   ├── risk-policy.yaml
+│   │   │   ├── risk-register.yaml
+│   │   │   └── risk-response-strategies.yaml
+│   │   ├── 05-compliance
+│   │   │   ├── AUTOMATION_ENGINE_README.md
+│   │   │   ├── README.md
+│   │   │   ├── __init__.py
+│   │   │   ├── automation_engine.py
+│   │   │   ├── compliance-audit-schedule.yaml
+│   │   │   ├── compliance-check-rules.yaml
+│   │   │   ├── compliance-framework.yaml
+│   │   │   ├── compliance-policy.yaml
+│   │   │   ├── compliance-reporting.yaml
+│   │   │   ├── compliance-standards.yaml
+│   │   │   ├── compliance-violations.yaml
+│   │   │   ├── config
+│   │   │   ├── dimension.yaml
+│   │   │   └── schemas
+│   │   ├── 06-security
+│   │   │   ├── AUTOMATION_ENGINE_README.md
+│   │   │   ├── README.md
+│   │   │   ├── __init__.py
+│   │   │   ├── access-control-policy.yaml
+│   │   │   ├── automation_engine.py
+│   │   │   ├── config
+│   │   │   ├── data-protection-policy.yaml
+│   │   │   ├── dimension.yaml
+│   │   │   ├── incident-response-plan.yaml
+│   │   │   ├── schemas
+│   │   │   ├── security-audit-framework.yaml
+│   │   │   ├── security-maturity-model.yaml
+│   │   │   ├── security-policy.yaml
+│   │   │   └── vulnerability-management.yaml
+│   │   ├── 07-audit
+│   │   │   ├── AUTOMATION_ENGINE_README.md
+│   │   │   ├── README.md
+│   │   │   ├── __init__.py
+│   │   │   ├── append_only_log_client.py
+│   │   │   ├── audit-framework.yaml
+│   │   │   ├── audit-improvement-tracking.yaml
+│   │   │   ├── audit-plan-annual.yaml
+│   │   │   ├── audit-policy.yaml
+│   │   │   ├── audit-procedures.yaml
+│   │   │   ├── audit-reporting-template.yaml
+│   │   │   ├── audit-workpapers.yaml
+│   │   │   ├── automation_engine.py
+│   │   │   ├── dimension.yaml
+│   │   │   └── format.yaml
+│   │   ├── 08-process
+│   │   │   ├── AUTOMATION_ENGINE_README.md
+│   │   │   ├── README.md
+│   │   │   ├── __init__.py
+│   │   │   ├── automation_engine.py
+│   │   │   ├── dimension.yaml
+│   │   │   ├── process-automation-roadmap.yaml
+│   │   │   ├── process-design-standards.yaml
+│   │   │   ├── process-improvement-procedures.yaml
+│   │   │   ├── process-inventory.yaml
+│   │   │   ├── process-metrics.yaml
+│   │   │   ├── process-optimization-framework.yaml
+│   │   │   └── process-policy.yaml
+│   │   ├── 09-performance
+│   │   │   ├── AUTOMATION_ENGINE_README.md
+│   │   │   ├── README.md
+│   │   │   ├── __init__.py
+│   │   │   ├── automation_engine.py
+│   │   │   ├── config
+│   │   │   ├── dimension.yaml
+│   │   │   ├── kpi-framework.yaml
+│   │   │   ├── performance-assessment.yaml
+│   │   │   ├── performance-improvement-plan.yaml
+│   │   │   ├── performance-metrics.yaml
+│   │   │   ├── performance-policy.yaml
+│   │   │   ├── performance-reporting.yaml
+│   │   │   ├── performance-targets.yaml
+│   │   │   └── schemas
+│   │   ├── 10-policy
+│   │   │   ├── ARCHITECTURE.md
+│   │   │   ├── README.md
+│   │   │   ├── base-policies
+│   │   │   ├── dimension.yaml
+│   │   │   └── framework.yaml
+│   │   ├── 10-stakeholder
+│   │   │   ├── AUTOMATION_ENGINE_README.md
+│   │   │   ├── README.md
+│   │   │   ├── __init__.py
+│   │   │   ├── automation_engine.py
+│   │   │   ├── conflict-resolution-procedures.yaml
+│   │   │   ├── dimension.yaml
+│   │   │   ├── stakeholder-analysis.yaml
+│   │   │   ├── stakeholder-communication-plan.yaml
+│   │   │   ├── stakeholder-engagement-plan.yaml
+│   │   │   ├── stakeholder-identification.yaml
+│   │   │   ├── stakeholder-policy.yaml
+│   │   │   └── stakeholder-satisfaction-survey.yaml
+│   │   ├── 11-tools-systems
+│   │   │   ├── AUTOMATION_ENGINE_README.md
+│   │   │   ├── README.md
+│   │   │   ├── __init__.py
+│   │   │   ├── audit-management-system.yaml
+│   │   │   ├── automation_engine.py
+│   │   │   ├── compliance-management-system.yaml
+│   │   │   ├── data-integration-framework.yaml
+│   │   │   ├── decision-support-system.yaml
+│   │   │   ├── dimension.yaml
+│   │   │   ├── process-management-system.yaml
+│   │   │   ├── risk-management-system.yaml
+│   │   │   ├── system-integration-guide.yaml
+│   │   │   └── tools-inventory.yaml
+│   │   ├── 12-culture-capability
+│   │   │   ├── AUTOMATION_ENGINE_README.md
+│   │   │   ├── README.md
+│   │   │   ├── __init__.py
+│   │   │   ├── automation_engine.py
+│   │   │   ├── capability-model.yaml
+│   │   │   ├── competency-framework.yaml
+│   │   │   ├── culture-metrics.yaml
+│   │   │   ├── culture-strategy.yaml
+│   │   │   ├── dimension.yaml
+│   │   │   ├── governance-values.yaml
+│   │   │   ├── maturity-assessment.yaml
+│   │   │   └── training-program.yaml
+│   │   ├── 13-metrics-reporting
+│   │   │   ├── AUTOMATION_ENGINE_README.md
+│   │   │   ├── README.md
+│   │   │   ├── __init__.py
+│   │   │   ├── automation_engine.py
+│   │   │   ├── dashboard-specification.yaml
+│   │   │   ├── dimension.yaml
+│   │   │   ├── generate-consolidated-report.py
+│   │   │   ├── kpi-definitions.yaml
+│   │   │   ├── metrics-data-source.yaml
+│   │   │   ├── metrics-framework.yaml
+│   │   │   ├── multidimensional-metrics.yaml
+│   │   │   ├── report-templates.yaml
+│   │   │   └── reporting-schedule.yaml
+│   │   ├── 14-improvement
+│   │   │   ├── AUTOMATION_ENGINE_README.md
+│   │   │   ├── README.md
+│   │   │   ├── __init__.py
+│   │   │   ├── automation_engine.py
+│   │   │   ├── dimension.yaml
+│   │   │   ├── improvement-identification.yaml
+│   │   │   ├── improvement-implementation.yaml
+│   │   │   ├── improvement-metrics.yaml
+│   │   │   ├── improvement-planning.yaml
+│   │   │   ├── improvement-policy.yaml
+│   │   │   ├── improvement-verification.yaml
+│   │   │   ├── knowledge-management.yaml
+│   │   │   └── self-healing-improvement.yaml
+│   │   ├── 15-economic
+│   │   │   ├── README.md
+│   │   │   ├── config
+│   │   │   ├── dimension.yaml
+│   │   │   └── schemas
+│   │   ├── 16-psychological
+│   │   │   ├── README.md
+│   │   │   └── dimension.yaml
+│   │   ├── 17-sociological
+│   │   │   ├── README.md
+│   │   │   └── dimension.yaml
+│   │   ├── 18-complex-system
+│   │   │   ├── README.md
+│   │   │   └── dimension.yaml
+│   │   ├── 19-evolutionary
+│   │   │   ├── README.md
+│   │   │   └── dimension.yaml
+│   │   ├── 20-intent
+│   │   │   ├── README.md
+│   │   │   ├── dimension.yaml
+│   │   │   └── framework.yaml
+│   │   ├── 21-ecological
+│   │   │   ├── README.md
+│   │   │   └── dimension.yaml
+│   │   ├── 22-aesthetic
+│   │   │   ├── README.md
+│   │   │   └── dimension.yaml
+│   │   ├── 23-policies
+│   │   │   ├── README.md
+│   │   │   ├── README_DEPRECATED.md
+│   │   │   ├── architecture-rules.yaml
+│   │   │   ├── autonomous
+│   │   │   ├── base-policies.yaml
+│   │   │   ├── base-policy.yaml
+│   │   │   ├── ci-policy-gate.yaml
+│   │   │   ├── cli-safe-mode.rego
+│   │   │   ├── compliance
+│   │   │   ├── conftest
+│   │   │   ├── data-privacy-policy.yaml
+│   │   │   ├── dimension.yaml
+│   │   │   ├── manifest-policies.rego
+│   │   │   ├── namespace-naming-policy.yaml
+│   │   │   ├── plugin-quality-gates.yaml
+│   │   │   ├── python-code-standards.md
+│   │   │   ├── security
+│   │   │   └── workflow
+│   │   ├── 24-registry
+│   │   │   ├── README.md
+│   │   │   ├── dimension.yaml
+│   │   │   ├── module-A.yaml
+│   │   │   ├── module-contracts-l1.yaml
+│   │   │   ├── plugins
+│   │   │   ├── schema.json
+│   │   │   └── services.yaml
+│   │   ├── 25-principles
+│   │   │   ├── coordination-architecture.md
+│   │   │   └── dimension.yaml
+│   │   ├── 26-tools
+│   │   │   ├── api-governance-requirements.txt
+│   │   │   ├── api_contract.py
+│   │   │   ├── check-language-policy.py
+│   │   │   ├── dimension.yaml
+│   │   │   ├── governance-cli.py
+│   │   │   ├── governance-dashboard.py
+│   │   │   ├── language-governance-analyzer.py
+│   │   │   ├── legacy-core-__init__.py
+│   │   │   ├── legacy-governance-__init__.py
+│   │   │   ├── legacy-governance-governance-cli.py
+│   │   │   ├── legacy-governance-governance-dashboard.py
+│   │   │   ├── legacy-governance-utils.py
+│   │   │   ├── legacy-governance-version.py
+│   │   │   ├── legacy-models-__init__.py
+│   │   │   ├── legacy-services-__init__.py
+│   │   │   └── legacy-utils-__init__.py
+│   │   ├── 27-templates
+│   │   │   ├── assessment-template.md
+│   │   │   ├── dimension.yaml
+│   │   │   ├── governance-template.md
+│   │   │   ├── process-template.md
+│   │   │   ├── report-template.html
+│   │   │   └── report-template.tex
+│   │   ├── 28-tests
+│   │   │   ├── conftest.py
+│   │   │   ├── dimension.yaml
+│   │   │   ├── e2e
+│   │   │   ├── integration
+│   │   │   ├── pytest.ini
+│   │   │   ├── reports
+│   │   │   ├── self-healing-validation.py
+│   │   │   ├── skeleton-testing-checklists.md
+│   │   │   ├── skeleton-testing-guardrails.md
+│   │   │   ├── skeleton-testing-io-contract.yaml
+│   │   │   ├── skeleton-testing-overview.md
+│   │   │   ├── skeleton-testing-runtime-mapping.yaml
+│   │   │   ├── unit
+│   │   │   ├── v2-skeleton-testing-checklists.md
+│   │   │   ├── v2-skeleton-testing-guardrails.md
+│   │   │   ├── v2-skeleton-testing-io-contract.yaml
+│   │   │   ├── v2-skeleton-testing-overview.md
+│   │   │   ├── v2-skeleton-testing-runtime-mapping.yaml
+│   │   │   └── validate-governance-matrix.py
+│   │   ├── 29-docs
+│   │   │   ├── API.md
+│   │   │   ├── ARCHITECTURE.md
+│   │   │   ├── ARCHITECTURE_GOVERNANCE_MATRIX.md
+│   │   │   ├── BEST-PRACTICES.md
+│   │   │   ├── BUILD.md
+│   │   │   ├── CASE-STUDIES.md
+│   │   │   ├── CHANGELOG.md
+│   │   │   ├── COMPLETENESS_REPORT.md
+│   │   │   ├── FAQ.md
+│   │   │   ├── GOVERNANCE_STRUCTURE_ANALYSIS.md
+│   │   │   ├── GOVERNANCE_STRUCTURE_INDEX.md
+│   │   │   ├── IMPLEMENTATION-GUIDE.md
+│   │   │   ├── IMPLEMENTATION-ROADMAP.md
+│   │   │   ├── IMPLEMENTATION_SUMMARY.md
+│   │   │   ├── INSTALL.md
+│   │   │   ├── LICENSE-THIRD-PARTY.md
+│   │   │   ├── QUICKSTART.md
+│   │   │   ├── QUICK_START.md
+│   │   │   ├── README.md
+│   │   │   ├── RELEASE.md
+│   │   │   ├── TROUBLESHOOTING.md
+│   │   │   ├── UNINSTALL.md
+│   │   │   ├── ai-refactor-suggestions.md
+│   │   │   ├── api
+│   │   │   ├── api-governance-skeleton.md
+│   │   │   ├── architecture
+│   │   │   ├── canonical-naming-governance-report.md
+│   │   │   ├── config
+│   │   │   ├── data
+│   │   │   ├── data-governance-skeleton.md
+│   │   │   ├── decision_levels.md
+│   │   │   ├── dimension.yaml
+│   │   │   ├── guides
+│   │   │   ├── l0_policy.md
+│   │   │   ├── namespace-advanced-playbook.md
+│   │   │   ├── namespace-from-zero.md
+│   │   │   ├── namespace-governance-lifecycle.md
+│   │   │   ├── overview.md
+│   │   │   ├── policies.md
+│   │   │   ├── refactor-governance__policy_refactor.md
+│   │   │   ├── reports
+│   │   │   ├── schema.md
+│   │   │   ├── skeleton-api-checklists.md
+│   │   │   ├── skeleton-api-guardrails.md
+│   │   │   ├── skeleton-api-io-contract.yaml
+│   │   │   ├── skeleton-api-overview.md
+│   │   │   ├── skeleton-api-runtime-mapping.yaml
+│   │   │   ├── skeleton-data-checklists.md
+│   │   │   ├── skeleton-data-guardrails.md
+│   │   │   ├── skeleton-data-io-contract.yaml
+│   │   │   ├── skeleton-data-overview.md
+│   │   │   ├── skeleton-data-runtime-mapping.yaml
+│   │   │   ├── skeleton-docs-checklists.md
+│   │   │   ├── skeleton-docs-guardrails.md
+│   │   │   ├── skeleton-docs-io-contract.yaml
+│   │   │   ├── skeleton-docs-overview.md
+│   │   │   ├── skeleton-docs-runtime-mapping.yaml
+│   │   │   ├── slsa.md
+│   │   │   ├── v2-skeleton-api-checklists.md
+│   │   │   ├── v2-skeleton-api-guardrails.md
+│   │   │   ├── v2-skeleton-api-io-contract.yaml
+│   │   │   ├── v2-skeleton-api-overview.md
+│   │   │   ├── v2-skeleton-api-runtime-mapping.yaml
+│   │   │   ├── v2-skeleton-data-checklists.md
+│   │   │   ├── v2-skeleton-data-guardrails.md
+│   │   │   ├── v2-skeleton-data-io-contract.yaml
+│   │   │   ├── v2-skeleton-data-overview.md
+│   │   │   ├── v2-skeleton-data-runtime-mapping.yaml
+│   │   │   ├── v2-skeleton-docs-checklists.md
+│   │   │   ├── v2-skeleton-docs-guardrails.md
+│   │   │   ├── v2-skeleton-docs-io-contract.yaml
+│   │   │   ├── v2-skeleton-docs-overview.md
+│   │   │   └── v2-skeleton-docs-runtime-mapping.yaml
+│   │   ├── 30-agents
+│   │   │   ├── COMPLETION_REPORT.md
+│   │   │   ├── INTEGRATION_ARCHITECTURE.md
+│   │   │   ├── QUICK_START.md
+│   │   │   ├── README.md
+│   │   │   ├── compliance
+│   │   │   ├── dimension.yaml
+│   │   │   ├── framework.yaml
+│   │   │   ├── lifecycle
+│   │   │   ├── monitoring
+│   │   │   ├── permissions
+│   │   │   └── registry
+│   │   ├── 30-integration
+│   │   │   ├── GOVERNANCE_DEPENDENCY_MAP.yaml
+│   │   │   ├── GOVERNANCE_INTEGRATION_MATRIX.md
+│   │   │   ├── coordination-framework.md
+│   │   │   ├── dependency-map.json
+│   │   │   ├── dependency-map.md
+│   │   │   ├── dependency-map.mermaid
+│   │   │   ├── dimension.yaml
+│   │   │   ├── integration-coordinator.py
+│   │   │   ├── metrics.md
+│   │   │   └── self-healing-integration.md
+│   │   ├── 31-schemas
+│   │   │   ├── README_DEPRECATED.md
+│   │   │   ├── ai-constitution.schema.json
+│   │   │   ├── auto-fix-bot-v2.schema.json
+│   │   │   ├── cloud-agent-delegation.schema.json
+│   │   │   ├── code-analysis.schema.json
+│   │   │   ├── dependencies.schema.json
+│   │   │   ├── dimension.yaml
+│   │   │   ├── docs-index.schema.json
+│   │   │   ├── environment.schema.json
+│   │   │   ├── mndoc
+│   │   │   ├── namespace-labels.schema.json
+│   │   │   ├── osv-advisory.schema.json
+│   │   │   ├── plugin-specification.schema.json
+│   │   │   ├── repair.schema.json
+│   │   │   ├── safety-mechanisms.schema.json
+│   │   │   ├── state-machine.schema.json
+│   │   │   └── vulnerability.schema.json
+│   │   ├── 32-rules
+│   │   │   ├── dimension.yaml
+│   │   │   ├── language-naming-rules.yaml
+│   │   │   ├── language-policy.yml
+│   │   │   └── mapping-rules.yaml
+│   │   ├── 33-common
+│   │   │   ├── README.md
+│   │   │   ├── dimension.yaml
+│   │   │   ├── schemas
+│   │   │   └── tools
+│   │   ├── 34-config
+│   │   │   ├── MANIFEST.in
+│   │   │   ├── architecture-health.yaml
+│   │   │   ├── data
+│   │   │   ├── default-config.yaml
+│   │   │   ├── deployment
+│   │   │   ├── development-config.yaml
+│   │   │   ├── dimension.yaml
+│   │   │   ├── environment-matrix
+│   │   │   ├── logging-config.yaml
+│   │   │   ├── naming
+│   │   │   ├── ownership-map.yaml
+│   │   │   ├── production-config.yaml
+│   │   │   └── testing-config.yaml
+│   │   ├── 35-scripts
+│   │   │   ├── README.md
+│   │   │   ├── dimension.yaml
+│   │   │   ├── extreme-problem-identifier.py
+│   │   │   ├── init-governance-configs.sh
+│   │   │   ├── logical-consistency-engine.py
+│   │   │   ├── validate-governance-structure.sh
+│   │   │   └── validate-python-syntax.py
+│   │   ├── 36-modules
+│   │   │   ├── README.md
+│   │   │   ├── core.unified_integration.yaml
+│   │   │   └── dimension.yaml
+│   │   ├── 37-behavior-contracts
+│   │   │   ├── README.md
+│   │   │   ├── apps.web.ui.yaml
+│   │   │   ├── automation.architect.yaml
+│   │   │   ├── automation.autonomous.yaml
+│   │   │   ├── automation.hyperautomation.yaml
+│   │   │   ├── automation.intelligent.yaml
+│   │   │   ├── core.contract_service.L1.yaml
+│   │   │   ├── core.mind_matrix.yaml
+│   │   │   ├── core.safety_mechanisms.yaml
+│   │   │   ├── core.slsa_provenance.yaml
+│   │   │   ├── core.unified_integration.yaml
+│   │   │   ├── dimension.yaml
+│   │   │   ├── island_ai.yaml
+│   │   │   └── services.mcp.yaml
+│   │   ├── 38-sbom
+│   │   │   ├── dimension.yaml
+│   │   │   ├── docs-provenance.json
+│   │   │   ├── provenance.json
+│   │   │   ├── signing-policy.yml
+│   │   │   └── synergymesh.spdx.json
+│   │   ├── 39-automation
+│   │   │   ├── ARCHITECTURE.md
+│   │   │   ├── README.md
+│   │   │   ├── SYSTEM_OVERVIEW.md
+│   │   │   ├── __init__.py
+│   │   │   ├── coordinator
+│   │   │   ├── deploy_dimension_engines.py
+│   │   │   ├── dimension.yaml
+│   │   │   ├── engines
+│   │   │   ├── governance_automation_launcher.py
+│   │   │   ├── integrated_launcher.py
+│   │   │   ├── self-healing-engine.py
+│   │   │   ├── simulation-README.md
+│   │   │   └── test_automation_system.py
+│   │   ├── 40-self-healing
+│   │   │   ├── README.md
+│   │   │   ├── config
+│   │   │   ├── dimension.yaml
+│   │   │   ├── docs
+│   │   │   ├── metadata.yaml
+│   │   │   ├── monitoring
+│   │   │   ├── policies
+│   │   │   └── tests
+│   │   ├── 60-contracts
+│   │   │   ├── README.md
+│   │   │   ├── dimension.yaml
+│   │   │   ├── framework.yaml
+│   │   │   └── registry
+│   │   ├── 70-audit
+│   │   │   ├── README.md
+│   │   │   ├── dimension.yaml
+│   │   │   └── framework.yaml
+│   │   ├── 80-feedback
+│   │   │   ├── README.md
+│   │   │   ├── dimension.yaml
+│   │   │   └── framework.yaml
+│   │   ├── ADVANCED_RESTRUCTURING_REPORT.md
+│   │   ├── API_CONTRACT_README.md
+│   │   ├── COMPREHENSIVE_SYSTEM_ANALYSIS.md
+│   │   ├── CRITICAL_CLARIFICATION_執行能力澄清.md
+│   │   ├── DEBT_MANAGEMENT_README.md
+│   │   ├── DEBT_TRACKING.md
+│   │   ├── EXPANSION_COMPLETION_REPORT.md
+│   │   ├── GOVERNANCE_INTEGRATION_ARCHITECTURE.md
+│   │   ├── INSTANT_DEBT_RESOLUTION_REPORT.md
+│   │   ├── INSTANT_EXECUTION_PROOF_即時執行證明.md
+│   │   ├── INSTANT_EXECUTION_README.md
+│   │   ├── INSTANT_TRANSFORMATION_SUMMARY.md
+│   │   ├── INTEGRATION_EXAMPLE.md
+│   │   ├── LOGICAL_VALIDATION.json
+│   │   ├── MARKET_ALIGNMENT_REPORT.md
+│   │   ├── Makefile
+│   │   ├── PHASE4_STATE.yaml
+│   │   ├── PHASE5_STATE.yaml
+│   │   ├── PR172_DEEP_ANALYSIS_AND_EVALUATION.md
+│   │   ├── PR172_評估摘要.md
+│   │   ├── README.md
+│   │   ├── RESTRUCTURING_BACKUP.md
+│   │   ├── RESTRUCTURING_GUIDE.md
+│   │   ├── RESTRUCTURING_SUMMARY.md
+│   │   ├── TECHNICAL_DEBT_REPORT.md
+│   │   ├── VERSION
+│   │   ├── _legacy
+│   │   │   ├── 20-information
+│   │   │   └── README.md
+│   │   ├── _scratch
+│   │   │   └── README.md
+│   │   ├── ci
+│   │   │   ├── argocd-app.yaml
+│   │   │   ├── github-actions.yaml
+│   │   │   └── gitlab-ci.yaml
+│   │   ├── deploy-instant.sh
+│   │   ├── dimensions
+│   │   │   ├── 00-vision-strategy
+│   │   │   ├── 01-architecture
+│   │   │   ├── 02-decision
+│   │   │   ├── 03-change
+│   │   │   ├── 04-risk
+│   │   │   ├── 05-compliance
+│   │   │   ├── 06-security
+│   │   │   ├── 07-audit
+│   │   │   ├── 08-process
+│   │   │   ├── 09-performance
+│   │   │   ├── 10-policy
+│   │   │   ├── 11-tools-systems
+│   │   │   ├── 12-culture-capability
+│   │   │   ├── 13-metrics-reporting
+│   │   │   ├── 14-improvement
+│   │   │   ├── 15-economic
+│   │   │   ├── 16-psychological
+│   │   │   ├── 17-sociological
+│   │   │   ├── 18-complex-system
+│   │   │   ├── 19-evolutionary
+│   │   │   ├── 20-intent
+│   │   │   ├── 21-ecological
+│   │   │   ├── 22-aesthetic
+│   │   │   ├── 23-policies
+│   │   │   ├── 24-registry
+│   │   │   ├── 25-principles
+│   │   │   ├── 26-tools
+│   │   │   ├── 27-templates
+│   │   │   ├── 28-tests
+│   │   │   ├── 29-docs
+│   │   │   ├── 30-agents
+│   │   │   ├── 31-schemas
+│   │   │   ├── 32-rules
+│   │   │   ├── 33-common
+│   │   │   ├── 34-config
+│   │   │   ├── 35-scripts
+│   │   │   ├── 36-modules
+│   │   │   ├── 37-behavior-contracts
+│   │   │   ├── 38-sbom
+│   │   │   ├── 39-automation
+│   │   │   ├── 40-self-healing
+│   │   │   ├── 41-orchestration
+│   │   │   ├── 42-deployment
+│   │   │   ├── 43-scaling
+│   │   │   ├── 44-resilience
+│   │   │   ├── 45-recovery
+│   │   │   ├── 46-migration
+│   │   │   ├── 47-versioning
+│   │   │   ├── 48-rollback
+│   │   │   ├── 49-canary
+│   │   │   ├── 50-monitoring
+│   │   │   ├── 51-logging
+│   │   │   ├── 52-tracing
+│   │   │   ├── 53-alerting
+│   │   │   ├── 54-dashboards
+│   │   │   ├── 55-slo-sli
+│   │   │   ├── 56-incidents
+│   │   │   ├── 57-postmortems
+│   │   │   ├── 58-capacity
+│   │   │   ├── 59-forecasting
+│   │   │   ├── 60-contracts
+│   │   │   ├── 61-lineage
+│   │   │   ├── 62-provenance
+│   │   │   ├── 63-evidence
+│   │   │   ├── 64-attestation
+│   │   │   ├── 65-certification
+│   │   │   ├── 66-reporting
+│   │   │   ├── 67-analytics
+│   │   │   ├── 68-visualization
+│   │   │   ├── 69-correlation
+│   │   │   ├── 70-audit-trail
+│   │   │   ├── 71-feedback-loops
+│   │   │   ├── 72-optimization
+│   │   │   ├── 73-learning
+│   │   │   ├── 74-adaptation
+│   │   │   ├── 75-evolution
+│   │   │   ├── 76-innovation
+│   │   │   ├── 77-experimentation
+│   │   │   ├── 78-simulation
+│   │   │   ├── 79-prediction
+│   │   │   ├── 80-synthesis
+│   │   │   ├── 81-auto-comment
+│   │   │   └── index.yaml
+│   │   ├── docker-compose.yml
+│   │   ├── governance-index.json
+│   │   ├── governance-map.yaml
+│   │   ├── governance.yaml
+│   │   ├── index
+│   │   │   ├── README.md
+│   │   │   ├── compliance.json
+│   │   │   ├── dimensions.json
+│   │   │   ├── events
+│   │   │   ├── events.json
+│   │   │   ├── observability.json
+│   │   │   ├── scripts
+│   │   │   ├── shared.json
+│   │   │   ├── tech-debt.json
+│   │   │   └── vectors.json
+│   │   ├── packages
+│   │   │   ├── encryption
+│   │   │   ├── logging
+│   │   │   ├── notification
+│   │   │   ├── validation
+│   │   │   └── workflow
+│   │   ├── policies
+│   │   │   ├── agent-policy.rego
+│   │   │   ├── compliance-policy.rego
+│   │   │   ├── global-policy.rego
+│   │   │   └── security-policy.rego
+│   │   ├── pyproject.toml
+│   │   ├── requirements.txt
+│   │   ├── schemas
+│   │   │   ├── audit-log-schema.json
+│   │   │   ├── dimension-schema.json
+│   │   │   └── governance-schema.json
+│   │   ├── scripts
+│   │   │   ├── README.md
+│   │   │   ├── auto-fix-medium-issues.py
+│   │   │   ├── demo-instant-execution.sh
+│   │   │   ├── generate_dimensions.py
+│   │   │   ├── intelligent-file-router.py
+│   │   │   ├── routing-config.yaml
+│   │   │   └── validate-governance-structure.py
+│   │   ├── setup.py
+│   │   ├── technical-debt-report.json
+│   │   └── version.py
+│   ├── machinenativeops.egg-info
+│   │   ├── PKG-INFO
+│   │   ├── SOURCES.txt
+│   │   ├── dependency_links.txt
+│   │   ├── entry_points.txt
+│   │   ├── not-zip-safe
+│   │   ├── requires.txt
+│   │   └── top_level.txt
+│   ├── mcp-servers
+│   │   ├── Dockerfile
+│   │   ├── README.md
+│   │   ├── VALIDATION.md
+│   │   ├── code-analyzer.js
+│   │   ├── comprehensive-validator.js
+│   │   ├── deploy
+│   │   │   ├── deployment.yaml
+│   │   │   ├── hpa.yaml
+│   │   │   ├── pdb.yaml
+│   │   │   ├── rbac.yaml
+│   │   │   └── service.yaml
+│   │   ├── deployment-validator.js
+│   │   ├── doc-generator.js
+│   │   ├── index.js
+│   │   ├── logic-validator.js
+│   │   ├── package.json
+│   │   ├── performance-analyzer.js
+│   │   ├── security-scanner.js
+│   │   ├── slsa-validator.js
+│   │   ├── test-generator.js
+│   │   └── tsconfig.json
+│   ├── runtime
+│   │   ├── README.md
+│   │   └── mind_matrix
+│   │       ├── __init__.py
+│   │       ├── executive_auto.py
+│   │       └── main.py
+│   ├── schemas
+│   │   ├── audit-report.schema.yaml
+│   │   ├── change-request.schema.yaml
+│   │   ├── exception-request.schema.yaml
+│   │   ├── metric-definition.schema.yaml
+│   │   ├── migration-plan.schema.yaml
+│   │   ├── naming-observability.schema.yaml
+│   │   ├── naming-policy.schema.yaml
+│   │   ├── naming-spec.schema.yaml
+│   │   ├── remediation-playbook.schema.yaml
+│   │   ├── resource-name.schema.yaml
+│   │   ├── review-meeting.schema.yaml
+│   │   └── validation-policy.schema.yaml
+│   ├── server
+│   │   ├── index.ts
+│   │   ├── routes.ts
+│   │   ├── static.ts
+│   │   ├── storage.ts
+│   │   └── vite.ts
+│   ├── services
+│   │   ├── README.md
+│   │   ├── __init__.py
+│   │   ├── _scratch
+│   │   │   └── README.md
+│   │   ├── agents
+│   │   │   ├── README.md
+│   │   │   ├── architecture-reasoner
+│   │   │   ├── auto-repair
+│   │   │   ├── code-analyzer
+│   │   │   ├── dependency-manager
+│   │   │   ├── orchestrator
+│   │   │   ├── recovery
+│   │   │   ├── runbook-executor.sh
+│   │   │   └── vulnerability-detector
+│   │   ├── api-gateway
+│   │   │   ├── Dockerfile
+│   │   │   ├── README.md
+│   │   │   ├── jest.config.js
+│   │   │   ├── package.json
+│   │   │   ├── src
+│   │   │   └── tsconfig.json
+│   │   ├── mcp
+│   │   │   ├── Dockerfile
+│   │   │   ├── README.md
+│   │   │   ├── VALIDATION.md
+│   │   │   ├── deploy
+│   │   │   ├── package-lock.json
+│   │   │   ├── package.json
+│   │   │   └── tsconfig.json
+│   │   ├── scheduler
+│   │   │   ├── Dockerfile
+│   │   │   ├── README.md
+│   │   │   ├── package.json
+│   │   │   ├── src
+│   │   │   └── tsconfig.json
+│   │   ├── scheduler-service
+│   │   │   └── migrations
+│   │   └── watchdog
+│   │       ├── README.md
+│   │       ├── __init__.py
+│   │       └── system_watchdog.py
+│   ├── shared
+│   │   ├── README.md
+│   │   ├── __init__.py
+│   │   ├── config
+│   │   │   ├── __init__.py
+│   │   │   └── base_config.py
+│   │   ├── constants
+│   │   │   ├── __init__.py
+│   │   │   └── system_constants.py
+│   │   ├── language_bridges.py
+│   │   ├── schema.ts
+│   │   └── utils
+│   │       ├── __init__.py
+│   │       └── common_helpers.py
+│   ├── supply-chain
+│   │   ├── README.md
+│   │   └── sbom
+│   │       ├── docs-provenance.json
+│   │       ├── provenance.json
+│   │       ├── signing-policy.yml
+│   │       └── synergymesh.spdx.json
+│   ├── synergymesh.egg-info
+│   │   ├── PKG-INFO
+│   │   ├── SOURCES.txt
+│   │   ├── dependency_links.txt
+│   │   ├── entry_points.txt
+│   │   ├── not-zip-safe
+│   │   ├── requires.txt
+│   │   └── top_level.txt
+│   ├── templates
+│   │   ├── ci
+│   │   │   └── validate-manifests-canonical.yml
+│   │   ├── conftest
+│   │   │   └── naming.rego
+│   │   ├── git-hooks
+│   │   │   └── post-commit.island-ai.v1.sh
+│   │   ├── github
+│   │   │   ├── 01-validate.v1.yml
+│   │   │   ├── 02-test.v1.yml
+│   │   │   ├── 03-build.v1.yml
+│   │   │   ├── 04-deploy-staging.v1.yml
+│   │   │   ├── 05-deploy-production.v1.yml
+│   │   │   ├── 06-security-scan.v1.yml
+│   │   │   ├── 07-dependency-update.v1.yml
+│   │   │   └── 08-sync-subdirs.v1.yml
+│   │   ├── governance
+│   │   │   ├── ci
+│   │   │   ├── forms
+│   │   │   └── k8s
+│   │   ├── k8s
+│   │   │   └── namespace.canonical.template.yaml
+│   │   ├── playbooks
+│   │   │   └── remediation-playbook.template.yaml
+│   │   ├── prometheus
+│   │   │   └── naming-alert-rules.yaml
+│   │   ├── root
+│   │   │   ├── Cargo.workspace.v1.toml
+│   │   │   ├── LICENSE.MIT.v1.txt
+│   │   │   ├── README.island-ai.v1.md
+│   │   │   ├── gitignore.monorepo.v1.txt
+│   │   │   ├── go.work.v1.txt
+│   │   │   ├── integrations.pom.v1.xml
+│   │   │   └── package.island-ai.v1.json
+│   │   ├── sync
+│   │   │   └── watch-and-sync.island-ai.v1.sh
+│   │   └── yaml-patterns
+│   │       └── naming-governance-lifecycle.md
+│   ├── tests
+│   │   ├── README.md
+│   │   ├── __init__.py
+│   │   ├── automation
+│   │   │   ├── test_baseline_validation_engine.py
+│   │   │   ├── test_framework_patterns.py
+│   │   │   └── test_self_awareness_security.py
+│   │   ├── integration
+│   │   │   ├── test_recovery_system.py
+│   │   │   └── test_workflow_system.py
+│   │   ├── performance
+│   │   │   ├── benchmark.js
+│   │   │   └── load-test.js
+│   │   ├── setup.ts
+│   │   ├── test_path_validation.py
+│   │   ├── unit
+│   │   │   ├── auto-fix-bot
+│   │   │   ├── benchmark.js
+│   │   │   ├── cloud-agent-delegation
+│   │   │   ├── hlp-executor
+│   │   │   ├── load-test.js
+│   │   │   ├── osv-advisory
+│   │   │   ├── phases
+│   │   │   ├── test_ai_decision_engine.py
+│   │   │   ├── test_contract_engine.py
+│   │   │   ├── test_deep_execution_system.py
+│   │   │   ├── test_enhanced_integration.py
+│   │   │   ├── test_executive_auto.py
+│   │   │   ├── test_partial_rollback.py
+│   │   │   ├── test_validators.py
+│   │   │   └── vectors-manifest.yaml
+│   │   └── vectors
+│   │       ├── auto-fix-bot
+│   │       ├── cloud-agent-delegation
+│   │       ├── osv-advisory
+│   │       └── vectors-manifest.yaml
+│   └── web
+│       └── dashboard
+│           └── config
+├── tools
+│   ├── AUTONOMOUS_CAPABILITIES.md
+│   ├── QUICKSTART_AUTONOMOUS_TOOLKIT.md
+│   ├── README.md
+│   ├── _scratch
+│   │   └── README.md
+│   ├── ai
+│   │   ├── __init__.py
+│   │   └── governance_engine.py
+│   ├── ai-auto-fix.py
+│   ├── ai-refactor-review.py
+│   ├── auto-fix-bot-dashboard.html
+│   ├── automation
+│   │   ├── __init__.py
+│   │   ├── engine_base.py
+│   │   ├── engines
+│   │   │   ├── __init__.py
+│   │   │   ├── baseline_validation_engine.py
+│   │   │   ├── generation_engine.py
+│   │   │   ├── integration_automation_engine.py
+│   │   │   ├── refactor_automation_engine.py
+│   │   │   └── validation_automation_engine.py
+│   │   └── master_orchestrator.py
+│   ├── autonomous_cleanup_toolkit.py
+│   ├── bootstrap_from_manifest.py
+│   ├── ci
+│   │   ├── contract-checker.js
+│   │   ├── language-checker.js
+│   │   └── policy-simulate.yml
+│   ├── ci-cost-dashboard.py
+│   ├── cleanup_duplicates.py
+│   ├── cli
+│   │   ├── README.md
+│   │   ├── bin
+│   │   │   └── admin-copilot.js
+│   │   ├── package-lock.json
+│   │   ├── package.json
+│   │   ├── src
+│   │   │   └── index.ts
+│   │   └── tsconfig.json
+│   ├── docs
+│   │   ├── README.md
+│   │   ├── analyze_root_reports.py
+│   │   ├── generate_knowledge_graph.py
+│   │   ├── generate_mndoc_from_readme.py
+│   │   ├── pr_comment_summary.py
+│   │   ├── project_to_superroot.py
+│   │   ├── provenance_injector.py
+│   │   ├── scan_repo_generate_index.py
+│   │   └── validate_index.py
+│   ├── evolution
+│   │   └── generate_evolution_report.py
+│   ├── find_duplicate_scripts.py
+│   ├── generate-hotspot-heatmap.py
+│   ├── generate-language-dashboard.py
+│   ├── generate-migration-flow.py
+│   ├── generate-refactor-playbook.py
+│   ├── generate-sankey-data.py
+│   ├── generators
+│   │   ├── __init__.py
+│   │   ├── contract_generator.py
+│   │   ├── documentation_generator.py
+│   │   └── validator_generator.py
+│   ├── governance
+│   │   ├── bash
+│   │   │   └── generate_resource_name.sh
+│   │   ├── generate-consolidated-report.py
+│   │   ├── language-governance-analyzer.py
+│   │   ├── python
+│   │   │   ├── naming-migration.py
+│   │   │   └── validate_naming.py
+│   │   └── validate-governance-matrix.py
+│   ├── integrate_all_repos.sh
+│   ├── integrate_repositories.sh
+│   ├── language-dashboard-data.yaml
+│   ├── language-health-score.py
+│   ├── language-history-writer.py
+│   ├── lkb-update.py
+│   ├── load-playbook.py
+│   ├── map-violations-to-playbooks.py
+│   ├── path_tools
+│   │   ├── README.md
+│   │   ├── __init__.py
+│   │   ├── path_fixer.py
+│   │   ├── path_scanner.py
+│   │   └── path_validator.py
+│   ├── refactor
+│   │   ├── __init__.py
+│   │   ├── auto_refactor.py
+│   │   ├── cognitive_engine.py
+│   │   ├── execute_integration.py
+│   │   ├── process_legacy_scratch.py
+│   │   ├── refactor_engine.py
+│   │   ├── refactor_evolution_workflow.py
+│   │   ├── test_integration.sh
+│   │   ├── update_indexes.py
+│   │   └── validate_structure.py
+│   ├── run_full_cleanup.sh
+│   ├── scan_tech_debt.py
+│   ├── scripts
+│   │   ├── README.md
+│   │   ├── advanced-push-protection.sh
+│   │   ├── analyze.sh
+│   │   ├── artifacts
+│   │   │   └── build.sh
+│   │   ├── automation-entry.sh
+│   │   ├── backup
+│   │   │   ├── backup.sh
+│   │   │   └── restore.sh
+│   │   ├── build-matrix.sh
+│   │   ├── check-env.sh
+│   │   ├── check-sync-contracts.js
+│   │   ├── conditional-deploy.sh
+│   │   ├── consistency-audit.sh
+│   │   ├── generate-directory-tree.sh
+│   │   ├── manage-secret-patterns.py
+│   │   ├── naming
+│   │   │   ├── check-naming.sh
+│   │   │   ├── language-checker.mjs
+│   │   │   └── suggest-name.mjs
+│   │   ├── repair.sh
+│   │   ├── run-v2.sh
+│   │   ├── setup.sh
+│   │   ├── validate-config.js
+│   │   ├── validate-pr351-consistency.sh
+│   │   ├── validate_auto_fix_bot_config.py
+│   │   └── vulnerability-alert-handler.py
+│   ├── semantic-commit-generator.py
+│   ├── subtree_integrate.py
+│   ├── sync_external_repos.py
+│   ├── utilities
+│   │   ├── validate_vectors.py
+│   │   └── validate_yaml.py
+│   ├── validate-refactor-index.py
+│   └── verify_p0_safety.py
+└── uv.lock
+
+683 directories, 1705 files

@@ -1,0 +1,54 @@
+# =============================================================================
+# 引用規範 (Reference Standards)
+# Spec ID: 07-reference-standards
+# URN: urn:machinenativeops:governance:naming-spec:reference:v1
+# =============================================================================
+
+apiVersion: governance.machinenativeops.io/v2
+kind: NamingSpec
+metadata:
+  id: "reference-standards"
+  name: "引用規範"
+  name_en: "Reference Standards"
+  version: "1.0.0"
+  urn: "urn:machinenativeops:governance:naming-spec:reference:v1"
+  parent: "99-naming-convention"
+
+spec:
+  description: |
+    此規範定義跨檔案引用和導入的標準格式。
+
+  cross_file_reference:
+    formats:
+      json_pointer:
+        syntax: "#/definitions/name"
+        example: "#/definitions/kebab_case"
+      yaml_anchor:
+        syntax: "*anchor_name"
+        example: "*common_config"
+      file_reference:
+        syntax: "$file{path}"
+        example: "$file{./config/database.yaml}"
+      env_reference:
+        syntax: "$env{VAR_NAME}"
+        example: "$env{DATABASE_URL}"
+
+  import_patterns:
+    relative:
+      syntax: "from './module'"
+      preferred_for: "同目錄或子目錄模組"
+    absolute:
+      syntax: "from '@package/module'"
+      preferred_for: "跨套件引用"
+    dynamic:
+      syntax: "import('./module')"
+      preferred_for: "延遲載入"
+
+  link_integrity:
+    validations:
+      - check_file_exists
+      - check_anchor_exists
+      - check_circular_reference
+    tools:
+      - conftest
+      - custom_validator

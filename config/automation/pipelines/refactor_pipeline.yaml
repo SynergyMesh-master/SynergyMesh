@@ -1,0 +1,109 @@
+# ═══════════════════════════════════════════════════════════════════════════════
+#                    Refactor Pipeline Configuration
+#                         重構管道配置
+# ═══════════════════════════════════════════════════════════════════════════════
+
+pipeline_id: refactor_full_cycle
+name: "全自動重構管道"
+description: "完整的自動化重構週期：掃描 → 分析 → 規劃 → 執行 → 驗證"
+enabled: true
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# 觸發器
+# ═══════════════════════════════════════════════════════════════════════════════
+triggers:
+  # 定時觸發
+  - type: cron
+    schedule: "0 */6 * * *"  # 每6小時
+
+  # 事件觸發
+  - type: event
+    event: "file.changed"
+    filter:
+      path: "docs/refactor_playbooks/**"
+
+  # 手動觸發
+  - type: manual
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# 階段定義
+# ═══════════════════════════════════════════════════════════════════════════════
+stages:
+  # 階段 1: 掃描
+  - stage_id: scan
+    name: "掃描分析"
+    engine_type: execution
+    operation: scan
+    params:
+      target: "docs/refactor_playbooks"
+      deep: true
+    timeout: 60
+    on_failure: abort
+
+  # 階段 2: 生成計畫
+  - stage_id: plan
+    name: "生成計畫"
+    engine_type: execution
+    operation: plan
+    params:
+      priority_filter: all
+    depends_on:
+      - scan
+    timeout: 30
+
+  # 階段 3: 執行重構
+  - stage_id: execute
+    name: "執行重構"
+    engine_type: execution
+    operation: execute_plan
+    params:
+      dry_run: false
+    depends_on:
+      - plan
+    timeout: 300
+    on_failure: rollback
+
+  # 階段 4: 驗證
+  - stage_id: validate
+    name: "驗證結果"
+    engine_type: validation
+    operation: validate_all
+    depends_on:
+      - execute
+    timeout: 60
+
+  # 階段 5: 生成報告
+  - stage_id: report
+    name: "生成報告"
+    engine_type: generation
+    operation: generate_report
+    params:
+      report_type: summary
+    depends_on:
+      - validate
+    timeout: 30
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# 錯誤處理
+# ═══════════════════════════════════════════════════════════════════════════════
+error_handling:
+  # 失敗策略
+  on_stage_failure: continue_to_next  # abort | continue_to_next | retry
+
+  # 重試配置
+  retry:
+    max_attempts: 2
+    delay: 5
+
+  # 回滾
+  rollback:
+    enabled: true
+    auto_rollback_on_validation_failure: true
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# 通知
+# ═══════════════════════════════════════════════════════════════════════════════
+notifications:
+  on_start: false
+  on_complete: true
+  on_failure: true

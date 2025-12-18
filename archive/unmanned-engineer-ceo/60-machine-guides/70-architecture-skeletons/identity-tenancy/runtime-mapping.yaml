@@ -1,0 +1,25 @@
+version: "1.0.0"
+skeleton_id: "identity-tenancy"
+
+runtime_mappings:
+  authentication:
+    path: "services/mcp/"
+    file: "auth-mcp.js"
+
+  authorization:
+    path: "governance/policies/"
+    file: "authorization.rego"
+
+  tenancy:
+    path: "automation/autonomous/identity-tenancy/"
+    responsibility: "多租戶管理、資料隔離"
+
+configuration:
+  identity_config: "config/identity-governance.yaml"
+  tenancy_policies: "governance/policies/tenancy/"
+  rbac_definitions: "config/rbac-definitions.yaml"
+
+ai_quick_links:
+  "OAuth2 設置": "services/mcp/oauth2-mcp.js"
+  "授權策略": "governance/policies/authorization.rego"
+  "租戶隔離": "automation/autonomous/identity-tenancy/tenant_isolation.py"

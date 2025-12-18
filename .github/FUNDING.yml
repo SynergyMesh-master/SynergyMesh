@@ -1,0 +1,16 @@
+# SynergyMesh Funding Configuration
+# These are supported funding model platforms
+
+github: [SynergyMesh]
+patreon: # machinenativeops
+open_collective: machinenativeops
+ko_fi: # machinenativeops
+tidelift: # npm/machinenativeops
+community_bridge: # machinenativeops
+liberapay: # machinenativeops
+issuehunt: # machinenativeops
+lfx_crowdfunding: # machinenativeops
+polar: # machinenativeops
+buy_me_a_coffee: # machinenativeops
+thanks_dev: # machinenativeops
+custom: ['https://machinenativeops.io/sponsor']

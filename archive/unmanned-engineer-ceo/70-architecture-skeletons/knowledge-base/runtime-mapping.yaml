@@ -1,0 +1,10 @@
+runtime_module:
+  root: core/knowledge-base
+
+  schemas:
+    document: core/knowledge-base/schemas/document.json
+    chunk: core/knowledge-base/schemas/chunk.json
+
+  docs:
+    indexing_strategy: core/knowledge-base/docs/indexing-strategy.md
+    rag_patterns: core/knowledge-base/docs/rag-patterns.md

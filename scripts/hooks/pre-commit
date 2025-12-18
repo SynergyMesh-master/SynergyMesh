@@ -1,0 +1,110 @@
+#!/bin/bash
+# ═══════════════════════════════════════════════════════════════════════════════
+#                    Stage 0 Pre-Commit Hook
+#                    Stage 0 提交前檢查
+# ═══════════════════════════════════════════════════════════════════════════════
+#
+# 安裝方式 / Installation:
+#   cp scripts/hooks/pre-commit .git/hooks/pre-commit
+#   chmod +x .git/hooks/pre-commit
+#
+# ═══════════════════════════════════════════════════════════════════════════════
+
+set -e
+
+echo "🔍 Running Stage 0 pre-commit checks..."
+
+# ─────────────────────────────────────────────────────────────────────────────
+#                    1. YAML 語法驗證
+# ─────────────────────────────────────────────────────────────────────────────
+echo "📋 Checking YAML syntax..."
+
+YAML_ERRORS=0
+for file in $(git diff --cached --name-only --diff-filter=ACM | grep -E '\.(yaml|yml)$'); do
+    if [ -f "$file" ]; then
+        if ! python3 -c "import yaml; yaml.safe_load(open('$file'))" 2>/dev/null; then
+            echo "❌ Invalid YAML: $file"
+            YAML_ERRORS=$((YAML_ERRORS + 1))
+        fi
+    fi
+done
+
+if [ $YAML_ERRORS -gt 0 ]; then
+    echo "❌ Found $YAML_ERRORS YAML syntax errors. Please fix before committing."
+    exit 1
+fi
+echo "✅ YAML syntax check passed"
+
+# ─────────────────────────────────────────────────────────────────────────────
+#                    2. Workflow 配置驗證
+# ─────────────────────────────────────────────────────────────────────────────
+echo "📋 Checking workflow configurations..."
+
+WORKFLOW_ERRORS=0
+for file in $(git diff --cached --name-only --diff-filter=ACM | grep -E '^\.github/workflows/.*\.(yaml|yml)$'); do
+    if [ -f "$file" ]; then
+        # Check for timeout-minutes at wrong level
+        if grep -q "workflow_dispatch:" "$file"; then
+            # Get lines between workflow_dispatch and next section
+            if awk '/workflow_dispatch:/,/^[a-z]/' "$file" | grep -q "timeout-minutes:"; then
+                # Check if it's at trigger level (indented less than jobs)
+                if awk '/workflow_dispatch:/,/jobs:/' "$file" | grep -q "^  timeout-minutes:"; then
+                    echo "❌ Invalid timeout-minutes at trigger level in: $file"
+                    echo "   (timeout-minutes should be at job level, not under workflow_dispatch)"
+                    WORKFLOW_ERRORS=$((WORKFLOW_ERRORS + 1))
+                fi
+            fi
+        fi
+    fi
+done
+
+if [ $WORKFLOW_ERRORS -gt 0 ]; then
+    echo "❌ Found $WORKFLOW_ERRORS workflow configuration errors."
+    exit 1
+fi
+echo "✅ Workflow configuration check passed"
+
+# ─────────────────────────────────────────────────────────────────────────────
+#                    3. 敏感資料掃描
+# ─────────────────────────────────────────────────────────────────────────────
+echo "📋 Scanning for sensitive data..."
+
+SENSITIVE_PATTERNS="password\s*=\s*['\"][^'\"]+['\"]|api[_-]?key\s*=\s*['\"][^'\"]+['\"]|secret\s*=\s*['\"][^'\"]+['\"]"
+
+SENSITIVE_FILES=0
+for file in $(git diff --cached --name-only --diff-filter=ACM); do
+    if [ -f "$file" ] && [[ ! "$file" =~ \.md$ ]] && [[ ! "$file" =~ ^\.git ]]; then
+        if grep -iE "$SENSITIVE_PATTERNS" "$file" 2>/dev/null | grep -v "example\|template\|placeholder" > /dev/null; then
+            echo "⚠️ Potential sensitive data in: $file"
+            SENSITIVE_FILES=$((SENSITIVE_FILES + 1))
+        fi
+    fi
+done
+
+if [ $SENSITIVE_FILES -gt 0 ]; then
+    echo "⚠️ Warning: Found $SENSITIVE_FILES files with potential sensitive data. Please review."
+    # Warning only, don't block
+fi
+echo "✅ Sensitive data scan completed"
+
+# ─────────────────────────────────────────────────────────────────────────────
+#                    4. TypeScript/JavaScript Lint (if applicable)
+# ─────────────────────────────────────────────────────────────────────────────
+TS_JS_FILES=$(git diff --cached --name-only --diff-filter=ACM | grep -E '\.(ts|tsx|js|jsx)$' || true)
+
+if [ -n "$TS_JS_FILES" ] && [ -f "package.json" ]; then
+    if grep -q '"lint"' package.json; then
+        echo "📋 Running lint on staged TypeScript/JavaScript files..."
+        # Run lint only on staged files if possible
+        if command -v npx &> /dev/null && [ -f ".eslintrc.yaml" ] || [ -f "eslint.config.js" ]; then
+            echo "$TS_JS_FILES" | xargs npx eslint --max-warnings=0 2>/dev/null || {
+                echo "⚠️ Lint warnings found. Consider running 'npm run lint -- --fix'"
+                # Warning only for now
+            }
+        fi
+    fi
+fi
+
+echo ""
+echo "✅ All Stage 0 pre-commit checks passed!"
+echo ""

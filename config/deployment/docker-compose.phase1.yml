@@ -1,0 +1,113 @@
+version: '3.8'
+
+# Phase 1 Development Environment
+# This docker-compose file sets up the complete Phase 1 stack for local development
+
+services:
+  # Redis - Job Queue & Caching
+  redis:
+    image: redis:7-alpine
+    container_name: phase1-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    command: redis-server --appendonly yes
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+    networks:
+      - phase1-network
+
+  # API Gateway
+  api-gateway:
+    build:
+      context: ./services/api-gateway
+      dockerfile: Dockerfile
+    container_name: phase1-api-gateway
+    ports:
+      - "8000:8000"
+    environment:
+      - NODE_ENV=development
+      - PORT=8000
+      - JWT_SECRET=INSECURE-DEV-SECRET-CHANGE-FOR-PRODUCTION-USE
+      - JWT_EXPIRES_IN=1h
+      - API_RATE_LIMIT=100
+      - CORS_ORIGIN=*
+      - LOG_LEVEL=info
+    volumes:
+      - ./services/api-gateway/src:/app/src:ro
+      - ./services/api-gateway/logs:/app/logs
+    depends_on:
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    networks:
+      - phase1-network
+    restart: unless-stopped
+
+  # Scheduler Service
+  scheduler:
+    build:
+      context: ./services/scheduler
+      dockerfile: Dockerfile
+    container_name: phase1-scheduler
+    environment:
+      - NODE_ENV=development
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - MAX_CONCURRENT_JOBS=10
+      - JOB_TIMEOUT=300000
+      - HISTORY_RETENTION_DAYS=90
+      - LOG_LEVEL=info
+    volumes:
+      - ./services/scheduler/src:/app/src:ro
+    depends_on:
+      redis:
+        condition: service_healthy
+    networks:
+      - phase1-network
+    restart: unless-stopped
+
+  # Web Dashboard (Static Build)
+  # For development, run 'npm run dev' locally instead
+  # dashboard:
+  #   build:
+  #     context: ./apps/web
+  #     dockerfile: Dockerfile
+  #   container_name: phase1-dashboard
+  #   ports:
+  #     - "3000:80"
+  #   networks:
+  #     - phase1-network
+
+volumes:
+  redis-data:
+    driver: local
+
+networks:
+  phase1-network:
+    driver: bridge
+    name: phase1-network
+
+# Usage:
+# 1. Start all services:
+#    docker-compose -f docker-compose.phase1.yml up -d
+#
+# 2. View logs:
+#    docker-compose -f docker-compose.phase1.yml logs -f
+#
+# 3. Stop all services:
+#    docker-compose -f docker-compose.phase1.yml down
+#
+# 4. Stop and remove volumes:
+#    docker-compose -f docker-compose.phase1.yml down -v
+#
+# 5. Rebuild services:
+#    docker-compose -f docker-compose.phase1.yml up -d --build

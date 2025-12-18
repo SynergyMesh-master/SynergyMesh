@@ -1,0 +1,177 @@
+# =============================================================================
+# 目錄命名規範 (Directory Naming Standards)
+# Spec ID: 01-directory-naming
+# URN: urn:machinenativeops:governance:naming-spec:directory:v1
+# =============================================================================
+
+apiVersion: governance.machinenativeops.io/v2
+kind: NamingSpec
+metadata:
+  id: "dir-naming"
+  name: "目錄命名規範"
+  name_en: "Directory Naming Standards"
+  version: "1.0.0"
+  urn: "urn:machinenativeops:governance:naming-spec:directory:v1"
+  parent: "99-naming-convention"
+
+spec:
+  description: |
+    此規範定義 MachineNativeOps 專案中所有目錄的命名標準。
+    目錄命名直接影響專案的可導航性、可維護性和團隊協作效率。
+
+  # ==========================================================================
+  # 核心規則：kebab-case
+  # ==========================================================================
+  core_format:
+    name: "kebab-case"
+    pattern: "^[a-z0-9]+(-[a-z0-9]+)*$"
+    description: "所有目錄名稱必須使用小寫字母和數字，單詞間以連字符分隔"
+    rationale:
+      - "跨平台相容性：避免大小寫敏感性問題"
+      - "URL 友好：可直接用於 URL 路徑"
+      - "可讀性：連字符比底線更易於閱讀"
+      - "一致性：與 K8s、Docker 等雲原生工具對齊"
+
+  # ==========================================================================
+  # 標準根目錄結構
+  # ==========================================================================
+  standard_root_directories:
+    - name: "src"
+      purpose: "程式碼神殿 - 僅存放可執行的應用程式原始碼"
+      allowed_subdirs:
+        - ai
+        - core
+        - governance
+        - autonomous
+        - apps
+      forbidden_content:
+        - 教學內容
+        - 純文件
+        - 配置範例
+
+    - name: "config"
+      purpose: "所有環境與服務配置檔"
+      allowed_subdirs:
+        - dev
+        - staging
+        - prod
+      naming_pattern: "{environment}/"
+
+    - name: "scripts"
+      purpose: "自動化操作腳本"
+      allowed_subdirs:
+        - dev
+        - ci
+        - ops
+      naming_pattern: "{purpose}/"
+
+    - name: "docs"
+      purpose: "專案文件、技術介紹、架構設計"
+      allowed_subdirs:
+        - api
+        - architecture
+        - governance
+        - tutorials
+      naming_pattern: "{topic}/"
+
+    - name: "tests"
+      purpose: "測試程式碼（可選，若存在）"
+      allowed_subdirs:
+        - unit
+        - integration
+        - e2e
+      naming_pattern: "{test-type}/"
+
+  # ==========================================================================
+  # 同義詞消除規則
+  # ==========================================================================
+  synonym_elimination:
+    description: "每個功能域僅允許一個標準目錄名，禁止同義詞共存"
+    forbidden_pairs:
+      - canonical: "config"
+        forbidden: ["configuration", "configs", "conf", "settings"]
+      - canonical: "scripts"
+        forbidden: ["script", "bin", "tools", "utils"]
+      - canonical: "docs"
+        forbidden: ["doc", "documentation", "documents"]
+      - canonical: "tests"
+        forbidden: ["test", "testing", "spec", "specs"]
+      - canonical: "src"
+        forbidden: ["source", "sources", "lib", "libs"]
+
+  # ==========================================================================
+  # 維度目錄命名規範
+  # ==========================================================================
+  dimension_naming:
+    pattern: "^[0-9]{2}-[a-z0-9]+(-[a-z0-9]+)*$"
+    description: "治理維度目錄必須以兩位數 ID 開頭"
+    examples:
+      correct:
+        - "00-vision-strategy"
+        - "27-templates"
+        - "99-naming-convention"
+      incorrect:
+        - "0-vision"        # 缺少前導零
+        - "vision-strategy" # 缺少數字 ID
+        - "99_naming"       # 使用底線
+
+  # ==========================================================================
+  # 禁止的命名模式
+  # ==========================================================================
+  forbidden_patterns:
+    - pattern: "^[A-Z]"
+      reason: "禁止大寫開頭（PascalCase/camelCase）"
+    - pattern: "_"
+      reason: "禁止使用底線分隔"
+    - pattern: "\\s"
+      reason: "禁止包含空格"
+    - pattern: "\\."
+      reason: "禁止在目錄名中使用點號（副檔名除外）"
+    - pattern: "^(new|old|backup|temp|tmp)$"
+      reason: "禁止使用臨時性命名"
+
+  # ==========================================================================
+  # 保留關鍵字
+  # ==========================================================================
+  reserved_keywords:
+    - name: "core"
+      usage: "僅限 src/core/ 使用"
+    - name: "common"
+      usage: "共用模組，限特定上下文使用"
+    - name: "shared"
+      usage: "跨模組共享資源"
+    - name: "internal"
+      usage: "內部實作，不對外暴露"
+    - name: "vendor"
+      usage: "第三方依賴（僅限必要時）"
+
+  # ==========================================================================
+  # 驗證工具
+  # ==========================================================================
+  validation:
+    cli_command: "find . -type d | grep -v node_modules | grep -v .git"
+    rego_policy: "../policy.rego"
+    json_schema: "../schema.json#/definitions/directory_entry"
+
+  # ==========================================================================
+  # 範例
+  # ==========================================================================
+  examples:
+    correct:
+      - path: "src/governance/dimensions/99-naming-convention/"
+        explanation: "完整的 kebab-case 路徑，維度 ID 格式正確"
+      - path: "config/prod/database.yaml"
+        explanation: "配置目錄使用環境縮寫"
+      - path: "scripts/ci/deploy.sh"
+        explanation: "腳本目錄使用用途分類"
+
+    incorrect:
+      - path: "Src/Governance/Dimensions/"
+        issue: "使用 PascalCase"
+        correction: "src/governance/dimensions/"
+      - path: "source/"
+        issue: "非標準根目錄名"
+        correction: "src/"
+      - path: "my_scripts/"
+        issue: "使用底線"
+        correction: "scripts/ 或 my-scripts/"

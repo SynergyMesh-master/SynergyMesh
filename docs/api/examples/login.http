@@ -1,0 +1,23 @@
+### Login Example - Get JWT Token
+POST http://localhost:8000/api/v1/auth/login
+Content-Type: application/json
+
+{
+  "email": "admin@example.com",
+  "password": "password"
+}
+
+### Expected Response
+# HTTP/1.1 200 OK
+# {
+#   "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+#   "expiresIn": "1h",
+#   "user": {
+#     "id": "1",
+#     "email": "admin@example.com",
+#     "role": "admin"
+#   }
+# }
+
+### Save the token for subsequent requests
+@token = {{login.response.body.$.token}}

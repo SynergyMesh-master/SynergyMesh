@@ -1,0 +1,89 @@
+# RBAC Policies Configuration
+version: 1.0.0
+
+roles:
+  # 超級管理員
+  - id: super_admin
+    name: Super Administrator
+    description: 完整系統存取權限
+    permissions:
+      - "*"
+    assignable_by:
+      - super_admin
+
+  # 租戶管理員
+  - id: tenant_admin
+    name: Tenant Administrator
+    description: 租戶內完整權限
+    permissions:
+      - "tenant:*"
+      - "project:*"
+      - "user:*"
+      - "billing:read"
+      - "billing:update"
+    assignable_by:
+      - super_admin
+      - tenant_admin
+
+  # 專案管理員
+  - id: project_admin
+    name: Project Administrator
+    description: 專案內完整權限
+    permissions:
+      - "project:read"
+      - "project:update"
+      - "project:delete"
+      - "deployment:*"
+      - "agent:*"
+      - "knowledge:*"
+    assignable_by:
+      - tenant_admin
+      - project_admin
+
+  # 開發者
+  - id: developer
+    name: Developer
+    description: 開發與部署權限
+    permissions:
+      - "project:read"
+      - "deployment:read"
+      - "deployment:create"
+      - "deployment:update"
+      - "agent:read"
+      - "agent:create"
+      - "agent:update"
+      - "knowledge:read"
+      - "knowledge:write"
+    assignable_by:
+      - tenant_admin
+      - project_admin
+
+  # 檢視者
+  - id: viewer
+    name: Viewer
+    description: 唯讀權限
+    permissions:
+      - "project:read"
+      - "deployment:read"
+      - "agent:read"
+      - "knowledge:read"
+    assignable_by:
+      - tenant_admin
+      - project_admin
+
+permission_matrix:
+  resources:
+    - id: project
+      operations: [create, read, update, delete]
+    - id: deployment
+      operations: [create, read, update, delete, start, stop]
+    - id: agent
+      operations: [create, read, update, delete, trigger]
+    - id: knowledge
+      operations: [create, read, update, delete, index, search]
+    - id: billing
+      operations: [read, update, export]
+    - id: user
+      operations: [create, read, update, delete, grant_role, revoke_role]
+    - id: tenant
+      operations: [read, update, delete, list_projects, list_users]

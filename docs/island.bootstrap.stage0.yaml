@@ -1,0 +1,260 @@
+version: 1
+kind: island-bootstrap
+metadata:
+  project: src/ai
+  stage: stage0
+  description: >-
+    Stage 0 skeleton & automation bootstrap for Island AI monorepo.
+spec:
+  repo:
+    default_branch: main
+    license: MIT
+    visibility: private
+  scaffold:
+    - id: docs
+      type: tree
+      base: docs
+      ordered_sections:
+        - code: 00-GETTING_STARTED
+          title: Getting Started
+        - code: 01-PRODUCT
+          title: Product
+        - code: 02-ARCHITECTURE
+          title: Architecture
+        - code: 03-AGENTS
+          title: Agents
+        - code: 04-GOVERNANCE
+          title: Governance
+        - code: 05-COMPONENTS
+          title: Core Components
+        - code: 06-AUTONOMY
+          title: Autonomy
+        - code: 07-DEPLOYMENT
+          title: Deployment
+        - code: 08-API
+          title: API
+        - code: 09-TUTORIALS
+          title: Tutorials
+    - id: core
+      type: tree
+      base: core
+      modules:
+        - name: runtime
+          language: rust
+        - name: knowledge-base
+          language: rust
+        - name: decision-engine
+          language: rust
+        - name: workflow-orchestrator
+          language: rust
+        - name: storage-engine
+          language: rust
+        - name: network
+          language: rust
+        - name: monitoring
+          language: rust
+    - id: services
+      type: tree
+      base: services
+      modules:
+        - name: api-gateway
+          language: go
+        - name: agent-service
+          language: go
+        - name: workflow-service
+          language: go
+        - name: auth-service
+          language: go
+        - name: notification-service
+          language: go
+        - name: shared
+          language: go
+    - id: agents
+      type: tree
+      base: agents
+      modules:
+        - name: architect
+          language: typescript
+        - name: developer
+          language: typescript
+        - name: security
+          language: python
+        - name: devops
+          language: typescript
+        - name: qa
+          language: typescript
+        - name: data-scientist
+          language: python
+        - name: product-manager
+          language: typescript
+        - name: shared
+          language: mixed
+    - id: applications
+      type: tree
+      base: applications
+      modules:
+        - name: web-ui
+          language: typescript
+        - name: cli
+          language: typescript
+        - name: ml-pipeline
+          language: python
+        - name: mobile
+          language: typescript
+    - id: integrations
+      type: tree
+      base: integrations
+      modules:
+        - name: legacy-bridge
+          language: java
+        - name: message-queue
+          language: java
+        - name: batch-processing
+          language: java
+        - name: enterprise-connectors
+          language: java
+    - id: infrastructure
+      type: tree
+      base: infrastructure
+      subsystems:
+        - name: terraform
+        - name: kubernetes
+        - name: docker
+        - name: ansible
+        - name: monitoring
+    - id: misc
+      type: tree
+      base: .
+      extra_paths:
+        - scripts
+        - tools
+        - tests
+        - .github
+  templates:
+    - id: root.readme
+      target: README.md
+      mode: 0644
+      source: templates/root/README.src/ai.v1.md
+    - id: root.license
+      target: LICENSE
+      mode: 0644
+      source: templates/root/LICENSE.MIT.v1.txt
+    - id: root.gitignore
+      target: .gitignore
+      mode: 0644
+      source: templates/root/gitignore.monorepo.v1.txt
+    - id: root.package-json
+      target: package.json
+      mode: 0644
+      source: templates/root/package.src/ai.v1.json
+    - id: root.cargo-workspace
+      target: Cargo.toml
+      mode: 0644
+      source: templates/root/Cargo.workspace.v1.toml
+    - id: root.go-work
+      target: go.work
+      mode: 0644
+      source: templates/root/go.work.v1.txt
+    - id: root.pom
+      target: pom.xml
+      mode: 0644
+      source: templates/root/integrations.pom.v1.xml
+    - id: gha.01-validate
+      target: .github/workflows/01-validate.yml
+      mode: 0644
+      source: templates/github/01-validate.v1.yml
+    - id: gha.02-test
+      target: .github/workflows/02-test.yml
+      mode: 0644
+      source: templates/github/02-test.v1.yml
+    - id: gha.03-build
+      target: .github/workflows/03-build.yml
+      mode: 0644
+      source: templates/github/03-build.v1.yml
+    - id: gha.04-deploy-staging
+      target: .github/workflows/04-deploy-staging.yml
+      mode: 0644
+      source: templates/github/04-deploy-staging.v1.yml
+    - id: gha.05-deploy-production
+      target: .github/workflows/05-deploy-production.yml
+      mode: 0644
+      source: templates/github/05-deploy-production.v1.yml
+    - id: gha.06-security-scan
+      target: .github/workflows/06-security-scan.yml
+      mode: 0644
+      source: templates/github/06-security-scan.v1.yml
+    - id: gha.07-dependency-update
+      target: .github/workflows/07-dependency-update.yml
+      mode: 0644
+      source: templates/github/07-dependency-update.v1.yml
+    - id: gha.08-sync-subdirs
+      target: .github/workflows/08-sync-subdirs.yml
+      mode: 0644
+      source: templates/github/08-sync-subdirs.v1.yml
+    - id: git.post-commit
+      target: .git/hooks/post-commit
+      mode: 0755
+      source: templates/git-hooks/post-commit.src/ai.v1.sh
+    - id: sync.watch-and-sync
+      target: scripts/sync/watch-and-sync.sh
+      mode: 0755
+      source: templates/sync/watch-and-sync.src/ai.v1.sh
+  automation:
+    bootstrap_sequence:
+      - id: init.git
+        kind: shell
+        run: |
+          git init
+          git branch -M main
+      - id: scaffold.directories
+        kind: scaffold
+        from: scaffold
+      - id: materialize.templates
+        kind: materialize
+        from: templates
+      - id: chmod.hooks
+        kind: shell
+        run: |
+          chmod +x .git/hooks/post-commit
+          chmod +x scripts/sync/watch-and-sync.sh
+      - id: git.initial-commit
+        kind: shell
+        run: |
+          git add .
+          git commit -m "chore: bootstrap Island AI Stage 0 skeleton"
+    build_matrix:
+      rust:
+        workdir: core
+        build: "cargo build --workspace"
+        test: "cargo test --workspace"
+      go:
+        workdir: services
+        build: "go build ./..."
+        test: "go test ./..."
+      typescript:
+        workdir: .
+        build: "npm run build --workspaces --if-present"
+        test: "npm run test --workspaces --if-present"
+      python:
+        workdir: .
+        test: "pytest || true"
+      java:
+        workdir: integrations
+        build: "mvn clean install -DskipTests"
+        test: "mvn test"
+    validation:
+      required_paths:
+        - README.md
+        - LICENSE
+        - .github/workflows/08-sync-subdirs.yml
+        - core/runtime/src/lib.rs
+        - services/api-gateway/cmd/server/main.go
+        - agents/architect/src/index.ts
+        - agents/security/src/__init__.py
+        - applications/web-ui/src/main.tsx
+        - infrastructure/terraform/main.tf
+      commands:
+        - npm run lint
+        - npm run test
+        - cargo build --workspace
+        - go build ./services/...

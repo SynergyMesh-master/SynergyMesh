@@ -1,0 +1,149 @@
+# Custom Agent Configuration
+# SynergyMesh Private Agent Settings
+# 自訂代理程式配置
+
+# Global settings
+global:
+  enabled: true
+  log_level: info
+  timeout_seconds: 300
+  retry_attempts: 3
+  notifications:
+    slack: false
+    email: false
+    github_issues: true
+
+# Agent-specific settings
+agents:
+  # Code Review Agent
+  code-review:
+    enabled: true
+    languages:
+      - typescript
+      - javascript
+      - python
+      - go
+    rules:
+      style: strict
+      security: enabled
+      performance: enabled
+      documentation: warn
+    auto_approve:
+      enabled: false
+      conditions:
+        max_changes: 10
+        severity_max: low
+        test_coverage_min: 80
+    exclude_paths:
+      - "**/*.test.ts"
+      - "**/__mocks__/**"
+      - "**/node_modules/**"
+      - "**/dist/**"
+
+  # Security Scanner Agent
+  security-scanner:
+    enabled: true
+    scan_types:
+      - code
+      - dependencies
+      - secrets
+      - configuration
+    severity_threshold: MEDIUM
+    fail_on:
+      - CRITICAL
+      - HIGH
+    ignore_paths:
+      - "**/*.test.ts"
+      - "**/__mocks__/**"
+      - "**/test-vectors/**"
+    secret_patterns:
+      - "api[_-]?key"
+      - "password"
+      - "secret"
+      - "token"
+      - "credential"
+      - "private[_-]?key"
+    integrations:
+      codeql: true
+      semgrep: true
+      snyk: false
+
+  # Dependency Updater Agent
+  dependency-updater:
+    enabled: true
+    ecosystems:
+      npm:
+        enabled: true
+        manifest: "package.json"
+        lock_file: "package-lock.json"
+      pip:
+        enabled: false
+        manifest: "requirements.txt"
+      go:
+        enabled: false
+        manifest: "go.mod"
+    schedule:
+      cron: "0 2 * * 1"  # Weekly on Monday at 2 AM UTC
+    update_policy:
+      patch: auto_merge
+      minor: create_pr
+      major: create_pr_with_review
+    ignore_packages:
+      - "@types/*"
+    group_updates: true
+    max_open_prs: 5
+    reviewers:
+      - security-team
+    labels:
+      - dependencies
+      - automated
+
+  # Workflow Optimizer Agent
+  workflow-optimizer:
+    enabled: true
+    analysis_scope:
+      - duration
+      - cost
+      - resources
+      - caching
+      - parallelization
+    thresholds:
+      max_duration_minutes: 30
+      cache_hit_rate_min: 0.8
+      parallel_efficiency_min: 0.7
+    report_frequency: weekly
+    report_recipients:
+      - platform-team
+    optimization_targets:
+      - ci.yml
+      - cd.yml
+      - codeql.yml
+
+# Integration settings
+integrations:
+  github:
+    api_version: "2022-11-28"
+    per_page: 100
+  
+  slack:
+    enabled: false
+    webhook_url: "${SLACK_WEBHOOK_URL}"
+    channel: "#ci-cd-alerts"
+  
+  email:
+    enabled: false
+    smtp_host: "${SMTP_HOST}"
+    recipients:
+      - platform@machinenativeops.com
+
+# Rate limiting
+rate_limits:
+  api_calls_per_hour: 5000
+  pr_creation_per_day: 10
+  comment_creation_per_hour: 100
+
+# Audit settings
+audit:
+  enabled: true
+  log_retention_days: 90
+  include_metadata: true

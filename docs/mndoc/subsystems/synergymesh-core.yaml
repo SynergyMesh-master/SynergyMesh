@@ -1,0 +1,83 @@
+# ═══════════════════════════════════════════════════════════════════════════════
+#                    SynergyMesh Core Engine - Subsystem Entity
+#                    SynergyMesh 核心引擎 - 子系統實體
+# ═══════════════════════════════════════════════════════════════════════════════
+#
+# Schema: https://schema.superroot.kn/mndoc/entity/subsystem/v1
+# Source: README.md - SynergyMesh Core Engine section
+#
+# ═══════════════════════════════════════════════════════════════════════════════
+
+$schema: "https://schema.superroot.kn/mndoc/entity/subsystem/v1"
+entity: "Subsystem"
+id: "machinenativeops-core"
+type: "subsystem"
+title: "SynergyMesh Core Engine"
+description: |
+  雲原生智能業務自動化和數據編排平台。Cloud-native intelligent business 
+  automation and data orchestration platform.
+
+layer: "control-plane"
+domain: "automation"
+
+# Four-layer cognitive architecture
+capabilities:
+  - perception    # 感知層 - 遙測收集、異常偵測
+  - reasoning     # 推理層 - 因果圖構建、風險評分
+  - execution     # 執行層 - 多代理協作、同步屏障
+  - proof         # 證明層 - 審計鏈固化、SLSA 證據
+
+# Components belonging to this subsystem
+components:
+  - "cognitive-processor"
+  - "service-registry"
+  - "configuration-optimizer"
+  - "ai-decision-engine"
+  - "hallucination-detector"
+  - "context-understanding-engine"
+  - "auto-bug-detector"
+  - "auto-governance-hub"
+  - "autonomous-trust-engine"
+
+# Interfaces exposed
+interfaces:
+  - "service_registry"
+  - "mind_matrix"
+  - "cognitive_processor"
+
+# Dependencies
+dependencies:
+  - "config/topology-mind-matrix.yaml"
+  - "config/ai-constitution.yaml"
+  - "config/agents/team/virtual-experts.yaml"
+  - "config/safety-mechanisms.yaml"
+
+owner: "platform-team"
+status: "active"
+
+tags:
+  - ai
+  - orchestration
+  - cognitive
+  - automation
+  - cloud-native
+
+meta:
+  modules:
+    unified_integration:
+      path: "core/unified_integration/"
+      description: "統一整合層（認知處理器、服務註冊表、配置優化器）"
+    mind_matrix:
+      path: "core/mind_matrix/"
+      description: "心智矩陣（執行長系統、多代理超圖）"
+    safety_mechanisms:
+      path: "core/safety_mechanisms/"
+      description: "安全機制（斷路器、緊急停止、回滾系統）"
+    slsa_provenance:
+      path: "core/slsa_provenance/"
+      description: "SLSA 溯源（證明管理、簽名驗證）"
+
+evidence_ref:
+  sbom: "governance/sbom/machinenativeops-core.yaml"
+  signature: "governance/signature/machinenativeops-core.sig"
+  slsa_ref: ".slsa/provenance/machinenativeops-core.json"

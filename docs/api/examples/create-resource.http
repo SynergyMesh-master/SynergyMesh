@@ -1,0 +1,58 @@
+### Create Resource Example
+# First, login to get a token (see login.http)
+@token = YOUR_JWT_TOKEN_HERE
+
+POST http://localhost:8000/api/v1/resources
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "name": "Database Server",
+  "type": "postgresql",
+  "config": {
+    "host": "db.example.com",
+    "port": 5432,
+    "database": "production",
+    "maxConnections": 100
+  }
+}
+
+### Expected Response
+# HTTP/1.1 201 Created
+# {
+#   "id": "res_abc123",
+#   "name": "Database Server",
+#   "type": "postgresql",
+#   "config": { ... },
+#   "createdAt": "2025-12-16T23:00:00.000Z",
+#   "updatedAt": "2025-12-16T23:00:00.000Z"
+# }
+
+### Get Resource by ID
+@resourceId = {{create-resource.response.body.$.id}}
+
+GET http://localhost:8000/api/v1/resources/{{resourceId}}
+Authorization: Bearer {{token}}
+
+### Update Resource
+PUT http://localhost:8000/api/v1/resources/{{resourceId}}
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "name": "Database Server - Updated",
+  "config": {
+    "host": "db.example.com",
+    "port": 5432,
+    "database": "production",
+    "maxConnections": 200
+  }
+}
+
+### Delete Resource
+DELETE http://localhost:8000/api/v1/resources/{{resourceId}}
+Authorization: Bearer {{token}}
+
+### List All Resources
+GET http://localhost:8000/api/v1/resources?limit=10&offset=0
+Authorization: Bearer {{token}}

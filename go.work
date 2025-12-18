@@ -1,0 +1,12 @@
+go 1.21
+
+// NOTE: The following Go modules have been commented out because they do not exist
+// in the repository. Uncomment and restore when the services are implemented.
+// use (
+//   ./services/api-gateway
+//   ./services/agent-service
+//   ./services/workflow-service
+//   ./services/auth-service
+//   ./services/notification-service
+//   ./services/shared
+// )

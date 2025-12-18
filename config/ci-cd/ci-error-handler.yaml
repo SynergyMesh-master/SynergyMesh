@@ -1,0 +1,176 @@
+# ═══════════════════════════════════════════════════════════════════════════════
+#                    SynergyMesh CI Error Handler Configuration
+#                    CI 錯誤處理配置 (Phase 12)
+# ═══════════════════════════════════════════════════════════════════════════════
+#
+# 📋 完整解決方案配置請參考: config/ci-comprehensive-solution.yaml
+#
+
+ci_error_handler:
+  version: "1.1.0"
+  enabled: true
+  comprehensive_solution: "config/ci-comprehensive-solution.yaml"
+
+# Error Categories
+error_categories:
+  - BUILD_ERROR
+  - TEST_FAILURE
+  - LINT_ERROR
+  - TYPE_ERROR
+  - DEPENDENCY_ERROR
+  - SECURITY_SCAN
+  - DEPLOYMENT_ERROR
+  - STARTUP_FAILURE        # 新增: GitHub Actions 啟動失敗
+  - PERMISSION_ERROR       # 新增: 權限錯誤
+  - NETWORK_ERROR          # 新增: 網路錯誤
+
+# Error Patterns
+error_patterns:
+  # GitHub Actions 特定錯誤
+  startup_failure:
+    pattern: "startup_failure|Workflow failed to start"
+    category: STARTUP_FAILURE
+    auto_fixable: true
+    fix_command: null
+    fix_description: "移除 job-level permissions 區塊（用於 reusable workflows 時）"
+    
+  permission_error:
+    pattern: "Resource not accessible by integration|Permission denied"
+    category: PERMISSION_ERROR
+    auto_fixable: false
+    
+  action_not_found:
+    pattern: "Unable to resolve action|Could not find action"
+    category: DEPENDENCY_ERROR
+    auto_fixable: true
+    fix_description: "更新 Action 到最新穩定版本"
+
+  # 原有錯誤模式
+  eslint:
+    pattern: "error\\s+.*eslint"
+    category: LINT_ERROR
+    auto_fixable: true
+    fix_command: "npm run lint -- --fix"
+  
+  prettier:
+    pattern: "Prettier.*check failed"
+    category: LINT_ERROR
+    auto_fixable: true
+    fix_command: "npm run format"
+  
+  typescript:
+    pattern: "error TS\\d+"
+    category: TYPE_ERROR
+    auto_fixable: false
+  
+  jest:
+    pattern: "FAIL.*\\.test\\."
+    category: TEST_FAILURE
+    auto_fixable: false
+  
+  npm_audit:
+    pattern: "npm audit.*vulnerabilities"
+    category: SECURITY_SCAN
+    auto_fixable: true
+    fix_command: "npm audit fix"
+    
+  npm_ci_failure:
+    pattern: "npm ERR!|Exit handler never called"
+    category: DEPENDENCY_ERROR
+    auto_fixable: true
+    fix_command: "rm -rf node_modules package-lock.json && npm install"
+    
+  docker_error:
+    pattern: "docker.*failed|Error response from daemon"
+    category: BUILD_ERROR
+    auto_fixable: true
+    fix_command: "docker system prune -a --volumes"
+    
+  network_timeout:
+    pattern: "ETIMEDOUT|ECONNREFUSED|network timeout"
+    category: NETWORK_ERROR
+    auto_fixable: false
+
+# Issue Management
+issue_management:
+  auto_create: true
+  
+  labels:
+    BUILD_ERROR: ["ci-failure", "build"]
+    TEST_FAILURE: ["ci-failure", "test"]
+    LINT_ERROR: ["ci-failure", "lint", "auto-fixable"]
+    TYPE_ERROR: ["ci-failure", "typescript"]
+    DEPENDENCY_ERROR: ["ci-failure", "dependencies"]
+    SECURITY_SCAN: ["ci-failure", "security"]
+    DEPLOYMENT_ERROR: ["ci-failure", "deployment"]
+  
+  assignees:
+    enabled: true
+    use_codeowners: true
+  
+  duplicate_detection: true
+  
+  templates:
+    title: "[CI Failure] {workflow_name}: {error_category}"
+    body: |
+      ## CI Failure Report
+      
+      **Workflow:** {workflow_name}
+      **Run ID:** {run_id}
+      **Branch:** {branch}
+      **Commit:** {commit_sha}
+      
+      ### Error Details
+      ```
+      {error_details}
+      ```
+      
+      ### Suggested Fix
+      {suggested_fix}
+      
+      ### Links
+      - [Workflow Run]({run_url})
+      - [Commit]({commit_url})
+
+# Auto Fix
+auto_fix:
+  enabled: true
+  
+  safe_fixes:
+    - lint_errors
+    - formatting
+    - dependency_audit
+    - import_sorting
+  
+  create_pr: true
+  pr_template:
+    title: "[Auto-Fix] {error_category} in {workflow_name}"
+    body: |
+      ## Automated Fix
+      
+      This PR was automatically generated to fix CI errors.
+      
+      **Original Issue:** #{issue_number}
+      **Error Category:** {error_category}
+      
+      ### Changes Made
+      {changes_description}
+      
+      ### Verification
+      - [ ] Tests pass
+      - [ ] Lint passes
+      - [ ] Build succeeds
+
+# Status Tracking
+status_tracking:
+  statuses:
+    - PENDING
+    - IN_PROGRESS
+    - PR_CREATED
+    - VERIFIED
+    - CLOSED
+  
+  metrics:
+    track_fix_rate: true
+    track_time_to_fix: true
+    track_auto_vs_manual: true

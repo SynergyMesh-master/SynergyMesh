@@ -1,0 +1,234 @@
+# ═══════════════════════════════════════════════════════════════════════════════
+#                    Island AI 品牌映射配置
+#                    Brand Mapping Configuration v1.0
+# ═══════════════════════════════════════════════════════════════════════════════
+# 此檔案定義從舊品牌 (Island AI) 到新品牌 (Island AI) 的完整映射關係
+# 用於全系統品牌統一和自動化替換
+
+meta:
+  version: "1.0.0"
+  created: "2025-12-02"
+  description: "Island AI 品牌映射配置 - 替換所有 Island AI 相關術語"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+#                         品牌映射表
+# ═══════════════════════════════════════════════════════════════════════════════
+brand_mapping:
+  # 主要品牌替換
+  primary:
+    - old: "Island AI"
+      new: "Island AI"
+      description: "主要 AI 助手品牌"
+
+    - old: "Microsoft Island AI"
+      new: "Island AI"
+      description: "企業 AI 品牌"
+
+    - old: "Island AI"
+      new: "Island AI"
+      description: "通用品牌名稱"
+
+  # 功能模組替換
+  modules:
+    - old: "Island Admin CLI"
+      new: "Island Admin CLI"
+      description: "命令行介面工具"
+
+    - old: "Island Shell"
+      new: "Island Shell"
+      description: "互動式對話介面"
+
+    - old: "Island Agents"
+      new: "Island Agents"
+      description: "自動化代理系統"
+
+    - old: "Island Agents"
+      new: "Island Agents"
+      description: "多代理系統"
+
+    - old: "Island Workspace"
+      new: "Island Workspace"
+      description: "開發工作空間"
+
+    - old: "Island AI Prompt System"
+      new: "Island AI Constitution"
+      description: "AI 提示和規範系統"
+
+    - old: "Island AI Plugin"
+      new: "Island Code Assist"
+      description: "程式碼輔助插件"
+
+  # 檔案名稱替換
+  files:
+    - old: "src/ai-instructions.md"
+      new: "src/ai-instructions.md"
+      description: "AI 指令檔案"
+
+    - old: "src/ai-setup-steps.yml"
+      new: "src/ai-setup-steps.yml"
+      description: "AI 設定工作流程"
+
+    - old: "validate-src/ai-instructions.yml"
+      new: "validate-src/ai-instructions.yml"
+      description: "指令驗證工作流程"
+
+    - old: "ISLAND_AI_SETUP.md"
+      new: "ISLAND_AI_SETUP.md"
+      description: "AI 設定文檔"
+
+    - old: "fix-src/ai.sh"
+      new: "fix-src/ai.sh"
+      description: "AI 修復腳本"
+
+    - old: "github-copilot-agent-fix.md"
+      new: "src/ai-agent-fix.md"
+      description: "代理修復指南"
+
+  # 指令替換
+  commands:
+    - old: "@island"
+      new: "@island"
+      description: "AI 指令前綴"
+
+    - old: "copilot analyze"
+      new: "island analyze"
+      description: "分析指令"
+
+    - old: "copilot fix"
+      new: "island fix"
+      description: "修復指令"
+
+    - old: "copilot help"
+      new: "island help"
+      description: "幫助指令"
+
+  # VS Code 擴展 ID (保持原樣，因為這是外部依賴)
+  extensions:
+    - old: "github.copilot"
+      new: "github.copilot"
+      keep_original: true
+      note: "VS Code 擴展 ID 保持原樣以確保相容性"
+
+    - old: "github.copilot-chat"
+      new: "github.copilot-chat"
+      keep_original: true
+      note: "VS Code 擴展 ID 保持原樣以確保相容性"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+#                    Island AI Runtime 架構定義
+# ═══════════════════════════════════════════════════════════════════════════════
+island_ai_runtime:
+  name: "Island AI Runtime"
+  version: "1.0.0"
+  description: "核心 AI 執行層 - 統一的智能自動化平台"
+
+  # 核心模組
+  modules:
+    model_gateway:
+      name: "Model Gateway"
+      path: "src/ai-runtime/model-gateway"
+      description: "LLM 提供者選擇 (本地模型, BYOM)"
+      capabilities:
+        - "多模型路由"
+        - "負載均衡"
+        - "模型切換"
+        - "成本優化"
+
+    agent_framework:
+      name: "Agent Framework"
+      path: "src/ai-runtime/agent-framework"
+      description: "多代理系統 (Architect/Dev/QA/Security)"
+      capabilities:
+        - "代理編排"
+        - "任務分配"
+        - "協作通信"
+        - "狀態管理"
+
+    knowledge_engine:
+      name: "Knowledge Engine"
+      path: "src/ai-runtime/knowledge-engine"
+      description: "知識庫和 Repo Graph Embeddings"
+      capabilities:
+        - "程式碼索引"
+        - "向量搜索"
+        - "上下文理解"
+        - "知識圖譜"
+
+    safety_constitution:
+      name: "Safety Constitution"
+      path: "src/ai-runtime/safety-constitution"
+      description: "Guardrails, Red Flags, AI 憲法"
+      capabilities:
+        - "安全護欄"
+        - "風險檢測"
+        - "行為限制"
+        - "倫理規範"
+
+    tool_executor:
+      name: "Tool Executor"
+      path: "src/ai-runtime/tool-executor"
+      description: "Code-runner, MCP, Filesystem Sandbox"
+      capabilities:
+        - "程式碼執行"
+        - "MCP 整合"
+        - "沙箱隔離"
+        - "工具調用"
+
+    session_memory:
+      name: "Session Memory"
+      path: "src/ai-runtime/session-memory"
+      description: "短期記憶和計畫管理"
+      capabilities:
+        - "對話記憶"
+        - "上下文追蹤"
+        - "任務規劃"
+        - "狀態持久化"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+#                         代理角色定義
+# ═══════════════════════════════════════════════════════════════════════════════
+agents:
+  architect:
+    name: "Architect Agent"
+    role: "系統架構師"
+    responsibilities:
+      - "系統設計"
+      - "架構決策"
+      - "技術選型"
+      - "設計審查"
+
+  developer:
+    name: "Developer Agent"
+    role: "開發工程師"
+    responsibilities:
+      - "程式碼實現"
+      - "功能開發"
+      - "重構優化"
+      - "文檔編寫"
+
+  qa:
+    name: "QA Agent"
+    role: "品質保證工程師"
+    responsibilities:
+      - "測試設計"
+      - "測試執行"
+      - "缺陷追蹤"
+      - "品質報告"
+
+  security:
+    name: "Security Agent"
+    role: "安全工程師"
+    responsibilities:
+      - "安全審計"
+      - "漏洞掃描"
+      - "合規檢查"
+      - "風險評估"
+
+  devops:
+    name: "DevOps Agent"
+    role: "DevOps 工程師"
+    responsibilities:
+      - "CI/CD 管理"
+      - "部署自動化"
+      - "監控告警"
+      - "基礎設施"

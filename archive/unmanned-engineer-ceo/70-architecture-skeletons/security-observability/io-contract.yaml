@@ -1,0 +1,85 @@
+version: 0.1.0
+
+schemas:
+  security_requirement:
+    description: "描述某個操作或資源的安全要求"
+    type: object
+    required: [resource, operation, required_permissions]
+    properties:
+      resource:
+        type: string
+        description: "資源類型(例如: user, project, billing)"
+      operation:
+        type: string
+        enum: [create, read, update, delete, execute]
+      required_permissions:
+        type: array
+        items:
+          type: string
+        description: "需要的權限列表"
+      audit_level:
+        type: string
+        enum: [none, basic, detailed, forensic]
+        description: "審計記錄詳細程度"
+
+  observability_config:
+    description: "服務的可觀測性配置"
+    type: object
+    required: [service_name, log_level, metrics, traces]
+    properties:
+      service_name:
+        type: string
+      log_level:
+        type: string
+        enum: [debug, info, warn, error]
+      metrics:
+        type: object
+        properties:
+          enabled:
+            type: boolean
+          custom_metrics:
+            type: array
+            items:
+              type: object
+              properties:
+                name:
+                  type: string
+                type:
+                  type: string
+                  enum: [counter, gauge, histogram]
+      traces:
+        type: object
+        properties:
+          enabled:
+            type: boolean
+          sampling_rate:
+            type: number
+            minimum: 0
+            maximum: 1
+
+  security_assessment:
+    description: "安全性評估報告"
+    type: object
+    required: [target, vulnerabilities, recommendations]
+    properties:
+      target:
+        type: string
+        description: "評估目標(模組/API/服務)"
+      vulnerabilities:
+        type: array
+        items:
+          type: object
+          required: [severity, category, description]
+          properties:
+            severity:
+              type: string
+              enum: [critical, high, medium, low]
+            category:
+              type: string
+              description: "漏洞類別(例如: SQL injection, XSS)"
+            description:
+              type: string
+      recommendations:
+        type: array
+        items:
+          type: string

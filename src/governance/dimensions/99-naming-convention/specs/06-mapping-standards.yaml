@@ -1,0 +1,54 @@
+# =============================================================================
+# 映射規範 (Mapping Standards)
+# Spec ID: 06-mapping-standards
+# URN: urn:machinenativeops:governance:naming-spec:mapping:v1
+# =============================================================================
+
+apiVersion: governance.machinenativeops.io/v2
+kind: NamingSpec
+metadata:
+  id: "mapping-standards"
+  name: "映射規範"
+  name_en: "Mapping Standards"
+  version: "1.0.0"
+  urn: "urn:machinenativeops:governance:naming-spec:mapping:v1"
+  parent: "99-naming-convention"
+
+spec:
+  description: |
+    此規範定義路徑映射、別名和引用的標準格式。
+
+  path_alias:
+    patterns:
+      relative: "^\\.\\.\\/|^\\.\\/"
+      absolute: "^\\/"
+      alias: "^@[a-z-]+\\/"
+    standard_aliases:
+      - alias: "@config/"
+        target: "./config/"
+      - alias: "@shared/"
+        target: "./shared/"
+      - alias: "@governance/"
+        target: "./src/governance/"
+      - alias: "@assets/"
+        target: "./attached_assets/"
+
+  junction_table_naming:
+    pattern: "^[a-z]+-to-[a-z]+$"
+    examples:
+      - "dimension-to-policy"
+      - "module-to-schema"
+      - "user-to-role"
+
+  change_tracking_metadata:
+    required_fields:
+      - created_at
+      - updated_at
+      - version
+      - owner
+
+  reference_syntax:
+    json_pointer: "#/path/to/element"
+    yaml_anchor: "*anchor_name"
+    file_reference: "$file{path/to/file.yaml}"
+    env_reference: "$env{VARIABLE_NAME}"

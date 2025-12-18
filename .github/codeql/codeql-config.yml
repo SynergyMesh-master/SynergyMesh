@@ -1,0 +1,43 @@
+name: "Enterprise CodeQL Config"
+
+disable-default-queries: false
+
+queries:
+  - name: security-extended
+    uses: security-extended
+  - name: security-and-quality
+    uses: security-and-quality
+  - name: custom-enterprise-queries
+    uses: .github/codeql/custom-queries
+
+paths-ignore:
+  - "node_modules"
+  - "vendor"
+  - "**/*.test.js"
+  - "**/*.spec.ts"
+  - "**/*.test.ts"
+  - "**/*.test.py"
+  - "**/*.spec.py"
+  - "test/**"
+  - "tests/**"
+  - "**/__tests__/**"
+  - "**/dist/**"
+  - "**/build/**"
+  - "**/.vscode/**"
+  - "**/.github/**"
+  - "venv/**"
+  - "**/venv/**"
+  - "backups/**"
+  - "reports/**"
+  - "logs/**"
+  - "evidence/**"
+
+packs:
+  javascript:
+    - codeql/javascript-queries:AlertSuppression.ql
+    - codeql/javascript-queries:Security/CWE-079
+    - codeql/javascript-queries:Security/CWE-798
+  python:
+    - codeql/python-queries:Security/CWE-089
+    - codeql/python-queries:Security/CWE-798
+    - codeql/python-queries:Security/CWE-079

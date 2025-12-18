@@ -1,0 +1,180 @@
+# ═══════════════════════════════════════════════════════════════════════════════
+#                    Machine-Native Knowledge Layer Index
+#                    機器原生知識層索引
+# ═══════════════════════════════════════════════════════════════════════════════
+#
+# This file serves as the master index for the Machine-Native Documentation (MN-DOC)
+# knowledge layer. It provides a machine-consumable registry of all entities.
+#
+# Purpose:
+# - Single source of truth for all MN-DOC entities
+# - Enables governance systems, parsers, and index builders to discover entities
+# - Provides provenance hooks for SLSA pipeline integration
+#
+# ═══════════════════════════════════════════════════════════════════════════════
+
+$schema: "https://schema.superroot.kn/mndoc/index/v1"
+version: "1.0.0"
+id: "mndoc-index"
+namespace: "unmanned.island.mndoc"
+title: "Unmanned Island System - Machine-Native Knowledge Layer Index"
+last_updated: "2025-12-01"
+
+# ============================================================================
+# Schema References (Schema 引用)
+# ============================================================================
+schemas:
+  mndoc: "governance/schemas/mndoc/mndoc.schema.json"
+  mndoc_index: "governance/schemas/mndoc/mndoc-index.schema.json"
+  mapping_rules: "governance/schemas/mndoc/mapping-rules.schema.json"
+  entity_system: "governance/schemas/mndoc/entity-system.schema.json"
+  entity_subsystem: "governance/schemas/mndoc/entity-subsystem.schema.json"
+  entity_component: "governance/schemas/mndoc/entity-component.schema.json"
+  entity_component_collection: "governance/schemas/mndoc/entity-component-collection.schema.json"
+  entity_configuration: "governance/schemas/mndoc/entity-configuration.schema.json"
+  entity_governance: "governance/schemas/mndoc/entity-governance.schema.json"
+
+# ============================================================================
+# Mapping Rules Reference
+# ============================================================================
+mapping_rules: "governance/mapping-rules.yaml"
+
+# ============================================================================
+# Entity Registry (實體註冊表)
+# ============================================================================
+entities:
+  # Comprehensive SystemDoc (complete README mapping)
+  system_doc:
+    path: "docs/unmanned-island.mndoc.yaml"
+    id: "unmanned-island"
+    kind: "SystemDoc"
+    description: "Comprehensive machine-native representation of README.md"
+    schema: "$ref:mndoc"
+
+  # System Entity
+  system:
+    path: "docs/mndoc/system.yaml"
+    id: "unmanned-island"
+    schema: "$ref:entity_system"
+    
+  # Subsystem Entities
+  subsystems:
+    - path: "docs/mndoc/subsystems/machinenativeops-core.yaml"
+      id: "machinenativeops-core"
+      schema: "$ref:entity_subsystem"
+      
+    - path: "docs/mndoc/subsystems/structural-governance.yaml"
+      id: "structural-governance"
+      schema: "$ref:entity_subsystem"
+      
+    - path: "docs/mndoc/subsystems/autonomous-framework.yaml"
+      id: "autonomous-framework"
+      schema: "$ref:entity_subsystem"
+
+  # Component Entities
+  components:
+    - path: "docs/mndoc/components/core-components.yaml"
+      ids:
+        - "cognitive-processor"
+        - "service-registry"
+        - "configuration-optimizer"
+        - "ai-decision-engine"
+        - "hallucination-detector"
+        - "context-understanding-engine"
+        - "auto-governance-hub"
+        - "autonomous-trust-engine"
+        - "auto-bug-detector"
+      schema: "$ref:entity_component_collection"
+
+  # Governance Entities
+  governance:
+    - path: "docs/mndoc/governance-pipeline.yaml"
+      id: "ten-stage-governance-pipeline"
+      schema: "$ref:entity_governance"
+
+# ============================================================================
+# Cross-References (交叉引用)
+# ============================================================================
+cross_references:
+  # Maps to existing knowledge_index.yaml
+  knowledge_index: "docs/knowledge_index.yaml"
+  
+  # Maps to machinenativeops.yaml
+  master_config: "machinenativeops.yaml"
+  
+  # Maps to system-module-map.yaml
+  module_map: "config/system-module-map.yaml"
+  
+  # Maps to unified-config-index.yaml
+  config_index: "config/unified-config-index.yaml"
+
+# ============================================================================
+# Provenance Hooks (溯源鉤子)
+# ============================================================================
+provenance:
+  # SLSA provenance configuration
+  slsa:
+    level: "L3"
+    generator: "slsa-generator-generic"
+    attestation_path: ".slsa/provenance/"
+  
+  # SBOM configuration
+  sbom:
+    format: "cyclonedx-json"
+    output_path: "governance/sbom/"
+  
+  # Signature configuration
+  signature:
+    provider: "sigstore"
+    keyless: true
+    output_path: "governance/signature/"
+
+# ============================================================================
+# Validation Configuration (驗證配置)
+# ============================================================================
+validation:
+  # Validate all entities against their schemas
+  validate_schemas: true
+  
+  # Ensure all component paths exist
+  validate_paths: true
+  
+  # Ensure all cross-references are valid
+  validate_references: true
+  
+  # Required entity fields (from MN-DOC schema)
+  required_fields:
+    system:
+      - id
+      - title
+      - version
+      - domain
+      - layer
+      - subsystems
+    subsystem:
+      - id
+      - type
+      - layer
+      - title
+    component:
+      - id
+      - type
+      - path
+    governance:
+      - id
+      - type
+
+# ============================================================================
+# Statistics (統計)
+# ============================================================================
+statistics:
+  total_entities: 14
+  by_type:
+    system: 1
+    subsystem: 3
+    component: 9
+    governance: 1
+  coverage:
+    readme_sections_mapped: true
+    core_components_indexed: true
+    governance_pipeline_defined: true

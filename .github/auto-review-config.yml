@@ -1,0 +1,87 @@
+# Auto Review & Merge Configuration
+# 自動審核與合併配置
+
+# File patterns to include in analysis
+# 包含在分析中的文件模式
+file_patterns:
+  typescript:
+    - "*.ts"
+    - "*.tsx"
+  javascript:
+    - "*.js"
+    - "*.jsx"
+    - "*.mjs"
+  python:
+    - "*.py"
+
+# Paths to exclude from analysis
+# 從分析中排除的路徑
+exclude_paths:
+  - "node_modules/"
+  - "dist/"
+  - "build/"
+  - ".next/"
+  - "coverage/"
+  - "*.min.js"
+  - "*.min.css"
+
+# Review settings
+# 審核設置
+review:
+  # Wait time for checks to complete (in milliseconds)
+  # 等待檢查完成的時間（毫秒）
+  check_wait_time: 5000
+  
+  # Auto-approve PRs that pass all checks
+  # 自動批准通過所有檢查的 PR
+  auto_approve: true
+  
+  # Require all CI checks to pass before merging
+  # 合併前要求所有 CI 檢查通過
+  require_checks_pass: true
+
+# Merge settings
+# 合併設置
+merge:
+  # Merge method: squash, merge, rebase
+  # 合併方式：squash（壓縮）、merge（合併）、rebase（變基）
+  method: squash
+  
+  # Auto-merge enabled
+  # 啟用自動合併
+  enabled: true
+  
+  # Target branches for auto-merge
+  # 自動合併的目標分支
+  target_branches:
+    - main
+    - master
+
+# Auto-fix settings
+# 自動修復設置
+auto_fix:
+  # Enable auto-fix
+  # 啟用自動修復
+  enabled: true
+  
+  # Types of issues to auto-fix
+  # 要自動修復的問題類型
+  fix_types:
+    - unused_imports
+    - code_formatting
+    - simple_syntax_errors
+
+# Notification settings
+# 通知設置
+notifications:
+  # Comment on PR after review
+  # 審核後在 PR 上評論
+  comment_on_review: true
+  
+  # Comment on successful merge
+  # 成功合併後評論
+  comment_on_merge: true
+  
+  # Comment on merge failure
+  # 合併失敗後評論
+  comment_on_failure: true

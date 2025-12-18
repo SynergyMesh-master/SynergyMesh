@@ -1,0 +1,578 @@
+# ═══════════════════════════════════════════════════════════════════════════════
+#                    Unmanned Island System - Complete MN-DOC
+#                    無人之島系統 - 完整機器原生文檔
+# ═══════════════════════════════════════════════════════════════════════════════
+#
+# This file is the comprehensive machine-native representation of README.md
+# Transforms all narrative documentation into machine-consumable entities.
+#
+# Source: README.md
+# Schema: https://schema.superroot.kn/mndoc/v1
+#
+# ═══════════════════════════════════════════════════════════════════════════════
+
+$schema: "https://schema.superroot.kn/mndoc/v1"
+id: "unmanned-island"
+kind: "SystemDoc"
+path: "README.md"
+title: "Unmanned Island System"
+version: "3.0.0"
+domain: "unmanned-island"
+layer: "platform"
+type: "overview"
+owner: "unmanned-island"
+status: "active"
+
+languages:
+  - "zh-Hant"
+  - "en"
+
+tags:
+  - "cloud-native"
+  - "automation"
+  - "governance"
+  - "ai"
+  - "autonomous-system"
+  - "slsa"
+  - "mcp"
+  - "kubernetes"
+  - "ci-cd"
+
+summary: >
+  Unmanned Island System 是企業級雲原生智能自動化平台，整合 SynergyMesh 核心引擎、
+  結構治理系統與五骨架自主系統框架，並透過統一配置檔 machinenativeops.yaml 作為單一真實來源，
+  提供零信任安全、自主運維與多子系統協作能力。
+
+repository:
+  homepage: "https://github.com/SynergyMesh-admin/Unmanned-Island"
+  issues: "https://github.com/SynergyMesh-admin/Unmanned-Island/issues"
+  discussions: "https://github.com/SynergyMesh-admin/Unmanned-Island/discussions"
+
+license:
+  spdx_id: "MIT"
+  path: "LICENSE"
+
+runtime_requirements:
+  nodejs: ">=18.0.0"
+  python: ">=3.10"
+  npm: ">=8.0.0"
+  ros2:
+    required: false
+    distro: "Humble"
+  go:
+    required: false
+    version: ">=1.20"
+  cpp:
+    required: false
+    standard: "C++17"
+    compiler: "GCC 11+"
+
+design_principles:
+  unified_entry:
+    description: "單一配置檔 machinenativeops.yaml 作為所有系統的真實來源"
+  modular_design:
+    description: "三大子系統獨立運作，透過統一接口協作"
+  zero_trust_security:
+    description: "SLSA L3 溯源 + Sigstore 簽名 + 策略閘驗證"
+  autonomous_ops:
+    description: "AI 驅動的自動修復、智能派工、升級管理"
+
+single_source_of_truth:
+  main_config: "machinenativeops.yaml"
+  manifests:
+    - "config/system-manifest.yaml"
+    - "config/unified-config-index.yaml"
+    - "config/system-module-map.yaml"
+
+subsystems:
+  - id: "machinenativeops-core-engine"
+    kind: "subsystem"
+    title: "SynergyMesh Core Engine"
+    description: "雲原生智能業務自動化和數據編排平台"
+    layer: "control-plane"
+    domain: "automation"
+    tags:
+      - "ai"
+      - "orchestration"
+      - "service-management"
+    capabilities:
+      cognitive_processing:
+        description: "四層認知架構"
+        layers:
+          - id: "perception"
+            name: "感知層"
+            description: "遙測收集、異常偵測"
+          - id: "reasoning"
+            name: "推理層"
+            description: "因果圖構建、風險評分"
+          - id: "execution"
+            name: "執行層"
+            description: "多代理協作、同步屏障"
+          - id: "proof"
+            name: "證明層"
+            description: "審計鏈固化、SLSA 證據"
+      service_management:
+        description: "服務管理能力"
+        items:
+          - "discovery"
+          - "health_monitoring"
+          - "dependency_resolution"
+      ai_engines:
+        items:
+          - "decision_engine"
+          - "hallucination_detector"
+          - "context_understanding"
+    core_modules:
+      - id: "unified-integration"
+        title: "統一整合層"
+        path: "core/unified_integration/"
+        files:
+          - "cognitive_processor.py"
+          - "service_registry.py"
+          - "configuration_optimizer.py"
+      - id: "mind-matrix"
+        title: "心智矩陣"
+        path: "core/mind_matrix/"
+      - id: "lifecycle-systems"
+        title: "生命週期系統"
+        path: "core/lifecycle_systems/"
+      - id: "safety-mechanisms"
+        title: "安全機制"
+        path: "core/safety_mechanisms/"
+      - id: "slsa-provenance"
+        title: "SLSA 溯源"
+        path: "core/slsa_provenance/"
+      - id: "contract-service-l1"
+        title: "合約管理服務 (L1)"
+        path: "core/contract_service/"
+      - id: "ai-decision-engine"
+        title: "AI 決策引擎"
+        path: "core/ai_decision_engine.py"
+
+  - id: "structural-governance-system"
+    kind: "subsystem"
+    title: "Structural Governance System"
+    description: "SuperRoot 風格的 Schema 命名空間與自主治理基礎設施"
+    layer: "governance"
+    domain: "governance"
+    tags:
+      - "schema"
+      - "policy"
+      - "slsa"
+      - "supply-chain-security"
+    schema_namespace:
+      uri: "https://schema.machinenativeops.io/docs-index/v1"
+      required_fields:
+        - "id"
+        - "path"
+        - "title"
+        - "domain"
+        - "layer"
+        - "type"
+        - "tags"
+        - "owner"
+        - "status"
+        - "description"
+      optional_fields:
+        - "platforms"
+        - "languages"
+        - "provenance"
+        - "sbom"
+        - "signature"
+        - "links"
+        - "meta"
+    governance_pipeline:
+      stages:
+        - order: 1
+          id: "lint"
+          name: "Lint"
+          description: "YAML/JSON 語法檢查"
+          tools: ["yamllint", "jsonlint"]
+        - order: 2
+          id: "format"
+          name: "Format"
+          description: "格式化規則驗證"
+        - order: 3
+          id: "schema"
+          name: "Schema"
+          description: "JSON Schema 驗證"
+        - order: 4
+          id: "vector-test"
+          name: "Vector Test"
+          description: "測試向量驗證"
+        - order: 5
+          id: "policy-gate"
+          name: "Policy Gate"
+          description: "OPA/Conftest 策略檢查"
+        - order: 6
+          id: "k8s-validation"
+          name: "K8s Validation"
+          description: "Kubernetes 清單驗證"
+        - order: 7
+          id: "sbom"
+          name: "SBOM"
+          description: "軟體物料清單生成"
+        - order: 8
+          id: "provenance"
+          name: "Provenance"
+          description: "SLSA 證據注入"
+        - order: 9
+          id: "cosign-sign"
+          name: "Cosign Sign"
+          description: "Sigstore 無密鑰簽名"
+        - order: 10
+          id: "audit"
+          name: "Audit"
+          description: "審計事件記錄"
+    governance_tools:
+      - id: "docs-schema-validator"
+        path: "tools/docs/validate_index.py"
+        role: "schema-validation"
+      - id: "docs-index-generator"
+        path: "tools/docs/scan_repo_generate_index.py"
+        role: "repo-scan-and-index"
+      - id: "provenance-injector"
+        path: "tools/docs/provenance_injector.py"
+        role: "slsa-l3-and-sbom"
+
+  - id: "autonomous-framework"
+    kind: "subsystem"
+    title: "Autonomous Framework"
+    description: "完整的五骨架無人機/自駕車自主系統框架"
+    layer: "autonomous-system"
+    domain: "robotics"
+    tags:
+      - "uav"
+      - "self-driving"
+      - "ros2"
+      - "observability"
+    architecture: "five-skeleton"
+    skeletons:
+      - id: "architecture-stability"
+        name: "架構穩定性骨架"
+        language: "C++"
+        stack: ["C++17", "ROS 2"]
+        responsibilities:
+          - "即時飛控 (100Hz)"
+          - "IMU 融合"
+          - "PID 控制器"
+      - id: "api-governance"
+        name: "API 治理邊界骨架"
+        language: "Python"
+        responsibilities:
+          - "模組責任矩陣"
+          - "API 合約驗證"
+          - "依賴鏈檢查"
+      - id: "testing-compatibility"
+        name: "測試與兼容性骨架"
+        language: "Python"
+        config_format: "YAML"
+        responsibilities:
+          - "自動化測試套件"
+          - "跨版本兼容測試"
+      - id: "security-observability"
+        name: "安全性與觀測骨架"
+        language: "Go"
+        responsibilities:
+          - "分散式事件日誌"
+          - "安全監控"
+          - "追蹤 ID"
+      - id: "docs-examples"
+        name: "文件與範例骨架"
+        languages: ["YAML", "Markdown"]
+        responsibilities:
+          - "治理矩陣定義"
+          - "完整 API 文檔"
+          - "快速入門指南"
+
+directory_layout:
+  root: "unmanned-island/"
+  entries:
+    - path: "machinenativeops.yaml"
+      kind: "config"
+      role: "unified-main-config"
+    - path: "core/"
+      kind: "module-group"
+      role: "core-platform-services"
+    - path: "automation/"
+      kind: "module-group"
+      role: "automation-modules"
+      subdirs:
+        - "intelligent/"
+        - "autonomous/"
+        - "architect/"
+        - "hyperautomation/"
+    - path: "config/"
+      kind: "config-center"
+      files:
+        - "system-manifest.yaml"
+        - "unified-config-index.yaml"
+        - "system-module-map.yaml"
+        - "ai-constitution.yaml"
+        - "safety-mechanisms.yaml"
+    - path: "governance/"
+      kind: "governance"
+      subdirs:
+        - "schemas/"
+        - "policies/"
+        - "sbom/"
+        - "audit/"
+    - path: "infrastructure/"
+      kind: "infrastructure"
+      subdirs:
+        - "kubernetes/"
+        - "monitoring/"
+        - "canary/"
+        - "drift/"
+    - path: "mcp-servers/"
+      kind: "mcp-servers"
+      files:
+        - "code-analyzer.js"
+        - "security-scanner.js"
+        - "slsa-validator.js"
+    - path: "agent/"
+      kind: "agents"
+    - path: "frontend/"
+      kind: "frontend-app"
+    - path: "tests/"
+      kind: "tests"
+    - path: "tools/"
+      kind: "tools"
+    - path: "ops/"
+      kind: "operations"
+    - path: "docs/"
+      kind: "docs"
+    - path: "shared/"
+      kind: "shared-resources"
+    - path: "legacy/"
+      kind: "legacy-archive"
+    - path: ".github/workflows/"
+      kind: "cicd-workflows"
+
+configs:
+  - id: "config-system-manifest"
+    path: "config/system-manifest.yaml"
+    role: "system-manifest"
+  - id: "config-unified-config-index"
+    path: "config/unified-config-index.yaml"
+    role: "unified-config-index"
+  - id: "config-system-module-map"
+    path: "config/system-module-map.yaml"
+    role: "module-to-config-mapping"
+  - id: "config-ai-constitution"
+    path: "config/ai-constitution.yaml"
+    role: "ai-governance-constitution"
+  - id: "config-safety-mechanisms"
+    path: "config/safety-mechanisms.yaml"
+    role: "safety-mechanisms-config"
+
+security_and_compliance:
+  slsa:
+    level: "L3"
+    provenance_path: "core/slsa_provenance/"
+  signing:
+    provider: "Sigstore"
+    tool: "Cosign"
+  policy_engine:
+    provider: "OPA"
+    config_path: "governance/policies/"
+  schema_validation:
+    path: "governance/schemas/"
+  sbom:
+    path: "governance/sbom/"
+
+features:
+  automation:
+    - id: "auto-code-review"
+      name: "自動程式碼審查"
+      description: "PR 自動審查與合併"
+      entry: ".github/workflows/"
+    - id: "intelligent-dispatch"
+      name: "智能派工系統"
+      description: "問題自動分配與負載均衡"
+      entry: "core/contract_service/"
+    - id: "advanced-escalation"
+      name: "進階升級系統"
+      description: "五級升級階梯 (L1 Auto → L5 客服)"
+      doc: "docs/ADVANCED_ESCALATION_SYSTEM.md"
+    - id: "auto-fix-bot"
+      name: "Auto-Fix Bot"
+      description: "自動修復 CI 失敗"
+      config: "config/auto-fix-bot.yml"
+  security:
+    - id: "slsa-l3-provenance"
+      name: "SLSA L3 溯源"
+      entry: "core/slsa_provenance/"
+    - id: "schema-validation"
+      name: "Schema 驗證"
+      entry: "governance/schemas/"
+    - id: "policy-gate"
+      name: "策略閘"
+      entry: "governance/policies/"
+    - id: "sbom-generation"
+      name: "SBOM 生成"
+      entry: "governance/sbom/"
+  observability:
+    - id: "dynamic-ci-assistant"
+      name: "動態 CI 助手"
+      doc: "docs/DYNAMIC_CI_ASSISTANT.md"
+    - id: "prometheus-monitoring"
+      name: "Prometheus 監控"
+      entry: "infrastructure/monitoring/"
+    - id: "drift-detection"
+      name: "漂移檢測"
+      entry: "infrastructure/drift/"
+
+commands:
+  ci_assistant:
+    description: "CI 客服互動命令"
+    patterns:
+      - id: "analyze-ci"
+        example: "@copilot analyze Core Services CI"
+        action: "analyze_ci"
+      - id: "fix-ci"
+        example: "@copilot fix Core Services CI"
+        action: "auto_fix_ci"
+      - id: "help-ci"
+        example: "@copilot help Integration CI"
+        action: "show_docs"
+      - id: "global-analyze"
+        example: "@copilot 幫我分析"
+        action: "analyze_all_ci"
+      - id: "env-check"
+        example: "@copilot 環境檢查"
+        action: "environment_check"
+  governance_tools:
+    description: "治理工具命令"
+    commands:
+      - id: "validate-docs-index"
+        cmd: "python tools/docs/validate_index.py --verbose"
+      - id: "scan-repo-generate-index"
+        cmd: "python tools/docs/scan_repo_generate_index.py --dry-run"
+      - id: "generate-provenance"
+        cmd: "python tools/docs/provenance_injector.py --generate-provenance"
+      - id: "generate-sbom"
+        cmd: "python tools/docs/provenance_injector.py --generate-sbom"
+  core_services:
+    description: "核心服務啟動命令"
+    steps:
+      - id: "start-contract-service-l1"
+        path: "core/contract_service/contracts-L1/contracts"
+        commands:
+          - "npm install"
+          - "npm run build"
+          - "npm start"
+      - id: "start-mcp-servers"
+        path: "mcp-servers"
+        commands:
+          - "npm install"
+          - "npm start"
+      - id: "validate-config"
+        path: "."
+        commands:
+          - "python tools/docs/validate_index.py --verbose"
+  docker:
+    description: "Docker 部署"
+    dev:
+      cmd: "docker-compose -f docker-compose.dev.yml up -d"
+    prod:
+      cmd: "docker-compose up -d"
+
+docs_index:
+  core:
+    - id: "architecture"
+      path: "docs/architecture/"
+      title: "系統架構"
+      category: "architecture"
+    - id: "quick-start"
+      path: "docs/QUICK_START.md"
+      title: "快速入門"
+      category: "getting-started"
+    - id: "api-docs"
+      path: "docs/AUTO_ASSIGNMENT_API.md"
+      title: "API 文檔"
+      category: "api"
+    - id: "operations"
+      path: "docs/operations/"
+      title: "運維手冊"
+      category: "operations"
+  features:
+    - id: "auto-review-merge"
+      path: "docs/AUTO_REVIEW_MERGE.md"
+      title: "自動審查與合併"
+    - id: "auto-assignment-system"
+      path: "docs/AUTO_ASSIGNMENT_SYSTEM.md"
+      title: "智能派工系統"
+    - id: "advanced-escalation-system"
+      path: "docs/ADVANCED_ESCALATION_SYSTEM.md"
+      title: "進階升級系統"
+    - id: "dynamic-ci-assistant"
+      path: "docs/DYNAMIC_CI_ASSISTANT.md"
+      title: "動態 CI 助手"
+  governance:
+    - id: "schema-defs"
+      path: "governance/schemas/"
+      title: "Schema 定義"
+    - id: "policies"
+      path: "governance/policies/"
+      title: "策略配置"
+    - id: "audit-format"
+      path: "governance/audit/"
+      title: "審計格式"
+    - id: "knowledge-index"
+      path: "docs/knowledge_index.yaml"
+      title: "知識索引"
+
+cicd:
+  workflows:
+    - id: "core-services"
+      file: ".github/workflows/core-services.yml"
+      trigger: ["pr", "push"]
+      description: "核心服務測試"
+    - id: "integration"
+      file: ".github/workflows/integration.yml"
+      trigger: ["pr", "push"]
+      description: "整合測試"
+    - id: "apply"
+      file: ".github/workflows/apply.yaml"
+      trigger: ["pr"]
+      description: "十階段治理管道"
+    - id: "auto-review"
+      file: ".github/workflows/auto-review.yml"
+      trigger: ["pr"]
+      description: "自動審查與合併"
+  quality_gates:
+    test_coverage: ">= 80%"
+    lint_errors: 0
+    security_vulnerabilities: 0
+    schema_validation: "pass"
+    policy_check: "pass"
+
+infrastructure:
+  kubernetes:
+    path: "infrastructure/kubernetes/"
+  monitoring:
+    path: "infrastructure/monitoring/"
+  canary:
+    path: "infrastructure/canary/"
+  drift_detection:
+    path: "infrastructure/drift/"
+
+mcp_servers:
+  path: "mcp-servers/"
+  servers:
+    - id: "code-analyzer"
+      file: "code-analyzer.js"
+      role: "code-analysis"
+    - id: "security-scanner"
+      file: "security-scanner.js"
+      role: "security-scan"
+    - id: "slsa-validator"
+      file: "slsa-validator.js"
+      role: "slsa-validation"
+
+acknowledgements:
+  - "SynergyMesh"
+  - "Sigstore"
+  - "OPA"
+  - "SLSA"

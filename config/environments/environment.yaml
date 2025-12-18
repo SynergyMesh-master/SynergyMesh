@@ -1,0 +1,121 @@
+# ═══════════════════════════════════════════════════════════
+#    SynergyMesh Environment Configuration
+#    環境配置 - 定義可用的環境、租戶、區域和風險層級
+# ═══════════════════════════════════════════════════════════
+#
+# This is the base layer of the configuration hierarchy.
+# All other configs can reference environment IDs and risk levels.
+#
+# Dependency: None (this is the foundation)
+# Referenced by: dependencies.yaml, ai-constitution.yaml, 
+#                virtual-experts.yaml, safety-mechanisms.yaml
+# ═══════════════════════════════════════════════════════════
+
+version: "1.0"
+kind: "environment-config"
+
+# ============ Environment Definitions ============
+environments:
+  - id: dev
+    name: "Development"
+    risk_level: low
+    description: "Local development and testing environment"
+    features:
+      debug_mode: true
+      verbose_logging: true
+      mock_external_services: true
+    restrictions:
+      max_concurrent_agents: 5
+      rate_limit_per_minute: 100
+      data_retention_days: 7
+    
+  - id: staging
+    name: "Staging"
+    risk_level: medium
+    description: "Pre-production testing environment"
+    features:
+      debug_mode: false
+      verbose_logging: true
+      mock_external_services: false
+    restrictions:
+      max_concurrent_agents: 20
+      rate_limit_per_minute: 500
+      data_retention_days: 30
+    
+  - id: prod
+    name: "Production"
+    risk_level: high
+    description: "Live production environment"
+    features:
+      debug_mode: false
+      verbose_logging: false
+      mock_external_services: false
+    restrictions:
+      max_concurrent_agents: 100
+      rate_limit_per_minute: 1000
+      data_retention_days: 365
+    audit_required: true
+    approval_required: true
+
+# ============ Risk Level Definitions ============
+risk_levels:
+  - id: low
+    name: "Low Risk"
+    description: "Development and testing - minimal restrictions"
+    color: "green"
+    approval_required: false
+    audit_level: "basic"
+    
+  - id: medium
+    name: "Medium Risk"
+    description: "Staging and QA - moderate restrictions"
+    color: "yellow"
+    approval_required: false
+    audit_level: "standard"
+    
+  - id: high
+    name: "High Risk"
+    description: "Production - full restrictions and auditing"
+    color: "red"
+    approval_required: true
+    audit_level: "comprehensive"
+    
+  - id: critical
+    name: "Critical Risk"
+    description: "Financial, medical, or safety-critical systems"
+    color: "purple"
+    approval_required: true
+    audit_level: "forensic"
+    multi_party_approval: true
+
+# ============ Region Definitions ============
+regions:
+  - id: us-east
+    name: "US East"
+    timezone: "America/New_York"
+    data_residency: "US"
+    compliance_frameworks:
+      - SOC2
+      - HIPAA
+      
+  - id: eu-west
+    name: "EU West"
+    timezone: "Europe/London"
+    data_residency: "EU"
+    compliance_frameworks:
+      - GDPR
+      - SOC2
+      
+  - id: ap-southeast
+    name: "Asia Pacific"
+    timezone: "Asia/Singapore"
+    data_residency: "APAC"
+    compliance_frameworks:
+      - SOC2
+
+# ============ Tenant Configuration ============
+tenant_config:
+  multi_tenant_enabled: true
+  isolation_level: "strict"
+  default_environment: "dev"
+  tenant_specific_overrides_allowed: true

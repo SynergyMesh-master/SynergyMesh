@@ -1,0 +1,43 @@
+---
+apiVersion: governance.machinenativeops.io/v1
+kind: RiskRegister
+metadata:
+  name: security-risk-001
+  namespace: governance
+  labels:
+    category: "security"
+    severity: "high"
+    department: "it-security"
+  annotations:
+    governance.machinenativeops.io/created-by: "risk-manager"
+    governance.machinenativeops.io/last-reviewed: "2025-01-15"
+spec:
+  riskId: "RISK-2025-001"
+  title: "Data breach in customer database"
+  description: "Potential unauthorized access to sensitive customer data due to inadequate security controls"
+  category: "security"
+  subcategory: "cybersecurity"
+  probability: 0.3
+  impact: 8.5
+  riskLevel: "high"
+  riskScore: 2.55
+  owner: "security-team"
+  department: "IT Security"
+  identifiedDate: "2025-01-15"
+  reviewDate: "2025-04-15"
+  mitigationStrategy: "Implement multi-factor authentication and regular security audits"
+  mitigationStatus: "in_progress"
+  mitigationCost: 50000
+  residualRisk: 1.5
+  relatedRisks: ["RISK-2025-002", "RISK-2025-003"]
+  tags: ["cybersecurity", "data-protection", "compliance"]
+  complianceFrameworks: ["GDPR", "ISO-27001"]
+  businessImpact:
+    financial: 1000000
+    operational: "significant"
+    reputational: "high"
+    legal: "medium"
+  monitoring:
+    frequency: "monthly"
+    metrics: ["failed_login_attempts", "security_incidents"]
+    alerts: ["failed_login_attempts > 100", "security_incidents > 0"]

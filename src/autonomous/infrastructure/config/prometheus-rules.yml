@@ -1,0 +1,180 @@
+# Prometheus Alert Rules for GitHub Security
+# 定義 GitHub Advanced Security 的告警規則
+
+groups:
+  - name: github_security_alerts
+    interval: 30s
+    rules:
+      # Critical Security Alerts
+      - alert: CriticalSecurityVulnerability
+        expr: github_security_alerts{severity="critical",state="open"} > 0
+        for: 1m
+        labels:
+          severity: critical
+          team: security
+        annotations:
+          summary: "Critical security vulnerability detected"
+          description: "{{ $value }} critical security vulnerabilities found in repository {{ $labels.repository }}"
+          
+      # High Severity Alerts Threshold
+      - alert: HighSeverityAlertsThreshold
+        expr: github_security_alerts{severity="high",state="open"} > 5
+        for: 5m
+        labels:
+          severity: warning
+          team: security
+        annotations:
+          summary: "High number of high severity alerts"
+          description: "{{ $value }} high severity security alerts in repository {{ $labels.repository }}"
+          
+      # Secret Leaked
+      - alert: SecretLeaked
+        expr: github_secret_scanning_alerts{state="open"} > 0
+        for: 1m
+        labels:
+          severity: critical
+          team: security
+        annotations:
+          summary: "Secret leaked in repository"
+          description: "{{ $value }} secrets detected in repository {{ $labels.repository }}"
+          
+      # Vulnerable Dependencies
+      - alert: VulnerableDependencies
+        expr: github_dependabot_alerts{severity=~"high|critical",state="open"} > 0
+        for: 10m
+        labels:
+          severity: warning
+          team: development
+        annotations:
+          summary: "Vulnerable dependencies detected"
+          description: "{{ $value }} vulnerable dependencies in repository {{ $labels.repository }}"
+          
+      # CodeQL Analysis Failed
+      - alert: CodeQLAnalysisFailed
+        expr: github_codeql_analysis_status{status="failed"} == 1
+        for: 5m
+        labels:
+          severity: warning
+          team: development
+        annotations:
+          summary: "CodeQL analysis failed"
+          description: "CodeQL analysis failed for repository {{ $labels.repository }}"
+          
+      # Alert Response Time
+      - alert: SlowAlertResponse
+        expr: (time() - github_security_alert_created_timestamp) / 3600 > 24
+        for: 1h
+        labels:
+          severity: info
+          team: security
+        annotations:
+          summary: "Security alert not addressed in 24 hours"
+          description: "Alert {{ $labels.alert_id }} in repository {{ $labels.repository }} has been open for more than 24 hours"
+
+  - name: github_api_monitoring
+    interval: 60s
+    rules:
+      # API Rate Limit
+      - alert: GitHubAPIRateLimitHigh
+        expr: (github_api_remaining / github_api_limit) < 0.2
+        for: 5m
+        labels:
+          severity: warning
+          team: operations
+        annotations:
+          summary: "GitHub API rate limit usage high"
+          description: "GitHub API rate limit is at {{ $value | humanizePercentage }} capacity"
+          
+      # API Rate Limit Exhausted
+      - alert: GitHubAPIRateLimitExhausted
+        expr: github_api_remaining == 0
+        for: 1m
+        labels:
+          severity: critical
+          team: operations
+        annotations:
+          summary: "GitHub API rate limit exhausted"
+          description: "GitHub API rate limit has been exhausted. Resets at {{ $labels.reset_time }}"
+
+  - name: github_runners
+    interval: 30s
+    rules:
+      # Runner Offline
+      - alert: GitHubRunnerOffline
+        expr: up{job="github-runners"} == 0
+        for: 5m
+        labels:
+          severity: warning
+          team: operations
+        annotations:
+          summary: "GitHub runner is offline"
+          description: "Runner {{ $labels.instance }} has been offline for more than 5 minutes"
+          
+      # Runner High CPU
+      - alert: GitHubRunnerHighCPU
+        expr: rate(process_cpu_seconds_total{job="github-runners"}[5m]) > 0.8
+        for: 10m
+        labels:
+          severity: warning
+          team: operations
+        annotations:
+          summary: "GitHub runner high CPU usage"
+          description: "Runner {{ $labels.instance }} CPU usage is {{ $value | humanizePercentage }}"
+          
+      # Runner High Memory
+      - alert: GitHubRunnerHighMemory
+        expr: (process_resident_memory_bytes{job="github-runners"} / node_memory_MemTotal_bytes) > 0.9
+        for: 10m
+        labels:
+          severity: warning
+          team: operations
+        annotations:
+          summary: "GitHub runner high memory usage"
+          description: "Runner {{ $labels.instance }} memory usage is {{ $value | humanizePercentage }}"
+          
+      # Runner Disk Space Low
+      - alert: GitHubRunnerDiskSpaceLow
+        expr: (node_filesystem_avail_bytes{job="github-runners"} / node_filesystem_size_bytes) < 0.1
+        for: 5m
+        labels:
+          severity: critical
+          team: operations
+        annotations:
+          summary: "GitHub runner disk space low"
+          description: "Runner {{ $labels.instance }} has less than 10% disk space available"
+
+  - name: github_security_trends
+    interval: 300s
+    rules:
+      # Increasing Security Alerts
+      - alert: IncreasingSecurityAlerts
+        expr: rate(github_security_alerts_total[1h]) > rate(github_security_alerts_total[24h] offset 1d)
+        for: 1h
+        labels:
+          severity: warning
+          team: security
+        annotations:
+          summary: "Security alerts increasing"
+          description: "Security alert rate is increasing in repository {{ $labels.repository }}"
+          
+      # High Alert Dismissal Rate
+      - alert: HighAlertDismissalRate
+        expr: rate(github_security_alerts_dismissed_total[24h]) / rate(github_security_alerts_total[24h]) > 0.5
+        for: 1h
+        labels:
+          severity: info
+          team: security
+        annotations:
+          summary: "High security alert dismissal rate"
+          description: "More than 50% of security alerts are being dismissed in repository {{ $labels.repository }}"
+          
+      # Slow Fix Time
+      - alert: SlowSecurityFixTime
+        expr: histogram_quantile(0.95, rate(github_security_alert_fix_duration_seconds_bucket[24h])) > 604800
+        for: 1h
+        labels:
+          severity: warning
+          team: development
+        annotations:
+          summary: "Slow security fix time"
+          description: "95th percentile fix time for security alerts is over 7 days in repository {{ $labels.repository }}"

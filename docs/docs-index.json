@@ -1,0 +1,605 @@
+{
+  "$schema": "https://schema.machinenativeops.io/docs-index/v1",
+  "namespace": "machinenativeops.docs",
+  "version": "1.0.0",
+  "last_updated": "2025-11-30",
+  "categories": {
+    "architecture": {
+      "name": "Architecture 架構",
+      "description": "System design, layers, and structural documentation"
+    },
+    "automation": {
+      "name": "Automation 自動化",
+      "description": "Automation systems, agents, and pipelines"
+    },
+    "governance": {
+      "name": "Governance 治理",
+      "description": "Policies, rules, security, and compliance"
+    },
+    "operations": {
+      "name": "Operations 運維",
+      "description": "Deployment, monitoring, and operational guides"
+    },
+    "guides": {
+      "name": "Guides 指南",
+      "description": "Getting started, tutorials, and how-to guides"
+    },
+    "security": {
+      "name": "Security 安全",
+      "description": "Security policies, scanning, and vulnerability management"
+    }
+  },
+  "layers": [
+    "experience-interfaces",
+    "platform-core",
+    "ai-automation",
+    "enablement",
+    "governance-ops"
+  ],
+  "items": [
+    {
+      "id": "architecture_layers",
+      "path": "docs/architecture/layers.md",
+      "title": "Architecture Layers 架構分層視圖",
+      "domain": "architecture",
+      "layer": "platform-core",
+      "type": "reference",
+      "tags": [
+        "architecture",
+        "layers",
+        "dependencies",
+        "overview"
+      ],
+      "owner": "platform-team",
+      "status": "stable",
+      "last_reviewed": "2025-11-30",
+      "description": "Five-layer architecture view with dependency rules and quick reference tables."
+    },
+    {
+      "id": "architecture_repo_map",
+      "path": "docs/architecture/repo-map.md",
+      "title": "Repository Map 倉庫地圖與語義邊界",
+      "domain": "architecture",
+      "layer": "platform-core",
+      "type": "reference",
+      "tags": [
+        "architecture",
+        "boundaries",
+        "semantic",
+        "agents"
+      ],
+      "owner": "platform-team",
+      "status": "stable",
+      "last_reviewed": "2025-11-30",
+      "description": "Semantic boundary definitions for all modules, decision guides for agents."
+    },
+    {
+      "id": "architecture_system",
+      "path": "docs/architecture/SYSTEM_ARCHITECTURE.md",
+      "title": "System Architecture Design 系統架構設計",
+      "domain": "architecture",
+      "layer": "platform-core",
+      "type": "design",
+      "tags": [
+        "architecture",
+        "microservices",
+        "design"
+      ],
+      "owner": "platform-team",
+      "status": "stable",
+      "last_reviewed": "2025-11-21",
+      "description": "Four-layer microservices architecture overview."
+    },
+    {
+      "id": "architecture_readme",
+      "path": "docs/architecture/README.md",
+      "title": "Architecture Documentation Index 架構文檔索引",
+      "domain": "architecture",
+      "layer": "platform-core",
+      "type": "index",
+      "tags": [
+        "architecture",
+        "index",
+        "navigation"
+      ],
+      "owner": "platform-team",
+      "status": "stable",
+      "last_reviewed": "2025-11-30",
+      "description": "Entry point for all architecture documentation."
+    },
+    {
+      "id": "deployment_infrastructure",
+      "path": "docs/architecture/DEPLOYMENT_INFRASTRUCTURE.md",
+      "title": "Deployment & Infrastructure 部署與基礎設施",
+      "domain": "operations",
+      "layer": "enablement",
+      "type": "guide",
+      "tags": [
+        "deployment",
+        "docker",
+        "kubernetes",
+        "ci-cd"
+      ],
+      "owner": "devops-team",
+      "status": "stable",
+      "last_reviewed": "2025-11-21",
+      "description": "Docker, Kubernetes, and CI/CD deployment guides."
+    },
+    {
+      "id": "code_quality_checks",
+      "path": "docs/architecture/CODE_QUALITY_CHECKS.md",
+      "title": "Code Quality Checks 代碼品質檢查",
+      "domain": "operations",
+      "layer": "enablement",
+      "type": "guide",
+      "tags": [
+        "quality",
+        "linting",
+        "sonarqube",
+        "eslint"
+      ],
+      "owner": "platform-team",
+      "status": "stable",
+      "last_reviewed": "2025-11-21",
+      "description": "Quality tools configuration and implementation."
+    },
+    {
+      "id": "security_config_checks",
+      "path": "docs/architecture/SECURITY_CONFIG_CHECKS.md",
+      "title": "Security & Config Checks 安全檢測與配置文件檢查",
+      "domain": "security",
+      "layer": "enablement",
+      "type": "guide",
+      "tags": [
+        "security",
+        "bandit",
+        "owasp",
+        "validation"
+      ],
+      "owner": "security-team",
+      "status": "stable",
+      "last_reviewed": "2025-11-21",
+      "description": "Phase 2 security scanning and configuration validation."
+    },
+    {
+      "id": "automation_intelligent_readme",
+      "path": "automation/intelligent/README.md",
+      "title": "Intelligent Automation Module 智能自動化模組",
+      "domain": "automation",
+      "layer": "ai-automation",
+      "type": "readme",
+      "tags": [
+        "automation",
+        "ai",
+        "pipeline",
+        "agents"
+      ],
+      "owner": "automation-team",
+      "status": "stable",
+      "last_reviewed": "2025-11-30",
+      "description": "Multi-agent AI code analysis system and product-level pipelines."
+    },
+    {
+      "id": "automation_autonomous_readme",
+      "path": "automation/autonomous/README.md",
+      "title": "Autonomous System Framework 自主系統框架",
+      "domain": "automation",
+      "layer": "ai-automation",
+      "type": "readme",
+      "tags": [
+        "autonomous",
+        "drone",
+        "self-driving",
+        "framework"
+      ],
+      "owner": "autonomous-team",
+      "status": "stable",
+      "last_reviewed": "2025-10-20",
+      "description": "Five-skeleton architecture for drone and self-driving vehicle development."
+    },
+    {
+      "id": "autonomous_quickstart",
+      "path": "automation/autonomous/docs-examples/QUICKSTART.md",
+      "title": "Autonomous System Quickstart 自主系統快速入門",
+      "domain": "automation",
+      "layer": "ai-automation",
+      "type": "guide",
+      "tags": [
+        "autonomous",
+        "quickstart",
+        "getting-started"
+      ],
+      "owner": "autonomous-team",
+      "status": "experimental",
+      "last_reviewed": "2025-10-20",
+      "description": "Quick start guide for autonomous system framework."
+    },
+    {
+      "id": "agent_readme",
+      "path": "agent/README.md",
+      "title": "Agent Services 代理服務",
+      "domain": "automation",
+      "layer": "ai-automation",
+      "type": "readme",
+      "tags": [
+        "agents",
+        "auto-repair",
+        "orchestrator",
+        "boundaries"
+      ],
+      "owner": "agent-team",
+      "status": "stable",
+      "last_reviewed": "2025-11-30",
+      "description": "Long-lifecycle business agents with boundary definitions."
+    },
+    {
+      "id": "core_readme",
+      "path": "core/README.md",
+      "title": "Core Platform Services 核心平台服務",
+      "domain": "architecture",
+      "layer": "platform-core",
+      "type": "readme",
+      "tags": [
+        "core",
+        "ai-engine",
+        "execution",
+        "boundaries"
+      ],
+      "owner": "platform-team",
+      "status": "stable",
+      "last_reviewed": "2025-11-30",
+      "description": "Platform core capabilities including AI engines and safety mechanisms."
+    },
+    {
+      "id": "execution_engine_readme",
+      "path": "core/execution_engine/README.md",
+      "title": "Execution Engine 執行引擎",
+      "domain": "architecture",
+      "layer": "platform-core",
+      "type": "readme",
+      "tags": [
+        "execution",
+        "engine",
+        "abstraction"
+      ],
+      "owner": "platform-team",
+      "status": "stable",
+      "last_reviewed": "2025-11-30",
+      "description": "Code execution logic abstraction layer."
+    },
+    {
+      "id": "execution_architecture_readme",
+      "path": "core/execution_architecture/README.md",
+      "title": "Execution Architecture 執行架構",
+      "domain": "architecture",
+      "layer": "platform-core",
+      "type": "readme",
+      "tags": [
+        "execution",
+        "architecture",
+        "orchestration"
+      ],
+      "owner": "platform-team",
+      "status": "stable",
+      "last_reviewed": "2025-11-30",
+      "description": "Execution topology and design definitions."
+    },
+    {
+      "id": "contract_service_readme",
+      "path": "core/contract_service/README.md",
+      "title": "Contract Service 合約管理服務",
+      "domain": "architecture",
+      "layer": "platform-core",
+      "type": "readme",
+      "tags": [
+        "contracts",
+        "service",
+        "l1"
+      ],
+      "owner": "contract-team",
+      "status": "stable",
+      "last_reviewed": "2025-11-30",
+      "description": "Contract management microservice (L1) implementation."
+    },
+    {
+      "id": "runtime_readme",
+      "path": "runtime/README.md",
+      "title": "Runtime Environment 運行時環境",
+      "domain": "architecture",
+      "layer": "platform-core",
+      "type": "readme",
+      "tags": [
+        "runtime",
+        "mind-matrix",
+        "execution"
+      ],
+      "owner": "platform-team",
+      "status": "stable",
+      "last_reviewed": "2025-11-30",
+      "description": "Runtime environment hosting execution components."
+    },
+    {
+      "id": "mcp_servers_readme",
+      "path": "mcp-servers/README.md",
+      "title": "MCP Servers MCP 服務器",
+      "domain": "automation",
+      "layer": "ai-automation",
+      "type": "readme",
+      "tags": [
+        "mcp",
+        "llm",
+        "tools",
+        "endpoints"
+      ],
+      "owner": "platform-team",
+      "status": "stable",
+      "last_reviewed": "2025-11-30",
+      "description": "LLM tool endpoints using Model Context Protocol."
+    },
+    {
+      "id": "contracts_readme",
+      "path": "contracts/README.md",
+      "title": "External API Contracts 外部 API 合約定義",
+      "domain": "architecture",
+      "layer": "experience-interfaces",
+      "type": "readme",
+      "tags": [
+        "contracts",
+        "api",
+        "schema",
+        "openapi"
+      ],
+      "owner": "integration-team",
+      "status": "stable",
+      "last_reviewed": "2025-11-30",
+      "description": "External API contract specifications (OpenAPI, JSON Schema)."
+    },
+    {
+      "id": "auto_assignment_system",
+      "path": "docs/AUTO_ASSIGNMENT_SYSTEM.md",
+      "title": "Auto-Assignment System 自動分配系統",
+      "domain": "automation",
+      "layer": "ai-automation",
+      "type": "design",
+      "tags": [
+        "auto-assignment",
+        "sla",
+        "load-balancing"
+      ],
+      "owner": "automation-team",
+      "status": "stable",
+      "last_reviewed": "2025-09-15",
+      "description": "Intelligent problem assignment and responsibility management."
+    },
+    {
+      "id": "auto_assignment_api",
+      "path": "docs/AUTO_ASSIGNMENT_API.md",
+      "title": "Auto-Assignment API 自動分配 API",
+      "domain": "automation",
+      "layer": "ai-automation",
+      "type": "api-reference",
+      "tags": [
+        "auto-assignment",
+        "api",
+        "rest"
+      ],
+      "owner": "automation-team",
+      "status": "stable",
+      "last_reviewed": "2025-09-15",
+      "description": "API documentation for auto-assignment system."
+    },
+    {
+      "id": "advanced_escalation_system",
+      "path": "docs/ADVANCED_ESCALATION_SYSTEM.md",
+      "title": "Advanced Escalation System 進階升級系統",
+      "domain": "automation",
+      "layer": "ai-automation",
+      "type": "design",
+      "tags": [
+        "escalation",
+        "customer-service",
+        "safety-critical"
+      ],
+      "owner": "automation-team",
+      "status": "stable",
+      "last_reviewed": "2025-09-15",
+      "description": "Multi-level intelligent escalation with customer service integration."
+    },
+    {
+      "id": "dynamic_ci_assistant",
+      "path": "docs/DYNAMIC_CI_ASSISTANT.md",
+      "title": "Dynamic CI Assistant 動態 CI 助手",
+      "domain": "operations",
+      "layer": "enablement",
+      "type": "guide",
+      "tags": [
+        "ci",
+        "assistant",
+        "automation"
+      ],
+      "owner": "devops-team",
+      "status": "stable",
+      "last_reviewed": "2025-11-01",
+      "description": "Interactive CI system with per-workflow customer service agents."
+    },
+    {
+      "id": "auto_review_merge",
+      "path": "docs/AUTO_REVIEW_MERGE.md",
+      "title": "Auto Review & Merge 自動審查與合併",
+      "domain": "operations",
+      "layer": "enablement",
+      "type": "guide",
+      "tags": [
+        "auto-review",
+        "auto-merge",
+        "ci-cd"
+      ],
+      "owner": "devops-team",
+      "status": "stable",
+      "last_reviewed": "2025-11-01",
+      "description": "Automated PR review and merge workflow."
+    },
+    {
+      "id": "quick_start",
+      "path": "docs/QUICK_START.md",
+      "title": "Quick Start Guide 快速入門指南",
+      "domain": "guides",
+      "layer": "enablement",
+      "type": "guide",
+      "tags": [
+        "quickstart",
+        "getting-started",
+        "tutorial"
+      ],
+      "owner": "docs-team",
+      "status": "stable",
+      "last_reviewed": "2025-11-01",
+      "description": "Get up and running quickly with SynergyMesh."
+    },
+    {
+      "id": "integration_guide",
+      "path": "docs/INTEGRATION_GUIDE.md",
+      "title": "Integration Guide 整合指南",
+      "domain": "guides",
+      "layer": "experience-interfaces",
+      "type": "guide",
+      "tags": [
+        "integration",
+        "external-systems",
+        "api"
+      ],
+      "owner": "integration-team",
+      "status": "stable",
+      "last_reviewed": "2025-11-01",
+      "description": "Integration with external systems."
+    },
+    {
+      "id": "src/ai_setup",
+      "path": "docs/ISLAND_AI_SETUP.md",
+      "title": "Island AI Setup Island AI 設定",
+      "domain": "guides",
+      "layer": "enablement",
+      "type": "guide",
+      "tags": [
+        "src/ai",
+        "github",
+        "setup"
+      ],
+      "owner": "docs-team",
+      "status": "stable",
+      "last_reviewed": "2025-11-01",
+      "description": "Island AI integration setup."
+    },
+    {
+      "id": "vulnerability_management",
+      "path": "docs/VULNERABILITY_MANAGEMENT.md",
+      "title": "Vulnerability Management 漏洞管理",
+      "domain": "security",
+      "layer": "governance-ops",
+      "type": "guide",
+      "tags": [
+        "security",
+        "vulnerabilities",
+        "cve"
+      ],
+      "owner": "security-team",
+      "status": "stable",
+      "last_reviewed": "2025-11-01",
+      "description": "Vulnerability detection and management procedures."
+    },
+    {
+      "id": "secret_scanning",
+      "path": "docs/SECRET_SCANNING.md",
+      "title": "Secret Scanning 密鑰掃描",
+      "domain": "security",
+      "layer": "governance-ops",
+      "type": "guide",
+      "tags": [
+        "security",
+        "secrets",
+        "scanning"
+      ],
+      "owner": "security-team",
+      "status": "stable",
+      "last_reviewed": "2025-11-01",
+      "description": "Secret detection and remediation."
+    },
+    {
+      "id": "security_training",
+      "path": "docs/SECURITY_TRAINING.md",
+      "title": "Security Training 安全培訓",
+      "domain": "security",
+      "layer": "governance-ops",
+      "type": "guide",
+      "tags": [
+        "security",
+        "training",
+        "best-practices"
+      ],
+      "owner": "security-team",
+      "status": "stable",
+      "last_reviewed": "2025-11-01",
+      "description": "Security awareness and training materials."
+    },
+    {
+      "id": "governance_readme",
+      "path": "governance/README.md",
+      "title": "Governance 治理",
+      "domain": "governance",
+      "layer": "governance-ops",
+      "type": "readme",
+      "tags": [
+        "governance",
+        "policies",
+        "rules",
+        "sbom"
+      ],
+      "owner": "governance-team",
+      "status": "stable",
+      "last_reviewed": "2025-10-01",
+      "description": "Governance policies, rules, and compliance documentation."
+    }
+  ],
+  "relationships": [
+    {
+      "from": "architecture_layers",
+      "to": "architecture_repo_map",
+      "type": "complements"
+    },
+    {
+      "from": "core_readme",
+      "to": "execution_engine_readme",
+      "type": "parent-child"
+    },
+    {
+      "from": "core_readme",
+      "to": "execution_architecture_readme",
+      "type": "parent-child"
+    },
+    {
+      "from": "runtime_readme",
+      "to": "execution_engine_readme",
+      "type": "depends-on"
+    },
+    {
+      "from": "agent_readme",
+      "to": "core_readme",
+      "type": "depends-on"
+    },
+    {
+      "from": "mcp_servers_readme",
+      "to": "core_readme",
+      "type": "depends-on"
+    },
+    {
+      "from": "automation_intelligent_readme",
+      "to": "agent_readme",
+      "type": "depends-on"
+    },
+    {
+      "from": "automation_intelligent_readme",
+      "to": "mcp_servers_readme",
+      "type": "depends-on"
+    }
+  ]
+}

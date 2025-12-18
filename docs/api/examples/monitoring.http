@@ -1,0 +1,74 @@
+### Monitoring & Metrics Examples
+@token = YOUR_JWT_TOKEN_HERE
+
+### Basic Health Check (No Auth Required)
+GET http://localhost:8000/health
+
+### Expected Response
+# HTTP/1.1 200 OK
+# {
+#   "status": "healthy",
+#   "timestamp": "2025-12-16T23:00:00.000Z",
+#   "uptime": 123.456,
+#   "version": "1.0.0"
+# }
+
+### Detailed System Health (Auth Required)
+GET http://localhost:8000/api/v1/system/health
+Authorization: Bearer {{token}}
+
+### Expected Response
+# HTTP/1.1 200 OK
+# {
+#   "status": "healthy",
+#   "timestamp": "2025-12-16T23:00:00.000Z",
+#   "uptime": 123.456,
+#   "memory": {
+#     "used": 123456789,
+#     "total": 987654321,
+#     "percentage": 12.5
+#   },
+#   "cpu": {
+#     "usage": 45.2,
+#     "cores": 8
+#   },
+#   "services": {
+#     "database": "healthy",
+#     "cache": "healthy",
+#     "messageQueue": "healthy"
+#   }
+# }
+
+### System Metrics
+GET http://localhost:8000/api/v1/system/metrics
+Authorization: Bearer {{token}}
+
+### Time Series Metrics
+GET http://localhost:8000/api/v1/metrics/timeseries?metric=cpu&interval=1m
+Authorization: Bearer {{token}}
+
+### Query Logs
+GET http://localhost:8000/api/v1/metrics/logs?level=error&limit=100
+Authorization: Bearer {{token}}
+
+### List System Events
+GET http://localhost:8000/api/v1/metrics/events?type=deployment&since=2025-12-01
+Authorization: Bearer {{token}}
+
+### Get Active Alerts
+GET http://localhost:8000/api/v1/metrics/alerts?status=active
+Authorization: Bearer {{token}}
+
+### System Configuration
+GET http://localhost:8000/api/v1/system/config
+Authorization: Bearer {{token}}
+
+### Restart Service (Admin Only)
+POST http://localhost:8000/api/v1/system/restart
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "service": "scheduler",
+  "graceful": true
+}

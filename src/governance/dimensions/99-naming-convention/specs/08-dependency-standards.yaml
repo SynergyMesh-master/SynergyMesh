@@ -1,0 +1,69 @@
+# =============================================================================
+# 依賴規範 (Dependency Standards)
+# Spec ID: 08-dependency-standards
+# URN: urn:machinenativeops:governance:naming-spec:dependency:v1
+# =============================================================================
+
+apiVersion: governance.machinenativeops.io/v2
+kind: NamingSpec
+metadata:
+  id: "dependency-standards"
+  name: "依賴規範"
+  name_en: "Dependency Standards"
+  version: "1.0.0"
+  urn: "urn:machinenativeops:governance:naming-spec:dependency:v1"
+  parent: "99-naming-convention"
+
+spec:
+  description: |
+    此規範定義依賴聲明和版本約束的標準格式。
+
+  version_constraints:
+    exact:
+      syntax: "1.2.3"
+      description: "精確版本"
+    caret:
+      syntax: "^1.2.3"
+      description: "相容次版本更新"
+    tilde:
+      syntax: "~1.2.3"
+      description: "相容修訂版更新"
+    range:
+      syntax: ">=1.0.0 <2.0.0"
+      description: "版本範圍"
+    wildcard:
+      syntax: "1.x"
+      description: "主版本通配"
+
+  dependency_types:
+    - type: "required"
+      description: "必需依賴，缺失則無法運行"
+    - type: "optional"
+      description: "可選依賴，提供額外功能"
+    - type: "peer"
+      description: "對等依賴，需消費者提供"
+
+  declaration_format:
+    required_fields:
+      - id
+      - version
+      - type
+    optional_fields:
+      - reason
+      - alternatives
+    example:
+      id: "01-architecture"
+      version: "^1.0.0"
+      type: required
+      reason: "命名規範基於架構設計原則"
+
+  cycle_prevention:
+    max_depth: 10
+    validation: "acyclic_graph_check"
+    description: "禁止循環依賴"
+
+  transitive_visibility:
+    rules:
+      - "直接依賴必須顯式聲明"
+      - "傳遞依賴必須記錄"
+      - "對等依賴必須聲明"

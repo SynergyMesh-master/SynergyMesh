@@ -1,0 +1,48 @@
+version: 0.1.0
+
+schemas:
+  slo_definition:
+    description: "服務等級目標定義"
+    type: object
+    required: [service, objectives]
+    properties:
+      service:
+        type: string
+      objectives:
+        type: object
+        properties:
+          availability:
+            type: number
+            description: "可用性百分比(例如: 99.9)"
+          latency_p50:
+            type: number
+            description: "P50 延遲(毫秒)"
+          latency_p99:
+            type: number
+          error_rate:
+            type: number
+            description: "錯誤率百分比"
+
+  performance_assessment:
+    description: "性能評估報告"
+    type: object
+    required: [design_id, bottlenecks, recommendations]
+    properties:
+      design_id:
+        type: string
+      bottlenecks:
+        type: array
+        items:
+          type: object
+          properties:
+            component:
+              type: string
+            issue:
+              type: string
+            impact:
+              type: string
+              enum: [critical, high, medium, low]
+      recommendations:
+        type: array
+        items:
+          type: string

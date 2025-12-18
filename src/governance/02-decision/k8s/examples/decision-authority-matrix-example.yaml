@@ -1,0 +1,209 @@
+---
+apiVersion: governance.machinenativeops.io/v1
+kind: DecisionAuthorityMatrix
+metadata:
+  name: enterprise-decision-matrix
+  namespace: governance
+  labels:
+    category: "decision"
+    version: "v1"
+    department: "governance"
+  annotations:
+    governance.machinenativeops.io/created-by: "governance-admin"
+    governance.machinenativeops.io/approved-by: "board"
+spec:
+  matrixId: "MATRIX-2025-001"
+  title: "Enterprise Decision Authority Matrix"
+  description: "Defines decision authority levels and approval workflows for all enterprise decisions"
+  version: "1.0.0"
+  effectiveDate: "2025-01-01"
+  expiryDate: "2026-12-31"
+  decisionLevels:
+  - level: "L1-Operational"
+    authority: "Team Lead"
+    scope: "日常運營決策"
+    approvalRequired: false
+    approvers: []
+    escalationThreshold: "impact > $10,000"
+    timeLimit: "24 hours"
+    delegationAllowed: true
+    documentationRequired: false
+    reviewFrequency: "none"
+  - level: "L2-Tactical"
+    authority: "Department Manager"
+    scope: "戰術性決策和資源分配"
+    approvalRequired: true
+    approvers: ["Operations Director", "Finance Manager"]
+    escalationThreshold: "impact > $100,000"
+    timeLimit: "72 hours"
+    delegationAllowed: true
+    documentationRequired: true
+    reviewFrequency: "monthly"
+  - level: "L3-Strategic"
+    authority: "Executive Director"
+    scope: "戰略性決策和重大投資"
+    approvalRequired: true
+    approvers: ["CTO", "CFO", "CEO"]
+    escalationThreshold: "impact > $1,000,000"
+    timeLimit: "2 weeks"
+    delegationAllowed: false
+    documentationRequired: true
+    reviewFrequency: "quarterly"
+  - level: "L4-Governance"
+    authority: "Board of Directors"
+    scope: "公司治理和重大政策決策"
+    approvalRequired: true
+    approvers: ["Board of Directors", "Audit Committee"]
+    escalationThreshold: "impact > $10,000,000"
+    timeLimit: "1 month"
+    delegationAllowed: false
+    documentationRequired: true
+    reviewFrequency: "annually"
+  decisionCategories:
+  - category: "financial"
+    description: "財務相關決策"
+    defaultLevel: "L2-Tactical"
+    specialRules:
+    - condition: "capital_expenditure > $500,000"
+      requiredLevel: "L3-Strategic"
+      additionalApprovers: ["CFO", "Board"]
+      enhancedDocumentation: true
+    - condition: "capital_expenditure > $5,000,000"
+      requiredLevel: "L4-Governance"
+      additionalApprovers: ["Board of Directors", "Audit Committee"]
+      enhancedDocumentation: true
+    complianceFrameworks: ["SOX", "GDPR"]
+    riskLevel: "medium"
+  - category: "technical"
+    description: "技術架構和系統決策"
+    defaultLevel: "L2-Tactical"
+    specialRules:
+    - condition: "system_architecture_change"
+      requiredLevel: "L3-Strategic"
+      additionalApprovers: ["CTO", "Architecture Review Board"]
+      enhancedDocumentation: true
+    - condition: "security_policy_change"
+      requiredLevel: "L3-Strategic"
+      additionalApprovers: ["CISO", "Security Committee"]
+      enhancedDocumentation: true
+    complianceFrameworks: ["ISO-27001", "NIST"]
+    riskLevel: "medium"
+  - category: "human_resources"
+    description: "人力資源決策"
+    defaultLevel: "L2-Tactical"
+    specialRules:
+    - condition: "executive_hiring"
+      requiredLevel: "L3-Strategic"
+      additionalApprovers: ["CEO", "Board"]
+      enhancedDocumentation: true
+    - condition: "layoffs > 50"
+      requiredLevel: "L4-Governance"
+      additionalApprovers: ["Board of Directors", "HR Committee"]
+      enhancedDocumentation: true
+    complianceFrameworks: ["GDPR", "Labor Laws"]
+    riskLevel: "high"
+  - category: "legal_compliance"
+    description: "法律合規決策"
+    defaultLevel: "L3-Strategic"
+    specialRules:
+    - condition: "regulatory_violation"
+      requiredLevel: "L4-Governance"
+      additionalApprovers: ["Legal Counsel", "Board", "Regulatory Affairs"]
+      enhancedDocumentation: true
+    complianceFrameworks: ["SOX", "GDPR", "HIPAA", "PCI-DSS"]
+    riskLevel: "critical"
+  workflowRules:
+    validation:
+    - check: "authority_level"
+      required: true
+      errorMessage: "Authority level validation failed"
+    - check: "risk_assessment"
+      required: true
+      errorMessage: "Risk assessment is required"
+    - check: "stakeholder_impact"
+      required: true
+      errorMessage: "Stakeholder impact analysis is required"
+    - check: "compliance_check"
+      required: true
+      errorMessage: "Compliance check is required"
+    automation:
+      autoApprove:
+      - condition: "risk_level = low AND impact < $1,000"
+        level: "L1-Operational"
+      - condition: "routine_procurement AND impact < $5,000"
+        level: "L1-Operational"
+      autoEscalate:
+      - condition: "risk_level = critical"
+        toLevel: "L4-Governance"
+        reason: "Critical risk detected"
+      - condition: "compliance_breach"
+        toLevel: "L4-Governance"
+        reason: "Compliance breach detected"
+    notifications:
+    - trigger: "decision_submitted"
+      recipients: ["requester", "authority"]
+      channels: ["email", "portal"]
+      template: "decision-submitted-template"
+    - trigger: "approval_required"
+      recipients: ["approvers"]
+      channels: ["email", "slack"]
+      template: "approval-required-template"
+    - trigger: "escalation_triggered"
+      recipients: ["governance_committee", "compliance_officer"]
+      channels: ["email", "pagerduty"]
+      template: "escalation-template"
+  integrationPoints:
+    governanceFramework:
+    - "policy-engine"
+    - "risk-management"
+    - "compliance-monitoring"
+    externalSystems:
+    - name: "ERP System"
+      purpose: "Financial data validation"
+      interface: "SOAP_API"
+      endpoint: "https://erp.company.com/api"
+      authentication: "OAuth2"
+    - name: "HR System"
+      purpose: "Employee data validation"
+      interface: "REST_API"
+      endpoint: "https://hr.company.com/api"
+      authentication: "API_Key"
+    - name: "Legal System"
+      purpose: "Compliance checking"
+      interface: "REST_API"
+      endpoint: "https://legal.company.com/api"
+      authentication: "Certificate"
+  monitoring:
+    metrics:
+    - name: "decision_processing_time"
+      type: "histogram"
+      threshold: "< 24 hours"
+      description: "Time taken to process decisions"
+    - name: "approval_rate"
+      type: "gauge"
+      threshold: "> 90%"
+      description: "Percentage of decisions approved"
+    - name: "escalation_rate"
+      type: "counter"
+      threshold: "< 5%"
+      description: "Rate of decision escalations"
+    alerts:
+    - condition: "decision_processing_time > 48 hours"
+      severity: "warning"
+      action: "notify_governance_team"
+      escalation: "notify_governance_committee"
+    - condition: "escalation_rate > 10%"
+      severity: "error"
+      action: "investigate_process_issues"
+      escalation: "notify_executives"
+  compliance:
+    frameworks: ["SOX", "ISO-37001", "GDPR"]
+    auditRequirements:
+    - "all_decisions_logged"
+    - "approval_trail_maintained"
+    - "retention_period_7_years"
+    - "immutable_audit_trail"
+    reporting:
+      frequency: "monthly"
+      recipients: ["audit_committee", "compliance_officer"]
+      format: "PDF"

@@ -1,0 +1,7 @@
+name: enterprise/custom-queries
+version: 1.0.0
+description: Custom CodeQL queries for enterprise security
+library: false
+dependencies:
+  codeql/javascript-all: "*"
+  codeql/python-all: "*"

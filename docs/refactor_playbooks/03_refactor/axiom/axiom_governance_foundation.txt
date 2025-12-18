@@ -1,0 +1,743 @@
+# =============================================================================
+# AXIOM Platform Governance Foundation v1
+# 企業級治理基礎架構 - 完整實現
+# =============================================================================
+# 版本：v1
+# 用途：AXIOM 平台全鏈路治理與供應鏈安全
+# 支援團隊：34人企業級部署
+# 驗證標準：PR + OPA + Kyverno 三重驗證
+# =============================================================================
+
+%YAML 1.2
+---
+# =============================================================================
+# 文檔元數據 (Document Metadata)
+# =============================================================================
+document_metadata:
+  unique_id: "axiom-governance-foundation-v1"
+  actual_filename: "axiom-governance-foundation-v1.yaml"
+  version: "v1"
+  format_type: "kubernetes"
+  encoding: "utf-8"
+  parse_mode: "strict"
+  description: "AXIOM 平台企業級治理基礎架構，包含完整的命名空間、RBAC、網路政策、Kyverno 規則與 OPA 策略"
+  creation_info:
+    created_date: "2025-09-14T00:00:00Z"
+    quantum_timestamp: "2025-09-14T00:00:00.000000000Z"
+    created_by: "axiom-platform-architect"
+    target_system: "axiom-v1"
+
+# =============================================================================
+# 治理資訊 (Governance Information)
+# =============================================================================
+governance_info:
+  compliance_frameworks:
+    - "ISO-27001"
+    - "SOC2-Type-II"
+    - "PCI-DSS"
+    - "GDPR"
+  security_controls:
+    - "zero-trust-network"
+    - "supply-chain-verification"
+    - "image-signature-validation"
+    - "sbom-compliance"
+    - "vulnerability-scanning"
+  audit_scope: "full-platform"
+  retention_period: "7-years"
+
+# =============================================================================
+# 註冊表綁定 (Registry Binding)  
+# =============================================================================
+registry_binding:
+  primary_registry: "harbor.axiom.internal"
+  trust_anchors:
+    - name: "axiom-root-ca"
+      type: "ed25519"
+      urn: "urn:axiom:trust-root:ed25519:v1"
+    - name: "axiom-intermediate-ca"
+      type: "rsa-4096"
+      urn: "urn:axiom:trust-intermediate:rsa:v1"
+  signature_validation: "required"
+  sbom_enforcement: "mandatory"
+  vulnerability_threshold: "zero-critical"
+
+# =============================================================================
+# 向量對齊映射 (Vector Alignment Map)
+# =============================================================================
+vector_alignment_map:
+  quantum_computing:
+    coherence_threshold: 0.94
+    fidelity_minimum: 0.92
+    error_correction: "surface-code"
+    noise_model: "depolarizing"
+  ai_ml_alignment:
+    drift_detection: "enabled"
+    embedding_stability: "monitored"
+    model_versioning: "semantic"
+    performance_baseline: "established"
+  classical_integration:
+    latency_target: "50ms-p95"
+    throughput_minimum: "10k-rps"
+    availability_sla: "99.99-percent"
+
+# =============================================================================
+# 層級規範 (Layer Specification)
+# =============================================================================
+layer_specification:
+  foundation_layers:
+    l00_infrastructure:
+      description: "基礎設施層 - Kubernetes、網路、儲存"
+      components: ["kubernetes", "calico", "longhorn", "metallb"]
+      dependencies: []
+      status: "active"
+    l01_security:
+      description: "安全層 - RBAC、NetworkPolicy、Pod Security"
+      components: ["rbac", "psp", "network-policies", "vault"]
+      dependencies: ["l00_infrastructure"]
+      status: "active"
+    l02_observability:
+      description: "可觀測性層 - 監控、日誌、追蹤"
+      components: ["prometheus", "grafana", "loki", "jaeger"]
+      dependencies: ["l00_infrastructure", "l01_security"]
+      status: "active"
+  governance_layers:
+    l03_policy_engine:
+      description: "政策引擎 - OPA、Kyverno、準入控制"
+      components: ["opa", "kyverno", "gatekeeper", "falco"]
+      dependencies: ["l00_infrastructure", "l01_security"]
+      status: "active"
+    l04_supply_chain:
+      description: "供應鏈安全 - 簽章驗證、SBOM、漏洞掃描"
+      components: ["cosign", "trivy", "sbom-generator", "notary"]
+      dependencies: ["l01_security", "l03_policy_engine"]
+      status: "active"
+  platform_layers:
+    l05_quantum_core:
+      description: "量子核心 - QPU 管理、電路最佳化"
+      components: ["qpu-scheduler", "coherence-monitor", "circuit-optimizer"]
+      dependencies: ["l00_infrastructure", "l02_observability"]
+      status: "active"
+    l06_ai_ml_platform:
+      description: "AI/ML 平台 - 模型服務、推理引擎"
+      components: ["seldon", "kubeflow", "mlflow", "feast"]
+      dependencies: ["l00_infrastructure", "l02_observability"]
+      status: "active"
+
+# =============================================================================
+# 架構規範 (Architecture Specification)
+# =============================================================================
+architecture:
+  deployment_model: "on-premise-only"
+  network_model: "zero-trust"
+  scaling_strategy: "horizontal"
+  disaster_recovery:
+    rto_target: "5m"
+    rpo_target: "1m"
+    backup_strategy: "continuous"
+  high_availability:
+    multi_zone: "required"
+    load_balancing: "intelligent"
+    failover: "automatic"
+
+# =============================================================================
+# 效能目標 (Performance Targets)
+# =============================================================================
+performance_targets:
+  api_gateway:
+    p50_latency_ms: 25
+    p95_latency_ms: 50
+    p99_latency_ms: 100
+    throughput_rps: 10000
+    error_rate_threshold: 0.001
+  quantum_services:
+    coherence_minimum: 0.94
+    fidelity_threshold: 0.92
+    circuit_depth_limit: 100
+    gate_error_rate: 0.0001
+  ml_inference:
+    prediction_latency_ms: 20
+    batch_throughput_qps: 1000
+    model_accuracy_minimum: 0.95
+    drift_detection_window: 24
+
+# =============================================================================
+# Kubernetes 資源定義開始
+# =============================================================================
+
+---
+# =============================================================================
+# 命名空間定義 (Namespace Definitions)
+# =============================================================================
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: axiom-foundation
+  labels:
+    axiom.io/layer: "foundation"
+    axiom.io/criticality: "high"
+    axiom.io/data-classification: "internal"
+    kubernetes.io/managed-by: "axiom-platform"
+    istio-injection: "enabled"
+  annotations:
+    axiom.io/urn: "urn:axiom:namespace:foundation:v1"
+    axiom.io/description: "AXIOM 基礎設施核心命名空間"
+    axiom.io/infrastructure-scope: "on-premise"
+    axiom.io/network-mode: "internal-only"
+    axiom.io/security-zone: "restricted"
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: axiom-governance
+  labels:
+    axiom.io/layer: "governance"
+    axiom.io/criticality: "critical"
+    axiom.io/data-classification: "confidential"
+    kubernetes.io/managed-by: "axiom-platform"
+  annotations:
+    axiom.io/urn: "urn:axiom:namespace:governance:v1"
+    axiom.io/description: "AXIOM 治理與政策執行命名空間"
+    axiom.io/infrastructure-scope: "on-premise"
+    axiom.io/network-mode: "internal-only"
+    axiom.io/security-zone: "restricted"
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: axiom-quantum
+  labels:
+    axiom.io/layer: "quantum"
+    axiom.io/criticality: "high"
+    axiom.io/data-classification: "internal"
+    kubernetes.io/managed-by: "axiom-platform"
+  annotations:
+    axiom.io/urn: "urn:axiom:namespace:quantum:v1"
+    axiom.io/description: "AXIOM 量子計算服務命名空間"
+    axiom.io/infrastructure-scope: "on-premise"
+    axiom.io/network-mode: "internal-only"
+    axiom.io/quantum-workload: "enabled"
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: axiom-ml
+  labels:
+    axiom.io/layer: "ml-platform"
+    axiom.io/criticality: "high"
+    axiom.io/data-classification: "internal"
+    kubernetes.io/managed-by: "axiom-platform"
+  annotations:
+    axiom.io/urn: "urn:axiom:namespace:ml:v1"
+    axiom.io/description: "AXIOM AI/ML 平台服務命名空間"
+    axiom.io/infrastructure-scope: "on-premise"
+    axiom.io/network-mode: "internal-only"
+    axiom.io/ml-workload: "enabled"
+
+---
+# =============================================================================
+# RBAC 定義 (Role-Based Access Control)
+# =============================================================================
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: axiom-platform-admin
+  labels:
+    axiom.io/rbac-scope: "platform-admin"
+  annotations:
+    axiom.io/urn: "urn:axiom:rbac:platform-admin:v1"
+    axiom.io/description: "AXIOM 平台管理員完整權限"
+rules:
+  - apiGroups: ["*"]
+    resources: ["*"]
+    verbs: ["*"]
+  - nonResourceURLs: ["*"]
+    verbs: ["*"]
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: axiom-governance-operator
+  labels:
+    axiom.io/rbac-scope: "governance-operator"
+  annotations:
+    axiom.io/urn: "urn:axiom:rbac:governance-operator:v1"
+    axiom.io/description: "AXIOM 治理操作員權限"
+rules:
+  - apiGroups: ["kyverno.io", "wgpolicyk8s.io.v1alpha2"]
+    resources: ["*"]
+    verbs: ["*"]
+  - apiGroups: ["policy"]
+    resources: ["podsecuritypolicies"]
+    verbs: ["use"]
+  - apiGroups: ["admissionregistration.k8s.io"]
+    resources: ["validatingadmissionwebhooks", "mutatingadmissionwebhooks"]
+    verbs: ["get", "list", "watch"]
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: axiom-quantum-operator
+  labels:
+    axiom.io/rbac-scope: "quantum-operator"
+  annotations:
+    axiom.io/urn: "urn:axiom:rbac:quantum-operator:v1"
+    axiom.io/description: "AXIOM 量子服務操作員權限"
+rules:
+  - apiGroups: [""]
+    resources: ["pods", "services", "configmaps", "secrets"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+  - apiGroups: ["apps"]
+    resources: ["deployments", "replicasets"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+  - apiGroups: ["batch"]
+    resources: ["jobs", "cronjobs"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+
+---
+# =============================================================================
+# 網路政策 (Network Policies) - 零信任架構
+# =============================================================================
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: axiom-default-deny-all
+  namespace: axiom-foundation
+  labels:
+    axiom.io/network-policy: "default-deny"
+  annotations:
+    axiom.io/urn: "urn:axiom:network-policy:default-deny:v1"
+    axiom.io/description: "預設拒絕所有流量的零信任基線"
+spec:
+  podSelector: {}
+  policyTypes:
+    - Ingress
+    - Egress
+
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: axiom-internal-communication
+  namespace: axiom-foundation
+  labels:
+    axiom.io/network-policy: "internal-allow"
+  annotations:
+    axiom.io/urn: "urn:axiom:network-policy:internal-allow:v1"
+    axiom.io/description: "允許 AXIOM 內部命名空間間通訊"
+spec:
+  podSelector: {}
+  policyTypes:
+    - Ingress
+    - Egress
+  ingress:
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/managed-by: "axiom-platform"
+      ports:
+        - protocol: TCP
+          port: 8080
+        - protocol: TCP
+          port: 8443
+        - protocol: TCP
+          port: 9090
+  egress:
+    - to:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/managed-by: "axiom-platform"
+      ports:
+        - protocol: TCP
+          port: 8080
+        - protocol: TCP
+          port: 8443
+        - protocol: TCP
+          port: 9090
+    - to: []
+      ports:
+        - protocol: UDP
+          port: 53
+
+---
+# =============================================================================
+# 資源配額與限制 (Resource Quotas and Limits)
+# =============================================================================
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: axiom-foundation-quota
+  namespace: axiom-foundation
+  labels:
+    axiom.io/resource-management: "quota"
+  annotations:
+    axiom.io/urn: "urn:axiom:resource-quota:foundation:v1"
+    axiom.io/description: "AXIOM 基礎設施資源配額"
+spec:
+  hard:
+    requests.cpu: "100"
+    requests.memory: "200Gi"
+    limits.cpu: "200"
+    limits.memory: "400Gi"
+    pods: "100"
+    services: "50"
+    persistentvolumeclaims: "20"
+    secrets: "100"
+    configmaps: "100"
+
+---
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: axiom-foundation-limits
+  namespace: axiom-foundation
+  labels:
+    axiom.io/resource-management: "limits"
+  annotations:
+    axiom.io/urn: "urn:axiom:resource-limit:foundation:v1"
+    axiom.io/description: "AXIOM 基礎設施資源限制"
+spec:
+  limits:
+    - type: Container
+      default:
+        cpu: "1000m"
+        memory: "2Gi"
+      defaultRequest:
+        cpu: "100m"
+        memory: "128Mi"
+      max:
+        cpu: "4000m"
+        memory: "8Gi"
+      min:
+        cpu: "10m"
+        memory: "64Mi"
+    - type: Pod
+      max:
+        cpu: "8000m"
+        memory: "16Gi"
+
+---
+# =============================================================================
+# Kyverno 政策定義開始 (Kyverno Policy Definitions)
+# =============================================================================
+
+# 核心標註驗證政策
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: axiom-enforce-required-annotations
+  annotations:
+    policies.kyverno.io/title: "AXIOM Required Annotations"
+    policies.kyverno.io/category: "AXIOM Governance"
+    policies.kyverno.io/severity: "high"
+    policies.kyverno.io/description: >-
+      確保所有 AXIOM 資源包含必要的標註：infrastructure-scope, network-mode, urn
+      Ensure all AXIOM resources have required annotations: infrastructure-scope, network-mode, urn
+    axiom.io/urn: "urn:axiom:policy:kyverno:required-annotations:v1"
+    axiom.io/policy-domain: "governance"
+spec:
+  validationFailureAction: Enforce
+  background: true
+  rules:
+    - name: require-axiom-annotations
+      match:
+        any:
+          - resources:
+              kinds:
+                - Pod
+                - Deployment
+                - StatefulSet
+                - DaemonSet
+                - Service
+                - Job
+                - CronJob
+              namespaces:
+                - axiom-foundation
+                - axiom-governance
+                - axiom-quantum
+                - axiom-ml
+      validate:
+        message: >-
+          資源必須包含 AXIOM 必要標註：
+          - axiom.io/infrastructure-scope (值：on-premise)
+          - axiom.io/network-mode (值：internal-only)
+          - axiom.io/urn (格式：urn:axiom:...)
+        pattern:
+          metadata:
+            annotations:
+              axiom.io/infrastructure-scope: "on-premise"
+              axiom.io/network-mode: "internal-only"
+              axiom.io/urn: "urn:axiom:*"
+
+---
+# 映像簽章驗證政策
+apiVersion: kyverno.io/v2
+kind: ClusterPolicy
+metadata:
+  name: axiom-verify-image-signatures
+  annotations:
+    policies.kyverno.io/title: "AXIOM Image Signature Verification"
+    policies.kyverno.io/category: "Supply Chain Security"
+    policies.kyverno.io/severity: "critical"
+    policies.kyverno.io/description: >-
+      驗證所有容器映像的數位簽章和 SBOM attestation
+      Verify digital signatures and SBOM attestations for all container images
+    axiom.io/urn: "urn:axiom:policy:kyverno:image-verification:v1"
+    axiom.io/policy-domain: "supply-chain"
+spec:
+  validationFailureAction: Enforce
+  background: false
+  failurePolicy: Fail
+  rules:
+    - name: verify-harbor-images
+      match:
+        any:
+          - resources:
+              kinds:
+                - Pod
+                - Job
+              namespaces:
+                - axiom-foundation
+                - axiom-governance
+                - axiom-quantum
+                - axiom-ml
+      verifyImages:
+        - imageReferences:
+            - "harbor.axiom.internal/*"
+          attestors:
+            - entries:
+                - keys:
+                    publicKeys: |
+                      -----BEGIN PUBLIC KEY-----
+                      AXIOM_TRUST_ROOT_ED25519_PUBLIC_KEY_PLACEHOLDER
+                      -----END PUBLIC KEY-----
+          attestations:
+            - predicateType: https://slsa.dev/provenance/v1
+              conditions:
+                - all:
+                    - key: "{{ attestation.predicate.buildType }}"
+                      operator: Equals
+                      value: "https://axiom.io/build/v1"
+            - predicateType: https://spdx.dev/Document
+              conditions:
+                - all:
+                    - key: "{{ attestation.predicate.packages | length(@) }}"
+                      operator: GreaterThan
+                      value: 0
+
+---
+# 資源限制自動注入政策
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: axiom-inject-resource-limits
+  annotations:
+    policies.kyverno.io/title: "AXIOM Resource Limits Injection"
+    policies.kyverno.io/category: "Resource Management"
+    policies.kyverno.io/severity: "medium"
+    policies.kyverno.io/description: >-
+      為未設定資源限制的容器自動注入預設值
+      Automatically inject default resource limits for containers without specified limits
+    axiom.io/urn: "urn:axiom:policy:kyverno:resource-injection:v1"
+    axiom.io/policy-domain: "resource-management"
+spec:
+  validationFailureAction: Enforce
+  background: false
+  rules:
+    - name: inject-cpu-memory-limits
+      match:
+        any:
+          - resources:
+              kinds:
+                - Pod
+              namespaces:
+                - axiom-foundation
+                - axiom-governance
+                - axiom-quantum
+                - axiom-ml
+      mutate:
+        foreach:
+          - list: "request.object.spec.containers"
+            patchesJson6902: |-
+              - op: add
+                path: "/spec/containers/{{elementIndex}}/resources"
+                value:
+                  requests:
+                    cpu: "100m"
+                    memory: "128Mi"
+                  limits:
+                    cpu: "1000m"
+                    memory: "2Gi"
+            preconditions:
+              all:
+                - key: "{{ element.resources.requests.cpu || '' }}"
+                  operator: Equals
+                  value: ""
+
+---
+# 量子工作負載特殊處理政策
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: axiom-quantum-workload-policies
+  annotations:
+    policies.kyverno.io/title: "AXIOM Quantum Workload Governance"
+    policies.kyverno.io/category: "Quantum Computing"
+    policies.kyverno.io/severity: "high"
+    policies.kyverno.io/description: >-
+      量子工作負載專用治理政策，包含相干性監控注入
+      Quantum workload specific governance policies with coherence monitoring injection
+    axiom.io/urn: "urn:axiom:policy:kyverno:quantum-governance:v1"
+    axiom.io/policy-domain: "quantum"
+spec:
+  validationFailureAction: Enforce
+  background: true
+  rules:
+    - name: validate-quantum-labels
+      match:
+        any:
+          - resources:
+              kinds:
+                - Pod
+                - Job
+              namespaces:
+                - axiom-quantum
+      validate:
+        message: >-
+          量子工作負載必須包含以下標籤：
+          - axiom.io/quantum-workload=enabled
+          - axiom.io/quantum-job-type (值：vqe, qaoa, qnn, qgan, 或 qsvm)
+          - axiom.io/coherence-threshold (數值：0.90-0.99)
+        pattern:
+          metadata:
+            labels:
+              axiom.io/quantum-workload: "enabled"
+              axiom.io/quantum-job-type: "vqe | qaoa | qnn | qgan | qsvm"
+              axiom.io/coherence-threshold: "0.9? | 0.8?"
+    - name: inject-coherence-monitor
+      match:
+        any:
+          - resources:
+              kinds:
+                - Pod
+              namespaces:
+                - axiom-quantum
+      preconditions:
+        all:
+          - key: "{{ request.object.metadata.labels['axiom.io/quantum-workload'] || '' }}"
+            operator: Equals
+            value: "enabled"
+      mutate:
+        patchesJson6902: |-
+          - op: add
+            path: /spec/containers/-
+            value:
+              name: quantum-coherence-monitor
+              image: harbor.axiom.internal/quantum/coherence-monitor:v1
+              env:
+                - name: QUANTUM_JOB_TYPE
+                  value: "{{ request.object.metadata.labels['axiom.io/quantum-job-type'] }}"
+                - name: COHERENCE_THRESHOLD
+                  value: "{{ request.object.metadata.labels['axiom.io/coherence-threshold'] }}"
+              resources:
+                requests:
+                  cpu: "50m"
+                  memory: "64Mi"
+                limits:
+                  cpu: "200m"
+                  memory: "256Mi"
+
+---
+# =============================================================================
+# 配置映射 (ConfigMaps) - OPA 政策與配置
+# =============================================================================
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: axiom-opa-policies
+  namespace: axiom-governance
+  labels:
+    axiom.io/component: "opa-policies"
+    axiom.io/version: "v1"
+  annotations:
+    axiom.io/urn: "urn:axiom:config:opa-policies:v1"
+    axiom.io/description: "AXIOM OPA 政策配置"
+data:
+  # 供應鏈安全政策
+  supply-chain.rego: |
+    package axiom.supply_chain
+    
+    # 映像必須來自信任的註冊表
+    deny_untrusted_registry[msg] {
+      input.request.kind.kind == "Pod"
+      some i
+      container := input.request.object.spec.containers[i]
+      not starts_with(container.image, "harbor.axiom.internal/")
+      msg := sprintf("容器 %s 使用不信任的註冊表映像: %s", [container.name, container.image])
+    }
+    
+    # 禁止使用 latest 標籤
+    deny_latest_tag[msg] {
+      input.request.kind.kind == "Pod"
+      some i
+      container := input.request.object.spec.containers[i]
+      ends_with(container.image, ":latest")
+      msg := sprintf("容器 %s 不能使用 :latest 標籤: %s", [container.name, container.image])
+    }
+    
+    # 映像必須有數位簽章
+    deny_unsigned_image[msg] {
+      input.request.kind.kind == "Pod"
+      some i
+      container := input.request.object.spec.containers[i]
+      not input.image_signatures[container.image]
+      msg := sprintf("容器 %s 使用未簽章的映像: %s", [container.name, container.image])
+    }
+
+  # 量子工作負載政策  
+  quantum.rego: |
+    package axiom.quantum
+    
+    # 量子工作負載資源限制
+    deny_excessive_quantum_resources[msg] {
+      input.request.kind.kind == "Pod"
+      input.request.object.metadata.namespace == "axiom-quantum"
+      some i
+      container := input.request.object.spec.containers[i]
+      cpu_limit := container.resources.limits.cpu
+      to_number(trim_suffix(cpu_limit, "m")) > 4000
+      msg := sprintf("量子工作負載容器 %s CPU 限制過高: %s", [container.name, cpu_limit])
+    }
+    
+    # QPU 排程公平性
+    deny_qpu_monopoly[msg] {
+      input.request.kind.kind == "Pod"
+      input.request.object.metadata.labels["axiom.io/quantum-workload"] == "enabled"
+      count(input.quantum.active_jobs) >= 10
+      msg := "QPU 佇列已滿，請稍後重試"
+    }
+    
+    # 相干性門檻驗證
+    deny_low_coherence[msg] {
+      input.request.kind.kind == "Pod"
+      coherence_str := input.request.object.metadata.labels["axiom.io/coherence-threshold"]
+      coherence := to_number(coherence_str)
+      coherence < 0.85
+      msg := sprintf("相干性門檻過低: %v，最小值為 0.85", [coherence])
+    }
+
+  # 網路安全政策
+  network.rego: |
+    package axiom.network
+    
+    # 拒絕特權容器
+    deny_privileged[msg] {
+      input.request.kind.kind == "Pod"
+      some i
+      container := input.request.object.spec.containers[i]
+      container.securityContext.privileged == true
+      msg := sprintf("容器 %s 不能使用特權模

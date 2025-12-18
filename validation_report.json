@@ -1,0 +1,70 @@
+{
+  "timestamp": "2025-12-18T08:05:59.414287",
+  "project_root": "/workspace/MachineNativeOps",
+  "validation_results": {
+    "directory_structure": {
+      "valid": false,
+      "missing_directories": [
+        "/workspace/MachineNativeOps/src/core/services",
+        "/workspace/MachineNativeOps/src/platform",
+        "/workspace/MachineNativeOps/src/services/api",
+        "/workspace/MachineNativeOps/src/services/data",
+        "/workspace/MachineNativeOps/src/services/monitoring"
+      ],
+      "unexpected_directories": [],
+      "details": {
+        "src": {
+          "core": "exists",
+          "platform": "missing",
+          "services": "exists",
+          "shared": "exists",
+          "web": "exists"
+        },
+        "config": {
+          "ci-cd": "exists",
+          "deployment": "exists",
+          "monitoring": "exists",
+          "environments": "exists",
+          "security": "exists",
+          "build-tools": "exists",
+          "governance": "exists"
+        }
+      }
+    },
+    "file_integrity": {
+      "valid": true,
+      "missing_files": [],
+      "empty_files": [],
+      "total_files": 2850
+    },
+    "import_paths": {
+      "valid": true,
+      "broken_imports": [],
+      "fixed_imports": [],
+      "files_checked": 678
+    },
+    "config_files": {
+      "valid": false,
+      "invalid_configs": [
+        "config/governance/system-manifest.yaml: 解析錯誤 - name 'yaml' is not defined",
+        "config/governance/system-module-map.yaml: 解析錯誤 - name 'yaml' is not defined"
+      ],
+      "missing_configs": []
+    },
+    "web_structure": {
+      "valid": false,
+      "missing_components": [
+        "src/web/client/package.json"
+      ],
+      "structure_issues": []
+    }
+  },
+  "issues": [],
+  "warnings": [],
+  "summary": {
+    "total_issues": 0,
+    "critical_issues": 0,
+    "warnings": 0,
+    "overall_valid": false
+  }
+}

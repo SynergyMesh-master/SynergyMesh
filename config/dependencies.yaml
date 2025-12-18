@@ -1,0 +1,194 @@
+# ═══════════════════════════════════════════════════════════
+#    SynergyMesh Dependencies Configuration
+#    依賴配置 - 定義各環境下可用的工具、模型和外部服務
+# ═══════════════════════════════════════════════════════════
+#
+# This layer defines available resources per environment.
+# References environment.yaml for environment IDs.
+#
+# Dependency: environment.yaml
+# Referenced by: ai-constitution.yaml, virtual-experts.yaml,
+#                safety-mechanisms.yaml
+# ═══════════════════════════════════════════════════════════
+
+version: "1.0"
+kind: "dependencies-config"
+
+# ============ Tool Definitions ============
+tools:
+  # Database Tools
+  - id: db_reader
+    name: "Database Reader"
+    kind: "database"
+    description: "Read-only database access"
+    allowed_environments: ["dev", "staging", "prod"]
+    risk_level: low
+    requires_approval: false
+    
+  - id: db_writer
+    name: "Database Writer"
+    kind: "database"
+    description: "Read-write database access"
+    allowed_environments: ["staging", "prod"]
+    risk_level: high
+    requires_approval: true
+    audit_all_operations: true
+    
+  # HTTP/API Tools
+  - id: http_client
+    name: "HTTP Client"
+    kind: "http-client"
+    description: "Make HTTP requests to external APIs"
+    allowed_environments: ["dev", "staging", "prod"]
+    risk_level: medium
+    rate_limit: 100
+    
+  - id: web_browser
+    name: "Web Browser"
+    kind: "browser"
+    description: "Automated web browsing"
+    allowed_environments: ["dev"]
+    risk_level: high
+    requires_approval: true
+    
+  # File System Tools
+  - id: file_reader
+    name: "File Reader"
+    kind: "filesystem"
+    description: "Read files from allowed paths"
+    allowed_environments: ["dev", "staging", "prod"]
+    risk_level: low
+    allowed_paths:
+      - "/data/input"
+      - "/tmp"
+      
+  - id: file_writer
+    name: "File Writer"
+    kind: "filesystem"
+    description: "Write files to allowed paths"
+    allowed_environments: ["dev", "staging"]
+    risk_level: medium
+    allowed_paths:
+      - "/data/output"
+      - "/tmp"
+      
+  # Code Execution Tools
+  - id: code_executor
+    name: "Code Executor"
+    kind: "execution"
+    description: "Execute sandboxed code"
+    allowed_environments: ["dev"]
+    risk_level: critical
+    requires_approval: true
+    sandbox_required: true
+    
+  # Policy/Security Tools
+  - id: policy_checker
+    name: "Policy Checker"
+    kind: "security"
+    description: "Check actions against security policies"
+    allowed_environments: ["dev", "staging", "prod"]
+    risk_level: low
+    requires_approval: false
+
+# ============ Model Definitions ============
+models:
+  - id: gpt-4.1
+    name: "GPT-4.1"
+    provider: "openai"
+    description: "Latest GPT-4 model for general tasks"
+    environments: ["dev", "staging", "prod"]
+    capabilities:
+      - text_generation
+      - code_generation
+      - reasoning
+    cost_tier: "high"
+    rate_limit: 60
+    
+  - id: gpt-4.1-mini
+    name: "GPT-4.1 Mini"
+    provider: "openai"
+    description: "Faster, cheaper GPT-4 variant"
+    environments: ["dev", "staging", "prod"]
+    capabilities:
+      - text_generation
+      - code_generation
+    cost_tier: "medium"
+    rate_limit: 120
+    
+  - id: claude-3.5-sonnet
+    name: "Claude 3.5 Sonnet"
+    provider: "anthropic"
+    description: "Anthropic's balanced model"
+    environments: ["dev", "staging", "prod"]
+    capabilities:
+      - text_generation
+      - code_generation
+      - reasoning
+      - analysis
+    cost_tier: "high"
+    rate_limit: 60
+    
+  - id: local-llama
+    name: "Local Llama"
+    provider: "local"
+    description: "Locally hosted Llama model"
+    environments: ["dev"]
+    capabilities:
+      - text_generation
+    cost_tier: "free"
+    rate_limit: 1000
+
+# ============ External Services ============
+external_services:
+  - id: github_api
+    name: "GitHub API"
+    kind: "api"
+    description: "GitHub REST and GraphQL API"
+    environments: ["dev", "staging", "prod"]
+    auth_required: true
+    rate_limit: 5000
+    
+  - id: slack_webhook
+    name: "Slack Webhook"
+    kind: "notification"
+    description: "Send notifications to Slack"
+    environments: ["staging", "prod"]
+    auth_required: true
+    
+  - id: email_service
+    name: "Email Service"
+    kind: "notification"
+    description: "Send email notifications"
+    environments: ["prod"]
+    auth_required: true
+    requires_approval: true
+    
+  - id: kubernetes_api
+    name: "Kubernetes API"
+    kind: "infrastructure"
+    description: "Kubernetes cluster management"
+    environments: ["staging", "prod"]
+    auth_required: true
+    risk_level: critical
+    requires_approval: true
+
+# ============ Dependency Groups ============
+dependency_groups:
+  - id: basic_tools
+    name: "Basic Tools"
+    description: "Standard tools for all agents"
+    tools:
+      - db_reader
+      - http_client
+      - file_reader
+      - policy_checker
+      
+  - id: advanced_tools
+    name: "Advanced Tools"
+    description: "Tools requiring elevated permissions"
+    tools:
+      - db_writer
+      - file_writer
+      - code_executor
+    requires_approval: true

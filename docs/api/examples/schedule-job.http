@@ -1,0 +1,78 @@
+### Schedule Job Example - Create a Daily Backup Task
+@token = YOUR_JWT_TOKEN_HERE
+
+POST http://localhost:8000/api/v1/tasks
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "name": "Daily Database Backup",
+  "type": "cron",
+  "config": {
+    "schedule": "0 2 * * *",
+    "timezone": "UTC",
+    "command": "backup-database",
+    "priority": "high",
+    "retries": 3,
+    "timeout": 300000
+  }
+}
+
+### Expected Response
+# HTTP/1.1 201 Created
+# {
+#   "id": "task_xyz789",
+#   "name": "Daily Database Backup",
+#   "type": "cron",
+#   "status": "pending",
+#   "config": { ... },
+#   "createdAt": "2025-12-16T23:00:00.000Z"
+# }
+
+### Get Task Details
+@taskId = {{schedule-job.response.body.$.id}}
+
+GET http://localhost:8000/api/v1/tasks/{{taskId}}
+Authorization: Bearer {{token}}
+
+### List All Tasks
+GET http://localhost:8000/api/v1/tasks?status=pending
+Authorization: Bearer {{token}}
+
+### Get Task Logs
+GET http://localhost:8000/api/v1/tasks/{{taskId}}/logs
+Authorization: Bearer {{token}}
+
+### Cancel Running Task
+PUT http://localhost:8000/api/v1/tasks/{{taskId}}/cancel
+Authorization: Bearer {{token}}
+
+### Schedule One-Time Task
+POST http://localhost:8000/api/v1/tasks
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "name": "Cleanup Old Logs",
+  "type": "once",
+  "config": {
+    "executeAt": "2026-01-01T00:00:00Z",
+    "command": "cleanup-logs",
+    "priority": "normal"
+  }
+}
+
+### Schedule Interval Task (Every 5 Minutes)
+POST http://localhost:8000/api/v1/tasks
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "name": "Health Check",
+  "type": "interval",
+  "config": {
+    "interval": 300000,
+    "command": "health-check",
+    "priority": "high"
+  }
+}

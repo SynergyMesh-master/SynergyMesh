@@ -1,0 +1,475 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: decisionauthoritymatrices.governance.machinenativeops.io
+  labels:
+    app: "governance-framework"
+    component: "decision-management"
+    version: "v1"
+  annotations:
+    description: "Decision Authority Matrix CRD for governance decision management"
+    governance.machinenativeops.io/category: "decision"
+    governance.machinenativeops.io/layer: "execution"
+spec:
+  group: governance.machinenativeops.io
+  versions:
+  - name: v1
+    served: true
+    storage: true
+    schema:
+      openAPIV3Schema:
+        type: object
+        properties:
+          spec:
+            type: object
+            required:
+            - matrixId
+            - decisionLevels
+            - decisionCategories
+            properties:
+              matrixId:
+                type: string
+                pattern: '^MATRIX-[0-9]{4}-[0-9]{3}$'
+                description: "Unique matrix identifier"
+                example: "MATRIX-2025-001"
+              title:
+                type: string
+                maxLength: 200
+                description: "Matrix title"
+                example: "Enterprise Decision Authority Matrix"
+              description:
+                type: string
+                maxLength: 2000
+                description: "Matrix description"
+                example: "Defines decision authority levels and approval workflows"
+              version:
+                type: string
+                pattern: '^[0-9]+\.[0-9]+\.[0-9]+$'
+                description: "Matrix version"
+                example: "1.0.0"
+              effectiveDate:
+                type: string
+                format: date
+                description: "Effective date of this matrix version"
+                example: "2025-01-01"
+              expiryDate:
+                type: string
+                format: date
+                description: "Expiry date of this matrix version"
+                example: "2026-12-31"
+              decisionLevels:
+                type: array
+                minItems: 1
+                items:
+                  type: object
+                  required:
+                  - level
+                  - authority
+                  - scope
+                  properties:
+                    level:
+                      type: string
+                      pattern: '^L[1-9]-[A-Za-z]+$'
+                      description: "Decision level identifier"
+                      example: "L1-Operational"
+                    authority:
+                      type: string
+                      maxLength: 100
+                      description: "Authority role or title"
+                      example: "Team Lead"
+                    scope:
+                      type: string
+                      maxLength: 500
+                      description: "Scope of decisions at this level"
+                      example: "日常運營決策"
+                    approvalRequired:
+                      type: boolean
+                      description: "Whether approval is required"
+                      example: false
+                    approvers:
+                      type: array
+                      items:
+                        type: string
+                      description: "List of approvers if approval required"
+                      example: ["Operations Director", "Finance Manager"]
+                    escalationThreshold:
+                      type: string
+                      maxLength: 200
+                      description: "Threshold for escalation to next level"
+                      example: "impact > $10,000"
+                    timeLimit:
+                      type: string
+                      maxLength: 50
+                      description: "Time limit for decision making"
+                      example: "24 hours"
+                    delegationAllowed:
+                      type: boolean
+                      description: "Whether delegation is allowed"
+                      example: true
+                    documentationRequired:
+                      type: boolean
+                      description: "Whether documentation is required"
+                      example: false
+                    reviewFrequency:
+                      type: string
+                      enum: [none, monthly, quarterly, semi-annually, annually]
+                      description: "Review frequency for decisions at this level"
+                      example: "none"
+              decisionCategories:
+                type: array
+                minItems: 1
+                items:
+                  type: object
+                  required:
+                  - category
+                  - defaultLevel
+                  properties:
+                    category:
+                      type: string
+                      maxLength: 100
+                      description: "Decision category"
+                      example: "financial"
+                    description:
+                      type: string
+                      maxLength: 500
+                      description: "Category description"
+                      example: "財務相關決策"
+                    defaultLevel:
+                      type: string
+                      pattern: '^L[1-9]-[A-Za-z]+$'
+                      description: "Default decision level for this category"
+                      example: "L2-Tactical"
+                    specialRules:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          condition:
+                            type: string
+                            maxLength: 200
+                            description: "Condition for special rule"
+                            example: "capital_expenditure > $500,000"
+                          requiredLevel:
+                            type: string
+                            pattern: '^L[1-9]-[A-Za-z]+$'
+                            description: "Required level when condition is met"
+                            example: "L3-Strategic"
+                          additionalApprovers:
+                            type: array
+                            items:
+                              type: string
+                            description: "Additional approvers required"
+                            example: ["CFO", "Board"]
+                          enhancedDocumentation:
+                            type: boolean
+                            description: "Whether enhanced documentation is required"
+                            example: true
+                    complianceFrameworks:
+                      type: array
+                      items:
+                        type: string
+                        enum: [SOX, ISO-27001, GDPR, HIPAA, PCI-DSS, NIST, SOC2]
+                      description: "Relevant compliance frameworks"
+                      example: ["SOX", "GDPR"]
+                    riskLevel:
+                      type: string
+                      enum: [low, medium, high, critical]
+                      description: "Typical risk level for this category"
+                      example: "medium"
+              workflowRules:
+                type: object
+                properties:
+                  validation:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        check:
+                          type: string
+                          enum: [authority_level, risk_assessment, stakeholder_impact, compliance_check, budget_availability, resource_capacity]
+                          description: "Validation check type"
+                          example: "authority_level"
+                        required:
+                          type: boolean
+                          description: "Whether this check is required"
+                          example: true
+                        errorMessage:
+                          type: string
+                          description: "Error message if check fails"
+                          example: "Authority level validation failed"
+                  automation:
+                    type: object
+                    properties:
+                      autoApprove:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            condition:
+                              type: string
+                              description: "Condition for auto-approval"
+                              example: "risk_level = low AND impact < $1,000"
+                            level:
+                              type: string
+                              pattern: '^L[1-9]-[A-Za-z]+$'
+                              description: "Decision level for auto-approval"
+                              example: "L1-Operational"
+                      autoEscalate:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            condition:
+                              type: string
+                              description: "Condition for auto-escalation"
+                              example: "risk_level = critical"
+                            toLevel:
+                              type: string
+                              pattern: '^L[1-9]-[A-Za-z]+$'
+                              description: "Level to escalate to"
+                              example: "L4-Governance"
+                            reason:
+                              type: string
+                              description: "Reason for escalation"
+                              example: "Critical risk detected"
+                  notifications:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        trigger:
+                          type: string
+                          enum: [decision_submitted, approval_required, decision_approved, decision_rejected, escalation_triggered, timeout_warning]
+                          description: "Notification trigger"
+                          example: "decision_submitted"
+                        recipients:
+                          type: array
+                          items:
+                            type: string
+                          description: "Notification recipients"
+                          example: ["requester", "authority"]
+                        channels:
+                          type: array
+                          items:
+                            type: string
+                            enum: [email, slack, teams, sms, portal]
+                          description: "Notification channels"
+                          example: ["email", "portal"]
+                        template:
+                          type: string
+                          description: "Notification template"
+                          example: "decision-submitted-template"
+              integrationPoints:
+                type: object
+                properties:
+                  governanceFramework:
+                    type: array
+                    items:
+                      type: string
+                    description: "Governance framework integration points"
+                    example: ["policy-engine", "risk-management", "compliance-monitoring"]
+                  externalSystems:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                          description: "External system name"
+                          example: "ERP System"
+                        purpose:
+                          type: string
+                          description: "Integration purpose"
+                          example: "Financial data validation"
+                        interface:
+                          type: string
+                          enum: [REST_API, SOAP_API, gRPC, Message_Queue, File_Transfer, Database]
+                          description: "Interface type"
+                          example: "SOAP API"
+                        endpoint:
+                          type: string
+                          description: "System endpoint"
+                          example: "https://erp.company.com/api"
+                        authentication:
+                          type: string
+                          enum: [OAuth2, API_Key, Basic_Auth, Certificate, Service_Account]
+                          description: "Authentication method"
+                          example: "OAuth2"
+              monitoring:
+                type: object
+                properties:
+                  metrics:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                          description: "Metric name"
+                          example: "decision_processing_time"
+                        type:
+                          type: string
+                          enum: [counter, gauge, histogram, summary]
+                          description: "Metric type"
+                          example: "histogram"
+                        threshold:
+                          type: string
+                          description: "Alert threshold"
+                          example: "< 24 hours"
+                        description:
+                          type: string
+                          description: "Metric description"
+                          example: "Time taken to process decisions"
+                  alerts:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        condition:
+                          type: string
+                          description: "Alert condition"
+                          example: "decision_processing_time > 48 hours"
+                        severity:
+                          type: string
+                          enum: [info, warning, error, critical]
+                          description: "Alert severity"
+                          example: "high"
+                        action:
+                          type: string
+                          description: "Action to take"
+                          example: "notify_governance_team"
+                        escalation:
+                          type: string
+                          description: "Escalation path"
+                          example: "notify_governance_committee"
+              compliance:
+                type: object
+                properties:
+                  frameworks:
+                    type: array
+                    items:
+                      type: string
+                      enum: [SOX, ISO-37001, GDPR, HIPAA, PCI-DSS, NIST, SOC2]
+                    description: "Compliance frameworks"
+                    example: ["SOX", "ISO-37001", "GDPR"]
+                  auditRequirements:
+                    type: array
+                    items:
+                      type: string
+                    description: "Audit requirements"
+                    example: ["all_decisions_logged", "approval_trail_maintained", "retention_period_7_years", "immutable_audit_trail"]
+                  reporting:
+                    type: object
+                    properties:
+                      frequency:
+                        type: string
+                        enum: [daily, weekly, monthly, quarterly, annually]
+                        description: "Reporting frequency"
+                        example: "monthly"
+                      recipients:
+                        type: array
+                        items:
+                          type: string
+                        description: "Report recipients"
+                        example: ["audit_committee", "compliance_officer"]
+                      format:
+                        type: string
+                        enum: [PDF, Excel, JSON, XML]
+                        description: "Report format"
+                        example: "PDF"
+          status:
+            type: object
+            properties:
+              phase:
+                type: string
+                enum: [draft, active, deprecated, superseded]
+                description: "Current matrix phase"
+                example: "active"
+              lastUpdated:
+                type: string
+                format: date-time
+                description: "Last status update timestamp"
+                example: "2025-01-15T10:30:00Z"
+              updatedBy:
+                type: string
+                description: "User who last updated the matrix"
+                example: "governance-admin"
+              version:
+                type: string
+                description: "Current version"
+                example: "1.0.0"
+              statistics:
+                type: object
+                properties:
+                  totalDecisions:
+                    type: integer
+                    minimum: 0
+                    description: "Total decisions processed"
+                    example: 1250
+                  averageProcessingTime:
+                    type: string
+                    description: "Average processing time"
+                    example: "18 hours"
+                  approvalRate:
+                    type: number
+                    minimum: 0
+                    maximum: 100
+                    description: "Approval rate percentage"
+                    example: 94.5
+                  escalationRate:
+                    type: number
+                    minimum: 0
+                    maximum: 100
+                    description: "Escalation rate percentage"
+                    example: 3.2
+              conditions:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    type:
+                      type: string
+                      enum: [compliance_issue, performance_degradation, integration_failure, security_violation]
+                    status:
+                      type: string
+                      enum: [True, False]
+                    lastTransitionTime:
+                      type: string
+                      format: date-time
+                    reason:
+                      type: string
+                    message:
+                      type: string
+    additionalPrinterColumns:
+    - name: Title
+      type: string
+      description: "Matrix title"
+      jsonPath: ".spec.title"
+    - name: Version
+      type: string
+      description: "Matrix version"
+      jsonPath: ".spec.version"
+    - name: Status
+      type: string
+      description: "Current status"
+      jsonPath: ".status.phase"
+    - name: Effective Date
+      type: string
+      description: "Effective date"
+      jsonPath: ".spec.effectiveDate"
+    - name: Total Decisions
+      type: integer
+      description: "Total decisions processed"
+      jsonPath: ".status.statistics.totalDecisions"
+  scope: Namespaced
+  names:
+    plural: decisionauthoritymatrices
+    singular: decisionauthoritymatrix
+    kind: DecisionAuthorityMatrix
+    shortNames:
+    - dam
+    - decision-matrix
+  conversion:
+    strategy: None
+  preserveUnknownFields: false

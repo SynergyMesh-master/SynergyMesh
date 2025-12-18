@@ -1,0 +1,248 @@
+---
+# Tenant Tier Definitions / 租戶層級定義
+# Extracted from: baseline-03-resource-management.v1.0.yaml
+# Purpose: Define resource quotas and SLA targets for different tenant tiers
+
+apiVersion: config.machinenativeops.io/v1
+kind: TenantTierConfig
+metadata:
+  name: tenant-tier-definitions
+  version: v1.0.0
+  description: "多租戶層級定義與資源配額 / Multi-tenant tier definitions and resource quotas"
+
+spec:
+  version: v1.0.0
+  
+  tenant_tiers:
+    enterprise:
+      description: "企業級租戶 / Enterprise tier tenant"
+      tier_level: 1
+      priority_class: "high-priority"
+      
+      quotas:
+        cpu_requests: "80"
+        memory_requests: "160Gi"
+        cpu_limits: "160"
+        memory_limits: "320Gi"
+        storage: "500Gi"
+        pods: "400"
+        services: "100"
+        loadbalancers: "10"
+        ingresses: "50"
+        configmaps: "200"
+        secrets: "200"
+      
+      sla:
+        uptime_target: "99.95"
+        support_level: "24x7"
+        response_time_critical: "15-minutes"
+        response_time_high: "1-hour"
+        response_time_medium: "4-hours"
+      
+      features:
+        dedicated_nodes: true
+        gpu_access: true
+        quantum_computing: true
+        advanced_monitoring: true
+        custom_dashboards: true
+        backup_retention_days: 90
+        disaster_recovery: true
+      
+      cost:
+        base_monthly_usd: 10000
+        cpu_core_hour: 0.08
+        memory_gb_hour: 0.015
+        storage_gb_month: 0.25
+        support_included: true
+      
+      limits:
+        max_namespaces: 50
+        max_users: 100
+        max_service_accounts: 200
+    
+    business:
+      description: "商業級租戶 / Business tier tenant"
+      tier_level: 2
+      priority_class: "medium-priority"
+      
+      quotas:
+        cpu_requests: "40"
+        memory_requests: "80Gi"
+        cpu_limits: "80"
+        memory_limits: "160Gi"
+        storage: "200Gi"
+        pods: "200"
+        services: "50"
+        loadbalancers: "5"
+        ingresses: "25"
+        configmaps: "100"
+        secrets: "100"
+      
+      sla:
+        uptime_target: "99.9"
+        support_level: "business-hours"
+        response_time_critical: "30-minutes"
+        response_time_high: "2-hours"
+        response_time_medium: "8-hours"
+      
+      features:
+        dedicated_nodes: false
+        gpu_access: true
+        quantum_computing: false
+        advanced_monitoring: true
+        custom_dashboards: false
+        backup_retention_days: 30
+        disaster_recovery: false
+      
+      cost:
+        base_monthly_usd: 5000
+        cpu_core_hour: 0.06
+        memory_gb_hour: 0.012
+        storage_gb_month: 0.20
+        support_included: true
+      
+      limits:
+        max_namespaces: 25
+        max_users: 50
+        max_service_accounts: 100
+    
+    startup:
+      description: "新創級租戶 / Startup tier tenant"
+      tier_level: 3
+      priority_class: "low-priority"
+      
+      quotas:
+        cpu_requests: "20"
+        memory_requests: "40Gi"
+        cpu_limits: "40"
+        memory_limits: "80Gi"
+        storage: "100Gi"
+        pods: "100"
+        services: "25"
+        loadbalancers: "2"
+        ingresses: "10"
+        configmaps: "50"
+        secrets: "50"
+      
+      sla:
+        uptime_target: "99.5"
+        support_level: "email-only"
+        response_time_critical: "4-hours"
+        response_time_high: "8-hours"
+        response_time_medium: "24-hours"
+      
+      features:
+        dedicated_nodes: false
+        gpu_access: false
+        quantum_computing: false
+        advanced_monitoring: false
+        custom_dashboards: false
+        backup_retention_days: 7
+        disaster_recovery: false
+      
+      cost:
+        base_monthly_usd: 1000
+        cpu_core_hour: 0.05
+        memory_gb_hour: 0.01
+        storage_gb_month: 0.15
+        support_included: false
+      
+      limits:
+        max_namespaces: 10
+        max_users: 20
+        max_service_accounts: 50
+    
+    development:
+      description: "開發測試環境 / Development environment"
+      tier_level: 4
+      priority_class: "low-priority"
+      
+      quotas:
+        cpu_requests: "10"
+        memory_requests: "20Gi"
+        cpu_limits: "20"
+        memory_limits: "40Gi"
+        storage: "50Gi"
+        pods: "50"
+        services: "20"
+        loadbalancers: "1"
+        ingresses: "5"
+        configmaps: "25"
+        secrets: "25"
+      
+      sla:
+        uptime_target: "99.0"
+        support_level: "best-effort"
+        response_time_critical: "next-business-day"
+        response_time_high: "2-business-days"
+        response_time_medium: "5-business-days"
+      
+      features:
+        dedicated_nodes: false
+        gpu_access: false
+        quantum_computing: false
+        advanced_monitoring: false
+        custom_dashboards: false
+        backup_retention_days: 3
+        disaster_recovery: false
+      
+      cost:
+        base_monthly_usd: 500
+        cpu_core_hour: 0.03
+        memory_gb_hour: 0.008
+        storage_gb_month: 0.10
+        support_included: false
+      
+      limits:
+        max_namespaces: 5
+        max_users: 10
+        max_service_accounts: 20
+
+  discount_tiers:
+    - usage_threshold_usd: 10000
+      discount_percent: 10
+      description: "10% discount for $10k+ monthly spend"
+    - usage_threshold_usd: 50000
+      discount_percent: 20
+      description: "20% discount for $50k+ monthly spend"
+    - usage_threshold_usd: 100000
+      discount_percent: 30
+      description: "30% discount for $100k+ monthly spend"
+
+  billing:
+    cycle: "monthly"
+    currency: "USD"
+    payment_terms_days: 30
+    overage_charges: true
+    overage_rate_multiplier: 1.5
+    showback_reports:
+      frequency: "weekly"
+      recipients:
+        - "finance@example.com"
+        - "engineering-leads@example.com"
+      format: "csv"
+      include_forecast: true
+
+  enforcement:
+    hard_limits_enabled: true
+    burst_allowance: true
+    burst_ratio: 1.2
+    burst_duration_minutes: 15
+    grace_period_hours: 24
+    auto_throttle: true
+    notification:
+      quota_warning_threshold: 80
+      quota_critical_threshold: 95
+      channels:
+        - "email"
+        - "slack"
+
+  related_configs:
+    - resource-optimization.yaml
+    - cost-allocation-model.yaml
+  
+  references:
+    - description: "Kubernetes Resource Quotas"
+      url: "https://kubernetes.io/docs/concepts/policy/resource-quotas/"
+    - description: "Multi-Tenancy Best Practices"
+      url: "https://kubernetes.io/docs/concepts/security/multi-tenancy/"

@@ -1,0 +1,72 @@
+# Docker Compose 統一配置索引
+# Unified Docker Compose Configuration Index
+
+version: "1.0.0"
+description: "統一管理所有 Docker Compose 配置檔案"
+
+# 配置檔案映射
+compose_files:
+  base:
+    path: "./compose.base.yaml"
+    description: "基礎生產環境配置"
+    original: "/docker-compose.yml"
+    usage: "docker-compose -f config/docker/compose.base.yaml up -d"
+
+  dev:
+    path: "./compose.dev.yaml"
+    description: "開發環境配置 (含熱重載)"
+    original: "/docker-compose.dev.yml"
+    usage: "docker-compose -f config/docker/compose.dev.yaml up -d"
+
+  devcontainer:
+    path: "./composeconfig/dev.yaml"
+    description: "VS Code Dev Container 配置"
+    original: "/config/dev/docker-compose.yml"
+    usage: "由 VS Code 自動調用"
+
+  architect:
+    path: "./compose.architect.yaml"
+    description: "架構分析服務配置"
+    original: "/automation/architect/docker-compose.yml"
+    usage: "docker-compose -f config/docker/compose.architect.yaml up -d"
+
+  example:
+    path: "./compose.example.yaml"
+    description: "範例配置模板"
+    original: "/docs/examples/configuration/docker/docker-compose.yml"
+    usage: "僅供參考"
+
+# 常用命令
+commands:
+  # 生產環境
+  production:
+    start: "docker-compose -f config/docker/compose.base.yaml up -d"
+    stop: "docker-compose -f config/docker/compose.base.yaml down"
+    logs: "docker-compose -f config/docker/compose.base.yaml logs -f"
+
+  # 開發環境
+  development:
+    start: "docker-compose -f config/docker/compose.dev.yaml up -d"
+    stop: "docker-compose -f config/docker/compose.dev.yaml down"
+    rebuild: "docker-compose -f config/docker/compose.dev.yaml up -d --build"
+
+  # 多環境組合
+  combined:
+    dev_with_monitoring: |
+      docker-compose \
+        -f config/docker/compose.base.yaml \
+        -f config/docker/compose.dev.yaml \
+        up -d
+
+# 環境變數
+environment_files:
+  - ".env"
+  - ".env.local"
+  - ".env.development"
+  - ".env.production"
+
+# 注意事項
+notes:
+  - "所有配置已統一至 config/docker/ 目錄"
+  - "原始檔案位置保留以維持向後相容"
+  - "建議使用此索引中的命令啟動服務"

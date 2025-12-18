@@ -1,0 +1,49 @@
+version: "0.1.0"
+description: >
+  System evolution objectives & constraints for 🏝️ Unmanned Island System.
+  此配置讓儲存庫自己說：「我想怎麼演化、如何量測、有哪些硬性約束」。
+
+# 系統想達成的「演化目標」
+objectives:
+  - id: "language-governance"
+    name: "語言治理健康度"
+    description: "降低語言違規，讓模組語言堆疊穩定且符合策略。"
+    metric: "language_violations_total"
+    target: 0                    # 目標值：違規數 0
+    direction: "lower_is_better" # 越低越好
+    weight: 0.4                  # 在總分中的權重（0~1）
+
+  - id: "security"
+    name: "安全掃描健康度"
+    description: "Semgrep 高風險問題必須為 0。"
+    metric: "semgrep_high_total"
+    target: 0
+    direction: "lower_is_better"
+    weight: 0.3
+
+  - id: "refactor-playbook-coverage"
+    name: "重構劇本覆蓋率"
+    description: "高風險 cluster 應該都有對應的 03_refactor Playbook。"
+    metric: "playbook_coverage_ratio"
+    target: 1.0                  # 目標：100% 覆蓋
+    direction: "higher_is_better"
+    weight: 0.3
+
+# 演化過程的硬約束（AI / 工具都要遵守）
+constraints:
+  - "不得自動修改 core/autonomous 中 safety-critical 邏輯。"
+  - "不得破壞 architecture skeletons 的邊界（core 不依賴 apps 等）。"
+  - "不得將 forbidden_languages（如 PHP/Perl）引入新的路徑。"
+  - "所有重大重構建議都必須在 docs/refactor_playbooks/03_refactor/* 中有對應 Playbook。"
+
+# 指標對應的檔案來源（可以缺，腳本會自我降級）
+metrics_sources:
+  language_governance_report: "governance/language-governance-report.md"
+  semgrep_report: "governance/semgrep-report.json"
+  cluster_heatmap: "apps/web/public/data/cluster-heatmap.json"
+  refactor_playbooks_root: "docs/refactor_playbooks/03_refactor"
+
+# 報告輸出位置
+outputs:
+  state_yaml: "knowledge/evolution-state.yaml"
+  report_markdown: "docs/SYSTEM_EVOLUTION_REPORT.md"

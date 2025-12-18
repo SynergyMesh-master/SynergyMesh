@@ -1,0 +1,69 @@
+### 第 2 階段：多 Agent 生態（6 個月，$3M）
+
+**目標**：實現完整的 7 種 Agent + 協作機制
+
+#### 新增文件結構
+
+```
+island-ai/
+├── src/
+│   ├── agents/
+│   │   ├── architect/           # 架構師 Agent
+│   │   │   ├── index.ts
+│   │   │   ├── analyzer.ts      # 系統分析
+│   │   │   ├── optimizer.ts     # 性能優化
+│   │   │   ├── recommender.ts   # 架構建議
+│   │   │   └── patterns/        # 設計模式庫
+│   │   │       ├── microservices.ts
+│   │   │       ├── event-driven.ts
+│   │   │       └── layered.ts
+│   │   │
+│   │   ├── security/            # 安全官 Agent
+│   │   │   ├── index.ts
+│   │   │   ├── scanner.ts       # 漏洞掃描
+│   │   │   ├── auditor.ts       # 安全審計
+│   │   │   ├── patcher.ts       # 自動修補
+│   │   │   └── rules/           # 安全規則
+│   │   │       ├── owasp.ts
+│   │   │       ├── cwe.ts
+│   │   │       └── custom.ts
+│   │   │
+│   │   ├── devops/              # DevOps Agent
+│   │   │   ├── index.ts
+│   │   │   ├── deployer.ts      # 部署管理
+│   │   │   ├── monitor.ts       # 監控告警
+│   │   │   ├── scaler.ts        # 自動擴展
+│   │   │   └── pipelines/       # CI/CD 管道
+│   │   │       ├── build.ts
+│   │   │       ├── test.ts
+│   │   │       └── deploy.ts
+│   │   │
+│   │   ├── qa/                  # QA Agent
+│   │   │   ├── index.ts
+│   │   │   ├── tester.ts        # 測試執行
+│   │   │   ├── validator.ts     # 結果驗證
+│   │   │   ├── reporter.ts      # 報告生成
+│   │   │   └── strategies/      # 測試策略
+│   │   │       ├── unit.ts
+│   │   │       ├── integration.ts
+│   │   │       └── e2e.ts
+│   │   │
+│   │   ├── data-scientist/      # 數據科學家 Agent
+│   │   │   ├── index.ts
+│   │   │   ├── analyzer.ts      # 數據分析
+│   │   │   ├── modeler.ts       # 模型訓練
+│   │   │   ├── predictor.ts     # 預測引擎
+│   │   │   └── models/          # ML 模型
+│   │   │       ├── regression.ts
+│   │   │       ├── classification.ts
+│   │   │       └── clustering.ts
+│   │   │
+│   │   └── product-manager/     # 產品經理 Agent
+│   │       ├── index.ts
+│   │       ├── prioritizer.ts   # 優先級排序
+│   │       ├── roadmap.ts       # 路線圖規劃
+│   │       ├── feedback.ts      # 用戶反饋分析
+│   │       └── metrics/         # 產品指標
+│   │           ├── kpis.ts
+│   │           ├── analytics.ts
+│   │           └── reporting.ts

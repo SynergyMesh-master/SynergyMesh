@@ -1,0 +1,315 @@
+# RBAC 角色設定範例
+# RBAC (Role-Based Access Control) Configuration Examples
+#
+# 此檔案包含 Kubernetes RBAC 的完整範例配置
+# This file contains complete Kubernetes RBAC configuration examples
+
+---
+# 1. 叢集管理員角色
+# Cluster Admin Role (ClusterRole)
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: cluster-admin-custom
+  labels:
+    rbac.authorization.k8s.io/aggregate-to-admin: "true"
+rules:
+  - apiGroups: ["*"]
+    resources: ["*"]
+    verbs: ["*"]
+  - nonResourceURLs: ["*"]
+    verbs: ["*"]
+
+---
+# 2. 命名空間管理員角色
+# Namespace Admin Role
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: namespace-admin
+  namespace: production
+  labels:
+    app.kubernetes.io/name: namespace-admin
+rules:
+  # 完整的資源管理權限
+  - apiGroups: ["", "apps", "batch", "extensions"]
+    resources: ["*"]
+    verbs: ["*"]
+  # RBAC 管理權限
+  - apiGroups: ["rbac.authorization.k8s.io"]
+    resources: ["roles", "rolebindings"]
+    verbs: ["*"]
+  # 網路策略管理
+  - apiGroups: ["networking.k8s.io"]
+    resources: ["networkpolicies"]
+    verbs: ["*"]
+  # 自動擴展管理
+  - apiGroups: ["autoscaling"]
+    resources: ["horizontalpodautoscalers"]
+    verbs: ["*"]
+
+---
+# 3. 開發者角色（標準權限）
+# Developer Role (Standard Permissions)
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: developer
+  namespace: development
+  labels:
+    app.kubernetes.io/name: developer
+rules:
+  # Pod 管理
+  - apiGroups: [""]
+    resources: ["pods", "pods/log", "pods/status"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: [""]
+    resources: ["pods/exec", "pods/portforward"]
+    verbs: ["create"]
+  # Deployment 管理
+  - apiGroups: ["apps"]
+    resources: ["deployments", "replicasets"]
+    verbs: ["get", "list", "watch", "create", "update", "patch"]
+  # ConfigMap 和 Secret
+  - apiGroups: [""]
+    resources: ["configmaps"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+  - apiGroups: [""]
+    resources: ["secrets"]
+    verbs: ["get", "list", "watch"]  # 只讀 Secret
+  # Service
+  - apiGroups: [""]
+    resources: ["services", "endpoints"]
+    verbs: ["get", "list", "watch", "create", "update", "patch"]
+  # Job 和 CronJob
+  - apiGroups: ["batch"]
+    resources: ["jobs", "cronjobs"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+
+---
+# 4. 唯讀角色（觀察者）
+# Read-Only Role (Observer)
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: observer
+  namespace: production
+  labels:
+    app.kubernetes.io/name: observer
+rules:
+  - apiGroups: ["", "apps", "batch", "extensions", "networking.k8s.io"]
+    resources: ["*"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: [""]
+    resources: ["pods/log"]
+    verbs: ["get"]
+
+---
+# 5. CI/CD 服務角色
+# CI/CD Service Role
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: cicd-deployer
+  namespace: production
+  labels:
+    app.kubernetes.io/name: cicd-deployer
+rules:
+  # Deployment 管理
+  - apiGroups: ["apps"]
+    resources: ["deployments", "replicasets"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+  # Pod 監控
+  - apiGroups: [""]
+    resources: ["pods", "pods/log", "pods/status"]
+    verbs: ["get", "list", "watch"]
+  # Service 管理
+  - apiGroups: [""]
+    resources: ["services"]
+    verbs: ["get", "list", "watch", "create", "update", "patch"]
+  # ConfigMap 管理
+  - apiGroups: [""]
+    resources: ["configmaps"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+  # Secret 更新（用於部署憑證）
+  - apiGroups: [""]
+    resources: ["secrets"]
+    verbs: ["get", "list", "watch", "create", "update", "patch"]
+  # Ingress 管理
+  - apiGroups: ["networking.k8s.io"]
+    resources: ["ingresses"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+
+---
+# 6. 監控服務角色
+# Monitoring Service Role
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: monitoring-reader
+  labels:
+    app.kubernetes.io/name: monitoring-reader
+rules:
+  # 讀取所有資源狀態
+  - apiGroups: [""]
+    resources: ["nodes", "nodes/proxy", "services", "endpoints", "pods"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: [""]
+    resources: ["configmaps"]
+    verbs: ["get"]
+  # 讀取 metrics
+  - apiGroups: ["metrics.k8s.io"]
+    resources: ["pods", "nodes"]
+    verbs: ["get", "list", "watch"]
+  # 非資源 URL
+  - nonResourceURLs: ["/metrics", "/healthz"]
+    verbs: ["get"]
+
+---
+# 7. 角色綁定 - 開發者群組
+# RoleBinding - Developer Group
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: developer-binding
+  namespace: development
+  labels:
+    app.kubernetes.io/name: developer-binding
+subjects:
+  # 綁定到群組
+  - kind: Group
+    name: developers
+    apiGroup: rbac.authorization.k8s.io
+  # 綁定到特定用戶
+  - kind: User
+    name: alice@example.com
+    apiGroup: rbac.authorization.k8s.io
+  - kind: User
+    name: bob@example.com
+    apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: Role
+  name: developer
+  apiGroup: rbac.authorization.k8s.io
+
+---
+# 8. 角色綁定 - 命名空間管理員
+# RoleBinding - Namespace Admin
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: namespace-admin-binding
+  namespace: production
+subjects:
+  - kind: User
+    name: platform-admin@example.com
+    apiGroup: rbac.authorization.k8s.io
+  - kind: Group
+    name: platform-team
+    apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: Role
+  name: namespace-admin
+  apiGroup: rbac.authorization.k8s.io
+
+---
+# 9. 角色綁定 - CI/CD 服務帳戶
+# RoleBinding - CI/CD Service Account
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: cicd-deployer-binding
+  namespace: production
+subjects:
+  - kind: ServiceAccount
+    name: github-actions-deployer
+    namespace: ci-cd
+roleRef:
+  kind: Role
+  name: cicd-deployer
+  apiGroup: rbac.authorization.k8s.io
+
+---
+# 10. 叢集角色綁定 - 監控服務
+# ClusterRoleBinding - Monitoring Service
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: monitoring-reader-binding
+subjects:
+  - kind: ServiceAccount
+    name: prometheus
+    namespace: monitoring
+roleRef:
+  kind: ClusterRole
+  name: monitoring-reader
+  apiGroup: rbac.authorization.k8s.io
+
+---
+# 11. 服務帳戶 - CI/CD
+# Service Account - CI/CD
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: github-actions-deployer
+  namespace: ci-cd
+  labels:
+    app.kubernetes.io/name: github-actions-deployer
+automountServiceAccountToken: true
+
+---
+# 12. 服務帳戶 - 監控
+# Service Account - Monitoring
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: prometheus
+  namespace: monitoring
+  labels:
+    app.kubernetes.io/name: prometheus
+automountServiceAccountToken: true
+
+---
+# 13. 聚合叢集角色 - 自定義資源管理
+# Aggregated ClusterRole - Custom Resource Management
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: custom-resource-admin
+  labels:
+    rbac.authorization.k8s.io/aggregate-to-admin: "true"
+rules:
+  - apiGroups: ["custom.example.com"]
+    resources: ["*"]
+    verbs: ["*"]
+
+---
+# 14. 最小權限角色 - Secret 讀取器
+# Least Privilege Role - Secret Reader
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: secret-reader
+  namespace: production
+rules:
+  - apiGroups: [""]
+    resources: ["secrets"]
+    resourceNames: ["app-credentials", "db-credentials"]  # 只能讀取特定 Secret
+    verbs: ["get"]
+
+---
+# 15. 跨命名空間角色綁定
+# Cross-Namespace RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: monitoring-cross-namespace
+  namespace: production
+subjects:
+  - kind: ServiceAccount
+    name: prometheus
+    namespace: monitoring  # 來自不同命名空間的服務帳戶
+roleRef:
+  kind: Role
+  name: observer
+  apiGroup: rbac.authorization.k8s.io

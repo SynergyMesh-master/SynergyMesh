@@ -1,0 +1,54 @@
+apiVersion: governance.machinenativeops.io/v2
+kind: DimensionModule
+metadata:
+  id: 81-auto-comment
+  name: 自動評論治理
+  name_en: Auto Comment Governance
+  version: 1.0.0
+  created_at: '2025-12-11T00:00:00Z'
+  updated_at: '2025-12-18T00:00:00Z'
+  owner: governance-bot
+  category: extended
+  tags:
+  - 81_auto-comment
+  - extended
+  - ci
+  - automation
+spec:
+  description: Auto Comment Engine for CI/CD governance - automated diagnosis and repair recommendations
+  schema:
+    path: ./schema.json
+    format: json-schema
+    validation: optional
+  policy:
+    path: ./policy.rego
+    engine: opa
+    enforcement: optional
+  dependencies:
+    required:
+    - 39-automation
+    - 80-synthesis
+    optional:
+    - 40-self-healing
+  interface:
+    inputs:
+    - name: ci_log
+      type: string
+      required: true
+    - name: error_patterns
+      type: object
+      required: false
+    outputs:
+    - name: diagnosis
+      type: object
+    - name: repair_action
+      type: object
+  status: active
+  compliance:
+    frameworks:
+    - DevOps
+    - GitOps
+    framework_mappings:
+    - framework: DevOps
+      controls: []
+      compliance_status: in_progress

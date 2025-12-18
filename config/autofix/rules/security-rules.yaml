@@ -1,0 +1,180 @@
+# ============================================================================
+# 安全修復規則 (Security Repair Rules)
+# ============================================================================
+
+version: "1.0.0"
+category: "security"
+priority: "critical"
+
+rules:
+  # 硬編碼密鑰檢測
+  - id: "SEC-001"
+    name: "hardcoded-secrets"
+    description: "檢測並移除硬編碼的密鑰和敏感信息"
+    severity: "CRITICAL"
+    enabled: true
+    
+    patterns:
+      - regex: "password\\s*=\\s*[\"'][\\w\\W]+[\"']"
+        message: "檢測到硬編碼密碼"
+      - regex: "api_key\\s*=\\s*[\"'][\\w\\W]+[\"']"
+        message: "檢測到硬編碼 API 密鑰"
+      - regex: "secret\\s*=\\s*[\"'][\\w\\W]+[\"']"
+        message: "檢測到硬編碼密鑰"
+      - regex: "token\\s*=\\s*[\"'][\\w\\W]+[\"']"
+        message: "檢測到硬編碼令牌"
+    
+    fix_strategy:
+      type: "environment_variable"
+      template: "security-env-var"
+      action: |
+        # 替換硬編碼值為環境變量
+        original: {variable_name} = "{hardcoded_value}"
+        replacement: {variable_name} = os.getenv("{VARIABLE_NAME}")
+    
+    verification:
+      - run_tests: true
+      - security_scan: true
+      - manual_review: true
+
+  # SQL 注入防護
+  - id: "SEC-002"
+    name: "sql-injection"
+    description: "修復 SQL 注入漏洞"
+    severity: "CRITICAL"
+    enabled: true
+    
+    patterns:
+      - regex: "execute\\([\"'].*\\+.*[\"']"
+        message: "檢測到 SQL 字符串拼接"
+      - regex: "query\\s*=\\s*[\"'].*\\+.*[\"']"
+        message: "檢測到不安全的查詢構建"
+    
+    fix_strategy:
+      type: "parameterized_query"
+      template: "security-parameterized-query"
+      action: |
+        # 使用參數化查詢
+        original: execute("SELECT * FROM users WHERE id = " + user_id)
+        replacement: execute("SELECT * FROM users WHERE id = ?", (user_id,))
+    
+    verification:
+      - run_tests: true
+      - security_scan: true
+      - penetration_test: true
+
+  # XSS 防護
+  - id: "SEC-003"
+    name: "xss-vulnerability"
+    description: "修復跨站腳本漏洞"
+    severity: "HIGH"
+    enabled: true
+    
+    patterns:
+      - regex: "innerHTML\\s*=\\s*[^(]"
+        message: "檢測到不安全的 innerHTML 使用"
+      - regex: "document\\.write\\("
+        message: "檢測到不安全的 document.write"
+    
+    fix_strategy:
+      type: "sanitization"
+      template: "security-xss-sanitize"
+      action: |
+        # 使用安全的 HTML 注入方法
+        original: element.innerHTML = userInput
+        replacement: element.textContent = DOMPurify.sanitize(userInput)
+    
+    verification:
+      - run_tests: true
+      - security_scan: true
+
+  # 不安全的依賴項
+  - id: "SEC-004"
+    name: "insecure-dependencies"
+    description: "更新存在已知漏洞的依賴項"
+    severity: "HIGH"
+    enabled: true
+    
+    patterns:
+      - type: "dependency_check"
+        sources: ["snyk", "npm audit", "pip audit"]
+    
+    fix_strategy:
+      type: "dependency_update"
+      template: "security-dependency-update"
+      action: |
+        # 更新到安全版本
+        - 檢查可用的安全版本
+        - 更新 package.json / requirements.txt
+        - 運行測試確保兼容性
+    
+    verification:
+      - run_tests: true
+      - security_scan: true
+      - compatibility_check: true
+
+  # CSRF 防護
+  - id: "SEC-005"
+    name: "csrf-vulnerability"
+    description: "添加 CSRF 防護"
+    severity: "HIGH"
+    enabled: true
+    
+    patterns:
+      - type: "missing_csrf_token"
+        check: "form_without_csrf"
+    
+    fix_strategy:
+      type: "add_csrf_protection"
+      template: "security-csrf-token"
+      action: |
+        # 添加 CSRF 令牌驗證
+        - 在表單中添加 CSRF 令牌
+        - 在服務器端驗證令牌
+    
+    verification:
+      - run_tests: true
+      - security_scan: true
+
+  # 路徑遍歷防護
+  - id: "SEC-006"
+    name: "path-traversal"
+    description: "防止路徑遍歷攻擊"
+    severity: "HIGH"
+    enabled: true
+    
+    patterns:
+      - regex: "open\\([^)]*\\+.*[^)]*\\)"
+        message: "檢測到不安全的文件路徑拼接"
+    
+    fix_strategy:
+      type: "path_sanitization"
+      template: "security-path-sanitize"
+      action: |
+        # 使用安全的路徑處理
+        original: open(base_path + user_input)
+        replacement: open(os.path.join(base_path, os.path.basename(user_input)))
+    
+    verification:
+      - run_tests: true
+      - security_scan: true
+
+# ============================================================================
+# 修復配置
+# ============================================================================
+
+fix_config:
+  auto_apply: false
+  require_review: true
+  create_backup: true
+  run_tests: true
+  generate_report: true
+  
+  review_requirements:
+    min_approvers: 2
+    required_roles: ["security-reviewer", "tech-lead"]
+    
+  rollback_conditions:
+    - test_failure: true
+    - security_scan_failure: true
+    - performance_degradation: true

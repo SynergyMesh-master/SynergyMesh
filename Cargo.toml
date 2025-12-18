@@ -1,0 +1,34 @@
+[workspace]
+resolver = "2"
+# NOTE: The following Rust crate members have been commented out because they do not exist
+# in the repository. Uncomment and restore when the crates are implemented.
+# members = [
+#   "core/runtime",
+#   "core/knowledge-base",
+#   "core/decision-engine",
+#   "core/workflow-orchestrator",
+#   "core/storage-engine",
+#   "core/network",
+#   "core/monitoring"
+# ]
+members = ["automation/autonomous/architecture-stability/rust-layer0"]
+
+[workspace.package]
+edition = "2021"
+rust-version = "1.75"
+
+[profile.dev]
+debug = true
+lto = false
+
+[profile.release]
+debug = false
+lto = "thin"
+codegen-units = 1
+panic = "abort"
+
+[workspace.dependencies]
+serde = { version = "1", features = ["derive"] }
+thiserror = "1"
+tracing = "0.1"
+anyhow = "1"

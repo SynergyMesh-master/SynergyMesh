@@ -1,0 +1,235 @@
+# Kubernetes 命名空間範例配置
+# Kubernetes Namespaces Examples
+#
+# 此檔案包含 Kubernetes 命名空間的完整範例配置
+# This file contains complete Kubernetes namespace configuration examples
+
+---
+# 1. 基本命名空間
+# Basic Namespace
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: development
+  labels:
+    environment: development
+    team: engineering
+  annotations:
+    description: "Development environment namespace"
+    owner: "dev-team@example.com"
+
+---
+# 2. 生產命名空間（含安全設定）
+# Production Namespace with Security Settings
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: production
+  labels:
+    environment: production
+    team: platform
+    # Pod Security Standards
+    pod-security.kubernetes.io/enforce: restricted
+    pod-security.kubernetes.io/enforce-version: latest
+    pod-security.kubernetes.io/audit: restricted
+    pod-security.kubernetes.io/audit-version: latest
+    pod-security.kubernetes.io/warn: restricted
+    pod-security.kubernetes.io/warn-version: latest
+  annotations:
+    description: "Production environment - highly secure"
+    owner: "platform-team@example.com"
+    compliance/standards: "PCI-DSS,SOC2"
+spec:
+  finalizers:
+    - kubernetes
+
+---
+# 3. 資源配額 - 開發環境
+# Resource Quota for Development
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: dev-resource-quota
+  namespace: development
+spec:
+  hard:
+    # 計算資源限制
+    pods: "20"
+    requests.cpu: "4"
+    requests.memory: "8Gi"
+    limits.cpu: "8"
+    limits.memory: "16Gi"
+    # 儲存資源限制
+    persistentvolumeclaims: "10"
+    requests.storage: "50Gi"
+    # 物件數量限制
+    configmaps: "20"
+    secrets: "20"
+    services: "10"
+    services.loadbalancers: "0"
+    services.nodeports: "0"
+
+---
+# 4. 資源配額 - 生產環境
+# Resource Quota for Production
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: prod-resource-quota
+  namespace: production
+spec:
+  hard:
+    # 計算資源限制（較高配額）
+    pods: "100"
+    requests.cpu: "50"
+    requests.memory: "100Gi"
+    limits.cpu: "100"
+    limits.memory: "200Gi"
+    # 儲存資源限制
+    persistentvolumeclaims: "50"
+    requests.storage: "500Gi"
+    # 物件數量限制
+    configmaps: "100"
+    secrets: "100"
+    services: "50"
+    services.loadbalancers: "5"
+    services.nodeports: "10"
+
+---
+# 5. 限制範圍 - 預設容器資源
+# Limit Range - Default Container Resources
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: default-limits
+  namespace: development
+spec:
+  limits:
+    - type: Container
+      default:
+        cpu: "500m"
+        memory: "512Mi"
+      defaultRequest:
+        cpu: "100m"
+        memory: "128Mi"
+      max:
+        cpu: "2"
+        memory: "4Gi"
+      min:
+        cpu: "50m"
+        memory: "64Mi"
+    - type: PersistentVolumeClaim
+      max:
+        storage: "10Gi"
+      min:
+        storage: "1Gi"
+
+---
+# 6. 網路策略 - 預設拒絕所有流量
+# Network Policy - Default Deny All
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: default-deny-all
+  namespace: production
+spec:
+  podSelector: {}
+  policyTypes:
+    - Ingress
+    - Egress
+
+---
+# 7. 網路策略 - 允許同命名空間內通訊
+# Network Policy - Allow Same Namespace Communication
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-same-namespace
+  namespace: production
+spec:
+  podSelector: {}
+  policyTypes:
+    - Ingress
+    - Egress
+  ingress:
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: production
+  egress:
+    - to:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: production
+
+---
+# 8. 網路策略 - 允許 DNS 查詢
+# Network Policy - Allow DNS
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-dns
+  namespace: production
+spec:
+  podSelector: {}
+  policyTypes:
+    - Egress
+  egress:
+    - to:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: kube-system
+        - podSelector:
+            matchLabels:
+              k8s-app: kube-dns
+      ports:
+        - protocol: UDP
+          port: 53
+        - protocol: TCP
+          port: 53
+
+---
+# 9. 服務帳戶
+# Service Account
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: app-service-account
+  namespace: production
+  labels:
+    app: myapp
+automountServiceAccountToken: false
+
+---
+# 10. 多租戶命名空間範例
+# Multi-tenant Namespace Example
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: tenant-acme-corp
+  labels:
+    tenant: acme-corp
+    tier: enterprise
+    billing-id: "ACME-001"
+    managed-by: tenant-operator
+  annotations:
+    tenant/created-at: "2024-01-15T10:00:00Z"
+    tenant/contact: "admin@acme-corp.com"
+    tenant/contract-end: "2025-01-15"
+
+---
+# 11. CI/CD 專用命名空間
+# CI/CD Namespace
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ci-pipeline-main-12345
+  labels:
+    purpose: ci-cd
+    pipeline-id: "12345"
+    branch: main
+    ttl: "24h"
+  annotations:
+    ci-cd/created-at: "2024-01-15T10:00:00Z"
+    ci-cd/created-by: "github-actions"
+    ci-cd/repository: "org/repo"

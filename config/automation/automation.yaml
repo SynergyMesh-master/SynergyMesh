@@ -1,0 +1,191 @@
+# ═══════════════════════════════════════════════════════════════════════════════
+#                    SynergyMesh Automation Configuration
+#                         全自動化系統主配置
+# ═══════════════════════════════════════════════════════════════════════════════
+#
+# 此配置文件定義全自動化系統的行為
+# 100% 機器自主操作，零人類介入
+#
+# Version: 1.0.0
+# ═══════════════════════════════════════════════════════════════════════════════
+
+version: "1.0.0"
+name: "SynergyMesh-Automation"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# 系統設定
+# ═══════════════════════════════════════════════════════════════════════════════
+system:
+  # 運行模式
+  # - autonomous: 全自主 (100% 機器操作)
+  # - supervised: 監督式 (有人類監控)
+  # - interactive: 互動式 (需人類確認)
+  mode: autonomous
+
+  # 自動化級別
+  # - full: 完全自動化
+  # - partial: 部分自動化
+  # - manual: 手動觸發
+  automation_level: full
+
+  # 全局開關
+  enabled: true
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# 引擎配置
+# ═══════════════════════════════════════════════════════════════════════════════
+engines:
+  # 引擎搜索路徑
+  search_paths:
+    - tools/automation/engines
+    - tools/refactor
+
+  # 自動發現
+  auto_discover: true
+
+  # 自動啟動
+  auto_start: true
+
+  # 自動恢復
+  auto_recover: true
+
+  # 最大並行引擎數
+  max_concurrent: 50
+
+  # 引擎類型配置
+  types:
+    cognitive:
+      enabled: true
+      max_instances: 5
+
+    execution:
+      enabled: true
+      max_instances: 20
+
+    validation:
+      enabled: true
+      max_instances: 10
+
+    generation:
+      enabled: true
+      max_instances: 5
+
+    integration:
+      enabled: true
+      max_instances: 10
+
+    monitoring:
+      enabled: true
+      max_instances: 3
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# 調度配置
+# ═══════════════════════════════════════════════════════════════════════════════
+scheduler:
+  # 任務隊列大小
+  queue_size: 10000
+
+  # 任務超時 (秒)
+  default_timeout: 300
+
+  # 重試配置
+  retry:
+    max_attempts: 3
+    initial_delay: 1.0
+    max_delay: 60.0
+    exponential_base: 2.0
+
+  # 優先級權重
+  priority_weights:
+    critical: 1.0
+    high: 0.8
+    normal: 0.5
+    low: 0.3
+    background: 0.1
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# 監控配置
+# ═══════════════════════════════════════════════════════════════════════════════
+monitoring:
+  # 健康檢查
+  health_check:
+    enabled: true
+    interval: 30  # 秒
+    timeout: 10
+
+  # 指標收集
+  metrics:
+    enabled: true
+    collection_interval: 60
+
+  # 告警配置
+  alerts:
+    enabled: true
+    channels:
+      - type: log
+        level: warning
+
+  # 自動修復
+  auto_healing:
+    enabled: true
+    max_recovery_attempts: 3
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# 持久化配置
+# ═══════════════════════════════════════════════════════════════════════════════
+persistence:
+  # 狀態目錄
+  state_dir: ".automation_state"
+
+  # 檢查點
+  checkpoint:
+    enabled: true
+    interval: 60  # 秒
+    max_checkpoints: 10
+
+  # 日誌
+  logging:
+    level: INFO
+    dir: ".automation_logs"
+    max_files: 30
+    max_size_mb: 100
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# 事件總線配置
+# ═══════════════════════════════════════════════════════════════════════════════
+event_bus:
+  # 隊列大小
+  queue_size: 10000
+
+  # 事件保留時間
+  retention_hours: 24
+
+  # 批量處理
+  batch_size: 100
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# 安全配置
+# ═══════════════════════════════════════════════════════════════════════════════
+security:
+  # 沙箱模式
+  sandbox: true
+
+  # 允許的操作
+  allowed_operations:
+    - create
+    - read
+    - update
+    - delete
+    - move
+    - rename
+
+  # 保護的路徑
+  protected_paths:
+    - "/"
+    - "/etc"
+    - "/usr"
+
+  # 備份
+  backup:
+    enabled: true
+    before_destructive: true

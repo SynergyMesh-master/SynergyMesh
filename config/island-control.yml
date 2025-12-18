@@ -1,0 +1,145 @@
+# SynergyMesh 無人島系統配置
+# 此檔案控制多語言無人島系統的行為
+
+meta:
+  version: "2.0.0"
+  name: "SynergyMesh Multi-Islands"
+  description: "多語言自動化無人島系統"
+  created: "2024-01-15"
+  last_updated: "2024-01-15"
+
+# 🏝️ 島嶼配置
+islands:
+  rust:
+    name: "🦀 Rust 性能核心島"
+    enabled: true
+    priority: 1
+    capabilities:
+      - performance_monitor
+      - security_guardian
+      - data_pipeline
+      - system_orchestrator
+    runtime:
+      tool: rustc
+      min_version: "1.70.0"
+    
+  go:
+    name: "🌊 Go 雲原生服務島"
+    enabled: true
+    priority: 2
+    capabilities:
+      - api_gateway
+      - microservice_mesh
+      - container_manager
+      - distributed_cache
+    runtime:
+      tool: go
+      min_version: "1.20.0"
+    
+  typescript:
+    name: "⚡ TypeScript 全棧開發島"
+    enabled: true
+    priority: 3
+    capabilities:
+      - web_dashboard
+      - api_client_generator
+      - real_time_monitor
+      - dev_tools_suite
+    runtime:
+      tool: tsc
+      min_version: "5.0.0"
+    
+  python:
+    name: "🐍 Python AI 數據島"
+    enabled: true
+    priority: 4
+    capabilities:
+      - ai_code_assistant
+      - data_analysis
+      - ml_pipeline
+      - automation_scripts
+    runtime:
+      tool: python3
+      min_version: "3.10.0"
+    
+  java:
+    name: "☕ Java 企業服務島"
+    enabled: true
+    priority: 5
+    capabilities:
+      - enterprise_integration
+      - message_queue_manager
+      - batch_processing
+      - legacy_system_bridge
+    runtime:
+      tool: java
+      min_version: "17"
+
+# 🎛️ 協調器配置
+orchestrator:
+  auto_start: true
+  health_check_interval: 30  # 秒
+  max_concurrent_islands: 5
+  failover:
+    enabled: true
+    max_retries: 3
+    retry_delay: 5  # 秒
+
+# 🌉 橋接配置
+bridges:
+  enabled: true
+  protocols:
+    - grpc
+    - rest
+    - websocket
+    - message_queue
+  timeout: 30  # 秒
+  retry_policy:
+    max_retries: 3
+    backoff_multiplier: 2
+
+# 🔗 島嶼間通信
+communication:
+  default_protocol: rest
+  serialization: json
+  compression: gzip
+  encryption: tls
+
+# 📊 監控配置
+monitoring:
+  enabled: true
+  metrics_port: 9090
+  health_endpoint: "/health"
+  metrics_endpoint: "/metrics"
+  alerts:
+    enabled: true
+    channels:
+      - slack
+      - email
+
+# 🛡️ 安全配置
+security:
+  island_isolation: true
+  inter_island_auth: true
+  audit_logging: true
+  secret_management:
+    provider: vault
+    enabled: false
+
+# 🔄 生命週期配置
+lifecycle:
+  startup_order:
+    - rust      # 高性能核心先啟動
+    - python    # AI 功能
+    - go        # 雲原生服務
+    - typescript  # 前端服務
+    - java      # 企業服務
+  shutdown_timeout: 30  # 秒
+  graceful_shutdown: true
+
+# 📁 路徑配置
+paths:
+  base_path: "v2-multi-islands"
+  logs_path: "logs/islands"
+  data_path: "data/islands"
+  temp_path: "tmp/islands"

@@ -1,0 +1,49 @@
+DEV CONTAINERS ENVIRONMENT SETUP & VALIDATION GUIDE
+Last Updated: 2025-12-04
+
+1) Rebuild the container
+   - VS Code: press Ctrl+Shift+P (Cmd+Shift+P on macOS) and run "Dev Containers: Rebuild Container".
+   - GitHub Codespaces: run "Codespaces: Rebuild Container".
+   Purpose: apply the latest Dockerfile, pre-create /home/node, and install declared features.
+
+2) Verify toolchain after rebuild
+   Run each command inside the container terminal and confirm versions:
+     node -v
+     python3 -V
+     kubectl version --client
+     helm version --short
+     minikube version --short
+   Example healthy output:
+     v18.17.0
+     Python 3.11.5
+     Client Version: v1.28.0
+     v3.12.0
+     minikube version: v1.31.0
+
+3) Troubleshoot failures
+   Common symptoms:
+     - Permission denied: share the full error so ownership of /home/node or npm cache can be fixed.
+     - Command not found: rebuild container to reinstall devcontainer features or adjust PATH.
+     - Missing directory: ensure Dockerfile creates required folders before dependency installs.
+   Provide exact error text for rapid diagnosis.
+
+4) Quick remediation checklist
+     • Node.js version mismatch → update .devcontainer Dockerfile base image or feature settings.
+     • Python module missing → reinstall requirements.txt inside the workspace venv.
+     • kubectl cannot reach a cluster → confirm ~/.kube/config or target context.
+     • Helm outdated → rerun Helm install script in Dockerfile.
+     • Minikube fails to start → confirm Docker daemon is running and has adequate CPU/RAM.
+
+5) Reference Dockerfile snippet
+FROM node:18-bullseye
+RUN apt-get update && apt-get install -y python3 python3-pip curl git \
+    && rm -rf /var/lib/apt/lists/*
+RUN curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" \
+    && chmod +x kubectl && mv kubectl /usr/local/bin/
+RUN curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+RUN curl -LO https://github.com/kubernetes/minikube/releases/latest/download/minikube-linux-amd64 \
+    && chmod +x minikube-linux-amd64 && mv minikube-linux-amd64 /usr/local/bin/minikube
+WORKDIR /home/node
+
+6) When in doubt
+   Copy the failing command and its full output, paste it into the support channel, and an on-call engineer will assist immediately.

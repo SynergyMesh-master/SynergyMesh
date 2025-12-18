@@ -1,0 +1,84 @@
+# SynergyMesh Pre-commit Hooks Configuration
+# 預提交鉤子配置
+
+# See https://pre-commit.com for more information
+# See https://pre-commit.com/hooks.html for more hooks
+
+repos:
+  # Python syntax and formatting
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: check-yaml
+        name: Check YAML files
+        exclude: ^(\.github/|\.refactor-backups/)
+      - id: check-json
+        name: Check JSON files
+      - id: check-toml
+        name: Check TOML files
+      - id: end-of-file-fixer
+        name: Fix end of files
+        exclude: ^(\.refactor-backups/|node_modules/|dist/)
+      - id: trailing-whitespace
+        name: Trim trailing whitespace
+        exclude: ^(\.refactor-backups/|node_modules/|dist/)
+      - id: check-added-large-files
+        name: Check for large files
+        args: ['--maxkb=1000']
+      - id: check-merge-conflict
+        name: Check for merge conflicts
+      - id: check-ast
+        name: Check Python AST
+        types: [python]
+
+  # Python code quality with Ruff
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.1.15
+    hooks:
+      - id: ruff
+        name: Ruff linter
+        args: [--fix, --exit-non-zero-on-fix]
+      - id: ruff-format
+        name: Ruff formatter
+
+  # Python import sorting
+  - repo: https://github.com/PyCQA/isort
+    rev: 5.13.2
+    hooks:
+      - id: isort
+        name: Sort Python imports
+        args: ["--profile", "black"]
+
+  # TypeScript/JavaScript formatting
+  - repo: https://github.com/pre-commit/mirrors-prettier
+    rev: v3.1.0
+    hooks:
+      - id: prettier
+        name: Prettier formatter
+        types_or: [javascript, jsx, ts, tsx, json, yaml, markdown]
+        exclude: ^(package-lock\.json|pnpm-lock\.yaml|\.refactor-backups/|node_modules/)
+
+  # Custom governance validation
+  - repo: local
+    hooks:
+      - id: validate-python-syntax
+        name: Validate Python syntax (SynergyMesh)
+        entry: python3 governance/35-scripts/validate-python-syntax.py --target
+        language: system
+        types: [python]
+        pass_filenames: false
+        always_run: false
+        stages: [commit]
+
+      - id: validate-governance-structure
+        name: Validate governance structure
+        entry: bash governance/35-scripts/validate-governance-structure.sh
+        language: system
+        pass_filenames: false
+        always_run: false
+        stages: [push]
+
+# Global settings
+default_install_hook_types: [pre-commit, pre-push]
+default_stages: [commit]
+fail_fast: false

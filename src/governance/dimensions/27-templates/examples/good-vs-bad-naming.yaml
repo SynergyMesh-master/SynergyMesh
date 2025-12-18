@@ -1,0 +1,105 @@
+# 命名规范对比示例
+# 展示符合和不符合规范的命名对比
+
+---
+# ✅ 好的示例 - Kubernetes Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prod-payment-deploy-v1.3.0
+  namespace: production
+  labels:
+    app: payment
+    version: v1.3.0
+    environment: prod
+    data-classification: confidential
+    owner: backend-team
+  annotations:
+    description: "Payment service production deployment"
+
+---
+# ❌ 坏的示例 - Kubernetes Deployment
+# 问题: 环境名未缩写、使用下划线、版本号格式错误
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: production_Payment_Service_1.3.0
+  namespace: production
+
+---
+# ✅ 好的示例 - Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: prod-payment-svc-v1.3.0
+  namespace: production
+  labels:
+    app: payment
+    version: v1.3.0
+
+---
+# ❌ 坏的示例 - Service
+# 问题: 不一致的命名、使用大写
+apiVersion: v1
+kind: Service
+metadata:
+  name: PaymentService
+  namespace: production
+
+---
+# ✅ 好的示例 - ConfigMap
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: staging-user-api-cm-v2.0.0
+  namespace: staging
+  labels:
+    app: user-api
+    environment: staging
+
+---
+# ❌ 坏的示例 - ConfigMap
+# 问题: 命名不清晰、缺少版本号
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: config
+  namespace: staging
+
+---
+# ✅ 好的示例 - Secret
+apiVersion: v1
+kind: Secret
+metadata:
+  name: prod-database-secret-v1.0.0
+  namespace: production
+  labels:
+    app: database
+    data-classification: restricted
+
+---
+# ❌ 坏的示例 - Secret
+# 问题: 名称包含敏感信息片段
+apiVersion: v1
+kind: Secret
+metadata:
+  name: db-password-abc123
+
+---
+# 命名规范总结
+#
+# ✅ 好的实践:
+# 1. 使用标准格式: {env}-{app}-{type}-{version}
+# 2. 环境缩写: dev, staging, prod
+# 3. 小写字母、数字、连字符
+# 4. 语义化版本: vX.Y.Z
+# 5. 包含必需的标签
+# 6. DNS-1123 兼容 (<=63字符)
+#
+# ❌ 应避免:
+# 1. 大写字母
+# 2. 下划线分隔符
+# 3. 不一致的命名
+# 4. 缺少版本号
+# 5. 名称中包含敏感信息
+# 6. 不清晰或模糊的名称

@@ -1,0 +1,574 @@
+# =============================================================================
+# SynergyMesh Governance - Meta-Specification Layer
+# 99-naming-convention: Unified Naming Convention Governance
+# =============================================================================
+# Layer: Meta-Specification (90-99)
+# Purpose: Foundational standards governing all other dimensions
+# Machine-First Format: YAML
+# Validation: JSON Schema Enforced
+# =============================================================================
+
+apiVersion: governance.machinenativeops.io/v2
+kind: DimensionModule
+metadata:
+  id: "99-naming-convention"
+  name: "統一命名規範治理"
+  name_en: "Unified Naming Convention Governance"
+  version: "1.0.0"
+  created_at: "2025-12-18T00:00:00Z"
+  updated_at: "2025-12-18T00:00:00Z"
+  owner: governance-bot
+  category: meta-specification
+  layer: "90-99"
+  layer_name: "Meta-Specification Layer"
+  tags:
+    - naming
+    - convention
+    - standards
+    - uri
+    - urn
+    - kebab-case
+    - canonical
+
+spec:
+  description: |
+    統一命名規範治理維度是 MachineNativeOps 治理框架的元規範層頂點。
+    此維度定義了整個系統的命名標準，確保所有維度、檔案、鍵值、
+    引用和依賴關係遵循一致的命名慣例。
+
+  # ==========================================================================
+  # NINE SUB-SPECIFICATIONS
+  # ==========================================================================
+  sub_specifications:
+    # ------------------------------------------------------------------------
+    # 1. Directory Naming (目錄命名規範)
+    # ------------------------------------------------------------------------
+    - id: "dir-naming"
+      name: "目錄命名規範"
+      name_en: "Directory Naming Standards"
+      spec_file: "./specs/01-directory-naming.yaml"
+      rules:
+        - rule_id: "DIR-001"
+          name: "kebab-case-only"
+          description: "所有目錄必須使用 kebab-case（小寫連字符）"
+          pattern: "^[a-z0-9]+(-[a-z0-9]+)*$"
+          severity: error
+        - rule_id: "DIR-002"
+          name: "standard-root-directories"
+          description: "根目錄必須使用標準化名稱"
+          allowed_values:
+            - src
+            - config
+            - scripts
+            - docs
+            - tests
+          severity: error
+        - rule_id: "DIR-003"
+          name: "synonym-elimination"
+          description: "禁止同義詞目錄共存"
+          forbidden_pairs:
+            - ["infra", "infrastructure"]
+            - ["config", "configuration"]
+            - ["script", "scripts"]
+            - ["doc", "docs"]
+            - ["test", "tests"]
+          severity: error
+
+    # ------------------------------------------------------------------------
+    # 2. File Naming (檔案命名規範)
+    # ------------------------------------------------------------------------
+    - id: "file-naming"
+      name: "檔案命名規範"
+      name_en: "File Naming Standards"
+      spec_file: "./specs/02-file-naming.yaml"
+      rules:
+        - rule_id: "FILE-001"
+          name: "kebab-case-filenames"
+          description: "一般檔案必須使用 kebab-case"
+          pattern: "^[a-z0-9]+(-[a-z0-9]+)*\\.[a-z0-9]+$"
+          severity: error
+        - rule_id: "FILE-002"
+          name: "special-files-uppercase"
+          description: "特殊標記檔案使用全大寫"
+          allowed_uppercase:
+            - README.md
+            - LICENSE
+            - CHANGELOG.md
+            - CONTRIBUTING.md
+            - CODE_OF_CONDUCT.md
+            - SECURITY.md
+          severity: warning
+        - rule_id: "FILE-003"
+          name: "generated-file-prefix"
+          description: "生成檔案必須有明確前綴或後綴"
+          patterns:
+            generated_prefix: "^_generated-"
+            generated_suffix: "-generated\\.[a-z]+$"
+          severity: info
+
+    # ------------------------------------------------------------------------
+    # 3. Extension Standards (副檔名規範)
+    # ------------------------------------------------------------------------
+    - id: "extension-standards"
+      name: "副檔名規範"
+      name_en: "File Extension Standards"
+      spec_file: "./specs/03-extension-standards.yaml"
+      rules:
+        - rule_id: "EXT-001"
+          name: "content-type-mapping"
+          description: "內容類型與副檔名的標準映射"
+          mappings:
+            yaml_config: [".yaml", ".yml"]
+            json_config: [".json"]
+            typescript: [".ts", ".tsx"]
+            javascript: [".js", ".jsx", ".mjs", ".cjs"]
+            python: [".py"]
+            go: [".go"]
+            rust: [".rs"]
+            markdown: [".md"]
+            rego_policy: [".rego"]
+            shell_script: [".sh"]
+            dockerfile: ["Dockerfile", ".dockerfile"]
+          severity: error
+        - rule_id: "EXT-002"
+          name: "preferred-extensions"
+          description: "偏好的副檔名選擇"
+          preferences:
+            yaml: ".yaml"  # 優先於 .yml
+            typescript: ".ts"  # 優先於 .js
+          severity: warning
+        - rule_id: "EXT-003"
+          name: "forbidden-extensions"
+          description: "禁止使用的副檔名"
+          forbidden:
+            - ".bak"
+            - ".tmp"
+            - ".old"
+            - ".orig"
+          severity: error
+
+    # ------------------------------------------------------------------------
+    # 4. Key Naming (鍵名規範)
+    # ------------------------------------------------------------------------
+    - id: "key-naming"
+      name: "鍵名規範"
+      name_en: "Key Naming Standards"
+      spec_file: "./specs/04-key-naming.yaml"
+      rules:
+        - rule_id: "KEY-001"
+          name: "yaml-key-snake-case"
+          description: "YAML 配置鍵使用 snake_case"
+          pattern: "^[a-z][a-z0-9]*(_[a-z0-9]+)*$"
+          applies_to: [".yaml", ".yml"]
+          severity: error
+        - rule_id: "KEY-002"
+          name: "json-key-camelCase"
+          description: "JSON API 回應鍵使用 camelCase"
+          pattern: "^[a-z][a-zA-Z0-9]*$"
+          applies_to: [".json"]
+          context: api_response
+          severity: warning
+        - rule_id: "KEY-003"
+          name: "reserved-keywords"
+          description: "保留關鍵字不可作為自定義鍵名"
+          reserved:
+            - apiVersion
+            - kind
+            - metadata
+            - spec
+            - status
+            - id
+            - name
+            - version
+          severity: error
+        - rule_id: "KEY-004"
+          name: "namespace-prefix"
+          description: "自定義鍵需使用命名空間前綴"
+          pattern: "^machinenativeops\\.io/[a-z0-9-]+$"
+          applies_to: annotations
+          severity: warning
+
+    # ------------------------------------------------------------------------
+    # 5. Value Naming (值名規範)
+    # ------------------------------------------------------------------------
+    - id: "value-naming"
+      name: "值名規範"
+      name_en: "Value Naming Standards"
+      spec_file: "./specs/05-value-naming.yaml"
+      rules:
+        - rule_id: "VAL-001"
+          name: "enum-lowercase-kebab"
+          description: "枚舉值使用小寫 kebab-case"
+          pattern: "^[a-z0-9]+(-[a-z0-9]+)*$"
+          examples:
+            correct: ["active", "in-progress", "pending-review"]
+            incorrect: ["Active", "IN_PROGRESS", "pendingReview"]
+          severity: error
+        - rule_id: "VAL-002"
+          name: "boolean-canonical"
+          description: "布林值的標準表示"
+          canonical:
+            true_values: [true, "true"]
+            false_values: [false, "false"]
+          forbidden: ["yes", "no", "on", "off", "1", "0"]
+          severity: error
+        - rule_id: "VAL-003"
+          name: "version-semver"
+          description: "版本號必須符合語意化版本"
+          pattern: "^v?[0-9]+\\.[0-9]+\\.[0-9]+(-[a-z0-9]+)?(\\+[a-z0-9]+)?$"
+          examples:
+            correct: ["1.0.0", "v2.1.3", "1.0.0-alpha", "1.0.0+build.123"]
+            incorrect: ["1.0", "v1", "version-1.0.0"]
+          severity: error
+        - rule_id: "VAL-004"
+          name: "environment-abbreviations"
+          description: "環境名稱的標準縮寫"
+          canonical_mappings:
+            development: "dev"
+            staging: "staging"
+            production: "prod"
+            testing: "test"
+            learning: "learn"
+          severity: error
+
+    # ------------------------------------------------------------------------
+    # 6. Mapping Standards (映射規範)
+    # ------------------------------------------------------------------------
+    - id: "mapping-standards"
+      name: "映射規範"
+      name_en: "Mapping Standards"
+      spec_file: "./specs/06-mapping-standards.yaml"
+      rules:
+        - rule_id: "MAP-001"
+          name: "path-alias-format"
+          description: "路徑別名格式標準"
+          patterns:
+            relative: "^\\.\\.?/"
+            absolute: "^/"
+            alias: "^@[a-z-]+/"
+          examples:
+            relative: ["./config/", "../shared/"]
+            alias: ["@config/", "@shared/", "@governance/"]
+          severity: warning
+        - rule_id: "MAP-002"
+          name: "junction-table-naming"
+          description: "映射表命名標準"
+          pattern: "^[a-z]+-to-[a-z]+$"
+          examples: ["dimension-to-policy", "module-to-schema"]
+          severity: info
+        - rule_id: "MAP-003"
+          name: "change-tracking-metadata"
+          description: "映射變更追蹤元數據"
+          required_fields:
+            - created_at
+            - updated_at
+            - version
+            - owner
+          severity: warning
+
+    # ------------------------------------------------------------------------
+    # 7. Reference Standards (引用規範)
+    # ------------------------------------------------------------------------
+    - id: "reference-standards"
+      name: "引用規範"
+      name_en: "Reference Standards"
+      spec_file: "./specs/07-reference-standards.yaml"
+      rules:
+        - rule_id: "REF-001"
+          name: "cross-file-reference-format"
+          description: "跨檔案引用格式"
+          formats:
+            json_pointer: "#/path/to/element"
+            yaml_anchor: "*anchor_name"
+            file_reference: "$file{path/to/file.yaml}"
+            env_reference: "$env{VARIABLE_NAME}"
+          severity: error
+        - rule_id: "REF-002"
+          name: "import-pattern"
+          description: "導入模式標準"
+          patterns:
+            relative_import: "from './module'"
+            absolute_import: "from '@package/module'"
+            dynamic_import: "import('./module')"
+          severity: warning
+        - rule_id: "REF-003"
+          name: "link-integrity"
+          description: "引用完整性檢查"
+          validations:
+            - check_file_exists
+            - check_anchor_exists
+            - check_circular_reference
+          severity: error
+
+    # ------------------------------------------------------------------------
+    # 8. Dependency Standards (依賴規範)
+    # ------------------------------------------------------------------------
+    - id: "dependency-standards"
+      name: "依賴規範"
+      name_en: "Dependency Standards"
+      spec_file: "./specs/08-dependency-standards.yaml"
+      rules:
+        - rule_id: "DEP-001"
+          name: "semver-constraints"
+          description: "版本約束語法"
+          patterns:
+            exact: "1.2.3"
+            caret: "^1.2.3"
+            tilde: "~1.2.3"
+            range: ">=1.0.0 <2.0.0"
+            wildcard: "1.x"
+          severity: error
+        - rule_id: "DEP-002"
+          name: "transitive-visibility"
+          description: "傳遞依賴可見性規則"
+          rules:
+            - direct_dependencies_explicit
+            - transitive_dependencies_documented
+            - peer_dependencies_declared
+          severity: warning
+        - rule_id: "DEP-003"
+          name: "cycle-prevention"
+          description: "循環依賴預防"
+          max_depth: 10
+          validation: acyclic_graph_check
+          severity: error
+        - rule_id: "DEP-004"
+          name: "dependency-declaration-format"
+          description: "依賴聲明格式"
+          format:
+            required_fields:
+              - id
+              - version
+              - type  # required | optional | peer
+            optional_fields:
+              - reason
+              - alternatives
+          severity: error
+
+    # ------------------------------------------------------------------------
+    # 9. URI/URN Standards (URI/URN 規範)
+    # ------------------------------------------------------------------------
+    - id: "uri-urn-standards"
+      name: "URI/URN 規範"
+      name_en: "URI/URN Standards"
+      spec_file: "./specs/09-uri-urn-standards.yaml"
+      rules:
+        - rule_id: "URN-001"
+          name: "canonical-urn-format"
+          description: "標準 URN 格式"
+          pattern: "^urn:machinenativeops:[a-z0-9-]+:[a-z0-9-]+(:v[0-9]+)?$"
+          template: "urn:machinenativeops:{domain}:{resource}:{version}"
+          examples:
+            correct:
+              - "urn:machinenativeops:governance:naming-convention:v1"
+              - "urn:machinenativeops:ai:cognitive-engine:v2"
+              - "urn:machinenativeops:core:execution-engine:v1"
+            incorrect:
+              - "urn:MachineNativeOps:Governance:NamingConvention"
+              - "machinenativeops:governance:naming"
+              - "urn:machinenativeops:Governance:naming-convention"
+          severity: error
+        - rule_id: "URN-002"
+          name: "urn-domain-registry"
+          description: "URN 域名登錄"
+          registered_domains:
+            governance: "治理框架資源"
+            ai: "AI 相關資源"
+            core: "核心引擎資源"
+            autonomous: "自主系統資源"
+            config: "配置資源"
+            dimension: "維度資源"
+          severity: error
+        - rule_id: "URN-003"
+          name: "urn-checksum-slot"
+          description: "URN 校驗碼欄位"
+          format: "urn:machinenativeops:{domain}:{resource}:{version}:{checksum}"
+          checksum_algorithm: "sha256-short"
+          checksum_length: 8
+          optional: true
+          severity: info
+        - rule_id: "URN-004"
+          name: "urn-environment-scoping"
+          description: "URN 環境範圍"
+          format: "urn:machinenativeops:{env}:{domain}:{resource}:{version}"
+          environments: ["dev", "staging", "prod"]
+          severity: warning
+        - rule_id: "URI-001"
+          name: "api-uri-pattern"
+          description: "API URI 路徑模式"
+          patterns:
+            rest_api: "/api/v{version}/{resource}/{id?}"
+            graphql: "/graphql"
+            websocket: "/ws/{channel}"
+          examples:
+            correct:
+              - "/api/v1/dimensions/99-naming-convention"
+              - "/api/v2/governance/policies"
+            incorrect:
+              - "/API/V1/Dimensions"
+              - "/api/dimensions/NamingConvention"
+          severity: error
+        - rule_id: "URI-002"
+          name: "resource-uri-pattern"
+          description: "資源 URI 路徑模式"
+          pattern: "^/[a-z0-9]+(/[a-z0-9-]+)*$"
+          severity: error
+
+  # ==========================================================================
+  # SCHEMA REFERENCE
+  # ==========================================================================
+  schema:
+    path: "./schema.json"
+    format: json-schema
+    validation: required
+
+  # ==========================================================================
+  # POLICY REFERENCE
+  # ==========================================================================
+  policy:
+    path: "./policy.rego"
+    engine: opa
+    enforcement: required
+
+  # ==========================================================================
+  # DEPENDENCIES
+  # ==========================================================================
+  dependencies:
+    required:
+      - id: "01-architecture"
+        reason: "命名規範基於架構設計原則"
+      - id: "25-principles"
+        reason: "命名規範遵循治理原則"
+      - id: "31-schemas"
+        reason: "命名規範需要結構驗證支持"
+    optional:
+      - id: "27-templates"
+        reason: "提供命名模板範例"
+      - id: "34-config"
+        reason: "配置命名標準"
+      - id: "60-contracts"
+        reason: "契約命名標準"
+
+  # ==========================================================================
+  # REVERSE DEPENDENCY PROTECTION
+  # ==========================================================================
+  meta_constraints:
+    no_downstream_dependencies: true
+    description: "作為元規範層，99-naming-convention 不可依賴下游模組"
+
+  # ==========================================================================
+  # INTERFACE DEFINITION
+  # ==========================================================================
+  interface:
+    inputs:
+      - name: resource
+        type: object
+        required: true
+        description: "待驗證的資源（檔案、目錄、配置等）"
+      - name: context
+        type: object
+        required: false
+        description: "驗證上下文（環境、嚴格程度等）"
+    outputs:
+      - name: validation_result
+        type: object
+        description: "驗證結果"
+        schema_ref: "#/definitions/validation_result"
+      - name: suggestions
+        type: array
+        description: "命名建議列表"
+      - name: canonical_form
+        type: string
+        description: "標準化後的名稱"
+    errors:
+      - code: "E99001"
+        name: "NamingViolation"
+        description: "命名規範違規"
+      - code: "E99002"
+        name: "PatternMismatch"
+        description: "模式不匹配"
+      - code: "E99003"
+        name: "ReservedKeyword"
+        description: "使用保留關鍵字"
+      - code: "E99004"
+        name: "URNFormatError"
+        description: "URN 格式錯誤"
+      - code: "E99005"
+        name: "CircularDependency"
+        description: "循環依賴檢測"
+
+  # ==========================================================================
+  # BEHAVIOR CONTRACTS
+  # ==========================================================================
+  behavior:
+    invariants:
+      - "所有操作必須可稽核"
+      - "命名驗證必須冪等"
+      - "元規範不可引入循環依賴"
+    preconditions:
+      - "輸入必須符合資源 schema"
+      - "上下文必須包含有效環境"
+    postconditions:
+      - "輸出必須包含驗證結果"
+      - "違規必須有對應的修正建議"
+    side_effects:
+      - "生成稽核軌跡"
+      - "更新命名統計指標"
+
+  # ==========================================================================
+  # LIFECYCLE
+  # ==========================================================================
+  lifecycle:
+    states:
+      - draft
+      - review
+      - active
+      - deprecated
+      - retired
+    transitions:
+      - from: draft
+        to: review
+        trigger: submit_for_review
+      - from: review
+        to: active
+        trigger: approval_complete
+      - from: active
+        to: deprecated
+        trigger: deprecation_notice
+      - from: deprecated
+        to: retired
+        trigger: retirement_complete
+
+  # ==========================================================================
+  # METRICS
+  # ==========================================================================
+  metrics:
+    - name: "naming_validations_total"
+      type: counter
+      description: "命名驗證總數"
+    - name: "naming_violations_total"
+      type: counter
+      description: "命名違規總數"
+      labels: ["rule_id", "severity"]
+    - name: "naming_validation_duration_seconds"
+      type: histogram
+      description: "驗證耗時（秒）"
+    - name: "naming_compliance_ratio"
+      type: gauge
+      description: "命名合規率"
+
+  # ==========================================================================
+  # COMPLIANCE
+  # ==========================================================================
+  compliance:
+    frameworks:
+      - ISO-42001
+      - NIST-AI-RMF
+      - COBIT-2019
+    controls:
+      - "NC-001: 目錄命名合規"
+      - "NC-002: 檔案命名合規"
+      - "NC-003: URN 格式合規"
+    audit_frequency: continuous
+
+status: active

@@ -1,0 +1,55 @@
+# ═══════════════════════════════════════════════════════════════════════════════
+#                    Production-specific Git Ignore Rules
+#                    生產環境相關 Git 忽略規則
+# ═══════════════════════════════════════════════════════════════════════════════
+
+# Environment & Secrets
+.env
+.env.*.local
+.env.production
+!.env.example
+
+# Build outputs
+dist/
+build/
+*.tgz
+*.tar.gz
+
+# Node & Package managers
+node_modules/
+npm-debug.log*
+yarn-error.log*
+pnpm-error.log*
+.npm
+
+# Cache
+.cache/
+.eslintcache
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDEs
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Test coverage
+coverage/
+.nyc_output/
+
+# Logs
+logs/
+*.log
+
+# Runtime data
+*.pid
+.pids

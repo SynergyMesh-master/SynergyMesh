@@ -1,0 +1,60 @@
+# =============================================================================
+# 鍵名規範 (Key Naming Standards)
+# Spec ID: 04-key-naming
+# URN: urn:machinenativeops:governance:naming-spec:key:v1
+# =============================================================================
+
+apiVersion: governance.machinenativeops.io/v2
+kind: NamingSpec
+metadata:
+  id: "key-naming"
+  name: "鍵名規範"
+  name_en: "Key Naming Standards"
+  version: "1.0.0"
+  urn: "urn:machinenativeops:governance:naming-spec:key:v1"
+  parent: "99-naming-convention"
+
+spec:
+  description: |
+    此規範定義配置檔和程式碼中鍵名的命名標準。
+
+  yaml_config:
+    format: "snake_case"
+    pattern: "^[a-z][a-z0-9]*(_[a-z0-9]+)*$"
+    examples:
+      correct: ["api_version", "max_retry_count", "created_at"]
+      incorrect: ["apiVersion", "MaxRetryCount", "createdAt"]
+
+  json_api:
+    format: "camelCase"
+    pattern: "^[a-z][a-zA-Z0-9]*$"
+    context: "API 回應和請求"
+    examples:
+      correct: ["apiVersion", "maxRetryCount", "createdAt"]
+      incorrect: ["api_version", "max_retry_count"]
+
+  kubernetes_standard:
+    reserved_keys:
+      - apiVersion
+      - kind
+      - metadata
+      - spec
+      - status
+    description: "K8s 標準欄位保持原格式"
+
+  annotation_namespace:
+    pattern: "^machinenativeops\\.io/[a-z0-9-]+$"
+    examples:
+      - "machinenativeops.io/canonical-urn"
+      - "machinenativeops.io/naming-mode"
+      - "machinenativeops.io/owner"
+
+  reserved_keywords:
+    - apiVersion
+    - kind
+    - metadata
+    - spec
+    - status
+    - id
+    - name
+    - version

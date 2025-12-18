@@ -1,0 +1,66 @@
+# Refactor & Evolution Pipeline Definition
+pipeline_id: "refactor_evolution_pipeline"
+name: "Refactor & Evolution Pipeline"
+description: "Automated project refactoring and evolution using SynergyMesh engines"
+version: "1.0.0"
+
+metadata:
+  category: "automation"
+  tags: ["refactor", "evolution", "optimization", "autonomous"]
+  owner: "machinenativeops-core"
+
+config:
+  mode: "autonomous"
+  max_duration_minutes: 30
+  
+stages:
+  - id: "analysis"
+    name: "Analysis Stage"
+    description: "Analyze codebase structure"
+    type: "analysis"
+  
+  - id: "planning"
+    name: "Planning Stage"
+    description: "Create execution plan"
+    type: "planning"
+  
+  - id: "execution"
+    name: "Execution Stage"
+    description: "Execute refactoring"
+    type: "execution"
+  
+  - id: "learning"
+    name: "Learning Stage"
+    description: "Learn from results"
+    type: "learning"
+  
+  - id: "evolution"
+    name: "Evolution Stage"
+    description: "Apply improvements"
+    type: "evolution"
+  
+  - id: "validation"
+    name: "Validation Stage"
+    description: "Validate changes"
+    type: "validation"
+
+inputs:
+  mode:
+    type: "string"
+    default: "autonomous"
+  
+  targets:
+    type: "array"
+    default: ["core/", "automation/", "services/"]
+  
+  dry_run:
+    type: "boolean"
+    default: false
+
+outputs:
+  workflow_report:
+    type: "file"
+    format: "yaml"
+  
+  metrics:
+    type: "object"

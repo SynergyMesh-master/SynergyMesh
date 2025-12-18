@@ -1,0 +1,82 @@
+# ═══════════════════════════════════════════════════════════════════════════════
+#                    Unmanned Island System - System Entity
+#                    無人之島系統 - 系統實體定義
+# ═══════════════════════════════════════════════════════════════════════════════
+#
+# This file defines the top-level System entity for the Unmanned Island System.
+# It serves as the machine-native knowledge layer entry point.
+#
+# Schema: https://schema.superroot.kn/mndoc/entity/system/v1
+# Source: README.md
+#
+# ═══════════════════════════════════════════════════════════════════════════════
+
+$schema: "https://schema.superroot.kn/mndoc/entity/system/v1"
+entity: "System"
+id: "unmanned-island"
+title: "Unmanned Island System"
+version: "3.0.0"
+description: |
+  次世代雲原生智能自動化平台，整合 SynergyMesh 核心引擎 + 結構治理系統 + 
+  無人之島自主框架。Next-generation cloud-native platform for intelligent 
+  business automation integrating SynergyMesh Core Engine, Structural 
+  Governance System, and Autonomous Framework.
+
+domain: "automation"
+layer: "control-plane"
+criticality: "high"
+
+# Three major subsystems
+subsystems:
+  - "machinenativeops-core"
+  - "structural-governance"
+  - "autonomous-framework"
+
+# Service Level Objectives
+slo:
+  latency_ms: 50
+  availability_pct: 99.9
+  error_budget_pct: 0.1
+
+owner: "platform-team"
+status: "active"
+
+tags:
+  - architecture
+  - automation
+  - governance
+  - cloud-native
+  - enterprise
+
+# Design principles from README
+meta:
+  design_principles:
+    - id: "unified-entry"
+      name: "統一入口"
+      description: "單一配置檔 machinenativeops.yaml 作為所有系統的真實來源"
+    - id: "modular-design"
+      name: "模組化設計"
+      description: "三大子系統獨立運作，透過統一接口協作"
+    - id: "zero-trust-security"
+      name: "零信任安全"
+      description: "SLSA L3 溯源 + Sigstore 簽名 + 策略閘驗證"
+    - id: "autonomous-ops"
+      name: "自主運維"
+      description: "AI 驅動的自動修復、智能派工、升級管理"
+  
+  config_refs:
+    master: "machinenativeops.yaml"
+    manifest: "config/system-manifest.yaml"
+    modules: "config/system-module-map.yaml"
+    index: "config/unified-config-index.yaml"
+  
+  quality_gates:
+    test_coverage: ">= 80%"
+    lint_errors: 0
+    security_vulnerabilities: 0
+    schema_validation: "pass"
+    policy_check: "pass"
+
+evidence_ref:
+  sbom: "governance/sbom/system.yaml"
+  slsa_ref: ".slsa/provenance/unmanned-island.json"

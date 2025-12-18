@@ -1,0 +1,245 @@
+{
+  "dashboard": {
+    "title": "GitHub Advanced Security Dashboard",
+    "tags": ["security", "ghas", "github"],
+    "timezone": "browser",
+    "schemaVersion": 16,
+    "version": 1,
+    "refresh": "5m",
+    "panels": [
+      {
+        "id": 1,
+        "title": "Security Alerts Overview",
+        "type": "stat",
+        "gridPos": {"x": 0, "y": 0, "w": 6, "h": 4},
+        "targets": [
+          {
+            "expr": "github_security_alerts{state=\"open\"}",
+            "legendFormat": "{{severity}}"
+          }
+        ],
+        "options": {
+          "reduceOptions": {
+            "values": false,
+            "calcs": ["lastNotNull"]
+          },
+          "orientation": "horizontal",
+          "textMode": "value_and_name",
+          "colorMode": "background"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {"value": 0, "color": "green"},
+                {"value": 1, "color": "yellow"},
+                {"value": 5, "color": "orange"},
+                {"value": 10, "color": "red"}
+              ]
+            }
+          }
+        }
+      },
+      {
+        "id": 2,
+        "title": "CodeQL Scan Results",
+        "type": "timeseries",
+        "gridPos": {"x": 6, "y": 0, "w": 10, "h": 8},
+        "targets": [
+          {
+            "expr": "rate(github_codeql_scans_total[1h])",
+            "legendFormat": "Scans per hour"
+          },
+          {
+            "expr": "github_codeql_alerts{severity=\"critical\"}",
+            "legendFormat": "Critical Alerts"
+          },
+          {
+            "expr": "github_codeql_alerts{severity=\"high\"}",
+            "legendFormat": "High Alerts"
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "title": "Secret Scanning Activity",
+        "type": "barchart",
+        "gridPos": {"x": 16, "y": 0, "w": 8, "h": 8},
+        "targets": [
+          {
+            "expr": "github_secret_scanning_alerts{state=\"open\"}",
+            "legendFormat": "{{secret_type}}"
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "title": "Vulnerability Remediation Time",
+        "type": "gauge",
+        "gridPos": {"x": 0, "y": 8, "w": 6, "h": 6},
+        "targets": [
+          {
+            "expr": "avg(github_vulnerability_remediation_time_hours)",
+            "legendFormat": "Avg Time (hours)"
+          }
+        ],
+        "options": {
+          "showThresholdLabels": true,
+          "showThresholdMarkers": true
+        },
+        "fieldConfig": {
+          "defaults": {
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {"value": 0, "color": "green"},
+                {"value": 24, "color": "yellow"},
+                {"value": 72, "color": "orange"},
+                {"value": 168, "color": "red"}
+              ]
+            },
+            "unit": "h"
+          }
+        }
+      },
+      {
+        "id": 5,
+        "title": "Dependabot PR Status",
+        "type": "piechart",
+        "gridPos": {"x": 6, "y": 8, "w": 6, "h": 6},
+        "targets": [
+          {
+            "expr": "github_dependabot_prs{state=\"open\"}",
+            "legendFormat": "{{severity}}"
+          }
+        ]
+      },
+      {
+        "id": 6,
+        "title": "API Rate Limit Usage",
+        "type": "timeseries",
+        "gridPos": {"x": 12, "y": 8, "w": 12, "h": 6},
+        "targets": [
+          {
+            "expr": "github_api_remaining / github_api_limit",
+            "legendFormat": "API Quota Remaining"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "percentunit"
+          }
+        }
+      },
+      {
+        "id": 7,
+        "title": "Security SLA Compliance",
+        "type": "table",
+        "gridPos": {"x": 0, "y": 14, "w": 12, "h": 8},
+        "targets": [
+          {
+            "expr": "github_sla_compliance_rate",
+            "format": "table",
+            "legendFormat": ""
+          }
+        ],
+        "transformations": [
+          {
+            "id": "organize",
+            "options": {
+              "excludeByName": {},
+              "indexByName": {},
+              "renameByName": {
+                "severity": "Severity",
+                "sla_target": "SLA Target",
+                "compliance_rate": "Compliance Rate",
+                "avg_resolution_time": "Avg Resolution Time"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "id": 8,
+        "title": "Runner Health Status",
+        "type": "stat",
+        "gridPos": {"x": 12, "y": 14, "w": 12, "h": 4},
+        "targets": [
+          {
+            "expr": "up{job=\"github-runners\"}",
+            "legendFormat": "{{instance}}"
+          }
+        ],
+        "options": {
+          "textMode": "value_and_name",
+          "colorMode": "background"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "thresholds": {
+              "steps": [
+                {"value": 0, "color": "red"},
+                {"value": 1, "color": "green"}
+              ]
+            },
+            "mappings": [
+              {"type": "value", "value": "0", "text": "Offline"},
+              {"type": "value", "value": "1", "text": "Online"}
+            ]
+          }
+        }
+      },
+      {
+        "id": 9,
+        "title": "Security Events Timeline",
+        "type": "timeseries",
+        "gridPos": {"x": 12, "y": 18, "w": 12, "h": 6},
+        "targets": [
+          {
+            "expr": "increase(github_security_events_total[1h])",
+            "legendFormat": "{{event_type}}"
+          }
+        ]
+      }
+    ],
+    "templating": {
+      "list": [
+        {
+          "name": "datasource",
+          "type": "datasource",
+          "query": "prometheus"
+        },
+        {
+          "name": "repository",
+          "type": "query",
+          "query": "label_values(github_security_alerts, repository)",
+          "multi": true,
+          "includeAll": true
+        },
+        {
+          "name": "severity",
+          "type": "custom",
+          "query": "critical,high,medium,low",
+          "multi": true,
+          "includeAll": true
+        }
+      ]
+    },
+    "annotations": {
+      "list": [
+        {
+          "datasource": "Prometheus",
+          "enable": true,
+          "expr": "ALERTS{alertstate=\"firing\",severity=\"critical\"}",
+          "iconColor": "red",
+          "name": "Critical Alerts",
+          "step": "60s",
+          "tagKeys": "alertname",
+          "textFormat": "{{alertname}}: {{summary}}",
+          "titleFormat": "Critical Alert"
+        }
+      ]
+    }
+  }
+}

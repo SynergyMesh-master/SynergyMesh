@@ -1,0 +1,638 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: performancetargets.governance.machinenativeops.io
+  labels:
+    app: "governance-framework"
+    component: "performance-management"
+    version: "v1"
+  annotations:
+    description: "Performance Targets CRD for governance performance management"
+    governance.machinenativeops.io/category: "performance"
+    governance.machinenativeops.io/layer: "execution"
+spec:
+  group: governance.machinenativeops.io
+  versions:
+  - name: v1
+    served: true
+    storage: true
+    schema:
+      openAPIV3Schema:
+        type: object
+        properties:
+          spec:
+            type: object
+            required:
+            - targetsId
+            - performanceCategories
+            - serviceLevelObjectives
+            properties:
+              targetsId:
+                type: string
+                pattern: '^TARGETS-[0-9]{4}-[0-9]{3}$'
+                description: "Unique targets identifier"
+                example: "TARGETS-2025-001"
+              title:
+                type: string
+                maxLength: 200
+                description: "Performance targets title"
+                example: "Enterprise Performance Targets 2025"
+              description:
+                type: string
+                maxLength: 2000
+                description: "Performance targets description"
+                example: "Comprehensive performance targets for all enterprise services"
+              version:
+                type: string
+                pattern: '^[0-9]+\.[0-9]+\.[0-9]+$'
+                description: "Targets version"
+                example: "1.0.0"
+              effectivePeriod:
+                type: object
+                required:
+                - startDate
+                - endDate
+                properties:
+                  startDate:
+                    type: string
+                    format: date
+                    description: "Effective start date"
+                    example: "2025-01-01"
+                  endDate:
+                    type: string
+                    format: date
+                    description: "Effective end date"
+                    example: "2025-12-31"
+                  reviewFrequency:
+                    type: string
+                    enum: [monthly, quarterly, semi-annually, annually]
+                    description: "Review frequency"
+                    example: "quarterly"
+              performanceCategories:
+                type: array
+                minItems: 1
+                items:
+                  type: object
+                  required:
+                  - category
+                  - targets
+                  properties:
+                    category:
+                      type: string
+                      enum: [availability, response_time, throughput, resource_utilization, error_rate, user_experience, business_metrics]
+                      description: "Performance category"
+                      example: "availability"
+                    description:
+                      type: string
+                      maxLength: 500
+                      description: "Category description"
+                      example: "系統可用性指標"
+                    targets:
+                      type: array
+                      minItems: 1
+                      items:
+                        type: object
+                        required:
+                        - metric
+                        - target
+                        - threshold
+                        - measurement
+                        properties:
+                          metric:
+                            type: string
+                            maxLength: 100
+                            description: "Metric name"
+                            example: "uptime_percentage"
+                          displayName:
+                            type: string
+                            maxLength: 200
+                            description: "Display name for the metric"
+                            example: "Uptime Percentage"
+                          target:
+                            type: string
+                            description: "Target value"
+                            example: "99.9%"
+                          threshold:
+                            type: string
+                            description: "Alert threshold"
+                            example: "99.5%"
+                          measurement:
+                            type: string
+                            maxLength: 100
+                            description: "Measurement method"
+                            example: "monthly"
+                          unit:
+                            type: string
+                            maxLength: 20
+                            description: "Unit of measurement"
+                            example: "percentage"
+                          aggregation:
+                            type: string
+                            enum: [average, sum, min, max, p50, p90, p95, p99]
+                            description: "Aggregation method"
+                            example: "average"
+                          weight:
+                            type: number
+                            minimum: 0
+                            maximum: 1
+                            description: "Weight in overall score calculation"
+                            example: 0.3
+                          slaImpact:
+                            type: boolean
+                            description: "Whether this metric impacts SLA"
+                            example: true
+                          businessCritical:
+                            type: boolean
+                            description: "Whether this is business critical"
+                            example: true
+              serviceLevelObjectives:
+                type: array
+                minItems: 1
+                items:
+                  type: object
+                  required:
+                  - name
+                  - availabilityTarget
+                  - measurementPeriod
+                  properties:
+                    name:
+                      type: string
+                      maxLength: 100
+                      description: "SLO name"
+                      example: "critical_services_slo"
+                    description:
+                      type: string
+                      maxLength: 500
+                      description: "SLO description"
+                      example: "關鍵服務 SLO"
+                    services:
+                      type: array
+                      items:
+                        type: string
+                      description: "Services covered by this SLO"
+                      example: ["payment-service", "user-auth", "core-api"]
+                    availabilityTarget:
+                      type: string
+                      description: "Availability target"
+                      example: "99.9%"
+                    latencyTarget:
+                      type: string
+                      description: "Latency target"
+                      example: "p99 < 500ms"
+                    errorBudget:
+                      type: string
+                      description: "Error budget"
+                      example: "0.1%"
+                    measurementPeriod:
+                      type: string
+                      enum: [7_days, 30_days, 90_days, 1_year]
+                      description: "Measurement period"
+                      example: "30 days"
+                    alerting:
+                      type: object
+                      properties:
+                        burnRateAlert:
+                          type: boolean
+                          description: "Enable burn rate alerts"
+                          example: true
+                        burnRateThreshold:
+                          type: number
+                          minimum: 1
+                          description: "Burn rate threshold"
+                          example: 2
+                        notificationChannels:
+                          type: array
+                          items:
+                            type: string
+                          description: "Notification channels"
+                          example: ["slack", "email", "pagerduty"]
+                    compliance:
+                      type: object
+                      properties:
+                        frameworks:
+                          type: array
+                          items:
+                            type: string
+                          description: "Compliance frameworks"
+                          example: ["SOX", "ISO-27001"]
+                        auditRequired:
+                          type: boolean
+                          description: "Whether audit is required"
+                          example: true
+                        reportingFrequency:
+                          type: string
+                          enum: [weekly, monthly, quarterly]
+                          description: "Reporting frequency"
+                          example: "monthly"
+              monitoringConfiguration:
+                type: object
+                properties:
+                  metricsCollection:
+                    type: object
+                      properties:
+                        interval:
+                          type: string
+                          description: "Collection interval"
+                          example: "30 seconds"
+                        retention:
+                          type: string
+                          description: "Data retention period"
+                          example: "90 days"
+                        aggregation:
+                          type: array
+                          items:
+                            type: string
+                          description: "Aggregation levels"
+                          example: ["1m", "5m", "1h", "1d"]
+                        storageBackend:
+                          type: string
+                          enum: [prometheus, influxdb, elasticsearch, datadog]
+                          description: "Storage backend"
+                          example: "prometheus"
+                  alertingRules:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                          description: "Alert rule name"
+                          example: "high_response_time"
+                        condition:
+                          type: string
+                          description: "Alert condition"
+                          example: "api_response_p95 > 500ms"
+                        duration:
+                          type: string
+                          description: "Alert duration"
+                          example: "5m"
+                        severity:
+                          type: string
+                          enum: [info, warning, error, critical]
+                          description: "Alert severity"
+                          example: "warning"
+                        labels:
+                          type: object
+                          additionalProperties:
+                            type: string
+                          description: "Alert labels"
+                          example:
+                            team: "platform"
+                            service: "api"
+                        annotations:
+                          type: object
+                          additionalProperties:
+                            type: string
+                          description: "Alert annotations"
+                          example:
+                            summary: "High response time detected"
+                            description: "API response time is above threshold"
+                  dashboards:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                          description: "Dashboard name"
+                          example: "system_overview"
+                        title:
+                          type: string
+                          description: "Dashboard title"
+                          example: "System Overview Dashboard"
+                        refreshInterval:
+                          type: string
+                          description: "Refresh interval"
+                          example: "30s"
+                        panels:
+                          type: array
+                          items:
+                            type: string
+                          description: "Panel types"
+                          example: ["availability_gauge", "response_time_trend", "throughput_graph"]
+                        template:
+                          type: string
+                          description: "Dashboard template"
+                          example: "standard-performance"
+              performanceOptimization:
+                type: object
+                properties:
+                  autoScaling:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        metric:
+                          type: string
+                          description: "Scaling metric"
+                          example: "cpu_utilization"
+                        target:
+                          type: string
+                          description: "Target value"
+                          example: "70%"
+                        minInstances:
+                          type: integer
+                          minimum: 1
+                          description: "Minimum instances"
+                          example: 2
+                        maxInstances:
+                          type: integer
+                          minimum: 1
+                          description: "Maximum instances"
+                          example: 50
+                        scaleUpCooldown:
+                          type: string
+                          description: "Scale up cooldown"
+                          example: "5m"
+                        scaleDownCooldown:
+                          type: string
+                          description: "Scale down cooldown"
+                          example: "10m"
+                        policies:
+                          type: array
+                          items:
+                            type: string
+                          description: "Scaling policies"
+                          example: ["predictive_scaling", "scheduled_scaling"]
+                  cachingStrategy:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        level:
+                          type: string
+                          enum: [application_cache, database_cache, cdn_cache, edge_cache]
+                          description: "Cache level"
+                          example: "application_cache"
+                        ttl:
+                          type: string
+                          description: "Time to live"
+                          example: "5 minutes"
+                        hitRatioTarget:
+                          type: string
+                          description: "Hit ratio target"
+                          example: "> 80%"
+                        evictionPolicy:
+                          type: string
+                          enum: [lru, lfu, fifo, random]
+                          description: "Eviction policy"
+                          example: "lru"
+                        maxSize:
+                          type: string
+                          description: "Maximum cache size"
+                          example: "1GB"
+              reporting:
+                type: object
+                properties:
+                  dailyReports:
+                    type: array
+                    items:
+                      type: string
+                    description: "Daily report types"
+                    example: ["performance_summary", "sla_status", "resource_utilization"]
+                  weeklyReports:
+                    type: array
+                    items:
+                      type: string
+                    description: "Weekly report types"
+                    example: ["performance_trends", "capacity_planning", "optimization_recommendations"]
+                  monthlyReports:
+                    type: array
+                    items:
+                      type: string
+                    description: "Monthly report types"
+                    example: ["slo_compliance", "performance_baseline", "cost_optimization", "capacity_forecast"]
+                  stakeholders:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        role:
+                          type: string
+                          description: "Stakeholder role"
+                          example: "CTO"
+                        reports:
+                          type: array
+                          items:
+                            type: string
+                          description: "Reports they receive"
+                          example: ["daily", "weekly", "monthly"]
+                        channels:
+                          type: array
+                          items:
+                            type: string
+                          description: "Delivery channels"
+                          example: ["email", "dashboard"]
+              integrationPoints:
+                type: object
+                properties:
+                  monitoringSystems:
+                    type: array
+                    items:
+                      type: string
+                    description: "Monitoring system integrations"
+                    example: ["prometheus", "grafana", "alertmanager", "jaeger"]
+                  businessSystems:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                          description: "Business system name"
+                          example: "billing_system"
+                        purpose:
+                          type: string
+                          description: "Integration purpose"
+                          example: "usage-based billing"
+                        interface:
+                          type: string
+                          enum: [REST_API, SOAP_API, gRPC, Message_Queue, WebSocket, Webhook]
+                          description: "Interface type"
+                          example: "REST_API"
+                        dataFlow:
+                          type: string
+                          enum: [unidirectional, bidirectional]
+                          description: "Data flow direction"
+                          example: "unidirectional"
+                        frequency:
+                          type: string
+                          description: "Data sync frequency"
+                          example: "hourly"
+              compliance:
+                type: object
+                properties:
+                  frameworks:
+                    type: array
+                    items:
+                      type: string
+                      enum: [ISO-27001, SOC2, GDPR, HIPAA, PCI-DSS, NIST]
+                    description: "Compliance frameworks"
+                    example: ["ISO-27001", "SOC2", "GDPR"]
+                  auditRequirements:
+                    type: array
+                    items:
+                      type: string
+                    description: "Audit requirements"
+                    example: ["performance_data_retention_1_year", "sla_compliance_reporting", "incident_documentation", "change_impact_analysis"]
+                  dataRetention:
+                    type: object
+                    properties:
+                      performanceData:
+                        type: string
+                        description: "Performance data retention period"
+                        example: "1 year"
+                      auditLogs:
+                        type: string
+                        description: "Audit logs retention period"
+                        example: "7 years"
+                      slaReports:
+                        type: string
+                        description: "SLA reports retention period"
+                        example: "3 years"
+                  privacy:
+                    type: object
+                    properties:
+                      dataAnonymization:
+                        type: boolean
+                        description: "Whether data anonymization is required"
+                        example: true
+                      gdprCompliance:
+                        type: boolean
+                        description: "GDPR compliance status"
+                        example: true
+                      dataProcessingAgreement:
+                        type: boolean
+                        description: "Data processing agreement required"
+                        example: false
+          status:
+            type: object
+            properties:
+              phase:
+                type: string
+                enum: [draft, active, suspended, deprecated]
+                description: "Current targets phase"
+                example: "active"
+              lastUpdated:
+                type: string
+                format: date-time
+                description: "Last status update timestamp"
+                example: "2025-01-15T10:30:00Z"
+              updatedBy:
+                type: string
+                description: "User who last updated the targets"
+                example: "performance-manager"
+              compliance:
+                type: object
+                properties:
+                  overallScore:
+                    type: number
+                    minimum: 0
+                    maximum: 100
+                    description: "Overall compliance score"
+                    example: 94.5
+                  slaCompliance:
+                    type: number
+                    minimum: 0
+                    maximum: 100
+                    description: "SLA compliance percentage"
+                    example: 99.2
+                  errorBudgetUtilization:
+                    type: number
+                    minimum: 0
+                    maximum: 100
+                    description: "Error budget utilization percentage"
+                    example: 15.3
+              performance:
+                type: object
+                properties:
+                  availability:
+                    type: string
+                    description: "Current availability"
+                    example: "99.95%"
+                  averageResponseTime:
+                    type: string
+                    description: "Average response time"
+                    example: "185ms"
+                  throughput:
+                    type: string
+                    description: "Current throughput"
+                    example: "12,500 req/s"
+                  errorRate:
+                    type: string
+                    description: "Current error rate"
+                    example: "0.05%"
+              alerts:
+                type: object
+                properties:
+                  active:
+                    type: integer
+                    minimum: 0
+                    description: "Number of active alerts"
+                    example: 3
+                  critical:
+                    type: integer
+                    minimum: 0
+                    description: "Number of critical alerts"
+                    example: 0
+                  warning:
+                    type: integer
+                    minimum: 0
+                    description: "Number of warning alerts"
+                    example: 3
+                  lastAlert:
+                    type: string
+                    format: date-time
+                    description: "Last alert timestamp"
+                    example: "2025-01-15T09:45:00Z"
+              conditions:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    type:
+                      type: string
+                      enum: [sla_breached, performance_degraded, error_budget_exhausted, monitoring_failure, compliance_issue]
+                    status:
+                      type: string
+                      enum: [True, False]
+                    lastTransitionTime:
+                      type: string
+                      format: date-time
+                    reason:
+                      type: string
+                    message:
+                      type: string
+    additionalPrinterColumns:
+    - name: Title
+      type: string
+      description: "Performance targets title"
+      jsonPath: ".spec.title"
+    - name: Status
+      type: string
+      description: "Current status"
+      jsonPath: ".status.phase"
+    - name: Overall Score
+      type: number
+      description: "Overall compliance score"
+      jsonPath: ".status.compliance.overallScore"
+    - name: SLA Compliance
+      type: number
+      description: "SLA compliance percentage"
+      jsonPath: ".status.compliance.slaCompliance"
+    - name: Active Alerts
+      type: integer
+      description: "Number of active alerts"
+      jsonPath: ".status.alerts.active"
+  scope: Namespaced
+  names:
+    plural: performancetargets
+    singular: performancetargets
+    kind: PerformanceTargets
+    shortNames:
+    - perf
+    - targets
+  conversion:
+    strategy: None
+  preserveUnknownFields: false

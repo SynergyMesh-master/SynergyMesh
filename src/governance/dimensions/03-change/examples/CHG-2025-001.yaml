@@ -1,0 +1,178 @@
+apiVersion: governance.machinenativeops.io/v1alpha1
+kind: ChangeRequest
+metadata:
+  id: "CHG-2025-001"
+  title: "升级 Payment Service 到 v2.0.0"
+  createdAt: "2025-12-17T10:00:00Z"
+  labels:
+    service: "payment"
+    team: "backend"
+    priority: "P1"
+
+spec:
+  type: "常规变更"
+
+  requester:
+    userId: "john.doe"
+    name: "John Doe"
+    email: "john.doe@example.com"
+    team: "backend-team"
+
+  riskLevel: "中"
+  priority: "P1"
+
+  impactAssessment:
+    servicesAffected:
+      - "payment-service"
+      - "order-service"
+      - "billing-service"
+    downtimeExpected: "5 min"
+    usersImpacted: 5000
+    dataImpact: "none"
+    dependencies:
+      - "Database schema v2.0 已部署"
+      - "API Gateway 配置已更新"
+
+  approval:
+    method: "CAB"
+    status: "Approved"
+    approver: "tech-lead@example.com"
+    approvedAt: "2025-12-17T14:00:00Z"
+    comments: "批准。测试覆盖充分，风险可控。建议在周二维护窗口执行。"
+
+  scheduledWindow:
+    startTime: "2025-12-20T02:00:00Z"
+    endTime: "2025-12-20T03:00:00Z"
+    timezone: "UTC"
+
+  implementationPlan:
+    steps:
+      - order: 1
+        description: "通知相关团队和利益相关者"
+        estimatedDuration: "5 min"
+        assignee: "john.doe"
+        validationCriteria: "确认所有团队收到通知"
+
+      - order: 2
+        description: "备份当前配置和数据库"
+        estimatedDuration: "10 min"
+        assignee: "ops-team"
+        validationCriteria: "备份文件存在且可恢复"
+
+      - order: 3
+        description: "更新 Kubernetes Deployment 为新版本"
+        estimatedDuration: "5 min"
+        assignee: "john.doe"
+        validationCriteria: "kubectl apply 成功"
+
+      - order: 4
+        description: "等待新 Pod 启动并通过健康检查"
+        estimatedDuration: "10 min"
+        assignee: "ops-team"
+        validationCriteria: "所有 Pod Running 且 Ready"
+
+      - order: 5
+        description: "执行烟雾测试"
+        estimatedDuration: "10 min"
+        assignee: "qa-team"
+        validationCriteria: "关键业务流程正常"
+
+      - order: 6
+        description: "监控服务指标和日志"
+        estimatedDuration: "15 min"
+        assignee: "ops-team"
+        validationCriteria: "无异常告警，错误率正常"
+
+    preChecks:
+      - "确认测试环境已验证"
+      - "确认备份已完成"
+      - "验证回滚方案可用"
+      - "确认监控和告警正常"
+      - "通知所有相关团队"
+      - "更新状态页"
+
+    postChecks:
+      - "检查服务健康状态"
+      - "验证关键业务流程"
+      - "确认无错误告警"
+      - "检查错误率和响应时间"
+      - "验证数据一致性"
+      - "更新文档"
+      - "通知变更完成"
+
+  rollbackPlan:
+    steps:
+      - order: 1
+        description: "停止新版本 Deployment"
+
+      - order: 2
+        description: "回滚到 v1.3.0"
+
+      - order: 3
+        description: "验证回滚成功"
+
+      - order: 4
+        description: "恢复配置（如有必要）"
+
+    triggers:
+      - "健康检查连续失败 3 次"
+      - "错误率超过 1%"
+      - "响应时间超过基线 200%"
+      - "关键业务流程验证失败"
+      - "数据一致性问题"
+
+    estimatedTime: "10 min"
+
+  testing:
+    environment: "staging"
+    testCases:
+      - "功能测试: 支付创建、查询、退款"
+      - "性能测试: 响应时间 < 200ms, TPS > 1000"
+      - "集成测试: 与订单服务、账单服务集成"
+      - "回归测试: 现有功能无影响"
+    testResults: "https://testresults.example.com/payment-v2.0.0"
+
+  metrics:
+    kpi:
+      - name: "response_time"
+        baseline: "120ms"
+        target: "<150ms"
+
+      - name: "error_rate"
+        baseline: "0.08%"
+        target: "<0.1%"
+
+      - name: "throughput"
+        baseline: "800 req/s"
+        target: ">900 req/s"
+
+    audit:
+      logEnabled: true
+      reviewer: "audit-team@example.com"
+
+  communication:
+    stakeholders:
+      - "backend-team@example.com"
+      - "product-manager@example.com"
+      - "customer-support@example.com"
+    notificationChannels:
+      - "slack:#engineering"
+      - "slack:#operations"
+      - "email:all-engineering@example.com"
+    statusPageUpdate: true
+
+status:
+  phase: "Scheduled"
+  lastUpdate: "2025-12-17T14:30:00Z"
+  notes:
+    - timestamp: "2025-12-17T10:00:00Z"
+      author: "john.doe"
+      message: "变更请求已创建"
+
+    - timestamp: "2025-12-17T14:00:00Z"
+      author: "tech-lead"
+      message: "CAB 批准。测试覆盖充分，风险可控。"
+
+    - timestamp: "2025-12-17T14:30:00Z"
+      author: "john.doe"
+      message: "已安排在 2025-12-20 02:00 UTC 执行"

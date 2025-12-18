@@ -1,0 +1,106 @@
+# ═══════════════════════════════════════════════════════════════════════════════
+#                    SynergyMesh Monitoring Configuration
+#                    監控系統配置 (Phase 11)
+# ═══════════════════════════════════════════════════════════════════════════════
+
+monitoring:
+  version: "1.0.0"
+  enabled: true
+
+# Metrics Collection
+metrics:
+  enabled: true
+  collection_interval_seconds: 30
+  retention_days: 90
+  
+  types:
+    - COUNTER
+    - GAUGE
+    - HISTOGRAM
+    - SUMMARY
+  
+  exporters:
+    prometheus:
+      enabled: true
+      port: 9090
+      path: /metrics
+
+# Anomaly Detection
+anomaly_detection:
+  enabled: true
+  strategies:
+    - STATISTICAL
+    - ML
+    - THRESHOLD
+    - PATTERN
+    - HYBRID
+  
+  thresholds:
+    low: 0.3
+    medium: 0.5
+    high: 0.7
+    critical: 0.9
+
+# Auto Diagnosis
+auto_diagnosis:
+  enabled: true
+  context_sources:
+    - logs
+    - metrics
+    - traces
+    - events
+  
+  root_cause_analysis: true
+  recommendation_generation: true
+
+# Auto Remediation
+auto_remediation:
+  enabled: true
+  require_approval: false
+  max_auto_fixes_per_hour: 10
+  
+  playbooks:
+    - name: restart_service
+      trigger: service_unhealthy
+      actions:
+        - check_health
+        - graceful_restart
+        - verify_health
+    
+    - name: scale_up
+      trigger: high_load
+      actions:
+        - check_resources
+        - add_instances
+        - rebalance_load
+    
+    - name: clear_cache
+      trigger: memory_pressure
+      actions:
+        - identify_cache
+        - clear_expired
+        - verify_memory
+
+# Self Learning
+self_learning:
+  enabled: true
+  learn_from_incidents: true
+  track_fix_effectiveness: true
+  improve_detection: true
+  update_frequency: weekly
+
+# Observability
+observability:
+  logs:
+    enabled: true
+    level: INFO
+    retention_days: 30
+  
+  traces:
+    enabled: true
+    sampling_rate: 0.1
+    retention_days: 7
+  
+  dashboards:
+    enabled: true
+    auto_generate: true

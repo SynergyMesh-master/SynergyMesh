@@ -1,0 +1,87 @@
+graph TB
+    Start([開發者修改代碼]) --> SaveFile[保存文件]
+    
+    SaveFile --> GitAdd{本地 Git Add?}
+    
+    GitAdd -->|是| GitCommit[Git Commit]
+    GitAdd -->|否| WatchDetect[實時監控檢測變更]
+    
+    WatchDetect --> Debounce{防抖檢查<br/>5秒內有其他變更?}
+    Debounce -->|是| WaitMore[等待穩定]
+    WaitMore --> Debounce
+    Debounce -->|否| AutoAdd[自動 Git Add]
+    AutoAdd --> GitCommit
+    
+    GitCommit --> PostCommitHook[觸發 post-commit Hook]
+    
+    PostCommitHook --> AnalyzeChanges[分析變更文件]
+    
+    AnalyzeChanges --> ExtractDirs[提取所有影響的目錄<br/>包括父目錄/子目錄/子子目錄]
+    
+    ExtractDirs --> RecursiveScan[遞歸掃描目錄樹]
+    
+    RecursiveScan --> BuildDirList[構建完整目錄列表]
+    
+    BuildDirList --> LogChanges[記錄變更日誌]
+    
+    LogChanges --> PullRemote[拉取遠程最新變更<br/>git pull --rebase]
+    
+    PullRemote --> ConflictCheck{有衝突?}
+    
+    ConflictCheck -->|是| NotifyUser[通知用戶<br/>手動解決衝突]
+    NotifyUser --> End([結束])
+    
+    ConflictCheck -->|否| PushRemote[推送到遠程<br/>git push origin branch]
+    
+    PushRemote --> GitHubWebhook[觸發 GitHub Webhook]
+    
+    GitHubWebhook --> GHActions[啟動 GitHub Actions<br/>08-sync-subdirs.yml]
+    
+    GHActions --> DetectJob[Job 1: 檢測變更目錄]
+    
+    DetectJob --> AnalyzeDepth[分析目錄深度<br/>生成 JSON 列表]
+    
+    AnalyzeDepth --> ParallelJobs{根據語言<br/>分配並行任務}
+    
+    ParallelJobs --> RustJob[Job 2: Rust 核心層<br/>core/**]
+    ParallelJobs --> GoJob[Job 3: Go 服務層<br/>services/**]
+    ParallelJobs --> TSJob[Job 4: TypeScript Agents<br/>agents/**/typescript]
+    ParallelJobs --> PyJob[Job 5: Python Agents<br/>agents/**/python]
+    ParallelJobs --> JavaJob[Job 6: Java 集成層<br/>integrations/**]
+    ParallelJobs --> InfraJob[Job 7: 基礎設施<br/>infrastructure/**]
+    ParallelJobs --> DocsJob[Job 8: 文檔<br/>docs/**]
+    
+    RustJob --> RustBuild[cargo build<br/>cargo test]
+    GoJob --> GoBuild[go build<br/>go test]
+    TSJob --> TSBuild[npm build<br/>npm test]
+    PyJob --> PyBuild[pip install<br/>pytest]
+    JavaJob --> JavaBuild[mvn install<br/>mvn test]
+    InfraJob --> InfraValidate[terraform validate<br/>kubectl dry-run]
+    DocsJob --> DocsValidate[markdown 連結檢查<br/>文檔生成]
+    
+    RustBuild --> JobReport[收集任務報告]
+    GoBuild --> JobReport
+    TSBuild --> JobReport
+    PyBuild --> JobReport
+    JavaBuild --> JobReport
+    InfraValidate --> JobReport
+    DocsValidate --> JobReport
+    
+    JobReport --> FinalReport[Job 9: 生成同步報告]
+    
+    FinalReport --> ReportContent[生成 Markdown 摘要<br/>包含變更統計]
+    
+    ReportContent --> NotifySuccess[✅ 通知開發者<br/>同步成功]
+    
+    NotifySuccess --> UpdateCache[更新本地緩存<br/>記錄同步狀態]
+    
+    UpdateCache --> End
+    
+    style Start fill:#e3f2fd
+    style End fill:#c8e6c9
+    style PostCommitHook fill:#fff3e0
+    style GHActions fill:#f3e5f5
+    style RecursiveScan fill:#ffe0b2
+    style ParallelJobs fill:#e1bee7
+    style FinalReport fill:#c5e1a5
+    style NotifySuccess fill:#a5d6a7

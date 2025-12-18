@@ -1,0 +1,153 @@
+# 03_refactor Machine-Readable Index
+# This file is used by CI/tools/agents to map cluster IDs to refactor playbooks
+# 
+# Based on the three-phase refactor system architecture:
+# 01_deconstruction → 02_integration → 03_refactor
+#
+# Each cluster entry provides:
+# - Traceability to deconstruction and integration playbooks
+# - Legacy asset references (via 01_deconstruction/legacy_assets_index.yaml)
+# - Governance status for CI/CD automation
+# - Priority and status for project management
+
+version: "1.0"
+last_updated: "2025-12-06T19:35:00Z"
+
+clusters:
+  - cluster_id: "core/architecture-stability"
+    domain: "core"
+    priority: "P0"                          # P0/P1/P2
+    status: "draft"                         # draft/in_progress/completed/blocked
+    
+    refactor_file: "core/core__architecture_refactor.md"
+    deconstruction_file: "../01_deconstruction/core__architecture_deconstruction.md"
+    integration_file: "../02_integration/core__architecture_integration.md"
+    
+    legacy_assets:
+      - "core-v1-legacy-modules"
+    
+    involved_dirs:
+      - "core/unified_integration/"
+      - "core/mind_matrix/"
+      - "core/architecture-stability/"
+    
+    governance_status:
+      violations: 0
+      threshold: 5
+      auto_fixable: 0
+    
+    last_updated: "2025-12-06"
+
+  - cluster_id: "automation/autonomous"
+    domain: "automation"
+    priority: "P0"
+    status: "draft"
+    refactor_file: "automation/automation__autonomous_refactor.md"
+    deconstruction_file: "../01_deconstruction/automation__autonomous_deconstruction.md"
+    integration_file: "../02_integration/automation__autonomous_integration.md"
+    legacy_assets: []
+    involved_dirs:
+      - "automation/autonomous/"
+    governance_status:
+      violations: 0
+      threshold: 5
+      auto_fixable: 0
+    last_updated: "2025-12-06"
+
+  # Future clusters (placeholders)
+  - cluster_id: "services/gateway"
+    domain: "services"
+    priority: "P1"
+    status: "pending"
+    refactor_file: "services/services__gateway_refactor.md"
+    deconstruction_file: "../01_deconstruction/services__gateway_deconstruction.md"
+    integration_file: "../02_integration/services__gateway_integration.md"
+    legacy_assets: []
+    involved_dirs:
+      - "services/gateway/"
+    governance_status:
+      violations: 0
+      threshold: 10
+      auto_fixable: 0
+    last_updated: "2025-12-06"
+
+  - cluster_id: "apps/web"
+    domain: "apps"
+    priority: "P1"
+    status: "pending"
+    refactor_file: "apps/apps__web_refactor.md"
+    deconstruction_file: "../01_deconstruction/apps__web_deconstruction.md"
+    integration_file: "../02_integration/apps__web_integration.md"
+    legacy_assets: []
+    involved_dirs:
+      - "apps/web/"
+    governance_status:
+      violations: 0
+      threshold: 10
+      auto_fixable: 0
+    last_updated: "2025-12-06"
+
+  - cluster_id: "governance/schemas"
+    domain: "governance"
+    priority: "P1"
+    status: "pending"
+    refactor_file: "governance/governance__schemas_refactor.md"
+    deconstruction_file: "../01_deconstruction/governance__schemas_deconstruction.md"
+    integration_file: "../02_integration/governance__schemas_integration.md"
+    legacy_assets: []
+    involved_dirs:
+      - "governance/schemas/"
+    governance_status:
+      violations: 0
+      threshold: 5
+      auto_fixable: 0
+    last_updated: "2025-12-06"
+
+  - cluster_id: "tools/scripts"
+    domain: "tools"
+    priority: "P2"
+    status: "pending"
+    refactor_file: "tools/tools__scripts_refactor.md"
+    deconstruction_file: "../01_deconstruction/tools__scripts_deconstruction.md"
+    integration_file: "../02_integration/tools__scripts_integration.md"
+    legacy_assets: []
+    involved_dirs:
+      - "tools/"
+    governance_status:
+      violations: 0
+      threshold: 15
+      auto_fixable: 0
+    last_updated: "2025-12-06"
+
+  - cluster_id: "src/autonomous/infrastructure/kubernetes"
+    domain: "infra"
+    priority: "P1"
+    status: "pending"
+    refactor_file: "src/autonomous/infrastructure/infra__kubernetes_refactor.md"
+    deconstruction_file: "../01_deconstruction/infra__kubernetes_deconstruction.md"
+    integration_file: "../02_integration/infra__kubernetes_integration.md"
+    legacy_assets: []
+    involved_dirs:
+      - "infrastructure/k8s/"
+    governance_status:
+      violations: 0
+      threshold: 5
+      auto_fixable: 0
+    last_updated: "2025-12-06"
+
+  - cluster_id: "knowledge/living-kb"
+    domain: "knowledge"
+    priority: "P2"
+    status: "pending"
+    refactor_file: "knowledge/knowledge__living_kb_refactor.md"
+    deconstruction_file: "../01_deconstruction/knowledge__living_kb_deconstruction.md"
+    integration_file: "../02_integration/knowledge__living_kb_integration.md"
+    legacy_assets: []
+    involved_dirs:
+      - "knowledge/"
+      - "docs/knowledge-graph.yaml"
+    governance_status:
+      violations: 0
+      threshold: 5
+      auto_fixable: 0
+    last_updated: "2025-12-06"

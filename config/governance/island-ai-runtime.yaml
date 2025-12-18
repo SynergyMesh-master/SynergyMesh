@@ -1,0 +1,333 @@
+# ═══════════════════════════════════════════════════════════════════════════════
+#                    Island AI Runtime 配置
+#                    Core AI Execution Layer v1.0
+# ═══════════════════════════════════════════════════════════════════════════════
+
+meta:
+  name: "Island AI Runtime"
+  version: "1.0.0"
+  description: "核心 AI 執行層 - SynergyMesh 智能自動化平台"
+  created: "2025-12-02"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+#                         模型閘道配置
+# ═══════════════════════════════════════════════════════════════════════════════
+model_gateway:
+  enabled: true
+  default_provider: "openai"
+
+  providers:
+    openai:
+      enabled: true
+      api_key_env: "OPENAI_API_KEY"
+      models:
+        - id: "gpt-4o"
+          type: "chat"
+          max_tokens: 128000
+          default: true
+        - id: "gpt-4o-mini"
+          type: "chat"
+          max_tokens: 128000
+        - id: "o1-preview"
+          type: "reasoning"
+          max_tokens: 128000
+
+    anthropic:
+      enabled: true
+      api_key_env: "ANTHROPIC_API_KEY"
+      models:
+        - id: "claude-sonnet-4-20250514"
+          type: "chat"
+          max_tokens: 200000
+        - id: "claude-3-5-haiku-20241022"
+          type: "chat"
+          max_tokens: 200000
+
+    local:
+      enabled: false
+      endpoint: "http://localhost:11434"
+      models:
+        - id: "llama3.2"
+          type: "chat"
+        - id: "codellama"
+          type: "code"
+
+    byom: # Bring Your Own Model
+      enabled: false
+      endpoint_env: "CUSTOM_LLM_ENDPOINT"
+      api_key_env: "CUSTOM_LLM_API_KEY"
+
+  routing:
+    strategy: "cost-optimized" # cost-optimized | performance | round-robin
+    fallback_enabled: true
+    retry_attempts: 3
+    timeout_seconds: 60
+
+# ═══════════════════════════════════════════════════════════════════════════════
+#                         代理框架配置
+# ═══════════════════════════════════════════════════════════════════════════════
+agent_framework:
+  enabled: true
+
+  agents:
+    architect:
+      name: "Architect Agent"
+      role: "系統架構師"
+      model: "gpt-4o"
+      temperature: 0.3
+      system_prompt: |
+        你是 Island AI 的架構師代理。你的職責是：
+        - 分析系統需求並設計架構
+        - 做出技術選型決策
+        - 審查設計文檔
+        - 確保架構的可擴展性和可維護性
+      capabilities:
+        - "architecture_design"
+        - "technology_selection"
+        - "design_review"
+        - "documentation"
+
+    developer:
+      name: "Developer Agent"
+      role: "開發工程師"
+      model: "gpt-4o"
+      temperature: 0.2
+      system_prompt: |
+        你是 Island AI 的開發者代理。你的職責是：
+        - 實現功能需求
+        - 編寫高質量程式碼
+        - 進行程式碼重構
+        - 編寫技術文檔
+      capabilities:
+        - "code_generation"
+        - "code_refactoring"
+        - "bug_fixing"
+        - "documentation"
+
+    qa:
+      name: "QA Agent"
+      role: "品質保證工程師"
+      model: "gpt-4o-mini"
+      temperature: 0.1
+      system_prompt: |
+        你是 Island AI 的 QA 代理。你的職責是：
+        - 設計測試用例
+        - 執行自動化測試
+        - 追蹤和報告缺陷
+        - 確保程式碼品質
+      capabilities:
+        - "test_design"
+        - "test_execution"
+        - "bug_tracking"
+        - "quality_reporting"
+
+    security:
+      name: "Security Agent"
+      role: "安全工程師"
+      model: "gpt-4o"
+      temperature: 0.1
+      system_prompt: |
+        你是 Island AI 的安全代理。你的職責是：
+        - 執行安全審計
+        - 掃描漏洞
+        - 檢查合規性
+        - 評估風險
+      capabilities:
+        - "security_audit"
+        - "vulnerability_scan"
+        - "compliance_check"
+        - "risk_assessment"
+
+    devops:
+      name: "DevOps Agent"
+      role: "DevOps 工程師"
+      model: "gpt-4o-mini"
+      temperature: 0.2
+      system_prompt: |
+        你是 Island AI 的 DevOps 代理。你的職責是：
+        - 管理 CI/CD 流程
+        - 自動化部署
+        - 監控系統
+        - 管理基礎設施
+      capabilities:
+        - "ci_cd_management"
+        - "deployment"
+        - "monitoring"
+        - "infrastructure"
+
+  orchestration:
+    mode: "collaborative" # collaborative | sequential | parallel
+    max_concurrent_agents: 3
+    task_timeout_minutes: 30
+    enable_agent_communication: true
+
+# ═══════════════════════════════════════════════════════════════════════════════
+#                         知識引擎配置
+# ═══════════════════════════════════════════════════════════════════════════════
+knowledge_engine:
+  enabled: true
+
+  indexing:
+    enabled: true
+    paths:
+      - "src/**/*"
+      - "core/**/*"
+      - "docs/**/*.md"
+      - "config/**/*.yaml"
+    exclude:
+      - "node_modules/**"
+      - "dist/**"
+      - ".git/**"
+
+  embeddings:
+    provider: "openai"
+    model: "text-embedding-3-small"
+    dimensions: 1536
+    batch_size: 100
+
+  vector_store:
+    type: "in-memory" # in-memory | chromadb | pinecone
+    persist_path: ".src/ai/vectors"
+
+  search:
+    top_k: 10
+    similarity_threshold: 0.7
+    enable_reranking: true
+
+# ═══════════════════════════════════════════════════════════════════════════════
+#                         安全憲法配置
+# ═══════════════════════════════════════════════════════════════════════════════
+safety_constitution:
+  enabled: true
+
+  guardrails:
+    content_filtering:
+      enabled: true
+      block_harmful_content: true
+      block_pii: true
+      block_secrets: true
+
+    code_safety:
+      enabled: true
+      block_dangerous_commands: true
+      sandbox_execution: true
+      require_review_for_system_changes: true
+
+    output_validation:
+      enabled: true
+      max_output_length: 50000
+      validate_json_output: true
+      validate_code_syntax: true
+
+  red_flags:
+    - pattern: "rm -rf /"
+      severity: "critical"
+      action: "block"
+    - pattern: "DROP TABLE"
+      severity: "high"
+      action: "require_confirmation"
+    - pattern: "password|secret|api_key"
+      severity: "medium"
+      action: "warn"
+
+  ai_constitution:
+    principles:
+      - "優先考慮系統安全和穩定性"
+      - "保護用戶數據和隱私"
+      - "在不確定時尋求確認"
+      - "記錄所有重要決策"
+      - "遵循最小權限原則"
+
+    boundaries:
+      - "不得執行未經授權的系統更改"
+      - "不得洩露敏感資訊"
+      - "不得繞過安全檢查"
+      - "不得自動執行破壞性操作"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+#                         工具執行器配置
+# ═══════════════════════════════════════════════════════════════════════════════
+tool_executor:
+  enabled: true
+
+  code_runner:
+    enabled: true
+    languages:
+      - "python"
+      - "javascript"
+      - "typescript"
+      - "bash"
+    timeout_seconds: 300
+    max_memory_mb: 512
+    sandbox_mode: true
+
+  mcp_integration:
+    enabled: true
+    servers:
+      - name: "filesystem"
+        command: "npx"
+        args: ["-y", "@anthropic/mcp-server-fs"]
+      - name: "github"
+        command: "npx"
+        args: ["-y", "@anthropic/mcp-server-github"]
+
+  filesystem_sandbox:
+    enabled: true
+    allowed_paths:
+      - "./src"
+      - "./docs"
+      - "./config"
+      - "./tests"
+    blocked_paths:
+      - ".git"
+      - "node_modules"
+      - ".env"
+      - "*.key"
+      - "*.pem"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+#                         會話記憶配置
+# ═══════════════════════════════════════════════════════════════════════════════
+session_memory:
+  enabled: true
+
+  short_term:
+    enabled: true
+    max_messages: 100
+    max_tokens: 50000
+    ttl_minutes: 60
+
+  long_term:
+    enabled: true
+    persist_path: ".src/ai/memory"
+    compression_enabled: true
+
+  planning:
+    enabled: true
+    max_steps: 20
+    checkpoint_enabled: true
+    rollback_enabled: true
+
+# ═══════════════════════════════════════════════════════════════════════════════
+#                         日誌和監控配置
+# ═══════════════════════════════════════════════════════════════════════════════
+observability:
+  logging:
+    level: "info"
+    format: "json"
+    output:
+      - "console"
+      - "file"
+    file_path: ".src/ai/logs/runtime.log"
+
+  metrics:
+    enabled: true
+    export_interval_seconds: 60
+    endpoints:
+      - type: "prometheus"
+        port: 9090
+
+  tracing:
+    enabled: true
+    provider: "opentelemetry"
+    sample_rate: 0.1

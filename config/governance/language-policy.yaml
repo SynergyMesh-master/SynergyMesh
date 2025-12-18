@@ -1,0 +1,369 @@
+# Language Policy Configuration
+# 語言策略配置檔案
+# Version: 1.0
+# Last Updated: 2025-12-06
+
+# 全域語言策略
+global_policy:
+  # 允許的主要語言
+  primary_languages:
+    - TypeScript
+    - Python
+    - C++
+  
+  # 允許的特殊用途語言
+  special_purpose_languages:
+    - Go          # 高並發服務
+    - Rust        # 系統級、安全關鍵
+    - Rego        # 策略定義
+    - Swift       # iOS 原生
+    - Kotlin      # Android 原生
+  
+  # 明確禁止的語言
+  forbidden_languages:
+    - PHP
+    - Ruby
+    - Lua
+    - Perl
+    - VBScript
+  
+  # 配置和數據格式（不算程式語言）
+  data_formats:
+    - YAML
+    - JSON
+    - TOML
+    - Markdown
+    - XML
+
+# 目錄級別的語言規則
+directory_rules:
+  
+  # Core Engine - SynergyMesh 核心
+  core/:
+    allowed_languages:
+      - TypeScript
+      - JavaScript  # For test configurations and legacy compatibility
+      - Python
+      - C++  # 僅限性能關鍵模組
+    primary_language: TypeScript
+    forbidden_patterns:
+      - "*.php"
+      - "*.rb"
+      - "*.lua"
+    notes: "核心引擎主要使用 TypeScript，JavaScript 允許用於測試配置和遺留兼容性，Python 用於 AI 整合，C++ 僅用於性能關鍵底層"
+  
+  # Automation - 自動化系統
+  automation/:
+    allowed_languages:
+      - Python
+      - TypeScript
+    primary_language: Python
+    forbidden_patterns:
+      - "*.go"  # 除非是基礎設施工具
+      - "*.cpp"
+    notes: "自動化和編排主要使用 Python，TypeScript 用於與 MCP/CLI 整合"
+  
+  # Autonomous Framework - 自主系統
+  automation/autonomous/:
+    allowed_languages:
+      - C++       # 底層 ROS 2、實時控制
+      - C         # HAL 實現、硬體驅動
+      - Python    # 高層編排、AI 整合
+      - Rust      # 可選，用於安全關鍵模組
+    primary_language: C++
+    forbidden_patterns:
+      - "*.ts"
+      - "*.js"
+    notes: "自主框架底層使用 C++/ROS 2，C 用於 HAL 和硬體驅動，Python 僅用於高層編排"
+  
+  # Governance - 治理系統
+  governance/:
+    allowed_languages:
+      - Python
+      - Rego      # OPA 策略
+      - TypeScript  # 工具
+      - Bash      # 初始化和驗證腳本
+    primary_language: Python
+    forbidden_patterns:
+      - "*.go"
+      - "*.cpp"
+    notes: "治理系統主要使用 Python 處理 YAML/JSON，Rego 用於策略定義，Bash 用於初始化腳本"
+  
+  # Services - 業務服務
+  services/:
+    allowed_languages:
+      - Go
+      - TypeScript
+      - Python  # 僅限 AI/分析 API
+      - Bash    # 啟動和部署腳本
+    primary_language: Go
+    secondary_language: TypeScript
+    forbidden_patterns:
+      - "*.cpp"
+      - "*.php"
+    notes: "服務層優先使用 Go（高並發）或 TypeScript（統一開發），Python 僅用於 AI API，Bash 用於運維腳本"
+  
+  # Apps - 應用層
+  apps/:
+    allowed_languages:
+      - TypeScript
+      - Python  # 僅限後端 API
+    primary_language: TypeScript
+    forbidden_patterns:
+      - "*.php"
+      - "*.rb"
+    notes: "應用層統一使用 TypeScript，Python 僅用於後端分析 API"
+  
+  apps/web/:
+    allowed_languages:
+      - TypeScript
+      - JavaScript  # 僅限遺留代碼
+    primary_language: TypeScript
+    framework: React
+    forbidden_patterns:
+      - "*.py"  # 前端不允許 Python
+      - "*.php"
+    notes: "Web 前端統一使用 TypeScript + React"
+  
+  # MCP Servers - Model Context Protocol
+  services/mcp/:
+    allowed_languages:
+      - TypeScript
+    primary_language: TypeScript
+    forbidden_patterns:
+      - "*.py"
+      - "*.go"
+    notes: "MCP Servers 統一使用 TypeScript 以保持一致性"
+  
+  # Infrastructure - 基礎設施
+  infrastructure/:
+    allowed_languages:
+      - YAML
+      - HCL       # Terraform
+      - TypeScript  # 工具腳本
+      - Go        # 基礎設施工具
+    primary_language: YAML
+    notes: "基礎設施即代碼，主要使用 YAML 和 HCL"
+  
+  # Scripts - 腳本工具
+  scripts/:
+    allowed_languages:
+      - Bash
+      - Python
+      - TypeScript
+    primary_language: Bash
+    notes: "簡單腳本用 Bash，複雜邏輯用 Python 或 TypeScript"
+  
+  # Tests - 測試
+  tests/:
+    allowed_languages:
+      - TypeScript  # Jest, Vitest
+      - JavaScript  # 遺留 Jest 配置
+      - Python      # pytest
+      - C++         # Google Test
+      - Go          # Go testing
+    notes: "測試語言應與被測試代碼一致，JavaScript 允許用於 Jest 配置"
+  
+  # Docs - 文檔
+  docs/:
+    allowed_languages:
+      - Markdown
+      - YAML
+      - Python  # 文檔生成工具
+      - TypeScript  # 文檔工具
+      - JavaScript  # 示例配置
+      - Bash        # 示例腳本
+    primary_language: Markdown
+    notes: "文檔主要使用 Markdown，工具可用 Python/TypeScript，允許 JavaScript/Bash 示例"
+
+# 語言間通訊協定規則
+communication_protocols:
+  TypeScript_to_Python:
+    allowed:
+      - HTTP/REST
+      - gRPC
+      - MCP
+    forbidden:
+      - Direct import
+      - Shared memory
+  
+  Python_to_TypeScript:
+    allowed:
+      - HTTP/REST
+      - Message Queue
+      - gRPC
+    forbidden:
+      - Direct import
+  
+  Any_to_Cpp:
+    allowed:
+      - gRPC
+      - ROS Topics
+      - ROS Services
+    forbidden:
+      - HTTP (for real-time)
+      - Direct import
+  
+  Service_to_Service:
+    preferred:
+      - gRPC
+    allowed:
+      - HTTP/REST
+    forbidden:
+      - Direct database access
+
+# API 層規則
+api_layer_rules:
+  rest_api:
+    allowed_languages:
+      - TypeScript
+      - Go
+      - Python
+    framework_preferences:
+      TypeScript: ["Express", "Fastify", "NestJS"]
+      Go: ["Gin", "Echo", "Chi"]
+      Python: ["FastAPI", "Flask"]
+  
+  grpc_api:
+    allowed_languages:
+      - TypeScript
+      - Go
+      - C++
+      - Python
+    notes: "gRPC 用於高性能服務間通訊"
+  
+  graphql_api:
+    allowed_languages:
+      - TypeScript
+      - Python
+    framework_preferences:
+      TypeScript: ["Apollo Server", "Nexus"]
+      Python: ["Graphene", "Strawberry"]
+
+# 依賴管理規則
+dependency_rules:
+  package_managers:
+    TypeScript: ["npm", "pnpm", "yarn"]
+    Python: ["pip", "poetry", "uv"]
+    Go: ["go modules"]
+    C++: ["conan", "vcpkg"]
+    Rust: ["cargo"]
+  
+  monorepo_strategy:
+    tools: ["npm workspaces", "pnpm workspaces"]
+    structure: "language-agnostic"
+    notes: "使用 workspace 管理多語言 monorepo"
+
+# 構建和部署規則
+build_rules:
+  TypeScript:
+    compiler: "tsc"
+    bundler: ["esbuild", "vite", "webpack"]
+    output: "dist/"
+  
+  Python:
+    runtime: ">=3.10"
+    packaging: ["setuptools", "poetry"]
+    virtual_env: "required"
+  
+  C++:
+    compiler: ["g++", "clang++"]
+    build_system: ["CMake", "Bazel"]
+    standard: ">=C++17"
+  
+  Go:
+    version: ">=1.21"
+    build: "go build"
+    output: "bin/"
+
+# CI/CD 檢查規則
+ci_checks:
+  language_scanner:
+    enabled: true
+    fail_on_violation: true
+    report_path: "reports/language-compliance.json"
+  
+  dependency_analyzer:
+    enabled: true
+    check_cross_language: true
+    allowed_protocols: ["HTTP", "gRPC", "MCP", "ROS"]
+  
+  documentation_check:
+    enabled: true
+    require_on_new_language: true
+    files_to_update:
+      - "docs/architecture/language-stack.md"
+      - "config/language-policy.yaml"
+
+# 例外管理
+exceptions:
+  process:
+    require_approval: true
+    approval_roles:
+      - "架構師"
+      - "技術委員會"
+    documentation_required: true
+    review_period: "季度"
+  
+  temporary_exceptions:
+    max_duration: "6個月"
+    require_migration_plan: true
+  
+  permanent_exceptions:
+    require_strong_justification: true
+    examples:
+      - "遺留系統整合"
+      - "特定硬體驅動"
+      - "無可替代的第三方庫"
+
+# 報告和監控
+monitoring:
+  metrics:
+    - name: "language_distribution"
+      description: "各語言代碼行數分布"
+      frequency: "每週"
+    
+    - name: "cross_language_calls"
+      description: "跨語言調用統計"
+      frequency: "每日"
+    
+    - name: "policy_violations"
+      description: "策略違規統計"
+      frequency: "即時"
+  
+  reports:
+    - name: "quarterly_language_review"
+      frequency: "季度"
+      recipients: ["架構團隊", "技術主管"]
+    
+    - name: "annual_policy_review"
+      frequency: "年度"
+      recipients: ["技術委員會", "CTO"]
+
+# 教育和文檔
+resources:
+  documentation:
+    - "docs/architecture/language-stack.md"
+    - "docs/architecture/language-governance.md"
+  
+  training:
+    - "新人語言堆疊培訓"
+    - "跨語言通訊最佳實踐"
+    - "語言選擇決策指南"
+  
+  references:
+    TypeScript: "https://www.typescriptlang.org/docs/"
+    Python: "https://docs.python.org/3/"
+    Cpp: "https://isocpp.org/"
+    Go: "https://go.dev/doc/"
+    Rust: "https://doc.rust-lang.org/"
+
+# 版本控制
+version_control:
+  schema_version: "1.0"
+  last_updated: "2025-12-06"
+  update_frequency: "季度審查，必要時更新"
+  changelog:
+    - version: "1.0"
+      date: "2025-12-06"
+      changes: "初始版本，定義完整語言策略"

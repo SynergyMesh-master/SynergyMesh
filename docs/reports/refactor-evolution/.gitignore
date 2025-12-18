@@ -1,0 +1,16 @@
+# Generated analysis reports
+analysis_*.yaml
+
+# Generated workflow reports
+workflow_report_*.yaml
+
+# Logs
+logs/*
+!logs/.gitkeep
+
+# Plans
+plans/*
+!plans/.gitkeep
+
+# Keep directory structure
+!.gitignore

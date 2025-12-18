@@ -1,0 +1,315 @@
+# =============================================================================
+# URI/URN 規範 (URI/URN Standards)
+# Spec ID: 09-uri-urn-standards
+# URN: urn:machinenativeops:governance:naming-spec:uri-urn:v1
+# =============================================================================
+
+apiVersion: governance.machinenativeops.io/v2
+kind: NamingSpec
+metadata:
+  id: "uri-urn-standards"
+  name: "URI/URN 規範"
+  name_en: "URI/URN Standards"
+  version: "1.0.0"
+  urn: "urn:machinenativeops:governance:naming-spec:uri-urn:v1"
+  parent: "99-naming-convention"
+
+spec:
+  description: |
+    此規範定義 MachineNativeOps 系統中所有資源的 URI 和 URN 標準。
+    URN（統一資源名稱）用於唯一識別資源，URI（統一資源識別符）用於定位資源。
+
+  # ==========================================================================
+  # URN 標準
+  # ==========================================================================
+  urn_standards:
+    # ------------------------------------------------------------------------
+    # 基礎 URN 格式
+    # ------------------------------------------------------------------------
+    canonical_format:
+      template: "urn:machinenativeops:{domain}:{resource}:{version}"
+      pattern: "^urn:machinenativeops:[a-z0-9-]+:[a-z0-9-]+(:v[0-9]+)?$"
+      components:
+        - name: "urn"
+          position: 0
+          value: "urn"
+          description: "URN 方案標識符（固定）"
+        - name: "namespace"
+          position: 1
+          value: "machinenativeops"
+          description: "命名空間（固定）"
+        - name: "domain"
+          position: 2
+          pattern: "[a-z0-9-]+"
+          description: "域名（必須已註冊）"
+        - name: "resource"
+          position: 3
+          pattern: "[a-z0-9-]+"
+          description: "資源名稱（kebab-case）"
+        - name: "version"
+          position: 4
+          pattern: "v[0-9]+"
+          description: "版本號（可選）"
+          optional: true
+
+    # ------------------------------------------------------------------------
+    # 註冊域名
+    # ------------------------------------------------------------------------
+    registered_domains:
+      - domain: "governance"
+        description: "治理框架資源"
+        owner: "governance-team"
+        examples:
+          - "urn:machinenativeops:governance:naming-convention:v1"
+          - "urn:machinenativeops:governance:policy-engine:v2"
+        sub_domains:
+          - "dimension"
+          - "policy"
+          - "schema"
+
+      - domain: "ai"
+        description: "AI 相關資源"
+        owner: "ai-team"
+        examples:
+          - "urn:machinenativeops:ai:cognitive-engine:v1"
+          - "urn:machinenativeops:ai:decision-maker:v1"
+        sub_domains:
+          - "model"
+          - "agent"
+          - "pipeline"
+
+      - domain: "core"
+        description: "核心引擎資源"
+        owner: "core-team"
+        examples:
+          - "urn:machinenativeops:core:execution-engine:v1"
+          - "urn:machinenativeops:core:service-registry:v1"
+        sub_domains:
+          - "engine"
+          - "registry"
+          - "bridge"
+
+      - domain: "autonomous"
+        description: "自主系統資源"
+        owner: "autonomous-team"
+        examples:
+          - "urn:machinenativeops:autonomous:drone-controller:v1"
+          - "urn:machinenativeops:autonomous:vehicle-agent:v1"
+        sub_domains:
+          - "drone"
+          - "vehicle"
+          - "sensor"
+
+      - domain: "config"
+        description: "配置資源"
+        owner: "platform-team"
+        examples:
+          - "urn:machinenativeops:config:database:v1"
+          - "urn:machinenativeops:config:monitoring:v1"
+
+      - domain: "dimension"
+        description: "治理維度資源"
+        owner: "governance-team"
+        examples:
+          - "urn:machinenativeops:dimension:99-naming-convention:v1"
+          - "urn:machinenativeops:dimension:27-templates:v1"
+
+    # ------------------------------------------------------------------------
+    # 擴展 URN 格式（帶校驗碼）
+    # ------------------------------------------------------------------------
+    extended_format_with_checksum:
+      template: "urn:machinenativeops:{domain}:{resource}:{version}:{checksum}"
+      pattern: "^urn:machinenativeops:[a-z0-9-]+:[a-z0-9-]+:v[0-9]+:sha256-[a-f0-9]{8}$"
+      checksum:
+        algorithm: "sha256"
+        length: 8
+        description: "資源內容的 SHA256 校驗碼前 8 位"
+      example: "urn:machinenativeops:governance:naming-convention:v1:sha256-a1b2c3d4"
+      use_case: "用於資源完整性驗證和版本鎖定"
+
+    # ------------------------------------------------------------------------
+    # 環境範圍 URN 格式
+    # ------------------------------------------------------------------------
+    environment_scoped_format:
+      template: "urn:machinenativeops:{env}:{domain}:{resource}:{version}"
+      pattern: "^urn:machinenativeops:(dev|staging|prod):[a-z0-9-]+:[a-z0-9-]+:v[0-9]+$"
+      environments:
+        - value: "dev"
+          description: "開發環境"
+        - value: "staging"
+          description: "測試環境"
+        - value: "prod"
+          description: "生產環境"
+      example: "urn:machinenativeops:prod:governance:naming-convention:v1"
+      use_case: "用於區分不同環境的資源實例"
+
+  # ==========================================================================
+  # URI 標準
+  # ==========================================================================
+  uri_standards:
+    # ------------------------------------------------------------------------
+    # API URI 模式
+    # ------------------------------------------------------------------------
+    api_patterns:
+      rest_api:
+        template: "/api/v{version}/{resource}/{id?}"
+        pattern: "^/api/v[0-9]+/[a-z0-9-]+(/[a-z0-9-]+)*$"
+        examples:
+          correct:
+            - "/api/v1/dimensions"
+            - "/api/v1/dimensions/99-naming-convention"
+            - "/api/v2/governance/policies/naming-policy"
+          incorrect:
+            - "/API/V1/Dimensions"
+            - "/api/dimensions"  # 缺少版本
+            - "/api/v1/Dimensions/NamingConvention"  # 大寫
+
+      graphql:
+        template: "/graphql"
+        pattern: "^/graphql$"
+        description: "GraphQL 端點（固定路徑）"
+
+      websocket:
+        template: "/ws/{channel}"
+        pattern: "^/ws/[a-z0-9-]+$"
+        examples:
+          - "/ws/events"
+          - "/ws/metrics-stream"
+
+    # ------------------------------------------------------------------------
+    # 資源 URI 模式
+    # ------------------------------------------------------------------------
+    resource_patterns:
+      general:
+        pattern: "^/[a-z0-9]+(/[a-z0-9-]+)*$"
+        description: "通用資源路徑格式"
+
+      file_reference:
+        template: "file://{path}"
+        pattern: "^file://[a-z0-9-]+(/[a-z0-9-]+)*\\.[a-z]+$"
+
+      internal_reference:
+        template: "internal://{module}/{resource}"
+        pattern: "^internal://[a-z0-9-]+/[a-z0-9-]+$"
+
+  # ==========================================================================
+  # URN 到 URI 的映射
+  # ==========================================================================
+  urn_uri_mapping:
+    description: "URN 與 URI 之間的標準映射規則"
+    rules:
+      - urn_pattern: "urn:machinenativeops:governance:{resource}:v{version}"
+        uri_pattern: "/api/v{version}/governance/{resource}"
+        example:
+          urn: "urn:machinenativeops:governance:naming-convention:v1"
+          uri: "/api/v1/governance/naming-convention"
+
+      - urn_pattern: "urn:machinenativeops:dimension:{id}:v{version}"
+        uri_pattern: "/api/v{version}/dimensions/{id}"
+        example:
+          urn: "urn:machinenativeops:dimension:99-naming-convention:v1"
+          uri: "/api/v1/dimensions/99-naming-convention"
+
+  # ==========================================================================
+  # 註解格式
+  # ==========================================================================
+  annotation_format:
+    namespace: "machinenativeops.io"
+    pattern: "^machinenativeops\\.io/[a-z0-9-]+$"
+    standard_annotations:
+      - key: "machinenativeops.io/canonical-urn"
+        description: "資源的標準 URN"
+        example: "urn:machinenativeops:governance:naming-convention:v1"
+
+      - key: "machinenativeops.io/naming-mode"
+        description: "使用的命名模式"
+        allowed_values:
+          - "team-domain-env"
+          - "tenant-workload-env-region"
+          - "env-app-version"
+
+      - key: "machinenativeops.io/description"
+        description: "資源描述"
+
+      - key: "machinenativeops.io/owner"
+        description: "資源擁有者"
+
+      - key: "machinenativeops.io/version"
+        description: "資源版本"
+
+  # ==========================================================================
+  # 驗證規則
+  # ==========================================================================
+  validation_rules:
+    - rule_id: "URN-001"
+      name: "canonical-urn-format"
+      severity: "error"
+      description: "URN 必須符合標準格式"
+
+    - rule_id: "URN-002"
+      name: "registered-domain"
+      severity: "error"
+      description: "URN 域名必須已註冊"
+
+    - rule_id: "URN-003"
+      name: "checksum-format"
+      severity: "info"
+      description: "校驗碼格式（可選）"
+
+    - rule_id: "URN-004"
+      name: "environment-scope"
+      severity: "warning"
+      description: "環境範圍 URN 格式"
+
+    - rule_id: "URI-001"
+      name: "api-uri-pattern"
+      severity: "error"
+      description: "API URI 必須符合模式"
+
+    - rule_id: "URI-002"
+      name: "resource-uri-pattern"
+      severity: "error"
+      description: "資源 URI 必須符合模式"
+
+  # ==========================================================================
+  # 範例
+  # ==========================================================================
+  examples:
+    urns:
+      correct:
+        - value: "urn:machinenativeops:governance:naming-convention:v1"
+          explanation: "標準治理資源 URN"
+        - value: "urn:machinenativeops:ai:cognitive-engine:v2"
+          explanation: "AI 引擎資源 URN"
+        - value: "urn:machinenativeops:prod:core:execution-engine:v1"
+          explanation: "生產環境核心引擎 URN"
+        - value: "urn:machinenativeops:governance:naming-convention:v1:sha256-a1b2c3d4"
+          explanation: "帶校驗碼的 URN"
+
+      incorrect:
+        - value: "urn:MachineNativeOps:Governance:NamingConvention"
+          issue: "命名空間和域名使用了大寫"
+          correction: "urn:machinenativeops:governance:naming-convention:v1"
+        - value: "machinenativeops:governance:naming"
+          issue: "缺少 urn: 前綴"
+          correction: "urn:machinenativeops:governance:naming:v1"
+        - value: "urn:machinenativeops:unknown:resource:v1"
+          issue: "使用未註冊的域名 'unknown'"
+          correction: "使用已註冊域名：governance, ai, core, autonomous, config, dimension"
+
+    uris:
+      correct:
+        - value: "/api/v1/dimensions/99-naming-convention"
+          explanation: "標準 REST API 路徑"
+        - value: "/api/v2/governance/policies"
+          explanation: "版本化 API 端點"
+        - value: "/ws/metrics-stream"
+          explanation: "WebSocket 通道"
+
+      incorrect:
+        - value: "/API/V1/Dimensions"
+          issue: "使用大寫"
+          correction: "/api/v1/dimensions"
+        - value: "/api/dimensions/naming"
+          issue: "缺少版本號"
+          correction: "/api/v1/dimensions/naming"

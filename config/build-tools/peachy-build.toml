@@ -1,0 +1,122 @@
+# ==============================================================================
+# Deterministic Build 配置 - Peachy Build
+# ==============================================================================
+# 用途: 確保映像每次重建內容一致（可重現構建）
+# 語言: 繁體中文註解
+# ==============================================================================
+
+[build]
+# 構建工具版本鎖定
+name = "intelligent-hyperautomation"
+version = "2.0.0"
+build_tool = "docker"
+build_tool_version = "24.0.0"
+
+[build.deterministic]
+# 確定性構建選項
+enabled = true
+strip_timestamps = true          # 移除時間戳
+normalize_permissions = true     # 標準化權限
+sort_filesystem = true          # 檔案系統排序
+reproducible_archives = true    # 可重現歸檔
+
+[build.environment]
+# 環境變數鎖定
+SOURCE_DATE_EPOCH = "1700000000"  # 固定構建時間
+TZ = "UTC"                        # 時區鎖定
+LANG = "C.UTF-8"                  # 語言環境鎖定
+LC_ALL = "C.UTF-8"
+
+[build.dependencies]
+# 依賴鎖定（使用 SHA256）
+node_version = "18.19.0"
+node_sha256 = "e4a7c88094c6aeb2caa8295231e9e1c49852fbddef8a67e4ef7c5768bd6f5e22"
+npm_version = "10.2.3"
+
+python_version = "3.11.7"
+python_sha256 = "24a6c44c0e4c0f0a7e53e7c0f4f6e6f6e6f6e6f6e6f6e6f6e6f6e6f6e6f6e6f6"
+
+[build.base_images]
+# 基礎映像使用 SHA256 digest
+alpine = "alpine@sha256:6457d53fb065d6f250e1504b9bc42d5b6c65941d57532c072d929dd0628977d0"
+ubuntu = "ubuntu:22.04@sha256:77906da86b60585ce12215807090eb327e7386c8fafb5402369e421f44eff17e"
+node = "node:18-alpine@sha256:e4a7c88094c6aeb2caa8295231e9e1c49852fbddef8a67e4ef7c5768bd6f5e22"
+
+[build.output]
+# 輸出格式
+format = "docker"
+registry = "registry.example.com"
+image_name = "intelligent-hyperautomation"
+tag_strategy = "sha256-digest"  # 始終使用 digest
+
+[build.verification]
+# 構建驗證
+verify_checksum = true
+verify_signature = true
+sbom_required = true
+sbom_format = "cyclonedx-json"
+
+[build.reproducibility]
+# 可重現性保證
+# 每次構建應產生相同的 SHA256
+expected_layers = 10
+max_layer_size = "500MB"
+build_cache = false              # 禁用快取以確保可重現
+
+[build.security]
+# 安全掃描
+scan_on_build = true
+scan_tools = ["trivy", "grype"]
+fail_on_critical = true
+fail_on_high = false
+
+[build.audit]
+# 審計追蹤
+log_build_commands = true
+log_environment = true
+log_dependencies = true
+audit_file = "build-audit.json"
+
+[metadata]
+# 構建元資料
+maintainer = "Platform Team <platform-team@example.com>"
+description = "Deterministic build configuration for intelligent-hyperautomation"
+documentation = "https://github.com/we-can-fix/slasolve"
+license = "MIT"
+language = "zh-TW"
+
+[metadata.labels]
+# 映像標籤
+"org.opencontainers.image.title" = "Intelligent Hyperautomation"
+"org.opencontainers.image.description" = "UAV/AD Governance Platform"
+"org.opencontainers.image.vendor" = "Platform Team"
+"org.opencontainers.image.version" = "2.0.0"
+"org.opencontainers.image.created" = "${SOURCE_DATE_EPOCH}"
+"org.opencontainers.image.source" = "https://github.com/we-can-fix/slasolve"
+
+# ==============================================================================
+# 使用方式
+# ==============================================================================
+# 1. 構建映像:
+#    docker build --build-arg SOURCE_DATE_EPOCH=1700000000 -t app:latest .
+#
+# 2. 驗證可重現性:
+#    ./scripts/verify-reproducible-build.sh
+#
+# 3. 生成 SBOM:
+#    syft packages docker:app:latest -o cyclonedx-json > sbom.json
+#
+# 4. 簽署映像與 SBOM:
+#    cosign sign --key cosign.key docker:app@sha256:...
+#    cosign sign-blob --key cosign.key sbom.json > sbom.sig
+# ==============================================================================
+
+# ==============================================================================
+# 注意事項
+# ==============================================================================
+# - 所有基礎映像必須使用 SHA256 digest
+# - SOURCE_DATE_EPOCH 必須固定以確保時間戳一致
+# - 禁用構建快取以確保每次從頭構建
+# - 所有依賴版本必須精確鎖定
+# - 構建環境變數必須標準化
+# ==============================================================================

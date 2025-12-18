@@ -1,0 +1,9 @@
+version: "1.0.0"
+skeleton_id: "knowledge-base"
+
+mapping:
+  knowledge_structure: "docs/mndoc/"
+  knowledge_graph: "docs/knowledge-graph.yaml"
+  knowledge_health: "docs/knowledge-health-report.yaml"
+  query_engine: "core/modules/mind_matrix/"
+  update_script: "automation/self_awareness_report.py"

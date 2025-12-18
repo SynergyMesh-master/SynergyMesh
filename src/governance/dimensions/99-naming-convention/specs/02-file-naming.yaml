@@ -1,0 +1,73 @@
+# =============================================================================
+# 檔案命名規範 (File Naming Standards)
+# Spec ID: 02-file-naming
+# URN: urn:machinenativeops:governance:naming-spec:file:v1
+# =============================================================================
+
+apiVersion: governance.machinenativeops.io/v2
+kind: NamingSpec
+metadata:
+  id: "file-naming"
+  name: "檔案命名規範"
+  name_en: "File Naming Standards"
+  version: "1.0.0"
+  urn: "urn:machinenativeops:governance:naming-spec:file:v1"
+  parent: "99-naming-convention"
+
+spec:
+  description: |
+    此規範定義 MachineNativeOps 專案中所有檔案的命名標準。
+    檔案命名影響程式碼可讀性、模組導入和自動化處理。
+
+  core_format:
+    name: "kebab-case"
+    pattern: "^[a-z0-9]+(-[a-z0-9]+)*\\.[a-z0-9]+$"
+    description: "一般檔案必須使用 kebab-case，副檔名小寫"
+
+  special_files:
+    uppercase_allowed:
+      - name: "README.md"
+        purpose: "專案說明文件"
+      - name: "LICENSE"
+        purpose: "授權文件"
+      - name: "CHANGELOG.md"
+        purpose: "變更日誌"
+      - name: "CONTRIBUTING.md"
+        purpose: "貢獻指南"
+      - name: "CODE_OF_CONDUCT.md"
+        purpose: "行為準則"
+      - name: "SECURITY.md"
+        purpose: "安全政策"
+      - name: "Dockerfile"
+        purpose: "Docker 建置檔"
+      - name: "Makefile"
+        purpose: "Make 建置檔"
+
+  file_type_patterns:
+    source_code:
+      pattern: "^[a-z0-9-]+\\.(ts|tsx|js|jsx|py|go|rs)$"
+      examples: ["user-service.ts", "auth-handler.py"]
+
+    config:
+      pattern: "^[a-z0-9-]+\\.(yaml|yml|json|toml)$"
+      examples: ["database-config.yaml", "app-settings.json"]
+
+    test:
+      patterns:
+        - "^[a-z0-9-]+\\.test\\.(ts|js)$"
+        - "^[a-z0-9-]+\\.spec\\.(ts|js)$"
+        - "^test_[a-z0-9_]+\\.py$"
+      examples: ["user-service.test.ts", "test_auth.py"]
+
+    generated:
+      prefix: "_generated-"
+      suffix: ".generated"
+      examples: ["_generated-types.ts", "schema.generated.json"]
+
+  forbidden_patterns:
+    - pattern: "\\s"
+      reason: "禁止空格"
+    - pattern: "^\\."
+      reason: "禁止隱藏檔（配置檔除外）"
+    - pattern: "\\.(bak|tmp|old|orig)$"
+      reason: "禁止臨時檔副檔名"

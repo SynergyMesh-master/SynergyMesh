@@ -1,0 +1,122 @@
+# Ingress Configuration
+# Phase: 2 (Q2 2026) - Pre-designed for distributed deployment
+# Description: Routes external traffic to services
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: keystone-ai-ingress
+  namespace: keystone-ai
+  labels:
+    app: keystone-ai
+  annotations:
+    # NGINX Ingress Controller annotations
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    
+    # Rate limiting
+    nginx.ingress.kubernetes.io/limit-rps: "100"
+    nginx.ingress.kubernetes.io/limit-connections: "10"
+    
+    # Timeouts
+    nginx.ingress.kubernetes.io/proxy-connect-timeout: "30"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
+    
+    # CORS
+    nginx.ingress.kubernetes.io/enable-cors: "true"
+    nginx.ingress.kubernetes.io/cors-allow-origin: "*"
+    nginx.ingress.kubernetes.io/cors-allow-methods: "GET, POST, PUT, DELETE, OPTIONS"
+    nginx.ingress.kubernetes.io/cors-allow-headers: "Authorization, Content-Type"
+    nginx.ingress.kubernetes.io/cors-max-age: "3600"
+    
+    # Security headers
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      more_set_headers "X-Frame-Options: DENY";
+      more_set_headers "X-Content-Type-Options: nosniff";
+      more_set_headers "X-XSS-Protection: 1; mode=block";
+      more_set_headers "Referrer-Policy: strict-origin-when-cross-origin";
+    
+    # Certificate manager (if using cert-manager)
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    cert-manager.io/acme-challenge-type: "http01"
+spec:
+  ingressClassName: nginx
+  
+  tls:
+    - hosts:
+        - api.keystone-ai.example.com
+        - dashboard.keystone-ai.example.com
+      secretName: keystone-ai-tls
+  
+  rules:
+    # API Gateway routes
+    - host: api.keystone-ai.example.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: api-gateway-service
+                port:
+                  number: 80
+    
+    # Dashboard routes (Phase 1 - if deployed separately)
+    - host: dashboard.keystone-ai.example.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: dashboard-service
+                port:
+                  number: 80
+---
+# Ingress for internal services (not exposed publicly)
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: keystone-ai-internal-ingress
+  namespace: keystone-ai
+  labels:
+    app: keystone-ai
+    scope: internal
+  annotations:
+    nginx.ingress.kubernetes.io/whitelist-source-range: "10.0.0.0/8,172.16.0.0/12,192.168.0.0/16"
+spec:
+  ingressClassName: nginx-internal
+  
+  rules:
+    # Scheduler admin interface
+    - host: scheduler.internal.keystone-ai.example.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: scheduler-service
+                port:
+                  number: 3000
+    
+    # Metrics endpoints
+    - host: metrics.internal.keystone-ai.example.com
+      http:
+        paths:
+          - path: /api-gateway
+            pathType: Prefix
+            backend:
+              service:
+                name: api-gateway-service
+                port:
+                  number: 9090
+          - path: /scheduler
+            pathType: Prefix
+            backend:
+              service:
+                name: scheduler-service
+                port:
+                  number: 9091

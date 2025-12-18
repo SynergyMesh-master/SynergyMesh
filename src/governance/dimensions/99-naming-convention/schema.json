@@ -1,0 +1,303 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "urn:machinenativeops:governance:99-naming-convention:v1",
+  "title": "Unified Naming Convention Schema",
+  "description": "JSON Schema for MachineNativeOps Unified Naming Convention Governance",
+  "type": "object",
+  "definitions": {
+    "kebab_case": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+      "description": "kebab-case format: lowercase letters and numbers separated by hyphens"
+    },
+    "snake_case": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9]*(_[a-z0-9]+)*$",
+      "description": "snake_case format: lowercase letters and numbers separated by underscores"
+    },
+    "camel_case": {
+      "type": "string",
+      "pattern": "^[a-z][a-zA-Z0-9]*$",
+      "description": "camelCase format: first letter lowercase, subsequent words capitalized"
+    },
+    "pascal_case": {
+      "type": "string",
+      "pattern": "^[A-Z][a-zA-Z0-9]*$",
+      "description": "PascalCase format: each word capitalized"
+    },
+    "semver": {
+      "type": "string",
+      "pattern": "^v?[0-9]+\\.[0-9]+\\.[0-9]+(-[a-zA-Z0-9]+)?(\\+[a-zA-Z0-9]+)?$",
+      "description": "Semantic version format"
+    },
+    "canonical_urn": {
+      "type": "string",
+      "pattern": "^urn:machinenativeops:[a-z0-9-]+:[a-z0-9-]+(:v[0-9]+)?(:sha256-[a-f0-9]{8})?$",
+      "description": "Canonical URN format for MachineNativeOps resources"
+    },
+    "api_uri": {
+      "type": "string",
+      "pattern": "^/api/v[0-9]+/[a-z0-9-]+(/[a-z0-9-]+)*$",
+      "description": "API URI path pattern"
+    },
+    "environment": {
+      "type": "string",
+      "enum": ["dev", "staging", "prod", "test", "learn"],
+      "description": "Standard environment abbreviations"
+    },
+    "severity": {
+      "type": "string",
+      "enum": ["error", "warning", "info"],
+      "description": "Violation severity levels"
+    },
+    "validation_result": {
+      "type": "object",
+      "properties": {
+        "valid": {
+          "type": "boolean",
+          "description": "Whether the naming is valid"
+        },
+        "violations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/violation"
+          },
+          "description": "List of violations found"
+        },
+        "canonical_form": {
+          "type": "string",
+          "description": "The canonicalized name"
+        },
+        "suggestions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Suggested corrections"
+        }
+      },
+      "required": ["valid", "violations"]
+    },
+    "violation": {
+      "type": "object",
+      "properties": {
+        "rule_id": {
+          "type": "string",
+          "pattern": "^[A-Z]+-[0-9]{3}$",
+          "description": "Rule identifier"
+        },
+        "message": {
+          "type": "string",
+          "description": "Violation message"
+        },
+        "severity": {
+          "$ref": "#/definitions/severity"
+        },
+        "location": {
+          "type": "string",
+          "description": "Location of the violation"
+        },
+        "actual": {
+          "type": "string",
+          "description": "Actual value found"
+        },
+        "expected": {
+          "type": "string",
+          "description": "Expected pattern or value"
+        }
+      },
+      "required": ["rule_id", "message", "severity"]
+    },
+    "directory_entry": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "$ref": "#/definitions/kebab_case"
+        },
+        "path": {
+          "type": "string",
+          "pattern": "^[a-z0-9-]+(/[a-z0-9-]+)*/?$"
+        },
+        "type": {
+          "type": "string",
+          "enum": ["root", "module", "package", "feature", "config", "test"]
+        }
+      },
+      "required": ["name", "path"]
+    },
+    "file_entry": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "pattern": "^[a-z0-9-]+\\.[a-z0-9]+$|^[A-Z][A-Z_]*\\.md$"
+        },
+        "extension": {
+          "type": "string",
+          "pattern": "^\\.[a-z0-9]+$"
+        },
+        "type": {
+          "type": "string",
+          "enum": ["source", "config", "doc", "test", "generated", "special"]
+        }
+      },
+      "required": ["name"]
+    },
+    "key_value_pair": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "oneOf": [
+            { "$ref": "#/definitions/snake_case" },
+            { "$ref": "#/definitions/camel_case" }
+          ]
+        },
+        "value": {
+          "type": ["string", "number", "boolean", "null", "array", "object"]
+        },
+        "context": {
+          "type": "string",
+          "enum": ["yaml_config", "json_api", "code", "annotation"]
+        }
+      },
+      "required": ["key"]
+    },
+    "dependency": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Dependency identifier"
+        },
+        "version": {
+          "type": "string",
+          "description": "Version constraint"
+        },
+        "type": {
+          "type": "string",
+          "enum": ["required", "optional", "peer"]
+        },
+        "reason": {
+          "type": "string",
+          "description": "Reason for dependency"
+        }
+      },
+      "required": ["id", "version", "type"]
+    },
+    "reference": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["file", "anchor", "json_pointer", "urn", "uri", "env"]
+        },
+        "target": {
+          "type": "string",
+          "description": "Reference target"
+        },
+        "format": {
+          "type": "string",
+          "description": "Reference format pattern"
+        }
+      },
+      "required": ["type", "target"]
+    },
+    "urn_resource": {
+      "type": "object",
+      "properties": {
+        "urn": {
+          "$ref": "#/definitions/canonical_urn"
+        },
+        "domain": {
+          "type": "string",
+          "enum": ["governance", "ai", "core", "autonomous", "config", "dimension"]
+        },
+        "resource": {
+          "$ref": "#/definitions/kebab_case"
+        },
+        "version": {
+          "type": "string",
+          "pattern": "^v[0-9]+$"
+        },
+        "checksum": {
+          "type": "string",
+          "pattern": "^sha256-[a-f0-9]{8}$"
+        },
+        "environment": {
+          "$ref": "#/definitions/environment"
+        }
+      },
+      "required": ["urn", "domain", "resource"]
+    }
+  },
+  "properties": {
+    "apiVersion": {
+      "type": "string",
+      "const": "governance.machinenativeops.io/v2"
+    },
+    "kind": {
+      "type": "string",
+      "const": "NamingConventionSpec"
+    },
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "#/definitions/kebab_case"
+        },
+        "name": {
+          "type": "string"
+        },
+        "version": {
+          "$ref": "#/definitions/semver"
+        },
+        "urn": {
+          "$ref": "#/definitions/canonical_urn"
+        }
+      },
+      "required": ["id", "name", "version"]
+    },
+    "spec": {
+      "type": "object",
+      "properties": {
+        "directories": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/directory_entry"
+          }
+        },
+        "files": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/file_entry"
+          }
+        },
+        "keys": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/key_value_pair"
+          }
+        },
+        "dependencies": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/dependency"
+          }
+        },
+        "references": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/reference"
+          }
+        },
+        "urns": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/urn_resource"
+          }
+        }
+      }
+    }
+  },
+  "required": ["apiVersion", "kind", "metadata"]
+}

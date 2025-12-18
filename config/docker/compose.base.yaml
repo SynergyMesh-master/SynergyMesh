@@ -1,0 +1,105 @@
+version: '3.8'
+
+# SynergyMesh 生產環境 Docker Compose 配置
+# 快速啟動所有核心服務
+
+services:
+  # ==================== 核心服務層 ====================
+  
+  contracts-l1:
+    build:
+      context: ./core/contract_service/contracts-L1/contracts
+      dockerfile: Dockerfile
+    container_name: machinenativeops-contracts-l1
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - LOG_LEVEL=info
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/healthz"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    restart: unless-stopped
+    networks:
+      - machinenativeops-network
+    labels:
+      - "com.machinenativeops.service=contracts-l1"
+      - "com.machinenativeops.tier=core"
+      - "com.machinenativeops.version=1.0.0"
+
+  # ==================== 工具與驗證層 ====================
+  
+  mcp-servers:
+    build:
+      context: ./mcp-servers
+      dockerfile: Dockerfile
+    container_name: machinenativeops-mcp-servers
+    ports:
+      - "3001:3001"
+    environment:
+      - NODE_ENV=production
+      - MCP_SERVER_PORT=3001
+      - CONTRACTS_L1_URL=http://contracts-l1:3000
+    depends_on:
+      contracts-l1:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3001/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    restart: unless-stopped
+    networks:
+      - machinenativeops-network
+    labels:
+      - "com.machinenativeops.service=mcp-servers"
+      - "com.machinenativeops.tier=tools"
+      - "com.machinenativeops.version=1.0.0"
+
+  # ==================== 儀表板與監控層 ====================
+  
+  dashboard:
+    image: nginx:alpine
+    container_name: machinenativeops-dashboard
+    ports:
+      - "8080:80"
+    volumes:
+      - ./auto-fix-bot-dashboard.html:/usr/share/nginx/html/index.html:ro
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - contracts-l1
+      - mcp-servers
+    restart: unless-stopped
+    networks:
+      - machinenativeops-network
+    labels:
+      - "com.machinenativeops.service=dashboard"
+      - "com.machinenativeops.tier=frontend"
+      - "com.machinenativeops.version=1.0.0"
+
+# ==================== 網路配置 ====================
+
+networks:
+  machinenativeops-network:
+    driver: bridge
+    name: machinenativeops-network
+    labels:
+      - "com.machinenativeops.network=main"
+
+# ==================== 卷配置 (可選) ====================
+
+volumes:
+  contracts-data:
+    name: machinenativeops-contracts-data
+    labels:
+      - "com.machinenativeops.volume=contracts"
+  
+  mcp-data:
+    name: machinenativeops-mcp-data
+    labels:
+      - "com.machinenativeops.volume=mcp"

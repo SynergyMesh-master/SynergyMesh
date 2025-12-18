@@ -1,0 +1,735 @@
+{
+  "$schema": "MachineNativeOps-Subdirectory-Restructure-Spec-v1.0.0",
+  "metadata": {
+    "specName": "Subdirectory Restructuring Specification",
+    "version": "1.0.0",
+    "parentSpec": "machinenativeops-restructure-spec.json",
+    "parentVersion": "4.0.0",
+    "description": "Phase 2: Subdirectory-level reorganization and standardization",
+    "createdDate": "2025-12-18",
+    "scope": "Reorganize subdirectories within src/, config/, scripts/, governance/, and examples/"
+  },
+  
+  "namingPrinciples": {
+    "consistency": "All subdirectories must follow kebab-case naming",
+    "clarity": "Names should be self-documenting and unambiguous",
+    "hierarchy": "Logical grouping by function, not by technology",
+    "elimination": "Remove duplicate, legacy, and scratch directories",
+    "standardization": "Follow industry-standard naming patterns"
+  },
+
+  "restructuringPlan": {
+    "src": {
+      "description": "Application source code - executable components only",
+      "currentIssues": [
+        "Multiple overlapping directories (automation/, autonomous/, bridges/)",
+        "Inconsistent naming (apps/ vs client/ vs frontend/)",
+        "Scratch and legacy directories mixed with production code",
+        "Unclear separation between services and shared code"
+      ],
+      "targetStructure": {
+        "ai": {
+          "description": "AI decision engine and ML pipelines",
+          "subdirectories": {
+            "agents": {
+              "description": "Autonomous AI agents",
+              "mergeFrom": ["ai/agents/"]
+            },
+            "collaboration": {
+              "description": "Multi-agent collaboration systems",
+              "mergeFrom": ["ai/collaboration/"]
+            },
+            "inference": {
+              "description": "Model inference and serving",
+              "createNew": true
+            },
+            "training": {
+              "description": "Model training pipelines",
+              "createNew": true
+            },
+            "examples": {
+              "description": "AI usage examples",
+              "mergeFrom": ["ai/examples/"]
+            }
+          },
+          "removeDirectories": ["ai/__tests__/"]
+        },
+        "core": {
+          "description": "Core orchestration and workflow engine",
+          "subdirectories": {
+            "engine": {
+              "description": "Core execution engine",
+              "mergeFrom": ["core/execution_engine/", "core/execution_architecture/", "core/hlp_executor/"]
+            },
+            "plugins": {
+              "description": "Plugin system and extensions",
+              "mergeFrom": ["core/plugin_system.py", "core/modules/"]
+            },
+            "contracts": {
+              "description": "API contracts and service definitions",
+              "mergeFrom": ["core/contract_service/", "contracts/"]
+            },
+            "monitoring": {
+              "description": "System monitoring and observability",
+              "mergeFrom": ["core/monitoring_system/"]
+            },
+            "safety": {
+              "description": "Safety mechanisms and guardrails",
+              "mergeFrom": ["core/safety_mechanisms/", "core/hallucination_detector.py", "core/autonomous_trust_engine.py"]
+            },
+            "integrations": {
+              "description": "External system integrations",
+              "mergeFrom": ["core/unified_integration/", "core/mcp_servers_enhanced/"]
+            }
+          },
+          "removeDirectories": ["core/_scratch/", "core/advisory-database/", "core/ai_constitution/", "core/ci_error_handler/", "core/cloud_agent_delegation/", "core/island_ai_runtime/", "core/main_system/", "core/project_factory/", "core/slsa_provenance/", "core/tech_stack/", "core/training_system/", "core/validators/", "core/virtual_experts/", "core/yaml_module_system/"]
+        },
+        "autonomous": {
+          "description": "Autonomous operations and zero-touch automation",
+          "subdirectories": {
+            "infrastructure": {
+              "description": "Infrastructure as Code and IaC management",
+              "mergeFrom": ["autonomous/infrastructure/", "automation/autonomous/"]
+            },
+            "deployment": {
+              "description": "Deployment automation and orchestration",
+              "mergeFrom": ["autonomous/deployment/", "automation/pipelines/"]
+            },
+            "agents": {
+              "description": "Autonomous operation agents",
+              "mergeFrom": ["autonomous/ops/", "automation/intelligent/"]
+            },
+            "self-healing": {
+              "description": "Self-healing and recovery systems",
+              "createNew": true
+            }
+          },
+          "removeDirectories": ["autonomous/core/"]
+        },
+        "services": {
+          "description": "Microservices and backend services",
+          "subdirectories": {
+            "api-gateway": {
+              "description": "API gateway and routing",
+              "createNew": true
+            },
+            "auth": {
+              "description": "Authentication and authorization service",
+              "createNew": true
+            },
+            "config-management": {
+              "description": "Configuration management service",
+              "createNew": true
+            },
+            "observability": {
+              "description": "Observability and telemetry service",
+              "createNew": true
+            }
+          },
+          "mergeFrom": ["services/", "server/"]
+        },
+        "web": {
+          "description": "Web applications and frontends",
+          "subdirectories": {
+            "admin": {
+              "description": "Admin dashboard application",
+              "mergeFrom": ["apps/web/", "frontend/ui/"]
+            },
+            "api": {
+              "description": "Web API backend",
+              "mergeFrom": ["apps/web-backend/"]
+            },
+            "client": {
+              "description": "Client-side application",
+              "mergeFrom": ["client/"]
+            },
+            "shared": {
+              "description": "Shared web components and utilities",
+              "mergeFrom": ["shared/"]
+            }
+          }
+        },
+        "shared": {
+          "description": "Shared libraries and utilities",
+          "subdirectories": {
+            "types": {
+              "description": "Shared TypeScript types and interfaces",
+              "createNew": true
+            },
+            "utils": {
+              "description": "Common utility functions",
+              "createNew": true
+            },
+            "constants": {
+              "description": "Shared constants and enums",
+              "createNew": true
+            },
+            "schemas": {
+              "description": "Data schemas and validators",
+              "mergeFrom": ["schemas/"]
+            }
+          }
+        },
+        "mcp-servers": {
+          "description": "Model Context Protocol servers",
+          "keepAsIs": true,
+          "mergeFrom": ["mcp-servers/"]
+        }
+      },
+      "removeAtRoot": [
+        "automation/",
+        "apps/",
+        "bridges/",
+        "canonical/",
+        "contracts/",
+        "docker-templates/",
+        "frontend/",
+        "governance/",
+        "machinenativeops.egg-info/",
+        "runtime/",
+        "server/",
+        "supply-chain/",
+        "synergymesh.egg-info/",
+        "templates/",
+        "tests/"
+      ],
+      "moveToOtherRoots": {
+        "governance/": "Move to root-level governance/",
+        "tests/": "Move to root-level tests/",
+        "templates/": "Move to config/templates/",
+        "docker-templates/": "Move to config/docker/templates/"
+      }
+    },
+
+    "config": {
+      "description": "Centralized configuration management",
+      "currentIssues": [
+        "Too many files at root level (60+ files)",
+        "Mixed concerns (CI, dev, docker, agents, etc.)",
+        "Duplicate configuration files",
+        "No clear environment separation"
+      ],
+      "targetStructure": {
+        "environments": {
+          "description": "Environment-specific configurations",
+          "subdirectories": {
+            "dev": {
+              "description": "Development environment configs",
+              "mergeFrom": ["dev/environments/"],
+              "files": ["development.env", "docker-compose.dev.yml"]
+            },
+            "staging": {
+              "description": "Staging environment configs",
+              "mergeFrom": ["dev/environments/"],
+              "files": ["staging.env"]
+            },
+            "prod": {
+              "description": "Production environment configs",
+              "mergeFrom": ["dev/environments/"],
+              "files": ["production.env"]
+            }
+          }
+        },
+        "ci-cd": {
+          "description": "CI/CD pipeline configurations",
+          "files": [
+            "ci-agent-config.yaml",
+            "ci-comprehensive-solution.yaml",
+            "ci-config.yaml",
+            "ci-error-handler.yaml",
+            "drone-config.yml"
+          ]
+        },
+        "docker": {
+          "description": "Docker and container configurations",
+          "subdirectories": {
+            "compose": {
+              "description": "Docker Compose files",
+              "files": ["docker-compose.yml", "docker-compose.dev.yml", "docker-compose.phase1.yml"]
+            },
+            "templates": {
+              "description": "Dockerfile templates",
+              "mergeFrom": ["docker/"]
+            }
+          },
+          "files": ["Dockerfile", ".dockerignore"]
+        },
+        "agents": {
+          "description": "Agent configurations and profiles",
+          "keepAsIs": true,
+          "subdirectories": ["profiles/", "schemas/", "team/"]
+        },
+        "automation": {
+          "description": "Automation and pipeline configurations",
+          "keepAsIs": true,
+          "subdirectories": ["pipelines/"]
+        },
+        "monitoring": {
+          "description": "Monitoring and observability configs",
+          "files": [
+            "monitoring.yaml",
+            "prometheus-config.yml",
+            "prometheus-rules.yml",
+            "grafana-dashboard.json",
+            "elasticsearch-config.sh"
+          ]
+        },
+        "security": {
+          "description": "Security and compliance configurations",
+          "files": [
+            "security-network-config.yml",
+            "safety-mechanisms.yaml"
+          ]
+        },
+        "governance": {
+          "description": "Governance and policy configurations",
+          "files": [
+            "governance-manifest.yaml",
+            "language-policy.yaml",
+            "ai-constitution.yaml"
+          ]
+        },
+        "build": {
+          "description": "Build tool configurations",
+          "files": [
+            "vite.config.ts",
+            "tsconfig.json",
+            "eslint.config.js",
+            ".eslintrc.yaml",
+            "jest.config.js",
+            "postcss.config.js",
+            "tailwind.config.ts",
+            "drizzle.config.ts",
+            "peachy-build.toml"
+          ]
+        },
+        "linting": {
+          "description": "Code quality and linting configs",
+          "files": [
+            ".prettierrc",
+            ".markdownlint.json",
+            ".markdownlintignore",
+            ".pre-commit-config.yaml"
+          ]
+        },
+        "integrations": {
+          "description": "External integration configurations",
+          "keepAsIs": true,
+          "subdirectories": ["matechat/"],
+          "files": ["integrations-index.yaml"]
+        },
+        "templates": {
+          "description": "Configuration templates",
+          "keepAsIs": true,
+          "files": ["plugin-specification-template.yaml"]
+        },
+        "system": {
+          "description": "System-level configurations",
+          "files": [
+            "machinenativeops-restructure-spec.json",
+            "subdirectory-restructure-spec.json",
+            "system-manifest.yaml",
+            "system-module-map.yaml",
+            "system-evolution.yaml",
+            "unified-config-index.yaml",
+            "dependencies.yaml",
+            "environment.yaml"
+          ]
+        }
+      },
+      "removeFiles": [
+        "auto-fix-bot .prompt.yml",
+        "synergymesh.config.yaml",
+        "island-control.yml",
+        "topology-mind-matrix.yaml",
+        "tenant-tier-definitions.yaml",
+        "recovery-system.yaml",
+        "refactor-evolution.yaml",
+        "sync-refactor-config.yaml",
+        "instant-execution-pipeline.yaml",
+        "cloud-agent-delegation.yml",
+        "builder-system-prompt.yaml",
+        "brand-mapping.yaml",
+        "yaml-module-system.yaml",
+        "island-ai-runtime.yaml"
+      ],
+      "removeDirectories": [
+        "autofix/",
+        "conftest/",
+        "pipelines/"
+      ]
+    },
+
+    "scripts": {
+      "description": "Automation and operational scripts",
+      "currentIssues": [
+        "Mixed script types at root level",
+        "Unclear categorization",
+        "Legacy and duplicate scripts"
+      ],
+      "targetStructure": {
+        "dev": {
+          "description": "Development workflow scripts",
+          "files": [
+            "start-synergymesh-dev.sh",
+            "start-automation-engine.sh"
+          ]
+        },
+        "ci": {
+          "description": "CI/CD pipeline scripts",
+          "keepAsIs": true,
+          "files": ["governed-build.sh"]
+        },
+        "ops": {
+          "description": "Operations and maintenance scripts",
+          "keepAsIs": true,
+          "subdirectories": [
+            "migration/",
+            "onboarding/",
+            "reports/",
+            "runbooks/",
+            "artifacts/"
+          ]
+        },
+        "deployment": {
+          "description": "Deployment automation scripts",
+          "files": [
+            "deploy.sh",
+            "comprehensive-deploy.sh",
+            "run-instant-execution.sh"
+          ],
+          "subdirectories": {
+            "k8s": {
+              "description": "Kubernetes deployment scripts",
+              "keepAsIs": true
+            }
+          }
+        },
+        "governance": {
+          "description": "Governance automation scripts",
+          "subdirectories": {
+            "naming": {
+              "description": "Naming convention enforcement",
+              "keepAsIs": true
+            },
+            "migration": {
+              "description": "Brand and structure migration",
+              "files": [
+                "brand-migration.sh",
+                "brand-replacer.py"
+              ]
+            }
+          }
+        },
+        "automation": {
+          "description": "General automation scripts",
+          "files": [
+            "automation_launcher.py",
+            "emergency_recovery.py"
+          ]
+        },
+        "utils": {
+          "description": "Utility scripts",
+          "files": [
+            "bootstrap-from-manifest.sh",
+            "fix-island-ai.sh"
+          ]
+        }
+      },
+      "removeFiles": [
+        "auto_sync_flow.mermaid.txt",
+        "github_sync_workflow.txt",
+        "system_interconnection.mermaid.txt",
+        "post_commit_hook.sh"
+      ],
+      "removeDirectories": [
+        "hooks/",
+        "sync/"
+      ],
+      "moveToOtherRoots": {
+        "hooks/": "Move to .github/hooks/",
+        "build.ts": "Move to src/build/"
+      }
+    },
+
+    "governance": {
+      "description": "Governance content hub (non-code)",
+      "currentIssues": [
+        "Currently located in src/governance/ (should be at root)",
+        "Too many numbered directories (00-40+)",
+        "Mixed content types",
+        "Unclear hierarchy"
+      ],
+      "targetStructure": {
+        "policies": {
+          "description": "Policy definitions and templates",
+          "mergeFrom": ["src/governance/23-policies/", "src/governance/10-policy/", "governance/policies/"]
+        },
+        "strategies": {
+          "description": "Strategic frameworks and OKRs",
+          "mergeFrom": ["src/governance/00-vision-strategy/", "src/governance/20-intent/"]
+        },
+        "architecture": {
+          "description": "Architecture decisions and designs",
+          "mergeFrom": ["src/governance/01-architecture/", "src/governance/18-complex-system/"]
+        },
+        "compliance": {
+          "description": "Compliance and audit frameworks",
+          "mergeFrom": ["src/governance/05-compliance/", "src/governance/07-audit/", "src/governance/70-audit/"]
+        },
+        "security": {
+          "description": "Security policies and guidelines",
+          "mergeFrom": ["src/governance/06-security/"]
+        },
+        "processes": {
+          "description": "Process definitions and workflows",
+          "mergeFrom": ["src/governance/08-process/", "src/governance/03-change/"]
+        },
+        "metrics": {
+          "description": "Metrics and reporting frameworks",
+          "mergeFrom": ["src/governance/09-performance/", "src/governance/13-metrics-reporting/"]
+        },
+        "tools": {
+          "description": "Governance tools and utilities",
+          "mergeFrom": ["src/governance/26-tools/", "src/governance/11-tools-systems/"]
+        },
+        "docs": {
+          "description": "Governance documentation",
+          "mergeFrom": ["src/governance/29-docs/"]
+        },
+        "templates": {
+          "description": "Governance templates",
+          "mergeFrom": ["src/governance/27-templates/"]
+        },
+        "schemas": {
+          "description": "Governance data schemas",
+          "mergeFrom": ["src/governance/31-schemas/", "src/governance/schemas/"]
+        },
+        "automation": {
+          "description": "Governance automation",
+          "mergeFrom": ["src/governance/39-automation/", "src/governance/40-self-healing/"]
+        }
+      },
+      "removeDirectories": [
+        "src/governance/_legacy/",
+        "src/governance/_scratch/",
+        "src/governance/02-decision/",
+        "src/governance/04-risk/",
+        "src/governance/10-stakeholder/",
+        "src/governance/12-culture-capability/",
+        "src/governance/14-improvement/",
+        "src/governance/15-economic/",
+        "src/governance/16-psychological/",
+        "src/governance/17-sociological/",
+        "src/governance/19-evolutionary/",
+        "src/governance/21-ecological/",
+        "src/governance/22-aesthetic/",
+        "src/governance/24-registry/",
+        "src/governance/25-principles/",
+        "src/governance/28-tests/",
+        "src/governance/30-agents/",
+        "src/governance/30-integration/",
+        "src/governance/32-rules/",
+        "src/governance/33-common/",
+        "src/governance/34-config/",
+        "src/governance/35-scripts/",
+        "src/governance/36-modules/",
+        "src/governance/37-behavior-contracts/",
+        "src/governance/38-sbom/",
+        "src/governance/60-contracts/",
+        "src/governance/80-feedback/",
+        "src/governance/ci/",
+        "src/governance/dimensions/",
+        "src/governance/index/",
+        "src/governance/packages/"
+      ]
+    },
+
+    "examples": {
+      "description": "Educational and tutorial content",
+      "currentIssues": [
+        "Minimal structure",
+        "Governance examples mixed with tutorials"
+      ],
+      "targetStructure": {
+        "namespace-tutorial": {
+          "description": "Kubernetes namespace tutorial",
+          "keepAsIs": true
+        },
+        "governance": {
+          "description": "Governance usage examples",
+          "keepAsIs": true,
+          "subdirectories": ["change-management/", "naming/"]
+        },
+        "integrations": {
+          "description": "Integration examples",
+          "createNew": true
+        },
+        "workflows": {
+          "description": "Workflow examples",
+          "createNew": true
+        }
+      }
+    },
+
+    "tests": {
+      "description": "Test suites (to be moved from src/tests/)",
+      "targetStructure": {
+        "unit": {
+          "description": "Unit tests",
+          "createNew": true
+        },
+        "integration": {
+          "description": "Integration tests",
+          "createNew": true
+        },
+        "e2e": {
+          "description": "End-to-end tests",
+          "createNew": true
+        },
+        "fixtures": {
+          "description": "Test fixtures and data",
+          "createNew": true
+        }
+      }
+    }
+  },
+
+  "migrationPhases": {
+    "phase-1": {
+      "name": "Preparation and Backup",
+      "steps": [
+        "Create feature branch: refactor/subdirectory-restructure",
+        "Create backup tag with timestamp",
+        "Generate current directory tree snapshot",
+        "Run dependency analysis baseline",
+        "Document current import paths"
+      ]
+    },
+    "phase-2": {
+      "name": "src/ Restructuring",
+      "steps": [
+        "Create new subdirectory structure in src/",
+        "Merge AI-related directories",
+        "Consolidate core engine components",
+        "Reorganize autonomous operations",
+        "Migrate services and web applications",
+        "Create shared libraries structure",
+        "Update import paths in code",
+        "Remove deprecated directories",
+        "Run tests and verify builds"
+      ]
+    },
+    "phase-3": {
+      "name": "config/ Reorganization",
+      "steps": [
+        "Create environment-specific subdirectories",
+        "Group CI/CD configurations",
+        "Organize Docker configurations",
+        "Consolidate monitoring configs",
+        "Group build tool configurations",
+        "Remove deprecated config files",
+        "Update config references in code"
+      ]
+    },
+    "phase-4": {
+      "name": "scripts/ Cleanup",
+      "steps": [
+        "Categorize scripts by function",
+        "Move scripts to appropriate subdirectories",
+        "Remove duplicate and legacy scripts",
+        "Update script references in CI/CD",
+        "Update documentation"
+      ]
+    },
+    "phase-5": {
+      "name": "governance/ Migration",
+      "steps": [
+        "Move src/governance/ to root governance/",
+        "Consolidate numbered directories",
+        "Organize by logical categories",
+        "Remove deprecated governance content",
+        "Update governance references"
+      ]
+    },
+    "phase-6": {
+      "name": "Verification and Documentation",
+      "steps": [
+        "Run full test suite",
+        "Verify all imports resolve",
+        "Check CI/CD pipelines",
+        "Update all documentation",
+        "Generate new directory tree",
+        "Create migration report"
+      ]
+    }
+  },
+
+  "automationScripts": {
+    "create-structure": {
+      "description": "Create new directory structure",
+      "script": "scripts/ops/migration/create-subdirectory-structure.sh"
+    },
+    "merge-directories": {
+      "description": "Merge duplicate directories",
+      "script": "scripts/ops/migration/merge-subdirectories.sh"
+    },
+    "update-imports": {
+      "description": "Update import paths in code",
+      "script": "scripts/ops/migration/update-import-paths.sh"
+    },
+    "verify-structure": {
+      "description": "Verify new structure",
+      "script": "scripts/ops/migration/verify-subdirectory-structure.sh"
+    }
+  },
+
+  "validationRules": {
+    "naming": {
+      "format": "kebab-case",
+      "maxDepth": 4,
+      "prohibitedNames": ["_scratch", "_legacy", "temp", "tmp", "old", "backup"]
+    },
+    "structure": {
+      "noEmptyDirectories": true,
+      "noOrphanedFiles": true,
+      "consistentNaming": true
+    },
+    "imports": {
+      "noAbsolutePaths": true,
+      "useAliases": true,
+      "noCircularDependencies": true
+    }
+  },
+
+  "rollbackProcedure": {
+    "steps": [
+      "git reset --hard HEAD",
+      "git checkout <backup-tag>",
+      "git clean -fd",
+      "npm install",
+      "npm run build"
+    ]
+  },
+
+  "successCriteria": {
+    "structure": [
+      "All directories follow kebab-case naming",
+      "No duplicate or overlapping directories",
+      "Clear separation of concerns",
+      "Maximum 3-4 levels of nesting"
+    ],
+    "functionality": [
+      "All tests pass",
+      "Build succeeds without errors",
+      "No broken imports",
+      "CI/CD pipelines work"
+    ],
+    "documentation": [
+      "Updated README files",
+      "Migration guide created",
+      "New directory tree documented",
+      "Import path guide updated"
+    ]
+  }
+}

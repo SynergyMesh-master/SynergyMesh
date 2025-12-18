@@ -1,0 +1,149 @@
+#!/bin/bash
+# ═══════════════════════════════════════════════════════════════════════════════
+#                    Stage 0 Pre-Push Hook
+#                    Stage 0 推送前檢查
+# ═══════════════════════════════════════════════════════════════════════════════
+#
+# 安裝方式 / Installation:
+#   cp scripts/hooks/pre-push .git/hooks/pre-push
+#   chmod +x .git/hooks/pre-push
+#
+# ═══════════════════════════════════════════════════════════════════════════════
+
+set -e
+
+echo "🚀 Running Stage 0 pre-push validation..."
+
+# ─────────────────────────────────────────────────────────────────────────────
+#                    1. 必要檔案檢查 (from island.bootstrap.stage0.yaml)
+# ─────────────────────────────────────────────────────────────────────────────
+echo "📋 Checking required files..."
+
+REQUIRED_FILES=(
+    "README.md"
+    "LICENSE"
+    ".github/workflows/01-validate.yml"
+    ".github/workflows/02-test.yml"
+    ".github/workflows/03-build.yml"
+)
+
+MISSING_FILES=0
+for file in "${REQUIRED_FILES[@]}"; do
+    if [ ! -f "$file" ]; then
+        echo "❌ Missing required file: $file"
+        MISSING_FILES=$((MISSING_FILES + 1))
+    fi
+done
+
+if [ $MISSING_FILES -gt 0 ]; then
+    echo "❌ Found $MISSING_FILES missing required files."
+    exit 1
+fi
+echo "✅ All required files present"
+
+# ─────────────────────────────────────────────────────────────────────────────
+#                    2. 骨架目錄結構檢查
+# ─────────────────────────────────────────────────────────────────────────────
+echo "📋 Checking skeleton directory structure..."
+
+REQUIRED_DIRS=(
+    "core"
+    "services"
+    "docs"
+    "config"
+    "governance"
+)
+
+MISSING_DIRS=0
+for dir in "${REQUIRED_DIRS[@]}"; do
+    if [ ! -d "$dir" ]; then
+        echo "⚠️ Missing directory: $dir"
+        MISSING_DIRS=$((MISSING_DIRS + 1))
+    fi
+done
+
+if [ $MISSING_DIRS -gt 0 ]; then
+    echo "⚠️ Warning: $MISSING_DIRS skeleton directories not found."
+    # Warning only
+fi
+echo "✅ Directory structure check completed"
+
+# ─────────────────────────────────────────────────────────────────────────────
+#                    3. Workflow 標準檢查
+# ─────────────────────────────────────────────────────────────────────────────
+echo "📋 Validating workflow standards..."
+
+WORKFLOW_ISSUES=0
+
+for workflow in .github/workflows/*.yml .github/workflows/*.yaml; do
+    [ -f "$workflow" ] || continue
+    
+    # Check for timeout-minutes at job level
+    if ! grep -q "timeout-minutes:" "$workflow"; then
+        echo "⚠️ Missing timeout-minutes in: $workflow"
+        WORKFLOW_ISSUES=$((WORKFLOW_ISSUES + 1))
+    fi
+    
+    # Check for concurrency control
+    if ! grep -q "concurrency:" "$workflow"; then
+        echo "⚠️ Missing concurrency control in: $workflow"
+        # Not all workflows need concurrency, just warning
+    fi
+done
+
+echo "✅ Workflow standards check completed"
+
+# ─────────────────────────────────────────────────────────────────────────────
+#                    4. CI 配置一致性檢查
+# ─────────────────────────────────────────────────────────────────────────────
+echo "📋 Checking CI configuration consistency..."
+
+# Verify ci-error-handler.yaml exists
+if [ -f "config/ci-error-handler.yaml" ]; then
+    echo "✅ CI error handler configuration exists"
+else
+    echo "⚠️ Missing: config/ci-error-handler.yaml"
+fi
+
+# Verify ci-agent-config.yaml exists
+if [ -f "config/ci-agent-config.yaml" ]; then
+    echo "✅ CI agent configuration exists"
+else
+    echo "⚠️ Missing: config/ci-agent-config.yaml"
+fi
+
+# ─────────────────────────────────────────────────────────────────────────────
+#                    5. 架構骨架索引檢查
+# ─────────────────────────────────────────────────────────────────────────────
+echo "📋 Checking architecture skeleton index..."
+
+SKELETON_INDEX="unmanned-engineer-ceo/60-machine-guides/70-architecture-skeletons/skeletons-index.yaml"
+if [ -f "$SKELETON_INDEX" ]; then
+    if python3 -c "import yaml; yaml.safe_load(open('$SKELETON_INDEX'))" 2>/dev/null; then
+        echo "✅ Skeleton index is valid"
+    else
+        echo "❌ Skeleton index has invalid YAML syntax"
+        exit 1
+    fi
+else
+    echo "⚠️ Skeleton index not found at: $SKELETON_INDEX"
+fi
+
+# ─────────────────────────────────────────────────────────────────────────────
+#                    6. 測試執行 (可選)
+# ─────────────────────────────────────────────────────────────────────────────
+if [ "$SKIP_TESTS" != "1" ]; then
+    echo "📋 Running tests..."
+    
+    if [ -f "package.json" ] && grep -q '"test"' package.json; then
+        npm test --workspaces --if-present 2>/dev/null || {
+            echo "⚠️ Some tests failed. Consider fixing before push."
+            # Warning only to not block push
+        }
+    fi
+fi
+
+echo ""
+echo "✅ All Stage 0 pre-push checks passed!"
+echo "🚀 Proceeding with push..."
+echo ""

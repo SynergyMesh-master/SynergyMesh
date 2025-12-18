@@ -1,0 +1,162 @@
+# ═══════════════════════════════════════════════════════════════════════════════
+#                    Ten-Stage Governance Pipeline - Governance Entity
+#                    十階段治理管道 - 治理實體定義
+# ═══════════════════════════════════════════════════════════════════════════════
+#
+# Schema: https://schema.superroot.kn/mndoc/entity/governance/v1
+# Source: README.md - Structural Governance System - Ten-stage pipeline
+#
+# ═══════════════════════════════════════════════════════════════════════════════
+
+$schema: "https://schema.superroot.kn/mndoc/entity/governance/v1"
+entity: "Governance"
+id: "ten-stage-governance-pipeline"
+type: "pipeline"
+title: "Ten-Stage Governance Pipeline"
+description: |
+  SuperRoot 風格的十階段治理管道，確保所有配置和程式碼符合治理標準。
+  Ten-stage governance pipeline ensuring all configurations and code meet 
+  governance standards.
+
+pipeline:
+  stages:
+    - id: "stage-lint"
+      name: "Lint"
+      type: "lint"
+      description: "YAML/JSON 語法檢查"
+      tools:
+        - "yamllint"
+        - "jsonlint"
+      required: true
+      order: 1
+      timeout_seconds: 60
+      on_failure: "abort"
+
+    - id: "stage-format"
+      name: "Format"
+      type: "format"
+      description: "格式化規則驗證"
+      tools:
+        - "prettier"
+        - "black"
+      required: true
+      order: 2
+      timeout_seconds: 60
+      on_failure: "abort"
+
+    - id: "stage-schema"
+      name: "Schema"
+      type: "schema"
+      description: "JSON Schema 驗證"
+      tools:
+        - "ajv"
+        - "jsonschema"
+      required: true
+      order: 3
+      timeout_seconds: 120
+      on_failure: "abort"
+
+    - id: "stage-vector-test"
+      name: "Vector Test"
+      type: "vector-test"
+      description: "測試向量驗證"
+      tools:
+        - "pytest"
+        - "jest"
+      required: true
+      order: 4
+      timeout_seconds: 300
+      on_failure: "abort"
+
+    - id: "stage-policy-gate"
+      name: "Policy Gate"
+      type: "policy-gate"
+      description: "OPA/Conftest 策略檢查"
+      tools:
+        - "opa"
+        - "conftest"
+      required: true
+      order: 5
+      timeout_seconds: 180
+      on_failure: "abort"
+
+    - id: "stage-k8s-validation"
+      name: "K8s Validation"
+      type: "k8s-validation"
+      description: "Kubernetes 清單驗證"
+      tools:
+        - "kubectl"
+        - "kubeconform"
+        - "kubeval"
+      required: true
+      order: 6
+      timeout_seconds: 120
+      on_failure: "abort"
+
+    - id: "stage-sbom"
+      name: "SBOM"
+      type: "sbom"
+      description: "軟體物料清單生成"
+      tools:
+        - "syft"
+        - "cyclonedx"
+      required: true
+      order: 7
+      timeout_seconds: 300
+      on_failure: "continue"
+
+    - id: "stage-provenance"
+      name: "Provenance"
+      type: "provenance"
+      description: "SLSA L3 證據注入"
+      tools:
+        - "slsa-generator"
+        - "in-toto"
+      required: true
+      order: 8
+      timeout_seconds: 180
+      on_failure: "abort"
+
+    - id: "stage-sign"
+      name: "Cosign Sign"
+      type: "sign"
+      description: "Sigstore 無密鑰簽名"
+      tools:
+        - "cosign"
+        - "sigstore"
+      required: true
+      order: 9
+      timeout_seconds: 120
+      on_failure: "abort"
+
+    - id: "stage-audit"
+      name: "Audit"
+      type: "audit"
+      description: "審計事件記錄"
+      tools:
+        - "audit-logger"
+      required: true
+      order: 10
+      timeout_seconds: 60
+      on_failure: "alert"
+
+  on_failure: "rollback"
+
+owner: "governance-team"
+status: "active"
+
+tags:
+  - governance
+  - pipeline
+  - slsa
+  - supply-chain
+  - compliance
+
+evidence_ref:
+  audit_log: "governance/audit/pipeline-executions.yaml"
+  slsa_ref: ".slsa/provenance/governance-pipeline.json"
+
+meta:
+  workflow_ref: ".github/workflows/apply.yaml"
+  policy_path: "governance/policies/"
+  schema_path: "governance/schemas/"

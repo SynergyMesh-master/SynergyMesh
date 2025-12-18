@@ -1,0 +1,64 @@
+# ═══════════════════════════════════════════════════════════════════════════════
+#                    Integration Pipeline Configuration
+#                         整合管道配置
+# ═══════════════════════════════════════════════════════════════════════════════
+
+pipeline_id: integration_full_cycle
+name: "全自動整合管道"
+description: "完整的自動化整合週期：掃描 → 合併 → 同步 → 驗證"
+enabled: true
+
+triggers:
+  - type: cron
+    schedule: "0 */12 * * *"  # 每12小時
+
+  - type: event
+    event: "asset.added"
+    filter:
+      path: "docs/refactor_playbooks/_legacy_scratch/**"
+
+stages:
+  - stage_id: scan_legacy
+    name: "掃描遺留資產"
+    engine_type: execution
+    operation: scan
+    params:
+      target: "docs/refactor_playbooks/_legacy_scratch"
+    timeout: 60
+
+  - stage_id: analyze
+    name: "分析資產"
+    engine_type: cognitive
+    operation: analyze
+    depends_on:
+      - scan_legacy
+    timeout: 120
+
+  - stage_id: integrate
+    name: "執行整合"
+    engine_type: integration
+    operation: full_integration
+    depends_on:
+      - analyze
+    timeout: 300
+
+  - stage_id: sync_indexes
+    name: "同步索引"
+    engine_type: integration
+    operation: update_indexes
+    depends_on:
+      - integrate
+    timeout: 60
+
+  - stage_id: validate
+    name: "驗證結果"
+    engine_type: validation
+    operation: validate_all
+    depends_on:
+      - sync_indexes
+    timeout: 60
+
+error_handling:
+  on_stage_failure: continue_to_next
+  rollback:
+    enabled: true

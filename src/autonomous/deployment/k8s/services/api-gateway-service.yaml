@@ -1,0 +1,49 @@
+# API Gateway Service
+# Phase: 2 (Q2 2026) - Pre-designed for distributed deployment
+# Description: Exposes API Gateway deployment
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: api-gateway-service
+  namespace: keystone-ai
+  labels:
+    app: api-gateway
+    component: backend
+    tier: api
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-type: "nlb"
+    service.beta.kubernetes.io/aws-load-balancer-backend-protocol: "http"
+spec:
+  type: ClusterIP
+  selector:
+    app: api-gateway
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: http
+    - name: metrics
+      protocol: TCP
+      port: 9090
+      targetPort: metrics
+  sessionAffinity: None
+---
+# Headless service for StatefulSet (if needed in future)
+apiVersion: v1
+kind: Service
+metadata:
+  name: api-gateway-headless
+  namespace: keystone-ai
+  labels:
+    app: api-gateway
+spec:
+  type: ClusterIP
+  clusterIP: None
+  selector:
+    app: api-gateway
+  ports:
+    - name: http
+      protocol: TCP
+      port: 8000
+      targetPort: http

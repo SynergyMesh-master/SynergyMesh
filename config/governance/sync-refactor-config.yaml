@@ -1,0 +1,283 @@
+# ═══════════════════════════════════════════════════════════════════════════════
+#           Unified Sync & Refactor Configuration
+#           統一同步與重構配置
+# ═══════════════════════════════════════════════════════════════════════════════
+#
+# Version: 1.0.0
+# Purpose: Single source of truth for project synchronization and refactoring
+# 
+# This configuration file is referenced by:
+# - .github/workflows/08-sync-subdirs.yml
+# - .github/workflows/update-refactor-playbooks.yml
+# - scripts/sync/watch-and-sync.sh
+# - tools/generate-refactor-playbook.py
+# ═══════════════════════════════════════════════════════════════════════════════
+
+version: "1.0.0"
+name: "sync-refactor-config"
+description: "Unified configuration for project synchronization and refactoring systems"
+
+# ============================================================================
+# Synchronization Configuration (同步配置)
+# ============================================================================
+sync:
+  # Directories to monitor for changes (監控目錄)
+  # These directories are watched by the sync script and GitHub Actions
+  monitored_directories:
+    - "core/"
+    - "services/"
+    - "automation/"
+    - "autonomous/"
+    - "governance/"
+    - "apps/"
+    - "tools/"
+    - "infrastructure/"
+    - "docs/"
+    - "scripts/"
+    - "tests/"
+    - "config/"
+    - "mcp-servers/"
+
+  # Files to exclude from monitoring (排除文件)
+  exclude_patterns:
+    - ".git"
+    - "node_modules"
+    - "__pycache__"
+    - ".venv"
+    - "venv"
+    - "dist"
+    - "build"
+    - ".next"
+    - "coverage"
+    - "target"
+    - "*.pyc"
+    - "*.log"
+    - ".DS_Store"
+
+  # Trigger files that should immediately sync (觸發文件)
+  trigger_files:
+    - "templates/**"
+    - "island.bootstrap.stage0.yaml"
+    - "machinenativeops.yaml"
+    - "machinenativeops.yaml"
+    - "config/system-manifest.yaml"
+    - "config/unified-config-index.yaml"
+
+  # Debounce settings (防抖設置)
+  debounce:
+    enabled: true
+    time_seconds: 5
+    max_wait_seconds: 30
+
+  # Git settings (Git 設置)
+  git:
+    auto_commit: true
+    auto_push: true
+    commit_message_template: "🔄 自動同步: {timestamp}\n\n變更目錄:\n{directories}\n\n變更文件:\n{files}"
+    pull_before_push: true
+    rebase: true
+    max_retries: 3
+
+  # Validation before commit (提交前驗證)
+  validation:
+    enabled: true
+    checks:
+      - type: "yaml"
+        description: "Validate YAML syntax"
+        command: "python -c 'import yaml; yaml.safe_load(open(\"{file}\"))'"
+        file_patterns: ["*.yaml", "*.yml"]
+      - type: "json"
+        description: "Validate JSON syntax"
+        command: "python -c 'import json; json.load(open(\"{file}\"))'"
+        file_patterns: ["*.json"]
+      - type: "markdown"
+        description: "Check markdown links"
+        command: "npm run docs:lint -- {file}"
+        file_patterns: ["*.md"]
+        optional: true
+
+# ============================================================================
+# Refactoring Configuration (重構配置)
+# ============================================================================
+refactor:
+  # Playbook generation settings (Playbook 生成設置)
+  playbooks:
+    output_directory: "docs/refactor_playbooks"
+    phases:
+      - "01_deconstruction"
+      - "02_integration"
+      - "03_refactor"
+    
+    # Clusters to generate playbooks for (要生成 playbook 的集群)
+    clusters:
+      - id: "core"
+        path: "core/"
+        priority: "P0"
+        description: "核心平台模組"
+      - id: "services"
+        path: "services/"
+        priority: "P1"
+        description: "統一服務入口"
+      - id: "automation"
+        path: "automation/"
+        priority: "P1"
+        description: "自動化模組"
+      - id: "autonomous"
+        path: "autonomous/"
+        priority: "P1"
+        description: "自主系統"
+      - id: "governance"
+        path: "governance/"
+        priority: "P0"
+        description: "治理與政策"
+      - id: "apps"
+        path: "apps/"
+        priority: "P2"
+        description: "應用程式"
+      - id: "infrastructure"
+        path: "infrastructure/"
+        priority: "P1"
+        description: "基礎設施"
+      - id: "tools"
+        path: "tools/"
+        priority: "P2"
+        description: "工具與腳本"
+
+  # Data sources for playbook generation (數據源)
+  data_sources:
+    governance_report: "governance/language-governance-report.md"
+    semgrep_report: "governance/semgrep-report.json"
+    hotspot_data: "apps/web/public/data/hotspot.json"
+    cluster_heatmap: "apps/web/public/data/cluster-heatmap.json"
+    migration_flow: "apps/web/public/data/migration-flow.json"
+    ai_suggestions: "governance/ai-refactor-suggestions.md"
+
+  # Caching settings (緩存設置)
+  cache:
+    enabled: true
+    directory: ".cache/refactor"
+    ttl_hours: 24
+    invalidate_on:
+      - "governance/language-governance-report.md"
+      - "governance/semgrep-report.json"
+      - "apps/web/public/data/*.json"
+
+  # Generation triggers (生成觸發器)
+  triggers:
+    auto_generate_on_sync: true
+    governance_file_patterns:
+      - "governance/language-governance-report.md"
+      - "governance/semgrep-report.json"
+      - "governance/ai-refactor-suggestions.md"
+      - "apps/web/public/data/hotspot.json"
+      - "apps/web/public/data/cluster-heatmap.json"
+      - "apps/web/public/data/migration-flow.json"
+
+# ============================================================================
+# Integration Settings (整合設置)
+# ============================================================================
+integration:
+  # Sync-to-refactor integration (同步到重構整合)
+  sync_triggers_refactor: true
+  
+  # Workflows to trigger (要觸發的工作流程)
+  workflows:
+    refactor_playbooks:
+      workflow_file: ".github/workflows/update-refactor-playbooks.yml"
+      trigger_on_paths:
+        - "governance/**"
+        - "apps/web/public/data/**"
+        - "tools/generate-refactor-playbook.py"
+
+  # Notification settings (通知設置)
+  notifications:
+    enabled: true
+    channels:
+      - type: "github_step_summary"
+        enabled: true
+      - type: "commit_message"
+        enabled: true
+      - type: "slack"
+        enabled: false
+        webhook_url: "${SLACK_WEBHOOK_URL}"
+
+# ============================================================================
+# Monitoring & Metrics (監控與指標)
+# ============================================================================
+monitoring:
+  # Performance metrics (性能指標)
+  metrics:
+    enabled: true
+    collect:
+      - "sync_duration"
+      - "sync_file_count"
+      - "sync_directory_count"
+      - "playbook_generation_duration"
+      - "playbook_count"
+      - "validation_errors"
+      - "cache_hit_rate"
+
+  # Health checks (健康檢查)
+  health_checks:
+    sync_workflow:
+      max_duration_minutes: 10
+      alert_on_failure: true
+    refactor_workflow:
+      max_duration_minutes: 15
+      alert_on_failure: true
+
+  # Alerting (警報)
+  alerts:
+    enabled: true
+    conditions:
+      - type: "sync_failure"
+        threshold: 3
+        window_minutes: 60
+      - type: "refactor_failure"
+        threshold: 2
+        window_minutes: 120
+      - type: "validation_errors"
+        threshold: 10
+        window_minutes: 30
+
+# ============================================================================
+# Feature Flags (功能標誌)
+# ============================================================================
+features:
+  # Sync features
+  auto_sync_enabled: true
+  watch_script_enabled: true
+  post_commit_hook_enabled: false  # Disabled to avoid conflicts with watch script
+  
+  # Refactor features
+  ai_powered_suggestions: false  # Requires OpenAI API key
+  incremental_generation: true
+  cache_enabled: true
+  
+  # Integration features
+  cross_workflow_triggers: true
+  unified_validation: true
+
+# ============================================================================
+# Troubleshooting (故障排除)
+# ============================================================================
+troubleshooting:
+  debug_mode: false
+  log_level: "info"  # debug, info, warn, error
+  log_directory: ".git/logs"
+  preserve_temp_files: false
+
+# ============================================================================
+# References (參考)
+# ============================================================================
+references:
+  documentation:
+    - "docs/refactor_playbooks/README.md"
+    - "DOCUMENTATION_INDEX.md"
+  workflows:
+    - ".github/workflows/08-sync-subdirs.yml"
+    - ".github/workflows/update-refactor-playbooks.yml"
+  scripts:
+    - "scripts/sync/watch-and-sync.sh"
+    - "tools/generate-refactor-playbook.py"
+    - "tools/validate-refactor-index.py"

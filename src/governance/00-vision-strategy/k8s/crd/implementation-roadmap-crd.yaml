@@ -1,0 +1,483 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: implementationroadmaps.governance.machinenativeops.io
+  labels:
+    app: "governance-framework"
+    component: "strategic-planning"
+    version: "v1"
+  annotations:
+    description: "Implementation Roadmap CRD for strategic planning and execution"
+    governance.machinenativeops.io/category: "strategic"
+    governance.machinenativeops.io/layer: "execution"
+spec:
+  group: governance.machinenativeops.io
+  versions:
+  - name: v1
+    served: true
+    storage: true
+    schema:
+      openAPIV3Schema:
+        type: object
+        properties:
+          spec:
+            type: object
+            required:
+            - roadmapId
+            - title
+            - timeframe
+            - phases
+            properties:
+              roadmapId:
+                type: string
+                pattern: '^ROADMAP-[0-9]{4}-[0-9]{3}$'
+                description: "Unique roadmap identifier"
+                example: "ROADMAP-2025-001"
+              title:
+                type: string
+                maxLength: 200
+                description: "Roadmap title"
+                example: "Digital Transformation 2025-2030"
+              description:
+                type: string
+                maxLength: 2000
+                description: "Detailed roadmap description"
+                example: "Comprehensive digital transformation initiative spanning 5 years"
+              vision:
+                type: string
+                maxLength: 500
+                description: "Strategic vision statement"
+                example: "Become a fully digital, AI-driven organization by 2030"
+              timeframe:
+                type: object
+                required:
+                - startDate
+                - endDate
+                properties:
+                  startDate:
+                    type: string
+                    format: date
+                    description: "Roadmap start date"
+                    example: "2025-01-01"
+                  endDate:
+                    type: string
+                    format: date
+                    description: "Roadmap end date"
+                    example: "2030-12-31"
+                  duration:
+                    type: string
+                    description: "Duration in human readable format"
+                    example: "5 years"
+              strategicObjectives:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      description: "Objective identifier"
+                      example: "SO-001"
+                    title:
+                      type: string
+                      maxLength: 200
+                      description: "Objective title"
+                      example: "Modernize Infrastructure"
+                    description:
+                      type: string
+                      maxLength: 1000
+                      description: "Objective description"
+                    priority:
+                      type: string
+                      enum: [critical, high, medium, low]
+                      description: "Objective priority"
+                      example: "critical"
+                    kpis:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          name:
+                            type: string
+                            description: "KPI name"
+                            example: "Cloud Adoption Rate"
+                          target:
+                            type: string
+                            description: "KPI target"
+                            example: "95%"
+                          measurement:
+                            type: string
+                            description: "How KPI is measured"
+                            example: "Percentage of workloads in cloud"
+              phases:
+                type: array
+                minItems: 1
+                items:
+                  type: object
+                  required:
+                  - phaseId
+                  - name
+                  - timeline
+                  - objectives
+                  properties:
+                    phaseId:
+                      type: string
+                      pattern: '^PHASE-[0-9]{1,2}$'
+                      description: "Phase identifier"
+                      example: "PHASE-1"
+                    name:
+                      type: string
+                      maxLength: 100
+                      description: "Phase name"
+                      example: "Foundation Building"
+                    description:
+                      type: string
+                      maxLength: 1000
+                      description: "Phase description"
+                      example: "Establish foundational infrastructure and governance"
+                    timeline:
+                      type: object
+                      required:
+                      - startDate
+                      - endDate
+                      properties:
+                        startDate:
+                          type: string
+                          format: date
+                          description: "Phase start date"
+                          example: "2025-01-01"
+                        endDate:
+                          type: string
+                          format: date
+                          description: "Phase end date"
+                          example: "2026-12-31"
+                        duration:
+                          type: string
+                          description: "Phase duration"
+                          example: "24 months"
+                    objectives:
+                      type: array
+                      minItems: 1
+                      items:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                            description: "Objective ID"
+                            example: "OBJ-001"
+                          title:
+                            type: string
+                            maxLength: 200
+                            description: "Objective title"
+                            example: "Deploy Cloud Infrastructure"
+                          description:
+                            type: string
+                            maxLength: 1000
+                            description: "Objective description"
+                          deliverables:
+                            type: array
+                            items:
+                              type: string
+                            description: "Key deliverables"
+                            example: ["Cloud platform deployed", "Migration tools ready"]
+                          successCriteria:
+                            type: array
+                            items:
+                              type: string
+                            description: "Success criteria"
+                            example: ["90% of test workloads migrated", "Performance benchmarks met"]
+                    dependencies:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          type:
+                            type: string
+                            enum: [phase, objective, external]
+                            description: "Dependency type"
+                            example: "phase"
+                          id:
+                            type: string
+                            description: "Dependency ID"
+                            example: "PHASE-0"
+                          description:
+                            type: string
+                            description: "Dependency description"
+                            example: "Must complete planning phase"
+                    risks:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          riskId:
+                            type: string
+                            description: "Risk ID reference"
+                            example: "RISK-2025-001"
+                          impact:
+                            type: string
+                            enum: [critical, high, medium, low]
+                            description: "Risk impact on phase"
+                            example: "high"
+                          mitigation:
+                            type: string
+                            description: "Mitigation strategy"
+                            example: "Early stakeholder engagement"
+                    budget:
+                      type: object
+                      properties:
+                        estimated:
+                          type: number
+                          minimum: 0
+                          description: "Estimated budget in USD"
+                          example: 5000000
+                        allocated:
+                          type: number
+                          minimum: 0
+                          description: "Allocated budget in USD"
+                          example: 4500000
+                        currency:
+                          type: string
+                          default: "USD"
+                          description: "Budget currency"
+                    resources:
+                      type: object
+                      properties:
+                        team:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              role:
+                                type: string
+                                description: "Team role"
+                                example: "Cloud Architect"
+                              count:
+                                type: integer
+                                minimum: 1
+                                description: "Number of people needed"
+                                example: 3
+                              skills:
+                                type: array
+                                items:
+                                  type: string
+                                description: "Required skills"
+                                example: ["AWS", "Kubernetes", "DevOps"]
+                        technology:
+                          type: array
+                          items:
+                            type: string
+                          description: "Technology stack"
+                          example: ["Kubernetes", "AWS", "Terraform", "Jenkins"]
+                        infrastructure:
+                          type: array
+                          items:
+                            type: string
+                          description: "Infrastructure requirements"
+                          example: ["Cloud environment", "CI/CD pipeline", "Monitoring tools"]
+              governance:
+                type: object
+                properties:
+                  approvalProcess:
+                    type: string
+                    description: "Approval process description"
+                    example: "Steering committee approval required for each phase"
+                  reporting:
+                    type: object
+                    properties:
+                      frequency:
+                        type: string
+                        enum: [weekly, monthly, quarterly]
+                        description: "Reporting frequency"
+                        example: "monthly"
+                      stakeholders:
+                        type: array
+                        items:
+                          type: string
+                        description: "Reporting stakeholders"
+                        example: ["CEO", "CTO", "Board of Directors"]
+                      metrics:
+                        type: array
+                        items:
+                          type: string
+                        description: "Key metrics to report"
+                        example: ["Progress percentage", "Budget utilization", "Risk status"]
+                  changeManagement:
+                    type: object
+                    properties:
+                      approach:
+                        type: string
+                        description: "Change management approach"
+                        example: "Agile with regular stakeholder reviews"
+                      communicationPlan:
+                        type: string
+                        description: "Communication plan"
+                        example: "Monthly town halls, weekly team updates"
+                      trainingRequirements:
+                        type: array
+                        items:
+                          type: string
+                        description: "Training requirements"
+                        example: ["Cloud technologies", "New processes", "Security practices"]
+              successMetrics:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      description: "Metric name"
+                      example: "Digital Transformation Index"
+                    description:
+                      type: string
+                      description: "Metric description"
+                      example: "Composite measure of digital maturity"
+                    target:
+                      type: string
+                      description: "Target value"
+                      example: "85%"
+                    measurement:
+                      type: string
+                      description: "How measured"
+                      example: "Quarterly assessment using maturity model"
+                    frequency:
+                      type: string
+                      enum: [monthly, quarterly, semi-annually, annually]
+                      description: "Measurement frequency"
+                      example: "quarterly"
+          status:
+            type: object
+            properties:
+              phase:
+                type: string
+                enum: [planning, in_execution, completed, on_hold, cancelled]
+                description: "Current roadmap phase"
+                example: "in_execution"
+              currentPhase:
+                type: string
+                description: "Currently active phase ID"
+                example: "PHASE-1"
+              progress:
+                type: object
+                properties:
+                  overall:
+                    type: number
+                    minimum: 0
+                    maximum: 100
+                    description: "Overall progress percentage"
+                    example: 35
+                  phases:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        phaseId:
+                          type: string
+                          description: "Phase ID"
+                          example: "PHASE-1"
+                        progress:
+                          type: number
+                          minimum: 0
+                          maximum: 100
+                          description: "Phase progress percentage"
+                          example: 60
+                        status:
+                          type: string
+                          enum: [not_started, in_progress, completed, delayed, blocked]
+                          description: "Phase status"
+                          example: "in_progress"
+              budget:
+                type: object
+                properties:
+                  spent:
+                    type: number
+                    minimum: 0
+                    description: "Budget spent in USD"
+                    example: 1500000
+                  remaining:
+                    type: number
+                    minimum: 0
+                    description: "Budget remaining in USD"
+                    example: 3000000
+                  utilization:
+                    type: number
+                    minimum: 0
+                    maximum: 100
+                    description: "Budget utilization percentage"
+                    example: 33
+              risks:
+                type: object
+                properties:
+                  active:
+                    type: integer
+                    minimum: 0
+                    description: "Number of active risks"
+                    example: 5
+                  mitigated:
+                    type: integer
+                    minimum: 0
+                    description: "Number of mitigated risks"
+                    example: 3
+                  critical:
+                    type: integer
+                    minimum: 0
+                    description: "Number of critical risks"
+                    example: 1
+              lastUpdated:
+                type: string
+                format: date-time
+                description: "Last status update timestamp"
+                example: "2025-01-15T10:30:00Z"
+              updatedBy:
+                type: string
+                description: "User who last updated the roadmap"
+                example: "program-manager"
+              conditions:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    type:
+                      type: string
+                      enum: [budget_overrun, schedule_delay, resource_shortage, high_risk, milestone_missed]
+                    status:
+                      type: string
+                      enum: [True, False]
+                    lastTransitionTime:
+                      type: string
+                      format: date-time
+                    reason:
+                      type: string
+                    message:
+                      type: string
+    additionalPrinterColumns:
+    - name: Title
+      type: string
+      description: "Roadmap title"
+      jsonPath: ".spec.title"
+    - name: Duration
+      type: string
+      description: "Roadmap duration"
+      jsonPath: ".spec.timeframe.duration"
+    - name: Progress
+      type: number
+      description: "Overall progress"
+      jsonPath: ".status.progress.overall"
+    - name: Status
+      type: string
+      description: "Current status"
+      jsonPath: ".status.phase"
+    - name: Budget Utilization
+      type: number
+      description: "Budget utilization percentage"
+      jsonPath: ".status.budget.utilization"
+  scope: Namespaced
+  names:
+    plural: implementationroadmaps
+    singular: implementationroadmap
+    kind: ImplementationRoadmap
+    shortNames:
+    - roadmap
+    - ir
+  conversion:
+    strategy: None
+  preserveUnknownFields: false

@@ -1,0 +1,27 @@
+GLOBAL TECHNICAL REVIEW – UNMANNED ISLAND SYSTEM
+Last Updated: 2025-12-04
+
+1. Integrated Stack Posture
+- SynergyMesh Core, Structural Governance, and Autonomous Framework operate as a federated triad with `synergymesh.yaml` as the single source of truth.
+- Governance success depends on keeping `config/system-manifest.yaml`, `config/unified-config-index.yaml`, and `config/system-module-map.yaml` synchronized before touching service code.
+- Suggestion: add automated schema validation to every pipeline that writes to `synergymesh.yaml` to prevent configuration drift.
+
+2. Service & Governance Bridge
+- Core services rely on governance outputs in `governance/policies/` yet documentation lacks an end-to-end sample that shows config → policy → action.
+- Action item: publish a worked example (YAML + CLI commands) so new teams can follow the enforcement chain without reverse engineering.
+
+3. Autonomous Five-Skeleton Alignment
+- ROS/C++ flight stack and Python API governance share objectives but not vocabulary; introduce a canonical telemetry schema inside `automation/autonomous/docs-examples/` so observability agents and AI decision layers reason over the same metrics.
+- Ensure that schema is versioned and validated alongside ROS message definitions to avoid desynchronization.
+
+4. SLSA and Supply-Chain Readiness
+- SLSA, Sigstore, Conftest, and provenance guidance is scattered across `core/slsa_provenance/` and governance docs; create a single "Compliance Baseline" reference in `docs/` summarizing triggers, required artifacts, and troubleshooting steps.
+- Any new artifact must be recorded in `core/contract_service/contracts-L1/contracts/BUILD_PROVENANCE.md` and referenced by the Sigstore signing workflow.
+
+5. Automation Agent Cohesion
+- Orchestrator, Auto-Repair, Code Analyzer, and Vulnerability Detector descriptions are fragmented. Add a lightweight inventory script under `tools/` that enumerates agent status, queue depth, and last run to help governance teams audit automation behavior in real time.
+
+6. Living Knowledge Base Feedback Loop
+- `make all-kg` regenerates documentation, but the health report does not automatically trigger remediation. Wire health anomalies to Orchestrator or Auto-Repair so the "detect → action" loop becomes fully autonomous.
+
+Keep this review in sync whenever architecture, governance, or automation workflows change.

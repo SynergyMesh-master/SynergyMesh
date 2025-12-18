@@ -1,0 +1,188 @@
+# MateChat Integration Configuration for Drone/Autonomous Systems
+# 無人機/自動駕駛系統 AI 對話整合配置
+
+version: "1.0.0"
+integration_name: "matechat-drone-ai"
+description: "AI-powered communication system for drone and autonomous vehicle operations"
+
+# Service Configuration
+services:
+  ai-chat-service:
+    enabled: true
+    port: 8100
+    path: "core/contract_service/contracts-L1/ai-chat-service"
+    features:
+      - real-time-chat
+      - streaming-response
+      - context-awareness
+      - multi-language
+    
+  input-service:
+    enabled: true
+    port: 8101
+    path: "core/contract_service/contracts-L1/input-service"
+    features:
+      - mention-system
+      - file-upload
+      - quick-commands
+      - voice-input
+    
+  file-service:
+    enabled: true
+    port: 8102
+    path: "core/contract_service/contracts-L1/file-service"
+    features:
+      - telemetry-upload
+      - log-management
+      - provenance-tracking
+    
+  markdown-renderer:
+    enabled: true
+    port: 8103
+    path: "advanced-system-src/markdown-renderer"
+    features:
+      - syntax-highlighting
+      - mermaid-diagrams
+      - code-execution
+    
+  ai-model-integration:
+    enabled: true
+    port: 8104
+    path: "mcp-servers/ai-model-integration"
+    features:
+      - openai-compatible
+      - local-models
+      - custom-adapters
+
+# AI Model Configuration
+ai_models:
+  default_provider: "openai"
+  providers:
+    openai:
+      enabled: true
+      model: "gpt-4-turbo-preview"
+      max_tokens: 4096
+      temperature: 0.7
+      stream: true
+    
+    local:
+      enabled: false
+      model: "llama-3-70b"
+      endpoint: "http://localhost:11434"
+
+# Drone/Autonomous Vehicle Specific Settings
+drone_settings:
+  mission_commands:
+    enabled: true
+    allowed_commands:
+      - "takeoff"
+      - "land"
+      - "goto"
+      - "orbit"
+      - "return_to_home"
+      - "emergency_stop"
+  
+  telemetry_monitoring:
+    enabled: true
+    update_frequency_hz: 10
+    data_retention_days: 90
+  
+  flight_logs:
+    enabled: true
+    auto_upload: true
+    compression: true
+    encryption: true
+
+# Security Configuration
+security:
+  authentication:
+    enabled: true
+    method: "jwt"
+    token_expiry_hours: 24
+  
+  encryption:
+    enabled: true
+    protocol: "TLS 1.3"
+    certificate_path: "/etc/ssl/certs"
+  
+  audit_logging:
+    enabled: true
+    log_level: "info"
+    retention_days: 365
+  
+  slsa:
+    level: 3
+    provenance_required: true
+    signature_verification: true
+
+# Performance Configuration
+performance:
+  response_timeout_ms: 2000
+  max_concurrent_connections: 1000
+  message_queue_size: 10000
+  file_upload_max_size_mb: 100
+  streaming_chunk_size_kb: 64
+
+# Monitoring & Observability
+monitoring:
+  enabled: true
+  metrics_port: 9090
+  health_check_interval_s: 30
+  
+  alerts:
+    - name: "high_latency"
+      threshold_ms: 2000
+      action: "notify"
+    
+    - name: "connection_overflow"
+      threshold: 900
+      action: "scale"
+    
+    - name: "service_unavailable"
+      threshold: 3
+      action: "restart"
+
+# Integration Endpoints
+endpoints:
+  chat: "/api/v1/chat"
+  stream: "/api/v1/chat/stream"
+  upload: "/api/v1/files/upload"
+  telemetry: "/api/v1/telemetry"
+  commands: "/api/v1/commands"
+  status: "/api/v1/status"
+
+# Component Mapping
+component_mapping:
+  # MateChat components -> SynergyMesh services
+  McBubble: "ai-chat-service/components/message-bubble"
+  McInput: "input-service/components/smart-input"
+  McLayout: "advanced-system-src/ui/layout"
+  McHeader: "advanced-system-src/ui/header"
+  McPrompt: "ai-chat-service/components/quick-prompt"
+  McMarkdownCard: "markdown-renderer/components/card"
+  McAttachment: "file-service/components/attachment-handler"
+  McMention: "input-service/components/mention-parser"
+
+# Deployment Configuration
+deployment:
+  strategy: "rolling"
+  replicas: 3
+  resource_limits:
+    cpu: "2000m"
+    memory: "4Gi"
+  resource_requests:
+    cpu: "500m"
+    memory: "1Gi"
+  
+  health_check:
+    liveness_probe: "/health/live"
+    readiness_probe: "/health/ready"
+    startup_probe: "/health/startup"
+
+# Feature Flags
+feature_flags:
+  streaming_enabled: true
+  voice_input_enabled: false
+  offline_mode_enabled: true
+  multi_modal_enabled: false
+  debug_mode: false

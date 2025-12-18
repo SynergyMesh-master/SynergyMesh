@@ -1,0 +1,308 @@
+# =============================================================================
+# 完整命名規範範例 (Complete Naming Convention Examples)
+# URN: urn:machinenativeops:governance:naming-example:complete:v1
+# =============================================================================
+# 此文件展示 MachineNativeOps 統一命名規範的完整應用範例
+# =============================================================================
+
+apiVersion: governance.machinenativeops.io/v2
+kind: NamingConventionExample
+metadata:
+  id: "complete-naming-example"
+  name: "完整命名規範範例"
+  name_en: "Complete Naming Convention Examples"
+  version: "1.0.0"
+  urn: "urn:machinenativeops:governance:naming-example:complete:v1"
+  created_at: "2025-12-18T00:00:00Z"
+  owner: governance-bot
+
+# =============================================================================
+# 1. 目錄命名範例 (Directory Naming Examples)
+# =============================================================================
+directory_examples:
+  correct:
+    - path: "src/"
+      type: root
+      explanation: "標準根目錄"
+    - path: "src/governance/dimensions/99-naming-convention/"
+      type: dimension
+      explanation: "完整維度路徑，使用 kebab-case"
+    - path: "config/prod/"
+      type: config
+      explanation: "配置目錄使用環境縮寫"
+    - path: "scripts/ci/"
+      type: scripts
+      explanation: "腳本目錄使用用途分類"
+
+  incorrect:
+    - path: "Source/"
+      issue: "DIR-001 違規：使用大寫"
+      correction: "src/"
+    - path: "src/AI/"
+      issue: "DIR-001 違規：使用大寫"
+      correction: "src/ai/"
+    - path: "my_scripts/"
+      issue: "DIR-001 違規：使用底線"
+      correction: "my-scripts/ 或 scripts/"
+
+# =============================================================================
+# 2. 檔案命名範例 (File Naming Examples)
+# =============================================================================
+file_examples:
+  correct:
+    - name: "naming-convention.yaml"
+      type: config
+      explanation: "kebab-case 配置檔"
+    - name: "policy.rego"
+      type: policy
+      explanation: "標準策略檔名"
+    - name: "README.md"
+      type: special
+      explanation: "特殊標記檔案使用大寫"
+
+  incorrect:
+    - name: "NamingConvention.yaml"
+      issue: "FILE-001 違規：使用 PascalCase"
+      correction: "naming-convention.yaml"
+    - name: "my_config.yaml"
+      issue: "FILE-001 違規：使用底線"
+      correction: "my-config.yaml"
+
+# =============================================================================
+# 3. 鍵名範例 (Key Naming Examples)
+# =============================================================================
+key_examples:
+  yaml_config:
+    correct:
+      - key: "api_version"
+        context: "YAML 配置"
+        explanation: "使用 snake_case"
+      - key: "created_at"
+        context: "時間戳鍵"
+        explanation: "使用 snake_case"
+      - key: "max_retry_count"
+        context: "數值配置"
+        explanation: "使用 snake_case"
+
+    incorrect:
+      - key: "apiVersion"
+        context: "YAML 配置（非 K8s 標準欄位）"
+        issue: "KEY-001 違規：使用 camelCase"
+        correction: "api_version"
+      - key: "MaxRetryCount"
+        context: "YAML 配置"
+        issue: "KEY-001 違規：使用 PascalCase"
+        correction: "max_retry_count"
+
+  annotations:
+    correct:
+      - key: "machinenativeops.io/canonical-urn"
+        value: "urn:machinenativeops:governance:naming-convention:v1"
+        explanation: "使用命名空間前綴"
+      - key: "machinenativeops.io/naming-mode"
+        value: "team-domain-env"
+        explanation: "標準註解格式"
+
+# =============================================================================
+# 4. 值名範例 (Value Naming Examples)
+# =============================================================================
+value_examples:
+  enums:
+    correct:
+      - value: "active"
+        context: "狀態枚舉"
+        explanation: "小寫 kebab-case"
+      - value: "in-progress"
+        context: "狀態枚舉"
+        explanation: "多詞使用連字符"
+      - value: "pending-review"
+        context: "狀態枚舉"
+        explanation: "小寫 kebab-case"
+
+    incorrect:
+      - value: "Active"
+        issue: "VAL-001 違規：首字母大寫"
+        correction: "active"
+      - value: "IN_PROGRESS"
+        issue: "VAL-001 違規：使用底線和大寫"
+        correction: "in-progress"
+
+  booleans:
+    correct:
+      - value: true
+        explanation: "標準布林值"
+      - value: false
+        explanation: "標準布林值"
+
+    incorrect:
+      - value: "yes"
+        issue: "VAL-002 違規：非標準布林表示"
+        correction: true
+      - value: "1"
+        issue: "VAL-002 違規：使用數字表示布林"
+        correction: true
+
+  versions:
+    correct:
+      - value: "1.0.0"
+        explanation: "語意化版本"
+      - value: "v2.1.3"
+        explanation: "帶 v 前綴的版本"
+      - value: "1.0.0-alpha"
+        explanation: "預發布版本"
+
+    incorrect:
+      - value: "1.0"
+        issue: "VAL-003 違規：缺少修訂號"
+        correction: "1.0.0"
+      - value: "version-1.0.0"
+        issue: "VAL-003 違規：無效格式"
+        correction: "1.0.0"
+
+  environments:
+    correct:
+      - value: "dev"
+        full_name: "development"
+        explanation: "標準縮寫"
+      - value: "staging"
+        full_name: "staging"
+        explanation: "完整名稱（無縮寫）"
+      - value: "prod"
+        full_name: "production"
+        explanation: "標準縮寫"
+
+    incorrect:
+      - value: "development"
+        issue: "VAL-004 違規：應使用縮寫"
+        correction: "dev"
+      - value: "production"
+        issue: "VAL-004 違規：應使用縮寫"
+        correction: "prod"
+
+# =============================================================================
+# 5. URN 範例 (URN Examples)
+# =============================================================================
+urn_examples:
+  standard:
+    correct:
+      - urn: "urn:machinenativeops:governance:naming-convention:v1"
+        domain: governance
+        resource: naming-convention
+        version: v1
+        explanation: "標準 URN 格式"
+
+      - urn: "urn:machinenativeops:ai:cognitive-engine:v2"
+        domain: ai
+        resource: cognitive-engine
+        version: v2
+        explanation: "AI 域資源 URN"
+
+    incorrect:
+      - urn: "urn:MachineNativeOps:Governance:NamingConvention"
+        issue: "URN-001 違規：使用大寫"
+        correction: "urn:machinenativeops:governance:naming-convention:v1"
+
+  with_checksum:
+    correct:
+      - urn: "urn:machinenativeops:governance:naming-convention:v1:sha256-a1b2c3d4"
+        explanation: "帶校驗碼的 URN"
+
+  environment_scoped:
+    correct:
+      - urn: "urn:machinenativeops:prod:governance:naming-convention:v1"
+        environment: prod
+        explanation: "生產環境範圍 URN"
+
+# =============================================================================
+# 6. URI 範例 (URI Examples)
+# =============================================================================
+uri_examples:
+  api:
+    correct:
+      - uri: "/api/v1/dimensions"
+        explanation: "資源集合端點"
+      - uri: "/api/v1/dimensions/99-naming-convention"
+        explanation: "單一資源端點"
+      - uri: "/api/v2/governance/policies"
+        explanation: "版本化 API"
+
+    incorrect:
+      - uri: "/API/V1/Dimensions"
+        issue: "URI-001 違規：使用大寫"
+        correction: "/api/v1/dimensions"
+      - uri: "/api/dimensions"
+        issue: "URI-001 違規：缺少版本號"
+        correction: "/api/v1/dimensions"
+
+# =============================================================================
+# 7. 完整資源範例 (Complete Resource Example)
+# =============================================================================
+complete_resource_example:
+  description: "展示所有命名規範在單一資源中的應用"
+
+  resource:
+    apiVersion: governance.machinenativeops.io/v2
+    kind: DimensionModule
+    metadata:
+      id: "99-naming-convention"
+      name: "統一命名規範治理"
+      name_en: "Unified Naming Convention Governance"
+      version: "1.0.0"
+      urn: "urn:machinenativeops:governance:naming-convention:v1"
+      created_at: "2025-12-18T00:00:00Z"
+      updated_at: "2025-12-18T00:00:00Z"
+      owner: governance-bot
+      category: meta-specification
+      annotations:
+        machinenativeops.io/canonical-urn: "urn:machinenativeops:governance:naming-convention:v1"
+        machinenativeops.io/naming-mode: "team-domain-env"
+        machinenativeops.io/description: "統一命名規範治理維度"
+
+    spec:
+      schema:
+        path: "./schema.json"
+      policy:
+        path: "./policy.rego"
+      dependencies:
+        required:
+          - id: "01-architecture"
+            version: "^1.0.0"
+            type: required
+
+    status: active
+
+  validation_checklist:
+    - check: "目錄路徑使用 kebab-case"
+      result: "✅ 通過"
+    - check: "檔案名使用 kebab-case"
+      result: "✅ 通過"
+    - check: "YAML 鍵使用 snake_case"
+      result: "✅ 通過"
+    - check: "枚舉值使用 kebab-case"
+      result: "✅ 通過"
+    - check: "版本符合 SemVer"
+      result: "✅ 通過"
+    - check: "URN 符合標準格式"
+      result: "✅ 通過"
+    - check: "註解使用命名空間前綴"
+      result: "✅ 通過"
+
+# =============================================================================
+# 8. 驗證命令 (Validation Commands)
+# =============================================================================
+validation_commands:
+  directory_check: |
+    find . -type d | grep -v node_modules | grep -v .git | \
+    grep -E '[A-Z_]' && echo "違規目錄發現" || echo "目錄命名合規"
+
+  file_check: |
+    find . -type f -name '*.yaml' -o -name '*.json' | grep -v node_modules | \
+    xargs -I{} basename {} | grep -E '^[A-Z]|_' && echo "違規檔案發現" || echo "檔案命名合規"
+
+  urn_check: |
+    grep -rh 'urn:' --include='*.yaml' | \
+    grep -v 'urn:machinenativeops:[a-z0-9-]*:[a-z0-9-]*' && \
+    echo "URN 格式違規" || echo "URN 格式合規"
+
+  opa_validation: |
+    conftest test . --policy src/governance/dimensions/99-naming-convention/policy.rego

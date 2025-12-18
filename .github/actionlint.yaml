@@ -1,0 +1,14 @@
+# actionlint configuration
+# https://github.com/rhysd/actionlint
+#
+# This config helps actionlint understand our local reusable workflows
+# and expected secrets that may not exist in all environments
+
+self-hosted-runner:
+  # Labels for self-hosted runners
+  labels: []
+
+# Configure configuration variables (vars context)
+# These are GitHub Repository/Organization variables
+config-variables:
+  - DRY_RUN

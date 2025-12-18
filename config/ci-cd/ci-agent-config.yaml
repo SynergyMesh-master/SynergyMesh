@@ -1,0 +1,254 @@
+# ═══════════════════════════════════════════════════════════════════════════════
+#                    CI Copilot / Island AI Agent Configuration
+#                    CI 智能代理配置
+#                    Version: 1.0.0
+# ═══════════════════════════════════════════════════════════════════════════════
+#
+# 描述 / Description:
+# 本配置定義 CI Copilot 代理的自動啟動規則與行為模式。
+# 代理會監控 .github/workflows 目錄的變更，並自動執行相應的分析與修復。
+#
+# ═══════════════════════════════════════════════════════════════════════════════
+
+metadata:
+  name: ci-copilot-agent
+  version: "1.0.0"
+  description: |
+    CI Copilot 智能代理，自動監控工作流程事件並執行根因分析與專業維修。
+    CI Copilot intelligent agent that monitors workflow events and performs 
+    root cause analysis and professional repairs.
+  created: "2025-12-06"
+  updated: "2025-12-06"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+#                    代理觸發規則 / Agent Trigger Rules
+# ═══════════════════════════════════════════════════════════════════════════════
+
+trigger_rules:
+  # 監控的路徑 / Monitored Paths
+  paths:
+    - ".github/workflows/**"
+    - "config/ci-*.yaml"
+    - "governance/policies/**"
+
+  # 觸發事件 / Trigger Events
+  events:
+    - "push"
+    - "pull_request"
+    - "workflow_run"
+    - "check_run"
+
+  # 狀態觸發 / Status Triggers
+  on_status:
+    - "failure"
+    - "startup_failure"
+    - "cancelled"
+    - "timed_out"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+#                    代理角色定義 / Agent Role Definition
+# ═══════════════════════════════════════════════════════════════════════════════
+
+agent_role:
+  name: "CI/Workflow 根因分析與專業維修工程師"
+  name_en: "CI/Workflow Root Cause Analysis & Repair Engineer"
+  
+  primary_responsibilities:
+    - "監控所有 CI 工作流程執行狀態"
+    - "自動分析失敗原因並分類"
+    - "生成維修計畫與優先級排序"
+    - "執行自動化修復（安全範圍內）"
+    - "生成詳細的診斷報告"
+
+  analysis_framework:
+    layers:
+      - name: "GitHub Actions 基礎設施層"
+        checks:
+          - "workflow YAML 語法驗證"
+          - "action 版本與可用性"
+          - "runner 配置正確性"
+          - "權限設置合規性"
+      
+      - name: "工作流程設計層"
+        checks:
+          - "job 依賴關係"
+          - "並發控制設置"
+          - "超時配置"
+          - "重試策略"
+      
+      - name: "應用程式邏輯層"
+        checks:
+          - "build 腳本正確性"
+          - "test 執行結果"
+          - "lint 錯誤"
+          - "依賴項問題"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+#                    分析流程 / Analysis Workflow
+# ═══════════════════════════════════════════════════════════════════════════════
+
+analysis_workflow:
+  steps:
+    - id: "collect"
+      name: "收集錯誤資訊 / Collect Error Information"
+      actions:
+        - "獲取工作流程執行日誌"
+        - "提取錯誤訊息與堆疊追蹤"
+        - "記錄受影響的檔案與 commit"
+
+    - id: "classify"
+      name: "錯誤分類 / Error Classification"
+      actions:
+        - "匹配已知錯誤模式"
+        - "判定錯誤類別與嚴重度"
+        - "識別根因 vs 連鎖反應"
+      reference: "config/ci-error-handler.yaml"
+
+    - id: "analyze"
+      name: "根因分析 / Root Cause Analysis"
+      actions:
+        - "追蹤錯誤到源頭"
+        - "建立因果關係鏈"
+        - "評估影響範圍"
+
+    - id: "plan"
+      name: "維修計畫 / Repair Planning"
+      actions:
+        - "制定修復步驟"
+        - "排列優先級 (P0/P1/P2)"
+        - "評估自動修復可行性"
+      reference: "config/ci-error-handler.yaml#auto_fix"
+
+    - id: "execute"
+      name: "執行修復 / Execute Repair"
+      actions:
+        - "執行安全的自動修復"
+        - "生成 PR 或 Issue"
+        - "觸發驗證流程"
+
+    - id: "report"
+      name: "生成報告 / Generate Report"
+      actions:
+        - "產出 Markdown 診斷報告"
+        - "更新錯誤追蹤狀態"
+        - "通知相關人員"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+#                    架構骨架整合 / Architecture Skeleton Integration
+# ═══════════════════════════════════════════════════════════════════════════════
+
+skeleton_integration:
+  index_path: "unmanned-engineer-ceo/60-machine-guides/70-architecture-skeletons/skeletons-index.yaml"
+  
+  skeleton_validations:
+    - skeleton_id: "architecture-stability"
+      ci_checks:
+        - "服務邊界驗證"
+        - "模組依賴檢查"
+        - "循環依賴檢測"
+      
+    - skeleton_id: "security-observability"
+      ci_checks:
+        - "安全掃描 (SAST/DAST)"
+        - "漏洞掃描 (Snyk/OSV)"
+        - "SLSA 合規檢查"
+        - "日誌格式驗證"
+      
+    - skeleton_id: "identity-tenancy"
+      ci_checks:
+        - "認證機制測試"
+        - "授權策略驗證"
+        - "租戶隔離測試"
+      
+    - skeleton_id: "api-governance"
+      ci_checks:
+        - "API 合約驗證"
+        - "向後相容性檢查"
+        - "OpenAPI 規範驗證"
+      
+    - skeleton_id: "data-governance"
+      ci_checks:
+        - "資料模式驗證"
+        - "敏感資料掃描"
+        - "GDPR 合規檢查"
+      
+    - skeleton_id: "testing-governance"
+      ci_checks:
+        - "測試覆蓋率門檻"
+        - "品質門檢"
+        - "性能回歸測試"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+#                    報告模板 / Report Templates
+# ═══════════════════════════════════════════════════════════════════════════════
+
+report_templates:
+  diagnostic_report:
+    format: "markdown"
+    sections:
+      - "## 1. CI 問題總覽表"
+      - "## 2. 根因分群與因果鏈"
+      - "## 3. 與 Stage 0 / skeleton / workflows 的對齊檢查"
+      - "## 4. 維修計畫 (P0 → P1 → P2)"
+      - "## 5. Anti-pattern 清單"
+
+  repair_plan:
+    priority_levels:
+      P0:
+        description: "緊急：阻塞所有 CI 流程"
+        sla: "24 小時內修復"
+      P1:
+        description: "重要：影響主要功能"
+        sla: "48 小時內修復"
+      P2:
+        description: "一般：影響次要功能"
+        sla: "1 週內修復"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+#                    Anti-pattern 定義 / Anti-pattern Definitions
+# ═══════════════════════════════════════════════════════════════════════════════
+
+anti_patterns:
+  - id: "disable_job"
+    name: "關閉 Job"
+    description: "直接停用失敗的 job 而非修復根因"
+    reason: "只是隱藏問題，不會真正解決"
+    
+  - id: "skip_tests"
+    name: "跳過測試"
+    description: "使用 skip 或 exclude 跳過失敗的測試"
+    reason: "可能導致生產環境出現已知 bug"
+    
+  - id: "force_version"
+    name: "強改版本"
+    description: "只更新版本號而不修改架構"
+    reason: "版本號應反映真實的代碼狀態"
+    
+  - id: "ignore_security"
+    name: "忽略安全警告"
+    description: "使用 continue-on-error 跳過安全掃描"
+    reason: "可能引入安全漏洞"
+    
+  - id: "remove_timeout"
+    name: "移除超時"
+    description: "移除 timeout-minutes 設置"
+    reason: "可能導致無限執行與成本失控"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+#                    整合配置 / Integration Configuration
+# ═══════════════════════════════════════════════════════════════════════════════
+
+integrations:
+  error_handler: "config/ci-error-handler.yaml"
+  comprehensive_solution: "config/ci-comprehensive-solution.yaml"
+  stage0_checklist: "island.bootstrap.stage0.yaml"
+  skeleton_index: "unmanned-engineer-ceo/60-machine-guides/70-architecture-skeletons/skeletons-index.yaml"
+  
+notifications:
+  channels:
+    - type: "github_issue"
+      enabled: true
+      template: "ci-failure-issue"
+    - type: "pr_comment"
+      enabled: true
+      auto_create_pr: true

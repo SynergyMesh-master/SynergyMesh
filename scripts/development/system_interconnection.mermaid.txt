@@ -1,0 +1,137 @@
+graph TB
+    subgraph "External Systems"
+        GPT5[GPT-5.1 API]
+        Windows[Windows OS]
+        Linux[Linux OS]
+        GitHub[GitHub]
+        Cloud[Cloud Providers<br/>AWS/GCP/Azure]
+    end
+
+    subgraph "Island AI Platform"
+        subgraph "Presentation Layer"
+            WebUI[Web UI<br/>TypeScript/React]
+            CLI[island-cli<br/>TypeScript]
+            Mobile[Mobile App<br/>React Native]
+            API[REST/GraphQL API]
+        end
+
+        subgraph "Application Layer"
+            subgraph "AI Agents Ecosystem"
+                Architect[ðŸ—ï¸ Architect Agent<br/>TypeScript]
+                Developer[ðŸ'¨â€ðŸ'» Developer Agent<br/>TypeScript]
+                Security[ðŸ" Security Agent<br/>Python]
+                DevOps[ðŸš€ DevOps Agent<br/>TypeScript]
+                QA[ðŸ§ª QA Agent<br/>TypeScript]
+                DataSci[ðŸ"Š Data Scientist<br/>Python]
+                PM[ðŸŽ¯ Product Manager<br/>TypeScript]
+            end
+
+            Orchestrator[Workflow Orchestrator<br/>Rust]
+            DecisionEngine[Decision Engine<br/>Rust]
+        end
+
+        subgraph "Service Layer (Go)"
+            APIGateway[API Gateway<br/>Go]
+            AgentService[Agent Service<br/>Go]
+            WorkflowService[Workflow Service<br/>Go]
+            AuthService[Auth Service<br/>Go]
+            NotifyService[Notification Service<br/>Go]
+        end
+
+        subgraph "Core Layer (Rust)"
+            Runtime[Agent Runtime<br/>Rust]
+            KnowledgeBase[Living Knowledge Base<br/>Rust]
+            StorageEngine[Storage Engine<br/>Rust]
+            NetworkLayer[Network Layer<br/>Rust]
+            Monitoring[Monitoring<br/>Rust]
+        end
+
+        subgraph "Integration Layer (Java)"
+            LegacyBridge[Legacy Bridge<br/>Java]
+            MessageQueue[Message Queue<br/>Java]
+            BatchProcessing[Batch Processing<br/>Java]
+        end
+
+        subgraph "Data Layer"
+            PostgreSQL[(PostgreSQL)]
+            MongoDB[(MongoDB)]
+            Redis[(Redis)]
+            VectorDB[(Vector DB)]
+        end
+    end
+
+    %% External Connections
+    WebUI -.->|HTTPS| APIGateway
+    CLI -.->|HTTPS| APIGateway
+    Mobile -.->|HTTPS| APIGateway
+    API -.->|HTTPS| APIGateway
+
+    APIGateway -.->|AI Calls| GPT5
+    Security -.->|Scan| Windows
+    Security -.->|Scan| Linux
+    DevOps -.->|CI/CD| GitHub
+    DevOps -.->|Deploy| Cloud
+
+    %% Internal Connections
+    APIGateway -->|Route| AgentService
+    APIGateway -->|Route| WorkflowService
+    APIGateway -->|Authenticate| AuthService
+    
+    AgentService -->|Manage| Architect
+    AgentService -->|Manage| Developer
+    AgentService -->|Manage| Security
+    AgentService -->|Manage| DevOps
+    AgentService -->|Manage| QA
+    AgentService -->|Manage| DataSci
+    AgentService -->|Manage| PM
+
+    Architect -->|Execute| Runtime
+    Developer -->|Execute| Runtime
+    Security -->|Execute| Runtime
+    DevOps -->|Execute| Runtime
+    QA -->|Execute| Runtime
+    DataSci -->|Execute| Runtime
+    PM -->|Execute| Runtime
+
+    WorkflowService -->|Orchestrate| Orchestrator
+    Orchestrator -->|Decide| DecisionEngine
+    DecisionEngine -->|Query| KnowledgeBase
+
+    Runtime -->|Store| StorageEngine
+    Runtime -->|Network| NetworkLayer
+    Runtime -->|Metrics| Monitoring
+    KnowledgeBase -->|Persist| StorageEngine
+
+    AgentService -->|Integrate| LegacyBridge
+    WorkflowService -->|Queue| MessageQueue
+    WorkflowService -->|Batch| BatchProcessing
+
+    StorageEngine -->|CRUD| PostgreSQL
+    StorageEngine -->|CRUD| MongoDB
+    StorageEngine -->|Cache| Redis
+    KnowledgeBase -->|Embeddings| VectorDB
+
+    NotifyService -->|Alert| WebUI
+    NotifyService -->|Alert| CLI
+    Monitoring -->|Metrics| NotifyService
+
+    %% Sync Mechanism
+    GitHub -.->|Webhook| APIGateway
+    APIGateway -.->|Trigger| WorkflowService
+    WorkflowService -.->|Auto Sync| GitHub
+
+    classDef rust fill:#f4a261,stroke:#e76f51,color:#000
+    classDef go fill:#00add8,stroke:#0073a8,color:#fff
+    classDef typescript fill:#3178c6,stroke:#235a97,color:#fff
+    classDef python fill:#ffd43b,stroke:#306998,color:#000
+    classDef java fill:#f89820,stroke:#5382a1,color:#fff
+    classDef external fill:#95e1d3,stroke:#38ada9,color:#000
+    classDef data fill:#f8b500,stroke:#d39e00,color:#000
+
+    class Runtime,KnowledgeBase,StorageEngine,NetworkLayer,Monitoring,Orchestrator,DecisionEngine rust
+    class APIGateway,AgentService,WorkflowService,AuthService,NotifyService go
+    class WebUI,CLI,Architect,Developer,DevOps,QA,PM typescript
+    class Security,DataSci python
+    class LegacyBridge,MessageQueue,BatchProcessing java
+    class GPT5,Windows,Linux,GitHub,Cloud external
+    class PostgreSQL,MongoDB,Redis,VectorDB data
