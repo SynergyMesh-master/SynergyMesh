@@ -1,0 +1,246 @@
+# Scheduler Service Deployment
+# Phase: 2 (Q2 2026) - Pre-designed for distributed deployment
+# Description: Task scheduler with BullMQ and Redis
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: scheduler
+  namespace: keystone-ai
+  labels:
+    app: scheduler
+    component: backend
+    tier: worker
+    phase: "1"
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      app: scheduler
+  template:
+    metadata:
+      labels:
+        app: scheduler
+        component: backend
+        tier: worker
+        version: v1
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9091"
+        prometheus.io/path: "/metrics"
+    spec:
+      serviceAccountName: scheduler
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        fsGroup: 1000
+        seccompProfile:
+          type: RuntimeDefault
+      
+      initContainers:
+        - name: wait-for-redis
+          image: busybox:1.36
+          command:
+            - sh
+            - -c
+            - |
+              until nc -z redis-service 6379; do
+                echo "Waiting for Redis..."
+                sleep 2
+              done
+        
+        - name: wait-for-db
+          image: busybox:1.36
+          command:
+            - sh
+            - -c
+            - |
+              until nc -z postgres-service 5432; do
+                echo "Waiting for PostgreSQL..."
+                sleep 2
+              done
+      
+      containers:
+        - name: scheduler
+          image: keystone-ai/scheduler:latest
+          imagePullPolicy: IfNotPresent
+          
+          ports:
+            - name: http
+              containerPort: 3000
+              protocol: TCP
+            - name: metrics
+              containerPort: 9091
+              protocol: TCP
+          
+          env:
+            - name: NODE_ENV
+              value: "production"
+            - name: LOG_LEVEL
+              value: "info"
+            - name: REDIS_HOST
+              value: "redis-service"
+            - name: REDIS_PORT
+              value: "6379"
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: redis-secrets
+                  key: password
+            - name: DB_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secrets
+                  key: host
+            - name: DB_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secrets
+                  key: port
+            - name: DB_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secrets
+                  key: database
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secrets
+                  key: username
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secrets
+                  key: password
+            - name: MAX_CONCURRENT_JOBS
+              value: "10"
+            - name: WORKER_CONCURRENCY
+              value: "5"
+          
+          resources:
+            requests:
+              cpu: "500m"
+              memory: "1Gi"
+            limits:
+              cpu: "2000m"
+              memory: "4Gi"
+          
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: http
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+            successThreshold: 1
+            failureThreshold: 3
+          
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: http
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            timeoutSeconds: 3
+            successThreshold: 1
+            failureThreshold: 3
+          
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            runAsNonRoot: true
+            runAsUser: 1000
+            capabilities:
+              drop:
+                - ALL
+          
+          volumeMounts:
+            - name: tmp
+              mountPath: /tmp
+            - name: cache
+              mountPath: /app/.cache
+      
+      volumes:
+        - name: tmp
+          emptyDir: {}
+        - name: cache
+          emptyDir: {}
+      
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    - key: app
+                      operator: In
+                      values:
+                        - scheduler
+                topologyKey: kubernetes.io/hostname
+---
+# Service Account for Scheduler
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: scheduler
+  namespace: keystone-ai
+  labels:
+    app: scheduler
+---
+# Horizontal Pod Autoscaler
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: scheduler-hpa
+  namespace: keystone-ai
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: scheduler
+  minReplicas: 2
+  maxReplicas: 8
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 75
+    - type: Resource
+      resource:
+        name: memory
+        target:
+          type: Utilization
+          averageUtilization: 85
+  behavior:
+    scaleDown:
+      stabilizationWindowSeconds: 300
+      policies:
+        - type: Pods
+          value: 1
+          periodSeconds: 120
+    scaleUp:
+      stabilizationWindowSeconds: 0
+      policies:
+        - type: Pods
+          value: 2
+          periodSeconds: 60
+---
+# Pod Disruption Budget
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: scheduler-pdb
+  namespace: keystone-ai
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app: scheduler

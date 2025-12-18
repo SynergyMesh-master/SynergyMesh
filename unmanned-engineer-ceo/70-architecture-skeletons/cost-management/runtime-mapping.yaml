@@ -1,0 +1,9 @@
+runtime_module:
+  root: platform/operations/cost-management
+
+  docs:
+    cost_model: platform/operations/cost-management/docs/cost-model.md
+    optimization_strategies: platform/operations/cost-management/docs/optimization.md
+
+  config:
+    pricing_tiers: platform/operations/cost-management/config/pricing-tiers.yaml

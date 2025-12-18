@@ -1,0 +1,638 @@
+# ═══════════════════════════════════════════════════════════════════════════════
+#                    SynergyMesh CI 完整解決方案配置
+#                    CI Comprehensive Solution Configuration
+#                    Version: 1.0.0
+# ═══════════════════════════════════════════════════════════════════════════════
+
+metadata:
+  name: ci-comprehensive-solution
+  version: "1.0.0"
+  description: |
+    完整的 CI 架構失敗解決方案，涵蓋所有已知和潛在的錯誤類型。
+    Comprehensive CI architecture failure solution covering all known and potential errors.
+  created: "2025-11-29"
+  updated: "2025-11-29"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+#                           錯誤分類矩陣
+#                           Error Classification Matrix
+# ═══════════════════════════════════════════════════════════════════════════════
+
+error_categories:
+  # ─────────────────────────────────────────────────────────────────────────────
+  #                    1. GitHub Actions 基礎設施錯誤
+  # ─────────────────────────────────────────────────────────────────────────────
+  github_actions_infrastructure:
+    startup_failure:
+      description: "工作流程無法啟動 (startup_failure)"
+      patterns:
+        - "startup_failure"
+        - "Workflow failed to start"
+        - "Required permissions not available"
+      causes:
+        - "Job-level permissions 在使用 reusable workflows 時無效"
+        - "Workflow YAML 語法錯誤"
+        - "引用的 reusable workflow 不存在"
+        - "權限配置衝突"
+      solutions:
+        - action: "移除 job-level permissions 區塊"
+          details: "使用 `uses:` 調用 reusable workflow 時，不能在 job 層級指定 permissions"
+          command: null
+          auto_fixable: true
+        - action: "驗證 YAML 語法"
+          details: "使用 yaml linter 驗證語法"
+          command: "python3 -c \"import yaml; yaml.safe_load(open('.github/workflows/file.yml'))\""
+          auto_fixable: false
+        - action: "檢查 reusable workflow 路徑"
+          details: "確保 `uses: ./.github/workflows/xxx.yml` 路徑正確"
+          command: null
+          auto_fixable: false
+
+    runner_unavailable:
+      description: "Runner 不可用"
+      patterns:
+        - "No runner matching the specified labels"
+        - "Job failed to start because of runner unavailable"
+      causes:
+        - "指定的 runner 標籤不存在"
+        - "所有 runner 都在忙碌"
+        - "Self-hosted runner 離線"
+      solutions:
+        - action: "使用 ubuntu-latest"
+          details: "將 runs-on 改為 ubuntu-latest"
+          command: null
+          auto_fixable: true
+        - action: "檢查 self-hosted runner 狀態"
+          details: "在 Settings > Actions > Runners 檢查"
+          command: null
+          auto_fixable: false
+
+    rate_limit_exceeded:
+      description: "API 速率限制"
+      patterns:
+        - "rate limit exceeded"
+        - "API rate limit exceeded"
+      causes:
+        - "短時間內 API 請求過多"
+        - "並發工作流程太多"
+      solutions:
+        - action: "添加重試邏輯"
+          details: "使用指數退避重試"
+          command: null
+          auto_fixable: false
+        - action: "減少並發"
+          details: "使用 concurrency 限制同時運行的工作流程"
+          command: null
+          auto_fixable: false
+
+    action_not_found:
+      description: "Action 版本不存在"
+      patterns:
+        - "Unable to resolve action"
+        - "Not Found"
+        - "Could not find action"
+      causes:
+        - "Action 版本已被移除"
+        - "Action 倉庫已刪除或改名"
+        - "版本標籤錯誤"
+      solutions:
+        - action: "更新到最新穩定版本"
+          details: "使用具體的 SHA 而非版本標籤"
+          command: null
+          auto_fixable: true
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  #                    2. 依賴與套件管理錯誤
+  # ─────────────────────────────────────────────────────────────────────────────
+  dependency_errors:
+    npm_ci_failure:
+      description: "npm ci 失敗"
+      patterns:
+        - "npm ERR! code E"
+        - "npm ERR! Exit handler never called"
+        - "ERESOLVE unable to resolve dependency tree"
+      causes:
+        - "package-lock.json 與 package.json 不同步"
+        - "Node.js 版本不符"
+        - "網路問題"
+        - "Docker 容器中的已知 npm 問題"
+      solutions:
+        - action: "刪除 lock 文件重新安裝"
+          details: "rm -rf node_modules package-lock.json && npm install"
+          command: "rm -rf node_modules package-lock.json && npm install"
+          auto_fixable: true
+        - action: "使用 --legacy-peer-deps"
+          details: "npm install --legacy-peer-deps"
+          command: "npm install --legacy-peer-deps"
+          auto_fixable: true
+        - action: "清除 npm cache"
+          details: "npm cache clean --force"
+          command: "npm cache clean --force"
+          auto_fixable: true
+
+    npm_audit_vulnerabilities:
+      description: "npm 安全漏洞"
+      patterns:
+        - "npm audit"
+        - "vulnerabilities"
+        - "high severity"
+        - "critical severity"
+      causes:
+        - "依賴包有已知安全漏洞"
+        - "過時的依賴版本"
+      solutions:
+        - action: "自動修復"
+          details: "npm audit fix"
+          command: "npm audit fix"
+          auto_fixable: true
+        - action: "強制修復"
+          details: "npm audit fix --force (可能有破壞性變更)"
+          command: "npm audit fix --force"
+          auto_fixable: false
+
+    module_not_found:
+      description: "模組找不到"
+      patterns:
+        - "Cannot find module"
+        - "Module not found"
+        - "Error: Cannot resolve"
+      causes:
+        - "依賴未安裝"
+        - "路徑錯誤"
+        - "TypeScript 配置問題"
+      solutions:
+        - action: "重新安裝依賴"
+          details: "npm install"
+          command: "npm install"
+          auto_fixable: true
+        - action: "檢查 tsconfig.json paths"
+          details: "確保路徑映射正確"
+          command: null
+          auto_fixable: false
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  #                    3. 構建與編譯錯誤
+  # ─────────────────────────────────────────────────────────────────────────────
+  build_errors:
+    typescript_error:
+      description: "TypeScript 編譯錯誤"
+      patterns:
+        - "error TS"
+        - "TypeScript error"
+        - "Cannot find name"
+        - "Property .* does not exist"
+        - "Type .* is not assignable"
+      causes:
+        - "類型定義錯誤"
+        - "缺少類型聲明"
+        - "API 變更"
+      solutions:
+        - action: "執行 type check"
+          details: "npx tsc --noEmit"
+          command: "npx tsc --noEmit"
+          auto_fixable: false
+        - action: "安裝類型定義"
+          details: "npm install @types/xxx"
+          command: null
+          auto_fixable: false
+
+    out_of_memory:
+      description: "記憶體不足"
+      patterns:
+        - "JavaScript heap out of memory"
+        - "FATAL ERROR: CALL_AND_RETRY_LAST"
+        - "heap out of memory"
+      causes:
+        - "構建過程消耗過多記憶體"
+        - "依賴過多"
+        - "循環依賴"
+      solutions:
+        - action: "增加 Node.js 記憶體限制"
+          details: "export NODE_OPTIONS=--max-old-space-size=4096"
+          command: "export NODE_OPTIONS=--max-old-space-size=4096"
+          auto_fixable: true
+        - action: "分析依賴大小"
+          details: "npx analyze-bundle-size"
+          command: null
+          auto_fixable: false
+
+    docker_build_failure:
+      description: "Docker 構建失敗"
+      patterns:
+        - "docker build.*failed"
+        - "Error response from daemon"
+        - "Dockerfile syntax error"
+      causes:
+        - "Dockerfile 語法錯誤"
+        - "基礎映像不存在"
+        - "磁盤空間不足"
+        - "網路問題"
+      solutions:
+        - action: "驗證 Dockerfile"
+          details: "docker build --no-cache ."
+          command: "docker build --no-cache ."
+          auto_fixable: false
+        - action: "清理 Docker 系統"
+          details: "docker system prune -a --volumes"
+          command: "docker system prune -a --volumes"
+          auto_fixable: true
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  #                    4. 測試相關錯誤
+  # ─────────────────────────────────────────────────────────────────────────────
+  test_errors:
+    test_failure:
+      description: "測試失敗"
+      patterns:
+        - "FAIL"
+        - "Test failed"
+        - "Expected .* but received"
+        - "AssertionError"
+      causes:
+        - "代碼邏輯錯誤"
+        - "測試預期不正確"
+        - "環境差異"
+      solutions:
+        - action: "本地運行測試"
+          details: "npm test -- --verbose"
+          command: "npm test -- --verbose"
+          auto_fixable: false
+        - action: "更新快照"
+          details: "npm test -- -u"
+          command: "npm test -- -u"
+          auto_fixable: false
+
+    test_timeout:
+      description: "測試超時"
+      patterns:
+        - "Timeout"
+        - "exceeded timeout"
+        - "did not complete within"
+      causes:
+        - "測試執行時間過長"
+        - "等待的服務未啟動"
+        - "死鎖或無限循環"
+      solutions:
+        - action: "增加超時時間"
+          details: "jest --testTimeout=60000"
+          command: "npm test -- --testTimeout=60000"
+          auto_fixable: true
+        - action: "檢查異步操作"
+          details: "確保所有 async 操作正確處理"
+          command: null
+          auto_fixable: false
+
+    coverage_threshold:
+      description: "覆蓋率不足"
+      patterns:
+        - "Coverage threshold"
+        - "Coverage for .* is below"
+      causes:
+        - "測試覆蓋率未達標準"
+        - "新代碼缺少測試"
+      solutions:
+        - action: "添加更多測試"
+          details: "為未覆蓋的代碼添加測試"
+          command: null
+          auto_fixable: false
+        - action: "暫時降低閾值"
+          details: "在 jest.config.js 中調整 coverageThreshold"
+          command: null
+          auto_fixable: false
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  #                    5. Lint 和格式化錯誤
+  # ─────────────────────────────────────────────────────────────────────────────
+  lint_errors:
+    eslint_error:
+      description: "ESLint 錯誤"
+      patterns:
+        - "eslint"
+        - "error.*eslint"
+        - "no-unused-vars"
+        - "no-undef"
+      causes:
+        - "代碼風格不符合規範"
+        - "潛在的代碼錯誤"
+      solutions:
+        - action: "自動修復"
+          details: "npm run lint -- --fix"
+          command: "npm run lint -- --fix"
+          auto_fixable: true
+        - action: "檢查配置"
+          details: "確保 .eslintrc 配置正確"
+          command: null
+          auto_fixable: false
+
+    prettier_error:
+      description: "Prettier 格式錯誤"
+      patterns:
+        - "prettier"
+        - "Code style issues"
+        - "check failed"
+      causes:
+        - "代碼格式不符合 Prettier 規則"
+      solutions:
+        - action: "自動格式化"
+          details: "npx prettier --write ."
+          command: "npx prettier --write ."
+          auto_fixable: true
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  #                    6. 安全掃描錯誤
+  # ─────────────────────────────────────────────────────────────────────────────
+  security_errors:
+    codeql_alert:
+      description: "CodeQL 安全警報"
+      patterns:
+        - "CodeQL"
+        - "security alert"
+        - "vulnerability detected"
+      causes:
+        - "代碼中存在安全漏洞"
+        - "不安全的編碼實踐"
+      solutions:
+        - action: "查看 Security 頁籤"
+          details: "在 GitHub Security 頁籤查看詳細警報"
+          command: null
+          auto_fixable: false
+        - action: "修復漏洞代碼"
+          details: "根據 CodeQL 建議修改代碼"
+          command: null
+          auto_fixable: false
+
+    secret_scanning:
+      description: "密鑰洩露警報"
+      patterns:
+        - "Secret scanning"
+        - "exposed secret"
+        - "API key"
+      causes:
+        - "代碼中硬編碼了密鑰"
+        - "配置文件包含敏感信息"
+      solutions:
+        - action: "立即撤銷密鑰"
+          details: "撤銷洩露的密鑰並生成新密鑰"
+          command: null
+          auto_fixable: false
+        - action: "使用 secrets 管理"
+          details: "改用 GitHub Secrets 或環境變量"
+          command: null
+          auto_fixable: false
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  #                    7. 部署相關錯誤
+  # ─────────────────────────────────────────────────────────────────────────────
+  deployment_errors:
+    pages_build_failure:
+      description: "GitHub Pages 構建失敗"
+      patterns:
+        - "Pages build failure"
+        - "Deploy to GitHub Pages failed"
+      causes:
+        - "構建輸出目錄不存在"
+        - "Jekyll 配置錯誤"
+        - "權限問題"
+      solutions:
+        - action: "檢查構建輸出"
+          details: "確保構建產生了正確的輸出目錄"
+          command: null
+          auto_fixable: false
+        - action: "添加 .nojekyll"
+          details: "在構建目錄添加 .nojekyll 文件"
+          command: "touch .nojekyll"
+          auto_fixable: true
+
+    artifact_upload_failure:
+      description: "Artifact 上傳失敗"
+      patterns:
+        - "Unable to upload artifact"
+        - "Artifact upload failed"
+      causes:
+        - "文件路徑不存在"
+        - "文件太大"
+        - "權限問題"
+      solutions:
+        - action: "驗證路徑"
+          details: "確保 artifact 路徑存在"
+          command: null
+          auto_fixable: false
+        - action: "壓縮文件"
+          details: "減少 artifact 大小"
+          command: null
+          auto_fixable: false
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  #                    8. 環境與資源錯誤
+  # ─────────────────────────────────────────────────────────────────────────────
+  environment_errors:
+    disk_space:
+      description: "磁盤空間不足"
+      patterns:
+        - "No space left on device"
+        - "ENOSPC"
+        - "disk full"
+      causes:
+        - "構建產物過大"
+        - "Docker 映像堆積"
+        - "日誌文件過多"
+      solutions:
+        - action: "清理 Docker"
+          details: "docker system prune -a --volumes"
+          command: "docker system prune -a --volumes"
+          auto_fixable: true
+        - action: "清理 npm cache"
+          details: "npm cache clean --force"
+          command: "npm cache clean --force"
+          auto_fixable: true
+
+    network_error:
+      description: "網路連接錯誤"
+      patterns:
+        - "ETIMEDOUT"
+        - "ECONNREFUSED"
+        - "network timeout"
+        - "connection refused"
+      causes:
+        - "外部服務不可用"
+        - "防火牆阻擋"
+        - "DNS 解析失敗"
+      solutions:
+        - action: "重試"
+          details: "添加重試邏輯"
+          command: null
+          auto_fixable: false
+        - action: "使用代理"
+          details: "配置網路代理"
+          command: null
+          auto_fixable: false
+
+    permission_denied:
+      description: "權限拒絕"
+      patterns:
+        - "Permission denied"
+        - "EACCES"
+        - "access denied"
+      causes:
+        - "文件權限不正確"
+        - "GitHub Token 權限不足"
+      solutions:
+        - action: "檢查 Token 權限"
+          details: "確保 GITHUB_TOKEN 有足夠權限"
+          command: null
+          auto_fixable: false
+        - action: "修改文件權限"
+          details: "chmod +x script.sh"
+          command: null
+          auto_fixable: true
+
+# ═══════════════════════════════════════════════════════════════════════════════
+#                           自動修復配置
+#                           Auto-Fix Configuration
+# ═══════════════════════════════════════════════════════════════════════════════
+
+auto_fix:
+  enabled: true
+  
+  # 安全修復 - 可自動執行
+  safe_fixes:
+    - lint_errors
+    - formatting_errors
+    - dependency_audit_moderate
+    - npm_cache_clean
+    - docker_system_prune
+    - nojekyll_file
+    
+  # 需要審核的修復
+  review_required:
+    - dependency_major_updates
+    - security_vulnerabilities
+    - test_updates
+    - configuration_changes
+    
+  # 禁止自動修復
+  never_auto_fix:
+    - production_deployments
+    - database_migrations
+    - secret_rotations
+    - breaking_changes
+
+# ═══════════════════════════════════════════════════════════════════════════════
+#                           監控與告警配置
+#                           Monitoring & Alerting Configuration
+# ═══════════════════════════════════════════════════════════════════════════════
+
+monitoring:
+  # 錯誤追蹤
+  error_tracking:
+    enabled: true
+    retention_days: 30
+    aggregation: "workflow,error_category"
+    
+  # 健康檢查
+  health_checks:
+    enabled: true
+    interval_minutes: 5
+    endpoints:
+      - name: "contracts-l1"
+        path: "core/contract_service/contracts-L1/contracts"
+        check: "npm test"
+      - name: "mcp-servers"
+        path: "mcp-servers"
+        check: "npm run validate:deployment"
+        
+  # 告警規則
+  alerts:
+    critical:
+      - "startup_failure"
+      - "security_vulnerability_critical"
+      - "production_deployment_failure"
+    high:
+      - "test_failure_main_branch"
+      - "build_failure"
+      - "security_vulnerability_high"
+    medium:
+      - "lint_error"
+      - "coverage_below_threshold"
+    low:
+      - "deprecation_warning"
+      - "optional_dependency_missing"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+#                           報告配置
+#                           Reporting Configuration
+# ═══════════════════════════════════════════════════════════════════════════════
+
+reporting:
+  # 每日報告
+  daily_summary:
+    enabled: true
+    time: "09:00"
+    timezone: "Asia/Taipei"
+    include:
+      - total_runs
+      - success_rate
+      - failure_breakdown
+      - top_errors
+      
+  # 週報告
+  weekly_report:
+    enabled: true
+    day: "monday"
+    include:
+      - trend_analysis
+      - mttr  # Mean Time To Resolve
+      - recurring_issues
+      - recommendations
+
+# ═══════════════════════════════════════════════════════════════════════════════
+#                           預防措施
+#                           Preventive Measures
+# ═══════════════════════════════════════════════════════════════════════════════
+
+preventive_measures:
+  # 預提交檢查
+  pre_commit:
+    - lint
+    - type_check
+    - unit_tests_fast
+    
+  # 預推送檢查
+  pre_push:
+    - full_test_suite
+    - security_scan_quick
+    
+  # PR 要求
+  pr_requirements:
+    - ci_passing
+    - code_review_approved
+    - no_merge_conflicts
+    - changelog_updated
+
+# ═══════════════════════════════════════════════════════════════════════════════
+#                           相關文件引用
+#                           Related File References
+# ═══════════════════════════════════════════════════════════════════════════════
+
+references:
+  documentation:
+    - path: "docs/ci-troubleshooting.md"
+      description: "CI 故障排除 Runbook"
+    - path: "docs/CI_AUTO_COMMENT_SYSTEM.md"
+      description: "CI 自動評論系統文檔"
+    - path: "docs/CI_GLOBAL_STATUS_FIX.md"
+      description: "CI 全局狀態修復指南"
+      
+  configurations:
+    - path: "config/ci-error-handler.yaml"
+      description: "CI 錯誤處理配置"
+    - path: ".github/workflows/autonomous-ci-guardian.yml"
+      description: "自動駕駛級 CI 守護者"
+    - path: ".github/workflows/autofix-bot.yml"
+      description: "自動修復機器人"
+      
+  scripts:
+    - path: "scripts/check-env.sh"
+      description: "環境檢查腳本"
+    - path: ".github/scripts/risk_assessment.py"
+      description: "風險評估腳本"

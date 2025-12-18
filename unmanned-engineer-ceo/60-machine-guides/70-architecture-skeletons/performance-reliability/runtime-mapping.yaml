@@ -1,0 +1,8 @@
+version: "1.0.0"
+skeleton_id: "performance-reliability"
+
+mapping:
+  sla_definitions: "config/sla-definitions.yaml"
+  disaster_recovery: "infrastructure/disaster-recovery/"
+  capacity_planning: "config/capacity-plan.yaml"
+  performance_benchmarks: "tests/performance/"

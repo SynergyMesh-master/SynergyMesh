@@ -1,0 +1,120 @@
+version: "1.0.0"
+skeleton_id: "knowledge-base"
+
+schemas:
+  knowledge_base_input:
+    type: object
+    description: "知識庫請求：查詢、更新或結構化知識"
+    properties:
+      action_type:
+        type: string
+        enum:
+          - "query_knowledge"
+          - "update_knowledge"
+          - "validate_completeness"
+          - "generate_graph"
+          - "find_related_entities"
+        description: "執行動作類型"
+      query:
+        type: string
+        description: "知識查詢（自然語言或結構化）"
+      context:
+        type: object
+        properties:
+          domain: { type: string }
+          component: { type: string }
+          tags: { type: array, items: { type: string } }
+        description: "查詢背景與域名"
+      knowledge_update:
+        type: object
+        description: "知識更新內容（若適用）"
+    required:
+      - action_type
+      - query
+
+  knowledge_base_report:
+    type: object
+    description: "知識庫查詢報告：相關文檔、決策記錄與架構信息"
+    properties:
+      query: { type: string }
+      relevant_documents:
+        type: array
+        items:
+          type: object
+          properties:
+            document_id: { type: string }
+            title: { type: string }
+            relevance_score: { type: number, minimum: 0, maximum: 1 }
+            excerpt: { type: string }
+            path: { type: string }
+            tags: { type: array, items: { type: string } }
+      decision_records:
+        type: array
+        items:
+          type: object
+          properties:
+            adr_id: { type: string }
+            title: { type: string }
+            status:
+              { enum: ["accepted", "superseded", "deprecated", "proposed"] }
+            decision: { type: string }
+            rationale: { type: string }
+            consequences: { type: array, items: { type: string } }
+      architecture_context:
+        type: object
+        properties:
+          related_components: { type: array, items: { type: string } }
+          dependencies: { type: array, items: { type: string } }
+          best_practices: { type: array, items: { type: string } }
+      knowledge_gaps:
+        type: array
+        items:
+          type: object
+          properties:
+            gap_description: { type: string }
+            severity: { enum: ["low", "medium", "high"] }
+      metadata:
+        type: object
+        properties:
+          last_updated: { type: string, format: "date" }
+          coverage_areas: { type: array, items: { type: string } }
+          missing_documentation: { type: array, items: { type: string } }
+      timestamp: { type: string, format: "date-time" }
+    required:
+      - query
+      - relevant_documents
+
+  knowledge_base_suggestion:
+    type: object
+    description: "知識庫改善建議：文檔補充、結構重構或知識圖更新"
+    properties:
+      suggestion_type:
+        type: string
+        enum:
+          - "document_addition"
+          - "structure_optimization"
+          - "link_missing_documents"
+          - "create_adr"
+          - "update_knowledge_graph"
+      identified_gaps:
+        type: array
+        items: { type: string }
+      proposed_content:
+        type: object
+        properties:
+          document_outline: { type: array, items: { type: string } }
+          suggested_structure: { type: object }
+          key_topics: { type: array, items: { type: string } }
+      impact:
+        type: object
+        properties:
+          knowledge_coverage_improvement:
+            { type: number, minimum: 0, maximum: 1 }
+          affected_components: { type: array, items: { type: string } }
+          query_performance_impact: { type: string }
+      implementation_effort:
+        type: string
+        enum: ["low", "medium", "high"]
+    required:
+      - suggestion_type
+      - identified_gaps

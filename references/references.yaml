@@ -1,0 +1,289 @@
+# 治理框架参考资料索引
+# 包含所有外部标准、最佳实践和参考文档
+
+apiVersion: governance.machinenativeops.io/v1alpha1
+kind: ReferenceIndex
+metadata:
+  name: governance-framework-references
+  version: "1.0.0"
+  lastUpdated: "2025-12-17"
+
+spec:
+  # 行业标准
+  standards:
+    - category: "Kubernetes"
+      items:
+        - title: "Kubernetes Documentation"
+          url: "https://kubernetes.io/docs/"
+          description: "Official Kubernetes documentation"
+          relevantTo: ["naming-governance", "observability-validation"]
+
+        - title: "Kubernetes Object Names and IDs"
+          url: "https://kubernetes.io/docs/concepts/overview/working-with-objects/names/"
+          description: "Kubernetes resource naming conventions"
+          relevantTo: ["naming-governance"]
+
+        - title: "DNS Subdomain Names"
+          url: "https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#dns-subdomain-names"
+          description: "DNS-1123 subdomain naming rules"
+          relevantTo: ["naming-governance"]
+
+        - title: "Labels and Selectors"
+          url: "https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/"
+          description: "Recommended labels and annotations"
+          relevantTo: ["naming-governance", "observability-validation"]
+
+    - category: "Versioning"
+      items:
+        - title: "Semantic Versioning"
+          url: "https://semver.org/"
+          description: "Semantic versioning specification"
+          relevantTo: ["naming-governance"]
+
+        - title: "Calendar Versioning"
+          url: "https://calver.org/"
+          description: "Alternative versioning scheme"
+          relevantTo: ["naming-governance"]
+
+    - category: "API Design"
+      items:
+        - title: "RESTful API Design"
+          url: "https://restfulapi.net/"
+          description: "RESTful API design best practices"
+          relevantTo: ["naming-governance"]
+
+        - title: "Microsoft REST API Guidelines"
+          url: "https://github.com/microsoft/api-guidelines"
+          description: "Microsoft's comprehensive API guidelines"
+          relevantTo: ["naming-governance"]
+
+        - title: "Google API Design Guide"
+          url: "https://cloud.google.com/apis/design"
+          description: "Google Cloud API design guide"
+          relevantTo: ["naming-governance"]
+
+  # ITIL 和变更管理
+  itil:
+    - category: "Change Management"
+      items:
+        - title: "ITIL Change Management"
+          url: "https://www.axelos.com/certifications/itil-service-management"
+          description: "ITIL change management framework"
+          relevantTo: ["change-management"]
+
+        - title: "Google SRE - Managing Change"
+          url: "https://sre.google/sre-book/managing-change/"
+          description: "Google SRE approach to change management"
+          relevantTo: ["change-management"]
+
+        - title: "ITIL Exception Management"
+          url: "https://wiki.en.it-processmaps.com/index.php/Exception_Handling"
+          description: "ITIL guidelines for exception handling"
+          relevantTo: ["exception-handling"]
+
+  # 安全与合规
+  security:
+    - category: "Security Standards"
+      items:
+        - title: "OWASP Secure Coding Practices"
+          url: "https://owasp.org/www-project-secure-coding-practices-quick-reference-guide/"
+          description: "OWASP secure coding guidelines"
+          relevantTo: ["security-compliance"]
+
+        - title: "NIST Cybersecurity Framework"
+          url: "https://www.nist.gov/cyberframework"
+          description: "NIST cybersecurity framework"
+          relevantTo: ["security-compliance"]
+
+        - title: "CIS Controls"
+          url: "https://www.cisecurity.org/controls"
+          description: "CIS critical security controls"
+          relevantTo: ["security-compliance"]
+
+    - category: "Secrets Management"
+      items:
+        - title: "OWASP Secrets Management Cheat Sheet"
+          url: "https://cheatsheetseries.owasp.org/cheatsheets/Secrets_Management_Cheat_Sheet.html"
+          description: "Best practices for secrets management"
+          relevantTo: ["security-compliance", "naming-governance"]
+
+    - category: "Compliance Frameworks"
+      items:
+        - title: "SOC 2"
+          url: "https://www.aicpa.org/interestareas/frc/assuranceadvisoryservices/aicpasoc2report.html"
+          description: "SOC 2 compliance framework"
+          relevantTo: ["security-compliance", "metrics-and-audit"]
+
+        - title: "ISO 27001"
+          url: "https://www.iso.org/isoiec-27001-information-security.html"
+          description: "ISO 27001 information security standard"
+          relevantTo: ["security-compliance"]
+
+        - title: "GDPR"
+          url: "https://gdpr.eu/"
+          description: "General Data Protection Regulation"
+          relevantTo: ["security-compliance"]
+
+  # 可观测性与监控
+  observability:
+    - category: "Monitoring"
+      items:
+        - title: "Prometheus Documentation"
+          url: "https://prometheus.io/docs/"
+          description: "Prometheus monitoring system documentation"
+          relevantTo: ["observability-validation"]
+
+        - title: "Prometheus Best Practices"
+          url: "https://prometheus.io/docs/practices/"
+          description: "Prometheus naming and best practices"
+          relevantTo: ["observability-validation", "naming-governance"]
+
+        - title: "Grafana Documentation"
+          url: "https://grafana.com/docs/"
+          description: "Grafana visualization platform"
+          relevantTo: ["observability-validation"]
+
+    - category: "Logging"
+      items:
+        - title: "The Twelve-Factor App - Logs"
+          url: "https://12factor.net/logs"
+          description: "Best practices for application logging"
+          relevantTo: ["observability-validation"]
+
+  # CI/CD 最佳实践
+  cicd:
+    - category: "GitHub Actions"
+      items:
+        - title: "GitHub Actions Documentation"
+          url: "https://docs.github.com/en/actions"
+          description: "GitHub Actions CI/CD platform"
+          relevantTo: ["naming-governance"]
+
+    - category: "GitLab CI"
+      items:
+        - title: "GitLab CI/CD Documentation"
+          url: "https://docs.gitlab.com/ee/ci/"
+          description: "GitLab CI/CD documentation"
+          relevantTo: ["naming-governance"]
+
+  # 风险管理
+  risk:
+    - category: "Risk Management"
+      items:
+        - title: "NIST Risk Management Framework"
+          url: "https://csrc.nist.gov/projects/risk-management"
+          description: "NIST risk management framework"
+          relevantTo: ["exception-handling", "change-management"]
+
+        - title: "COBIT"
+          url: "https://www.isaca.org/resources/cobit"
+          description: "COBIT governance framework"
+          relevantTo: ["exception-handling"]
+
+  # 组织与流程
+  organizational:
+    - category: "DevOps"
+      items:
+        - title: "DevOps Handbook"
+          url: "https://itrevolution.com/product/the-devops-handbook/"
+          description: "DevOps principles and practices"
+          relevantTo: ["org-adoption-lifecycle"]
+
+        - title: "Accelerate"
+          url: "https://itrevolution.com/product/accelerate/"
+          description: "Software delivery performance metrics"
+          relevantTo: ["metrics-and-audit"]
+
+    - category: "Team Topologies"
+      items:
+        - title: "Team Topologies"
+          url: "https://teamtopologies.com/"
+          description: "Organizing teams for fast flow"
+          relevantTo: ["cross-team-governance"]
+
+  # 工具与技术
+  tools:
+    - category: "Policy as Code"
+      items:
+        - title: "Open Policy Agent"
+          url: "https://www.openpolicyagent.org/"
+          description: "Policy-based control for cloud native environments"
+          relevantTo: ["naming-governance", "security-compliance"]
+
+        - title: "Gatekeeper"
+          url: "https://open-policy-agent.github.io/gatekeeper/"
+          description: "Kubernetes admission controller using OPA"
+          relevantTo: ["naming-governance"]
+
+    - category: "GitOps"
+      items:
+        - title: "ArgoCD"
+          url: "https://argo-cd.readthedocs.io/"
+          description: "Declarative GitOps CD for Kubernetes"
+          relevantTo: ["change-management"]
+
+        - title: "Flux"
+          url: "https://fluxcd.io/"
+          description: "GitOps toolkit for Kubernetes"
+          relevantTo: ["change-management"]
+
+  # 社区资源
+  community:
+    - category: "CNCF"
+      items:
+        - title: "CNCF Projects"
+          url: "https://www.cncf.io/projects/"
+          description: "Cloud Native Computing Foundation projects"
+          relevantTo: ["observability-validation", "naming-governance"]
+
+    - category: "Awesome Lists"
+      items:
+        - title: "Awesome Kubernetes"
+          url: "https://github.com/ramitsurana/awesome-kubernetes"
+          description: "Curated list of Kubernetes resources"
+          relevantTo: ["naming-governance"]
+
+        - title: "Awesome SRE"
+          url: "https://github.com/dastergon/awesome-sre"
+          description: "Curated list of SRE resources"
+          relevantTo: ["change-management", "observability-validation"]
+
+  # 内部资源
+  internal:
+    - category: "Documentation"
+      items:
+        - title: "Organization Handbook"
+          url: "https://handbook.example.com"
+          description: "Internal organization handbook"
+          relevantTo: ["all-modules"]
+
+        - title: "Architecture Decision Records"
+          url: "https://adr.example.com"
+          description: "Architecture decision records"
+          relevantTo: ["naming-governance", "change-management"]
+
+    - category: "Training"
+      items:
+        - title: "Internal Training Portal"
+          url: "https://training.example.com"
+          description: "Organization training resources"
+          relevantTo: ["role-based-training"]
+
+# 使用说明
+usage:
+  description: |
+    本索引提供治理框架相关的所有外部参考资料。
+    每个参考资料都标注了相关的治理模块，方便查找。
+
+  howToContribute: |
+    添加新的参考资料：
+    1. 确定相关的类别和治理模块
+    2. 添加到对应的 category 下
+    3. 包含 title, url, description, relevantTo
+    4. 提交 PR 并通过审查
+
+  maintenance:
+    frequency: "Quarterly"
+    lastReview: "2025-12-17"
+    nextReview: "2026-03-17"
+    owner: "governance-team@example.com"

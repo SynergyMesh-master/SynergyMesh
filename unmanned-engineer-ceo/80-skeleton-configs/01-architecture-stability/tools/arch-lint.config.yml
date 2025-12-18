@@ -1,0 +1,78 @@
+# Architecture Linter Configuration
+version: 1.0.0
+
+rules:
+  # 分層規則
+  layering:
+    enabled: true
+    layers:
+      - name: core
+        path: core/**
+        can-depend-on: []
+      
+      - name: platform
+        path: platform/**
+        can-depend-on:
+          - core
+      
+      - name: services
+        path: services/**
+        can-depend-on:
+          - core
+          - platform
+        cannot-depend-on:
+          - services
+          - agents
+          - applications
+      
+      - name: agents
+        path: agents/**
+        can-depend-on:
+          - core
+          - platform
+        cannot-depend-on:
+          - agents
+          - applications
+      
+      - name: applications
+        path: applications/**
+        can-depend-on:
+          - core
+          - platform
+
+  # 循環依賴檢查
+  circular-dependencies:
+    enabled: true
+    severity: error
+
+  # 外部依賴審查
+  external-dependencies:
+    enabled: true
+    approved-packages:
+      - lodash
+      - axios
+      - zod
+      - pino
+    require-adr-for-new: true
+
+  # 命名規範
+  naming-conventions:
+    enabled: true
+    patterns:
+      service: "^[a-z]+(-[a-z]+)*$"
+      agent: "^[a-z]+-agent$"
+      module: "^[a-z]+(-[a-z]+)*$"
+
+  # 檔案組織
+  file-organization:
+    enabled: true
+    require-readme: true
+    require-tests: true
+    test-location: "tests/" # 或 "__tests__"
+
+# 豁免規則 (需要 ADR 支持)
+exemptions:
+  - path: platform/legacy/**
+    reason: "Legacy code migration in progress"
+    adr: ADR-2024-001
+    expires: 2025-12-31

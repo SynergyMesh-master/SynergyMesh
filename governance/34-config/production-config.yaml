@@ -1,0 +1,10 @@
+# Production Configuration
+environment: "production"
+
+logging:
+  level: "WARNING"
+
+database:
+  type: "postgresql"
+  host: "localhost"
+  port: 5432

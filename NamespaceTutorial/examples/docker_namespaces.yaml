@@ -1,0 +1,241 @@
+# Docker 命名空間範例配置
+# Docker Namespaces Examples
+#
+# 此檔案展示 Docker 和 Docker Compose 中的命名空間概念
+# This file demonstrates namespace concepts in Docker and Docker Compose
+# 
+# 注意：使用較新的 Compose 格式，不需要指定版本號
+# Note: Using newer Compose format without version specification
+
+---
+# Docker Compose 範例：網路命名空間隔離
+# Docker Compose Example: Network Namespace Isolation
+
+# 服務定義
+services:
+  # 前端服務 - 連接前端和後端網路
+  frontend:
+    image: nginx:alpine
+    container_name: frontend-web
+    networks:
+      - frontend-network
+      - backend-network
+    ports:
+      - "80:80"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 256M
+        reservations:
+          cpus: '0.1'
+          memory: 128M
+
+  # API 服務 - 僅連接後端網路
+  api:
+    image: node:18-alpine
+    container_name: api-server
+    networks:
+      - backend-network
+    environment:
+      - NODE_ENV=production
+      - DB_HOST=database
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 512M
+        reservations:
+          cpus: '0.25'
+          memory: 256M
+    depends_on:
+      - database
+
+  # 資料庫服務 - 僅連接後端和資料庫網路
+  database:
+    image: postgres:15-alpine
+    container_name: postgres-db
+    networks:
+      - backend-network
+      - database-network
+    environment:
+      - POSTGRES_USER=app
+      - POSTGRES_PASSWORD_FILE=/run/secrets/db_password
+      - POSTGRES_DB=myapp
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    secrets:
+      - db_password
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 1G
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+
+  # Redis 快取 - 連接後端網路
+  redis:
+    image: redis:7-alpine
+    container_name: redis-cache
+    networks:
+      - backend-network
+    command: redis-server --appendonly yes
+    volumes:
+      - redis-data:/data
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 256M
+
+  # 監控服務 - 連接所有網路進行監控
+  monitoring:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    networks:
+      - frontend-network
+      - backend-network
+      - database-network
+      - monitoring-network
+    ports:
+      - "9090:9090"
+    volumes:
+      - prometheus-data:/prometheus
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+
+# 網路定義 - 模擬命名空間隔離
+networks:
+  # 前端網路 - 外部可訪問
+  frontend-network:
+    driver: bridge
+    name: frontend-ns
+    ipam:
+      config:
+        - subnet: 172.20.0.0/24
+          gateway: 172.20.0.1
+
+  # 後端網路 - 內部服務通訊
+  backend-network:
+    driver: bridge
+    name: backend-ns
+    internal: false
+    ipam:
+      config:
+        - subnet: 172.21.0.0/24
+          gateway: 172.21.0.1
+
+  # 資料庫網路 - 高安全隔離
+  database-network:
+    driver: bridge
+    name: database-ns
+    internal: true  # 無外部存取
+    ipam:
+      config:
+        - subnet: 172.22.0.0/24
+          gateway: 172.22.0.1
+
+  # 監控網路
+  monitoring-network:
+    driver: bridge
+    name: monitoring-ns
+    internal: true
+    ipam:
+      config:
+        - subnet: 172.23.0.0/24
+          gateway: 172.23.0.1
+
+# 卷定義
+volumes:
+  postgres-data:
+    name: postgres-data-volume
+  redis-data:
+    name: redis-data-volume
+  prometheus-data:
+    name: prometheus-data-volume
+
+# 密鑰定義
+secrets:
+  db_password:
+    file: ./secrets/db_password.txt
+
+---
+# Docker 命令範例：Linux 命名空間操作
+# Docker Commands: Linux Namespace Operations
+
+# 查看容器使用的命名空間
+# docker inspect --format '{{.State.Pid}}' <container_id>
+# ls -la /proc/<pid>/ns/
+
+# 進入容器的網路命名空間
+# nsenter -t <pid> -n ip addr
+
+# 創建自定義網路（命名空間）
+# docker network create --driver bridge --subnet 172.30.0.0/24 custom-namespace
+
+# 查看網路詳情
+# docker network inspect custom-namespace
+
+# 連接容器到多個網路
+# docker network connect backend-network container-name
+# docker network disconnect frontend-network container-name
+
+---
+# 多環境配置範例
+# Multi-environment Configuration Example
+
+# development.yml
+# 使用較新的 Compose 格式，不需要指定版本號
+services:
+  app:
+    image: myapp:dev
+    networks:
+      - dev-network
+    environment:
+      - ENV=development
+      - DEBUG=true
+
+networks:
+  dev-network:
+    name: dev-namespace
+    driver: bridge
+
+---
+# staging.yml
+services:
+  app:
+    image: myapp:staging
+    networks:
+      - staging-network
+    environment:
+      - ENV=staging
+      - DEBUG=false
+
+networks:
+  staging-network:
+    name: staging-namespace
+    driver: bridge
+
+---
+# production.yml
+services:
+  app:
+    image: myapp:prod
+    networks:
+      - prod-network
+    environment:
+      - ENV=production
+      - DEBUG=false
+    deploy:
+      replicas: 3
+      resources:
+        limits:
+          cpus: '2'
+          memory: 2G
+
+networks:
+  prod-network:
+    name: prod-namespace
+    driver: bridge
+    internal: false

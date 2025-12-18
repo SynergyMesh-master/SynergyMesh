@@ -1,0 +1,22 @@
+version: "1.0.0"
+skeleton_id: "nucleus-orchestrator"
+
+input:
+  schema:
+    properties:
+      action_type:
+        enum:
+          [
+            "define_workflow",
+            "coordinate_agents",
+            "dispatch_task",
+            "manage_state",
+          ]
+
+output:
+  schema:
+    properties:
+      workflow_plan: { type: "object" }
+      execution_steps: { type: "array" }
+      agent_assignments: { type: "array" }
+      state_transitions: { type: "array" }

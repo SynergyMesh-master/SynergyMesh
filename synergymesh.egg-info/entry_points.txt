@@ -1,0 +1,6 @@
+[console_scripts]
+smesh = synergymesh.cli:main
+synergymesh = synergymesh.cli:main
+
+[synergymesh.plugins]
+default = synergymesh.plugins.default:DefaultPlugin

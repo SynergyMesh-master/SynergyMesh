@@ -1,0 +1,118 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "meta": {
+    "version": "2.0.0",
+    "name": "SynergyMesh Auto-Scaffold",
+    "description": "自動架構配置 - 控制系統結構與代碼生成"
+  },
+  "scaffold": {
+    "enabled": true,
+    "autoDetect": true,
+    "templates": {
+      "connector": {
+        "path": ".devcontainer/templates/connector-template",
+        "description": "連接器模板 - 用於建立外部系統整合",
+        "variables": ["name", "type", "endpoint"],
+        "outputs": ["src/", "tests/", "config/"]
+      },
+      "service": {
+        "path": ".devcontainer/templates/service-template",
+        "description": "服務模板 - 用於建立微服務",
+        "variables": ["name", "port", "database"],
+        "outputs": ["src/", "tests/", "docker/"]
+      },
+      "integration": {
+        "path": ".devcontainer/templates/integration-template",
+        "description": "整合模板 - 用於建立系統整合",
+        "variables": ["name", "sourceService", "targetService"],
+        "outputs": ["src/", "tests/", "config/"]
+      }
+    }
+  },
+  "projectStructure": {
+    "directories": {
+      ".devcontainer": {
+        "description": "核心自動化控制中心",
+        "required": true,
+        "subdirs": ["automation", "templates", "environments"]
+      },
+      ".vscode": {
+        "description": "VS Code 配置",
+        "required": true,
+        "files": ["settings.json", "tasks.json", "extensions.json"]
+      },
+      "v1-python-drones": {
+        "description": "第一版：Python 無人機系統",
+        "required": false
+      },
+      "v2-multi-islands": {
+        "description": "第二版：多語言島嶼系統",
+        "required": false
+      },
+      "shared": {
+        "description": "共享資源",
+        "required": true
+      },
+      "migration": {
+        "description": "版本遷移工具",
+        "required": true
+      }
+    }
+  },
+  "codeGeneration": {
+    "enabled": true,
+    "languages": ["typescript", "python", "javascript"],
+    "formatting": {
+      "typescript": {
+        "indent": 2,
+        "singleQuote": true,
+        "trailingComma": "es5"
+      },
+      "python": {
+        "indent": 4,
+        "lineLength": 100
+      },
+      "javascript": {
+        "indent": 2,
+        "singleQuote": true
+      }
+    }
+  },
+  "automation": {
+    "triggers": {
+      "onFileCreate": {
+        "patterns": ["*.ts", "*.py", "*.js"],
+        "actions": ["lint", "format"]
+      },
+      "onCommit": {
+        "actions": ["test", "build"]
+      },
+      "onPush": {
+        "branches": ["main", "develop"],
+        "actions": ["deploy-staging"]
+      }
+    },
+    "schedules": {
+      "healthCheck": {
+        "cron": "*/5 * * * *",
+        "action": "system-diagnosis"
+      },
+      "cleanup": {
+        "cron": "0 0 * * *",
+        "action": "cleanup-temp"
+      }
+    }
+  },
+  "dependencies": {
+    "required": {
+      "node": ">=18.0.0",
+      "npm": ">=8.0.0",
+      "python": ">=3.9.0",
+      "docker": ">=20.0.0"
+    },
+    "optional": {
+      "kubectl": ">=1.25.0",
+      "helm": ">=3.10.0"
+    }
+  }
+}
