@@ -13,7 +13,7 @@
 # ═══════════════════════════════════════════════════════════════════════════════
 
 version: "1.0.0"
-id: "synergymesh.layers-domains"
+id: "machinenativeops.layers-domains"
 description: "Architectural layer and domain definitions for SynergyMesh"
 
 # ============================================================================

@@ -3,7 +3,7 @@
 # Extracted from: baseline-01-namespace-governance.v1.0.yaml
 # Purpose: Define standard naming conventions for Kubernetes namespaces across all environments
 
-apiVersion: governance.synergymesh.io/v1
+apiVersion: governance.machinenativeops.io/v1
 kind: Policy
 metadata:
   name: namespace-naming-policy

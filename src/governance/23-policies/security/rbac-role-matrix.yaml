@@ -3,7 +3,7 @@
 # Extracted from: baseline-02-security-rbac.v1.0.yaml
 # Purpose: Define standard RBAC roles and permissions across the cluster
 
-apiVersion: governance.synergymesh.io/v1
+apiVersion: governance.machinenativeops.io/v1
 kind: Policy
 metadata:
   name: rbac-role-matrix

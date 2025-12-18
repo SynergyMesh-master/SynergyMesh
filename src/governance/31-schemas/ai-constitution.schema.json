@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://synergymesh.io/schemas/ai-constitution.schema.json",
+  "$id": "https://machinenativeops.io/schemas/ai-constitution.schema.json",
   "title": "SynergyMesh AI Constitution",
   "description": "Schema for ai-constitution.yaml - defines principles, priorities, forbidden behaviors",
   "type": "object",

@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://synergymesh.io/governance/dimensions/68-visualization/schema.json",
+  "$id": "https://machinenativeops.io/governance/dimensions/68-visualization/schema.json",
   "title": "Visualization Governance Schema",
   "description": "資料視覺化、圖表標準與互動展示",
   "type": "object",

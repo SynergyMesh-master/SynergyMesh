@@ -5,7 +5,7 @@
 # Status: Active
 # Last Updated: 2025-12-10
 
-$schema: "https://schema.synergymesh.io/governance/vision-statement/v1"
+$schema: "https://schema.machinenativeops.io/governance/vision-statement/v1"
 version: "1.0.0"
 dimension: "00-vision-strategy"
 status: "active"
@@ -73,7 +73,7 @@ mission:
   
   core_principles:
     - principle: "統一入口 (Unified Entry)"
-      description: "單一配置檔 synergymesh.yaml 作為所有系統的真實來源"
+      description: "單一配置檔 machinenativeops.yaml 作為所有系統的真實來源"
       rationale: "簡化配置管理，降低出錯風險"
     
     - principle: "模組化設計 (Modular Design)"

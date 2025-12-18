@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://synergymesh.io/governance/dimensions/35-scripts/schema.json",
+  "$id": "https://machinenativeops.io/governance/dimensions/35-scripts/schema.json",
   "title": "Scripts Governance Schema",
   "description": "自動化腳本、批次作業與任務執行",
   "type": "object",

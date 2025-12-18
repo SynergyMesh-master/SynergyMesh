@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://synergymesh.io/governance/dimensions/56-incidents/schema.json",
+  "$id": "https://machinenativeops.io/governance/dimensions/56-incidents/schema.json",
   "title": "Incidents Governance Schema",
   "description": "事件管理、分類分級與響應流程",
   "type": "object",

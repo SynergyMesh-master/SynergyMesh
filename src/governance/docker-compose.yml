@@ -9,7 +9,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: synergymesh-governance-dashboard
+    container_name: machinenativeops-governance-dashboard
     ports:
       - "8080:8080"
     environment:
@@ -33,7 +33,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: synergymesh-governance-cli
+    container_name: machinenativeops-governance-cli
     environment:
       - GOVERNANCE_ROOT=/app/governance
     volumes:
@@ -49,7 +49,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: synergymesh-governance-validator
+    container_name: machinenativeops-governance-validator
     environment:
       - GOVERNANCE_ROOT=/app/governance
     volumes:
@@ -62,7 +62,7 @@ services:
 
   prometheus:
     image: prom/prometheus:latest
-    container_name: synergymesh-prometheus
+    container_name: machinenativeops-prometheus
     ports:
       - "9090:9090"
     volumes:
@@ -79,7 +79,7 @@ services:
 
   grafana:
     image: grafana/grafana:latest
-    container_name: synergymesh-grafana
+    container_name: machinenativeops-grafana
     ports:
       - "3000:3000"
     environment:

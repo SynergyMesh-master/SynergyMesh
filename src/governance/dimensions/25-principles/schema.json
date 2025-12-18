@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://synergymesh.io/governance/dimensions/25-principles/schema.json",
+  "$id": "https://machinenativeops.io/governance/dimensions/25-principles/schema.json",
   "title": "Principles Governance Schema",
   "description": "治理原則、指導方針與價值觀定義",
   "type": "object",

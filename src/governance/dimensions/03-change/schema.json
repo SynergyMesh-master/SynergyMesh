@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://synergymesh.io/governance/dimensions/03-change/schema.json",
+  "$id": "https://machinenativeops.io/governance/dimensions/03-change/schema.json",
   "title": "Change Governance Schema",
   "description": "變更管理、版本控制與影響評估",
   "type": "object",

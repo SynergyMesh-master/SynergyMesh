@@ -264,7 +264,7 @@ platform_integration:
     system_manifest: config/system-manifest.yaml
     module_map: config/system-module-map.yaml
     virtual_experts: config/agents/team/virtual-experts.yaml
-    synergymesh_config: config/synergymesh.config.yaml
+    machinenativeops_config: config/machinenativeops.config.yaml
 
 # 查詢輔助函數 / Query Helper Functions
 query_helpers:

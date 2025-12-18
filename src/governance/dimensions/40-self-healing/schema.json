@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://synergymesh.io/governance/dimensions/40-self-healing/schema.json",
+  "$id": "https://machinenativeops.io/governance/dimensions/40-self-healing/schema.json",
   "title": "Self-Healing Governance Schema",
   "description": "自動復原、故障偵測與預防性維護",
   "type": "object",

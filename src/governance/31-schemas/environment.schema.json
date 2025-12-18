@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://synergymesh.io/schemas/environment.schema.json",
+  "$id": "https://machinenativeops.io/schemas/environment.schema.json",
   "title": "SynergyMesh Environment Configuration",
   "description": "Schema for environment.yaml - defines environments, risk levels, regions, tenants",
   "type": "object",

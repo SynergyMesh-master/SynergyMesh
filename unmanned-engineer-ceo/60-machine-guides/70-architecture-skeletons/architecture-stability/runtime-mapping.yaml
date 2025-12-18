@@ -74,7 +74,7 @@ source_directories:
 
 configuration_files:
   master_config:
-    file: "synergymesh.yaml"
+    file: "machinenativeops.yaml"
     purpose: "全局配置入口"
     ai_relevant_fields:
       - "directories"
@@ -198,7 +198,7 @@ ai_actions:
       2: "檢查 config/dependencies.yaml 中的依賴規則"
       3: "參考 core/unified_integration/ 中的現有實現"
       4: "在 config/ 中新增配置項"
-      5: "更新 synergymesh.yaml 中的 capabilities"
+      5: "更新 machinenativeops.yaml 中的 capabilities"
       6: "執行驗證工具確保無衝突"
 
   when_modifying_architecture:

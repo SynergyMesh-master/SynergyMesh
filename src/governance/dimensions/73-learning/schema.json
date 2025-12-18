@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://synergymesh.io/governance/dimensions/73-learning/schema.json",
+  "$id": "https://machinenativeops.io/governance/dimensions/73-learning/schema.json",
   "title": "Learning Governance Schema",
   "description": "機器學習、模型訓練與知識積累",
   "type": "object",

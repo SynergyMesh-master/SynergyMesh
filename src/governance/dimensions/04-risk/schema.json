@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://synergymesh.io/governance/dimensions/04-risk/schema.json",
+  "$id": "https://machinenativeops.io/governance/dimensions/04-risk/schema.json",
   "title": "Risk Governance Schema",
   "description": "風險識別、評估、緩解與監控",
   "type": "object",

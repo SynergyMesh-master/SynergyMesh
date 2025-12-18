@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://synergymesh.io/governance/dimensions/28-tests/schema.json",
+  "$id": "https://machinenativeops.io/governance/dimensions/28-tests/schema.json",
   "title": "Tests Governance Schema",
   "description": "測試框架、驗證策略與品質保證",
   "type": "object",

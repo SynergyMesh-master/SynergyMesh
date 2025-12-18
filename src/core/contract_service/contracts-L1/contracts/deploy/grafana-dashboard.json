@@ -1,7 +1,7 @@
 {
   "dashboard": {
     "title": "Contracts L1 Service Dashboard",
-    "tags": ["contracts", "l1", "synergymesh"],
+    "tags": ["contracts", "l1", "machinenativeops"],
     "timezone": "browser",
     "panels": [
       {

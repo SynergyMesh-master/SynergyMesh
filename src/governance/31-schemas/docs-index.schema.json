@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://schema.synergymesh.io/docs-index/v1",
+  "$id": "https://schema.machinenativeops.io/docs-index/v1",
   "title": "SynergyMesh Docs Index Schema v1 (Mirror)",
   "description": "治理鏡像：定義 SynergyMesh 文件/資產索引之權威結構，支援系統↔系統治理、跨平台掛載與供應鏈證據。",
   "type": "object",
@@ -8,7 +8,7 @@
   "properties": {
     "$schema": {
       "type": "string",
-      "const": "https://schema.synergymesh.io/docs-index/v1",
+      "const": "https://schema.machinenativeops.io/docs-index/v1",
       "description": "Schema namespace identifier"
     },
     "version": {

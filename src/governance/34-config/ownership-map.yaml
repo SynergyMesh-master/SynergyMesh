@@ -12,7 +12,7 @@
 # ═══════════════════════════════════════════════════════════════════════════════
 
 version: "1.0.0"
-id: "synergymesh.ownership-map"
+id: "machinenativeops.ownership-map"
 description: "Module ownership, lifecycle, and SLA definitions"
 
 # ============================================================================
@@ -65,7 +65,7 @@ modules:
     lifecycle: active
     
     team:
-      primary_contact: "core-platform@synergymesh.io"
+      primary_contact: "core-platform@machinenativeops.io"
       slack_channel: "#core-platform"
       oncall_rotation: "core-platform-oncall"
     
@@ -96,7 +96,7 @@ modules:
     lifecycle: active
     
     team:
-      primary_contact: "contracts@synergymesh.io"
+      primary_contact: "contracts@machinenativeops.io"
       slack_channel: "#contracts"
       oncall_rotation: "platform-oncall"
     
@@ -127,7 +127,7 @@ modules:
     lifecycle: active
     
     team:
-      primary_contact: "security@synergymesh.io"
+      primary_contact: "security@machinenativeops.io"
       slack_channel: "#security"
       oncall_rotation: "security-oncall"
     
@@ -159,7 +159,7 @@ modules:
     lifecycle: active
     
     team:
-      primary_contact: "safety@synergymesh.io"
+      primary_contact: "safety@machinenativeops.io"
       slack_channel: "#security"
       oncall_rotation: "security-oncall"
     
@@ -185,7 +185,7 @@ modules:
     lifecycle: active
     
     team:
-      primary_contact: "ai-research@synergymesh.io"
+      primary_contact: "ai-research@machinenativeops.io"
       slack_channel: "#ai-research"
       oncall_rotation: "ai-research-oncall"
     
@@ -211,7 +211,7 @@ modules:
     lifecycle: active
     
     team:
-      primary_contact: "autonomous@synergymesh.io"
+      primary_contact: "autonomous@machinenativeops.io"
       slack_channel: "#autonomous"
       oncall_rotation: "automation-oncall"
     
@@ -239,7 +239,7 @@ modules:
     lifecycle: active
     
     team:
-      primary_contact: "automation@synergymesh.io"
+      primary_contact: "automation@machinenativeops.io"
       slack_channel: "#automation"
       oncall_rotation: "automation-oncall"
     
@@ -265,7 +265,7 @@ modules:
     lifecycle: active
     
     team:
-      primary_contact: "architecture@synergymesh.io"
+      primary_contact: "architecture@machinenativeops.io"
       slack_channel: "#architecture"
       oncall_rotation: "architecture-oncall"
     
@@ -291,7 +291,7 @@ modules:
     lifecycle: active
     
     team:
-      primary_contact: "services@synergymesh.io"
+      primary_contact: "services@machinenativeops.io"
       slack_channel: "#services"
       oncall_rotation: "services-oncall"
     
@@ -317,8 +317,8 @@ modules:
     lifecycle: experimental
     
     team:
-      primary_contact: "island-ai@synergymesh.io"
-      slack_channel: "#island-ai"
+      primary_contact: "src/ai@machinenativeops.io"
+      slack_channel: "#src/ai"
       oncall_rotation: null  # No oncall for experimental
     
     sla:
@@ -353,7 +353,7 @@ modules:
     lifecycle: active
     
     team:
-      primary_contact: "frontend@synergymesh.io"
+      primary_contact: "frontend@machinenativeops.io"
       slack_channel: "#frontend"
       oncall_rotation: "frontend-oncall"
     

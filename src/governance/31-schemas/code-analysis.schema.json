@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://synergymesh.dev/schemas/code-analysis.schema.json",
+  "$id": "https://machinenativeops.dev/schemas/code-analysis.schema.json",
   "title": "Code Analysis Result",
   "description": "Schema for code analysis results from SynergyMesh analysis engine",
   "type": "object",

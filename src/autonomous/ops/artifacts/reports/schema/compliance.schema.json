@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://github.com/we-can-fix/synergymesh/schemas/compliance-report.json",
+  "$id": "https://github.com/we-can-fix/machinenativeops/schemas/compliance-report.json",
   "title": "Compliance Report",
   "description": "供應鏈與安全合規報告 schema",
   "type": "object",

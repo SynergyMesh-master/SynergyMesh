@@ -49,7 +49,7 @@ spec:
       containers:
       - name: advanced-system
         # 注意：實際部署時應使用特定版本標籤或 digest
-        image: ghcr.io/we-can-fix/synergymesh/advanced-system:main-abc123
+        image: ghcr.io/we-can-fix/machinenativeops/advanced-system:main-abc123
         imagePullPolicy: Always
         
         ports:

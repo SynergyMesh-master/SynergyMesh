@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   contracts-l1:
-    image: ghcr.io/we-can-fix/synergymesh/contracts-l1:latest
+    image: ghcr.io/we-can-fix/machinenativeops/contracts-l1:latest
     container_name: contracts-l1-prod
     restart: unless-stopped
     
@@ -29,12 +29,12 @@ services:
       start_period: 40s
     
     networks:
-      - synergymesh-network
+      - machinenativeops-network
     
     labels:
-      com.synergymesh.service: "contracts-l1"
-      com.synergymesh.tier: "core"
-      com.synergymesh.environment: "production"
+      com.machinenativeops.service: "contracts-l1"
+      com.machinenativeops.tier: "core"
+      com.machinenativeops.environment: "production"
     
     deploy:
       replicas: 3
@@ -69,14 +69,14 @@ services:
       - contracts-l1
     
     networks:
-      - synergymesh-network
+      - machinenativeops-network
     
     labels:
-      com.synergymesh.service: "nginx"
-      com.synergymesh.tier: "ingress"
+      com.machinenativeops.service: "nginx"
+      com.machinenativeops.tier: "ingress"
 
 networks:
-  synergymesh-network:
+  machinenativeops-network:
     driver: bridge
     ipam:
       config:

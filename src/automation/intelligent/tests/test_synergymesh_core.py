@@ -21,24 +21,24 @@ _parent_dir = os.path.dirname(_current_dir)
 if _parent_dir not in sys.path:
     sys.path.insert(0, _parent_dir)
 
-from synergymesh_core.natural_language_processor import (
+from machinenativeops_core.natural_language_processor import (
     NaturalLanguageProcessor,
     IntentType,
     ParsedIntent
 )
-from synergymesh_core.autonomous_coordinator import (
+from machinenativeops_core.autonomous_coordinator import (
     AutonomousCoordinator,
     TaskPriority,
     TaskStatus,
     SystemHealth
 )
-from synergymesh_core.self_evolution_engine import (
+from machinenativeops_core.self_evolution_engine import (
     SelfEvolutionEngine,
     EvolutionPhase,
     LearningType,
     OptimizationType
 )
-from synergymesh_core.ecosystem_orchestrator import (
+from machinenativeops_core.ecosystem_orchestrator import (
     EcosystemOrchestrator,
     SubsystemType,
     SubsystemStatus,
@@ -689,12 +689,12 @@ class TestSynergyMeshIntegration:
 # Phase 2 Tests - NLI Layer
 # ============================================
 
-from synergymesh_core.nli_layer import (
+from machinenativeops_core.nli_layer import (
     NaturalLanguageInteractionLayer,
     InteractionMode,
     UserIntent
 )
-from synergymesh_core.orchestration_layer import (
+from machinenativeops_core.orchestration_layer import (
     IntentUnderstandingEngine,
     TaskOrchestrationEngine,
     TaskType,

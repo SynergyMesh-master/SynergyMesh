@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://synergymesh.io/governance/dimensions/41-orchestration/schema.json",
+  "$id": "https://machinenativeops.io/governance/dimensions/41-orchestration/schema.json",
   "title": "Orchestration Governance Schema",
   "description": "服務編排、容器調度與資源管理",
   "type": "object",

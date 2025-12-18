@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://synergymesh.io/governance/dimensions/66-reporting/schema.json",
+  "$id": "https://machinenativeops.io/governance/dimensions/66-reporting/schema.json",
   "title": "Reporting Governance Schema",
   "description": "自動報告生成、排程與分發",
   "type": "object",

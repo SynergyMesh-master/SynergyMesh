@@ -505,7 +505,7 @@ deployment:
   # Docker
   docker:
     enabled: true
-    image: "synergymesh/automation-architect"
+    image: "machinenativeops/automation-architect"
     tag: "latest"
     registry: "docker.io"
   

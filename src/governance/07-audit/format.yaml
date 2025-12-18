@@ -4,7 +4,7 @@
 # This file defines the standard format for audit events in the SynergyMesh platform.
 # 本檔案定義 SynergyMesh 平台的審計事件標準格式。
 
-$schema: "https://schema.synergymesh.io/audit-format/v1"
+$schema: "https://schema.machinenativeops.io/audit-format/v1"
 version: "1.0.0"
 metadata:
   name: "audit-format"

@@ -15,7 +15,7 @@
       "buildType": "https://github.com/actions/runner",
       "externalParameters": {
         "workflow": {
-          "ref": "refs/heads/island-ai/update-superroot-namespaces",
+          "ref": "refs/heads/src/ai/update-superroot-namespaces",
           "repository": "https://github.com/Unmanned-Island-admin/SynergyMesh",
           "path": ".github/workflows/apply.yaml"
         }

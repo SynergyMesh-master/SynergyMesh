@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://synergymesh.io/governance/dimensions/19-evolutionary/schema.json",
+  "$id": "https://machinenativeops.io/governance/dimensions/19-evolutionary/schema.json",
   "title": "Evolutionary Governance Schema",
   "description": "演化架構、適應性變化與治理演進",
   "type": "object",

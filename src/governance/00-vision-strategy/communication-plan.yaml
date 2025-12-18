@@ -236,7 +236,7 @@ communication_channels:
           
     documentation_portals:
       internal_wiki:
-        url: "https://wiki.synergymesh.internal"
+        url: "https://wiki.machinenativeops.internal"
         content:
           - "Vision and strategic objectives"
           - "OKR dashboards"
@@ -247,7 +247,7 @@ communication_channels:
         ai_assistant: "Enabled (answer questions about strategy)"
         
       public_docs:
-        url: "https://docs.synergymesh.io"
+        url: "https://docs.machinenativeops.io"
         content:
           - "Product vision"
           - "Feature roadmap"
@@ -284,14 +284,14 @@ communication_channels:
       acknowledgment: "Required"
       
     policy_update_webhooks:
-      endpoint: "https://api.synergymesh.internal/agents/policy-updates"
+      endpoint: "https://api.machinenativeops.internal/agents/policy-updates"
       method: "POST"
       authentication: "Bearer token (JWT)"
       retry_policy: "Exponential backoff, max 3 retries"
       timeout: "5 seconds"
       
     agent_dashboard:
-      url: "https://agents.synergymesh.internal/dashboard"
+      url: "https://agents.machinenativeops.internal/dashboard"
       updates: "Real-time WebSocket"
       notifications: "Push to agent notification queue"
 
@@ -493,7 +493,7 @@ feedback_mechanisms:
       
     anonymous_feedback_form:
       availability: "Always accessible"
-      url: "https://feedback.synergymesh.internal"
+      url: "https://feedback.machinenativeops.internal"
       response_guarantee: "Acknowledged within 48 hours, addressed within 2 weeks"
       
     office_hours:

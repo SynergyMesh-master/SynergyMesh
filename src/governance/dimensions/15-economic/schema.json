@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://synergymesh.io/governance/dimensions/15-economic/schema.json",
+  "$id": "https://machinenativeops.io/governance/dimensions/15-economic/schema.json",
   "title": "Economic Governance Schema",
   "description": "成本管理、預算控制與經濟效益治理",
   "type": "object",

@@ -196,7 +196,7 @@ agent_specific:
   
   unmanned_island_agent:
     custom_metrics:
-      - name: "synergymesh_integration_success_rate"
+      - name: "machinenativeops_integration_success_rate"
         type: "gauge"
         description: "SynergyMesh integration success rate"
         target: "> 99%"

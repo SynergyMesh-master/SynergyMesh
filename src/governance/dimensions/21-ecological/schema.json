@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://synergymesh.io/governance/dimensions/21-ecological/schema.json",
+  "$id": "https://machinenativeops.io/governance/dimensions/21-ecological/schema.json",
   "title": "Ecological Governance Schema",
   "description": "環境考量、永續發展與綠色IT治理",
   "type": "object",

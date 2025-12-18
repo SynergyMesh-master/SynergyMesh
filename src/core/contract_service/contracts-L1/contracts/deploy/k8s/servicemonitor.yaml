@@ -2,7 +2,7 @@ apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
   name: contracts-l1
-  namespace: synergymesh
+  namespace: machinenativeops
   labels:
     app: contracts-l1
     tier: core
@@ -18,4 +18,4 @@ spec:
     scrapeTimeout: 10s
   namespaceSelector:
     matchNames:
-    - synergymesh
+    - machinenativeops

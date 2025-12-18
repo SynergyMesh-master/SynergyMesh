@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://synergymesh.io/governance/dimensions/65-certification/schema.json",
+  "$id": "https://machinenativeops.io/governance/dimensions/65-certification/schema.json",
   "title": "Certification Governance Schema",
   "description": "合規驗證、標準認證與持續合規",
   "type": "object",

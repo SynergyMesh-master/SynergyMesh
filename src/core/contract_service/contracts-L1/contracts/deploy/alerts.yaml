@@ -23,7 +23,7 @@ spec:
       annotations:
         summary: "Contracts Service Pod is down"
         description: "Pod {{ $labels.pod }} is down for more than 5 minutes"
-        runbook_url: "https://github.com/we-can-fix/synergymesh/blob/main/docs/runbooks/contracts-service-down.md"
+        runbook_url: "https://github.com/we-can-fix/machinenativeops/blob/main/docs/runbooks/contracts-service-down.md"
     
     # 高錯誤率告警
     - alert: ContractsServiceHighErrorRate
@@ -38,7 +38,7 @@ spec:
       annotations:
         summary: "High error rate in Contracts Service"
         description: "Error rate is {{ $value | humanizePercentage }} (threshold: 5%)"
-        runbook_url: "https://github.com/we-can-fix/synergymesh/blob/main/docs/runbooks/high-error-rate.md"
+        runbook_url: "https://github.com/we-can-fix/machinenativeops/blob/main/docs/runbooks/high-error-rate.md"
     
     # 高延遲告警
     - alert: ContractsServiceHighLatency
@@ -53,7 +53,7 @@ spec:
       annotations:
         summary: "High latency in Contracts Service"
         description: "P99 latency is {{ $value }}s (threshold: 1s)"
-        runbook_url: "https://github.com/we-can-fix/synergymesh/blob/main/docs/runbooks/high-latency.md"
+        runbook_url: "https://github.com/we-can-fix/machinenativeops/blob/main/docs/runbooks/high-latency.md"
     
     # Pod 重啟風暴
     - alert: ContractsServiceFrequentRestarts
@@ -68,7 +68,7 @@ spec:
       annotations:
         summary: "Frequent pod restarts in Contracts Service"
         description: "Pod {{ $labels.pod }} is restarting frequently"
-        runbook_url: "https://github.com/we-can-fix/synergymesh/blob/main/docs/runbooks/pod-restarts.md"
+        runbook_url: "https://github.com/we-can-fix/machinenativeops/blob/main/docs/runbooks/pod-restarts.md"
     
     # 記憶體使用率高
     - alert: ContractsServiceHighMemoryUsage
@@ -83,7 +83,7 @@ spec:
       annotations:
         summary: "High memory usage in Contracts Service"
         description: "Memory usage is {{ $value | humanizePercentage }} (threshold: 90%)"
-        runbook_url: "https://github.com/we-can-fix/synergymesh/blob/main/docs/runbooks/high-memory.md"
+        runbook_url: "https://github.com/we-can-fix/machinenativeops/blob/main/docs/runbooks/high-memory.md"
     
     # CPU 使用率高
     - alert: ContractsServiceHighCPUUsage
@@ -98,7 +98,7 @@ spec:
       annotations:
         summary: "High CPU usage in Contracts Service"
         description: "CPU usage is {{ $value | humanizePercentage }} (threshold: 90%)"
-        runbook_url: "https://github.com/we-can-fix/synergymesh/blob/main/docs/runbooks/high-cpu.md"
+        runbook_url: "https://github.com/we-can-fix/machinenativeops/blob/main/docs/runbooks/high-cpu.md"
     
     # Pod 不就緒
     - alert: ContractsServicePodNotReady
@@ -114,4 +114,4 @@ spec:
       annotations:
         summary: "Contracts Service Pod not ready"
         description: "Pod {{ $labels.pod }} has been not ready for more than 10 minutes"
-        runbook_url: "https://github.com/we-can-fix/synergymesh/blob/main/docs/runbooks/pod-not-ready.md"
+        runbook_url: "https://github.com/we-can-fix/machinenativeops/blob/main/docs/runbooks/pod-not-ready.md"

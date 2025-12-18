@@ -1,6 +1,6 @@
 # Validation Rules Configuration
 version: "2.0.0"
-schema_version: "validation.synergymesh.io/v1"
+schema_version: "validation.machinenativeops.io/v1"
 
 validation_rules:
   syntax:

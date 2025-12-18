@@ -5,7 +5,7 @@
 # Status: Active
 # Last Updated: 2025-12-10
 
-$schema: "https://schema.synergymesh.io/governance/alignment-framework/v1"
+$schema: "https://schema.machinenativeops.io/governance/alignment-framework/v1"
 version: "1.0.0"
 dimension: "00-vision-strategy"
 status: "active"

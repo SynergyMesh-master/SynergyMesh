@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://synergymesh.io/governance/dimensions/08-process/schema.json",
+  "$id": "https://machinenativeops.io/governance/dimensions/08-process/schema.json",
   "title": "Process Governance Schema",
   "description": "流程定義、優化與自動化",
   "type": "object",

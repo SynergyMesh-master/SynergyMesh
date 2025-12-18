@@ -2,7 +2,7 @@ apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
   name: contracts-l1-alerts
-  namespace: synergymesh
+  namespace: machinenativeops
   labels:
     app: contracts-l1
     tier: core

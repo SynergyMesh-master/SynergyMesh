@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://github.com/we-can-fix/synergymesh/schemas/sla-report.json",
+  "$id": "https://github.com/we-can-fix/machinenativeops/schemas/sla-report.json",
   "title": "SLA Report",
   "description": "服務級別協議 (SLA) 報告 schema",
   "type": "object",

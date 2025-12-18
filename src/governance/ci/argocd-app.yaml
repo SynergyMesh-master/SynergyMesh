@@ -6,11 +6,11 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: synergymesh-governance
+  name: machinenativeops-governance
   namespace: argocd
   labels:
     app.kubernetes.io/name: governance
-    app.kubernetes.io/part-of: synergymesh
+    app.kubernetes.io/part-of: machinenativeops
   annotations:
     argocd.argoproj.io/sync-wave: "0"
   finalizers:
@@ -134,12 +134,12 @@ spec:
         package governancevalidation
 
         violation[{"msg": msg}] {
-          not input.review.object.metadata.labels["governance.synergymesh.io/validated"]
+          not input.review.object.metadata.labels["governance.machinenativeops.io/validated"]
           msg := "Resource must be validated by governance framework"
         }
 
         violation[{"msg": msg}] {
-          input.review.object.metadata.labels["governance.synergymesh.io/compliant"] == "false"
+          input.review.object.metadata.labels["governance.machinenativeops.io/compliant"] == "false"
           msg := "Resource failed governance compliance check"
         }
 
@@ -154,7 +154,7 @@ metadata:
   name: governance
   labels:
     app.kubernetes.io/name: governance
-    app.kubernetes.io/part-of: synergymesh
-    governance.synergymesh.io/managed: "true"
+    app.kubernetes.io/part-of: machinenativeops
+    governance.machinenativeops.io/managed: "true"
   annotations:
-    governance.synergymesh.io/version: "2.0.0"
+    governance.machinenativeops.io/version: "2.0.0"

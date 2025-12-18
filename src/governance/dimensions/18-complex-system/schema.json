@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://synergymesh.io/governance/dimensions/18-complex-system/schema.json",
+  "$id": "https://machinenativeops.io/governance/dimensions/18-complex-system/schema.json",
   "title": "Complex System Governance Schema",
   "description": "複雜適應系統、湧現行為與系統動力學治理",
   "type": "object",

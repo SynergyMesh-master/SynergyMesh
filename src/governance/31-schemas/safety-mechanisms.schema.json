@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://synergymesh.io/schemas/safety-mechanisms.schema.json",
+  "$id": "https://machinenativeops.io/schemas/safety-mechanisms.schema.json",
   "title": "SynergyMesh Safety Mechanisms",
   "description": "Schema for safety-mechanisms.yaml - defines safety checks, triggers, actions",
   "type": "object",

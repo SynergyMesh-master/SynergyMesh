@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://synergymesh.io/governance/dimensions/59-forecasting/schema.json",
+  "$id": "https://machinenativeops.io/governance/dimensions/59-forecasting/schema.json",
   "title": "Forecasting Governance Schema",
   "description": "趨勢預測、異常預警與容量預估",
   "type": "object",

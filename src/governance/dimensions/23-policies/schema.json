@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://synergymesh.io/governance/dimensions/23-policies/schema.json",
+  "$id": "https://machinenativeops.io/governance/dimensions/23-policies/schema.json",
   "title": "Policy Definitions Schema",
   "description": "具體政策規則、例外處理與政策模板",
   "type": "object",

@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://synergymesh.io/governance/dimensions/57-postmortems/schema.json",
+  "$id": "https://machinenativeops.io/governance/dimensions/57-postmortems/schema.json",
   "title": "Postmortems Governance Schema",
   "description": "事後分析、根因分析與改善行動",
   "type": "object",

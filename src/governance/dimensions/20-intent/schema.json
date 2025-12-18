@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://synergymesh.io/governance/dimensions/20-intent/schema.json",
+  "$id": "https://machinenativeops.io/governance/dimensions/20-intent/schema.json",
   "title": "Intent Governance Schema",
   "description": "Intent-based Orchestration、語意映射與自動執行",
   "type": "object",

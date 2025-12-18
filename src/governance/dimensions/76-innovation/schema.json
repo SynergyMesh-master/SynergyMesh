@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://synergymesh.io/governance/dimensions/76-innovation/schema.json",
+  "$id": "https://machinenativeops.io/governance/dimensions/76-innovation/schema.json",
   "title": "Innovation Governance Schema",
   "description": "創新管理、實驗文化與新興技術治理",
   "type": "object",

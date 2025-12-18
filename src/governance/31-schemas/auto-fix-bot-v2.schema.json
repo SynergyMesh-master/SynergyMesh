@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://isynergymesh.com/schemas/auto-fix-bot-v2.json",
+  "$id": "https://imachinenativeops.com/schemas/auto-fix-bot-v2.json",
   "title": "Auto-Fix Bot Configuration Schema v2.0",
   "description": "Schema for validating Auto-Fix Bot 2.0 configuration files",
   "type": "object",

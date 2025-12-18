@@ -3,7 +3,7 @@
 # Cryptographic utilities for governance security
 # =============================================================================
 
-apiVersion: governance.synergymesh.io/v2
+apiVersion: governance.machinenativeops.io/v2
 kind: Package
 metadata:
   name: encryption

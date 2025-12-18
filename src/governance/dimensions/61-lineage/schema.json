@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://synergymesh.io/governance/dimensions/61-lineage/schema.json",
+  "$id": "https://machinenativeops.io/governance/dimensions/61-lineage/schema.json",
   "title": "Lineage Governance Schema",
   "description": "資料血緣、依賴追蹤與影響分析",
   "type": "object",

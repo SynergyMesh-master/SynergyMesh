@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://synergymesh.dev/schemas/osv-advisory.schema.json",
+  "$id": "https://machinenativeops.dev/schemas/osv-advisory.schema.json",
   "title": "OSV Advisory",
   "description": "Open Source Vulnerability (OSV) format schema - GitHub Advisory Database compatible",
   "type": "object",

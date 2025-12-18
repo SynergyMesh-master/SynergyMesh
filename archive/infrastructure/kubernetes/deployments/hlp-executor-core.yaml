@@ -51,7 +51,7 @@ spec:
       
       containers:
       - name: executor
-        image: ghcr.io/synergymesh-admin/hlp-executor-core:v1.0.0
+        image: ghcr.io/machinenativeops-admin/hlp-executor-core:v1.0.0
         imagePullPolicy: IfNotPresent
         
         ports:

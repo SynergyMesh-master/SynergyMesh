@@ -279,7 +279,7 @@ ownership:
   backup_owner: "@architecture-team"
   
   team:
-    primary_contact: "core-platform@synergymesh.io"
+    primary_contact: "core-platform@machinenativeops.io"
     slack_channel: "#core-platform"
     oncall_rotation: "core-platform-oncall"
 

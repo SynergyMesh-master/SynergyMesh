@@ -7,10 +7,10 @@
 # Execution: INSTANT (< 3 minutes full stack deployment)
 # =============================================================================
 
-apiVersion: governance.synergymesh.io/v2
+apiVersion: governance.machinenativeops.io/v2
 kind: GovernanceConfiguration
 metadata:
-  name: synergymesh-governance
+  name: machinenativeops-governance
   version: "2.0.0"
   created_at: "2025-12-11T00:00:00Z"
   updated_at: "2025-12-11T00:00:00Z"

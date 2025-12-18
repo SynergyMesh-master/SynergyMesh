@@ -6,7 +6,7 @@
 apiVersion: governance.kai/v1
 kind: VisionStatement
 metadata:
-  name: vision-synergymesh-2025
+  name: vision-machinenativeops-2025
   namespace: governance
   annotations:
     strategic-doc-path: "governance/00-vision-strategy/vision-statement.yaml"
@@ -72,7 +72,7 @@ spec:
       efficient cloud-native platform, driving the industry towards "unmanned" operations.
     pillars:
       - pillar: "統一入口"
-        description: "單一配置檔 synergymesh.yaml 作為所有系統的真實來源"
+        description: "單一配置檔 machinenativeops.yaml 作為所有系統的真實來源"
       - pillar: "模組化設計"
         description: "三大子系統獨立運作，透過統一接口協作"
       - pillar: "零信任安全"

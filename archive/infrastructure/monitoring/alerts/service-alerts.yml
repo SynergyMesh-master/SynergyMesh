@@ -22,8 +22,8 @@ groups:
         annotations:
           summary: "Contracts L1 Service is down"
           description: "Contracts L1 Service ({{ $labels.instance }}) has been down for more than 1 minute."
-          runbook_url: "https://docs.synergymesh.com/runbooks/contracts-l1-down"
-          dashboard: "https://grafana.synergymesh.com/d/contracts-l1"
+          runbook_url: "https://docs.machinenativeops.com/runbooks/contracts-l1-down"
+          dashboard: "https://grafana.machinenativeops.com/d/contracts-l1"
 
       # Tier 2: MCP Servers Down
       - alert: MCPServersDown
@@ -36,7 +36,7 @@ groups:
         annotations:
           summary: "MCP Servers is down"
           description: "MCP Servers ({{ $labels.instance }}) has been down for more than 2 minutes."
-          runbook_url: "https://docs.synergymesh.com/runbooks/mcp-servers-down"
+          runbook_url: "https://docs.machinenativeops.com/runbooks/mcp-servers-down"
 
       # Dashboard Down
       - alert: DashboardDown

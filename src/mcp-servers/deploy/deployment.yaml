@@ -50,7 +50,7 @@ spec:
       containers:
       - name: mcp-servers
         # 注意：實際部署時應使用特定版本標籤或 digest
-        image: ghcr.io/we-can-fix/synergymesh/mcp-servers:main-abc123
+        image: ghcr.io/we-can-fix/machinenativeops/mcp-servers:main-abc123
         imagePullPolicy: Always
         
         ports:

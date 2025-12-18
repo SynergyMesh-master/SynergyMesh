@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://synergymesh.io/governance/dimensions/37-behavior-contracts/schema.json",
+  "$id": "https://machinenativeops.io/governance/dimensions/37-behavior-contracts/schema.json",
   "title": "Behavior Contracts Governance Schema",
   "description": "行為契約、不變量定義與副作用聲明",
   "type": "object",

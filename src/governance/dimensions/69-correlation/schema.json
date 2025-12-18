@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://synergymesh.io/governance/dimensions/69-correlation/schema.json",
+  "$id": "https://machinenativeops.io/governance/dimensions/69-correlation/schema.json",
   "title": "Correlation Governance Schema",
   "description": "事件關聯、因果分析與模式識別",
   "type": "object",

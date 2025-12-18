@@ -20,7 +20,7 @@
 # ═══════════════════════════════════════════════════════════════════════════════
 
 version: "1.2.0"
-id: "synergymesh.module-map"
+id: "machinenativeops.module-map"
 description: "SynergyMesh 系統模組映射 - 統一目錄結構"
 
 # Phase 2 Reference
@@ -694,7 +694,7 @@ root_directory_guidelines:
       - "cloud-agent-delegation.yml"
       - "drone-config.yml"
       - "island-control.yml"
-      - "synergymesh.config.yaml"
+      - "machinenativeops.config.yaml"
     target: "config/"
   
   hidden_directories:

@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://synergymesh.io/governance/dimensions/36-modules/schema.json",
+  "$id": "https://machinenativeops.io/governance/dimensions/36-modules/schema.json",
   "title": "Modules Governance Schema",
   "description": "模組定義、介面規範與依賴管理",
   "type": "object",

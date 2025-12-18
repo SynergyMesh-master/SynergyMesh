@@ -12,7 +12,7 @@
 # ═══════════════════════════════════════════════════════════════════════════════
 
 version: "1.0.0"
-id: "synergymesh.architecture-rules"
+id: "machinenativeops.architecture-rules"
 description: "Executable architecture policies for automated validation"
 
 # ============================================================================

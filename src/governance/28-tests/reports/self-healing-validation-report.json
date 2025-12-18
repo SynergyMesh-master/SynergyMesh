@@ -66,17 +66,17 @@
         {
           "check": "Architect Agent (架構設計) 目錄存在",
           "status": "PASS",
-          "message": "/home/runner/work/SynergyMesh/SynergyMesh/island-ai/src/agents/architect"
+          "message": "/home/runner/work/SynergyMesh/SynergyMesh/src/ai/src/agents/architect"
         },
         {
           "check": "Developer Agent (代碼實現) 目錄不存在",
           "status": "WARNING",
-          "message": "路徑: /home/runner/work/SynergyMesh/SynergyMesh/island-ai/src/agents/developer (可能尚未實現)"
+          "message": "路徑: /home/runner/work/SynergyMesh/SynergyMesh/src/ai/src/agents/developer (可能尚未實現)"
         },
         {
           "check": "Tester Agent (質量保證) 目錄不存在",
           "status": "WARNING",
-          "message": "路徑: /home/runner/work/SynergyMesh/SynergyMesh/island-ai/src/agents/tester (可能尚未實現)"
+          "message": "路徑: /home/runner/work/SynergyMesh/SynergyMesh/src/ai/src/agents/tester (可能尚未實現)"
         },
         {
           "check": "Deployer Agent (部署管理) 目錄不存在",

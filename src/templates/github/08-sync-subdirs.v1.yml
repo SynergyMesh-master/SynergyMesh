@@ -26,7 +26,7 @@ jobs:
         run: |
           if git status --short | grep -q '.'; then
             git config user.name "island-sync-bot"
-            git config user.email "sync-bot@island-ai.io"
+            git config user.email "sync-bot@src/ai.io"
             git commit -am "chore: sync scaffold from manifest"
             git push
           else

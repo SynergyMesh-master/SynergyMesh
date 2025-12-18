@@ -7,7 +7,7 @@ contract:
   name: "Self-Healing Module Contract"
   version: "1.0.0"
   status: "active"
-  owner: "self-healing-team@synergymesh.io"
+  owner: "self-healing-team@machinenativeops.io"
   created_at: "2025-12-11"
   updated_at: "2025-12-11"
 
@@ -232,8 +232,8 @@ versioning:
 # Metadata
 metadata:
   tags: ["self-healing", "recovery", "automation", "resilience"]
-  documentation_url: "https://docs.synergymesh.io/contracts/self-healing"
-  support_contact: "self-healing-team@synergymesh.io"
+  documentation_url: "https://docs.machinenativeops.io/contracts/self-healing"
+  support_contact: "self-healing-team@machinenativeops.io"
   sla:
     availability: 99.9
     response_time_p95_ms: 100

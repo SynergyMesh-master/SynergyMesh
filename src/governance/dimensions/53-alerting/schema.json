@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://synergymesh.io/governance/dimensions/53-alerting/schema.json",
+  "$id": "https://machinenativeops.io/governance/dimensions/53-alerting/schema.json",
   "title": "Alerting Governance Schema",
   "description": "告警規則、通知管道與告警疲勞管理",
   "type": "object",

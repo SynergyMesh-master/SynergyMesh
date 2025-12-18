@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://synergymesh.io/governance/dimensions/52-tracing/schema.json",
+  "$id": "https://machinenativeops.io/governance/dimensions/52-tracing/schema.json",
   "title": "Tracing Governance Schema",
   "description": "分散式追蹤、span收集與因果關係",
   "type": "object",

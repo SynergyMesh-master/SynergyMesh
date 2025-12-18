@@ -28,7 +28,7 @@ metadata:
 dashboard_overview:
   purpose: "Real-time visualization and AI-driven insights for strategic success metrics"
   access:
-    url: "https://metrics.synergymesh.internal"
+    url: "https://metrics.machinenativeops.internal"
     authentication: "SSO (Okta) + role-based access control"
     availability: "99.99% SLA"
   

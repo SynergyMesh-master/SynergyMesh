@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://synergymesh.io/governance/dimensions/51-logging/schema.json",
+  "$id": "https://machinenativeops.io/governance/dimensions/51-logging/schema.json",
   "title": "Logging Governance Schema",
   "description": "結構化日誌、日誌聚合與保留策略",
   "type": "object",

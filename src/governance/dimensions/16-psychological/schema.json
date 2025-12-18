@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://synergymesh.io/governance/dimensions/16-psychological/schema.json",
+  "$id": "https://machinenativeops.io/governance/dimensions/16-psychological/schema.json",
   "title": "Psychological Governance Schema",
   "description": "認知負荷、心理安全與使用者體驗治理",
   "type": "object",

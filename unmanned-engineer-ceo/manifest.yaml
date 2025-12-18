@@ -5,7 +5,7 @@ owners:
     contact: governance@unmanned.island
 alignment:
   source_of_truth:
-    - synergymesh.yaml
+    - machinenativeops.yaml
     - config/system-manifest.yaml
   governance_schema: governance/schemas/document-index.schema.json
   knowledge_index: docs/LIVING_KNOWLEDGE_BASE.md

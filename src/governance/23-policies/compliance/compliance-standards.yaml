@@ -3,7 +3,7 @@
 # Extracted from: baseline-05-compliance-attestation.v1.0.yaml
 # Purpose: Define supported compliance frameworks and their controls
 
-apiVersion: governance.synergymesh.io/v1
+apiVersion: governance.machinenativeops.io/v1
 kind: Policy
 metadata:
   name: compliance-standards

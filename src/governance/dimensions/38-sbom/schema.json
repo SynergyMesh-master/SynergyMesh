@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://synergymesh.io/governance/dimensions/38-sbom/schema.json",
+  "$id": "https://machinenativeops.io/governance/dimensions/38-sbom/schema.json",
   "title": "SBOM Governance Schema",
   "description": "軟體供應鏈、來源追蹤與簽章驗證",
   "type": "object",

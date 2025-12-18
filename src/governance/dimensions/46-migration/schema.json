@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://synergymesh.io/governance/dimensions/46-migration/schema.json",
+  "$id": "https://machinenativeops.io/governance/dimensions/46-migration/schema.json",
   "title": "Migration Governance Schema",
   "description": "資料遷移、系統遷移與現代化治理",
   "type": "object",

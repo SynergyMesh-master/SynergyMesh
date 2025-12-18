@@ -2,7 +2,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: contracts-l1
-  namespace: synergymesh
+  namespace: machinenativeops
   labels:
     app: contracts-l1
     tier: core
@@ -19,11 +19,11 @@ spec:
   ingressClassName: nginx
   tls:
   - hosts:
-    - contracts-l1.synergymesh.com
-    - api.synergymesh.com
+    - contracts-l1.machinenativeops.com
+    - api.machinenativeops.com
     secretName: contracts-l1-tls
   rules:
-  - host: contracts-l1.synergymesh.com
+  - host: contracts-l1.machinenativeops.com
     http:
       paths:
       - path: /
@@ -33,7 +33,7 @@ spec:
             name: contracts-l1
             port:
               number: 80
-  - host: api.synergymesh.com
+  - host: api.machinenativeops.com
     http:
       paths:
       - path: /v1/contracts

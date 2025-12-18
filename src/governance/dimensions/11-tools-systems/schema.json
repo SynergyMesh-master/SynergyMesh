@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://synergymesh.io/governance/dimensions/11-tools-systems/schema.json",
+  "$id": "https://machinenativeops.io/governance/dimensions/11-tools-systems/schema.json",
   "title": "Tools Systems Governance Schema",
   "description": "治理工具、系統整合與平台管理",
   "type": "object",

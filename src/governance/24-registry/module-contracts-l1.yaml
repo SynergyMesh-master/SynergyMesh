@@ -16,16 +16,16 @@ semantic_version:
 # ==================== Ownership ====================
 owner:
   team: platform-governance
-  primary_contact: platform@isynergymesh.com
+  primary_contact: platform@imachinenativeops.com
   secondary_contacts:
-    - tech-lead@isynergymesh.com
-    - security-head@isynergymesh.com
+    - tech-lead@imachinenativeops.com
+    - security-head@imachinenativeops.com
   maintainers:
     - name: Platform Team
-      email: platform@isynergymesh.com
+      email: platform@imachinenativeops.com
       role: primary
     - name: Security Team
-      email: security@isynergymesh.com
+      email: security@imachinenativeops.com
       role: reviewer
 
 # ==================== Language & Localization ====================
@@ -202,7 +202,7 @@ monitoring:
 changelog:
   - version: 1.0.0
     date: 2025-11-24
-    author: platform@isynergymesh.com
+    author: platform@imachinenativeops.com
     changes:
       - 初始版本發布
       - SLSA Level 3 合規
@@ -211,7 +211,7 @@ changelog:
   
   - version: 0.9.0
     date: 2025-11-20
-    author: platform@isynergymesh.com
+    author: platform@imachinenativeops.com
     changes:
       - Beta 版本
       - 核心功能實作
@@ -221,5 +221,5 @@ metadata:
   created_at: "2025-11-24T00:00:00Z"
   updated_at: "2025-11-24T11:54:00Z"
   architecture_pattern: 去AXIOM化重構策略
-  project_structure: isynergymesh
+  project_structure: imachinenativeops
   governance_level: deep-validation

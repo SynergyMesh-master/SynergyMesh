@@ -1,7 +1,7 @@
 {
   "dashboard": {
     "title": "SynergyMesh Platform Overview",
-    "tags": ["synergymesh", "production", "overview"],
+    "tags": ["machinenativeops", "production", "overview"],
     "timezone": "browser",
     "schemaVersion": 16,
     "version": 1,

@@ -11,7 +11,7 @@
 # ═══════════════════════════════════════════════════════════════════════════════
 
 version: "1.0.0"
-id: "synergymesh.topology.mind_matrix"
+id: "machinenativeops.topology.mind_matrix"
 description: "核心拓撲自稠密演化心智矩陣（含 Executive Layer）"
 
 mind_matrix:
@@ -26,7 +26,7 @@ mind_matrix:
   executive_layer:
     version: "1.0.0"
     roles:
-      - id: "synergymesh.ceo"
+      - id: "machinenativeops.ceo"
         title: "總執行長"
         kind: "executive"
         mission:
@@ -34,7 +34,7 @@ mind_matrix:
           - "確保供應鏈可證明性與策略合規"
         domains: ["strategy", "governance", "resilience"]
         values: ["verifiable", "auditable", "secure-by-default"]
-      - id: "synergymesh.ciso"
+      - id: "machinenativeops.ciso"
         title: "資訊安全長"
         kind: "executive"
         mission:

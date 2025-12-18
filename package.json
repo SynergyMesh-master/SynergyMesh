@@ -8,7 +8,7 @@
     "src/core/contract_service/contracts-L1/contracts",
     "src/core/advisory-database",
     "src/apps/web",
-    "src/ai/island-ai",
+    "src/ai/src/ai",
     "archive/unmanned-engineer-ceo/80-skeleton-configs"
   ],
   "scripts": {
@@ -16,7 +16,7 @@
     "test": "npm run test --workspaces --if-present",
     "build": "npm run build --workspaces --if-present",
     "install:all": "npm install --workspaces",
-    "dev:stack": "bash scripts/start-synergymesh-dev.sh",
+    "dev:stack": "bash scripts/start-machinenativeops-dev.sh",
     "docs:lint": "markdownlint \"**/*.md\"",
     "clean": "npm run clean --workspaces --if-present && rm -rf node_modules"
   },

@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://synergymesh.io/governance/dimensions/67-analytics/schema.json",
+  "$id": "https://machinenativeops.io/governance/dimensions/67-analytics/schema.json",
   "title": "Analytics Governance Schema",
   "description": "資料分析、洞察發現與決策支援",
   "type": "object",

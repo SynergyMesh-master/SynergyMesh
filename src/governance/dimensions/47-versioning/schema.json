@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://synergymesh.io/governance/dimensions/47-versioning/schema.json",
+  "$id": "https://machinenativeops.io/governance/dimensions/47-versioning/schema.json",
   "title": "Versioning Governance Schema",
   "description": "語意版本控制、相容性管理與棄用策略",
   "type": "object",

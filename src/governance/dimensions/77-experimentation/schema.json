@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://synergymesh.io/governance/dimensions/77-experimentation/schema.json",
+  "$id": "https://machinenativeops.io/governance/dimensions/77-experimentation/schema.json",
   "title": "Experimentation Governance Schema",
   "description": "A/B測試、特徵標誌與實驗框架",
   "type": "object",

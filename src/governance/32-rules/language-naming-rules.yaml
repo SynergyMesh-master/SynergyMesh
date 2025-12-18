@@ -175,7 +175,7 @@ python_naming:
   applies_to:
     paths:
       - "runtime/"
-      - "ai/"
+      - "src/ai/"
       - "tools/"
       - "tests/"
       - "automation/"

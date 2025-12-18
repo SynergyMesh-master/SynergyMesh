@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://synergymesh.io/governance/dimensions/01-architecture/schema.json",
+  "$id": "https://machinenativeops.io/governance/dimensions/01-architecture/schema.json",
   "title": "Architecture Governance Schema",
   "description": "企業架構、技術架構與治理框架設計",
   "type": "object",

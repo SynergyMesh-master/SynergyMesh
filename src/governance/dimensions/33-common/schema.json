@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://synergymesh.io/governance/dimensions/33-common/schema.json",
+  "$id": "https://machinenativeops.io/governance/dimensions/33-common/schema.json",
   "title": "Common Governance Schema",
   "description": "共用元件、工具函式與基礎設施",
   "type": "object",

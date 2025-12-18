@@ -54,7 +54,7 @@ signing:
   # OIDC 配置
   oidc:
     issuer: "https://token.actions.githubusercontent.com"
-    identity_regexp: ".*@isynergymesh\\.com"
+    identity_regexp: ".*@imachinenativeops\\.com"
   
   # 簽章對象
   targets:
@@ -88,7 +88,7 @@ verification:
   on_failure:
     action: "block"
     notify:
-      - "security@isynergymesh.com"
+      - "security@imachinenativeops.com"
 
 # 自動化配置
 automation:
@@ -127,6 +127,6 @@ automation:
 #    cosign verify-blob sbom/contracts-l1-sbom.spdx.json \
 #      --signature sbom/contracts-l1-sbom.spdx.json.sig \
 #      --certificate sbom/contracts-l1-sbom.spdx.json.crt \
-#      --certificate-identity-regexp ".*@isynergymesh\.com" \
+#      --certificate-identity-regexp ".*@imachinenativeops\.com" \
 #      --certificate-oidc-issuer "https://token.actions.githubusercontent.com"
 # ==============================================================================

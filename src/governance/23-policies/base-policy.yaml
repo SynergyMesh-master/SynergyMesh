@@ -9,7 +9,7 @@
 # - Enforced by governance agents and validators
 # - Audited for compliance and security
 
-$schema: "https://schema.synergymesh.io/policy/v1"
+$schema: "https://schema.machinenativeops.io/policy/v1"
 version: "1.0.0"
 metadata:
   name: "base-policy"

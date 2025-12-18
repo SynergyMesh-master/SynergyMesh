@@ -73,7 +73,7 @@ section_to_entity_rules:
       input: "## SynergyMesh Core Engine"
       output:
         entity_type: "subsystem"
-        id: "synergymesh-core-engine"
+        id: "machinenativeops-core-engine"
         layer: "control-plane"
 
   # Rule 2: H3 sections under subsystems map to components
@@ -294,7 +294,7 @@ entity_type_mappings:
 transformation_functions:
   - name: "slug"
     description: "Convert string to slug format"
-    example: "slug('SynergyMesh Core Engine') → 'synergymesh-core-engine'"
+    example: "slug('SynergyMesh Core Engine') → 'machinenativeops-core-engine'"
   
   - name: "basename_without_extension"
     description: "Get filename without extension"

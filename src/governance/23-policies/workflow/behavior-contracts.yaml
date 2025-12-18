@@ -12,7 +12,7 @@
 # =============================================================================
 
 version: "2.0.0"
-schema_version: "behavior.synergymesh.io/v1"
+schema_version: "behavior.machinenativeops.io/v1"
 
 # =============================================================================
 # AI Governance Behavior Contracts | AI 治理行為契約

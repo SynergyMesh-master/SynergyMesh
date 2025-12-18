@@ -295,7 +295,7 @@ notifications:
       channels: ["#platform-alerts", "#governance"]
     
     email:
-      recipients: ["governance@synergymesh.io", "platform-team@synergymesh.io"]
+      recipients: ["governance@machinenativeops.io", "platform-team@machinenativeops.io"]
     
     pagerduty:
       service_key: "${PAGERDUTY_SERVICE_KEY}"

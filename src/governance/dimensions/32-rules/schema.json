@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://synergymesh.io/governance/dimensions/32-rules/schema.json",
+  "$id": "https://machinenativeops.io/governance/dimensions/32-rules/schema.json",
   "title": "Rules Governance Schema",
   "description": "業務規則、決策邏輯與規則引擎",
   "type": "object",

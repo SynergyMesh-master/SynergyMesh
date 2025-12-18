@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://synergymesh.io/governance/dimensions/50-monitoring/schema.json",
+  "$id": "https://machinenativeops.io/governance/dimensions/50-monitoring/schema.json",
   "title": "Monitoring Governance Schema",
   "description": "系統監控、指標收集與健康檢查",
   "type": "object",

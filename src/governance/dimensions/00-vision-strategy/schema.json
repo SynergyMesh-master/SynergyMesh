@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://synergymesh.io/governance/dimensions/00-vision-strategy/schema.json",
+  "$id": "https://machinenativeops.io/governance/dimensions/00-vision-strategy/schema.json",
   "title": "Vision Strategy Governance Schema",
   "description": "組織願景、策略目標與長期規劃治理",
   "type": "object",

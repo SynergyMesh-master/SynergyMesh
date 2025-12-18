@@ -42,7 +42,7 @@
       "ratio": 0
     },
     {
-      "file": ".github/island-ai-instructions.md",
+      "file": ".github/src/ai-instructions.md",
       "type": "documentation",
       "severity": "critical",
       "message": "文檔中文比例不足: 0.1% (建議 ≥30%)",

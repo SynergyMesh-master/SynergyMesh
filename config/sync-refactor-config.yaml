@@ -59,7 +59,7 @@ sync:
     - "templates/**"
     - "island.bootstrap.stage0.yaml"
     - "machinenativeops.yaml"
-    - "synergymesh.yaml"
+    - "machinenativeops.yaml"
     - "config/system-manifest.yaml"
     - "config/unified-config-index.yaml"
 

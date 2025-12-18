@@ -2,7 +2,7 @@
   "spdxVersion": "SPDX-2.3",
   "dataLicense": "CC0-1.0",
   "SPDXID": "SPDXRef-DOCUMENT",
-  "name": "synergymesh-sbom",
+  "name": "machinenativeops-sbom",
   "documentNamespace": "https://github.com/Unmanned-Island-admin/SynergyMesh/sbom",
   "creationInfo": {
     "created": "2025-11-30T00:00:00Z",
@@ -12,11 +12,11 @@
     ],
     "licenseListVersion": "3.21"
   },
-  "documentDescribes": ["SPDXRef-Package-synergymesh"],
+  "documentDescribes": ["SPDXRef-Package-machinenativeops"],
   "packages": [
     {
-      "SPDXID": "SPDXRef-Package-synergymesh",
-      "name": "synergymesh",
+      "SPDXID": "SPDXRef-Package-machinenativeops",
+      "name": "machinenativeops",
       "versionInfo": "1.0.0",
       "downloadLocation": "https://github.com/Unmanned-Island-admin/SynergyMesh",
       "filesAnalyzed": false,
@@ -30,7 +30,7 @@
   "relationships": [
     {
       "spdxElementId": "SPDXRef-DOCUMENT",
-      "relatedSpdxElement": "SPDXRef-Package-synergymesh",
+      "relatedSpdxElement": "SPDXRef-Package-machinenativeops",
       "relationshipType": "DESCRIBES"
     }
   ]

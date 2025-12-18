@@ -180,7 +180,7 @@ alerting:
     
     email:
       enabled: false  # Configure SMTP in production
-      recipients: ["governance@synergymesh.io"]
+      recipients: ["governance@machinenativeops.io"]
   
   severity_levels:
     critical: ["compliance_violation", "security_alert"]

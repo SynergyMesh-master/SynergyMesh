@@ -6,7 +6,7 @@
 # Validation: JSON Schema Enforced
 # =============================================================================
 
-apiVersion: governance.synergymesh.io/v2
+apiVersion: governance.machinenativeops.io/v2
 kind: DimensionModule
 metadata:
   id: "76-innovation"

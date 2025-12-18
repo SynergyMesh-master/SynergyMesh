@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://synergymesh.io/governance/dimensions/10-policy/schema.json",
+  "$id": "https://machinenativeops.io/governance/dimensions/10-policy/schema.json",
   "title": "Policy Governance Schema",
   "description": "Policy-as-Code框架、政策定義與執行",
   "type": "object",

@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://synergymesh.io/governance/dimensions/31-schemas/schema.json",
+  "$id": "https://machinenativeops.io/governance/dimensions/31-schemas/schema.json",
   "title": "Schemas Governance Schema",
   "description": "JSON Schema、資料結構與驗證規則",
   "type": "object",

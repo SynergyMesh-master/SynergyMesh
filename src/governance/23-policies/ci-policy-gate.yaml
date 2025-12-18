@@ -10,7 +10,7 @@
 # ═══════════════════════════════════════════════════════════════════════════════
 
 version: "1.0.0"
-id: "synergymesh.ci.policy_gate"
+id: "machinenativeops.ci.policy_gate"
 description: "CI Policy Gate rules for SynergyMesh"
 
 rules:
@@ -69,8 +69,8 @@ rules:
     check:
       file: "config/topology-mind-matrix.yaml"
       must_include:
-        - 'id: "synergymesh.ceo"'
-        - 'id: "synergymesh.ciso"'
+        - 'id: "machinenativeops.ceo"'
+        - 'id: "machinenativeops.ciso"'
 
   - id: "slsa-level-required"
     description: "必須指定 SLSA 等級"

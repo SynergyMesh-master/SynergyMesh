@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://isynergymesh.com/schemas/module-registry/v1.0.0",
+  "$id": "https://imachinenativeops.com/schemas/module-registry/v1.0.0",
   "title": "Module Registry Metadata Schema",
   "description": "模組註冊元資料架構定義 - Schema for module registry metadata",
   "type": "object",

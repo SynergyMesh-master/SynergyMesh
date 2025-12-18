@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://synergymesh.io/governance/dimensions/54-dashboards/schema.json",
+  "$id": "https://machinenativeops.io/governance/dimensions/54-dashboards/schema.json",
   "title": "Dashboards Governance Schema",
   "description": "儀表板設計、視覺化標準與即時展示",
   "type": "object",

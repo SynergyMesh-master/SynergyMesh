@@ -50,9 +50,9 @@ spec:
       containers:
       - name: contracts-service
         # 注意：實際部署時應使用特定版本標籤或 digest
-        # 例如：ghcr.io/we-can-fix/synergymesh/contracts-service:v1.0.0
-        # 或：ghcr.io/we-can-fix/synergymesh/contracts-service@sha256:...
-        image: ghcr.io/we-can-fix/synergymesh/contracts-service:main-abc123
+        # 例如：ghcr.io/we-can-fix/machinenativeops/contracts-service:v1.0.0
+        # 或：ghcr.io/we-can-fix/machinenativeops/contracts-service@sha256:...
+        image: ghcr.io/we-can-fix/machinenativeops/contracts-service:main-abc123
         imagePullPolicy: Always
         
         ports:

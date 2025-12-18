@@ -12,7 +12,7 @@
 # ═══════════════════════════════════════════════════════════════════════════════
 
 version: "1.0.0"
-id: "synergymesh.architecture-health"
+id: "machinenativeops.architecture-health"
 description: "Architecture health metrics and quality gates"
 
 # ============================================================================

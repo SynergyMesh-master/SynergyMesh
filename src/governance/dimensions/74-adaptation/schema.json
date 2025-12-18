@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://synergymesh.io/governance/dimensions/74-adaptation/schema.json",
+  "$id": "https://machinenativeops.io/governance/dimensions/74-adaptation/schema.json",
   "title": "Adaptation Governance Schema",
   "description": "自適應調整、動態配置與環境適應",
   "type": "object",

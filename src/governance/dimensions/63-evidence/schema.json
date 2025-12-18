@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://synergymesh.io/governance/dimensions/63-evidence/schema.json",
+  "$id": "https://machinenativeops.io/governance/dimensions/63-evidence/schema.json",
   "title": "Evidence Governance Schema",
   "description": "證據收集、證據鏈與不可變儲存",
   "type": "object",

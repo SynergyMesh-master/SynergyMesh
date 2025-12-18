@@ -97,7 +97,7 @@ actions:
       severity: "high"
       channels:
         - "slack://platform-alerts"
-        - "email://governance@synergymesh.io"
+        - "email://governance@machinenativeops.io"
       message_template: "Agent {agent_id} health check {check_name} failed: {error_message}"
     
     # Auto-Recovery Actions

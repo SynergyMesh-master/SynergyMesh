@@ -55,8 +55,8 @@ spec:
         environment: prod
         tenant: platform
         app.kubernetes.io/managed-by: axiom-naming-controller
-    - old_name: island-ai
-      canonical_name: prod-island-ai
+    - old_name: src/ai
+      canonical_name: prod-src/ai
       urn: "urn:axiom:island:ai:env:prod:v1"
       labels:
         environment: prod

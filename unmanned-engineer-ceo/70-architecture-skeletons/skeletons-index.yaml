@@ -216,7 +216,7 @@ usage_guidelines:
     4. 提交骨架改進建議（通過 PR）
 
 integration_points:
-  - synergymesh.yaml: 主系統配置入口
+  - machinenativeops.yaml: 主系統配置入口
   - docs/: 用戶可讀文檔
   - config/: 系統配置文件
   - tests/: 自動化驗證

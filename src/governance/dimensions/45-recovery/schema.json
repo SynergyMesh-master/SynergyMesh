@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://synergymesh.io/governance/dimensions/45-recovery/schema.json",
+  "$id": "https://machinenativeops.io/governance/dimensions/45-recovery/schema.json",
   "title": "Recovery Governance Schema",
   "description": "備份策略、復原程序與RTO/RPO管理",
   "type": "object",

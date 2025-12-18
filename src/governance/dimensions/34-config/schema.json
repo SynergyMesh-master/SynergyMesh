@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://synergymesh.io/governance/dimensions/34-config/schema.json",
+  "$id": "https://machinenativeops.io/governance/dimensions/34-config/schema.json",
   "title": "Config Governance Schema",
   "description": "配置管理、環境變數與參數化設定",
   "type": "object",

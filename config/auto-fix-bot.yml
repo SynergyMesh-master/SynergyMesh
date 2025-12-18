@@ -8,11 +8,11 @@
 
 # ==================== Metadata ====================
 name: "Enterprise Code Intelligence Platform"
-id: synergymesh-auto-fix-bot
+id: machinenativeops-auto-fix-bot
 version: "3.0.0"
 owner:
   team: platform-governance
-  contacts: ["platform@isynergymesh.com"]
+  contacts: ["platform@imachinenativeops.com"]
   approvers: ["tech-lead", "security-head"]
 
 metadata:
@@ -20,7 +20,7 @@ metadata:
   updated_at: "2025-11-25T14:39:00Z"
   labels: [auto-fix, governance, policy-enforcement, deep-validation, hyperautomation]
   compliance_tags: [slsa-l3, in-toto, audit-trail, axiom-free, enterprise-grade]
-  project_structure: synergymesh
+  project_structure: machinenativeops
   architecture_pattern: "智能超自動化治理架構"
 
 description: >
@@ -378,7 +378,7 @@ fix_rules:
         command: |
           cosign verify-blob \
             --signature ${FILE_PATH}.sig \
-            --certificate-identity-regexp ".*@isynergymesh\.com" \
+            --certificate-identity-regexp ".*@imachinenativeops\.com" \
             --certificate-oidc-issuer "https://token.actions.githubusercontent.com" \
             ${FILE_PATH}
         
@@ -408,8 +408,8 @@ policy_gates:
     
     failure_action: block
     notification:
-      slack: "#isynergymesh-alerts"
-      email: ["security@isynergymesh.com"]
+      slack: "#imachinenativeops-alerts"
+      email: ["security@imachinenativeops.com"]
   
   # 修復後驗證門
   - name: post-fix-validation-gate
@@ -454,7 +454,7 @@ evidence_generation:
         python cross-layer-bridges/evidence-to-trust/generate_attestation.py \
           --type auto-fix \
           --subject ${CHANGED_FILES} \
-          --predicate-type "https://isynergymesh.com/auto-fix/v1" \
+          --predicate-type "https://imachinenativeops.com/auto-fix/v1" \
           --output root-evidence/attestation/auto-fix-attestation.json
     
     - name: provenance-generator
@@ -470,14 +470,14 @@ notifications:
   channels:
     slack:
       webhook_url: "${SLACK_WEBHOOK_URL}"
-      channel: "#isynergymesh-auto-fix"
+      channel: "#imachinenativeops-auto-fix"
       mention_on_failure: ["@platform-team", "@security-team"]
     
     email:
       smtp_server: "${SMTP_SERVER}"
       recipients:
-        - "platform@isynergymesh.com"
-        - "security@isynergymesh.com"
+        - "platform@imachinenativeops.com"
+        - "security@imachinenativeops.com"
     
     github:
       create_issue: true
@@ -699,7 +699,7 @@ cross_layer_bridges:
       
       - name: deployment_attestation
         trigger: "deployment_complete"  
-        predicate_type: "https://isynergymesh.com/src/autonomous/deployment/v1"
+        predicate_type: "https://imachinenativeops.com/src/autonomous/deployment/v1"
         command: |
           python cross-layer-bridges/evidence-to-trust/generate_attestation.py \
             --type deployment \
@@ -772,7 +772,7 @@ evidence_chain_validation:
       command: |
         find root-evidence/ -name "*.json" -exec \
           cosign verify-blob --signature {}.sig \
-          --certificate-identity-regexp ".*@isynergymesh\.com" {} \;
+          --certificate-identity-regexp ".*@imachinenativeops\.com" {} \;
     
     - step: validate_attestations
       command: |
@@ -967,8 +967,8 @@ notifications:
     - name: email
       enabled: true
       smtp_server: "${SMTP_SERVER}"
-      from: "autofix@synergymesh.com"
-      to: ["platform@synergymesh.com"]
+      from: "autofix@machinenativeops.com"
+      to: ["platform@machinenativeops.com"]
     
     - name: slack
       enabled: true
@@ -1175,7 +1175,7 @@ changelog:
   - ts: "2025-01-17T12:30:00Z"
     by: "platform-governance"
     version: "2.0.0"
-    change: "完整整合深度可驗證模組、去標籤化架構策略與Isynergymesh專案架構適配"
+    change: "完整整合深度可驗證模組、去標籤化架構策略與Imachinenativeops專案架構適配"
   - ts: "2025-11-25T14:39:00Z"
     by: "automation-architect"
     version: "3.0.0"

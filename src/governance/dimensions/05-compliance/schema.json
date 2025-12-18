@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://synergymesh.io/governance/dimensions/05-compliance/schema.json",
+  "$id": "https://machinenativeops.io/governance/dimensions/05-compliance/schema.json",
   "title": "Compliance Governance Schema",
   "description": "法規遵循、標準符合與合規驗證",
   "type": "object",

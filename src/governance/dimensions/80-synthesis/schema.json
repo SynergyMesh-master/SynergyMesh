@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://synergymesh.io/governance/dimensions/80-synthesis/schema.json",
+  "$id": "https://machinenativeops.io/governance/dimensions/80-synthesis/schema.json",
   "title": "Synthesis Governance Schema",
   "description": "跨維度綜合、整體優化與治理整合",
   "type": "object",

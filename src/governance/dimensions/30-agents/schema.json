@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://synergymesh.io/governance/dimensions/30-agents/schema.json",
+  "$id": "https://machinenativeops.io/governance/dimensions/30-agents/schema.json",
   "title": "Agents Governance Schema",
   "description": "AI Agent生命週期、權限管理與合規追蹤",
   "type": "object",

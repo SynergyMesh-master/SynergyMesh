@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://synergymesh.io/schemas/namespace-labels.schema.json",
+  "$id": "https://machinenativeops.io/schemas/namespace-labels.schema.json",
   "title": "Namespace Labels Schema",
   "description": "Mandatory and optional labels for Kubernetes namespaces. Extracted from baseline-01-namespace-governance.v1.0.yaml",
   "type": "object",

@@ -34,7 +34,7 @@ contract:
 # ============================================================================
 
 api:
-  base_path: "/api/v1/island-ai"
+  base_path: "/api/v1/src/ai"
   
   endpoints:
     

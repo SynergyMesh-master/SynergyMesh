@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://synergymesh.io/schemas/dependencies.schema.json",
+  "$id": "https://machinenativeops.io/schemas/dependencies.schema.json",
   "title": "SynergyMesh Dependencies Configuration",
   "description": "Schema for dependencies.yaml - defines tools, models, external services",
   "type": "object",

@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://synergymesh.io/governance/dimensions/62-provenance/schema.json",
+  "$id": "https://machinenativeops.io/governance/dimensions/62-provenance/schema.json",
   "title": "Provenance Governance Schema",
   "description": "來源追蹤、版本歷史與變更記錄",
   "type": "object",

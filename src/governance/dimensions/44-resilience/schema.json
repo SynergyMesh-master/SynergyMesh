@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://synergymesh.io/governance/dimensions/44-resilience/schema.json",
+  "$id": "https://machinenativeops.io/governance/dimensions/44-resilience/schema.json",
   "title": "Resilience Governance Schema",
   "description": "系統韌性、故障容忍與災難復原",
   "type": "object",

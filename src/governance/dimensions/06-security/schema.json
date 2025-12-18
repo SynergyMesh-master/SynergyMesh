@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://synergymesh.io/governance/dimensions/06-security/schema.json",
+  "$id": "https://machinenativeops.io/governance/dimensions/06-security/schema.json",
   "title": "Security Governance Schema",
   "description": "資訊安全、存取控制與威脅管理",
   "type": "object",

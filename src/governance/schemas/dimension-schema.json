@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://synergymesh.io/governance/schemas/dimension-schema.json",
+  "$id": "https://machinenativeops.io/governance/schemas/dimension-schema.json",
   "title": "Dimension Module Schema",
   "description": "Schema for validating dimension module definitions",
   "type": "object",
@@ -8,7 +8,7 @@
   "properties": {
     "apiVersion": {
       "type": "string",
-      "pattern": "^governance\\.synergymesh\\.io/v\\d+$",
+      "pattern": "^governance\\.machinenativeops\\.io/v\\d+$",
       "description": "API version"
     },
     "kind": {

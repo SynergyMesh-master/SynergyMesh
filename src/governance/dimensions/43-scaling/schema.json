@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://synergymesh.io/governance/dimensions/43-scaling/schema.json",
+  "$id": "https://machinenativeops.io/governance/dimensions/43-scaling/schema.json",
   "title": "Scaling Governance Schema",
   "description": "自動擴展、容量規劃與資源優化",
   "type": "object",

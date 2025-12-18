@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://isynergymesh.com/schemas/policy-report.json",
+  "$id": "https://imachinenativeops.com/schemas/policy-report.json",
   "title": "策略模擬報告 Schema",
   "description": "機器可讀的策略測試結果格式定義",
   "type": "object",

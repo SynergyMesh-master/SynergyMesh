@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://synergymesh.io/governance/dimensions/55-slo-sli/schema.json",
+  "$id": "https://machinenativeops.io/governance/dimensions/55-slo-sli/schema.json",
   "title": "SLO SLI Governance Schema",
   "description": "服務等級目標、指標定義與錯誤預算",
   "type": "object",

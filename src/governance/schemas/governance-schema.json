@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://synergymesh.io/governance/schemas/governance-schema.json",
+  "$id": "https://machinenativeops.io/governance/schemas/governance-schema.json",
   "title": "Governance Configuration Schema",
   "description": "Schema for validating governance.yaml configuration",
   "type": "object",
@@ -8,7 +8,7 @@
   "properties": {
     "apiVersion": {
       "type": "string",
-      "pattern": "^governance\\.synergymesh\\.io/v\\d+$",
+      "pattern": "^governance\\.machinenativeops\\.io/v\\d+$",
       "description": "API version of the governance configuration"
     },
     "kind": {

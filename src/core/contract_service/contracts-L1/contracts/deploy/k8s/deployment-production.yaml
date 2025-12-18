@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: contracts-l1
-  namespace: synergymesh
+  namespace: machinenativeops
   labels:
     app: contracts-l1
     tier: core
@@ -10,7 +10,7 @@ metadata:
     version: "1.0.0"
   annotations:
     description: "Contracts L1 Service - SLSA provenance and build attestation"
-    contact: "platform@isynergymesh.com"
+    contact: "platform@imachinenativeops.com"
 spec:
   replicas: 3
   strategy:
@@ -46,7 +46,7 @@ spec:
       
       containers:
       - name: contracts-l1
-        image: ghcr.io/we-can-fix/synergymesh/contracts-l1:latest
+        image: ghcr.io/we-can-fix/machinenativeops/contracts-l1:latest
         imagePullPolicy: Always
         
         ports:

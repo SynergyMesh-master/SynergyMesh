@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://synergymesh.io/governance/dimensions/79-prediction/schema.json",
+  "$id": "https://machinenativeops.io/governance/dimensions/79-prediction/schema.json",
   "title": "Prediction Governance Schema",
   "description": "預測模型、趨勢分析與前瞻性治理",
   "type": "object",
