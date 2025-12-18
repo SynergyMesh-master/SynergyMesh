@@ -3,7 +3,7 @@
 SynergyMesh 島嶼協調器 (Island Orchestrator)
 
 負責協調所有無人之島的運作，管理島嶼間的通信和資源分配。
-對應 .devcontainer/automation/drone-coordinator.py
+對應 config/dev/automation/drone-coordinator.py
 """
 
 import subprocess

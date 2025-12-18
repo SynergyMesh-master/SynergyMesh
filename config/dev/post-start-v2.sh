@@ -8,7 +8,7 @@ cd /workspace
 
 # Start supporting services (if not already running)
 echo "🔄 Ensuring supporting services are running..."
-docker-compose -f .devcontainer/docker-compose.yml up -d postgres redis prometheus grafana 2>/dev/null || true
+docker-compose -f config/dev/docker-compose.yml up -d postgres redis prometheus grafana 2>/dev/null || true
 
 # Wait a moment for services to initialize
 sleep 5
@@ -17,14 +17,14 @@ sleep 5
 echo "🔍 Checking essential service connectivity..."
 
 # Check PostgreSQL
-if docker-compose -f .devcontainer/docker-compose.yml exec -T postgres pg_isready -U life_admin -d life_system >/dev/null 2>&1; then
+if docker-compose -f config/dev/docker-compose.yml exec -T postgres pg_isready -U life_admin -d life_system >/dev/null 2>&1; then
     echo "✅ PostgreSQL: Ready"
 else
     echo "⏳ PostgreSQL: Starting up..."
 fi
 
 # Check Redis
-if docker-compose -f .devcontainer/docker-compose.yml exec -T redis redis-cli ping >/dev/null 2>&1; then
+if docker-compose -f config/dev/docker-compose.yml exec -T redis redis-cli ping >/dev/null 2>&1; then
     echo "✅ Redis: Ready"
 else
     echo "⏳ Redis: Starting up..."

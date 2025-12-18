@@ -10,9 +10,9 @@ export NPM_CONFIG_CACHE="/tmp/npm-cache"
 
 echo "[1/3] 啟動基礎服務 (Postgres/Redis/Prometheus/Grafana)..."
 if command -v docker-compose >/dev/null 2>&1; then
-	docker-compose -f .devcontainer/docker-compose.yml up -d postgres redis prometheus grafana
+	docker-compose -f config/dev/docker-compose.yml up -d postgres redis prometheus grafana
 elif command -v docker >/dev/null 2>&1; then
-	docker compose -f .devcontainer/docker-compose.yml up -d postgres redis prometheus grafana
+	docker compose -f config/dev/docker-compose.yml up -d postgres redis prometheus grafana
 else
 	echo "⚠️  系統中找不到 docker/docker-compose，略過基礎服務啟動；請在支援 Docker 的開發容器中啟動這些服務。"
 fi

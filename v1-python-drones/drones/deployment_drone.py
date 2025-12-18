@@ -3,7 +3,7 @@
 部署無人機 (Deployment Drone)
 
 負責自動化部署流程，包括環境準備、建置和健康檢查。
-對應 .devcontainer/automation/deployment-drone.sh (Python 版本)
+對應 config/dev/automation/deployment-drone.sh (Python 版本)
 """
 
 import os
@@ -148,7 +148,7 @@ class DeploymentDrone(BaseDrone):
         self.log_info(f"🔧 準備部署環境: {self.deploy_env}")
         
         # 載入環境配置
-        env_file = self.project_root / '.devcontainer' / 'environments' / f'{self.deploy_env}.env'
+        env_file = self.project_root / 'config/dev' / 'environments' / f'{self.deploy_env}.env'
         
         if env_file.exists():
             self.log_info(f"  載入環境配置: {env_file}")
@@ -240,7 +240,7 @@ class DeploymentDrone(BaseDrone):
         """
         self.log_info(f"🚀 部署服務到 {self.deploy_env} 環境...")
         
-        devcontainer_dir = self.project_root / '.devcontainer'
+        devcontainer_dir = self.project_root / 'config/dev'
         
         # 停止現有服務
         self.log_info("  停止現有服務...")
@@ -292,7 +292,7 @@ class DeploymentDrone(BaseDrone):
             self.log_info(f"  健康檢查 ({i}/{self.health_check_retries})...")
             
             # 檢查容器狀態
-            devcontainer_dir = self.project_root / '.devcontainer'
+            devcontainer_dir = self.project_root / 'config/dev'
             
             try:
                 result = subprocess.run(
@@ -340,12 +340,12 @@ class DeploymentDrone(BaseDrone):
     
     def run_core_deployment(self) -> int:
         """
-        執行核心部署腳本 (.devcontainer/automation/deployment-drone.sh)
+        執行核心部署腳本 (config/dev/automation/deployment-drone.sh)
         
         Returns:
             執行結果代碼
         """
-        core_script = self.project_root / '.devcontainer' / 'automation' / 'deployment-drone.sh'
+        core_script = self.project_root / 'config/dev' / 'automation' / 'deployment-drone.sh'
         
         if not core_script.exists():
             self.log_error(f"核心部署腳本不存在: {core_script}")

@@ -73,13 +73,13 @@ class DroneConfig:
             'drone_fleet': {
                 'coordinator': {
                     'name': '主協調器',
-                    'script': '.devcontainer/automation/drone-coordinator.py',
+                    'script': 'config/dev/automation/drone-coordinator.py',
                     'priority': 1,
                     'auto_start': True,
                 },
                 'autopilot': {
                     'name': '自動駕駛',
-                    'script': '.devcontainer/automation/auto-pilot.js',
+                    'script': 'config/dev/automation/auto-pilot.js',
                     'priority': 2,
                     'auto_start': True,
                 },

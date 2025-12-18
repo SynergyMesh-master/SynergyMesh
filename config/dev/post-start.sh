@@ -18,14 +18,14 @@ echo "✅ npm: $(npm --version 2>/dev/null || echo 'not installed')"
 
 # Start supporting services (if not already running)
 # Check PostgreSQL
-if docker-compose -f .devcontainer/docker-compose.yml exec -T postgres pg_isready -U life_admin -d life_system >/dev/null 2>&1; then
+if docker-compose -f config/dev/docker-compose.yml exec -T postgres pg_isready -U life_admin -d life_system >/dev/null 2>&1; then
     echo "✅ PostgreSQL: Ready"
 else
     echo "⏳ PostgreSQL: Starting up..."
 fi
 
 # Check Redis
-if docker-compose -f .devcontainer/docker-compose.yml exec -T redis redis-cli ping >/dev/null 2>&1; then
+if docker-compose -f config/dev/docker-compose.yml exec -T redis redis-cli ping >/dev/null 2>&1; then
     echo "✅ Redis: Ready"
 else
     echo "⏳ Redis: Starting up..."
@@ -58,9 +58,9 @@ echo "  • Heartbeat:      http://localhost:3020"
 echo ""
 echo "🚀 Quick Commands:"
 echo "  • Start Life System:    bash start-life-system.sh"
-echo "  • Health Check:         .devcontainer/scripts/health-check.sh"
-echo "  • Stop Services:        docker-compose -f .devcontainer/docker-compose.yml down"
-echo "  • Setup Kind Cluster:   .devcontainer/scripts/setup-kind-cluster.sh"
+echo "  • Health Check:         config/dev/scripts/health-check.sh"
+echo "  • Stop Services:        docker-compose -f config/dev/docker-compose.yml down"
+echo "  • Setup Kind Cluster:   config/dev/scripts/setup-kind-cluster.sh"
 echo ""
 echo "📚 Key Files:"
 echo "  • Life System Start:    ./start-life-system.sh"

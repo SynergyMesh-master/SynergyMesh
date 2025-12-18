@@ -12,27 +12,27 @@ meta:
 drone_fleet:
   coordinator:
     name: "主協調器"
-    script: ".devcontainer/automation/drone-coordinator.py"
+    script: "config/dev/automation/drone-coordinator.py"
     v1_module: "v1_python_drones.drones.coordinator_drone"
     priority: 1
     auto_start: true
     
   autopilot:
     name: "自動駕駛"
-    script: ".devcontainer/automation/auto-pilot.js"
+    script: "config/dev/automation/auto-pilot.js"
     v1_module: "v1_python_drones.drones.autopilot_drone"
     priority: 2
     auto_start: true
     
   code_generator:
     name: "代碼生成器"
-    script: ".devcontainer/automation/code-generator.ts"
+    script: "config/dev/automation/code-generator.ts"
     priority: 3
     auto_start: false
     
   deployment_drone:
     name: "部署無人機"
-    script: ".devcontainer/automation/deployment-drone.sh"
+    script: "config/dev/automation/deployment-drone.sh"
     v1_module: "v1_python_drones.drones.deployment_drone"
     priority: 4
     auto_start: false
@@ -139,7 +139,7 @@ v2_multi_islands:
 automation:
   code_generation:
     enabled: true
-    templates_path: ".devcontainer/templates"
+    templates_path: "config/dev/templates"
     output_path: "./generated"
     auto_format: true
     

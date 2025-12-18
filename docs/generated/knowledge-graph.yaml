@@ -8117,10 +8117,10 @@ nodes:
   path: config/docker/compose.example.yaml
   properties:
     label_zh: 設定
-- id: file:config:docker:compose.devcontainer.yaml
+- id: file:config:docker:composeconfig/dev.yaml
   type: config
-  label: compose.devcontainer.yaml
-  path: config/docker/compose.devcontainer.yaml
+  label: composeconfig/dev.yaml
+  path: config/docker/composeconfig/dev.yaml
   properties:
     label_zh: 設定
 - id: file:config:docker:compose.dev.yaml
@@ -13643,7 +13643,7 @@ edges:
   target: file:config:docker:compose.example.yaml
   type: contains
 - source: dir:config:docker
-  target: file:config:docker:compose.devcontainer.yaml
+  target: file:config:docker:composeconfig/dev.yaml
   type: contains
 - source: dir:config:docker
   target: file:config:docker:compose.dev.yaml

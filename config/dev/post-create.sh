@@ -59,8 +59,8 @@ fi
 
 # Set up database initialization scripts
 echo "🗄️ Setting up database initialization..."
-mkdir -p .devcontainer/init-db
-cat > .devcontainer/init-db/01-init-life-system.sql << 'EOF'
+mkdir -p config/dev/init-db
+cat > config/dev/init-db/01-init-life-system.sql << 'EOF'
 -- Life System Database Initialization
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
@@ -151,7 +151,7 @@ EOF
 
 # Set up Prometheus configuration
 echo "📊 Setting up Prometheus configuration..."
-cat > .devcontainer/prometheus.yml << 'EOF'
+cat > config/dev/prometheus.yml << 'EOF'
 global:
   scrape_interval: 15s
   evaluation_interval: 15s
@@ -192,9 +192,9 @@ EOF
 
 # Set up Grafana configuration
 echo "📈 Setting up Grafana dashboards..."
-mkdir -p .devcontainer/grafana/{dashboards,provisioning/{dashboards,datasources}}
+mkdir -p config/dev/grafana/{dashboards,provisioning/{dashboards,datasources}}
 
-cat > .devcontainer/grafana/provisioning/datasources/prometheus.yml << 'EOF'
+cat > config/dev/grafana/provisioning/datasources/prometheus.yml << 'EOF'
 apiVersion: 1
 
 datasources:
@@ -205,7 +205,7 @@ datasources:
     isDefault: true
 EOF
 
-cat > .devcontainer/grafana/provisioning/dashboards/life-system.yml << 'EOF'
+cat > config/dev/grafana/provisioning/dashboards/life-system.yml << 'EOF'
 apiVersion: 1
 
 providers:
@@ -222,9 +222,9 @@ EOF
 
 # Create development scripts
 echo "🔧 Creating development scripts..."
-mkdir -p .devcontainer/scripts
+mkdir -p config/dev/scripts
 
-cat > .devcontainer/scripts/start-life-system.sh << 'EOF'
+cat > config/dev/scripts/start-life-system.sh << 'EOF'
 #!/bin/bash
 set -e
 
@@ -233,7 +233,7 @@ echo "🧠💓 Starting 01-core Life System..."
 # Start supporting services first
 echo "🗄️ Starting supporting services..."
 cd /workspace
-docker-compose -f .devcontainer/docker-compose.yml up -d postgres redis prometheus
+docker-compose -f config/dev/docker-compose.yml up -d postgres redis prometheus
 
 # Wait for services to be ready
 echo "⏳ Waiting for services to be ready..."
@@ -241,8 +241,8 @@ sleep 10
 
 # Check service health
 echo "🔍 Checking service health..."
-docker-compose -f .devcontainer/docker-compose.yml exec postgres pg_isready -U life_admin -d life_system
-docker-compose -f .devcontainer/docker-compose.yml exec redis redis-cli ping
+docker-compose -f config/dev/docker-compose.yml exec postgres pg_isready -U life_admin -d life_system
+docker-compose -f config/dev/docker-compose.yml exec redis redis-cli ping
 
 # Start life system components
 echo "🧠 Starting Brain Engine..."
@@ -270,9 +270,9 @@ echo "💗 Heartbeat API: http://localhost:3020"
 echo "🧘 Consciousness API: http://localhost:3010"
 EOF
 
-chmod +x .devcontainer/scripts/start-life-system.sh
+chmod +x config/dev/scripts/start-life-system.sh
 
-cat > .devcontainer/scripts/health-check.sh << 'EOF'
+cat > config/dev/scripts/health-check.sh << 'EOF'
 #!/bin/bash
 
 echo "🔍 Life System Health Check"
@@ -311,21 +311,21 @@ check_service "Heart-Brain" "http://localhost:3018/api/brain/status" "connected"
 check_service "Heartbeat-All" "http://localhost:3020/api/system/status" "monitoring"
 EOF
 
-chmod +x .devcontainer/scripts/health-check.sh
+chmod +x config/dev/scripts/health-check.sh
 
 # Set up Kind cluster with Podman
 echo "🚀 Setting up Kind cluster with Podman..."
-if [ -f ".devcontainer/scripts/setup-kind-cluster.sh" ]; then
-    chmod +x .devcontainer/scripts/setup-kind-cluster.sh
-    if ! bash .devcontainer/scripts/setup-kind-cluster.sh; then
+if [ -f "config/dev/scripts/setup-kind-cluster.sh" ]; then
+    chmod +x config/dev/scripts/setup-kind-cluster.sh
+    if ! bash config/dev/scripts/setup-kind-cluster.sh; then
         echo "⚠️  Kind cluster setup failed. Troubleshooting steps:"
         echo "   1. Check Podman status: podman ps -a"
         echo "   2. View logs: podman logs <container_name>"
-        echo "   3. Manual retry: .devcontainer/scripts/setup-kind-cluster.sh"
-        echo "   4. See: .devcontainer/VALIDATION_CHECKLIST.md for more help"
+        echo "   3. Manual retry: config/dev/scripts/setup-kind-cluster.sh"
+        echo "   4. See: config/dev/VALIDATION_CHECKLIST.md for more help"
     fi
 else
-    echo "⚠️  Kind cluster setup script not found at .devcontainer/scripts/setup-kind-cluster.sh"
+    echo "⚠️  Kind cluster setup script not found at config/dev/scripts/setup-kind-cluster.sh"
 fi
 
 # Set up environment variables for development
@@ -358,8 +358,8 @@ fi
 echo "✅ Post-create setup completed!"
 echo ""
 echo "🚀 Quick Start Commands:"
-echo "  • Start Life System: .devcontainer/scripts/start-life-system.sh"
-echo "  • Health Check: .devcontainer/scripts/health-check.sh"
+echo "  • Start Life System: config/dev/scripts/start-life-system.sh"
+echo "  • Health Check: config/dev/scripts/health-check.sh"
 echo "  • Manual Start: bash start-life-system.sh"
 echo ""
 echo "☸️  Kubernetes Kind Cluster:"

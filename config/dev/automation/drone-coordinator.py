@@ -131,7 +131,7 @@ class DroneCoordinator:
                 analysis['tools'][tool] = {'installed': False, 'version': None}
         
         # 檢查專案結構
-        required_dirs = ['.devcontainer', '.vscode', 'shared', 'migration']
+        required_dirs = ['config/dev', '.vscode', 'shared', 'migration']
         for dir_name in required_dirs:
             dir_path = self.project_root / dir_name
             analysis['structure'][dir_name] = dir_path.exists()
@@ -140,8 +140,8 @@ class DroneCoordinator:
         if not analysis['tools'].get('docker', {}).get('installed'):
             analysis['recommendations'].append("建議安裝 Docker 以支援容器化開發")
         
-        if not analysis['structure'].get('.devcontainer'):
-            analysis['recommendations'].append("缺少 .devcontainer 目錄")
+        if not analysis['structure'].get('config/dev'):
+            analysis['recommendations'].append("缺少 config/dev 目錄")
         
         print_success("環境分析完成")
         return analysis
@@ -275,7 +275,7 @@ class DroneCoordinator:
             print_error("  ✗ drone-config.yml 不存在")
         
         # 檢查目錄結構
-        dirs_to_check = ['.devcontainer', '.vscode', 'shared']
+        dirs_to_check = ['config/dev', '.vscode', 'shared']
         for dir_name in dirs_to_check:
             checks_total += 1
             if (self.project_root / dir_name).exists():

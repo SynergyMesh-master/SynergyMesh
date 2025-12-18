@@ -98,7 +98,7 @@ check_prerequisites() {
 prepare_environment() {
     log_info "🔧 準備部署環境: $DEPLOY_ENV"
     
-    local env_file="$PROJECT_ROOT/.devcontainer/environments/${DEPLOY_ENV}.env"
+    local env_file="$PROJECT_ROOT/config/dev/environments/${DEPLOY_ENV}.env"
     
     if [ -f "$env_file" ]; then
         log_info "  載入環境配置: $env_file"
@@ -139,7 +139,7 @@ build_application() {
 build_docker_images() {
     log_info "🐳 建置 Docker 映像..."
     
-    cd "$PROJECT_ROOT/.devcontainer"
+    cd "$PROJECT_ROOT/config/dev"
     
     docker_compose build --parallel 2>/dev/null || docker_compose build
     
@@ -150,7 +150,7 @@ build_docker_images() {
 deploy_services() {
     log_info "🚀 部署服務到 $DEPLOY_ENV 環境..."
     
-    cd "$PROJECT_ROOT/.devcontainer"
+    cd "$PROJECT_ROOT/config/dev"
     
     # 停止現有服務
     log_info "  停止現有服務..."
@@ -175,7 +175,7 @@ health_check() {
         log_info "  健康檢查 ($i/$retries)..."
         
         # 檢查容器狀態
-        cd "$PROJECT_ROOT/.devcontainer"
+        cd "$PROJECT_ROOT/config/dev"
         
         local unhealthy=0
         if docker_compose ps | grep -q "unhealthy\|Exit"; then
@@ -222,7 +222,7 @@ show_deployment_info() {
 rollback() {
     log_warn "🔄 執行回滾..."
     
-    cd "$PROJECT_ROOT/.devcontainer"
+    cd "$PROJECT_ROOT/config/dev"
     
     docker_compose down
     
@@ -233,7 +233,7 @@ rollback() {
 show_status() {
     log_info "📊 服務狀態:"
     
-    cd "$PROJECT_ROOT/.devcontainer"
+    cd "$PROJECT_ROOT/config/dev"
     
     docker_compose ps
 }
@@ -242,7 +242,7 @@ show_status() {
 show_logs() {
     local service=$1
     
-    cd "$PROJECT_ROOT/.devcontainer"
+    cd "$PROJECT_ROOT/config/dev"
     
     if [ -n "$service" ]; then
         log_info "📋 顯示 $service 日誌:"
@@ -332,12 +332,12 @@ main() {
             deploy_services
             ;;
         stop)
-            cd "$PROJECT_ROOT/.devcontainer"
+            cd "$PROJECT_ROOT/config/dev"
             docker_compose down
             log_success "服務已停止"
             ;;
         restart)
-            cd "$PROJECT_ROOT/.devcontainer"
+            cd "$PROJECT_ROOT/config/dev"
             docker_compose restart
             log_success "服務已重啟"
             ;;

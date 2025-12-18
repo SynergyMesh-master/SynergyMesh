@@ -167,7 +167,7 @@ directories:
   legacy: "legacy/" # 舊版本存檔
 
   # Hidden/Config (Phase 4: 整合 .github-private)
-  devcontainer: ".devcontainer/" # 開發容器
+  devcontainer: "config/dev/" # 開發容器
   github: ".github/" # GitHub 配置
   github_private: ".github/private/" # 私有 GitHub 配置
   vscode: ".vscode/" # VS Code 配置

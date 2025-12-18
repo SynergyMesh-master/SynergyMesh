@@ -3,7 +3,7 @@
 自動駕駛無人機 (Autopilot Drone)
 
 負責自動化任務的執行邏輯，包括文件監控和任務觸發。
-對應 .devcontainer/automation/auto-pilot.js (Python 版本)
+對應 config/dev/automation/auto-pilot.js (Python 版本)
 """
 
 import subprocess
@@ -244,12 +244,12 @@ class AutopilotDrone(BaseDrone):
 
     def run_core_autopilot(self) -> int:
         """
-        執行核心自動駕駛 (.devcontainer/automation/auto-pilot.js)
+        執行核心自動駕駛 (config/dev/automation/auto-pilot.js)
         
         Returns:
             執行結果代碼
         """
-        core_script = self.project_root / '.devcontainer' / 'automation' / 'auto-pilot.js'
+        core_script = self.project_root / 'config/dev' / 'automation' / 'auto-pilot.js'
 
         if not core_script.exists():
             self.log_error(f"核心自動駕駛腳本不存在: {core_script}")

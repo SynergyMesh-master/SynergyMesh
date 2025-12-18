@@ -71,7 +71,7 @@ class CodeGenerator {
 
   constructor() {
     this.projectRoot = this.findProjectRoot();
-    this.templatesPath = path.join(this.projectRoot, '.devcontainer', 'templates');
+    this.templatesPath = path.join(this.projectRoot, 'config/dev', 'templates');
     this.outputPath = path.join(this.projectRoot, 'generated');
   }
 

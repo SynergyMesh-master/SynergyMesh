@@ -6,7 +6,7 @@ echo "🧠💓 Starting 01-core Life System..."
 # Start supporting services first
 echo "🗄️ Starting supporting services..."
 cd /workspace
-docker-compose -f .devcontainer/docker-compose.yml up -d postgres redis prometheus
+docker-compose -f config/dev/docker-compose.yml up -d postgres redis prometheus
 
 # Wait for services to be ready
 echo "⏳ Waiting for services to be ready..."
@@ -14,8 +14,8 @@ sleep 10
 
 # Check service health
 echo "🔍 Checking service health..."
-docker-compose -f .devcontainer/docker-compose.yml exec postgres pg_isready -U life_admin -d life_system
-docker-compose -f .devcontainer/docker-compose.yml exec redis redis-cli ping
+docker-compose -f config/dev/docker-compose.yml exec postgres pg_isready -U life_admin -d life_system
+docker-compose -f config/dev/docker-compose.yml exec redis redis-cli ping
 
 # Start life system components
 echo "🧠 Starting Brain Engine..."

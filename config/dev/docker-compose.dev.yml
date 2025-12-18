@@ -4,7 +4,7 @@ services:
   keystone-platform:
     build:
       context: ..
-      dockerfile: .devcontainer/Dockerfile
+      dockerfile: config/dev/Dockerfile
     container_name: keystone-platform-dev
     volumes:
       - ..:/workspace

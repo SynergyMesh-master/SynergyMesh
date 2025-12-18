@@ -538,7 +538,7 @@ root_directory_guidelines:
       - "config/autofix"
       - ".ci"
       - ".config"
-      - ".devcontainer"
+      - "config/dev"
       - ".docker-templates"
       - ".github"
       - ".github-private"

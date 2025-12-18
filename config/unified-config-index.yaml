@@ -102,7 +102,7 @@ root_directory_restructuring_plan:
   # Naming conflict resolutions
   naming_conflict_resolutions:
     config_conflict:
-      issue: "config/ vs .config/ naming overlap"
+      issue: "config/ vs config/ naming overlap"
       recommendation: "Rename config/ to app-configs/"
       rationale: "Distinguish application configs from tool/test configs"
       status: "planning"

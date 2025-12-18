@@ -267,7 +267,7 @@ bot_config:
       paths: 
         - "templates/**/*.yaml"
         - "schemas/**/*.json"
-        - ".config/**/*.yaml"
+        - "config/**/*.yaml"
         - ".governance/**/*.yaml"
       
     - name: mcp-servers-validation
@@ -584,7 +584,7 @@ integration:
   
   # DevContainer 整合
   devcontainer:
-    dockerfile: ".devcontainer/Dockerfile"
+    dockerfile: "config/dev/Dockerfile"
     extensions:
       - ms-python.python
       - ms-vscode.vscode-yaml
