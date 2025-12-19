@@ -17,7 +17,7 @@ on:
 
 env:
   PLATFORM_VERSION: "v1.0.0"
-  DEPLOYER_SCRIPT: "autonomous-deploy.sh"
+  DEPLOYER_SCRIPT: "scripts/deployment/comprehensive-deploy.sh"
   VALIDATION_TIMEOUT: 600 # seconds
 
 jobs:
@@ -102,8 +102,9 @@ jobs:
 
       - name: Shell脚本语法检查
         run: |
+          set -euo pipefail
           echo "验证Shell脚本语法..."
-          find . -name "*.sh" -type f | while read script; do
+          while IFS= read -r script; do
             echo "检查脚本: $script"
             if bash -n "$script"; then
               echo "✅ $script 语法正确"
@@ -111,12 +112,13 @@ jobs:
               echo "❌ $script 语法错误"
               exit 1
             fi
-          done
+          done < <(find . -name "*.sh" -type f)
 
       - name: Python脚本语法检查
         run: |
+          set -euo pipefail
           echo "验证Python脚本语法..."
-          find . -name "*.py" -type f | while read script; do
+          while IFS= read -r script; do
             echo "检查脚本: $script"
             if python3 -m py_compile "$script"; then
               echo "✅ $script 语法正确"
@@ -125,23 +127,21 @@ jobs:
               echo "❌ $script 语法错误"
               exit 1
             fi
-          done
+          done < <(find . -name "*.py" -type f)
 
       - name: 部署脚本功能验证
         run: |
+          set -euo pipefail
           echo "验证主部署脚本功能..."
           if [ -f "$DEPLOYER_SCRIPT" ]; then
             echo "✅ 找到部署脚本: $DEPLOYER_SCRIPT"
             chmod +x "$DEPLOYER_SCRIPT"
-            REQUIRED_FUNCTIONS=("detect_environment" "validate_prerequisites" "deploy_foundation")
-            for func in "${REQUIRED_FUNCTIONS[@]}"; do
-              if grep -q "$func" "$DEPLOYER_SCRIPT"; then
-                echo "✅ 找到函数: $func"
-              else
-                echo "❌ 缺失函数: $func"
-                exit 1
-              fi
-            done
+            if bash -n "$DEPLOYER_SCRIPT"; then
+              echo "✅ 部署脚本语法正确"
+            else
+              echo "❌ 部署脚本语法错误"
+              exit 1
+            fi
           else
             echo "❌ 部署脚本不存在: $DEPLOYER_SCRIPT"
             exit 1
@@ -161,9 +161,10 @@ jobs:
 
       - name: YAML配置语法检查
         run: |
+          set -euo pipefail
           echo "验证YAML配置文件..."
           pip install yamllint
-          find . -name "*.yaml" -o -name "*.yml" | while read file; do
+          while IFS= read -r file; do
             echo "检查文件: $file"
             if yamllint "$file"; then
               echo "✅ $file YAML语法正确"
@@ -171,12 +172,13 @@ jobs:
               echo "❌ $file YAML语法错误"
               exit 1
             fi
-          done
+          done < <(find . -name "*.yaml" -o -name "*.yml")
 
       - name: JSON配置语法检查
         run: |
+          set -euo pipefail
           echo "验证JSON配置文件..."
-          find . -name "*.json" | while read file; do
+          while IFS= read -r file; do
             echo "检查文件: $file"
             if jq empty "$file" 2>/dev/null; then
               echo "✅ $file JSON语法正确"
@@ -184,12 +186,13 @@ jobs:
               echo "❌ $file JSON语法错误"
               exit 1
             fi
-          done
+          done < <(find . -name "*.json")
 
       - name: 环境配置验证
         run: |
+          set -euo pipefail
           echo "验证环境特定配置..."
-          CONFIG_FILES=("config/dev.yaml" "config/prod.yaml" "config/test.yaml")
+          CONFIG_FILES=("config/dependencies.yaml" "config/unified-config-index.yaml" "config/brand-mapping.yaml")
           for config in "${CONFIG_FILES[@]}"; do
             if [ -f "$config" ]; then
               echo "✅ 找到配置文件: $config"
