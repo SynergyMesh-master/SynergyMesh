@@ -1,17 +1,22 @@
 import { Router, Request, Response } from 'express';
 import type { Router as RouterType } from 'express';
+import rateLimit from 'express-rate-limit';
 import { AssignmentController } from './controllers/assignment';
 import { EscalationController } from './controllers/escalation';
 import { ProvenanceController } from './controllers/provenance';
 import { SLSAController } from './controllers/slsa';
-import { createRateLimiter, rateLimitPresets } from './middleware/rate-limit';
 
 const router: RouterType = Router();
 const provenanceController = new ProvenanceController();
 const slsaController = new SLSAController();
 const assignmentController = new AssignmentController();
 const escalationController = new EscalationController();
-const slsaRateLimiter = createRateLimiter(rateLimitPresets.strict);
+const slsaRateLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 10,
+  standardHeaders: true,
+  legacyHeaders: false,
+});
 
 // 健康檢查端點
 router.get('/healthz', (_req: Request, res: Response) => {
