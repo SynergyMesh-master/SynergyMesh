@@ -74,7 +74,6 @@ async function resolveSafePath(userInputPath: string): Promise<string> {
   }
 
   // Ensure the canonical path is strictly within the canonical safe root.
-    !rel || // empty string means exactly the root directory; disallow for strictness
   const rel = path.relative(canonicalSafeRoot, canonicalPath);
   if (
     rel.startsWith('..') ||
