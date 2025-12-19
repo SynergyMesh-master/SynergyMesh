@@ -201,10 +201,11 @@ def run_command(command: str) -> str:
     safe_commands = ['ls', 'cat', 'head', 'tail', 'wc', 'find', 'tree', 'pwd', 'echo']
     cmd_parts = command.split()
     if not cmd_parts or cmd_parts[0] not in safe_commands:
-        return f"Command not allowed. Only these are permitted: {', '.join(safe_commands)}"
+        allowed = ', '.join(safe_commands)
+        return f"Command not allowed. Only these are permitted: {allowed}"
     try:
         result = subprocess.run(
-            command, shell=True, capture_output=True, text=True, 
+            cmd_parts, shell=False, capture_output=True, text=True, 
             cwd=WORKSPACE, timeout=10
         )
         output = result.stdout or result.stderr
