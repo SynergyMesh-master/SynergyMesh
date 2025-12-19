@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import os
 import shutil
 import subprocess
 import tempfile
@@ -99,10 +100,13 @@ class BootstrapContext:
         if self.apply:
             # Security: Only execute scripts from trusted YAML manifests
             # The manifest file should be version-controlled and reviewed
-            with tempfile.NamedTemporaryFile("w", delete=False, prefix="bootstrap_", suffix=".sh") as tmp:
+            with tempfile.NamedTemporaryFile(
+                "w", delete=False, prefix="bootstrap_", suffix=".sh", dir=self.repo_root
+            ) as tmp:
                 tmp.write(formatted)
                 tmp_path = tmp.name
             try:
+                os.chmod(tmp_path, 0o600)
                 subprocess.run(["/bin/bash", tmp_path], check=True, cwd=self.repo_root)
             finally:
                 try:

@@ -251,24 +251,49 @@ function isProtectedBranch(branch?: string): boolean {
   return branch ? protectedBranches.includes(branch) : false;
 }
 
-const SAFE_BINARIES = new Set(["npm", "npx", "pnpm", "yarn", "git"]);
 const UNSAFE_PATTERN = /[;|`$><]/;
 
-function normalizeArgs(cmd: string, args: string[]): string[] {
-  if (cmd !== "git") {
-    return args;
+function parseAllowedCommand(segment: string): string[] {
+  if (UNSAFE_PATTERN.test(segment)) {
+    throw new Error(`Unsafe command rejected: ${segment}`);
   }
 
-  const messageIndex = args.indexOf("-m");
-  if (messageIndex !== -1 && messageIndex + 1 < args.length) {
-    const message = args
-      .slice(messageIndex + 1)
-      .join(" ")
-      .replace(/^['"]|['"]$/g, "");
-    return [...args.slice(0, messageIndex + 1), message];
+  const trimmed = segment.trim();
+  switch (trimmed) {
+    case "git status --porcelain":
+      return ["git", "status", "--porcelain"];
+    case "git add .":
+      return ["git", "add", "."];
+    case "git rev-parse HEAD":
+      return ["git", "rev-parse", "HEAD"];
+    case "npm run lint":
+      return ["npm", "run", "lint"];
+    case "npm run build":
+      return ["npm", "run", "build"];
+    case "npm test":
+      return ["npm", "test"];
+    case "npm run type-check":
+      return ["npm", "run", "type-check"];
+    case "npm run format":
+      return ["npm", "run", "format"];
+    case "npx eslint --fix .":
+      return ["npx", "eslint", "--fix", "."];
+    case "npx eslint --fix --ext .ts,.tsx,.js,.jsx .":
+      return ["npx", "eslint", "--fix", "--ext", ".ts,.tsx,.js,.jsx", "."];
+    case "npx prettier --write .":
+      return ["npx", "prettier", "--write", "."];
+    case "npx yaml-lint --fix .":
+      return ["npx", "yaml-lint", "--fix", "."];
+    case "npx markdownlint --fix .":
+      return ["npx", "markdownlint", "--fix", "."];
+    default:
+      if (trimmed.startsWith("git commit -m ")) {
+        const message = trimmed.replace(/^git commit -m\s+/, "").replace(/^['"]|['"]$/g, "");
+        return ["git", "commit", "-m", message];
+      }
   }
 
-  return args;
+  throw new Error(`Command not allowed: ${segment}`);
 }
 
 function runSafeCommand(
@@ -289,17 +314,8 @@ function runSafeCommand(
   let output = "";
 
   for (const segment of segments) {
-    if (UNSAFE_PATTERN.test(segment)) {
-      throw new Error(`Unsafe command rejected: ${segment}`);
-    }
-
-    const [cmd, ...rest] = segment.split(/\s+/).filter(Boolean);
-    if (!SAFE_BINARIES.has(cmd)) {
-      throw new Error(`Command not allowed: ${cmd}`);
-    }
-
-    const args = normalizeArgs(cmd, rest);
-    const result = spawnSync(cmd, args, {
+    const args = parseAllowedCommand(segment);
+    const result = spawnSync(args[0], args.slice(1), {
       encoding: "utf-8",
       stdio: stdio === "inherit" ? "inherit" : "pipe",
       timeout,
