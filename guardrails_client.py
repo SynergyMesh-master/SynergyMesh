@@ -59,7 +59,8 @@ def build_client(api_key: Optional[str] = None, base_url: Optional[str] = None) 
 
     if not api_key:
         raise ValueError(
-            "API key is required to build the AI client. Set AI_INTEGRATIONS_OPENAI_API_KEY or OPENAI_API_KEY."
+            "API key is required to build the AI client. Set AI_INTEGRATIONS_OPENAI_API_KEY (preferred, checked first) "
+            "or OPENAI_API_KEY."
         )
 
     if HAS_GUARDRAILS_CLIENT:
