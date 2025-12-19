@@ -208,7 +208,7 @@ def run_command(command: str) -> str:
         return f"Command not allowed. Only these are permitted: {', '.join(safe_commands)}"
     try:
         result = subprocess.run(
-            command, shell=True, capture_output=True, text=True, 
+            cmd_parts, shell=False, capture_output=True, text=True, 
             cwd=WORKSPACE, timeout=10
         )
         output = result.stdout or result.stderr

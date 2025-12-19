@@ -205,6 +205,53 @@ export class AutoRepairExecutor {
   }
 
   /**
+   * 安全地執行命令，避免 shell 注入
+   */
+  private runCommandSafely(command: string): { output: string; status: number } {
+    const segments = command
+      .split("&&")
+      .map(s => s.trim())
+      .filter(Boolean);
+
+    if (segments.length === 0) {
+      throw new Error("No command to execute");
+    }
+
+    const unsafePattern = /[;|`$><]/;
+    const outputs: string[] = [];
+    let lastStatus = 0;
+
+    for (const segment of segments) {
+      if (unsafePattern.test(segment)) {
+        throw new Error(`Unsafe command segment rejected: ${segment}`);
+      }
+
+      const [cmd, ...args] = segment.split(/\s+/);
+      const result: SpawnSyncReturns<string> = spawnSync(cmd, args, {
+        encoding: "utf-8",
+        timeout: 300000,
+        stdio: "pipe",
+        cwd: process.cwd(),
+      });
+
+      lastStatus = result.status ?? 0;
+      if (result.error) {
+        throw result.error;
+      }
+      if (lastStatus !== 0) {
+        const error = new Error(result.stderr || `Command failed: ${segment}`);
+        (error as any).status = lastStatus;
+        throw error;
+      }
+      if (result.stdout) {
+        outputs.push(result.stdout);
+      }
+    }
+
+    return { output: outputs.join("\n"), status: lastStatus };
+  }
+
+  /**
    * 執行單個修復步驟
    */
   private async executeStep(step: FixStep): Promise<StepResult> {
@@ -225,17 +272,12 @@ export class AutoRepairExecutor {
 
     while (retries < this.config.maxRetries) {
       try {
-        const result = execSync(step.command, {
-          encoding: "utf-8",
-          timeout: 300000, // 5 分鐘超時
-          stdio: "pipe",
-          cwd: process.cwd(),
-        });
+        const result = this.runCommandSafely(step.command);
 
         return {
           step,
           success: true,
-          output: result || "命令執行成功",
+          output: result.output || "命令執行成功",
           duration: Date.now() - startTime,
         };
       } catch (error: any) {

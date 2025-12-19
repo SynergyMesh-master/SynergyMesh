@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import shutil
 import subprocess
+import tempfile
 from collections.abc import Mapping, Sequence
 from pathlib import Path
 from typing import Any
@@ -98,8 +99,16 @@ class BootstrapContext:
         if self.apply:
             # Security: Only execute scripts from trusted YAML manifests
             # The manifest file should be version-controlled and reviewed
-            cmd = ["/bin/bash", "-c", formatted]
-            subprocess.run(cmd, check=True, cwd=self.repo_root)
+            with tempfile.NamedTemporaryFile("w", delete=False, prefix="bootstrap_", suffix=".sh") as tmp:
+                tmp.write(formatted)
+                tmp_path = tmp.name
+            try:
+                subprocess.run(["/bin/bash", tmp_path], check=True, cwd=self.repo_root)
+            finally:
+                try:
+                    Path(tmp_path).unlink()
+                except OSError:
+                    pass
             self.log("[shell] executed block")
         else:
             self.log("[dry-run] shell block:\n" + formatted)

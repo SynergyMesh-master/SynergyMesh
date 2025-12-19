@@ -22,7 +22,7 @@
 
 import * as fs from "fs";
 import * as path from "path";
-import { execSync } from "child_process";
+import { spawnSync } from "child_process";
 import { CIDiagnosisEngine, DiagnosisReport, DiagnosedError } from "./ci-diagnosis-engine";
 
 // =============================================================================
@@ -251,6 +251,74 @@ function isProtectedBranch(branch?: string): boolean {
   return branch ? protectedBranches.includes(branch) : false;
 }
 
+const SAFE_BINARIES = new Set(["npm", "npx", "pnpm", "yarn", "git"]);
+const UNSAFE_PATTERN = /[;|`$><]/;
+
+function normalizeArgs(cmd: string, args: string[]): string[] {
+  if (cmd !== "git") {
+    return args;
+  }
+
+  const messageIndex = args.indexOf("-m");
+  if (messageIndex !== -1 && messageIndex + 1 < args.length) {
+    const message = args
+      .slice(messageIndex + 1)
+      .join(" ")
+      .replace(/^['"]|['"]$/g, "");
+    return [...args.slice(0, messageIndex + 1), message];
+  }
+
+  return args;
+}
+
+function runSafeCommand(
+  command: string,
+  options?: { stdio?: "inherit" | "pipe"; timeoutMs?: number }
+): string {
+  const segments = command
+    .split("&&")
+    .map(s => s.trim())
+    .filter(Boolean);
+
+  if (segments.length === 0) {
+    throw new Error("No command to execute");
+  }
+
+  const stdio = options?.stdio ?? "pipe";
+  const timeout = options?.timeoutMs ?? 300000;
+  let output = "";
+
+  for (const segment of segments) {
+    if (UNSAFE_PATTERN.test(segment)) {
+      throw new Error(`Unsafe command rejected: ${segment}`);
+    }
+
+    const [cmd, ...rest] = segment.split(/\s+/).filter(Boolean);
+    if (!SAFE_BINARIES.has(cmd)) {
+      throw new Error(`Command not allowed: ${cmd}`);
+    }
+
+    const args = normalizeArgs(cmd, rest);
+    const result = spawnSync(cmd, args, {
+      encoding: "utf-8",
+      stdio: stdio === "inherit" ? "inherit" : "pipe",
+      timeout,
+    });
+
+    if (result.error) {
+      throw result.error;
+    }
+    if (typeof result.status === "number" && result.status !== 0) {
+      throw new Error(result.stderr?.toString() || `Command failed: ${segment}`);
+    }
+    if (stdio === "pipe" && result.stdout) {
+      output += result.stdout;
+    }
+  }
+
+  return output.trim();
+}
+
 function executeAutoFix(
   fixCommand: string,
   branch?: string
@@ -262,15 +330,17 @@ function executeAutoFix(
 
   try {
     console.log(`執行自動修復: ${fixCommand}`);
-    execSync(fixCommand, { stdio: "inherit" });
+    runSafeCommand(fixCommand, { stdio: "inherit" });
 
     // 檢查是否有變更
-    const status = execSync("git status --porcelain").toString().trim();
+    const status = runSafeCommand("git status --porcelain");
     if (status) {
       // 提交變更
-      execSync('git add .');
-      execSync('git commit -m "[auto-fix] 自動修復格式錯誤 (81-auto-comment)"');
-      const commitSha = execSync("git rev-parse HEAD").toString().trim();
+      runSafeCommand("git add .", { stdio: "inherit" });
+      runSafeCommand('git commit -m "[auto-fix] 自動修復格式錯誤 (81-auto-comment)"', {
+        stdio: "inherit",
+      });
+      const commitSha = runSafeCommand("git rev-parse HEAD");
       console.log(`自動修復已提交: ${commitSha}`);
       return { success: true, commit: commitSha };
     }
@@ -566,7 +636,7 @@ async function executeAutoRepairPlan(
 
       console.log(`  執行: ${step.command}`);
       try {
-        execSync(step.command, { stdio: "inherit" });
+        runSafeCommand(step.command, { stdio: "inherit" });
       } catch {
         // 某些命令可能返回非零但實際成功
         console.log(`  ⚠️ 命令返回非零，繼續執行...`);
@@ -574,11 +644,13 @@ async function executeAutoRepairPlan(
     }
 
     // 檢查是否有變更
-    const status = execSync("git status --porcelain").toString().trim();
+    const status = runSafeCommand("git status --porcelain");
     if (status) {
-      execSync("git add .");
-      execSync(`git commit -m "[auto-fix] 自動修復 CI 錯誤 (診斷 ID: ${report.id})"`);
-      const commitSha = execSync("git rev-parse HEAD").toString().trim();
+      runSafeCommand("git add .", { stdio: "inherit" });
+      runSafeCommand(`git commit -m "[auto-fix] 自動修復 CI 錯誤 (診斷 ID: ${report.id})"`, {
+        stdio: "inherit",
+      });
+      const commitSha = runSafeCommand("git rev-parse HEAD");
       console.log(`✅ 自動修復已提交: ${commitSha}`);
       return { success: true, commit: commitSha };
     }

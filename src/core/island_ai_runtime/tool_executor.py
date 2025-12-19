@@ -185,10 +185,17 @@ class CodeRunner(Tool):
             "open('/etc/",
             "rm -rf",
         ]
+        dangerous_tokens = ["&&", "||", ";", "|", "`", "$(", "${"]
 
         for pattern in dangerous_patterns:
             if pattern in request.command:
                 return False, f"Dangerous pattern detected: {pattern}"
+
+        if any(token in request.command for token in dangerous_tokens):
+            return False, "Potential shell injection token detected"
+
+        if len(request.command) > 5000:
+            return False, "Command too long"
 
         return True, ""
 
