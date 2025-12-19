@@ -41,7 +41,7 @@ jobs:
         run: |
           echo "检测操作系统环境..."
           OS_TYPE=$(uname -s | tr '[:upper:]' '[:lower:]')
-          echo "os-type=$OS_TYPE" > $GITHUB_OUTPUT
+          echo "os-type=$OS_TYPE" >> $GITHUB_OUTPUT
           echo "✅ 操作系统: $OS_TYPE"
 
       - name: 架构检测
@@ -49,7 +49,7 @@ jobs:
         run: |
           echo "检测系统架构..."
           ARCH_TYPE=$(uname -m)
-          echo "arch-type=$ARCH_TYPE" > $GITHUB_OUTPUT
+          echo "arch-type=$ARCH_TYPE" >> $GITHUB_OUTPUT
           echo "✅ 系统架构: $ARCH_TYPE"
 
       - name: 基础工具检查
@@ -67,10 +67,10 @@ jobs:
             fi
           done
           if [ ${#MISSING_TOOLS[@]} -eq 0 ]; then
-            echo "available=true" > $GITHUB_OUTPUT
+            echo "available=true" >> $GITHUB_OUTPUT
             echo "✅ 所有必需工具可用"
           else
-            echo "available=false" > $GITHUB_OUTPUT
+            echo "available=false" >> $GITHUB_OUTPUT
             echo "❌ 缺失工具: ${MISSING_TOOLS[*]}"
             exit 1
           fi
@@ -106,7 +106,7 @@ jobs:
           echo "验证Shell脚本语法..."
           mapfile -t shell_files < <(find . -name "*.sh" -type f)
           if [ ${#shell_files[@]} -eq 0 ]; then
-            echo "ℹ️ 未找到 Shell 腳本"
+            echo "ℹ️ 未找到 Shell 脚本"
           else
             for script in "${shell_files[@]}"; do
               echo "检查脚本: $script"
@@ -125,7 +125,7 @@ jobs:
           echo "验证Python脚本语法..."
           mapfile -t python_files < <(find . -name "*.py" -type f)
           if [ ${#python_files[@]} -eq 0 ]; then
-            echo "ℹ️ 未找到 Python 腳本"
+            echo "ℹ️ 未找到 Python 脚本"
           else
             for script in "${python_files[@]}"; do
               echo "检查脚本: $script"
@@ -253,10 +253,10 @@ jobs:
                 "${{ needs.script-validation.result }}" == "success" && \
                 "${{ needs.config-validation.result }}" == "success" ]]; then
             echo "🎉 环境验证全部通过" | tee -a "$REPORT_FILE"
-            echo "report-status=success" > $GITHUB_OUTPUT
+            echo "report-status=success" >> $GITHUB_OUTPUT
           else
             echo "❌ 环境验证失败" | tee -a "$REPORT_FILE"
-            echo "report-status=failure" > $GITHUB_OUTPUT
+            echo "report-status=failure" >> $GITHUB_OUTPUT
           fi
 
       - name: 上传验证报告
