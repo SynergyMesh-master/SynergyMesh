@@ -387,7 +387,13 @@ class OptimizationAgent(BaseAgent):
             # 移除百分比符號
             value_str = value.replace("%", "").strip()
             
+            # 檢查是否以負號開頭
+            is_negative = value_str.startswith("-")
+            if is_negative:
+                value_str = value_str[1:].strip()
+            
             # 處理範圍值（例如 "30-50"），取第一個數字
+            # 只在不是負數的情況下處理連字符
             if "-" in value_str:
                 # 分割並過濾空字符串
                 parts = [p.strip() for p in value_str.split("-") if p.strip()]
@@ -396,16 +402,16 @@ class OptimizationAgent(BaseAgent):
                     value_str = parts[0]
             
             # 提取數字部分（處理類似 "30 faster" 的情況）
-            # 只保留數字和負號
+            # 只保留數字
             numeric_chars = ""
             for char in value_str:
-                if char.isdigit() or (char == "-" and not numeric_chars):
+                if char.isdigit():
                     numeric_chars += char
                 elif numeric_chars:
                     # 遇到非數字字符且已有數字，停止
                     break
             
-            if not numeric_chars or numeric_chars == "-":
+            if not numeric_chars:
                 return None
             
             # 轉換為整數並返回絕對值
