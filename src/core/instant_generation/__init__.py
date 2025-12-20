@@ -29,8 +29,7 @@ from .optimization import (
 
 from .monitoring import (
     RealTimeMonitor,
-    PerformanceTracker,
-    AlertSystem
+    PerformanceTracker
 )
 
 __version__ = "1.0.0"
