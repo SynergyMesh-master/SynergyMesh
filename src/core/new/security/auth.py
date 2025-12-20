@@ -14,6 +14,11 @@ from typing import Any, Optional
 
 logger = logging.getLogger(__name__)
 
+# 密碼哈希安全參數
+PBKDF2_SALT_LENGTH = 32  # bytes
+PBKDF2_ITERATIONS = 100000  # OWASP recommended minimum
+DEFAULT_PASSWORD_LENGTH = 24  # characters for token_urlsafe
+
 class Permission(Enum):
     """權限枚舉"""
     READ = "read"
@@ -43,8 +48,8 @@ class SecurityManager:
     @staticmethod
     def _hash_password(password: str) -> str:
         """使用 PBKDF2 對密碼進行哈希處理"""
-        salt = secrets.token_bytes(32)
-        pwdhash = hashlib.pbkdf2_hmac('sha256', password.encode('utf-8'), salt, 100000)
+        salt = secrets.token_bytes(PBKDF2_SALT_LENGTH)
+        pwdhash = hashlib.pbkdf2_hmac('sha256', password.encode('utf-8'), salt, PBKDF2_ITERATIONS)
         return salt.hex() + ':' + pwdhash.hex()
     
     @staticmethod
@@ -54,7 +59,7 @@ class SecurityManager:
             salt_hex, pwdhash_hex = stored_password.split(':')
             salt = bytes.fromhex(salt_hex)
             stored_hash = bytes.fromhex(pwdhash_hex)
-            pwdhash = hashlib.pbkdf2_hmac('sha256', provided_password.encode('utf-8'), salt, 100000)
+            pwdhash = hashlib.pbkdf2_hmac('sha256', provided_password.encode('utf-8'), salt, PBKDF2_ITERATIONS)
             return pwdhash == stored_hash
         except (ValueError, AttributeError):
             return False
@@ -104,7 +109,7 @@ class SecurityManager:
             password_from_env = default_password is not None
             
             if not default_password:
-                default_password = secrets.token_urlsafe(16)
+                default_password = secrets.token_urlsafe(DEFAULT_PASSWORD_LENGTH)
             
             admin_user = User(
                 id="admin_001",
@@ -119,11 +124,20 @@ class SecurityManager:
             if password_from_env:
                 logger.info("✅ 使用環境變量 ADMIN_DEFAULT_PASSWORD 設置的管理員密碼")
             else:
-                logger.warning("⚠️ 默認管理員密碼已生成，請妥善保管並立即修改。請查看安全日誌以獲取密碼。")
-                # 僅記錄到安全事件，不記錄到普通日誌
+                # 將密碼輸出到標準輸出供部署者記錄（僅在首次創建時）
+                print(f"\n{'='*60}")
+                print(f"🔐 默認管理員密碼已生成")
+                print(f"用戶名: admin")
+                print(f"密碼: {default_password}")
+                print(f"⚠️  請立即保存此密碼並在首次登入後修改！")
+                print(f"{'='*60}\n")
+                
+                logger.warning("⚠️ 默認管理員密碼已生成並輸出到控制台，請妥善保管並立即修改")
+                # 記錄密碼生成事件但不包含密碼本身
                 await self._log_security_event("admin_password_generated", {
                     "username": "admin",
-                    "password": default_password,
+                    "timestamp": datetime.now().isoformat(),
+                    "source": "environment_variable" if password_from_env else "auto_generated",
                     "warning": "請立即修改此密碼"
                 })
     
