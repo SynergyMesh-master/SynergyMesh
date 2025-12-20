@@ -13,9 +13,19 @@ const provenanceController = new ProvenanceController();
 const slsaController = new SLSAController();
 const assignmentController = new AssignmentController();
 const escalationController = new EscalationController();
+const windowMinutesEnv = process.env.SLSA_RATE_LIMIT_WINDOW_MINUTES;
+const maxRequestsEnv = process.env.SLSA_RATE_LIMIT_MAX_REQUESTS;
+const slsaRateLimitWindowMinutes = (() => {
+  const parsed = windowMinutesEnv ? parseInt(windowMinutesEnv, 10) : NaN;
+  return Number.isFinite(parsed) && parsed > 0 ? parsed : 15;
+})();
+const slsaRateLimitMaxRequests = (() => {
+  const parsed = maxRequestsEnv ? parseInt(maxRequestsEnv, 10) : NaN;
+  return Number.isFinite(parsed) && parsed > 0 ? parsed : 10;
+})();
 const slsaRateLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
-  max: 10,
+  windowMs: slsaRateLimitWindowMinutes * 60 * 1000,
+  max: slsaRateLimitMaxRequests,
   standardHeaders: true,
   legacyHeaders: false,
 });

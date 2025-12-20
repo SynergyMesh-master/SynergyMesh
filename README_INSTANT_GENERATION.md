@@ -205,6 +205,7 @@ result = await agent.process_task(task)
 - **結果**: 完整的在線購物平台
 
 ### 案例2：管理系統
+
 - **需求**: "開發企業管理系統"
 - **生成時間**: 8分45秒
 - **代碼質量**: 89分
@@ -224,6 +225,8 @@ result = await agent.process_task(task)
 - 📧 [郵件支持](mailto:support@myninja.ai)
 
 ### 🎯 參與貢獻
+
+
 - 🔧 [貢獻代碼](CONTRIBUTING.md)
 - 📝 [改進文檔](docs/contributing.md)
 - 🌟 [推薦項目](https://github.com/MachineNativeOps/MachineNativeOps)
