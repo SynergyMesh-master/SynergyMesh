@@ -1,0 +1,202 @@
+{
+  "version": "1.0.0",
+  "description": "DAR 協議 - 定義 DAR 能做什麼、怎麼做、產出什麼",
+  "dar_capabilities": [
+    {
+      "task_type": "diagnose",
+      "description": "偵測結構/語意/治理問題",
+      "triggers": [
+        "artifact_changed",
+        "scheduled_audit",
+        "manual_request"
+      ],
+      "tools": [
+        "vector_search",
+        "rag_answer",
+        "dag_analyzer",
+        "policy_checker"
+      ],
+      "output_format": {
+        "type": "object",
+        "properties": {
+          "issues": {
+            "type": "array",
+            "items": {
+              "severity": "enum(critical, high, medium, low)",
+              "type": "enum(missing_metadata, naming_inconsistency, circular_dependency, drift, compliance_violation)",
+              "affected_artifacts": "array",
+              "evidence": "string"
+            }
+          }
+        }
+      },
+      "priority": "P0",
+      "estimated_duration": "< 5 minutes"
+    },
+    {
+      "task_type": "repair",
+      "description": "產生修復 patch 和 PR",
+      "triggers": [
+        "diagnosis_completed",
+        "manual_request"
+      ],
+      "tools": [
+        "rag_answer",
+        "git_patch",
+        "ci_trigger"
+      ],
+      "output_format": {
+        "type": "object",
+        "properties": {
+          "patches": {
+            "type": "array",
+            "items": {
+              "file": "string",
+              "operation": "enum(create, update, delete)",
+              "diff": "string",
+              "rationale": "string"
+            }
+          },
+          "pr_body": "string",
+          "estimated_impact": "string"
+        }
+      },
+      "priority": "P1",
+      "estimated_duration": "< 10 minutes"
+    },
+    {
+      "task_type": "align",
+      "description": "檢查治理對齐",
+      "triggers": [
+        "policy_updated",
+        "scheduled_audit"
+      ],
+      "tools": [
+        "policy_checker",
+        "rag_answer"
+      ],
+      "output_format": {
+        "type": "object",
+        "properties": {
+          "alignment_score": "number(0-100)",
+          "violations": "array",
+          "recommendations": "array"
+        }
+      },
+      "priority": "P2",
+      "estimated_duration": "< 15 minutes"
+    },
+    {
+      "task_type": "refactor",
+      "description": "結構優化、命名統一",
+      "triggers": [
+        "manual_request",
+        "drift_detected"
+      ],
+      "tools": [
+        "dag_analyzer",
+        "rag_answer",
+        "git_patch"
+      ],
+      "output_format": {
+        "type": "object",
+        "properties": {
+          "refactoring_plan": "string",
+          "patches": "array",
+          "impact_analysis": "object"
+        }
+      },
+      "priority": "P1",
+      "estimated_duration": "< 30 minutes"
+    }
+  ],
+  "tool_definitions": {
+    "vector_search": {
+      "description": "多維度向量搜尋",
+      "parameters": {
+        "query": "string",
+        "dimensions": "enum(content, structure, governance)",
+        "top_k": "integer(default=10)"
+      },
+      "returns": "array of {artifact_id, similarity_score, context}",
+      "implementation": "../retrieval/vector-index/"
+    },
+    "rag_answer": {
+      "description": "從 context 生成答案/建議",
+      "parameters": {
+        "question": "string",
+        "context": "array of artifacts",
+        "style": "enum(technical, executive, patch)"
+      },
+      "returns": "string (generated answer)",
+      "implementation": "../retrieval/rag-config.json"
+    },
+    "dag_analyzer": {
+      "description": "分析治理 DAG 結構",
+      "parameters": {
+        "check_type": "enum(cycles, orphans, coverage, depth)"
+      },
+      "returns": "object with {issues, recommendations}",
+      "implementation": "../governance/dag.graphml"
+    },
+    "policy_checker": {
+      "description": "檢查策略合規性",
+      "parameters": {
+        "artifact_id": "string",
+        "policies": "array"
+      },
+      "returns": "object with {compliant, violations}",
+      "implementation": "../governance/policies.rego"
+    },
+    "git_patch": {
+      "description": "產生 git-compatible patch",
+      "parameters": {
+        "files": "array",
+        "changes": "object"
+      },
+      "returns": "string (patch content)",
+      "implementation": "../../scripts/"
+    },
+    "ci_trigger": {
+      "description": "觸發 CI/CD pipeline",
+      "parameters": {
+        "workflow": "string",
+        "inputs": "object"
+      },
+      "returns": "object with {run_id, url}",
+      "implementation": "../automation/ci-integration.yaml"
+    }
+  },
+  "execution_flow": {
+    "standard_pipeline": [
+      {
+        "stage": "1_diagnose",
+        "tasks": ["diagnose"],
+        "parallel": false
+      },
+      {
+        "stage": "2_analyze",
+        "tasks": ["align"],
+        "parallel": true
+      },
+      {
+        "stage": "3_plan",
+        "tasks": ["refactor"],
+        "parallel": false,
+        "conditional": "issues_found == true"
+      },
+      {
+        "stage": "4_repair",
+        "tasks": ["repair"],
+        "parallel": false,
+        "conditional": "auto_fix_enabled == true"
+      }
+    ]
+  },
+  "guardrails": {
+    "max_affected_artifacts": 50,
+    "max_depth": 5,
+    "require_approval_threshold": 10,
+    "auto_rollback_on_failure": true
+  }
+}

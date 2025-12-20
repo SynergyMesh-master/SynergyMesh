@@ -1,0 +1,93 @@
+# =============================================================================
+# Example: Data Lineage Graph
+# =============================================================================
+# This example demonstrates how to define data lineage with nodes and edges
+# representing data flow and transformations.
+# =============================================================================
+
+apiVersion: metadata.machinenativeops.io/v1
+kind: LineageGraph
+metadata:
+  id: "customer-analytics-lineage"
+  name: "Customer Analytics Data Lineage"
+  classification: operational
+  owner: data-engineering-team
+  tags:
+    - lineage
+    - analytics
+    - etl
+  created_at: "2025-12-19T00:00:00Z"
+  updated_at: "2025-12-19T00:00:00Z"
+
+spec:
+  nodes:
+    - id: "raw-customer-data"
+      type: source
+      attributes:
+        name: "Raw Customer Database"
+        location: "postgresql://db.example.com:5432/customers"
+        format: "relational"
+    
+    - id: "data-ingestion-pipeline"
+      type: transformation
+      attributes:
+        name: "Data Ingestion ETL"
+        technology: "Apache Airflow"
+        schedule: "daily"
+    
+    - id: "data-warehouse"
+      type: intermediate
+      attributes:
+        name: "Enterprise Data Warehouse"
+        location: "snowflake://warehouse.example.com/customers"
+        format: "columnar"
+    
+    - id: "analytics-transformation"
+      type: transformation
+      attributes:
+        name: "Analytics Aggregation"
+        technology: "dbt"
+        schedule: "hourly"
+    
+    - id: "customer-analytics-dashboard"
+      type: target
+      attributes:
+        name: "Customer Analytics Dashboard"
+        technology: "Tableau"
+        url: "https://analytics.example.com/customer-dashboard"
+
+  edges:
+    - source: "raw-customer-data"
+      target: "data-ingestion-pipeline"
+      relationship: "produces"
+      attributes:
+        data_volume: "1M records/day"
+        latency: "< 5 minutes"
+    
+    - source: "data-ingestion-pipeline"
+      target: "data-warehouse"
+      relationship: "transforms"
+      attributes:
+        transformation_type: "extract-load"
+        data_quality_checks: true
+    
+    - source: "data-warehouse"
+      target: "analytics-transformation"
+      relationship: "produces"
+      attributes:
+        data_volume: "500K records/day"
+    
+    - source: "analytics-transformation"
+      target: "customer-analytics-dashboard"
+      relationship: "transforms"
+      attributes:
+        transformation_type: "aggregation"
+        metrics:
+          - "customer_lifetime_value"
+          - "churn_rate"
+          - "acquisition_cost"
+
+status:
+  state: active
+  quality_score: 0.95
+  completeness_ratio: 0.90

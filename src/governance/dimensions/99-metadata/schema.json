@@ -1,0 +1,415 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "urn:machinenativeops:governance:metadata:schema:v1",
+  "title": "Metadata Management Center Schema",
+  "description": "JSON Schema for metadata management, lineage, provenance, and living knowledge base",
+  "type": "object",
+  "required": ["apiVersion", "kind", "metadata", "spec"],
+  "properties": {
+    "apiVersion": {
+      "type": "string",
+      "const": "metadata.machinenativeops.io/v1",
+      "description": "API version"
+    },
+    "kind": {
+      "type": "string",
+      "enum": ["MetadataEntry", "LineageGraph", "ProvenanceRecord", "KnowledgeGraph"],
+      "description": "Resource kind"
+    },
+    "metadata": {
+      "type": "object",
+      "required": ["id", "name", "classification"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+          "description": "Unique identifier"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Human-readable name"
+        },
+        "classification": {
+          "type": "string",
+          "enum": ["technical", "business", "operational", "governance"],
+          "description": "Metadata classification"
+        },
+        "owner": {
+          "type": "string",
+          "description": "Data owner"
+        },
+        "sensitivity": {
+          "type": "string",
+          "enum": ["public", "internal", "confidential", "restricted", "pii"],
+          "description": "Data sensitivity level"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Tags for categorization"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Creation timestamp"
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Last update timestamp"
+        }
+      }
+    },
+    "spec": {
+      "type": "object",
+      "description": "Specification based on kind",
+      "oneOf": [
+        {
+          "$ref": "#/definitions/metadataEntrySpec"
+        },
+        {
+          "$ref": "#/definitions/lineageGraphSpec"
+        },
+        {
+          "$ref": "#/definitions/provenanceRecordSpec"
+        },
+        {
+          "$ref": "#/definitions/knowledgeGraphSpec"
+        }
+      ]
+    },
+    "status": {
+      "type": "object",
+      "properties": {
+        "state": {
+          "type": "string",
+          "enum": ["draft", "validating", "active", "deprecating", "archived"],
+          "description": "Current state"
+        },
+        "quality_score": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Quality score (0-1)"
+        },
+        "completeness_ratio": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Completeness ratio (0-1)"
+        }
+      }
+    }
+  },
+  "definitions": {
+    "metadataEntrySpec": {
+      "type": "object",
+      "required": ["attributes"],
+      "properties": {
+        "attributes": {
+          "type": "object",
+          "description": "Metadata attributes based on classification",
+          "properties": {
+            "data_source": {
+              "type": "string",
+              "description": "Data source (technical)"
+            },
+            "format": {
+              "type": "string",
+              "description": "Data format (technical)"
+            },
+            "schema": {
+              "type": "object",
+              "description": "Data schema (technical)"
+            },
+            "dependencies": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Dependencies (technical)"
+            },
+            "business_terms": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Business terminology (business)"
+            },
+            "quality_rules": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              },
+              "description": "Data quality rules (business)"
+            },
+            "lineage": {
+              "type": "object",
+              "description": "Data lineage (operational)"
+            },
+            "change_history": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              },
+              "description": "Change history (operational)"
+            },
+            "policies": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Applicable policies (governance)"
+            },
+            "compliance_requirements": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Compliance requirements (governance)"
+            }
+          }
+        }
+      }
+    },
+    "lineageGraphSpec": {
+      "type": "object",
+      "required": ["nodes", "edges"],
+      "properties": {
+        "nodes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id", "type"],
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "Node identifier"
+              },
+              "type": {
+                "type": "string",
+                "enum": ["source", "transformation", "target", "intermediate"],
+                "description": "Node type"
+              },
+              "attributes": {
+                "type": "object",
+                "description": "Node attributes"
+              }
+            }
+          },
+          "description": "Lineage graph nodes"
+        },
+        "edges": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["source", "target", "relationship"],
+            "properties": {
+              "source": {
+                "type": "string",
+                "description": "Source node ID"
+              },
+              "target": {
+                "type": "string",
+                "description": "Target node ID"
+              },
+              "relationship": {
+                "type": "string",
+                "enum": ["produces", "consumes", "transforms", "depends_on"],
+                "description": "Relationship type"
+              },
+              "attributes": {
+                "type": "object",
+                "description": "Edge attributes"
+              }
+            }
+          },
+          "description": "Lineage graph edges"
+        }
+      }
+    },
+    "provenanceRecordSpec": {
+      "type": "object",
+      "required": ["source", "timestamp", "actor"],
+      "properties": {
+        "source": {
+          "type": "object",
+          "required": ["type"],
+          "properties": {
+            "type": {
+              "type": "string",
+              "enum": ["git", "build", "runtime", "manual"],
+              "description": "Source type"
+            },
+            "repository": {
+              "type": "string",
+              "description": "Git repository (for git source)"
+            },
+            "commit": {
+              "type": "string",
+              "description": "Git commit SHA (for git source)"
+            },
+            "pipeline": {
+              "type": "string",
+              "description": "Build pipeline (for build source)"
+            },
+            "run_id": {
+              "type": "string",
+              "description": "Pipeline run ID (for build source)"
+            }
+          },
+          "description": "Provenance source"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp of the action"
+        },
+        "actor": {
+          "type": "object",
+          "required": ["type", "id"],
+          "properties": {
+            "type": {
+              "type": "string",
+              "enum": ["human", "bot", "system"],
+              "description": "Actor type"
+            },
+            "id": {
+              "type": "string",
+              "description": "Actor identifier"
+            },
+            "name": {
+              "type": "string",
+              "description": "Actor name"
+            }
+          },
+          "description": "Actor who performed the action"
+        },
+        "action": {
+          "type": "string",
+          "enum": ["create", "update", "delete", "deploy", "validate"],
+          "description": "Action performed"
+        },
+        "artifacts": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "description": "Artifact type (e.g., sbom, attestation)"
+              },
+              "uri": {
+                "type": "string",
+                "format": "uri",
+                "description": "Artifact URI"
+              },
+              "checksum": {
+                "type": "string",
+                "description": "Artifact checksum"
+              }
+            }
+          },
+          "description": "Related artifacts"
+        }
+      }
+    },
+    "knowledgeGraphSpec": {
+      "type": "object",
+      "required": ["entities", "relationships"],
+      "properties": {
+        "entities": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id", "type"],
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "Entity identifier"
+              },
+              "type": {
+                "type": "string",
+                "enum": ["system", "subsystem", "component", "config", "document", "workflow"],
+                "description": "Entity type"
+              },
+              "name": {
+                "type": "string",
+                "description": "Entity name"
+              },
+              "attributes": {
+                "type": "object",
+                "description": "Entity attributes"
+              }
+            }
+          },
+          "description": "Knowledge graph entities"
+        },
+        "relationships": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["source", "target", "type"],
+            "properties": {
+              "source": {
+                "type": "string",
+                "description": "Source entity ID"
+              },
+              "target": {
+                "type": "string",
+                "description": "Target entity ID"
+              },
+              "type": {
+                "type": "string",
+                "enum": ["belongs_to", "depends_on", "documents", "covers", "links_to"],
+                "description": "Relationship type"
+              },
+              "attributes": {
+                "type": "object",
+                "description": "Relationship attributes"
+              }
+            }
+          },
+          "description": "Entity relationships"
+        },
+        "diagnostics": {
+          "type": "object",
+          "properties": {
+            "orphan_components": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Orphaned component IDs"
+            },
+            "dead_configs": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Dead config IDs"
+            },
+            "overlapping_workflows": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              },
+              "description": "Overlapping workflow groups"
+            },
+            "broken_links": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              },
+              "description": "Broken document links"
+            }
+          },
+          "description": "Diagnostic results"
+        }
+      }
+    }
+  }
+}

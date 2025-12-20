@@ -1,0 +1,98 @@
+{
+  "version": "1.0.0",
+  "description": "RAG 配置 - RAG 提示詞 & 檢索策略",
+  "retrieval_strategy": {
+    "default": {
+      "method": "hybrid",
+      "vector_weight": 0.7,
+      "keyword_weight": 0.3,
+      "top_k": 10,
+      "rerank": true,
+      "rerank_model": "cross-encoder/ms-marco-MiniLM-L-12-v2"
+    },
+    "by_task": {
+      "diagnose": {
+        "method": "vector_only",
+        "dimensions": ["structure", "governance"],
+        "top_k": 20,
+        "similarity_threshold": 0.75
+      },
+      "repair": {
+        "method": "hybrid",
+        "vector_weight": 0.6,
+        "keyword_weight": 0.4,
+        "context_window": 5,
+        "include_history": true,
+        "top_k": 10
+      },
+      "align": {
+        "method": "policy_focused",
+        "dimensions": ["governance"],
+        "top_k": 15,
+        "policy_boost": 2.0
+      },
+      "refactor": {
+        "method": "structural",
+        "dimensions": ["structure", "content"],
+        "top_k": 25,
+        "cluster_similar": true
+      }
+    }
+  },
+  "prompt_templates": {
+    "diagnose": {
+      "system": "You are a governance expert analyzing artifacts for structural, semantic, and compliance issues. Be precise and actionable.",
+      "user_template": "Analyze artifact {{artifact_id}} for the following issues:\n\n**Check for:**\n- Naming inconsistencies (kebab-case violations)\n- Missing or incomplete metadata (owner, domain, sla)\n- Policy violations\n- Circular dependencies\n- Orphaned artifacts\n\n**Artifact Details:**\n{{artifact_details}}\n\n**Related Context:**\n{{context}}\n\n**Output format:**\n- severity: critical|high|medium|low\n- type: specific issue type\n- evidence: concrete proof\n- recommendation: actionable fix",
+      "max_tokens": 1500,
+      "temperature": 0.2
+    },
+    "repair": {
+      "system": "You are a code repair assistant. Generate minimal, precise patches that fix issues without introducing new problems. Always provide rationale.",
+      "user_template": "Fix the following governance issues:\n\n**Issues:**\n{{issues}}\n\n**Context from similar artifacts:**\n{{context}}\n\n**Constraints:**\n- Maintain backward compatibility\n- Follow naming conventions (kebab-case)\n- Preserve metadata structure\n- Minimal changes only\n\n**Generate patches in this JSON format:**\n```json\n{\n  \"file\": \"path/to/file\",\n  \"operation\": \"update\",\n  \"changes\": {\n    \"field\": \"new_value\"\n  },\n  \"rationale\": \"why this fix is correct\"\n}\n```",
+      "max_tokens": 2000,
+      "temperature": 0.1
+    },
+    "align": {
+      "system": "You are a governance alignment checker. Evaluate artifacts against policies and provide compliance scores.",
+      "user_template": "Check governance alignment for:\n\n**Artifact:**\n{{artifact_id}}\n\n**Policies to check:**\n{{policies}}\n\n**Context:**\n{{context}}\n\n**Evaluate:**\n1. Compliance with each policy\n2. Overall alignment score (0-100)\n3. Specific violations\n4. Recommended actions\n\n**Output format:**\n- alignment_score: number (0-100)\n- policy_results: [{policy, compliant, violations}]\n- recommendations: [actionable items]",
+      "max_tokens": 1800,
+      "temperature": 0.15
+    },
+    "refactor": {
+      "system": "You are a refactoring specialist. Propose structural improvements that enhance maintainability while preserving functionality.",
+      "user_template": "Propose refactoring for:\n\n**Target artifacts:**\n{{artifacts}}\n\n**Issues identified:**\n{{issues}}\n\n**Context:**\n{{context}}\n\n**Goals:**\n- Improve naming consistency\n- Reduce coupling\n- Enhance metadata completeness\n- Optimize DAG structure\n\n**Provide:**\n1. Refactoring plan overview\n2. Step-by-step changes\n3. Impact analysis\n4. Rollback strategy",
+      "max_tokens": 2500,
+      "temperature": 0.25
+    }
+  },
+  "vector_config": {
+    "embedding_model": "text-embedding-ada-002",
+    "dimension": 1536,
+    "distance_metric": "cosine",
+    "index_type": "hnsw",
+    "hnsw_params": {
+      "m": 16,
+      "ef_construction": 200,
+      "ef_search": 100
+    }
+  },
+  "chunking_strategy": {
+    "method": "semantic",
+    "chunk_size": 1000,
+    "chunk_overlap": 200,
+    "separators": ["\n\n", "\n", " "]
+  },
+  "metadata_filters": {
+    "allow_filters": [
+      "owner",
+      "domain",
+      "lifecycle",
+      "type",
+      "tags",
+      "compliance"
+    ],
+    "default_filters": {
+      "lifecycle": "active"
+    }
+  }
+}

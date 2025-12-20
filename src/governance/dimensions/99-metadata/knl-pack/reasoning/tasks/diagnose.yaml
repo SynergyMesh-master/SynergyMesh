@@ -1,0 +1,142 @@
+task_type: diagnose
+name: "Diagnose Governance Issues"
+description: "偵測結構/語意/治理問題 - Detect structural, semantic, and governance issues"
+version: "1.0.0"
+
+metadata:
+  priority: P0
+  estimated_duration: "< 5 minutes"
+  auto_trigger: true
+
+steps:
+  - step: 1
+    name: "Load Governance Index"
+    action: "load_file"
+    file: "../governance/index.json"
+    output_var: "governance_index"
+    description: "載入全局治理索引"
+
+  - step: 2
+    name: "Load DAG"
+    action: "load_file"
+    file: "../governance/dag.graphml"
+    output_var: "governance_dag"
+    description: "載入治理 DAG"
+
+  - step: 3
+    name: "Check Circular Dependencies"
+    action: "dag_analyzer"
+    parameters:
+      check_type: "cycles"
+      dag: "{{ governance_dag }}"
+    output_var: "cycle_issues"
+    description: "檢測循環依賴"
+
+  - step: 4
+    name: "Check Orphan Artifacts"
+    action: "dag_analyzer"
+    parameters:
+      check_type: "orphans"
+      dag: "{{ governance_dag }}"
+      index: "{{ governance_index }}"
+    output_var: "orphan_issues"
+    description: "檢測孤兒資源"
+
+  - step: 5
+    name: "Check Naming Consistency"
+    action: "vector_search"
+    parameters:
+      query: "Find artifacts with inconsistent naming"
+      dimensions: ["structure", "governance"]
+      top_k: 20
+    output_var: "naming_candidates"
+    description: "查找命名不一致的候選"
+
+  - step: 6
+    name: "Analyze Naming Issues"
+    action: "policy_checker"
+    parameters:
+      artifacts: "{{ naming_candidates }}"
+      policies: ["naming-convention"]
+    output_var: "naming_issues"
+    description: "分析命名問題"
+
+  - step: 7
+    name: "Check Metadata Completeness"
+    action: "policy_checker"
+    parameters:
+      artifacts: "{{ governance_index.artifacts }}"
+      policies: ["metadata-completeness"]
+    output_var: "metadata_issues"
+    description: "檢查元數據完整性"
+
+  - step: 8
+    name: "Aggregate Issues"
+    action: "aggregate"
+    inputs:
+      - "{{ cycle_issues }}"
+      - "{{ orphan_issues }}"
+      - "{{ naming_issues }}"
+      - "{{ metadata_issues }}"
+    output_var: "all_issues"
+    description: "聚合所有問題"
+
+  - step: 9
+    name: "Prioritize Issues"
+    action: "prioritize"
+    parameters:
+      issues: "{{ all_issues }}"
+      criteria:
+        - severity
+        - impact_radius
+        - compliance_risk
+    output_var: "prioritized_issues"
+    description: "優先級排序"
+
+  - step: 10
+    name: "Generate Report"
+    action: "format_output"
+    template: |
+      # Governance Diagnosis Report
+      
+      **Timestamp**: {{ now() }}
+      **Total Issues Found**: {{ prioritized_issues | length }}
+      
+      ## Critical Issues ({{ prioritized_issues | filter(severity='critical') | length }})
+      {{ prioritized_issues | filter(severity='critical') | format_list }}
+      
+      ## High Priority Issues ({{ prioritized_issues | filter(severity='high') | length }})
+      {{ prioritized_issues | filter(severity='high') | format_list }}
+      
+      ## Medium Priority Issues ({{ prioritized_issues | filter(severity='medium') | length }})
+      {{ prioritized_issues | filter(severity='medium') | format_list }}
+      
+      ## Recommendations
+      {{ prioritized_issues | generate_recommendations }}
+    output_var: "diagnosis_report"
+
+output:
+  issues: "{{ prioritized_issues }}"
+  report: "{{ diagnosis_report }}"
+  summary:
+    total_issues: "{{ prioritized_issues | length }}"
+    critical: "{{ prioritized_issues | filter(severity='critical') | length }}"
+    high: "{{ prioritized_issues | filter(severity='high') | length }}"
+    medium: "{{ prioritized_issues | filter(severity='medium') | length }}"
+    low: "{{ prioritized_issues | filter(severity='low') | length }}"
+
+triggers:
+  - event: "artifact_changed"
+    condition: "true"
+  - event: "scheduled_audit"
+    schedule: "0 2 * * *"  # Daily at 2 AM
+  - event: "manual_request"
+    condition: "true"
+
+notifications:
+  on_critical_issues:
+    method: "github_issue"
+    template: "Critical governance issues detected. See diagnosis report."
+  on_completion:
+    method: "log"
+    level: "info"

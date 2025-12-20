@@ -1,0 +1,203 @@
+# =============================================================================
+# Example: Metadata Collection Configuration
+# =============================================================================
+# This configuration defines how metadata is collected from various sources
+# =============================================================================
+
+apiVersion: config.machinenativeops.io/v1
+kind: MetadataCollectionConfig
+metadata:
+  name: metadata-collection-config
+  version: "1.0.0"
+
+spec:
+  # Metadata collection settings
+  collection:
+    enabled: true
+    schedule: "0 */6 * * *"  # Every 6 hours
+    batch_size: 1000
+    
+    # Source configurations
+    sources:
+      # Kubernetes resources
+      - type: kubernetes
+        enabled: true
+        resources:
+          - pods
+          - services
+          - configmaps
+          - deployments
+          - statefulsets
+        namespaces:
+          - default
+          - production
+          - staging
+        labels:
+          - app
+          - component
+          - version
+      
+      # Database sources
+      - type: database
+        enabled: true
+        connection: "postgresql://localhost:5432"
+        databases:
+          - name: production_db
+            schemas:
+              - public
+              - audit
+              - analytics
+            tables:
+              include: ["customers", "orders", "products"]
+              exclude: ["temp_*", "staging_*"]
+      
+      # Filesystem sources
+      - type: filesystem
+        enabled: true
+        paths:
+          - path: /src
+            recursive: true
+            include: ["*.yaml", "*.yml", "*.json"]
+            exclude: ["node_modules", ".git", "dist"]
+          - path: /config
+            recursive: true
+          - path: /docs
+            recursive: true
+            include: ["*.md"]
+  
+  # Lineage tracking configuration
+  lineage:
+    enabled: true
+    auto_discovery: true
+    depth: 5  # Maximum depth for lineage tracking
+    
+    tracking:
+      - source: "data-ingestion"
+        target: "data-warehouse"
+        transformation: "etl-process"
+        frequency: "daily"
+      
+      - source: "ml-training"
+        target: "model-registry"
+        transformation: "model-build"
+        frequency: "on-demand"
+      
+      - source: "api-gateway"
+        target: "service-mesh"
+        transformation: "request-routing"
+        frequency: "real-time"
+  
+  # Provenance tracking configuration
+  provenance:
+    enabled: true
+    sources:
+      - type: git
+        repositories:
+          - url: "https://github.com/MachineNativeOps/MachineNativeOps"
+            branch: main
+            track_commits: true
+            track_branches: true
+            track_tags: true
+      
+      - type: build
+        pipelines:
+          - name: "ci-cd-pipeline"
+            track_runs: true
+            track_artifacts: true
+            track_attestations: true
+      
+      - type: runtime
+        events:
+          - deployment
+          - scaling
+          - failure
+          - recovery
+  
+  # Quality rules
+  quality:
+    enabled: true
+    rules:
+      - name: "completeness_check"
+        description: "Check metadata completeness"
+        threshold: 0.8
+        action: "warn"
+      
+      - name: "accuracy_check"
+        description: "Check metadata accuracy"
+        threshold: 0.9
+        action: "warn"
+      
+      - name: "consistency_check"
+        description: "Check metadata consistency"
+        threshold: 0.95
+        action: "fail"
+  
+  # Living knowledge base configuration
+  living_knowledge:
+    enabled: true
+    
+    # Perception layer
+    perception:
+      triggers:
+        - type: git_push
+          enabled: true
+        - type: workflow_completion
+          enabled: true
+          filter: ["success", "failure"]
+        - type: schedule
+          enabled: true
+          cron: "0 2 * * *"  # Daily at 2 AM
+    
+    # Modeling layer
+    modeling:
+      outputs:
+        - name: "generated-mndoc.yaml"
+          path: "docs/generated-mndoc.yaml"
+        - name: "knowledge-graph.yaml"
+          path: "docs/knowledge-graph.yaml"
+        - name: "superroot-entities.yaml"
+          path: "docs/superroot-entities.yaml"
+    
+    # Diagnosis layer
+    diagnosis:
+      checks:
+        - name: "orphan_components"
+          enabled: true
+          severity: "warning"
+        - name: "dead_configs"
+          enabled: true
+          severity: "warning"
+        - name: "overlapping_workflows"
+          enabled: true
+          severity: "info"
+        - name: "broken_links"
+          enabled: true
+          severity: "warning"
+      output:
+        path: "docs/knowledge-health-report.yaml"
+    
+    # Feedback layer
+    feedback:
+      actions:
+        - type: "update_dashboard"
+          enabled: true
+          dashboard_path: "docs/KNOWLEDGE_HEALTH.md"
+        - type: "notify_maintainers"
+          enabled: true
+          method: "github_issue"
+          threshold: "warning"
+        - type: "auto_remediation"
+          enabled: false  # Disabled by default for safety
+
+  # Export configuration
+  export:
+    enabled: true
+    formats:
+      - yaml
+      - json
+    destinations:
+      - type: filesystem
+        path: "/var/metadata/exports"
+      - type: s3
+        bucket: "metadata-exports"
+        prefix: "synergymesh/"

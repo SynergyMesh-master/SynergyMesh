@@ -1,0 +1,250 @@
+version: "1.0.0"
+description: "守護欄配置 - Guardian Pre-flight Checks for Safe Operations"
+
+guardians:
+  # =========================================================================
+  # Change Impact Guardians
+  # =========================================================================
+  - name: "no_breaking_changes"
+    description: "確保變更不會破壞現有依賴 - Ensure changes don't break dependencies"
+    enabled: true
+    severity: "critical"
+    checks:
+      - type: "dependency_impact"
+        description: "Check if changes affect dependent artifacts"
+        max_affected: 50
+        analyze_depth: 3
+        
+      - type: "api_compatibility"
+        description: "Verify API backward compatibility"
+        check_versions: true
+        allow_minor_updates: true
+        
+      - type: "schema_compatibility"
+        description: "Validate schema changes are non-breaking"
+        allow_additive: true
+        allow_deprecation: true
+        deny_removal: true
+    
+    failure_action:
+      action: "block"
+      notify: true
+      message: "Breaking changes detected. Manual review required."
+
+  # =========================================================================
+  # Policy Compliance Guardians
+  # =========================================================================
+  - name: "all_policies_compliant"
+    description: "所有策略必須合規 - All policies must be compliant"
+    enabled: true
+    severity: "error"
+    checks:
+      - type: "policy_check"
+        description: "Validate against all governance policies"
+        policies:
+          - "naming-convention"
+          - "metadata-completeness"
+          - "lineage-tracking"
+          - "provenance-recording"
+        enforcement: "strict"
+        
+      - type: "opa_validation"
+        description: "Run OPA policy validation"
+        policy_files:
+          - "../../policy.rego"
+          - "../governance/policies.rego"
+        
+      - type: "custom_rules"
+        description: "Apply custom governance rules"
+        rules:
+          - "no_sensitive_data_in_public"
+          - "required_approvals_obtained"
+    
+    failure_action:
+      action: "block"
+      notify: true
+      message: "Policy violations found. Fix before proceeding."
+
+  # =========================================================================
+  # Impact Radius Guardians
+  # =========================================================================
+  - name: "impact_radius"
+    description: "變更影響範圍限制 - Limit change impact radius"
+    enabled: true
+    severity: "warning"
+    checks:
+      - type: "radius_check"
+        description: "Ensure changes don't affect too many artifacts"
+        max_artifacts: 50
+        max_depth: 3
+        
+      - type: "cascade_analysis"
+        description: "Analyze cascade effects of changes"
+        max_cascades: 5
+        warn_threshold: 3
+        
+      - type: "team_impact"
+        description: "Check how many teams are affected"
+        max_teams: 5
+    
+    failure_action:
+      action: "warn"
+      notify: true
+      require_approval: true
+      approval_threshold: 2
+      message: "Large impact radius detected. Additional approvals required."
+
+  # =========================================================================
+  # Data Quality Guardians
+  # =========================================================================
+  - name: "data_quality"
+    description: "確保數據質量標準 - Ensure data quality standards"
+    enabled: true
+    severity: "error"
+    checks:
+      - type: "completeness_check"
+        description: "Verify metadata completeness"
+        required_fields:
+          - "owner"
+          - "domain"
+          - "lifecycle"
+          - "compliance"
+        min_completeness: 0.8
+        
+      - type: "accuracy_check"
+        description: "Validate data accuracy"
+        check_types: true
+        check_formats: true
+        check_constraints: true
+        
+      - type: "consistency_check"
+        description: "Ensure internal consistency"
+        cross_reference: true
+        check_references: true
+    
+    failure_action:
+      action: "block"
+      notify: true
+      message: "Data quality standards not met."
+
+  # =========================================================================
+  # Security Guardians
+  # =========================================================================
+  - name: "security_validation"
+    description: "安全性驗證 - Security validation checks"
+    enabled: true
+    severity: "critical"
+    checks:
+      - type: "secrets_scan"
+        description: "Scan for exposed secrets"
+        patterns:
+          - "api_key"
+          - "password"
+          - "token"
+          - "secret"
+        
+      - type: "pii_detection"
+        description: "Detect personally identifiable information"
+        sensitivity: "high"
+        
+      - type: "access_control"
+        description: "Verify proper access controls"
+        check_permissions: true
+        check_ownership: true
+    
+    failure_action:
+      action: "block"
+      notify: true
+      escalate: true
+      message: "Security violations detected. Immediate action required."
+
+  # =========================================================================
+  # Performance Guardians
+  # =========================================================================
+  - name: "performance_impact"
+    description: "性能影響評估 - Performance impact assessment"
+    enabled: true
+    severity: "warning"
+    checks:
+      - type: "size_check"
+        description: "Check artifact size limits"
+        max_size_kb: 1024
+        warn_size_kb: 512
+        
+      - type: "complexity_check"
+        description: "Assess complexity metrics"
+        max_depth: 10
+        max_branches: 20
+        
+      - type: "query_impact"
+        description: "Estimate query performance impact"
+        max_query_time_ms: 1000
+    
+    failure_action:
+      action: "warn"
+      notify: true
+      message: "Performance impact may be significant."
+
+  # =========================================================================
+  # Rollback Readiness Guardians
+  # =========================================================================
+  - name: "rollback_readiness"
+    description: "回滾準備檢查 - Rollback readiness checks"
+    enabled: true
+    severity: "warning"
+    checks:
+      - type: "backup_exists"
+        description: "Verify backup exists before changes"
+        require_snapshot: true
+        
+      - type: "rollback_plan"
+        description: "Ensure rollback plan is defined"
+        require_plan: true
+        
+      - type: "dependency_preservation"
+        description: "Check if rollback preserves dependencies"
+        validate_dependencies: true
+    
+    failure_action:
+      action: "warn"
+      notify: true
+      message: "Rollback preparation incomplete."
+
+# =========================================================================
+# Guardian Execution Configuration
+# =========================================================================
+execution:
+  parallel: true
+  timeout_seconds: 300
+  fail_fast: false
+  collect_all_failures: true
+
+# =========================================================================
+# Approval Configuration
+# =========================================================================
+approvals:
+  required_for_critical: 2
+  required_for_error: 1
+  required_for_warning: 0
+  
+  approval_teams:
+    - "governance-team"
+    - "platform-team"
+  
+  approval_timeout_hours: 48
+  auto_approve_minor: false
+
+# =========================================================================
+# Notification Configuration
+# =========================================================================
+notifications:
+  on_failure:
+    method: "github_issue"
+    labels: ["guardian-failure", "requires-review"]
+    
+  on_warning:
+    method: "github_comment"
+    
+  on_approval_needed:
+    method: "github_review"
+    reviewers: ["@governance-team"]

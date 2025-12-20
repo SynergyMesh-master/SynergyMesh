@@ -1,0 +1,163 @@
+apiVersion: axiom.io/v2
+kind: PipelineMemoryPolicy
+metadata:
+  name: axiom-pipeline-memory-policy
+  version: v1.0.0
+  annotations:
+    description: "Memory governance policy for AXIOM SSOT pipeline under 48GiB total RAM."
+    created_by: "KuboBot-v8"
+    timestamp: "2025-12-19T00:00:00Z"
+immutable: true
+retention: keep-forever
+
+policy_identity:
+  expected_path: "ops/policies/pipeline.memory.policy.v1.0.0.yaml.txt"
+  ssot_binding: true
+  integrity_placeholders:
+    sha3_512: "<TO_BE_FILLED_BY_PIPELINE>"   # unified placeholder
+    blake3: "<TO_BE_FILLED_BY_PIPELINE>"
+
+spec:
+  total_memory_gib: 48
+  min_required_memory_gib: 32
+  concurrency_mode: "streaming"
+  failover_mode: "serial"
+  lazy_attestation: true
+  stream_buffer_gib: 2        # 從 3 降至 2
+  baseline_overhead_gib: 4
+
+  degrade_rules:
+    - condition: "oom_rate_5m > 0"
+      action: "reduce_concurrency_by"
+      value: 2
+    - condition: "mem_usage_percent > 90"
+      action: "switch_mode"
+      value: "serial"
+
+  scope_rules:
+    default_by_stage:
+      L0: "A"
+      L1: "B"
+      L2: "C"
+      L3: "C"
+    overrides:
+      G03: "A"   # Canonical 強制 A
+      G05: "A"   # Double-hash 強制 A
+      G12: "B"   # Attestation verify
+      G14: "B"   # SBOM 生成
+      G15: "B"   # CVE 掃描
+      G17: "B"   # 政策覆蓋率
+      G36: "C"   # 觀測契約
+      G40: "C"   # 自癒策略
+      G48: "C"   # SSOT 凍結
+
+  artifact_contracts:
+    batch-a:
+      required:
+        - "outputs/canonical/canonical.jsonl.txt"
+        - "outputs/hash/digest.jsonl.txt"
+        - "outputs/locks/A.source.hashlock.json.txt"
+      must_exist_before_release_memory: true
+    batch-b:
+      required:
+        - "outputs/locks/B.attest.hashlock.json.txt"
+        - "outputs/sbom.cdx.json.txt"
+        - "outputs/grype.report.json.txt"
+      placeholders_allowed_when_lazy_attestation: true
+      placeholder_files:
+        - "outputs/attestation.placeholder.json.txt"
+        - "outputs/provenance.placeholder.json.txt"
+      must_exist_before_release_memory: true
+    batch-c:
+      required:
+        - "outputs/locks/C.freeze.hashlock.json.txt"
+        - "outputs/frozen.bundle.json.txt"
+        - "outputs/signatures/*.pem"
+        - "outputs/signatures/*.sig"
+      post_finalize_generate:
+        - "outputs/release-index.v1.yaml.txt"
+        - "outputs/manifest-map.v1.yaml.txt"
+      must_exist_before_release_memory: true
+
+  stage_batches:
+    - name: batch-a
+      description: "Ingest → HashLock"
+      include_gates: ["G01","G02","G03","G04","G05","G06","G07","G08"]
+      max_concurrent_gates: 5
+      memory_limit_gib: 13
+      reclaim_after_exit: true
+      scope: "A"
+    - name: batch-b
+      description: "Static → Attestation"
+      include_gates: ["G09","G10","G11","G12","G13","G14","G15","G16"]
+      max_concurrent_gates: 6
+      memory_limit_gib: 17
+      reclaim_after_exit: true
+      scope: "B"
+    - name: batch-c
+      description: "Governance → Freeze"
+      include_gates: ["G17","G18","G19","G20","G21","G22","G23","G24"]
+      max_concurrent_gates: 5
+      memory_limit_gib: 11
+      reclaim_after_exit: true
+      scope: "C"
+
+  allocation_policy:
+    gate_memory_floor_gib: 0.75
+    gate_memory_ceiling_gib: 2.0
+    burst_allowance_gib: 1.0
+    recycle_interval_sec: 30
+    oversubscription_guard: true
+    emergency_kill_threshold_percent: 98
+
+  lazy_attestation_policy:
+    enabled: true
+    defer_until_stage: "ReleaseFreeze"
+    placeholders:
+      - "outputs/attestation.placeholder.json.txt"
+      - "outputs/provenance.placeholder.json.txt"
+    finalize_with: "verify.sh --vault attest"
+    post_freeze_verification: true
+
+  telemetry:
+    exporter: "prometheus"
+    namespace: "axiom-pipeline"
+    metrics:
+      - name: "gate_memory_usage_bytes"
+        help: "Current memory used by each running Gate"
+      - name: "gate_batch_active"
+        help: "Active batch identifier (A/B/C)"
+      - name: "stream_buffer_usage"
+        help: "Streaming buffer consumption in GiB"
+    labels:
+      repo: "${GIT_REPO:-unknown}"
+      run_id: "${RUN_ID:-unknown}"
+      commit: "${GIT_COMMIT:-unknown}"
+
+  safeguards:
+    on_oom: "pause-and-retry"
+    retry_limit: 3
+    backoff:
+      initial_sec: 5
+      max_sec: 60
+      factor: 2.0
+      jitter: true
+    on_batch_failure: "rollback-last-hashlock"   # rollback according to A/B/C hashlock files
+    unknown_gate_action: "queue"
+    verify_required_artifacts: true
+    dry_run_on_first_use: true
+    log_to: "outputs/pipeline/memory.policy.log"
+
+  attestation_binding:
+    export_ref: true
+    fields:
+      path: "ops/policies/pipeline.memory.policy.v1.0.0.yaml.txt"
+      sha3_512: "<TO_BE_FILLED_BY_PIPELINE>"
+      blake3: "<TO_BE_FILLED_BY_PIPELINE>"
+
+  compatibility:
+    schema_version: "1.0"
+    consumer:
+      - kind: "BaselineAttestationAndIndex"
+        min_version: "v2r1-frozen"
+    notes: "This policy is referenced by governance_policies in the baseline index."

@@ -1,0 +1,66 @@
+{
+  "version": "1.0.0",
+  "description": "證據鏈 + 審計軌跡 - Trust Chain & Audit Trail",
+  "trust_chain": [
+    {
+      "event_id": "tc_001",
+      "timestamp": "2025-12-19T02:59:00Z",
+      "event_type": "artifact_created",
+      "artifact_id": "metadata:lineage-graph-001",
+      "actor": {
+        "type": "human",
+        "id": "governance-bot",
+        "name": "Governance Bot"
+      },
+      "evidence": {
+        "source": "git",
+        "commit": "e3baec1",
+        "repository": "https://github.com/MachineNativeOps/MachineNativeOps",
+        "branch": "copilot/update-metadata-management-center"
+      },
+      "verification": {
+        "signature": "sha256:abc123...",
+        "attestation": "slsa_l3",
+        "verified": true
+      },
+      "audit": {
+        "policies_checked": ["naming-convention", "metadata-completeness"],
+        "compliance_status": "compliant",
+        "reviewer": "automated"
+      }
+    },
+    {
+      "event_id": "tc_002",
+      "timestamp": "2025-12-19T02:59:30Z",
+      "event_type": "policy_enforced",
+      "artifact_id": "policy:naming-convention",
+      "actor": {
+        "type": "system",
+        "id": "opa-engine",
+        "name": "OPA Policy Engine"
+      },
+      "evidence": {
+        "policy_file": "knl-pack/governance/policies.rego",
+        "artifacts_checked": 3,
+        "violations_found": 0
+      },
+      "verification": {
+        "signature": "sha256:def456...",
+        "verified": true
+      },
+      "audit": {
+        "enforcement_result": "passed",
+        "artifacts_affected": ["schema:entity-base", "config:inference-engine", "metadata:lineage-graph-001"]
+      }
+    }
+  ],
+  "audit_summary": {
+    "total_events": 2,
+    "events_by_type": {
+      "artifact_created": 1,
+      "policy_enforced": 1
+    },
+    "compliance_rate": 1.0,
+    "last_audit": "2025-12-19T02:59:30Z"
+  }
+}

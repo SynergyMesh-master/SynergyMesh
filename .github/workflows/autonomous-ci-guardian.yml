@@ -1,0 +1,436 @@
+# =============================================================================
+# 🤖 Autonomous CI Guardian
+# 自主 CI 守護者 - 預測性失敗檢測與自動修復
+# =============================================================================
+name: "🤖 Autonomous CI Guardian"
+
+on:
+  pull_request:
+    branches: [main, develop]
+    types: [opened, synchronize, reopened]
+
+# Cost protection: prevent concurrent runs
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
+
+env:
+  FAILURE_THRESHOLD: 3
+  DETECTION_WINDOW: "24h"
+
+jobs:
+  # =============================================================================
+  # 預測性失敗檢測 (Predictive Failure Detection)
+  # =============================================================================
+  predictive-failure-detection:
+    name: "預測性失敗檢測"
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    timeout-minutes: 10
+    outputs:
+      failure-risk: ${{ steps.analyze.outputs.risk-level }}
+      patterns-detected: ${{ steps.analyze.outputs.patterns }}
+
+    steps:
+      - name: 檢出代碼
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Full history for pattern analysis
+
+      - name: 設置 Python 環境
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: 安裝分析工具
+        run: |
+          pip install --user pyyaml requests
+
+      - name: 分析歷史失敗模式
+        id: analyze
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+
+          echo "🔍 分析 CI 歷史失敗模式..."
+
+          # Get changed files in this PR
+          echo "📝 檢測變更的檔案..."
+          git diff --name-only origin/${{ github.base_ref }}...HEAD > changed_files.txt
+
+          # Count changed files by type
+          CHANGED_COUNT=$(wc -l < changed_files.txt)
+          echo "變更檔案數量: $CHANGED_COUNT"
+
+          # Analyze file patterns
+          YAML_CHANGES=$(grep -c '\.ya\?ml$' changed_files.txt || true)
+          PYTHON_CHANGES=$(grep -c '\.py$' changed_files.txt || true)
+          SCRIPT_CHANGES=$(grep -c '\.sh$' changed_files.txt || true)
+          CONFIG_CHANGES=$(grep -c '^config/' changed_files.txt || true)
+          WORKFLOW_CHANGES=$(grep -c '\.github/workflows/' changed_files.txt || true)
+
+          echo "📊 變更統計:"
+          echo "  YAML 檔案: $YAML_CHANGES"
+          echo "  Python 檔案: $PYTHON_CHANGES"
+          echo "  Shell 腳本: $SCRIPT_CHANGES"
+          echo "  配置檔案: $CONFIG_CHANGES"
+          echo "  工作流程: $WORKFLOW_CHANGES"
+
+          # Calculate risk level
+          RISK_SCORE=0
+          PATTERNS=""
+
+          if [ "$YAML_CHANGES" -gt 5 ]; then
+            RISK_SCORE=$((RISK_SCORE + 2))
+            PATTERNS="${PATTERNS}large-yaml-changes,"
+            echo "⚠️  大量 YAML 變更檢測到 (風險 +2)"
+          fi
+
+          if [ "$WORKFLOW_CHANGES" -gt 0 ]; then
+            RISK_SCORE=$((RISK_SCORE + 3))
+            PATTERNS="${PATTERNS}workflow-changes,"
+            echo "⚠️  工作流程變更檢測到 (風險 +3)"
+          fi
+
+          if [ "$CONFIG_CHANGES" -gt 3 ]; then
+            RISK_SCORE=$((RISK_SCORE + 2))
+            PATTERNS="${PATTERNS}config-changes,"
+            echo "⚠️  配置檔案變更檢測到 (風險 +2)"
+          fi
+
+          if [ "$CHANGED_COUNT" -gt 20 ]; then
+            RISK_SCORE=$((RISK_SCORE + 1))
+            PATTERNS="${PATTERNS}large-changeset,"
+            echo "ℹ️  大型變更集檢測到 (風險 +1)"
+          fi
+
+          # Determine risk level
+          RISK_LEVEL="low"
+          if [ "$RISK_SCORE" -ge 5 ]; then
+            RISK_LEVEL="high"
+          elif [ "$RISK_SCORE" -ge 3 ]; then
+            RISK_LEVEL="medium"
+          fi
+
+          echo "risk-level=$RISK_LEVEL" >> $GITHUB_OUTPUT
+          echo "patterns=${PATTERNS%,}" >> $GITHUB_OUTPUT
+          echo "risk-score=$RISK_SCORE" >> $GITHUB_OUTPUT
+
+          echo ""
+          echo "📊 失敗風險評估結果:"
+          echo "  風險等級: $RISK_LEVEL"
+          echo "  風險分數: $RISK_SCORE"
+          echo "  檢測到的模式: ${PATTERNS%,}"
+
+      - name: 生成風險報告
+        run: |
+          set -euo pipefail
+
+          RISK_LEVEL="${{ steps.analyze.outputs.risk-level }}"
+          PATTERNS="${{ steps.analyze.outputs.patterns }}"
+
+          cat > risk-report.md << 'EOF'
+          ## 🔍 預測性失敗檢測報告
+
+          **風險等級**: ${{ steps.analyze.outputs.risk-level }}
+          **風險分數**: ${{ steps.analyze.outputs.risk-score }}
+          **檢測模式**: ${{ steps.analyze.outputs.patterns }}
+
+          ### 建議措施
+
+          EOF
+
+          if [ "$RISK_LEVEL" = "high" ]; then
+            cat >> risk-report.md << 'EOF'
+          - ⚠️  **高風險變更檢測到**
+          - 建議進行額外的人工審查
+          - 建議在合併前進行更全面的測試
+          - 考慮分批次提交變更以降低風險
+          EOF
+          elif [ "$RISK_LEVEL" = "medium" ]; then
+            cat >> risk-report.md << 'EOF'
+          - ℹ️  **中等風險變更檢測到**
+          - 建議仔細檢查所有測試結果
+          - 確保文檔已更新
+          EOF
+          else
+            cat >> risk-report.md << 'EOF'
+          - ✅ **低風險變更**
+          - 標準審查流程即可
+          EOF
+          fi
+
+          echo ""
+          cat risk-report.md
+
+      - name: 上傳風險報告
+        uses: actions/upload-artifact@v4
+        with:
+          name: predictive-failure-report
+          path: risk-report.md
+          retention-days: 30
+
+  # =============================================================================
+  # 自動修復 (Auto-Remediation)
+  # =============================================================================
+  auto-remediation:
+    name: "自動修復系統"
+    runs-on: ubuntu-latest
+    needs: predictive-failure-detection
+    if: github.event_name == 'pull_request'
+    timeout-minutes: 15
+    outputs:
+      issues-found: ${{ steps.detect.outputs.issues-found }}
+      issues-fixed: ${{ steps.detect.outputs.issues-fixed }}
+
+    steps:
+      - name: 檢出代碼
+        uses: actions/checkout@v4
+
+      - name: 設置 Python 環境
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: 安裝修復工具
+        run: |
+          pip install --user pyyaml yamllint
+
+      - name: 檢測常見問題
+        env:
+          PATH: ${{ env.PATH }}:$HOME/.local/bin
+        id: detect
+        run: |
+          set -euo pipefail
+
+          echo "🔍 檢測常見 CI 失敗原因..."
+
+          ISSUES_FOUND=0
+          ISSUES_FIXED=0
+
+          # Check for YAML syntax issues
+          echo "檢查 YAML 語法問題..."
+          mapfile -t yaml_files < <(find . -type f \( -name "*.yaml" -o -name "*.yml" \) \
+            ! -path "*/node_modules/*" ! -path "*/.git/*")
+
+          YAML_ISSUES=0
+          if [ ${#yaml_files[@]} -gt 0 ]; then
+            for file in "${yaml_files[@]}"; do
+              if ! "$HOME/.local/bin/yamllint" -f parsable "$file" > /dev/null 2>&1; then
+                echo "⚠️  YAML 問題檢測到: $file"
+                YAML_ISSUES=$((YAML_ISSUES + 1))
+              fi
+            done
+          fi
+
+          if [ "$YAML_ISSUES" -gt 0 ]; then
+            ISSUES_FOUND=$((ISSUES_FOUND + YAML_ISSUES))
+            echo "yaml-issues=$YAML_ISSUES" >> $GITHUB_OUTPUT
+          fi
+
+          # Check for common script issues
+          echo "檢查 Shell 腳本問題..."
+          mapfile -t shell_files < <(find . -type f -name "*.sh" ! -path "*/node_modules/*" ! -path "*/.git/*")
+
+          SCRIPT_ISSUES=0
+          if [ ${#shell_files[@]} -gt 0 ]; then
+            for script in "${shell_files[@]}"; do
+              if [ -f "$script" ] && ! bash -n "$script" > /dev/null 2>&1; then
+                echo "⚠️  Shell 腳本問題檢測到: $script"
+                SCRIPT_ISSUES=$((SCRIPT_ISSUES + 1))
+              fi
+            done
+          fi
+
+          if [ "$SCRIPT_ISSUES" -gt 0 ]; then
+            ISSUES_FOUND=$((ISSUES_FOUND + SCRIPT_ISSUES))
+            echo "script-issues=$SCRIPT_ISSUES" >> $GITHUB_OUTPUT
+          fi
+
+          # Check for Python syntax issues
+          echo "檢查 Python 語法問題..."
+          mapfile -t python_files < <(find . -type f -name "*.py" \
+            ! -path "*/node_modules/*" ! -path "*/.git/*" ! -path "*/__pycache__/*")
+
+          PYTHON_ISSUES=0
+          if [ ${#python_files[@]} -gt 0 ]; then
+            for pyfile in "${python_files[@]}"; do
+              if [ -f "$pyfile" ] && ! python3 -m py_compile "$pyfile" > /dev/null 2>&1; then
+                echo "⚠️  Python 語法問題檢測到: $pyfile"
+                PYTHON_ISSUES=$((PYTHON_ISSUES + 1))
+              fi
+            done
+          fi
+
+          if [ "$PYTHON_ISSUES" -gt 0 ]; then
+            ISSUES_FOUND=$((ISSUES_FOUND + PYTHON_ISSUES))
+            echo "python-issues=$PYTHON_ISSUES" >> $GITHUB_OUTPUT
+          fi
+
+          echo "issues-found=$ISSUES_FOUND" >> $GITHUB_OUTPUT
+          echo "issues-fixed=$ISSUES_FIXED" >> $GITHUB_OUTPUT
+
+          echo ""
+          echo "📊 檢測結果摘要:"
+          echo "  YAML 問題: $YAML_ISSUES"
+          echo "  Shell 腳本問題: $SCRIPT_ISSUES"
+          echo "  Python 問題: $PYTHON_ISSUES"
+          echo "  總問題數: $ISSUES_FOUND"
+
+      - name: 嘗試自動修復
+        if: steps.detect.outputs.issues-found > 0
+        run: |
+          set -euo pipefail
+
+          echo "🔧 嘗試自動修復檢測到的問題..."
+
+          # Note: Actual auto-fix logic would go here
+          # For now, we report issues that need manual attention
+
+          echo "ℹ️  檢測到 ${{ steps.detect.outputs.issues-found }} 個問題"
+          echo "ℹ️  這些問題需要人工審查和修復"
+          echo ""
+          echo "📋 建議的修復步驟:"
+
+          if [ "${{ steps.detect.outputs.yaml-issues }}" != "" ]; then
+            echo "1. 運行 'yamllint' 檢查 YAML 語法"
+            echo "   修復報告的語法錯誤"
+          fi
+
+          if [ "${{ steps.detect.outputs.script-issues }}" != "" ]; then
+            echo "2. 使用 'bash -n' 驗證 Shell 腳本語法"
+            echo "   修復報告的腳本錯誤"
+          fi
+
+          if [ "${{ steps.detect.outputs.python-issues }}" != "" ]; then
+            echo "3. 使用 'python3 -m py_compile' 檢查 Python 語法"
+            echo "   修復報告的 Python 錯誤"
+          fi
+
+      - name: 生成修復報告
+        if: always()
+        run: |
+          set -euo pipefail
+
+          cat > remediation-report.md << 'EOF'
+          ## 🔧 自動修復報告
+
+          **檢測到的問題**: ${{ steps.detect.outputs.issues-found || 0 }}
+          **已修復的問題**: ${{ steps.detect.outputs.issues-fixed || 0 }}
+
+          ### 檢測詳情
+
+          - YAML 問題: ${{ steps.detect.outputs.yaml-issues || 0 }}
+          - Shell 腳本問題: ${{ steps.detect.outputs.script-issues || 0 }}
+          - Python 問題: ${{ steps.detect.outputs.python-issues || 0 }}
+
+          ### 狀態
+
+          EOF
+
+          if [ "${{ steps.detect.outputs.issues-found }}" = "0" ]; then
+            echo "✅ 未檢測到問題，代碼質量良好" >> remediation-report.md
+          else
+            echo "⚠️  檢測到問題需要修復" >> remediation-report.md
+            echo "" >> remediation-report.md
+            echo "請查看上方的步驟輸出以獲取詳細信息。" >> remediation-report.md
+          fi
+
+          echo ""
+          cat remediation-report.md
+
+      - name: 上傳修復報告
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: auto-remediation-report
+          path: remediation-report.md
+          retention-days: 30
+
+  # =============================================================================
+  # 最終報告 (Final Report)
+  # =============================================================================
+  guardian-report:
+    name: "Guardian 最終報告"
+    runs-on: ubuntu-latest
+    needs: [predictive-failure-detection, auto-remediation]
+    if: always() && github.event_name == 'pull_request'
+
+    steps:
+      - name: 下載報告
+        uses: actions/download-artifact@v4
+        with:
+          pattern: "*-report"
+          merge-multiple: true
+
+      - name: 生成綜合報告
+        run: |
+          set -euo pipefail
+
+          echo "# 🤖 Autonomous CI Guardian - 綜合報告"
+          echo ""
+          echo "**PR**: #${{ github.event.pull_request.number }}"
+          echo "**分支**: ${{ github.head_ref }}"
+          echo "**提交**: ${{ github.sha }}"
+          echo ""
+
+          if [ -f "risk-report.md" ]; then
+            echo "---"
+            cat risk-report.md
+            echo ""
+          fi
+
+          if [ -f "remediation-report.md" ]; then
+            echo "---"
+            cat remediation-report.md
+            echo ""
+          fi
+
+          echo "---"
+          echo ""
+          echo "### 工作流程狀態"
+          echo ""
+          echo "- 預測性失敗檢測: ${{ needs.predictive-failure-detection.result }}"
+          echo "- 自動修復: ${{ needs.auto-remediation.result }}"
+          echo ""
+
+          if [ "${{ needs.predictive-failure-detection.result }}" = "success" ] && \
+             [ "${{ needs.auto-remediation.result }}" = "success" ]; then
+            echo "✅ **所有 Guardian 檢查通過**"
+          else
+            echo "⚠️  **部分 Guardian 檢查失敗，請查看詳情**"
+          fi
+
+      - name: 評論 PR（如果有問題）
+        if: needs.auto-remediation.outputs.issues-found > 0
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            let comment = '## 🤖 Autonomous CI Guardian Report\n\n';
+
+            if (fs.existsSync('risk-report.md')) {
+              comment += fs.readFileSync('risk-report.md', 'utf8') + '\n\n';
+            }
+
+            if (fs.existsSync('remediation-report.md')) {
+              comment += fs.readFileSync('remediation-report.md', 'utf8') + '\n\n';
+            }
+
+            comment += '---\n';
+            comment += '*此報告由 Autonomous CI Guardian 自動生成*';
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: comment
+            });

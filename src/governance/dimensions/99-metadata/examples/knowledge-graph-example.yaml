@@ -1,0 +1,165 @@
+# =============================================================================
+# Example: Living Knowledge Graph
+# =============================================================================
+# This example demonstrates the structure of a living knowledge graph
+# including entities, relationships, and diagnostic findings.
+# =============================================================================
+
+apiVersion: metadata.machinenativeops.io/v1
+kind: KnowledgeGraph
+metadata:
+  id: "synergymesh-knowledge-graph"
+  name: "SynergyMesh Living Knowledge Graph"
+  classification: operational
+  owner: governance-bot
+  tags:
+    - knowledge
+    - system-model
+    - diagnostics
+  created_at: "2025-12-19T00:00:00Z"
+  updated_at: "2025-12-19T12:00:00Z"
+
+spec:
+  entities:
+    # System-level entities
+    - id: "synergymesh-core"
+      type: system
+      name: "SynergyMesh Core"
+      attributes:
+        version: "2.0.0"
+        status: "active"
+        subsystems:
+          - "cognitive-engine"
+          - "governance-framework"
+          - "contract-service"
+    
+    # Subsystem entities
+    - id: "cognitive-engine"
+      type: subsystem
+      name: "Cognitive Engine"
+      attributes:
+        technology: "python"
+        location: "src/core/cognitive_engine/"
+    
+    - id: "governance-framework"
+      type: subsystem
+      name: "Governance Framework"
+      attributes:
+        dimensions: 83
+        location: "src/governance/dimensions/"
+    
+    # Component entities
+    - id: "metadata-manager"
+      type: component
+      name: "Metadata Management Center"
+      attributes:
+        location: "src/governance/dimensions/99-metadata/"
+        language: "yaml"
+        has_tests: true
+    
+    - id: "lineage-tracker"
+      type: component
+      name: "Lineage Tracking Component"
+      attributes:
+        location: "src/governance/dimensions/61-lineage/"
+        language: "yaml"
+        has_tests: true
+    
+    # Config entities
+    - id: "metadata-config"
+      type: config
+      name: "Metadata Configuration"
+      attributes:
+        location: "config/metadata.yaml"
+        format: "yaml"
+    
+    # Document entities
+    - id: "metadata-readme"
+      type: document
+      name: "Metadata README"
+      attributes:
+        location: "src/governance/dimensions/99-metadata/README.md"
+        format: "markdown"
+    
+    # Workflow entities
+    - id: "knowledge-update-workflow"
+      type: workflow
+      name: "Knowledge Base Update Workflow"
+      attributes:
+        location: ".github/workflows/living-knowledge.yml"
+        trigger: "push, schedule"
+
+  relationships:
+    # Hierarchical relationships
+    - source: "cognitive-engine"
+      target: "synergymesh-core"
+      type: "belongs_to"
+    
+    - source: "governance-framework"
+      target: "synergymesh-core"
+      type: "belongs_to"
+    
+    - source: "metadata-manager"
+      target: "governance-framework"
+      type: "belongs_to"
+    
+    - source: "lineage-tracker"
+      target: "governance-framework"
+      type: "belongs_to"
+    
+    # Dependency relationships
+    - source: "metadata-manager"
+      target: "lineage-tracker"
+      type: "depends_on"
+      attributes:
+        dependency_type: "required"
+    
+    - source: "metadata-manager"
+      target: "metadata-config"
+      type: "depends_on"
+      attributes:
+        dependency_type: "configuration"
+    
+    # Documentation relationships
+    - source: "metadata-readme"
+      target: "metadata-manager"
+      type: "documents"
+    
+    # Coverage relationships
+    - source: "knowledge-update-workflow"
+      target: "metadata-manager"
+      type: "covers"
+      attributes:
+        coverage_type: "continuous-integration"
+
+  diagnostics:
+    orphan_components:
+      - "legacy-auth-module"
+      - "deprecated-analytics-service"
+    
+    dead_configs:
+      - "old-database-config"
+      - "unused-api-settings"
+      - "deprecated-feature-flags"
+    
+    overlapping_workflows:
+      - group: "build-and-test"
+        workflows:
+          - "ci-pipeline"
+          - "legacy-build-workflow"
+        recommendation: "Consolidate into single workflow"
+    
+    broken_links:
+      - source: "docs/architecture/OLD_DESIGN.md"
+        target: "diagrams/old-system.png"
+        status: "not_found"
+      - source: "README.md"
+        target: "docs/deprecated/GUIDE.md"
+        status: "not_found"
+
+status:
+  state: active
+  quality_score: 0.87
+  completeness_ratio: 0.92
+  last_scan: "2025-12-19T12:00:00Z"
+  next_scan: "2025-12-19T18:00:00Z"

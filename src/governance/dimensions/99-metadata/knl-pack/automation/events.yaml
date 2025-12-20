@@ -1,0 +1,233 @@
+version: "1.0.0"
+description: "事件驅動規則 - Event-Driven Rules for DAR Automation"
+
+event_handlers:
+  # =========================================================================
+  # Artifact Lifecycle Events
+  # =========================================================================
+  - event: "artifact.created"
+    description: "New artifact added to governance index"
+    triggers:
+      - task: "diagnose"
+        delay: "immediate"
+        priority: "high"
+        parameters:
+          scope: "new_artifact"
+      
+      - task: "update_governance_index"
+        delay: "immediate"
+        priority: "critical"
+      
+      - task: "update_vectors"
+        delay: "5m"
+        priority: "medium"
+        parameters:
+          dimensions: ["content", "structure", "governance"]
+  
+  - event: "artifact.updated"
+    description: "Existing artifact modified"
+    triggers:
+      - task: "diagnose"
+        delay: "2m"
+        priority: "high"
+        parameters:
+          scope: "updated_artifact"
+          compare_with_previous: true
+      
+      - task: "check_alignment"
+        delay: "5m"
+        priority: "medium"
+      
+      - task: "update_dag"
+        delay: "10m"
+        priority: "medium"
+        condition: "dependencies_changed == true"
+  
+  - event: "artifact.deleted"
+    description: "Artifact removed from system"
+    triggers:
+      - task: "check_orphans"
+        delay: "immediate"
+        priority: "high"
+        description: "Check for artifacts that now depend on deleted artifact"
+      
+      - task: "update_governance_index"
+        delay: "immediate"
+        priority: "critical"
+      
+      - task: "log_to_trust_chain"
+        delay: "immediate"
+        priority: "critical"
+
+  # =========================================================================
+  # Policy & Governance Events
+  # =========================================================================
+  - event: "policy.violated"
+    description: "Policy violation detected"
+    triggers:
+      - task: "notify_owner"
+        delay: "immediate"
+        priority: "critical"
+        parameters:
+          method: "github_issue"
+          severity_threshold: "high"
+      
+      - task: "repair"
+        delay: "5m"
+        priority: "high"
+        condition: "auto_fix_enabled == true && severity <= 'high'"
+        parameters:
+          auto_create_pr: true
+      
+      - task: "log_to_trust_chain"
+        delay: "immediate"
+        priority: "critical"
+  
+  - event: "policy.updated"
+    description: "Policy definition changed"
+    triggers:
+      - task: "align"
+        delay: "30m"
+        priority: "medium"
+        parameters:
+          scope: "all_artifacts"
+          policy: "{{ event.policy_id }}"
+      
+      - task: "notify_stakeholders"
+        delay: "immediate"
+        priority: "high"
+
+  # =========================================================================
+  # DAG & Structure Events
+  # =========================================================================
+  - event: "dag.cycle_detected"
+    description: "Circular dependency found in governance DAG"
+    triggers:
+      - task: "notify_owner"
+        delay: "immediate"
+        priority: "critical"
+        parameters:
+          method: "github_issue"
+          label: "circular-dependency"
+      
+      - task: "generate_resolution_plan"
+        delay: "5m"
+        priority: "high"
+  
+  - event: "dag.orphan_detected"
+    description: "Orphaned artifact found"
+    triggers:
+      - task: "diagnose"
+        delay: "10m"
+        priority: "medium"
+        parameters:
+          focus: "orphan_analysis"
+      
+      - task: "repair"
+        delay: "30m"
+        priority: "low"
+        condition: "auto_fix_orphans == true"
+
+  # =========================================================================
+  # Scheduled Events
+  # =========================================================================
+  - event: "scheduled.daily_audit"
+    description: "Daily governance audit"
+    schedule: "0 2 * * *"  # 2 AM UTC
+    triggers:
+      - task: "diagnose"
+        priority: "medium"
+        parameters:
+          scope: "all"
+          depth: "comprehensive"
+      
+      - task: "generate_health_report"
+        priority: "medium"
+        parameters:
+          recipients: ["governance-team"]
+  
+  - event: "scheduled.weekly_alignment"
+    description: "Weekly policy alignment check"
+    schedule: "0 3 * * 0"  # Sunday 3 AM UTC
+    triggers:
+      - task: "align"
+        priority: "medium"
+        parameters:
+          scope: "all_artifacts"
+      
+      - task: "generate_compliance_report"
+        priority: "medium"
+
+  # =========================================================================
+  # CI/CD Integration Events
+  # =========================================================================
+  - event: "ci.pr_created"
+    description: "Pull request created"
+    triggers:
+      - task: "diagnose"
+        delay: "immediate"
+        priority: "high"
+        parameters:
+          scope: "pr_changes"
+      
+      - task: "guardian_check"
+        delay: "immediate"
+        priority: "critical"
+        parameters:
+          checks: ["no_breaking_changes", "all_policies_compliant"]
+  
+  - event: "ci.pr_merged"
+    description: "Pull request merged"
+    triggers:
+      - task: "update_governance_index"
+        delay: "immediate"
+        priority: "critical"
+      
+      - task: "log_to_trust_chain"
+        delay: "immediate"
+        priority: "critical"
+
+  # =========================================================================
+  # Manual Triggers
+  # =========================================================================
+  - event: "manual.full_audit"
+    description: "Manually triggered full system audit"
+    triggers:
+      - task: "diagnose"
+        priority: "high"
+        parameters:
+          scope: "all"
+          depth: "deep"
+      
+      - task: "align"
+        priority: "high"
+      
+      - task: "refactor"
+        priority: "medium"
+        condition: "major_issues_found == true"
+
+# =========================================================================
+# Event Routing Configuration
+# =========================================================================
+routing:
+  default_queue: "dar-tasks"
+  priority_queues:
+    critical: "dar-critical"
+    high: "dar-high"
+    medium: "dar-medium"
+    low: "dar-low"
+  
+  retry_policy:
+    max_retries: 3
+    backoff: "exponential"
+    initial_delay: "5s"
+
+# =========================================================================
+# Event Logging
+# =========================================================================
+logging:
+  level: "info"
+  destination: "../traces/audit-logs/"
+  format: "json"
+  include_context: true
+  retention_days: 90

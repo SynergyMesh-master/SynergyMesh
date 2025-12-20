@@ -173,3 +173,31 @@ living-knowledge-base/
 - 「AI 驅動程式碼分析工具」的產品功能描述
 
 如果未來需要這些能力，會以「外部系統」的方式接入，而不是混進活體知識庫本身的核心設計中。
+
+---
+
+## 相關資源
+
+### 治理框架整合
+
+活體知識庫已整合進 **99-元數據管理中心 (99-metadata)**，提供完整的元數據治理、溯源和生命周期管理：
+
+- **文檔位置**: [src/governance/dimensions/99-metadata/](../src/governance/dimensions/99-metadata/)
+- **詳細文檔**: [99-metadata README](../src/governance/dimensions/99-metadata/README.md)
+- **維度定義**: [dimension.yaml](../src/governance/dimensions/99-metadata/dimension.yaml)
+- **架構設計**: [活體知識庫設計](./architecture/components/LIVING_KNOWLEDGE_BASE.md)
+
+### 核心功能模組
+
+1. **元數據分類**: 技術、業務、操作和治理元數據的統一管理
+2. **數據溯源**: Git、構建管道和運行時的完整溯源追踪
+3. **血緣追蹤**: 端到端數據血緣圖和影響分析
+4. **知識循環**: 感知 → 建模 → 診斷 → 回饋的完整循環
+
+### 使用範例
+
+完整的使用範例可在以下目錄找到：
+- [metadata-entry-example.yaml](../src/governance/dimensions/99-metadata/examples/metadata-entry-example.yaml)
+- [lineage-graph-example.yaml](../src/governance/dimensions/99-metadata/examples/lineage-graph-example.yaml)
+- [provenance-record-example.yaml](../src/governance/dimensions/99-metadata/examples/provenance-record-example.yaml)
+- [knowledge-graph-example.yaml](../src/governance/dimensions/99-metadata/examples/knowledge-graph-example.yaml)

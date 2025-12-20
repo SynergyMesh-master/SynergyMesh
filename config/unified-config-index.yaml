@@ -520,6 +520,9 @@ unified_capabilities:
     workflow_validation_rules:
       provider: "governance/policies/workflow/validation-rules.yaml"
       description: "工作流程驗證規則"
+    pipeline_memory_policy:
+      provider: "ops/policies/pipeline.memory.policy.v1.0.0.yaml.txt"
+      description: "AXIOM SSOT pipeline memory governance policy (48GiB budget)"
   
   # Workflow System (工作流程系統)
   workflow:

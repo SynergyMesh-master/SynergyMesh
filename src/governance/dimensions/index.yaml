@@ -11,11 +11,11 @@ apiVersion: governance.machinenativeops.io/v2
 kind: DimensionIndex
 metadata:
   name: governance-dimensions-index
-  version: "2.2.0"
+  version: "2.3.0"
   created_at: "2025-12-11T00:00:00Z"
-  updated_at: "2025-12-18T00:00:00Z"
+  updated_at: "2025-12-19T00:00:00Z"
   owner: governance-bot
-  total_dimensions: 85
+  total_dimensions: 86
 
 # =============================================================================
 # DIMENSION SCHEMA REFERENCE
@@ -1393,6 +1393,30 @@ dimensions:
   # ===========================================================================
   # META-SPECIFICATION LAYER (90-99)
   # ===========================================================================
+  - id: "99-metadata"
+    name: "元數據管理中心"
+    name_en: "Metadata Management Center"
+    version: "1.0.0"
+    category: meta-specification
+    layer: "90-99"
+    layer_name: "Meta-Specification Layer"
+    status: active
+    path: "./99-metadata/"
+    schema: "./99-metadata/schema.json"
+    policy: "./99-metadata/policy.rego"
+    dependencies: ["61-lineage", "62-provenance", "07-audit", "24-registry"]
+    description: "元數據治理、溯源、血緣追踪與活體知識庫整合管理"
+    components:
+      - "metadata-classification"
+      - "metadata-provenance"
+      - "data-lineage"
+      - "living-knowledge-base"
+    metadata:
+      owner: governance-bot
+      tags: [metadata, lineage, provenance, governance, living-knowledge-base, data-catalog, traceability]
+      compliance: [ISO-42001, NIST-AI-RMF, GDPR, COBIT-2019]
+      urn: "urn:machinenativeops:governance:metadata:v1"
+
   - id: "99-naming-convention"
     name: "統一命名規範治理"
     name_en: "Unified Naming Convention Governance"
@@ -1426,7 +1450,7 @@ dimensions:
 # STATISTICS
 # =============================================================================
 statistics:
-  total_dimensions: 85
+  total_dimensions: 86
   categories:
     strategic: 10
     operational: 20
@@ -1434,7 +1458,7 @@ statistics:
     observability: 20
     feedback: 11
     extended: 3
-    meta-specification: 1
+    meta-specification: 2
   layers:
     "00-09": "Strategic Layer"
     "10-29": "Operational Layer"
@@ -1444,6 +1468,6 @@ statistics:
     "81-83": "Extended Layer"
     "90-99": "Meta-Specification Layer"
   status:
-    active: 85
+    active: 86
     deprecated: 0
     draft: 0

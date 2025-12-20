@@ -41,3 +41,19 @@ island-cli knowledge:search "Schema pipeline"
 # 注入新知識
 island-cli knowledge:ingest --file report.md
 ```
+
+---
+
+## 治理框架整合
+
+活體知識庫已整合進 MachineNativeOps 治理框架的 **99-元數據管理中心**：
+
+- **維度路徑**: [src/governance/dimensions/99-metadata/](../../../src/governance/dimensions/99-metadata/)
+- **完整文檔**: [99-metadata README](../../../src/governance/dimensions/99-metadata/README.md)
+- **主文檔**: [活體知識庫](../../LIVING_KNOWLEDGE_BASE.md)
+
+此整合提供：
+- 統一的元數據治理
+- 完整的數據溯源和血緣追蹤
+- 機器可讀的知識圖譜
+- 自動化的健康診斷和回饋

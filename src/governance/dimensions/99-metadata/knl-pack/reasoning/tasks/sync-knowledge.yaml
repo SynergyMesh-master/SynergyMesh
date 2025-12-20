@@ -1,0 +1,320 @@
+task_type: sync_knowledge
+name: "Sync Living Knowledge Base with Repository Changes"
+description: "偵測倉庫變動 → 重新生成知識圖譜 → 更新治理索引 → 同步相關內容"
+version: "1.0.0"
+
+metadata:
+  priority: P0
+  estimated_duration: "< 3 minutes"
+  auto_trigger: true
+  特色: "紀錄功能 - 只要倉庫一有變動，立刻找到此次變動的內容、相關內容、高度相關內容"
+
+steps:
+  # =========================================================================
+  # Step 1: Detect Changes (感知層 - Perception)
+  # =========================================================================
+  - step: 1
+    name: "Detect Repository Changes"
+    action: "git_diff_analysis"
+    parameters:
+      base: "HEAD~1"
+      target: "HEAD"
+      include_untracked: false
+    output_var: "changes"
+    description: "偵測倉庫變動：新增、修改、刪除的檔案"
+
+  - step: 2
+    name: "Classify Changed Files"
+    action: "classify_changes"
+    parameters:
+      changes: "{{ changes }}"
+      categories:
+        - governance      # 治理相關檔案
+        - schema          # Schema 定義
+        - config          # 配置檔案
+        - code            # 程式碼
+        - documentation   # 文件
+        - workflow        # CI/CD workflows
+    output_var: "classified_changes"
+    description: "分類變動的檔案類型"
+
+  - step: 3
+    name: "Extract Change Metadata"
+    action: "extract_metadata"
+    parameters:
+      changes: "{{ classified_changes }}"
+      extract:
+        - commit_message
+        - commit_author
+        - commit_timestamp
+        - file_paths
+        - change_type  # added, modified, deleted
+        - line_count
+    output_var: "change_metadata"
+    description: "提取變動的元數據"
+
+  # =========================================================================
+  # Step 4-6: Regenerate Knowledge Artifacts (建模層 - Modeling)
+  # =========================================================================
+  - step: 4
+    name: "Generate MN-DOC"
+    action: "run_command"
+    parameters:
+      command: "make mndoc"
+      working_dir: "{{ repo_root }}"
+      timeout: 60
+    output_var: "mndoc_result"
+    description: "重新生成 MN-DOC (generated-mndoc.yaml)"
+
+  - step: 5
+    name: "Generate Knowledge Graph"
+    action: "run_command"
+    parameters:
+      command: "make kg"
+      working_dir: "{{ repo_root }}"
+      timeout: 120
+    output_var: "kg_result"
+    description: "重新生成知識圖譜 (knowledge-graph.yaml)"
+
+  - step: 6
+    name: "Generate SuperRoot Entities"
+    action: "run_command"
+    parameters:
+      command: "make superroot"
+      working_dir: "{{ repo_root }}"
+      timeout: 60
+    output_var: "superroot_result"
+    description: "投影到 SuperRoot 實體格式 (superroot-entities.yaml)"
+
+  # =========================================================================
+  # Step 7-8: Find Related Content (檢索層 - Retrieval)
+  # =========================================================================
+  - step: 7
+    name: "Find Related Artifacts"
+    action: "vector_search"
+    parameters:
+      query_template: "Find artifacts related to: {{ change_metadata.file_paths }}"
+      dimensions: ["content", "structure", "governance"]
+      top_k: 20
+      similarity_threshold: 0.7
+    output_var: "related_artifacts"
+    description: "找到與變動相關的 artifacts"
+
+  - step: 8
+    name: "Find Highly Related Content"
+    action: "vector_search"
+    parameters:
+      query_template: "Find highly similar content to: {{ change_metadata }}"
+      dimensions: ["content", "structure"]
+      top_k: 10
+      similarity_threshold: 0.85
+      boost_same_category: true
+    output_var: "highly_related_content"
+    description: "找到高度相關的內容"
+
+  # =========================================================================
+  # Step 9: Analyze Impact (診斷層 - Diagnosis)
+  # =========================================================================
+  - step: 9
+    name: "Analyze Change Impact"
+    action: "impact_analysis"
+    parameters:
+      changes: "{{ classified_changes }}"
+      knowledge_graph: "{{ kg_result.output_file }}"
+      governance_index: "../governance/index.json"
+    output_var: "impact_analysis"
+    description: "分析變動影響：哪些 artifacts 受影響、依賴關係"
+
+  - step: 10
+    name: "Check for Broken References"
+    action: "reference_check"
+    parameters:
+      changes: "{{ classified_changes }}"
+      knowledge_graph: "{{ kg_result.output_file }}"
+      check_types:
+        - imports
+        - links
+        - dependencies
+        - governance_refs
+    output_var: "broken_refs"
+    description: "檢查是否有斷掉的引用或連結"
+
+  # =========================================================================
+  # Step 11-12: Update Governance Index (治理層 - Governance)
+  # =========================================================================
+  - step: 11
+    name: "Update Governance Index"
+    action: "update_index"
+    parameters:
+      index_file: "../governance/index.json"
+      updates:
+        new_artifacts: "{{ impact_analysis.new_artifacts }}"
+        modified_artifacts: "{{ impact_analysis.modified_artifacts }}"
+        deleted_artifacts: "{{ impact_analysis.deleted_artifacts }}"
+        timestamp: "{{ now() }}"
+    output_var: "index_update_result"
+    description: "更新全局治理索引"
+
+  - step: 12
+    name: "Update DAG"
+    action: "update_dag"
+    parameters:
+      dag_file: "../governance/dag.graphml"
+      knowledge_graph: "{{ kg_result.output_file }}"
+      preserve_manual_edges: true
+    output_var: "dag_update_result"
+    description: "同步更新治理 DAG"
+
+  # =========================================================================
+  # Step 13: Update Vector Indices (檢索層 - Retrieval)
+  # =========================================================================
+  - step: 13
+    name: "Update Vector Indices"
+    action: "update_vectors"
+    parameters:
+      artifacts: "{{ impact_analysis.affected_artifacts }}"
+      dimensions: ["content", "structure", "governance"]
+      embedding_model: "text-embedding-ada-002"
+      batch_size: 50
+    output_var: "vector_update_result"
+    description: "更新向量索引"
+
+  # =========================================================================
+  # Step 14-15: Generate Reports and Log (回饋層 - Feedback)
+  # =========================================================================
+  - step: 14
+    name: "Generate Change Summary"
+    action: "generate_report"
+    parameters:
+      template: |
+        # Repository Change Summary
+        
+        **Timestamp**: {{ change_metadata.commit_timestamp }}
+        **Commit**: {{ change_metadata.commit_sha }}
+        **Author**: {{ change_metadata.commit_author }}
+        **Message**: {{ change_metadata.commit_message }}
+        
+        ## Changes Detected
+        
+        {{ classified_changes | format_table }}
+        
+        ## Impact Analysis
+        
+        - **Affected Artifacts**: {{ impact_analysis.affected_count }}
+        - **New Artifacts**: {{ impact_analysis.new_artifacts | length }}
+        - **Modified Artifacts**: {{ impact_analysis.modified_artifacts | length }}
+        - **Deleted Artifacts**: {{ impact_analysis.deleted_artifacts | length }}
+        
+        ## Related Content
+        
+        ### Related Artifacts ({{ related_artifacts | length }})
+        {{ related_artifacts | format_list }}
+        
+        ### Highly Related Content ({{ highly_related_content | length }})
+        {{ highly_related_content | format_list }}
+        
+        ## Broken References
+        
+        {{ broken_refs | format_issues }}
+        
+        ## Knowledge Graph Status
+        
+        - **MN-DOC**: {{ mndoc_result.status }}
+        - **Knowledge Graph**: {{ kg_result.status }}
+        - **SuperRoot Entities**: {{ superroot_result.status }}
+        - **Governance Index**: {{ index_update_result.status }}
+        - **Vector Indices**: {{ vector_update_result.status }}
+    output_var: "change_summary"
+    description: "生成變動摘要報告"
+
+  - step: 15
+    name: "Log to Trust Chain"
+    action: "log_to_trust_chain"
+    parameters:
+      event: "knowledge_sync_completed"
+      artifact_ids: "{{ impact_analysis.affected_artifacts | map('id') }}"
+      metadata:
+        commit_sha: "{{ change_metadata.commit_sha }}"
+        changes_count: "{{ classified_changes | length }}"
+        affected_artifacts_count: "{{ impact_analysis.affected_count }}"
+        related_artifacts_count: "{{ related_artifacts | length }}"
+        highly_related_count: "{{ highly_related_content | length }}"
+        broken_refs_count: "{{ broken_refs | length }}"
+        timestamp: "{{ now() }}"
+    output_var: "trust_chain_entry"
+    description: "記錄到證據鏈"
+
+  # =========================================================================
+  # Step 16: Store Change Record (紀錄功能)
+  # =========================================================================
+  - step: 16
+    name: "Store Change Record"
+    action: "store_record"
+    parameters:
+      storage_path: "../state/change-records/"
+      filename: "change-{{ change_metadata.commit_sha }}.yaml"
+      content:
+        commit: "{{ change_metadata }}"
+        changes: "{{ classified_changes }}"
+        impact: "{{ impact_analysis }}"
+        related: "{{ related_artifacts }}"
+        highly_related: "{{ highly_related_content }}"
+        broken_refs: "{{ broken_refs }}"
+        knowledge_artifacts:
+          mndoc: "{{ mndoc_result }}"
+          knowledge_graph: "{{ kg_result }}"
+          superroot: "{{ superroot_result }}"
+        governance_updates:
+          index: "{{ index_update_result }}"
+          dag: "{{ dag_update_result }}"
+          vectors: "{{ vector_update_result }}"
+        summary: "{{ change_summary }}"
+    output_var: "record_stored"
+    description: "儲存完整的變動記錄供未來查詢"
+
+output:
+  success: true
+  commit_sha: "{{ change_metadata.commit_sha }}"
+  changes_processed: "{{ classified_changes | length }}"
+  artifacts_affected: "{{ impact_analysis.affected_count }}"
+  related_artifacts: "{{ related_artifacts | length }}"
+  highly_related: "{{ highly_related_content | length }}"
+  knowledge_synced: true
+  record_path: "{{ record_stored.path }}"
+  summary: "{{ change_summary }}"
+
+triggers:
+  - event: "git.push"
+    condition: "true"
+    priority: "high"
+  
+  - event: "git.commit"
+    condition: "true"
+    priority: "high"
+  
+  - event: "workflow.completed"
+    condition: "true"
+    priority: "medium"
+  
+  - event: "scheduled.knowledge_sync"
+    schedule: "0 */6 * * *"  # Every 6 hours
+    priority: "low"
+
+notifications:
+  on_completion:
+    method: "log"
+    level: "info"
+    message: "Knowledge base synchronized. {{ impact_analysis.affected_count }} artifacts affected."
+  
+  on_broken_refs:
+    method: "github_issue"
+    condition: "broken_refs | length > 0"
+    template: |
+      ## 🔗 Broken References Detected
+      
+      The knowledge sync detected {{ broken_refs | length }} broken reference(s):
+      
+      {{ broken_refs | format_issues }}
+      
+      **Commit**: {{ change_metadata.commit_sha }}
+      **Full Report**: {{ record_stored.path }}

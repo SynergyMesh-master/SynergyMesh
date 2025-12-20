@@ -209,6 +209,13 @@ strategy_policies:
       reasoning: true
       execution: true
       proof: true
+  pipeline_memory:
+    path: "ops/policies/pipeline.memory.policy.v1.0.0.yaml.txt"
+    ssot_binding: true
+    integrity_placeholders:
+      sha3_512: "<TO_BE_FILLED_BY_PIPELINE>"
+      blake3: "<TO_BE_FILLED_BY_PIPELINE>"
+    lazy_attestation: true
 
 # ============================================================================
 # Workflow System Configuration (工作流程系統配置)

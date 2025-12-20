@@ -1,0 +1,369 @@
+# =============================================================================
+# SynergyMesh Governance - Meta-Specification Layer
+# 99-metadata: Unified Metadata Management & Living Knowledge Base
+# =============================================================================
+# Layer: Meta-Specification (90-99)
+# Purpose: Metadata governance, lineage, provenance, and living knowledge
+# Machine-First Format: YAML
+# Validation: JSON Schema Enforced
+# =============================================================================
+
+apiVersion: governance.machinenativeops.io/v2
+kind: DimensionModule
+metadata:
+  id: "99-metadata"
+  name: "元數據管理中心"
+  name_en: "Metadata Management Center"
+  version: "1.0.0"
+  created_at: "2025-12-19T00:00:00Z"
+  updated_at: "2025-12-19T00:00:00Z"
+  owner: governance-bot
+  category: meta-specification
+  layer: "90-99"
+  layer_name: "Meta-Specification Layer"
+  tags:
+    - metadata
+    - lineage
+    - provenance
+    - governance
+    - living-knowledge-base
+    - data-catalog
+    - traceability
+
+spec:
+  description: |
+    元數據管理中心負責整個平台的元數據治理、溯源和生命周期管理，
+    為AI治理和合規提供數據基礎。整合活體知識庫（Living Knowledge Base），
+    實現系統自我感知、自我建模、自我診斷和自我回饋的知識循環。
+
+  # ==========================================================================
+  # CORE COMPONENTS (核心組件)
+  # ==========================================================================
+  components:
+    # ------------------------------------------------------------------------
+    # 1. Metadata Classification (元數據分類)
+    # ------------------------------------------------------------------------
+    - id: "metadata-classification"
+      name: "元數據分類"
+      name_en: "Metadata Classification"
+      description: |
+        按照類型對元數據進行分類管理，確保數據的結構化和可追溯性
+      categories:
+        technical:
+          name: "技術元數據"
+          name_en: "Technical Metadata"
+          description: "數據源、格式、結構、依賴關係"
+          attributes:
+            - data_source
+            - format
+            - schema
+            - dependencies
+            - constraints
+        business:
+          name: "業務元數據"
+          name_en: "Business Metadata"
+          description: "業務術語、數據所有者、數據質量規則"
+          attributes:
+            - business_terms
+            - data_owner
+            - quality_rules
+            - criticality
+            - sensitivity
+        operational:
+          name: "操作元數據"
+          name_en: "Operational Metadata"
+          description: "數據血緣、變更歷史、訪問日誌"
+          attributes:
+            - lineage
+            - change_history
+            - access_logs
+            - performance_metrics
+        governance:
+          name: "治理元數據"
+          name_en: "Governance Metadata"
+          description: "策略、合規要求、審計記錄"
+          attributes:
+            - policies
+            - compliance_requirements
+            - audit_records
+            - certification_status
+
+    # ------------------------------------------------------------------------
+    # 2. Metadata Provenance (元數據溯源)
+    # ------------------------------------------------------------------------
+    - id: "metadata-provenance"
+      name: "元數據溯源"
+      name_en: "Metadata Provenance"
+      description: |
+        追蹤元數據的來源、變更歷史和傳播路徑
+      configuration:
+        enabled: true
+        sources:
+          - type: git
+            description: "Git倉庫源"
+            tracking:
+              - commits
+              - branches
+              - tags
+          - type: build
+            description: "構建管道源"
+            tracking:
+              - pipeline_runs
+              - artifacts
+              - attestations
+          - type: runtime
+            description: "運行時源"
+            tracking:
+              - events
+              - logs
+              - metrics
+
+    # ------------------------------------------------------------------------
+    # 3. Data Lineage (數據血緣)
+    # ------------------------------------------------------------------------
+    - id: "data-lineage"
+      name: "數據血緣"
+      name_en: "Data Lineage"
+      description: |
+        端到端數據血緣追踪、影響分析、變更傳播分析
+      capabilities:
+        - name: "端到端追踪"
+          description: "從數據源到消費者的完整路徑"
+        - name: "影響分析"
+          description: "評估變更對下游系統的影響"
+        - name: "變更傳播"
+          description: "追蹤變更如何在系統中傳播"
+        - name: "合規追踪"
+          description: "確保數據處理符合合規要求"
+
+    # ------------------------------------------------------------------------
+    # 4. Living Knowledge Base (活體知識庫)
+    # ------------------------------------------------------------------------
+    - id: "living-knowledge-base"
+      name: "活體知識庫"
+      name_en: "Living Knowledge Base"
+      description: |
+        實現系統自我感知、自我建模、自我診斷和自我回饋的知識循環
+      layers:
+        perception:
+          name: "感知層"
+          description: "感知系統變化"
+          triggers:
+            - git_commits
+            - workflow_results
+            - scheduled_scans
+        modeling:
+          name: "建模層"
+          description: "系統結構建模"
+          outputs:
+            - generated-mndoc.yaml
+            - knowledge-graph.yaml
+            - superroot-entities.yaml
+        diagnosis:
+          name: "自我診斷層"
+          description: "健康檢查和問題識別"
+          checks:
+            - orphan_components
+            - dead_configs
+            - overlapping_workflows
+            - broken_links
+        feedback:
+          name: "行動/回饋層"
+          description: "問題通知和自動修復"
+          actions:
+            - update_dashboard
+            - notify_maintainers
+            - auto_remediation
+
+  # ==========================================================================
+  # DIRECTORY STRUCTURE (目錄結構)
+  # ==========================================================================
+  directory_structure:
+    root: "metadata/"
+    subdirectories:
+      provenance:
+        description: "數據溯源"
+        files:
+          - workflow-evidence.schema.json
+          - policy-attestations.schema.json
+      schemas:
+        description: "元數據模式"
+        files:
+          - data-catalog.schema.json
+          - lineage.schema.json
+      catalog:
+        description: "數據目錄"
+        subdirectories:
+          - datasets
+          - policies
+          - services
+      lineage:
+        description: "數據血緣"
+        subdirectories:
+          - extractors
+          - visualizations
+      knowledge:
+        description: "活體知識庫"
+        subdirectories:
+          - runtime
+          - pipelines
+          - contracts
+
+  # ==========================================================================
+  # SCHEMA REFERENCE
+  # ==========================================================================
+  schema:
+    path: "./schema.json"
+    format: json-schema
+    validation: required
+
+  # ==========================================================================
+  # POLICY REFERENCE
+  # ==========================================================================
+  policy:
+    path: "./policy.rego"
+    engine: opa
+    enforcement: required
+
+  # ==========================================================================
+  # DEPENDENCIES
+  # ==========================================================================
+  dependencies:
+    required:
+      - id: "61-lineage"
+        reason: "數據血緣追踪基礎"
+      - id: "62-provenance"
+        reason: "數據溯源基礎"
+      - id: "07-audit"
+        reason: "審計記錄"
+      - id: "24-registry"
+        reason: "資源註冊"
+    optional:
+      - id: "38-sbom"
+        reason: "軟體物料清單"
+      - id: "63-evidence"
+        reason: "證據收集"
+      - id: "64-attestation"
+        reason: "證明和認證"
+
+  # ==========================================================================
+  # INTERFACE DEFINITION
+  # ==========================================================================
+  interface:
+    inputs:
+      - name: metadata_source
+        type: object
+        required: true
+        description: "元數據來源"
+      - name: classification
+        type: string
+        required: true
+        enum: ["technical", "business", "operational", "governance"]
+      - name: context
+        type: object
+        required: false
+        description: "處理上下文"
+    outputs:
+      - name: metadata_entry
+        type: object
+        description: "元數據條目"
+      - name: lineage_graph
+        type: object
+        description: "血緣圖"
+      - name: health_report
+        type: object
+        description: "健康報告"
+    errors:
+      - code: "E99M001"
+        name: "MetadataValidationError"
+        description: "元數據驗證失敗"
+      - code: "E99M002"
+        name: "LineageTrackingError"
+        description: "血緣追踪失敗"
+      - code: "E99M003"
+        name: "ProvenanceError"
+        description: "溯源記錄失敗"
+
+  # ==========================================================================
+  # BEHAVIOR CONTRACTS
+  # ==========================================================================
+  behavior:
+    invariants:
+      - "所有元數據操作必須可稽核"
+      - "元數據變更必須記錄溯源"
+      - "血緣關係必須保持一致性"
+    preconditions:
+      - "輸入必須符合元數據 schema"
+      - "數據源必須可訪問"
+    postconditions:
+      - "元數據條目必須包含完整屬性"
+      - "血緣圖必須是有向無環圖"
+      - "溯源記錄必須完整"
+    side_effects:
+      - "生成稽核軌跡"
+      - "更新知識圖譜"
+      - "觸發下游通知"
+
+  # ==========================================================================
+  # LIFECYCLE
+  # ==========================================================================
+  lifecycle:
+    states:
+      - draft
+      - validating
+      - active
+      - deprecating
+      - archived
+    transitions:
+      - from: draft
+        to: validating
+        trigger: submit_metadata
+      - from: validating
+        to: active
+        trigger: validation_passed
+      - from: active
+        to: deprecating
+        trigger: deprecation_notice
+      - from: deprecating
+        to: archived
+        trigger: archival_complete
+
+  # ==========================================================================
+  # METRICS
+  # ==========================================================================
+  metrics:
+    - name: "metadata_entries_total"
+      type: counter
+      description: "元數據條目總數"
+      labels: ["classification", "source"]
+    - name: "metadata_coverage_ratio"
+      type: gauge
+      description: "元數據覆蓋率"
+    - name: "lineage_completeness_ratio"
+      type: gauge
+      description: "血緣完整性比率"
+    - name: "metadata_quality_score"
+      type: gauge
+      description: "元數據質量得分"
+      labels: ["dimension"]
+    - name: "knowledge_health_score"
+      type: gauge
+      description: "知識庫健康得分"
+
+  # ==========================================================================
+  # COMPLIANCE
+  # ==========================================================================
+  compliance:
+    frameworks:
+      - ISO-42001
+      - NIST-AI-RMF
+      - COBIT-2019
+      - GDPR
+    controls:
+      - "META-001: 元數據分類完整性"
+      - "META-002: 數據溯源可追溯性"
+      - "META-003: 血緣關係準確性"
+      - "META-004: 知識庫健康監控"
+    audit_frequency: continuous
+
+status: active

@@ -1,34 +1,34 @@
 import { createHash, randomUUID } from 'crypto';
 import { readFile, stat, realpath } from 'fs/promises';
 import path from 'path';
-import { tmpdir } from 'os';
 
 import sanitize from 'sanitize-filename';
 
 import { PathValidationError } from '../errors';
-import { SLSAAttestationService, SLSAProvenance, BuildMetadata } from './attestation';
 
-const systemTmpDir = tmpdir();
+import { SLSAAttestationService, SLSAProvenance, BuildMetadata } from './attestation';
 
 const getSafeRoot = (): string =>
   path.resolve(process.env.SAFE_ROOT_PATH ?? path.resolve(process.cwd(), 'safefiles'));
-
-const isSubPath = (candidate: string, base: string): boolean => {
-  const relative = path.relative(base, candidate);
-  return relative === '' || (!relative.startsWith('..') && !path.isAbsolute(relative));
-};
 
 const assertPathValid = (filePath: string): void => {
   if (!filePath || typeof filePath !== 'string') {
     throw new PathValidationError('Invalid file path: Path must be a non-empty string');
   }
 
+  // Disallow null bytes which can truncate paths at the OS level.
   if (filePath.includes('\0')) {
+    throw new PathValidationError('Invalid file path');
+  }
+
+  // Reject absolute paths; all user input must be relative to the safe root.
+  if (path.isAbsolute(filePath)) {
     throw new PathValidationError('Invalid file path');
   }
 
   const hasDirectorySeparators = filePath.includes('/') || filePath.includes(path.sep);
   if (!hasDirectorySeparators) {
+    // Treat as a simple filename; sanitize and require that it does not change.
     const sanitized = sanitize(filePath);
     if (sanitized !== filePath || !sanitized) {
       throw new PathValidationError('Invalid file path');
@@ -36,7 +36,9 @@ const assertPathValid = (filePath: string): void => {
     return;
   }
 
-  if (filePath.split(path.sep).includes('..') || filePath.includes('//')) {
+  // For multi-component paths, perform basic syntactic validation and forbid traversal segments and duplicate separators.
+  const segments = filePath.split(/[\\/]+/);
+  if (segments.includes('..') || filePath.includes('//') || filePath.includes('\\\\')) {
     throw new PathValidationError('Invalid file path');
   }
 };
@@ -46,33 +48,30 @@ async function resolveSafePath(userInputPath: string): Promise<string> {
 
   const safeRoot = getSafeRoot();
   const normalizedInput = path.normalize(userInputPath);
-  const root = path.parse(normalizedInput).root || '/';
-  const relativeToRoot = path.relative(root, normalizedInput);
-  const resolvedCandidate = path.isAbsolute(normalizedInput)
-    ? path.resolve(safeRoot, relativeToRoot)
-    : path.resolve(safeRoot, normalizedInput);
 
-  let canonicalPath: string;
-  let canonicalSafeRoot: string;
-  try {
-    canonicalPath = await realpath(resolvedCandidate);
-    // Canonicalize the safe root directory as well for robust prefix checking
-    canonicalSafeRoot = await realpath(safeRoot);
-  } catch (error) {
-    // Allow caller to handle missing files (ENOENT)
-    throw error;
-  }
+  // Canonicalize the safe root directory for robust prefix checking.
+  const canonicalSafeRootWithSep =
+    canonicalSafeRoot.endsWith(path.sep) ? canonicalSafeRoot : canonicalSafeRoot + path.sep;
+  const canonicalSafeRoot = await realpath(safeRoot);
 
-  // Check that canonicalPath is within canonicalSafeRoot using path.relative
-  // This prevents directory traversal and symlink attacks robustly, regardless of separator/casing.
+  // Always resolve user input relative to the canonical safe root.
+  const resolvedCandidate = path.resolve(canonicalSafeRootWithSep, normalizedInput);
+
+  // Canonicalize the candidate to resolve any symlinks.
+  const canonicalPath = await realpath(resolvedCandidate);
+
+  // Ensure the canonical path is strictly within the canonical safe root.
   const rel = path.relative(canonicalSafeRoot, canonicalPath);
-  if (
-    rel.startsWith('..') ||
-    path.isAbsolute(rel) ||
-    rel === '' // Optionally, disallow accessing the root directory itself. Remove or comment this line to allow.
-  ) {
+  if (rel.startsWith('..') || path.isAbsolute(rel)) {
     throw new PathValidationError('Invalid file path');
   }
+  // Defense-in-depth: ensure prefix match on directory boundary.
+  const canonicalPathWithSep =
+    canonicalPath.endsWith(path.sep) ? canonicalPath : canonicalPath + path.sep;
+  if (!canonicalPathWithSep.startsWith(canonicalSafeRootWithSep)) {
+    throw new PathValidationError('Invalid file path');
+  }
+
 
   return canonicalPath;
 }
