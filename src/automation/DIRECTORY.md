@@ -2,7 +2,7 @@
 
 ## 目錄職責
 
-此目錄為 MachineNativeOps 的**自動化層**，包含智能自動化、建築分析、超自動化策略和五骨架自主系統框架。作為系統的自動化能力核心，它與 `src/core/`（決策引擎）和 `src/autonomous/`（自主執行）緊密協作。
+此目錄為 MachineNativeOps 的**自動化層**，包含智能自動化、建築分析、超自動化策略和架構骨架框架索引。作為系統的自動化能力核心，它與 `src/core/`（決策引擎）和 `src/autonomous/`（自主執行）緊密協作。
 
 ## 子目錄說明
 
@@ -34,7 +34,7 @@
 
 | 子目錄 | 職責 |
 |--------|------|
-| `architecture-skeletons/` | 11 骨架架構模式定義 |
+| `architecture-skeletons/` | 11 骨架架構模式定義與索引（對應 src/autonomous/infrastructure 的 8 個已實現骨架） |
 | `_scratch/` | 實驗性代碼 |
 
 ## 核心 Python 檔案說明
@@ -55,15 +55,19 @@
   - 部署驗證與回滾
 - **依賴**：deploy/, config/environments/
 
-## 五骨架自主系統 (Five-Skeleton Framework)
+## 架構骨架框架 (Architecture Skeletons Framework)
 
-| 骨架 | 職責 | 技術棧 |
-|------|------|--------|
-| 架構穩定性 | 即時飛控系統 | C++ + ROS 2 (100Hz) |
-| API 治理 | 模組責任矩陣、合約驗證 | Python |
-| 測試相容性 | 自動化測試、跨版本相容性 | Python + YAML |
-| 安全可觀測性 | 事件日誌、安全監控 | Go + Python |
-| 文件與範例 | 治理矩陣、API 文檔 | Markdown + YAML |
+本層提供 11 個架構骨架的統一索引（位於 `architecture-skeletons/`），這些骨架按功能可歸類為五大核心維度：
+
+| 核心維度 | 對應骨架 | 技術棧 |
+|---------|---------|--------|
+| 架構穩定性 | architecture-stability | C++ + ROS 2 (100Hz) |
+| API 與測試治理 | api-governance, testing-governance, testing-compatibility | Python + YAML |
+| 安全與可觀測性 | security-observability | Go + Python |
+| 身份與資料治理 | identity-tenancy, data-governance | - |
+| 編排與知識管理 | nucleus-orchestrator, knowledge-base, performance-reliability, cost-management | - |
+
+**註**：11 個骨架的完整索引與映射見 `architecture-skeletons/unified-index.yaml`；8 個已實現的骨架代碼位於 `src/autonomous/infrastructure/`。
 
 ## 核心能力
 

@@ -2,18 +2,18 @@
 
 ## 目錄職責
 
-此目錄為 MachineNativeOps 的 **MCP 服務器層**，負責提供 LLM 可調用的工具端點（Model Context Protocol）。包含代碼分析、測試生成、文檔生成、SLSA 驗證、安全掃描和性能優化等企業級 MCP 服務器。
+此目錄 `mcp-servers/` 為 MachineNativeOps 的 **MCP 伺服器層**，負責提供 LLM 可調用的工具端點（Model Context Protocol）。包含代碼分析、測試生成、文檔生成、SLSA 驗證、安全掃描和性能優化等企業級 MCP 伺服器；目錄名稱採用 kebab-case（`mcp-servers`）以符合 Node.js / JavaScript 工作空間慣例，而本文檔中統一以「MCP 伺服器層」與「MCP 伺服器」指稱此層與其服務。
 
 ## 子目錄說明
 
 | 子目錄 | 職責 |
 |--------|------|
-| `deploy/` | MCP 服務器部署配置 |
+| `deploy/` | MCP 伺服器部署配置 |
 
-## MCP 服務器說明
+## MCP 伺服器說明
 
 ### code-analyzer.js
-- **職責**：程式碼分析 MCP 服務器
+- **職責**：程式碼分析 MCP 伺服器
 - **功能**：
   - `analyze-code` - 代碼品質與複雜度分析
   - `detect-issues` - 問題檢測與嚴重性過濾
@@ -93,7 +93,7 @@
 - `agent/` - MCP 端點不應依賴業務代理
 - `automation/intelligent/` - MCP 端點不應依賴 pipeline
 
-## 架構模式
+## 執行模式
 
 ```
 1. 服務器初始化 - 創建 MCP 服務器與能力

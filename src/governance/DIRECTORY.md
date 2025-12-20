@@ -36,12 +36,16 @@
 | 子目錄 | 職責 |
 |--------|------|
 | `10-policy/` | Policy as Code Framework |
-| `20-intent/` | Intent-based Orchestration |
+| `11-tools-systems/` | 工具與系統整合 |
+| `12-culture-capability/` | 文化與能力建設 |
+| `13-metrics-reporting/` | 指標與報告 |
+| `14-improvement/` | 持續改進 |
 | `15-economic/` | 經濟模型 |
 | `16-psychological/` | 心理學維度 |
 | `17-sociological/` | 社會學維度 |
 | `18-complex-system/` | 複雜系統 |
 | `19-evolutionary/` | 演化維度 |
+| `20-intent/` | Intent-based Orchestration |
 | `21-ecological/` | 生態維度 |
 | `22-aesthetic/` | 美學維度 |
 

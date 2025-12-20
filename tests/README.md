@@ -1,6 +1,6 @@
 # Tests
 
-MachineNativeOps 測試套件，確保代碼質量和功能正確性。
+MachineNativeOps 測試目錄，確保代碼質量和功能正確性。
 
 ## 測試架構
 
