@@ -44,10 +44,14 @@ class SecurityManager:
     
     def _hash_password(self, password: str) -> str:
         """對密碼進行哈希處理"""
+        if not password:
+            raise ValueError("Password cannot be empty")
         return pwd_context.hash(password)
     
     def _verify_password(self, plain_password: str, hashed_password: str) -> bool:
         """驗證密碼是否匹配哈希值"""
+        if not plain_password or not hashed_password:
+            return False
         return pwd_context.verify(plain_password, hashed_password)
     
     async def initialize(self):
@@ -104,8 +108,12 @@ class SecurityManager:
             )
             self.users[admin_user.id] = admin_user
             logger.info("👑 創建默認管理員用戶")
-            logger.warning(f"⚠️ 默認管理員密碼已生成。請儲存此密碼: {default_password}")
-            logger.warning("🔒 在生產環境中，應立即更改默認密碼")
+            logger.warning("⚠️ 默認管理員密碼已生成並已加密存儲")
+            logger.warning("🔒 在生產環境中，應從環境變量或安全配置中設置密碼")
+            # Note: In production, retrieve password from secure configuration/environment variables
+            # For development purposes only, the password is logged once at startup
+            if logger.level <= logging.DEBUG:
+                logger.debug(f"DEBUG ONLY - 管理員密碼: {default_password}")
     
     async def _log_security_event(self, event_type: str, details: Dict[str, Any]):
         """記錄安全事件"""
