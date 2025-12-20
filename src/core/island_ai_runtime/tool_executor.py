@@ -116,10 +116,17 @@ class CodeRunner(Tool):
 
         normalized = os.path.realpath(working_dir)
         if not self.config.allowed_paths:
-            raise ValueError("Working directory is not allowed")
+            raise ValueError("Working directory requires an allowlist; configure allowed_paths.")
 
         for allowed in self.config.allowed_paths:
             base = os.path.realpath(allowed)
+            try:
+                if os.path.commonpath([normalized, base]) == base:
+                    return normalized
+            except ValueError:
+                # Paths on different drives (e.g., Windows); treat as not allowed
+                continue
+
             if normalized == base or normalized.startswith(base + os.sep):
                 return normalized
 
