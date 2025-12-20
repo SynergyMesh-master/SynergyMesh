@@ -33,7 +33,7 @@
 
 #### 1.1 執行引擎 (engine.py)
 - **行數**: ~600 行
-- **功能**: 
+- **功能**:
   - DebugEngine - 全域引擎管理
   - DebugSession - 會話管理
   - ConfigurationManager - 配置系統
