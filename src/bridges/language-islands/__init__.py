@@ -35,7 +35,14 @@ def _import_kebab_module(module_alias: str, file_name: str, legacy_alias: str | 
         sys.modules[qualified_name] = module
         if legacy_alias:
             sys.modules[legacy_alias] = module
-        spec.loader.exec_module(module)
+        try:
+            spec.loader.exec_module(module)
+        except Exception:
+            # Clean up partially-initialized modules from sys.modules on failure
+            sys.modules.pop(qualified_name, None)
+            if legacy_alias:
+                sys.modules.pop(legacy_alias, None)
+            raise
         return module
     raise ImportError(f"Could not load module from {module_path}")
 
