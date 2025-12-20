@@ -254,7 +254,7 @@ class CodeGenerationAgent(BaseAgent):
     def _generate_app_js(self, app_name: str, analysis: Dict[str, Any]) -> str:
         """生成React App組件"""
         app_name_capitalized = app_name.title()
-return f"""
+        return f"""
 import React from 'react';
 import {{ BrowserRouter as Router, Routes, Route }} from 'react-router-dom';
 import Header from './components/Header';
