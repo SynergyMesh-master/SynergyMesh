@@ -119,6 +119,8 @@ class BootstrapContext:
                     try:
                         Path(tmp_path).unlink()
                     except OSError:
+                        # Best-effort cleanup: ignore errors if file was already deleted
+                        # or if we lack permissions (e.g., concurrent deletion, unmounted fs)
                         pass
             self.log("[shell] executed block")
         else:
