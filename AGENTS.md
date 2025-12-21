@@ -22,6 +22,7 @@
    - 若任務失敗，所有相關審核項都應標記為 ❌
 
 ## PR 模板規範
+
 - 使用標準化狀態標記：✅ (Complete), ⏸️ (Blocked), 🔄 (In Progress), ❌ (Failed), ⏭️ (Skipped)
 - 確保狀態與清單進度一致：status ≡ checklist progress
 - 所有變更必須先更新治理文件再實施
