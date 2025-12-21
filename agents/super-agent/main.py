@@ -164,8 +164,9 @@ class SuperAgent:
                 return {"status": "no_handler", "message_type": message_type.value}
                 
         except Exception as e:
-            logger.error(f"Message routing failed: {e}")
-            return {"status": "error", "error": str(e)}
+            # Log full exception details server-side but avoid exposing them to the caller
+            logger.exception("Message routing failed")
+            return {"status": "error", "error": "Message routing failed"}
     
     def handle_incident_signal(self, envelope: MessageEnvelope) -> Dict[str, Any]:
         """Handle incoming incident signal"""
@@ -400,8 +401,9 @@ async def receive_message(message: MessageEnvelope):
         }
         
     except Exception as e:
-        logger.error(f"Message processing failed: {e}")
-        raise HTTPException(status_code=500, detail=f"Message processing failed: {str(e)}")
+        # Log the full exception details server-side, but return a generic error message
+        logger.exception("Message processing failed")
+        raise HTTPException(status_code=500, detail="Message processing failed")
 
 @app.get("/health")
 async def health_check():

@@ -49,6 +49,23 @@ else
     exit 1
 fi
 
+# Ensure python3 and dependencies are available before running integration tests
+if ! command -v python3 &> /dev/null; then
+    echo "❌ python3 is not installed or not in PATH"
+    docker stop super-agent-test
+    docker rm super-agent-test
+    exit 1
+fi
+
+echo "📦 Ensuring Python dependencies for integration tests..."
+if ! python3 -m pip show requests > /dev/null 2>&1; then
+    if ! python3 -m pip install --user requests > /dev/null 2>&1; then
+        echo "❌ Failed to install Python dependency 'requests'"
+        docker stop super-agent-test
+        docker rm super-agent-test
+        exit 1
+    fi
+fi
 # Run integration tests
 echo "🧪 Running integration tests..."
 python3 test_super_agent.py http://localhost:8080
