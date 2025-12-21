@@ -103,6 +103,7 @@ class Incident:
 class SuperAgent:
     def __init__(self):
         self.incidents: Dict[str, Incident] = {}
+        self.startup_time = datetime.now()
         self.message_handlers = {
             MessageType.INCIDENT_SIGNAL: self.handle_incident_signal,
             MessageType.RCA_REPORT: self.handle_rca_report,
@@ -118,6 +119,24 @@ class SuperAgent:
     def generate_span_id(self) -> str:
         """Generate unique span ID"""
         return str(uuid.uuid4())
+    
+    def get_uptime(self) -> str:
+        """Calculate uptime since startup"""
+        uptime_delta = datetime.now() - self.startup_time
+        total_seconds = int(uptime_delta.total_seconds())
+        days = total_seconds // 86400
+        hours = (total_seconds % 86400) // 3600
+        minutes = (total_seconds % 3600) // 60
+        seconds = total_seconds % 60
+        
+        if days > 0:
+            return f"{days}d {hours}h {minutes}m {seconds}s"
+        elif hours > 0:
+            return f"{hours}h {minutes}m {seconds}s"
+        elif minutes > 0:
+            return f"{minutes}m {seconds}s"
+        else:
+            return f"{seconds}s"
     
     def validate_message_envelope(self, envelope: MessageEnvelope) -> bool:
         """Validate message envelope structure and required fields"""
@@ -452,7 +471,7 @@ async def get_metrics():
             for state in IncidentState
         },
         "message_types_supported": [mt.value for mt in MessageType],
-        "uptime": "TODO",  # Implement uptime tracking
+        "uptime": super_agent.get_uptime(),
         "timestamp": datetime.now().isoformat()
     }
 
