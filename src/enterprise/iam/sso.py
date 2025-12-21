@@ -15,6 +15,8 @@ from typing import Any, Dict, Optional, Protocol
 from urllib.parse import urlencode, urlparse
 from uuid import UUID
 
+import jwt
+
 from enterprise.iam.models import (
     Membership,
     Role,
@@ -333,6 +335,7 @@ class SSOManager:
             raise ValueError("Invalid or expired state parameter")
 
         org_id = UUID(pending["org_id"])
+        nonce = pending["nonce"]
         code_verifier = pending["code_verifier"]
         redirect_uri = pending["redirect_uri"]
 
@@ -369,7 +372,7 @@ class SSOManager:
             expires_in=token_response.get("expires_in", 3600),
         )
 
-        # Validate ID token and nonce to prevent replay attacks
+        # Validate ID token and critical claims
         # NOTE: This implementation decodes the JWT without signature verification.
         # In production, implement full JWT signature verification using the OIDC
         # provider's JWKS endpoint to ensure token authenticity.
@@ -386,6 +389,38 @@ class SSOManager:
                 raise ValueError("Missing nonce claim in ID token")
             if token_nonce != nonce:
                 raise ValueError("Nonce mismatch in ID token - possible replay attack")
+            
+            # Verify issuer (iss) claim matches the configured issuer
+            token_issuer = id_token_claims.get("iss")
+            if not token_issuer:
+                raise ValueError("Missing issuer (iss) claim in ID token")
+            # Normalize issuer URLs for comparison (remove trailing slashes)
+            expected_issuer = config.issuer_url.rstrip('/')
+            actual_issuer = token_issuer.rstrip('/')
+            if actual_issuer != expected_issuer:
+                raise ValueError(
+                    f"Issuer mismatch: expected {expected_issuer}, got {actual_issuer}"
+                )
+            
+            # Verify audience (aud) claim matches the client ID
+            token_audience = id_token_claims.get("aud")
+            if not token_audience:
+                raise ValueError("Missing audience (aud) claim in ID token")
+            # Audience can be a string or a list of strings
+            audiences = [token_audience] if isinstance(token_audience, str) else token_audience
+            if config.client_id not in audiences:
+                raise ValueError(
+                    f"Audience mismatch: client_id {config.client_id} not in {audiences}"
+                )
+            
+            # Verify expiration (exp) claim - token must not be expired
+            token_exp = id_token_claims.get("exp")
+            if not token_exp:
+                raise ValueError("Missing expiration (exp) claim in ID token")
+            current_timestamp = datetime.utcnow().timestamp()
+            if current_timestamp >= token_exp:
+                raise ValueError("ID token has expired")
+                
         except jwt.DecodeError as e:
             raise ValueError(f"Failed to decode ID token: {e}")
 
