@@ -8,8 +8,8 @@ the backend interfaces for OIDC/SAML integration.
 
 from dataclasses import dataclass
 from datetime import datetime, timedelta
-from typing import Optional, List, Dict, Any, Protocol
-from uuid import UUID, uuid4
+from typing import Optional, Dict, Any, Protocol
+from uuid import UUID
 import hashlib
 import secrets
 import logging
@@ -193,6 +193,7 @@ class SSOManager:
 
         if not discovery_response:
             raise ValueError("Failed to discover OIDC configuration: empty response")
+
         # Hash client secret for storage
         secret_hash = hashlib.sha256(client_secret.encode()).hexdigest()
 
@@ -336,7 +337,6 @@ class SSOManager:
         org_id = UUID(pending["org_id"])
         code_verifier = pending["code_verifier"]
         redirect_uri = pending["redirect_uri"]
-        nonce = pending["nonce"]
 
         # Clean up pending auth
         del self._pending_auth[state]
