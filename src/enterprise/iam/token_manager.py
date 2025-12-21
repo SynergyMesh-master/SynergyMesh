@@ -21,8 +21,6 @@ from enterprise.iam.models import (
     TokenScope,
     Permission,
 )
-
-
 logger = logging.getLogger(__name__)
 
 
