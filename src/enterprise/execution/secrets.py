@@ -351,7 +351,8 @@ class SecretsManager:
                 context,
             )
         except Exception as e:
-            logger.error(f"Failed to decrypt secret {secret_id}: {e}")
+            secret_id_hash = hashlib.sha256(str(secret_id).encode("utf-8")).hexdigest()[:8]
+            logger.error(f"Failed to decrypt secret (id_hash={secret_id_hash}): {e}")
             return None
 
         # Update access metadata
