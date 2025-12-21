@@ -12,7 +12,6 @@ Ensures backwards compatibility during upgrades.
 from dataclasses import dataclass, field
 from datetime import datetime
 from typing import Optional, Dict, Any, List, Set, Tuple
-from uuid import UUID, uuid4
 from enum import Enum
 import re
 import logging

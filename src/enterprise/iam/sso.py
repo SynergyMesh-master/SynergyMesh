@@ -18,7 +18,6 @@ from urllib.parse import urlencode, urlparse
 from enterprise.iam.models import (
     User,
     SSOConfig,
-    OIDCProvider,
     Membership,
     Role,
 )
@@ -193,6 +192,7 @@ class SSOManager:
 
         if not discovery_response:
             raise ValueError("Failed to discover OIDC configuration: empty response")
+
         # Hash client secret for storage
         secret_hash = hashlib.sha256(client_secret.encode()).hexdigest()
 
