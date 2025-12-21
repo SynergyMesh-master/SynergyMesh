@@ -407,7 +407,14 @@ class SSOManager:
             if not token_audience:
                 raise ValueError("Missing audience (aud) claim in ID token")
             # Audience can be a string or a list of strings
-            audiences = [token_audience] if isinstance(token_audience, str) else token_audience
+            if isinstance(token_audience, str):
+                audiences = [token_audience]
+            elif isinstance(token_audience, list):
+                audiences = token_audience
+            else:
+                raise ValueError(
+                    f"Invalid audience claim type: expected string or list, got {type(token_audience)}"
+                )
             if config.client_id not in audiences:
                 raise ValueError(
                     f"Audience mismatch: client_id {config.client_id} not in {audiences}"
@@ -417,6 +424,10 @@ class SSOManager:
             token_exp = id_token_claims.get("exp")
             if not token_exp:
                 raise ValueError("Missing expiration (exp) claim in ID token")
+            if not isinstance(token_exp, (int, float)):
+                raise ValueError(
+                    f"Invalid expiration claim type: expected number, got {type(token_exp)}"
+                )
             current_timestamp = datetime.utcnow().timestamp()
             if current_timestamp >= token_exp:
                 raise ValueError("ID token has expired")
