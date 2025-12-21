@@ -6,13 +6,13 @@
 # ============================================================================
 
 # API requests proxy to Workers
-/api/*  https://api.machinenativeops.com/api/:splat  200
+/api/*  https://api.machinenativeops.com/api/:splat  302
 
 # Webhook endpoint proxy
-/webhooks/*  https://api.machinenativeops.com/webhooks/:splat  200
+/webhooks/*  https://api.machinenativeops.com/webhooks/:splat  302
 
 # Health check proxy
-/health  https://api.machinenativeops.com/health  200
+/health  https://api.machinenativeops.com/health  302
 
 # Legacy URL redirects
 /docs/*  /documentation/:splat  301

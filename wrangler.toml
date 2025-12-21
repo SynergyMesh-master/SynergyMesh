@@ -9,7 +9,7 @@
 
 name = "machinenativeops-worker"
 main = "cloudflare/workers/src/index.ts"
-compatibility_date = "2024-12-01"
+compatibility_date = "2025-12-01"
 compatibility_flags = ["nodejs_compat"]
 
 # ============================================================================
@@ -23,10 +23,10 @@ compatibility_flags = ["nodejs_compat"]
 # ============================================================================
 # Build Configuration
 # ============================================================================
-[build]
-command = "npm run build:worker"
-cwd = "."
-watch_dir = "cloudflare/workers/src"
+# Note: No custom [build] command is defined.
+# Wrangler 3 will automatically bundle the TypeScript entrypoint defined in
+# `main = "cloudflare/workers/src/index.ts"`, which avoids relying on a
+# non-emitting npm script (e.g., `tsc --noEmit`) for deployment artifacts.
 
 # ============================================================================
 # Development Configuration
@@ -48,15 +48,21 @@ routes = [
 vars = { ENVIRONMENT = "production" }
 
 # KV Namespace bindings for production
+# IMPORTANT: These IDs must be populated before production deployment.
+# Create namespaces using: wrangler kv:namespace create CACHE --env production
+# Then update the 'id' fields below with the generated namespace IDs.
 [[env.production.kv_namespaces]]
 binding = "CACHE"
-id = "" # Set via Cloudflare Dashboard or wrangler kv:namespace create
+id = "" # Set via wrangler kv:namespace create or Cloudflare Dashboard
 
 [[env.production.kv_namespaces]]
 binding = "SESSIONS"
 id = "" # Set via Cloudflare Dashboard
 
 # D1 Database binding for production
+# IMPORTANT: Populate database_id before production deployment.
+# Create database using: wrangler d1 create machinenativeops-prod
+# Then update the 'database_id' field below.
 [[env.production.d1_databases]]
 binding = "DB"
 database_name = "machinenativeops-prod"
@@ -149,7 +155,7 @@ invocation_logs = true
 # Limits
 # ============================================================================
 [limits]
-cpu_ms = 50
+cpu_ms = 100
 
 # ============================================================================
 # Placement (Smart Placement)

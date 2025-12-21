@@ -56,7 +56,7 @@ interface GitHubWebhookPayload {
 // ============================================================================
 
 const CORS_HEADERS = {
-  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Origin': 'https://machinenativeops.com',
   'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
   'Access-Control-Allow-Headers': 'Content-Type, Authorization, X-GitHub-Event, X-Hub-Signature-256',
   'Access-Control-Max-Age': '86400',
@@ -90,7 +90,7 @@ export default {
   /**
    * Scheduled event handler (Cron Triggers)
    */
-  async scheduled(event: ScheduledEvent, env: Env, ctx: ExecutionContext): Promise<void> {
+  async scheduled(event: ScheduledEvent, env: Env, _ctx: ExecutionContext): Promise<void> {
     console.log(`Cron trigger: ${event.cron}`);
 
     // Perform scheduled tasks
@@ -107,7 +107,7 @@ export default {
   /**
    * Queue message handler
    */
-  async queue(batch: MessageBatch<unknown>, env: Env): Promise<void> {
+  async queue(batch: MessageBatch<unknown>, _env: Env): Promise<void> {
     for (const message of batch.messages) {
       console.log('Processing queue message:', message.body);
       // Process queue messages
@@ -203,8 +203,16 @@ async function handleGitHubWebhook(request: Request, env: Env): Promise<Response
 
   const body = await request.text();
 
-  // Verify webhook signature if secret is configured
-  if (env.GITHUB_WEBHOOK_SECRET && signature) {
+  // Verify webhook signature (mandatory for production)
+  if (!env.GITHUB_WEBHOOK_SECRET) {
+    // In development, log warning but allow unsigned webhooks
+    if (env.ENVIRONMENT === 'production' || env.ENVIRONMENT === 'staging') {
+      return createJsonResponse({ error: 'Webhook secret not configured' }, 500);
+    }
+    console.warn('GitHub webhook secret not configured - allowing unsigned webhooks in development');
+  } else if (!signature) {
+    return createJsonResponse({ error: 'Missing webhook signature' }, 400);
+  } else {
     const isValid = await verifyGitHubSignature(body, signature, env.GITHUB_WEBHOOK_SECRET);
     if (!isValid) {
       return createJsonResponse({ error: 'Invalid signature' }, 401);
@@ -222,31 +230,49 @@ async function handleGitHubWebhook(request: Request, env: Env): Promise<Response
 
   // Store webhook event in KV for processing
   const eventId = crypto.randomUUID();
-  await env.CACHE.put(
-    `webhook:${eventId}`,
-    JSON.stringify({ event, payload, timestamp: Date.now() }),
-    { expirationTtl: 86400 } // 24 hours
-  );
+  try {
+    await env.CACHE.put(
+      `webhook:${eventId}`,
+      JSON.stringify({ event, payload, timestamp: Date.now() }),
+      { expirationTtl: 86400 } // 24 hours
+    );
+  } catch (error) {
+    console.error('Failed to store GitHub webhook event in KV', {
+      event,
+      eventId,
+      error,
+    });
+    return createJsonResponse({ error: 'Failed to persist webhook event' }, 500);
+  }
 
-  // Process different webhook events
-  switch (event) {
-    case 'push':
-      await handlePushEvent(payload, env);
-      break;
-    case 'pull_request':
-      await handlePullRequestEvent(payload, env);
-      break;
-    case 'issues':
-      await handleIssuesEvent(payload, env);
-      break;
-    case 'workflow_run':
-      await handleWorkflowRunEvent(payload, env);
-      break;
-    case 'release':
-      await handleReleaseEvent(payload, env);
-      break;
-    default:
-      console.log(`Unhandled GitHub event: ${event}`);
+  // Process different webhook events (with error handling)
+  try {
+    switch (event) {
+      case 'push':
+        await handlePushEvent(payload, env);
+        break;
+      case 'pull_request':
+        await handlePullRequestEvent(payload, env);
+        break;
+      case 'issues':
+        await handleIssuesEvent(payload, env);
+        break;
+      case 'workflow_run':
+        await handleWorkflowRunEvent(payload, env);
+        break;
+      case 'release':
+        await handleReleaseEvent(payload, env);
+        break;
+      default:
+        console.log(`Unhandled GitHub event: ${event}`);
+    }
+  } catch (error) {
+    console.error('Error processing GitHub webhook event', {
+      event,
+      eventId,
+      error,
+    });
+    // Still return success to GitHub (event is stored for retry)
   }
 
   return createJsonResponse({
@@ -322,27 +348,27 @@ async function handleGitHubAPI(request: Request, env: Env, url: URL): Promise<Re
 // ============================================================================
 
 async function handlePushEvent(payload: GitHubWebhookPayload, env: Env): Promise<void> {
-  console.log('Processing push event', payload.repository?.full_name);
+  console.log('Processing push event', payload.repository?.full_name, 'environment:', env.ENVIRONMENT || 'unknown');
   // Trigger CI/CD pipeline, update caches, etc.
 }
 
 async function handlePullRequestEvent(payload: GitHubWebhookPayload, env: Env): Promise<void> {
-  console.log('Processing pull request event', payload.action);
+  console.log('Processing pull request event', payload.action, 'environment:', env.ENVIRONMENT || 'unknown');
   // Handle PR opened, closed, merged, etc.
 }
 
 async function handleIssuesEvent(payload: GitHubWebhookPayload, env: Env): Promise<void> {
-  console.log('Processing issues event', payload.action);
+  console.log('Processing issues event', payload.action, 'environment:', env.ENVIRONMENT || 'unknown');
   // Handle issue opened, closed, labeled, etc.
 }
 
 async function handleWorkflowRunEvent(payload: GitHubWebhookPayload, env: Env): Promise<void> {
-  console.log('Processing workflow run event', payload.action);
+  console.log('Processing workflow run event', payload.action, 'environment:', env.ENVIRONMENT || 'unknown');
   // Handle workflow completed, failed, etc.
 }
 
 async function handleReleaseEvent(payload: GitHubWebhookPayload, env: Env): Promise<void> {
-  console.log('Processing release event', payload.action);
+  console.log('Processing release event', payload.action, 'environment:', env.ENVIRONMENT || 'unknown');
   // Handle new releases, deployments, etc.
 }
 
@@ -351,9 +377,22 @@ async function handleReleaseEvent(payload: GitHubWebhookPayload, env: Env): Prom
 // ============================================================================
 
 async function checkRateLimit(request: Request, env: Env): Promise<Response | null> {
-  const clientIP = request.headers.get('CF-Connecting-IP') || 'unknown';
+  // Use CF-Connecting-IP when available; otherwise derive a best-effort
+  // fallback identifier to avoid all "unknown" clients sharing the same
+  // Durable Object instance (common in development environments).
+  let clientIdentifier = request.headers.get('CF-Connecting-IP');
+  if (!clientIdentifier || clientIdentifier === 'unknown') {
+    const forwardedFor = request.headers.get('X-Forwarded-For');
+    if (forwardedFor) {
+      // Take the first IP from the X-Forwarded-For list.
+      clientIdentifier = forwardedFor.split(',')[0].trim();
+    } else {
+      const userAgent = request.headers.get('User-Agent');
+      clientIdentifier = userAgent ? `ua:${userAgent}` : 'anonymous';
+    }
+  }
 
-  const id = env.RATE_LIMITER.idFromName(clientIP);
+  const id = env.RATE_LIMITER.idFromName(clientIdentifier);
   const rateLimiter = env.RATE_LIMITER.get(id);
 
   const response = await rateLimiter.fetch(request);
@@ -395,12 +434,10 @@ async function handleAPIRequest(
 
     // Cache GET responses
     if (request.method === 'GET' && response.ok) {
-      const body = await response.text();
+      // Clone the response before consuming the body
+      const responseClone = response.clone();
+      const body = await responseClone.text();
       ctx.waitUntil(env.CACHE.put(cacheKey, body, { expirationTtl: 300 }));
-      return new Response(body, {
-        status: response.status,
-        headers: { ...CORS_HEADERS, 'Content-Type': 'application/json' },
-      });
     }
 
     return response;
@@ -414,7 +451,7 @@ async function handleAPIRequest(
 // ============================================================================
 
 async function handleAssetRequest(
-  request: Request,
+  _request: Request,
   env: Env,
   url: URL
 ): Promise<Response> {
@@ -461,16 +498,15 @@ async function proxyToBackend(request: Request, env: Env): Promise<Response> {
 // ============================================================================
 
 async function cleanupExpiredCache(env: Env): Promise<void> {
-  console.log('Running cache cleanup...');
-  // KV automatically handles TTL, but we can clean up specific patterns
-  const list = await env.CACHE.list({ prefix: 'temp:' });
-  for (const key of list.keys) {
-    await env.CACHE.delete(key.name);
-  }
+  console.log('Running cache cleanup (no-op; relying on KV TTL)...');
+  // KV automatically handles TTL expiration. If we introduce temporary
+  // cache keys in the future, targeted cleanup logic can be added here.
+  // For now, we rely on the expirationTtl set when storing webhook and API cache entries.
+  void env;
 }
 
 async function generateDailyReport(env: Env): Promise<void> {
-  console.log('Generating daily report...');
+  console.log(`Generating daily report for environment: ${env.ENVIRONMENT || 'unknown'}...`);
   // Generate and store daily metrics
 }
 

@@ -23,7 +23,10 @@ export class RateLimiter {
     maxRequests: 100,   // 100 requests per minute
   };
 
-  constructor(state: DurableObjectState, env: unknown) {
+  // Note: `_env` is required by the Durable Object constructor signature.
+  // It is currently unused here but typed properly for correct bindings and
+  // potential future use.
+  constructor(state: DurableObjectState, _env: unknown) {
     this.state = state;
 
     // Load state from storage
@@ -35,7 +38,7 @@ export class RateLimiter {
     });
   }
 
-  async fetch(request: Request): Promise<Response> {
+  async fetch(_request: Request): Promise<Response> {
     const now = Date.now();
     const windowStart = now - this.config.windowMs;
 
@@ -68,8 +71,13 @@ export class RateLimiter {
       });
     }
 
-    // Add new request
-    this.requests.push({ timestamp: now, count: 1 });
+    // Add new request (aggregate if same timestamp)
+    const lastRecord = this.requests[this.requests.length - 1];
+    if (lastRecord && lastRecord.timestamp === now) {
+      lastRecord.count += 1;
+    } else {
+      this.requests.push({ timestamp: now, count: 1 });
+    }
 
     // Persist state
     await this.state.storage.put('requests', this.requests);
