@@ -464,7 +464,7 @@ class TestJWTValidation:
         with patch('jwt.PyJWKClient') as mock_jwk_client:
             mock_jwk_instance = Mock()
             # PyJWKClient will raise when trying to get signing key from malformed JWT
-            mock_jwk_instance.get_signing_key_from_jwt.side_effect = jwt.exceptions.DecodeError("Invalid token")
+            mock_jwk_instance.get_signing_key_from_jwt.side_effect = DecodeError("Invalid token")
             mock_jwk_client.return_value = mock_jwk_instance
             
             # Should raise ValueError wrapping decode error
