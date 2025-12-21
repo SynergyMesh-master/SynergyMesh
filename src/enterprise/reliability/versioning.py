@@ -13,7 +13,6 @@ from dataclasses import dataclass, field
 from datetime import datetime
 from typing import Optional, Dict, Any, List, Set, Tuple
 from enum import Enum
-import functools
 import re
 import logging
 
@@ -37,7 +36,6 @@ class CompatibilityLevel(Enum):
     NONE = "none"              # Not compatible
 
 
-@functools.total_ordering
 @dataclass
 class SemanticVersion:
     """Semantic version (SemVer)"""
@@ -58,8 +56,20 @@ class SemanticVersion:
     def __lt__(self, other: "SemanticVersion") -> bool:
         return (self.major, self.minor, self.patch) < (other.major, other.minor, other.patch)
 
+    def __le__(self, other: "SemanticVersion") -> bool:
+        return (self.major, self.minor, self.patch) <= (other.major, other.minor, other.patch)
+
+    def __gt__(self, other: "SemanticVersion") -> bool:
+        return (self.major, self.minor, self.patch) > (other.major, other.minor, other.patch)
+
+    def __ge__(self, other: "SemanticVersion") -> bool:
+        return (self.major, self.minor, self.patch) >= (other.major, other.minor, other.patch)
+
     def __eq__(self, other: "SemanticVersion") -> bool:
         return (self.major, self.minor, self.patch) == (other.major, other.minor, other.patch)
+
+    def __ne__(self, other: "SemanticVersion") -> bool:
+        return (self.major, self.minor, self.patch) != (other.major, other.minor, other.patch)
 
     @classmethod
     def parse(cls, version_string: str) -> "SemanticVersion":
