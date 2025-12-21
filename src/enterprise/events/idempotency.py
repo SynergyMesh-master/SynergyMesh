@@ -9,14 +9,13 @@ Ensures that the same PR/commit webhook resend:
 Key principle: Same input → Same output, no side effects on retry.
 """
 
-from dataclasses import dataclass, field
-from datetime import datetime, timedelta
-from typing import Optional, Dict, Any, Protocol, TypeVar, Generic
-from uuid import UUID, uuid4
-from enum import Enum
 import hashlib
 import logging
-
+from dataclasses import dataclass, field
+from datetime import datetime, timedelta
+from enum import Enum
+from typing import Any, Generic, Protocol, TypeVar
+from uuid import UUID, uuid4
 
 logger = logging.getLogger(__name__)
 
@@ -44,7 +43,7 @@ class IdempotencyKey:
     # Context-specific components
     repo_full_name: str = ""
     head_sha: str = ""
-    pr_number: Optional[int] = None
+    pr_number: int | None = None
 
     # Additional discriminators
     discriminator: str = ""  # Additional unique component
@@ -92,23 +91,23 @@ class IdempotencyRecord:
     status: IdempotencyStatus = IdempotencyStatus.IN_PROGRESS
 
     # Result (stored for returning on duplicate requests)
-    result: Optional[Dict[str, Any]] = None
-    error: Optional[str] = None
+    result: dict[str, Any] | None = None
+    error: str | None = None
 
     # Timing
     created_at: datetime = field(default_factory=datetime.utcnow)
-    completed_at: Optional[datetime] = None
-    expires_at: Optional[datetime] = None
+    completed_at: datetime | None = None
+    expires_at: datetime | None = None
 
     # Metadata
     operation_type: str = ""
-    request_id: Optional[str] = None
+    request_id: str | None = None
 
 
 class IdempotencyStorage(Protocol):
     """Storage interface for idempotency records"""
 
-    async def get_by_key(self, key_hash: str) -> Optional[IdempotencyRecord]:
+    async def get_by_key(self, key_hash: str) -> IdempotencyRecord | None:
         ...
 
     async def save(self, record: IdempotencyRecord) -> IdempotencyRecord:
@@ -129,7 +128,7 @@ class IdempotencyResult(Generic[T]):
     """Result of an idempotency check"""
     is_duplicate: bool
     record: IdempotencyRecord
-    cached_result: Optional[T] = None
+    cached_result: T | None = None
 
 
 @dataclass
@@ -161,7 +160,7 @@ class IdempotencyManager:
     default_ttl_seconds: int = 86400  # 24 hours
 
     # In-memory cache for hot path (optional)
-    _cache: Dict[str, IdempotencyRecord] = field(default_factory=dict)
+    _cache: dict[str, IdempotencyRecord] = field(default_factory=dict)
     _cache_enabled: bool = False
 
     # ------------------------------------------------------------------
@@ -171,7 +170,7 @@ class IdempotencyManager:
     async def check(
         self,
         key: IdempotencyKey,
-        ttl_seconds: Optional[int] = None,
+        ttl_seconds: int | None = None,
     ) -> IdempotencyResult:
         """
         Check if an operation is a duplicate
@@ -254,7 +253,7 @@ class IdempotencyManager:
     async def complete(
         self,
         key: IdempotencyKey,
-        result: Dict[str, Any],
+        result: dict[str, Any],
     ) -> IdempotencyRecord:
         """
         Mark an operation as completed with result
@@ -336,7 +335,7 @@ class IdempotencyManager:
     def guard(
         self,
         key: IdempotencyKey,
-        ttl_seconds: Optional[int] = None,
+        ttl_seconds: int | None = None,
     ) -> "IdempotencyGuard":
         """
         Create an idempotency guard context manager
@@ -377,9 +376,9 @@ class IdempotencyGuard:
     """
     manager: IdempotencyManager
     key: IdempotencyKey
-    ttl_seconds: Optional[int] = None
+    ttl_seconds: int | None = None
 
-    _result: Optional[IdempotencyResult] = None
+    _result: IdempotencyResult | None = None
     _completed: bool = False
 
     @property
@@ -388,7 +387,7 @@ class IdempotencyGuard:
         return self._result.is_duplicate if self._result else False
 
     @property
-    def cached_result(self) -> Optional[Dict[str, Any]]:
+    def cached_result(self) -> dict[str, Any] | None:
         """Get cached result for duplicates"""
         return self._result.cached_result if self._result else None
 
@@ -409,7 +408,7 @@ class IdempotencyGuard:
             # Operation succeeded but no result stored - release lock
             await self.manager.release(self.key)
 
-    async def complete(self, result: Dict[str, Any]) -> None:
+    async def complete(self, result: dict[str, Any]) -> None:
         """Mark operation as completed with result"""
         await self.manager.complete(self.key, result)
         self._completed = True

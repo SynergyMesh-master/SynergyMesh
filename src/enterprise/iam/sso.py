@@ -6,22 +6,21 @@ MVP can use email/password + magic link, but this module provides
 the backend interfaces for OIDC/SAML integration.
 """
 
+import hashlib
+import logging
+import secrets
 from dataclasses import dataclass
 from datetime import datetime, timedelta
-from typing import Optional, List, Dict, Any, Protocol
-from uuid import UUID, uuid4
-import hashlib
-import secrets
-import logging
+from typing import Any, Dict, Optional, Protocol
 from urllib.parse import urlencode, urlparse
+from uuid import UUID
 
 from enterprise.iam.models import (
-    User,
-    SSOConfig,
     Membership,
     Role,
+    SSOConfig,
+    User,
 )
-
 
 logger = logging.getLogger(__name__)
 
@@ -192,6 +191,7 @@ class SSOManager:
 
         if not discovery_response:
             raise ValueError("Failed to discover OIDC configuration: empty response")
+
         # Hash client secret for storage
         secret_hash = hashlib.sha256(client_secret.encode()).hexdigest()
 
@@ -335,7 +335,6 @@ class SSOManager:
         org_id = UUID(pending["org_id"])
         code_verifier = pending["code_verifier"]
         redirect_uri = pending["redirect_uri"]
-        nonce = pending["nonce"]
 
         # Clean up pending auth
         del self._pending_auth[state]
@@ -369,6 +368,26 @@ class SSOManager:
             refresh_token=token_response.get("refresh_token"),
             expires_in=token_response.get("expires_in", 3600),
         )
+
+        # Validate ID token and nonce to prevent replay attacks
+        # NOTE: This implementation decodes the JWT without signature verification.
+        # In production, implement full JWT signature verification using the OIDC
+        # provider's JWKS endpoint to ensure token authenticity.
+        try:
+            # Decode ID token to extract claims
+            id_token_claims = jwt.decode(
+                tokens.id_token,
+                options={"verify_signature": False}
+            )
+            
+            # Verify nonce exists and matches to prevent replay attacks
+            token_nonce = id_token_claims.get("nonce")
+            if not token_nonce:
+                raise ValueError("Missing nonce claim in ID token")
+            if token_nonce != nonce:
+                raise ValueError("Nonce mismatch in ID token - possible replay attack")
+        except jwt.DecodeError as e:
+            raise ValueError(f"Failed to decode ID token: {e}")
 
         # Get user info
         userinfo_endpoint = discovery.get("userinfo_endpoint")
