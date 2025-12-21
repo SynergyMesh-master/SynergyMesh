@@ -40,7 +40,7 @@ The actions actions/checkout@v4, actions/setup-python@v5, and actions/upload-art
 ```
 
 ### 修復2：改進的 PR 模板
-創建了 `.github/PULL_REQUEST_TEMPLATE_IMPROVED.md`，包含：
+將改進內容合併到主 PR 模板 `.github/PULL_REQUEST_TEMPLATE.md` 中，包含：
 
 #### 狀態標記規範
 - ✅ **已完成**: 該項目已完成並驗證
