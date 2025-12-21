@@ -110,10 +110,6 @@ fi
 
 echo "✅ Docker image and tests passed"
 
-# Create namespace
-echo "🏗️ Creating namespace..."
-kubectl create namespace ${NAMESPACE} --dry-run=client -o yaml | kubectl apply -f -
-
 # Deploy to Kubernetes
 echo "🚀 Deploying to Kubernetes using Kustomize..."
 $KUSTOMIZE_CMD overlays/${ENVIRONMENT} | kubectl apply -f -

@@ -16,3 +16,4 @@ labels:
     app.kubernetes.io/name: super-agent
     app.kubernetes.io/component: control-plane
     app.kubernetes.io/part-of: aaps-multi-agent
+  includeSelectors: false
