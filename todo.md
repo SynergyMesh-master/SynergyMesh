@@ -22,8 +22,8 @@
 
 ## 階段5：文檔與提交 (Documentation & Commit)
 - [x] 建立 ROOT_SPECS_GUIDE.md 完整說明文檔
-- [ ] 提交所有變更至 Git
-- [ ] 創建 PR 並自動合併至 main
+- [x] 提交所有變更至 Git
+- [x] 推送至 main 分支（已完成）
 
 ---
 

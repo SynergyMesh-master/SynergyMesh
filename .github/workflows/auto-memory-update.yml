@@ -1,0 +1,416 @@
+name: Auto Memory Update
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types: [closed]
+    branches:
+      - main
+
+jobs:
+  update-memory:
+    name: Update Project Memory
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' || (github.event.pull_request.merged == true)
+    
+    steps:
+      - name: 📥 Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: 🐍 Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: 📦 Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pyyaml gitpython
+      
+      - name: 🔍 Analyze Changes
+        id: analyze
+        run: |
+          python << 'EOF'
+          import os
+          import json
+          import subprocess
+          from datetime import datetime
+          
+          def get_git_diff():
+              """獲取最近的變更"""
+              try:
+                  # 獲取最近兩次 commit 的差異
+                  result = subprocess.run(
+                      ['git', 'diff', 'HEAD~1', 'HEAD', '--name-status'],
+                      capture_output=True,
+                      text=True
+                  )
+                  return result.stdout
+              except Exception as e:
+                  print(f"Error getting git diff: {e}")
+                  return ""
+          
+          def analyze_changes(diff_output):
+              """分析變更內容"""
+              changes = {
+                  'added': [],
+                  'modified': [],
+                  'deleted': [],
+                  'root_files': [],
+                  'spec_files': [],
+                  'registry_files': [],
+                  'workflow_files': [],
+                  'doc_files': [],
+                  'memory_files': []
+              }
+              
+              for line in diff_output.split('\n'):
+                  if not line.strip():
+                      continue
+                  
+                  parts = line.split('\t')
+                  if len(parts) < 2:
+                      continue
+                  
+                  status = parts[0]
+                  filepath = parts[1]
+                  
+                  # 分類變更
+                  if status.startswith('A'):
+                      changes['added'].append(filepath)
+                  elif status.startswith('M'):
+                      changes['modified'].append(filepath)
+                  elif status.startswith('D'):
+                      changes['deleted'].append(filepath)
+                  
+                  # 分類檔案類型
+                  if filepath.startswith('root.') and not filepath.startswith('root.specs.') and not filepath.startswith('root.registry.'):
+                      changes['root_files'].append(filepath)
+                  elif filepath.startswith('root.specs.'):
+                      changes['spec_files'].append(filepath)
+                  elif filepath.startswith('root.registry.'):
+                      changes['registry_files'].append(filepath)
+                  elif filepath.startswith('.github/workflows/'):
+                      changes['workflow_files'].append(filepath)
+                  elif filepath.endswith('.md') and filepath.upper() in ['README.MD', 'ARCHITECTURE.MD', 'PROJECT_MEMORY.MD', 'CONVERSATION_LOG.MD']:
+                      changes['doc_files'].append(filepath)
+                  elif filepath in ['PROJECT_MEMORY.md', 'CONVERSATION_LOG.md', 'ARCHITECTURE.md', 'ACCEPTANCE_CHECKLIST.md']:
+                      changes['memory_files'].append(filepath)
+              
+              return changes
+          
+          def get_commit_info():
+              """獲取 commit 資訊"""
+              try:
+                  message = subprocess.run(
+                      ['git', 'log', '-1', '--pretty=%B'],
+                      capture_output=True,
+                      text=True
+                  ).stdout.strip()
+                  
+                  author = subprocess.run(
+                      ['git', 'log', '-1', '--pretty=%an'],
+                      capture_output=True,
+                      text=True
+                  ).stdout.strip()
+                  
+                  sha = subprocess.run(
+                      ['git', 'log', '-1', '--pretty=%H'],
+                      capture_output=True,
+                      text=True
+                  ).stdout.strip()
+                  
+                  return {
+                      'message': message,
+                      'author': author,
+                      'sha': sha[:8],
+                      'timestamp': datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+                  }
+              except Exception as e:
+                  print(f"Error getting commit info: {e}")
+                  return {}
+          
+          # 主邏輯
+          diff = get_git_diff()
+          changes = analyze_changes(diff)
+          commit_info = get_commit_info()
+          
+          # 輸出結果
+          output = {
+              'changes': changes,
+              'commit': commit_info,
+              'has_changes': len(changes['added']) + len(changes['modified']) + len(changes['deleted']) > 0
+          }
+          
+          print(json.dumps(output, indent=2))
+          
+          # 設定 GitHub Actions 輸出
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as f:
+              f.write(f"has_changes={str(output['has_changes']).lower()}\n")
+              f.write(f"added_count={len(changes['added'])}\n")
+              f.write(f"modified_count={len(changes['modified'])}\n")
+              f.write(f"deleted_count={len(changes['deleted'])}\n")
+              f.write(f"commit_sha={commit_info.get('sha', 'unknown')}\n")
+          
+          # 保存詳細資訊到檔案
+          with open('changes_analysis.json', 'w') as f:
+              json.dump(output, f, indent=2)
+          
+          EOF
+      
+      - name: 📝 Update PROJECT_MEMORY.md
+        if: steps.analyze.outputs.has_changes == 'true'
+        run: |
+          python << 'EOF'
+          import json
+          import re
+          from datetime import datetime
+          
+          # 讀取變更分析
+          with open('changes_analysis.json', 'r') as f:
+              analysis = json.load(f)
+          
+          changes = analysis['changes']
+          commit = analysis['commit']
+          
+          # 讀取現有的 PROJECT_MEMORY.md
+          try:
+              with open('PROJECT_MEMORY.md', 'r', encoding='utf-8') as f:
+                  content = f.read()
+          except FileNotFoundError:
+              print("PROJECT_MEMORY.md not found, skipping update")
+              exit(0)
+          
+          # 生成更新摘要
+          summary = f"""
+### 自動更新 - {commit['timestamp']}
+
+**Commit**: {commit['sha']}  
+**Author**: {commit['author']}  
+**Message**: {commit['message']}
+
+**變更統計**:
+- 新增檔案: {len(changes['added'])}
+- 修改檔案: {len(changes['modified'])}
+- 刪除檔案: {len(changes['deleted'])}
+
+**檔案類型分布**:
+- Root 配置: {len(changes['root_files'])}
+- 規範檔案: {len(changes['spec_files'])}
+- 註冊表: {len(changes['registry_files'])}
+- 工作流: {len(changes['workflow_files'])}
+- 文檔: {len(changes['doc_files'])}
+"""
+          
+          # 更新「自動更新記錄」區塊
+          update_section_pattern = r'(## 🔄 自動更新記錄.*?### 最近更新\n)(.*?)(\n### 統計資訊)'
+          
+          def update_recent_updates(match):
+              header = match.group(1)
+              old_updates = match.group(2)
+              footer = match.group(3)
+              
+              # 保留最近 10 條記錄
+              updates = old_updates.strip().split('\n')
+              updates = [u for u in updates if u.strip().startswith('-')][:9]
+              
+              # 添加新記錄
+              new_entry = f"- **{commit['timestamp']}** - {commit['message']}"
+              updates.insert(0, new_entry)
+              
+              return header + '\n'.join(updates) + '\n' + footer
+          
+          content = re.sub(update_section_pattern, update_recent_updates, content, flags=re.DOTALL)
+          
+          # 更新最後更新時間
+          content = re.sub(
+              r'> \*\*最後更新\*\*:.*',
+              f'> **最後更新**: {commit["timestamp"]}',
+              content
+          )
+          
+          # 寫回檔案
+          with open('PROJECT_MEMORY.md', 'w', encoding='utf-8') as f:
+              f.write(content)
+          
+          print("✅ PROJECT_MEMORY.md updated successfully")
+          EOF
+      
+      - name: 📝 Update CONVERSATION_LOG.md
+        if: steps.analyze.outputs.has_changes == 'true'
+        run: |
+          python << 'EOF'
+          import json
+          import re
+          from datetime import datetime
+          
+          # 讀取變更分析
+          with open('changes_analysis.json', 'r') as f:
+              analysis = json.load(f)
+          
+          changes = analysis['changes']
+          commit = analysis['commit']
+          
+          # 讀取現有的 CONVERSATION_LOG.md
+          try:
+              with open('CONVERSATION_LOG.md', 'r', encoding='utf-8') as f:
+                  content = f.read()
+          except FileNotFoundError:
+              print("CONVERSATION_LOG.md not found, skipping update")
+              exit(0)
+          
+          # 生成對話記錄條目
+          log_entry = f"""
+---
+
+### 自動記錄 - {commit['timestamp']}
+
+#### Commit 資訊
+- **SHA**: {commit['sha']}
+- **Author**: {commit['author']}
+- **Message**: {commit['message']}
+- **Timestamp**: {commit['timestamp']}
+
+#### 變更摘要
+- **新增**: {len(changes['added'])} 個檔案
+- **修改**: {len(changes['modified'])} 個檔案
+- **刪除**: {len(changes['deleted'])} 個檔案
+
+#### 檔案清單
+"""
+          
+          if changes['added']:
+              log_entry += "\n**新增檔案**:\n"
+              for f in changes['added'][:10]:  # 最多顯示 10 個
+                  log_entry += f"- {f}\n"
+          
+          if changes['modified']:
+              log_entry += "\n**修改檔案**:\n"
+              for f in changes['modified'][:10]:
+                  log_entry += f"- {f}\n"
+          
+          if changes['deleted']:
+              log_entry += "\n**刪除檔案**:\n"
+              for f in changes['deleted'][:10]:
+                  log_entry += f"- {f}\n"
+          
+          # 在「自動更新記錄」區塊前插入
+          insert_position = content.find('## 🔄 自動更新記錄')
+          if insert_position > 0:
+              content = content[:insert_position] + log_entry + '\n' + content[insert_position:]
+          else:
+              # 如果找不到區塊，添加到文件末尾
+              content += '\n' + log_entry
+          
+          # 寫回檔案
+          with open('CONVERSATION_LOG.md', 'w', encoding='utf-8') as f:
+              f.write(content)
+          
+          print("✅ CONVERSATION_LOG.md updated successfully")
+          EOF
+      
+      - name: 📝 Update ARCHITECTURE.md
+        if: steps.analyze.outputs.has_changes == 'true'
+        run: |
+          python << 'EOF'
+          import json
+          import re
+          from datetime import datetime
+          
+          # 讀取變更分析
+          with open('changes_analysis.json', 'r') as f:
+              analysis = json.load(f)
+          
+          commit = analysis['commit']
+          
+          # 讀取現有的 ARCHITECTURE.md
+          try:
+              with open('ARCHITECTURE.md', 'r', encoding='utf-8') as f:
+                  content = f.read()
+          except FileNotFoundError:
+              print("ARCHITECTURE.md not found, skipping update")
+              exit(0)
+          
+          # 更新最後更新時間
+          content = re.sub(
+              r'> \*\*最後更新\*\*:.*',
+              f'> **最後更新**: {commit["timestamp"]}',
+              content
+          )
+          
+          # 更新版本歷史
+          version_pattern = r'(## 🔄 版本歷史.*?### v1\.0\.0.*?)(\n### v1\.1\.0)'
+          
+          def update_version_history(match):
+              v1_section = match.group(1)
+              v1_1_header = match.group(2)
+              
+              # 在 v1.0.0 區塊添加更新記錄
+              update_note = f"\n- 🔄 自動更新 ({commit['timestamp']}): {commit['message']}"
+              
+              return v1_section + update_note + v1_1_header
+          
+          if re.search(version_pattern, content, flags=re.DOTALL):
+              content = re.sub(version_pattern, update_version_history, content, flags=re.DOTALL)
+          
+          # 寫回檔案
+          with open('ARCHITECTURE.md', 'w', encoding='utf-8') as f:
+              f.write(content)
+          
+          print("✅ ARCHITECTURE.md updated successfully")
+          EOF
+      
+      - name: 📊 Generate Update Summary
+        if: steps.analyze.outputs.has_changes == 'true'
+        run: |
+          echo "## 🔄 Memory Update Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Commit**: ${{ steps.analyze.outputs.commit_sha }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Timestamp**: $(date +'%Y-%m-%d %H:%M:%S')" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Changes" >> $GITHUB_STEP_SUMMARY
+          echo "- Added: ${{ steps.analyze.outputs.added_count }} files" >> $GITHUB_STEP_SUMMARY
+          echo "- Modified: ${{ steps.analyze.outputs.modified_count }} files" >> $GITHUB_STEP_SUMMARY
+          echo "- Deleted: ${{ steps.analyze.outputs.deleted_count }} files" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Updated Files" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ PROJECT_MEMORY.md" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ CONVERSATION_LOG.md" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ ARCHITECTURE.md" >> $GITHUB_STEP_SUMMARY
+      
+      - name: 💾 Commit Memory Updates
+        if: steps.analyze.outputs.has_changes == 'true'
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          
+          # 檢查是否有變更
+          if [[ -n $(git status --porcelain) ]]; then
+            git add PROJECT_MEMORY.md CONVERSATION_LOG.md ARCHITECTURE.md
+            git commit -m "chore: Auto-update project memory [skip ci]
+
+            - Updated PROJECT_MEMORY.md with latest changes
+            - Updated CONVERSATION_LOG.md with commit log
+            - Updated ARCHITECTURE.md timestamp
+            
+            Triggered by: ${{ steps.analyze.outputs.commit_sha }}"
+            
+            git push
+            echo "✅ Memory files committed and pushed"
+          else
+            echo "ℹ️ No changes to commit"
+          fi
+      
+      - name: 📢 Notify Completion
+        if: steps.analyze.outputs.has_changes == 'true'
+        run: |
+          echo "🎉 Memory update completed successfully!"
+          echo "📝 Updated files:"
+          echo "  - PROJECT_MEMORY.md"
+          echo "  - CONVERSATION_LOG.md"
+          echo "  - ARCHITECTURE.md"
