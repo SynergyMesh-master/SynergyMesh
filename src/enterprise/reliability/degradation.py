@@ -307,7 +307,7 @@ class HealthCheck:
                     message="Check returned false",
                 )
 
-        except TimeoutError:
+        except asyncio.TimeoutError:
             self._record_failure()
 
             return HealthCheckResult(
