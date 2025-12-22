@@ -17,7 +17,7 @@ class Settings(BaseSettings):
     # Service Identity
     service_name: str = Field(default="super-agent", env="SERVICE_NAME")
     service_version: str = Field(default="1.0.0", env="SERVICE_VERSION")
-    namespace: str = Field(default="axiom-system", env="NAMESPACE")
+    namespace: str = Field(default="machinenativeops", env="NAMESPACE")
     pod_name: str = Field(default="super-agent-local", env="POD_NAME")
     pod_ip: str = Field(default="127.0.0.1", env="POD_IP")
 

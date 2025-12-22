@@ -58,10 +58,10 @@ phase_1_foundation:
       name: "命名空間與RBAC基礎"
       duration: "2 hours"
       components:
-        - axiom-foundation namespace
-        - axiom-governance namespace
-        - axiom-quantum namespace
-        - axiom-automation namespace
+        - machinenativeops-foundation namespace
+        - machinenativeops-governance namespace
+        - machinenativeops-quantum namespace
+        - machinenativeops-automation namespace
         - Basic RBAC roles and bindings
       validation_criteria:
         - all_namespaces_active: true
@@ -287,57 +287,57 @@ data:
     apiVersion: v1
     kind: Namespace
     metadata:
-      name: axiom-foundation
+      name: machinenativeops-foundation
       labels:
-        axiom.io/layer: "l1-enterprise-basics"
-        kubernetes.io/managed-by: "axiom-platform"
+        machinenativeops.io/layer: "l1-enterprise-basics"
+        kubernetes.io/managed-by: "machinenativeops-platform"
       annotations:
-        axiom.io/urn: "urn:axiom:namespace:foundation:v1"
-        axiom.io/infrastructure-scope: "on-premise"
-        axiom.io/network-mode: "internal-only"
+        machinenativeops.io/urn: "urn:machinenativeops:namespace:foundation:v1"
+        machinenativeops.io/infrastructure-scope: "on-premise"
+        machinenativeops.io/network-mode: "internal-only"
     ---
     apiVersion: v1
     kind: Namespace
     metadata:
-      name: axiom-governance
+      name: machinenativeops-governance
       labels:
-        axiom.io/layer: "l4-governance-compliance"
-        kubernetes.io/managed-by: "axiom-platform"
+        machinenativeops.io/layer: "l4-governance-compliance"
+        kubernetes.io/managed-by: "machinenativeops-platform"
       annotations:
-        axiom.io/urn: "urn:axiom:namespace:governance:v1"
-        axiom.io/infrastructure-scope: "on-premise"
-        axiom.io/network-mode: "internal-only"
+        machinenativeops.io/urn: "urn:machinenativeops:namespace:governance:v1"
+        machinenativeops.io/infrastructure-scope: "on-premise"
+        machinenativeops.io/network-mode: "internal-only"
     ---
     apiVersion: v1
     kind: Namespace
     metadata:
-      name: axiom-quantum
+      name: machinenativeops-quantum
       labels:
-        axiom.io/layer: "l6-quantum-specific"
-        kubernetes.io/managed-by: "axiom-platform"
+        machinenativeops.io/layer: "l6-quantum-specific"
+        kubernetes.io/managed-by: "machinenativeops-platform"
       annotations:
-        axiom.io/urn: "urn:axiom:namespace:quantum:v1"
-        axiom.io/infrastructure-scope: "on-premise"
-        axiom.io/network-mode: "internal-only"
-        axiom.io/quantum-workload: "enabled"
+        machinenativeops.io/urn: "urn:machinenativeops:namespace:quantum:v1"
+        machinenativeops.io/infrastructure-scope: "on-premise"
+        machinenativeops.io/network-mode: "internal-only"
+        machinenativeops.io/quantum-workload: "enabled"
     ---
     apiVersion: v1
     kind: Namespace
     metadata:
-      name: axiom-automation
+      name: machinenativeops-automation
       labels:
-        axiom.io/layer: "l8-complete-zero-human"
-        kubernetes.io/managed-by: "axiom-platform"
+        machinenativeops.io/layer: "l8-complete-zero-human"
+        kubernetes.io/managed-by: "machinenativeops-platform"
       annotations:
-        axiom.io/urn: "urn:axiom:namespace:automation:v1"
-        axiom.io/infrastructure-scope: "on-premise"
-        axiom.io/network-mode: "internal-only"
-        axiom.io/zero-human-intervention: "enabled"
+        machinenativeops.io/urn: "urn:machinenativeops:namespace:automation:v1"
+        machinenativeops.io/infrastructure-scope: "on-premise"
+        machinenativeops.io/network-mode: "internal-only"
+        machinenativeops.io/zero-human-intervention: "enabled"
     EOF
     
     # 驗證命名空間創建成功
     echo "✅ 驗證命名空間狀態..."
-    kubectl get namespaces | grep axiom-
+    kubectl get namespaces | grep machinenativeops-
     if [ $? -eq 0 ]; then
         echo "✅ 命名空間創建成功"
     else
@@ -351,9 +351,9 @@ data:
     apiVersion: rbac.authorization.k8s.io/v1
     kind: ClusterRole
     metadata:
-      name: axiom-platform-admin
+      name: machinenativeops-platform-admin
       annotations:
-        axiom.io/urn: "urn:axiom:rbac:platform-admin:v1"
+        machinenativeops.io/urn: "urn:machinenativeops:rbac:platform-admin:v1"
     rules:
       - apiGroups: ["*"]
         resources: ["*"]
@@ -362,16 +362,16 @@ data:
     apiVersion: rbac.authorization.k8s.io/v1
     kind: ClusterRoleBinding
     metadata:
-      name: axiom-platform-admin-binding
+      name: machinenativeops-platform-admin-binding
       annotations:
-        axiom.io/urn: "urn:axiom:rbac:platform-admin-binding:v1"
+        machinenativeops.io/urn: "urn:machinenativeops:rbac:platform-admin-binding:v1"
     subjects:
       - kind: User
-        name: axiom-admin
+        name: machinenativeops-admin
         apiGroup: rbac.authorization.k8s.io
     roleRef:
       kind: ClusterRole
-      name: axiom-platform-admin
+      name: machinenativeops-platform-admin
       apiGroup: rbac.authorization.k8s.io
     EOF
     
@@ -398,14 +398,14 @@ data:
     helm repo update
     
     helm install prometheus prometheus-community/kube-prometheus-stack \
-      --namespace axiom-foundation \
+      --namespace machinenativeops-foundation \
       --set prometheus.prometheusSpec.retention=30d \
       --set prometheus.prometheusSpec.storageSpec.volumeClaimTemplate.spec.resources.requests.storage=100Gi \
-      --set grafana.adminPassword=axiom-admin-password
+      --set grafana.adminPassword=machinenativeops-admin-password
     
     # 驗證 Prometheus 部署
     echo "⏳ 等待 Prometheus 準備就緒..."
-    kubectl wait --for=condition=available --timeout=600s deployment/prometheus-grafana -n axiom-foundation
+    kubectl wait --for=condition=available --timeout=600s deployment/prometheus-grafana -n machinenativeops-foundation
     
     if [ $? -eq 0 ]; then
         echo "✅ Prometheus 監控堆疊部署成功"
@@ -416,12 +416,12 @@ data:
     
     echo "🎉 AXIOM Platform Phase 1 部署完成！"
     echo "📊 系統狀態檢查："
-    kubectl get pods -n axiom-foundation
+    kubectl get pods -n machinenativeops-foundation
     kubectl get pods -n argocd
     
     echo "🔗 服務訪問："
     echo "ArgoCD UI: kubectl port-forward svc/argocd-server -n argocd 8080:443"
-    echo "Grafana UI: kubectl port-forward svc/prometheus-grafana -n axiom-foundation 3000:80"
+    echo "Grafana UI: kubectl port-forward svc/prometheus-grafana -n machinenativeops-foundation 3000:80"
 
 ---
 # Phase 2 部署腳本
@@ -443,7 +443,7 @@ data:
     helm repo update
     
     helm install kyverno kyverno/kyverno \
-      --namespace axiom-governance \
+      --namespace machinenativeops-governance \
       --set admissionController.replicas=3 \
       --set backgroundController.replicas=2 \
       --set cleanupController.replicas=1 \
@@ -451,7 +451,7 @@ data:
     
     # 等待 Kyverno 準備就緒
     echo "⏳ 等待 Kyverno 準備就緒..."
-    kubectl wait --for=condition=available --timeout=300s deployment/kyverno-admission-controller -n axiom-governance
+    kubectl wait --for=condition=available --timeout=300s deployment/kyverno-admission-controller -n machinenativeops-governance
     
     # Step 7: 部署 OPA Gatekeeper
     echo "📋 步驟 7: 部署 OPA Gatekeeper..."
@@ -463,12 +463,12 @@ data:
     helm repo update
     
     helm install harbor harbor/harbor \
-      --namespace axiom-foundation \
+      --namespace machinenativeops-foundation \
       --set expose.type=ClusterIP \
       --set persistence.enabled=true \
       --set persistence.persistentVolumeClaim.registry.size=200Gi \
       --set persistence.persistentVolumeClaim.database.size=20Gi \
-      --set harborAdminPassword=axiom-harbor-admin
+      --set harborAdminPassword=machinenativeops-harbor-admin
     
     echo "✅ AXIOM Platform Phase 2 核心組件部署完成！"
 
@@ -493,13 +493,13 @@ data:
     kind: Deployment
     metadata:
       name: qiskit-development
-      namespace: axiom-quantum
+      namespace: machinenativeops-quantum
       labels:
         app.kubernetes.io/name: qiskit-dev
       annotations:
-        axiom.io/urn: "urn:axiom:component:qiskit:development:v1"
-        axiom.io/infrastructure-scope: "on-premise"
-        axiom.io/network-mode: "internal-only"
+        machinenativeops.io/urn: "urn:machinenativeops:component:qiskit:development:v1"
+        machinenativeops.io/infrastructure-scope: "on-premise"
+        machinenativeops.io/network-mode: "internal-only"
     spec:
       replicas: 1
       selector:
@@ -510,9 +510,9 @@ data:
           labels:
             app.kubernetes.io/name: qiskit-dev
           annotations:
-            axiom.io/urn: "urn:axiom:pod:qiskit:development:v1"
-            axiom.io/infrastructure-scope: "on-premise"
-            axiom.io/network-mode: "internal-only"
+            machinenativeops.io/urn: "urn:machinenativeops:pod:qiskit:development:v1"
+            machinenativeops.io/infrastructure-scope: "on-premise"
+            machinenativeops.io/network-mode: "internal-only"
         spec:
           containers:
             - name: qiskit-dev
@@ -554,7 +554,7 @@ data:
     
     # 檢查命名空間
     echo "📋 檢查命名空間狀態..."
-    NAMESPACES=("axiom-foundation" "axiom-governance" "axiom-quantum" "axiom-automation")
+    NAMESPACES=("machinenativeops-foundation" "machinenativeops-governance" "machinenativeops-quantum" "machinenativeops-automation")
     for ns in "${NAMESPACES[@]}"; do
         if kubectl get namespace "$ns" &> /dev/null; then
             echo "✅ 命名空間 $ns 存在"
@@ -569,10 +569,10 @@ data:
     kubectl get pods -n argocd | grep argocd
     
     echo "Prometheus:"
-    kubectl get pods -n axiom-foundation | grep prometheus
+    kubectl get pods -n machinenativeops-foundation | grep prometheus
     
     echo "Kyverno:"
-    kubectl get pods -n axiom-governance | grep kyverno
+    kubectl get pods -n machinenativeops-governance | grep kyverno
     
     # 檢查政策執行
     echo "📋 檢查政策執行狀態..."
@@ -584,16 +584,16 @@ data:
     
     # 生成部署報告
     echo "📊 生成部署狀態報告..."
-    echo "=== AXIOM Platform 部署狀態報告 ===" > /tmp/axiom-deployment-report.txt
-    echo "生成時間: $(date)" >> /tmp/axiom-deployment-report.txt
-    echo "" >> /tmp/axiom-deployment-report.txt
+    echo "=== AXIOM Platform 部署狀態報告 ===" > /tmp/machinenativeops-deployment-report.txt
+    echo "生成時間: $(date)" >> /tmp/machinenativeops-deployment-report.txt
+    echo "" >> /tmp/machinenativeops-deployment-report.txt
     
-    echo "命名空間狀態:" >> /tmp/axiom-deployment-report.txt
-    kubectl get namespaces | grep axiom >> /tmp/axiom-deployment-report.txt
+    echo "命名空間狀態:" >> /tmp/machinenativeops-deployment-report.txt
+    kubectl get namespaces | grep axiom >> /tmp/machinenativeops-deployment-report.txt
     
-    echo "" >> /tmp/axiom-deployment-report.txt
-    echo "Pod 狀態統計:" >> /tmp/axiom-deployment-report.txt
-    kubectl get pods -A | grep axiom | wc -l >> /tmp/axiom-deployment-report.txt
+    echo "" >> /tmp/machinenativeops-deployment-report.txt
+    echo "Pod 狀態統計:" >> /tmp/machinenativeops-deployment-report.txt
+    kubectl get pods -A | grep axiom | wc -l >> /tmp/machinenativeops-deployment-report.txt
     
-    echo "📄 部署報告已生成: /tmp/axiom-deployment-report.txt"
-    cat /tmp/axiom-deployment-report.txt
+    echo "📄 部署報告已生成: /tmp/machinenativeops-deployment-report.txt"
+    cat /tmp/machinenativeops-deployment-report.txt

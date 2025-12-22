@@ -139,7 +139,7 @@ class MessageEnvelope(BaseModel):
         payload: Dict[str, Any],
         source_agent: str = "super-agent",
         target_agent: str = "super-agent",
-        namespace: str = "axiom-system",
+        namespace: str = "machinenativeops",
         cluster: str = "default",
         urgency: Urgency = Urgency.P3,
         trace_id: Optional[str] = None,

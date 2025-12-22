@@ -410,7 +410,7 @@ root.config.yaml
 **Fix:**
 ```yaml
 # Wrong
-urn:axiom:module:governance-engine
+urn:machinenativeops:module:governance-engine
 urn:machinenativeops:Module:governance-engine
 
 # Correct

@@ -28,12 +28,12 @@ ops/
 │   ├── access-control.md    # 存取控制政策
 │   ├── backup-policy.md     # 備份政策
 │   └── pipeline.memory.policy.v1.0.0.yaml.txt  # Pipeline 記憶體政策
-└── axiom-axm-gate-fused-v2r1.yaml.txt  # Axiom 閘門配置
+└── machinenativeops-axm-gate-fused-v2r1.yaml.txt  # Axiom 閘門配置
 ```
 
 ## 檔案說明
 
-### axiom-axm-gate-fused-v2r1.yaml.txt
+### machinenativeops-axm-gate-fused-v2r1.yaml.txt
 - **職責**：Axiom AXM Gate 融合配置
 - **功能**：定義系統閘門控制規則與驗證邏輯
 - **格式**：YAML 配置（.txt 副檔名）

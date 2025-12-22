@@ -5,7 +5,7 @@ resources:
 - ../../base
 - namespace.yaml
 
-namespace: axiom-system
+namespace: machinenativeops
 
 # Production uses 'prod-' prefix to avoid conflicts with other environments
 namePrefix: prod-
@@ -20,7 +20,7 @@ replicas:
   count: 3
 
 images:
-- name: axiom-system/super-agent
+- name: machinenativeops/super-agent
   newTag: v1.0.0
 
 patches:

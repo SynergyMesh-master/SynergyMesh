@@ -61,18 +61,18 @@ class NamespaceConverter:
             r'namespace:\s*axiom': r'namespace: machinenativeops',
             
             # Kind conversions
-            r'\bAxiomGlobalBaseline\b': r'MachineNativeOpsGlobalBaseline',
+            r'\bMachineNativeOpsGlobalBaseline\b': r'MachineNativeOpsGlobalBaseline',
             r'\bAxiom([A-Z]\w+)': r'MachineNativeOps\1',
             
             # URN conversions
-            r'urn:axiom:': r'urn:machinenativeops:',
+            r'urn:machinenativeops:': r'urn:machinenativeops:',
             
             # Domain conversions
             r'axiom\.io/': r'machinenativeops.io/',
             
             # Resource name conversions (with word boundaries)
-            r'\baxiom-': r'machinenativeops-',
-            r'(["\']|^)axiom-': r'\1machinenativeops-',
+            r'\bmachinenativeops-': r'machinenativeops-',
+            r'(["\']|^)machinenativeops-': r'\1machinenativeops-',
             
             # Registry conversions
             r'registry\.axiom\.io': r'registry.machinenativeops.io',
@@ -84,7 +84,7 @@ class NamespaceConverter:
             r'/var/log/axiom': r'/var/log/machinenativeops',
             
             # Cluster name conversions
-            r'\baxiom-etcd-cluster\b': r'super-agent-etcd-cluster',
+            r'\bmachinenativeops-etcd-cluster\b': r'super-agent-etcd-cluster',
             
             # Label key conversions
             r'axiom\.io/(\w+)': r'machinenativeops.io/\1',
@@ -92,10 +92,10 @@ class NamespaceConverter:
         
         # Validation patterns (must NOT exist after conversion)
         self.forbidden_patterns = [
-            (r'\baxiom\.io/', "Legacy axiom.io domain found"),
+            (r'\baxiom\.io/', "Legacy machinenativeops.io domain found"),
             (r'\bAxiom[A-Z]', "Legacy Axiom class name found"),
-            (r'urn:axiom:', "Legacy axiom URN found"),
-            (r'/etc/axiom/', "Legacy axiom path found"),
+            (r'urn:machinenativeops:', "Legacy axiom URN found"),
+            (r'/etc/machinenativeops/', "Legacy axiom path found"),
         ]
         
         # File extensions to process

@@ -74,11 +74,11 @@
 
 #### 硬依賴 (5 個)
 
-- axiom-kernel-compute >= 1.0.0
+- machinenativeops-kernel-compute >= 1.0.0
 - hlp-executor-core >= 1.0.0
 - neo4j-database 5.x
 - nlp-processing-pipeline
-- axiom-trust-bundle
+- machinenativeops-trust-bundle
 
 #### 軟依賴 (1 個)
 
@@ -206,19 +206,19 @@
 
 | AXIOM 術語 | 替換為 | 出現次數 |
 |-----------|-------|---------|
-| `axiom.io/plugins/v1` | `{registry-host}/plugins/v1` | 1 |
-| `axiom-system` | `{namespace}` | 12 |
+| `machinenativeops.io/plugins/v1` | `{registry-host}/plugins/v1` | 1 |
+| `machinenativeops` | `{namespace}` | 12 |
 | `quantum-yaml` | `YAML 1.2` | 1 |
 | `quantum_timestamp` | `created_date` (ISO 8601) | 3 |
 | `AXIOM-v1` | `{system-name}` | 2 |
-| `axiom-embed-v2` | `{embedding-model}` | 3 |
-| `axiom-relation-embed` | `{relation-model}` | 2 |
-| `axiom-onto-embed` | `{ontology-model}` | 2 |
-| `axiom-kernel-compute` | `{kernel-compute}` | 1 |
+| `machinenativeops-embed-v2` | `{embedding-model}` | 3 |
+| `machinenativeops-relation-embed` | `{relation-model}` | 2 |
+| `machinenativeops-onto-embed` | `{ontology-model}` | 2 |
+| `machinenativeops-kernel-compute` | `{kernel-compute}` | 1 |
 | `hlp-executor-core` | `{workflow-executor}` | 1 |
-| `axiom-trust-bundle` | `{trust-bundle}` | 1 |
-| `axiom-domain-ner` | `{ner-model}` | 2 |
-| `axiom-relation-patterns` | `{relation-patterns}` | 1 |
+| `machinenativeops-trust-bundle` | `{trust-bundle}` | 1 |
+| `machinenativeops-domain-ner` | `{ner-model}` | 2 |
+| `machinenativeops-relation-patterns` | `{relation-patterns}` | 1 |
 
 ### 5.2 抽象化變更
 

@@ -1,7 +1,7 @@
-apiVersion: axiom.io/v2
+apiVersion: machinenativeops.io/v2
 kind: PipelineMemoryPolicy
 metadata:
-  name: axiom-pipeline-memory-policy
+  name: machinenativeops-pipeline-memory-policy
   version: v1.0.0
   annotations:
     description: "Memory governance policy for AXIOM SSOT pipeline under 48GiB total RAM."
@@ -121,7 +121,7 @@ spec:
 
   telemetry:
     exporter: "prometheus"
-    namespace: "axiom-pipeline"
+    namespace: "machinenativeops-pipeline"
     metrics:
       - name: "gate_memory_usage_bytes"
         help: "Current memory used by each running Gate"

@@ -46,7 +46,7 @@ ops/
 
 ## 根目錄文件
 
-- `axiom-axm-gate-fused-v2r1.yaml.txt` - Axiom 閘門融合配置
+- `machinenativeops-axm-gate-fused-v2r1.yaml.txt` - Axiom 閘門融合配置
 
 ## 與其他目錄的關係
 

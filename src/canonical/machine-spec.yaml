@@ -184,7 +184,7 @@ spec:
       resource_type: "Namespace"
       field: "metadata.annotations"
       rule_type: "required_keys"
-      required_keys: ["axiom.io/canonical-urn"]
+      required_keys: ["machinenativeops.io/canonical-urn"]
       severity: "medium"
       error_message: "Namespace 缺少 Canonical URN annotation"
 

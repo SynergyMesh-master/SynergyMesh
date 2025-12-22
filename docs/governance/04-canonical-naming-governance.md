@@ -224,9 +224,9 @@ prod-api-v1/  # 舊版本繼續運行
 urn:machinenativeops:{domain}:{component}:env:{environment}:{version}
 
 範例:
-urn:axiom:team:frontend:env:prod:v1
-urn:axiom:tenant:payment:env:prod:region:uswest
-urn:axiom:env:prod:app:api:version:v2
+urn:machinenativeops:team:frontend:env:prod:v1
+urn:machinenativeops:tenant:payment:env:prod:region:uswest
+urn:machinenativeops:env:prod:app:api:version:v2
 ```
 
 #### Kubernetes 資源中的應用
@@ -257,7 +257,7 @@ metadata:
 ```bash
 # 通過 URN 查找所有相關資源
 kubectl get all --all-namespaces \
-  -l machinenativeops.io/canonical-urn=urn:axiom:team:frontend:env:prod:v1
+  -l machinenativeops.io/canonical-urn=urn:machinenativeops:team:frontend:env:prod:v1
 
 # 查找特定租戶的所有資源
 kubectl get namespaces \

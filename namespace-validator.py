@@ -38,9 +38,9 @@ class NamespaceValidator:
         # Forbidden patterns (old AXIOM references)
         self.forbidden_patterns = {
             'old_domain': r'axiom\.io',
-            'old_namespace': r'axiom-system',
-            'old_urn': r'urn:axiom:',
-            'old_baseline': r'AxiomGlobalBaseline',
+            'old_namespace': r'machinenativeops',
+            'old_urn': r'urn:machinenativeops:',
+            'old_baseline': r'MachineNativeOpsGlobalBaseline',
         }
     
     def validate_file(self, file_path: Path) -> Tuple[bool, List[str]]:
@@ -88,9 +88,9 @@ class NamespaceValidator:
         if 'apiVersion' in doc:
             api_version = doc['apiVersion']
             # Note: Checking for forbidden pattern, not URL sanitization (CodeQL false positive)
-            if 'axiom.io' in api_version:
+            if 'machinenativeops.io' in api_version:
                 violations.append(
-                    f"❌ apiVersion uses forbidden 'axiom.io': {api_version}"
+                    f"❌ apiVersion uses forbidden 'machinenativeops.io': {api_version}"
                 )
             elif 'machinenativeops.io' not in api_version and '/' in api_version:
                 if api_version not in ['v1', 'v2', 'apps/v1', 'batch/v1']:
@@ -119,13 +119,13 @@ class NamespaceValidator:
         
         # Note: Checking for forbidden pattern in metadata, not URL sanitization (CodeQL false positive)
         for key, value in labels.items():
-            if 'axiom.io' in key:
+            if 'machinenativeops.io' in key:
                 violations.append(
-                    f"❌ Label/annotation uses forbidden 'axiom.io': {key}"
+                    f"❌ Label/annotation uses forbidden 'machinenativeops.io': {key}"
                 )
-            if isinstance(value, str) and 'axiom.io' in value:
+            if isinstance(value, str) and 'machinenativeops.io' in value:
                 violations.append(
-                    f"❌ Label/annotation value uses forbidden 'axiom.io': {key}={value}"
+                    f"❌ Label/annotation value uses forbidden 'machinenativeops.io': {key}={value}"
                 )
     
     def validate_directory(self, directory: Path, extensions: List[str] = None) -> Dict:
@@ -198,10 +198,10 @@ class NamespaceValidator:
   ✓ super-agent-etcd-cluster (cluster token)
 
 🚫 Forbidden Patterns:
-  ✗ axiom.io (old domain)
-  ✗ axiom-system (old namespace)
-  ✗ urn:axiom: (old URN pattern)
-  ✗ AxiomGlobalBaseline (old resource type)
+  ✗ machinenativeops.io (old domain)
+  ✗ machinenativeops (old namespace)
+  ✗ urn:machinenativeops: (old URN pattern)
+  ✗ MachineNativeOpsGlobalBaseline (old resource type)
 """
         
         return report

@@ -19,7 +19,7 @@ metadata:
   created_at: "2025-01-17T12:00:00Z"
   updated_at: "2025-11-25T14:39:00Z"
   labels: [auto-fix, governance, policy-enforcement, deep-validation, hyperautomation]
-  compliance_tags: [slsa-l3, in-toto, audit-trail, axiom-free, enterprise-grade]
+  compliance_tags: [slsa-l3, in-toto, audit-trail, machinenativeops-free, enterprise-grade]
   project_structure: machinenativeops
   architecture_pattern: "智能超自動化治理架構"
 
@@ -728,7 +728,7 @@ deep_validation_schema:
         - slsa-l3
         - in-toto
         - audit-trail
-        - axiom-free
+        - machinenativeops-free
         - deep-validation
     
     versioning_requirements:

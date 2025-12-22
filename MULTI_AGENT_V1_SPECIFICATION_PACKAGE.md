@@ -263,7 +263,7 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: super-agent
-  namespace: axiom-system
+  namespace: machinenativeops
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
@@ -300,7 +300,7 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: super-agent
-  namespace: axiom-system
+  namespace: machinenativeops
 
 # ProblemSolverAgent ServiceAccount  
 ---
@@ -308,7 +308,7 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: problem-solver-agent
-  namespace: axiom-system
+  namespace: machinenativeops
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
@@ -339,7 +339,7 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: problem-solver-agent
-  namespace: axiom-system
+  namespace: machinenativeops
 
 # MaintenanceAgent ServiceAccount (限制最嚴格)
 ---
@@ -347,7 +347,7 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: maintenance-agent
-  namespace: axiom-system
+  namespace: machinenativeops
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
@@ -387,7 +387,7 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: maintenance-agent
-  namespace: axiom-system
+  namespace: machinenativeops
 ```
 
 ---
@@ -412,7 +412,7 @@ spec:
     path: deployments/multi-agent
   destination:
     server: https://kubernetes.default.svc
-    namespace: axiom-system
+    namespace: machinenativeops
   syncPolicy:
     automated:
       prune: false
@@ -447,7 +447,7 @@ spec:
     # 驗證代理配置
     kubectl apply --dry-run=client -f configs/agents/
     # 檢查權限
-    kubectl auth can-i --list --as=system:serviceaccount:axiom-system:super-agent
+    kubectl auth can-i --list --as=system:serviceaccount:machinenativeops:super-agent
 ```
 
 ### Agent Deployment Templates
@@ -457,7 +457,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: super-agent
-  namespace: axiom-system
+  namespace: machinenativeops
   labels:
     app: super-agent
     component: control-plane
@@ -475,7 +475,7 @@ spec:
       serviceAccountName: super-agent
       containers:
       - name: super-agent
-        image: axiom-system/super-agent:v1.0.0
+        image: machinenativeops/super-agent:v1.0.0
         ports:
         - containerPort: 8080
           name: http
@@ -514,7 +514,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: super-agent
-  namespace: axiom-system
+  namespace: machinenativeops
   labels:
     app: super-agent
 spec:
@@ -539,7 +539,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: verification-gates-config
-  namespace: axiom-system
+  namespace: machinenativeops
 data:
   verification_gates.yaml: |
     gates:
@@ -645,7 +645,7 @@ spec:
       any:
       - resources:
           kinds: ["Deployment", "StatefulSet", "DaemonSet"]
-          namespaces: ["axiom-system"]
+          namespaces: ["machinenativeops"]
     validate:
       message: "Container images must be signed"
       pattern:
@@ -685,7 +685,7 @@ spec:
       any:
       - resources:
           kinds: ["Deployment"]
-          namespaces: ["axiom-system"]
+          namespaces: ["machinenativeops"]
     validate:
       message: "Agent changes must be limited in scope"
       anyPattern:
@@ -714,7 +714,7 @@ spec:
 
 set -euo pipefail
 
-NAMESPACE="axiom-system"
+NAMESPACE="machinenativeops"
 REPO="https://github.com/MachineNativeOps/machine-native-ops-aaps.git"
 BRANCH="main"
 
@@ -911,7 +911,7 @@ apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
   name: multi-agent-alerts
-  namespace: axiom-system
+  namespace: machinenativeops
 spec:
   groups:
   - name: multi-agent-system

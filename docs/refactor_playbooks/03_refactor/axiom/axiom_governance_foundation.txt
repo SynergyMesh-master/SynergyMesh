@@ -14,8 +14,8 @@
 # 文檔元數據 (Document Metadata)
 # =============================================================================
 document_metadata:
-  unique_id: "axiom-governance-foundation-v1"
-  actual_filename: "axiom-governance-foundation-v1.yaml"
+  unique_id: "machinenativeops-governance-foundation-v1"
+  actual_filename: "machinenativeops-governance-foundation-v1.yaml"
   version: "v1"
   format_type: "kubernetes"
   encoding: "utf-8"
@@ -24,8 +24,8 @@ document_metadata:
   creation_info:
     created_date: "2025-09-14T00:00:00Z"
     quantum_timestamp: "2025-09-14T00:00:00.000000000Z"
-    created_by: "axiom-platform-architect"
-    target_system: "axiom-v1"
+    created_by: "machinenativeops-platform-architect"
+    target_system: "machinenativeops-v1"
 
 # =============================================================================
 # 治理資訊 (Governance Information)
@@ -51,12 +51,12 @@ governance_info:
 registry_binding:
   primary_registry: "harbor.axiom.internal"
   trust_anchors:
-    - name: "axiom-root-ca"
+    - name: "machinenativeops-root-ca"
       type: "ed25519"
-      urn: "urn:axiom:trust-root:ed25519:v1"
-    - name: "axiom-intermediate-ca"
+      urn: "urn:machinenativeops:trust-root:ed25519:v1"
+    - name: "machinenativeops-intermediate-ca"
       type: "rsa-4096"
-      urn: "urn:axiom:trust-intermediate:rsa:v1"
+      urn: "urn:machinenativeops:trust-intermediate:rsa:v1"
   signature_validation: "required"
   sbom_enforcement: "mandatory"
   vulnerability_threshold: "zero-critical"
@@ -171,70 +171,70 @@ performance_targets:
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: axiom-foundation
+  name: machinenativeops-foundation
   labels:
-    axiom.io/layer: "foundation"
-    axiom.io/criticality: "high"
-    axiom.io/data-classification: "internal"
-    kubernetes.io/managed-by: "axiom-platform"
+    machinenativeops.io/layer: "foundation"
+    machinenativeops.io/criticality: "high"
+    machinenativeops.io/data-classification: "internal"
+    kubernetes.io/managed-by: "machinenativeops-platform"
     istio-injection: "enabled"
   annotations:
-    axiom.io/urn: "urn:axiom:namespace:foundation:v1"
-    axiom.io/description: "AXIOM 基礎設施核心命名空間"
-    axiom.io/infrastructure-scope: "on-premise"
-    axiom.io/network-mode: "internal-only"
-    axiom.io/security-zone: "restricted"
+    machinenativeops.io/urn: "urn:machinenativeops:namespace:foundation:v1"
+    machinenativeops.io/description: "AXIOM 基礎設施核心命名空間"
+    machinenativeops.io/infrastructure-scope: "on-premise"
+    machinenativeops.io/network-mode: "internal-only"
+    machinenativeops.io/security-zone: "restricted"
 
 ---
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: axiom-governance
+  name: machinenativeops-governance
   labels:
-    axiom.io/layer: "governance"
-    axiom.io/criticality: "critical"
-    axiom.io/data-classification: "confidential"
-    kubernetes.io/managed-by: "axiom-platform"
+    machinenativeops.io/layer: "governance"
+    machinenativeops.io/criticality: "critical"
+    machinenativeops.io/data-classification: "confidential"
+    kubernetes.io/managed-by: "machinenativeops-platform"
   annotations:
-    axiom.io/urn: "urn:axiom:namespace:governance:v1"
-    axiom.io/description: "AXIOM 治理與政策執行命名空間"
-    axiom.io/infrastructure-scope: "on-premise"
-    axiom.io/network-mode: "internal-only"
-    axiom.io/security-zone: "restricted"
+    machinenativeops.io/urn: "urn:machinenativeops:namespace:governance:v1"
+    machinenativeops.io/description: "AXIOM 治理與政策執行命名空間"
+    machinenativeops.io/infrastructure-scope: "on-premise"
+    machinenativeops.io/network-mode: "internal-only"
+    machinenativeops.io/security-zone: "restricted"
 
 ---
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: axiom-quantum
+  name: machinenativeops-quantum
   labels:
-    axiom.io/layer: "quantum"
-    axiom.io/criticality: "high"
-    axiom.io/data-classification: "internal"
-    kubernetes.io/managed-by: "axiom-platform"
+    machinenativeops.io/layer: "quantum"
+    machinenativeops.io/criticality: "high"
+    machinenativeops.io/data-classification: "internal"
+    kubernetes.io/managed-by: "machinenativeops-platform"
   annotations:
-    axiom.io/urn: "urn:axiom:namespace:quantum:v1"
-    axiom.io/description: "AXIOM 量子計算服務命名空間"
-    axiom.io/infrastructure-scope: "on-premise"
-    axiom.io/network-mode: "internal-only"
-    axiom.io/quantum-workload: "enabled"
+    machinenativeops.io/urn: "urn:machinenativeops:namespace:quantum:v1"
+    machinenativeops.io/description: "AXIOM 量子計算服務命名空間"
+    machinenativeops.io/infrastructure-scope: "on-premise"
+    machinenativeops.io/network-mode: "internal-only"
+    machinenativeops.io/quantum-workload: "enabled"
 
 ---
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: axiom-ml
+  name: machinenativeops-ml
   labels:
-    axiom.io/layer: "ml-platform"
-    axiom.io/criticality: "high"
-    axiom.io/data-classification: "internal"
-    kubernetes.io/managed-by: "axiom-platform"
+    machinenativeops.io/layer: "ml-platform"
+    machinenativeops.io/criticality: "high"
+    machinenativeops.io/data-classification: "internal"
+    kubernetes.io/managed-by: "machinenativeops-platform"
   annotations:
-    axiom.io/urn: "urn:axiom:namespace:ml:v1"
-    axiom.io/description: "AXIOM AI/ML 平台服務命名空間"
-    axiom.io/infrastructure-scope: "on-premise"
-    axiom.io/network-mode: "internal-only"
-    axiom.io/ml-workload: "enabled"
+    machinenativeops.io/urn: "urn:machinenativeops:namespace:ml:v1"
+    machinenativeops.io/description: "AXIOM AI/ML 平台服務命名空間"
+    machinenativeops.io/infrastructure-scope: "on-premise"
+    machinenativeops.io/network-mode: "internal-only"
+    machinenativeops.io/ml-workload: "enabled"
 
 ---
 # =============================================================================
@@ -243,12 +243,12 @@ metadata:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: axiom-platform-admin
+  name: machinenativeops-platform-admin
   labels:
-    axiom.io/rbac-scope: "platform-admin"
+    machinenativeops.io/rbac-scope: "platform-admin"
   annotations:
-    axiom.io/urn: "urn:axiom:rbac:platform-admin:v1"
-    axiom.io/description: "AXIOM 平台管理員完整權限"
+    machinenativeops.io/urn: "urn:machinenativeops:rbac:platform-admin:v1"
+    machinenativeops.io/description: "AXIOM 平台管理員完整權限"
 rules:
   - apiGroups: ["*"]
     resources: ["*"]
@@ -260,12 +260,12 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: axiom-governance-operator
+  name: machinenativeops-governance-operator
   labels:
-    axiom.io/rbac-scope: "governance-operator"
+    machinenativeops.io/rbac-scope: "governance-operator"
   annotations:
-    axiom.io/urn: "urn:axiom:rbac:governance-operator:v1"
-    axiom.io/description: "AXIOM 治理操作員權限"
+    machinenativeops.io/urn: "urn:machinenativeops:rbac:governance-operator:v1"
+    machinenativeops.io/description: "AXIOM 治理操作員權限"
 rules:
   - apiGroups: ["kyverno.io", "wgpolicyk8s.io.v1alpha2"]
     resources: ["*"]
@@ -281,12 +281,12 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: axiom-quantum-operator
+  name: machinenativeops-quantum-operator
   labels:
-    axiom.io/rbac-scope: "quantum-operator"
+    machinenativeops.io/rbac-scope: "quantum-operator"
   annotations:
-    axiom.io/urn: "urn:axiom:rbac:quantum-operator:v1"
-    axiom.io/description: "AXIOM 量子服務操作員權限"
+    machinenativeops.io/urn: "urn:machinenativeops:rbac:quantum-operator:v1"
+    machinenativeops.io/description: "AXIOM 量子服務操作員權限"
 rules:
   - apiGroups: [""]
     resources: ["pods", "services", "configmaps", "secrets"]
@@ -305,13 +305,13 @@ rules:
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: axiom-default-deny-all
-  namespace: axiom-foundation
+  name: machinenativeops-default-deny-all
+  namespace: machinenativeops-foundation
   labels:
-    axiom.io/network-policy: "default-deny"
+    machinenativeops.io/network-policy: "default-deny"
   annotations:
-    axiom.io/urn: "urn:axiom:network-policy:default-deny:v1"
-    axiom.io/description: "預設拒絕所有流量的零信任基線"
+    machinenativeops.io/urn: "urn:machinenativeops:network-policy:default-deny:v1"
+    machinenativeops.io/description: "預設拒絕所有流量的零信任基線"
 spec:
   podSelector: {}
   policyTypes:
@@ -322,13 +322,13 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: axiom-internal-communication
-  namespace: axiom-foundation
+  name: machinenativeops-internal-communication
+  namespace: machinenativeops-foundation
   labels:
-    axiom.io/network-policy: "internal-allow"
+    machinenativeops.io/network-policy: "internal-allow"
   annotations:
-    axiom.io/urn: "urn:axiom:network-policy:internal-allow:v1"
-    axiom.io/description: "允許 AXIOM 內部命名空間間通訊"
+    machinenativeops.io/urn: "urn:machinenativeops:network-policy:internal-allow:v1"
+    machinenativeops.io/description: "允許 AXIOM 內部命名空間間通訊"
 spec:
   podSelector: {}
   policyTypes:
@@ -338,7 +338,7 @@ spec:
     - from:
         - namespaceSelector:
             matchLabels:
-              kubernetes.io/managed-by: "axiom-platform"
+              kubernetes.io/managed-by: "machinenativeops-platform"
       ports:
         - protocol: TCP
           port: 8080
@@ -350,7 +350,7 @@ spec:
     - to:
         - namespaceSelector:
             matchLabels:
-              kubernetes.io/managed-by: "axiom-platform"
+              kubernetes.io/managed-by: "machinenativeops-platform"
       ports:
         - protocol: TCP
           port: 8080
@@ -370,13 +370,13 @@ spec:
 apiVersion: v1
 kind: ResourceQuota
 metadata:
-  name: axiom-foundation-quota
-  namespace: axiom-foundation
+  name: machinenativeops-foundation-quota
+  namespace: machinenativeops-foundation
   labels:
-    axiom.io/resource-management: "quota"
+    machinenativeops.io/resource-management: "quota"
   annotations:
-    axiom.io/urn: "urn:axiom:resource-quota:foundation:v1"
-    axiom.io/description: "AXIOM 基礎設施資源配額"
+    machinenativeops.io/urn: "urn:machinenativeops:resource-quota:foundation:v1"
+    machinenativeops.io/description: "AXIOM 基礎設施資源配額"
 spec:
   hard:
     requests.cpu: "100"
@@ -393,13 +393,13 @@ spec:
 apiVersion: v1
 kind: LimitRange
 metadata:
-  name: axiom-foundation-limits
-  namespace: axiom-foundation
+  name: machinenativeops-foundation-limits
+  namespace: machinenativeops-foundation
   labels:
-    axiom.io/resource-management: "limits"
+    machinenativeops.io/resource-management: "limits"
   annotations:
-    axiom.io/urn: "urn:axiom:resource-limit:foundation:v1"
-    axiom.io/description: "AXIOM 基礎設施資源限制"
+    machinenativeops.io/urn: "urn:machinenativeops:resource-limit:foundation:v1"
+    machinenativeops.io/description: "AXIOM 基礎設施資源限制"
 spec:
   limits:
     - type: Container
@@ -429,7 +429,7 @@ spec:
 apiVersion: kyverno.io/v1
 kind: ClusterPolicy
 metadata:
-  name: axiom-enforce-required-annotations
+  name: machinenativeops-enforce-required-annotations
   annotations:
     policies.kyverno.io/title: "AXIOM Required Annotations"
     policies.kyverno.io/category: "AXIOM Governance"
@@ -437,13 +437,13 @@ metadata:
     policies.kyverno.io/description: >-
       確保所有 AXIOM 資源包含必要的標註：infrastructure-scope, network-mode, urn
       Ensure all AXIOM resources have required annotations: infrastructure-scope, network-mode, urn
-    axiom.io/urn: "urn:axiom:policy:kyverno:required-annotations:v1"
-    axiom.io/policy-domain: "governance"
+    machinenativeops.io/urn: "urn:machinenativeops:policy:kyverno:required-annotations:v1"
+    machinenativeops.io/policy-domain: "governance"
 spec:
   validationFailureAction: Enforce
   background: true
   rules:
-    - name: require-axiom-annotations
+    - name: require-machinenativeops-annotations
       match:
         any:
           - resources:
@@ -456,29 +456,29 @@ spec:
                 - Job
                 - CronJob
               namespaces:
-                - axiom-foundation
-                - axiom-governance
-                - axiom-quantum
-                - axiom-ml
+                - machinenativeops-foundation
+                - machinenativeops-governance
+                - machinenativeops-quantum
+                - machinenativeops-ml
       validate:
         message: >-
           資源必須包含 AXIOM 必要標註：
-          - axiom.io/infrastructure-scope (值：on-premise)
-          - axiom.io/network-mode (值：internal-only)
-          - axiom.io/urn (格式：urn:axiom:...)
+          - machinenativeops.io/infrastructure-scope (值：on-premise)
+          - machinenativeops.io/network-mode (值：internal-only)
+          - machinenativeops.io/urn (格式：urn:machinenativeops:...)
         pattern:
           metadata:
             annotations:
-              axiom.io/infrastructure-scope: "on-premise"
-              axiom.io/network-mode: "internal-only"
-              axiom.io/urn: "urn:axiom:*"
+              machinenativeops.io/infrastructure-scope: "on-premise"
+              machinenativeops.io/network-mode: "internal-only"
+              machinenativeops.io/urn: "urn:machinenativeops:*"
 
 ---
 # 映像簽章驗證政策
 apiVersion: kyverno.io/v2
 kind: ClusterPolicy
 metadata:
-  name: axiom-verify-image-signatures
+  name: machinenativeops-verify-image-signatures
   annotations:
     policies.kyverno.io/title: "AXIOM Image Signature Verification"
     policies.kyverno.io/category: "Supply Chain Security"
@@ -486,8 +486,8 @@ metadata:
     policies.kyverno.io/description: >-
       驗證所有容器映像的數位簽章和 SBOM attestation
       Verify digital signatures and SBOM attestations for all container images
-    axiom.io/urn: "urn:axiom:policy:kyverno:image-verification:v1"
-    axiom.io/policy-domain: "supply-chain"
+    machinenativeops.io/urn: "urn:machinenativeops:policy:kyverno:image-verification:v1"
+    machinenativeops.io/policy-domain: "supply-chain"
 spec:
   validationFailureAction: Enforce
   background: false
@@ -501,10 +501,10 @@ spec:
                 - Pod
                 - Job
               namespaces:
-                - axiom-foundation
-                - axiom-governance
-                - axiom-quantum
-                - axiom-ml
+                - machinenativeops-foundation
+                - machinenativeops-governance
+                - machinenativeops-quantum
+                - machinenativeops-ml
       verifyImages:
         - imageReferences:
             - "harbor.axiom.internal/*"
@@ -521,7 +521,7 @@ spec:
                 - all:
                     - key: "{{ attestation.predicate.buildType }}"
                       operator: Equals
-                      value: "https://axiom.io/build/v1"
+                      value: "https://machinenativeops.io/build/v1"
             - predicateType: https://spdx.dev/Document
               conditions:
                 - all:
@@ -534,7 +534,7 @@ spec:
 apiVersion: kyverno.io/v1
 kind: ClusterPolicy
 metadata:
-  name: axiom-inject-resource-limits
+  name: machinenativeops-inject-resource-limits
   annotations:
     policies.kyverno.io/title: "AXIOM Resource Limits Injection"
     policies.kyverno.io/category: "Resource Management"
@@ -542,8 +542,8 @@ metadata:
     policies.kyverno.io/description: >-
       為未設定資源限制的容器自動注入預設值
       Automatically inject default resource limits for containers without specified limits
-    axiom.io/urn: "urn:axiom:policy:kyverno:resource-injection:v1"
-    axiom.io/policy-domain: "resource-management"
+    machinenativeops.io/urn: "urn:machinenativeops:policy:kyverno:resource-injection:v1"
+    machinenativeops.io/policy-domain: "resource-management"
 spec:
   validationFailureAction: Enforce
   background: false
@@ -555,10 +555,10 @@ spec:
               kinds:
                 - Pod
               namespaces:
-                - axiom-foundation
-                - axiom-governance
-                - axiom-quantum
-                - axiom-ml
+                - machinenativeops-foundation
+                - machinenativeops-governance
+                - machinenativeops-quantum
+                - machinenativeops-ml
       mutate:
         foreach:
           - list: "request.object.spec.containers"
@@ -583,7 +583,7 @@ spec:
 apiVersion: kyverno.io/v1
 kind: ClusterPolicy
 metadata:
-  name: axiom-quantum-workload-policies
+  name: machinenativeops-quantum-workload-policies
   annotations:
     policies.kyverno.io/title: "AXIOM Quantum Workload Governance"
     policies.kyverno.io/category: "Quantum Computing"
@@ -591,8 +591,8 @@ metadata:
     policies.kyverno.io/description: >-
       量子工作負載專用治理政策，包含相干性監控注入
       Quantum workload specific governance policies with coherence monitoring injection
-    axiom.io/urn: "urn:axiom:policy:kyverno:quantum-governance:v1"
-    axiom.io/policy-domain: "quantum"
+    machinenativeops.io/urn: "urn:machinenativeops:policy:kyverno:quantum-governance:v1"
+    machinenativeops.io/policy-domain: "quantum"
 spec:
   validationFailureAction: Enforce
   background: true
@@ -605,19 +605,19 @@ spec:
                 - Pod
                 - Job
               namespaces:
-                - axiom-quantum
+                - machinenativeops-quantum
       validate:
         message: >-
           量子工作負載必須包含以下標籤：
-          - axiom.io/quantum-workload=enabled
-          - axiom.io/quantum-job-type (值：vqe, qaoa, qnn, qgan, 或 qsvm)
-          - axiom.io/coherence-threshold (數值：0.90-0.99)
+          - machinenativeops.io/quantum-workload=enabled
+          - machinenativeops.io/quantum-job-type (值：vqe, qaoa, qnn, qgan, 或 qsvm)
+          - machinenativeops.io/coherence-threshold (數值：0.90-0.99)
         pattern:
           metadata:
             labels:
-              axiom.io/quantum-workload: "enabled"
-              axiom.io/quantum-job-type: "vqe | qaoa | qnn | qgan | qsvm"
-              axiom.io/coherence-threshold: "0.9? | 0.8?"
+              machinenativeops.io/quantum-workload: "enabled"
+              machinenativeops.io/quantum-job-type: "vqe | qaoa | qnn | qgan | qsvm"
+              machinenativeops.io/coherence-threshold: "0.9? | 0.8?"
     - name: inject-coherence-monitor
       match:
         any:
@@ -625,10 +625,10 @@ spec:
               kinds:
                 - Pod
               namespaces:
-                - axiom-quantum
+                - machinenativeops-quantum
       preconditions:
         all:
-          - key: "{{ request.object.metadata.labels['axiom.io/quantum-workload'] || '' }}"
+          - key: "{{ request.object.metadata.labels['machinenativeops.io/quantum-workload'] || '' }}"
             operator: Equals
             value: "enabled"
       mutate:
@@ -640,9 +640,9 @@ spec:
               image: harbor.axiom.internal/quantum/coherence-monitor:v1
               env:
                 - name: QUANTUM_JOB_TYPE
-                  value: "{{ request.object.metadata.labels['axiom.io/quantum-job-type'] }}"
+                  value: "{{ request.object.metadata.labels['machinenativeops.io/quantum-job-type'] }}"
                 - name: COHERENCE_THRESHOLD
-                  value: "{{ request.object.metadata.labels['axiom.io/coherence-threshold'] }}"
+                  value: "{{ request.object.metadata.labels['machinenativeops.io/coherence-threshold'] }}"
               resources:
                 requests:
                   cpu: "50m"
@@ -658,14 +658,14 @@ spec:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: axiom-opa-policies
-  namespace: axiom-governance
+  name: machinenativeops-opa-policies
+  namespace: machinenativeops-governance
   labels:
-    axiom.io/component: "opa-policies"
-    axiom.io/version: "v1"
+    machinenativeops.io/component: "opa-policies"
+    machinenativeops.io/version: "v1"
   annotations:
-    axiom.io/urn: "urn:axiom:config:opa-policies:v1"
-    axiom.io/description: "AXIOM OPA 政策配置"
+    machinenativeops.io/urn: "urn:machinenativeops:config:opa-policies:v1"
+    machinenativeops.io/description: "AXIOM OPA 政策配置"
 data:
   # 供應鏈安全政策
   supply-chain.rego: |
@@ -705,7 +705,7 @@ data:
     # 量子工作負載資源限制
     deny_excessive_quantum_resources[msg] {
       input.request.kind.kind == "Pod"
-      input.request.object.metadata.namespace == "axiom-quantum"
+      input.request.object.metadata.namespace == "machinenativeops-quantum"
       some i
       container := input.request.object.spec.containers[i]
       cpu_limit := container.resources.limits.cpu
@@ -716,7 +716,7 @@ data:
     # QPU 排程公平性
     deny_qpu_monopoly[msg] {
       input.request.kind.kind == "Pod"
-      input.request.object.metadata.labels["axiom.io/quantum-workload"] == "enabled"
+      input.request.object.metadata.labels["machinenativeops.io/quantum-workload"] == "enabled"
       count(input.quantum.active_jobs) >= 10
       msg := "QPU 佇列已滿，請稍後重試"
     }
@@ -724,7 +724,7 @@ data:
     # 相干性門檻驗證
     deny_low_coherence[msg] {
       input.request.kind.kind == "Pod"
-      coherence_str := input.request.object.metadata.labels["axiom.io/coherence-threshold"]
+      coherence_str := input.request.object.metadata.labels["machinenativeops.io/coherence-threshold"]
       coherence := to_number(coherence_str)
       coherence < 0.85
       msg := sprintf("相干性門檻過低: %v，最小值為 0.85", [coherence])

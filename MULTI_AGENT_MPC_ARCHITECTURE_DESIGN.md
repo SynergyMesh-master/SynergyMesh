@@ -187,8 +187,8 @@ require_human_approval:
     "signature": "ed25519:{base64-signature}"
   },
   "context": {
-    "namespace": "axiom-system",
-    "cluster": "axiom-v1",
+    "namespace": "machinenativeops",
+    "cluster": "machinenativeops-v1",
     "urgency": "P1|P2|P3",
     "constraints_ref": "policy://risk-management/v1"
   },

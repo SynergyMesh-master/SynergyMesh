@@ -5,7 +5,7 @@ resources:
 - ../../base
 - namespace.yaml
 
-namespace: axiom-system-staging
+namespace: machinenativeops-staging
 
 # Add prefix to avoid ClusterRole/ClusterRoleBinding conflicts when deploying multiple environments
 namePrefix: staging-
@@ -20,5 +20,5 @@ replicas:
   count: 2
 
 images:
-- name: axiom-system/super-agent
+- name: machinenativeops/super-agent
   newTag: staging-v1.0.0

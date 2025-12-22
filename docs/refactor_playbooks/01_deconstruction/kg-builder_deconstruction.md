@@ -82,7 +82,7 @@
 | 模組名稱 | 功能描述 | 關鍵技術 | 對應 YAML Section |
 |---------|---------|---------|------------------|
 | **Document Ingestion** | 多格式文檔解析 | multi-format-parser | architecture.processing_pipeline.stages[0] |
-| **Entity Extraction** | 命名實體識別 | spacy-en-core-lg, axiom-domain-ner | architecture.processing_pipeline.stages[1] |
+| **Entity Extraction** | 命名實體識別 | spacy-en-core-lg, machinenativeops-domain-ner | architecture.processing_pipeline.stages[1] |
 | **Relation Extraction** | 依存句法分析 | dependency-parser-enhanced | architecture.processing_pipeline.stages[2] |
 | **Triple Generation** | 三元組生成與驗證 | subject-predicate-object-extractor | architecture.processing_pipeline.stages[3] |
 | **Entity Resolution** | 模糊匹配與實體合併 | fuzzy-matching-engine | architecture.processing_pipeline.stages[4] |
@@ -92,7 +92,7 @@
 
 | 模組名稱 | 功能描述 | 技術實現 |
 |---------|---------|---------|
-| **Vector Embedding** | 語義向量化 | axiom-embed-v2 (1024維), relation-embed (768維), onto-embed (512維) |
+| **Vector Embedding** | 語義向量化 | machinenativeops-embed-v2 (1024維), relation-embed (768維), onto-embed (512維) |
 | **Quality Control** | 質量驗證與信心評分 | triple_validation, confidence_scoring |
 | **Error Handling** | 錯誤處理與容錯 | skip-with-logging, fallback-to-rule-based, exponential-backoff |
 | **Data Privacy** | PII 檢測與匿名化 | k-anonymity, GDPR compliance |
@@ -157,11 +157,11 @@ graph TD
 
 | 依賴項 | 版本要求 | 用途 | 影響範圍 |
 |-------|---------|-----|---------|
-| **axiom-kernel-compute** | >= 1.0.0 | 計算內核 | 核心運行時，無法啟動如缺失 |
+| **machinenativeops-kernel-compute** | >= 1.0.0 | 計算內核 | 核心運行時，無法啟動如缺失 |
 | **hlp-executor-core** | >= 1.0.0 | 高層規劃執行器 | 工作流調度，無法啟動如缺失 |
 | **neo4j-database** | 5.x | 圖數據庫 | 三元組存儲，系統核心 |
 | **nlp-processing-pipeline** | N/A | NLP 處理管線 | 實體與關係提取 |
-| **axiom-trust-bundle** | N/A | 信任捆綁包 | 安全與認證 |
+| **machinenativeops-trust-bundle** | N/A | 信任捆綁包 | 安全與認證 |
 
 ### 5.2 軟依賴 (Soft Dependencies)
 
@@ -218,7 +218,7 @@ Configuration Categories:
 ### 7.1 架構層面問題 (Architectural Issues)
 
 1. **過度耦合 (Over-Coupling)**
-   - ❌ Plugin 規範與 AXIOM 系統強綁定（axiom.io namespace）
+   - ❌ Plugin 規範與 AXIOM 系統強綁定（machinenativeops.io namespace）
    - ❌ 硬編碼 Kubernetes 部署配置在插件規範中
    - 💡 **建議**: 將部署配置與插件接口規範分離
 
@@ -227,7 +227,7 @@ Configuration Categories:
    - 💡 **建議**: 按關注點分離（Separation of Concerns）
 
 3. **硬編碼依賴 (Hard-coded Dependencies)**
-   - ❌ 特定模型名稱（spacy-en-core-lg, axiom-domain-ner）硬編碼
+   - ❌ 特定模型名稱（spacy-en-core-lg, machinenativeops-domain-ner）硬編碼
    - ❌ 特定版本（Neo4j 5.x）硬編碼
    - 💡 **建議**: 使用配置注入或插件化模型加載
 
@@ -256,7 +256,7 @@ Configuration Categories:
 
 | 風險類別 | 風險等級 | 描述 | 緩解策略 |
 |---------|---------|-----|---------|
-| **供應商鎖定** | 🔴 高 | AXIOM 系統特定概念（quantum_timestamp, axiom-embed-v2） | 抽象化為通用接口 |
+| **供應商鎖定** | 🔴 高 | AXIOM 系統特定概念（quantum_timestamp, machinenativeops-embed-v2） | 抽象化為通用接口 |
 | **配置複雜度** | 🟡 中 | 單一文件混合多重關注點 | 分解為多個配置文件 |
 | **依賴脆弱性** | 🟡 中 | 硬依賴特定版本（Neo4j 5.x, hlp-executor-core） | 使用語義化版本約束 |
 | **文檔過時** | 🟢 低 | 作為模板存在於 _legacy_scratch | 標記為歷史文檔並遷移有效內容 |
@@ -349,7 +349,7 @@ Configuration Categories:
 
 ### 10.3 可以刪除的內容 (Content to Remove)
 
-- ❌ AXIOM 系統特定的硬編碼引用（axiom.io namespace, quantum_timestamp）
+- ❌ AXIOM 系統特定的硬編碼引用（machinenativeops.io namespace, quantum_timestamp）
 - ❌ 未來日期時間戳（2025-09-14）
 - ❌ 硬編碼的模型名稱（改為配置注入）
 - ❌ 內嵌的 Kubernetes 部署 YAML（應獨立為模板）

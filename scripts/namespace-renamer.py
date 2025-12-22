@@ -32,9 +32,9 @@ def rename_axm_to_mno(content):
         '"AXIOM"': '"MachineNativeOps"',
         
         # 系統命名
-        'axiom-system': 'machinenativenops-system',
-        'axiom.io': 'machinenativeops.io',
-        'api.axiom.io': 'api.machinenativeops.io',
+        'machinenativeops': 'machinenativenops-system',
+        'machinenativeops.io': 'machinenativeops.io',
+        'api.machinenativeops.io': 'api.machinenativeops.io',
         
         # 類別名稱（Python）
         'AxiomAutoMonitor': 'MachineNativeOpsAutoMonitor',

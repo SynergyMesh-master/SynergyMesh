@@ -1,0 +1,518 @@
+version: v2
+description: "代理註冊表 - 統一管理所有 AI 代理的單一真相來源 (SSOT)"
+updated_at: "2025-12-22"
+
+agents:
+  # ============================================
+  # 中央編排層 (Central Orchestration Layer)
+  # ============================================
+  - id: "core.orchestrator"
+    name: "SuperAgent Orchestrator"
+    type: "orchestrator"
+    language: "python"
+    source: "teams/default-team/orchestrator"
+    entry_point: "main.py"
+    profile: "teams/default-team/profiles/role.ci_orchestrator.md"
+    capabilities:
+      - orchestration
+      - consensus
+      - state_management
+      - event_handling
+    status: "active"
+
+  # ============================================
+  # CI/CD Pipeline Agents (NEW)
+  # ============================================
+  - id: "pipeline.ci-orchestrator"
+    name: "CI Orchestrator"
+    type: "orchestrator"
+    language: "python"
+    source: "teams/default-team/orchestrator"
+    profile: "teams/default-team/profiles/role.ci_orchestrator.md"
+    capabilities:
+      - pipeline_coordination
+      - job_scheduling
+      - artifact_management
+      - status_reporting
+    status: "active"
+
+  - id: "pipeline.cd-deployer"
+    name: "CD Deployer"
+    type: "specialist"
+    language: "python"
+    source: "teams/default-team/orchestrator"
+    profile: "teams/default-team/profiles/role.cd_deployer.md"
+    capabilities:
+      - multi_environment_deployment
+      - container_building
+      - kubernetes_deployment
+      - rollback_management
+    status: "active"
+
+  - id: "pipeline.code-reviewer"
+    name: "Code Reviewer"
+    type: "specialist"
+    language: "python"
+    source: "teams/default-team/orchestrator"
+    profile: "teams/default-team/profiles/role.code_reviewer.md"
+    capabilities:
+      - static_analysis
+      - security_pattern_detection
+      - performance_analysis
+      - style_verification
+    status: "active"
+
+  - id: "pipeline.security-scanner"
+    name: "Security Scanner"
+    type: "specialist"
+    language: "python"
+    source: "teams/default-team/orchestrator"
+    profile: "teams/default-team/profiles/role.security_scanner.md"
+    capabilities:
+      - vulnerability_detection
+      - dependency_scanning
+      - secret_detection
+      - compliance_checking
+    status: "active"
+
+  - id: "pipeline.governance-guardian"
+    name: "Governance Guardian"
+    type: "specialist"
+    language: "python"
+    source: "teams/default-team/orchestrator"
+    profile: "teams/default-team/profiles/role.governance_guardian.md"
+    capabilities:
+      - policy_enforcement
+      - naming_validation
+      - schema_validation
+      - audit_management
+    status: "active"
+
+  - id: "pipeline.dependency-updater"
+    name: "Dependency Updater"
+    type: "service"
+    language: "python"
+    source: "teams/default-team/orchestrator"
+    profile: "teams/default-team/profiles/role.dependency_updater.md"
+    capabilities:
+      - version_monitoring
+      - security_patching
+      - pr_creation
+      - compatibility_testing
+    status: "active"
+
+  - id: "pipeline.workflow-optimizer"
+    name: "Workflow Optimizer"
+    type: "service"
+    language: "python"
+    source: "teams/default-team/orchestrator"
+    profile: "teams/default-team/profiles/role.workflow_optimizer.md"
+    capabilities:
+      - performance_analysis
+      - bottleneck_detection
+      - cache_optimization
+      - cost_analysis
+    status: "active"
+
+  # ============================================
+  # AI 專家層 (AI Expert Layer) - TypeScript
+  # ============================================
+  - id: "ai.architect"
+    name: "Architect Agent"
+    type: "specialist"
+    language: "typescript"
+    source: "src/ai/agents/architect"
+    entry_point: "index.ts"
+    capabilities:
+      - architecture_design
+      - pattern_analysis
+      - tech_stack_recommendation
+    status: "active"
+
+  - id: "ai.security"
+    name: "Security Agent"
+    type: "specialist"
+    language: "typescript"
+    source: "src/ai/agents/security"
+    entry_point: "index.ts"
+    capabilities:
+      - vulnerability_detection
+      - security_audit
+      - compliance_check
+    status: "active"
+
+  - id: "ai.devops"
+    name: "DevOps Agent"
+    type: "specialist"
+    language: "typescript"
+    source: "src/ai/agents/devops"
+    entry_point: "index.ts"
+    capabilities:
+      - ci_cd_design
+      - infrastructure_as_code
+      - monitoring_setup
+    status: "active"
+
+  - id: "ai.qa"
+    name: "QA Agent"
+    type: "specialist"
+    language: "typescript"
+    source: "src/ai/agents/qa"
+    entry_point: "index.ts"
+    capabilities:
+      - test_strategy
+      - automation_testing
+      - quality_metrics
+    status: "active"
+
+  - id: "ai.data-scientist"
+    name: "Data Scientist Agent"
+    type: "specialist"
+    language: "typescript"
+    source: "src/ai/agents/data-scientist"
+    entry_point: "index.ts"
+    capabilities:
+      - data_analysis
+      - ml_modeling
+      - data_pipeline
+    status: "active"
+
+  - id: "ai.product-manager"
+    name: "Product Manager Agent"
+    type: "specialist"
+    language: "typescript"
+    source: "src/ai/agents/product-manager"
+    entry_point: "index.ts"
+    capabilities:
+      - requirement_analysis
+      - user_story_generation
+      - prioritization
+    status: "active"
+
+  # ============================================
+  # 服務代理層 (Service Agent Layer) - Python
+  # ============================================
+  - id: "services.code-analyzer"
+    name: "Code Analyzer"
+    type: "service"
+    language: "python"
+    source: "src/services/agents/code-analyzer"
+    capabilities:
+      - static_analysis
+      - code_quality
+      - complexity_metrics
+    status: "active"
+
+  - id: "services.auto-repair"
+    name: "Auto Repair Agent"
+    type: "service"
+    language: "python"
+    source: "src/services/agents/auto-repair"
+    capabilities:
+      - auto_fix
+      - code_correction
+      - lint_repair
+    status: "active"
+
+  - id: "services.dependency-manager"
+    name: "Dependency Manager"
+    type: "service"
+    language: "python"
+    source: "src/services/agents/dependency-manager"
+    entry_point: "src/engine.py"
+    capabilities:
+      - dependency_analysis
+      - version_management
+      - vulnerability_scanning
+    status: "active"
+
+  - id: "services.phoenix"
+    name: "Phoenix Recovery Agent"
+    type: "service"
+    language: "python"
+    source: "src/services/agents/recovery"
+    entry_point: "phoenix_agent.py"
+    capabilities:
+      - failure_detection
+      - auto_recovery
+      - degradation_handling
+    status: "active"
+
+  - id: "services.vulnerability-detector"
+    name: "Vulnerability Detector"
+    type: "service"
+    language: "python"
+    source: "src/services/agents/vulnerability-detector"
+    capabilities:
+      - cve_detection
+      - security_scanning
+      - risk_assessment
+    status: "active"
+
+  # ============================================
+  # 即時生成流水線 (Instant Generation Pipeline)
+  # ============================================
+  - id: "instant.input-analysis"
+    name: "Input Analysis Agent"
+    type: "pipeline"
+    language: "python"
+    source: "src/core/instant_generation/agents"
+    entry_point: "input_analysis_agent.py"
+    stage: 1
+    capabilities:
+      - intent_recognition
+      - entity_extraction
+      - requirement_parsing
+    status: "active"
+
+  - id: "instant.architecture-design"
+    name: "Architecture Design Agent"
+    type: "pipeline"
+    language: "python"
+    source: "src/core/instant_generation/agents"
+    entry_point: "architecture_design_agent.py"
+    stage: 2
+    capabilities:
+      - system_architecture
+      - api_design
+      - data_modeling
+    status: "active"
+
+  - id: "instant.code-generation"
+    name: "Code Generation Agent"
+    type: "pipeline"
+    language: "python"
+    source: "src/core/instant_generation/agents"
+    entry_point: "code_generation_agent.py"
+    stage: 3
+    capabilities:
+      - react_generation
+      - fastapi_generation
+      - sql_generation
+    status: "active"
+
+  - id: "instant.testing"
+    name: "Testing Agent"
+    type: "pipeline"
+    language: "python"
+    source: "src/core/instant_generation/agents"
+    entry_point: "testing_agent.py"
+    stage: 4
+    capabilities:
+      - unit_testing
+      - integration_testing
+      - performance_testing
+    status: "active"
+
+  - id: "instant.deployment"
+    name: "Deployment Agent"
+    type: "pipeline"
+    language: "python"
+    source: "src/core/instant_generation/agents"
+    entry_point: "deployment_agent.py"
+    stage: 5
+    capabilities:
+      - docker_deployment
+      - k8s_deployment
+      - serverless_deployment
+    status: "active"
+
+  - id: "instant.optimization"
+    name: "Optimization Agent"
+    type: "pipeline"
+    language: "python"
+    source: "src/core/instant_generation/agents"
+    entry_point: "optimization_agent.py"
+    stage: 6
+    capabilities:
+      - performance_optimization
+      - resource_optimization
+      - cost_optimization
+    status: "active"
+
+  # ============================================
+  # 自主系統層 - SynergyMesh Core
+  # ============================================
+  - id: "synergy.self-evolution"
+    name: "Self Evolution Engine"
+    type: "autonomous"
+    language: "python"
+    source: "src/autonomous/agents/synergymesh_core"
+    entry_point: "self_evolution_engine.py"
+    capabilities:
+      - learning
+      - analysis
+      - evolution
+      - validation
+    status: "active"
+
+  - id: "synergy.ecosystem"
+    name: "Ecosystem Orchestrator"
+    type: "autonomous"
+    language: "python"
+    source: "src/autonomous/agents/synergymesh_core"
+    entry_point: "ecosystem_orchestrator.py"
+    capabilities:
+      - subsystem_management
+      - cross_system_communication
+      - resource_allocation
+    status: "active"
+
+  - id: "synergy.nlp"
+    name: "Natural Language Processor"
+    type: "autonomous"
+    language: "python"
+    source: "src/autonomous/agents/synergymesh_core"
+    entry_point: "natural_language_processor.py"
+    capabilities:
+      - intent_recognition
+      - command_parsing
+      - context_understanding
+    status: "active"
+
+  - id: "synergy.coordinator"
+    name: "Autonomous Coordinator"
+    type: "autonomous"
+    language: "python"
+    source: "src/autonomous/agents/synergymesh_core"
+    entry_point: "autonomous_coordinator.py"
+    capabilities:
+      - autonomous_decision
+      - task_priority
+      - exception_handling
+    status: "active"
+
+  # ============================================
+  # 自主代理層 (Autonomous Agents)
+  # ============================================
+  - id: "autonomous.task-executor"
+    name: "Task Executor"
+    type: "autonomous"
+    language: "python"
+    source: "src/autonomous/agents/agents"
+    entry_point: "task_executor.py"
+    capabilities:
+      - code_analysis
+      - security_check
+      - auto_repair
+    status: "active"
+
+  - id: "autonomous.autopilot"
+    name: "Autopilot Agent"
+    type: "autonomous"
+    language: "python"
+    source: "src/autonomous/agents"
+    entry_point: "autopilot-agent.py"
+    capabilities:
+      - auto_execution
+      - state_monitoring
+      - auto_decision
+    status: "active"
+
+  - id: "autonomous.coordinator"
+    name: "Coordinator Agent"
+    type: "autonomous"
+    language: "python"
+    source: "src/autonomous/agents"
+    entry_point: "coordinator-agent.py"
+    capabilities:
+      - multi_agent_coordination
+      - task_distribution
+      - progress_tracking
+    status: "active"
+
+  - id: "autonomous.deployment"
+    name: "Deployment Agent"
+    type: "autonomous"
+    language: "python"
+    source: "src/autonomous/agents"
+    entry_point: "deployment-agent.py"
+    capabilities:
+      - environment_config
+      - version_management
+      - rollback
+    status: "active"
+
+# ============================================
+# Playbook 映射 (Playbook Mappings)
+# ============================================
+playbooks:
+  ci_pipeline:
+    path: "teams/default-team/playbooks/ci_pipeline.yaml"
+    replaces: ".github/workflows/ci.yml"
+    agents: [ci-orchestrator, code-reviewer, security-scanner]
+    
+  cd_pipeline:
+    path: "teams/default-team/playbooks/cd_pipeline.yaml"
+    replaces: ".github/workflows/cd.yml"
+    agents: [cd-deployer, security-scanner, governance-guardian]
+    
+  security_pipeline:
+    path: "teams/default-team/playbooks/security_pipeline.yaml"
+    replaces: ".github/workflows/security.yml"
+    agents: [security-scanner, governance-guardian]
+    
+  governance_pipeline:
+    path: "teams/default-team/playbooks/governance_pipeline.yaml"
+    replaces: ".github/workflows/governance.yml"
+    agents: [governance-guardian]
+
+# ============================================
+# 供應商配置 (Provider Configuration)
+# ============================================
+providers:
+  - id: "openai"
+    display_name: "OpenAI"
+    models:
+      - id: "gpt-4"
+        display_name: "GPT-4"
+        modalities: ["text", "image"]
+      - id: "gpt-4-turbo"
+        display_name: "GPT-4 Turbo"
+        modalities: ["text", "image"]
+      - id: "gpt-3.5-turbo"
+        display_name: "GPT-3.5 Turbo"
+        modalities: ["text"]
+
+  - id: "anthropic"
+    display_name: "Anthropic"
+    models:
+      - id: "claude-3-opus"
+        display_name: "Claude 3 Opus"
+        modalities: ["text", "image"]
+      - id: "claude-3-sonnet"
+        display_name: "Claude 3 Sonnet"
+        modalities: ["text", "image"]
+      - id: "claude-3-haiku"
+        display_name: "Claude 3 Haiku"
+        modalities: ["text", "image"]
+
+  - id: "google"
+    display_name: "Google"
+    models:
+      - id: "gemini-pro"
+        display_name: "Gemini Pro"
+        modalities: ["text", "image"]
+      - id: "gemini-ultra"
+        display_name: "Gemini Ultra"
+        modalities: ["text", "image"]
+
+# ============================================
+# 元數據 (Metadata)
+# ============================================
+metadata:
+  total_agents: 32
+  languages:
+    python: 24
+    typescript: 6
+  layers:
+    orchestration: 2
+    specialist: 10
+    service: 7
+    pipeline: 6
+    autonomous: 7
+  playbooks:
+    total: 4
+    ci_cd: 2
+    security: 1
+    governance: 1

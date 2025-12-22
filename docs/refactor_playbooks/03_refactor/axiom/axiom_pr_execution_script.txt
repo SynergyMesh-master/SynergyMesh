@@ -4,7 +4,7 @@
 # =============================================================================
 # Purpose: 完整的 PR 流程執行腳本，從開發到合併的全自動化流程
 # Version: v1.0.0
-# Usage: ./axiom-pr-flow.sh [command] [options]
+# Usage: ./machinenativeops-pr-flow.sh [command] [options]
 # =============================================================================
 
 set -euo pipefail
@@ -12,8 +12,8 @@ set -euo pipefail
 # Script configuration
 SCRIPT_VERSION="v1.0.0"
 AXIOM_VERSION="v1.0.0"
-LOG_FILE="/tmp/axiom-pr-flow-$(date +%Y%m%d_%H%M%S).log"
-GITHUB_REPO="axiom-platform/axiom-v1"
+LOG_FILE="/tmp/machinenativeops-pr-flow-$(date +%Y%m%d_%H%M%S).log"
+GITHUB_REPO="machinenativeops-platform/machinenativeops-v1"
 SLACK_WEBHOOK="${SLACK_WEBHOOK_URL:-}"
 
 # Colors for output
@@ -192,7 +192,7 @@ create_pull_request() {
     #   commits_pushed: 5
     #   total_changes: 847
     #   push_time_seconds: 8.3
-    #   remote_url: "https://github.com/axiom-platform/axiom-v1.git"
+    #   remote_url: "https://github.com/machinenativeops-platform/machinenativeops-v1.git"
     
     # Create PR with GitHub CLI
     local draft_flag=""
@@ -208,8 +208,8 @@ create_pull_request() {
     #   base_branch: "main"
     #   head_branch: "feature/quantum-ml-enhancement"
     #   draft: false
-    #   url: "https://github.com/axiom-platform/axiom-v1/pull/247"
-    #   auto_assignees: ["@axiom-quantum-team", "@axiom-ai-team"]
+    #   url: "https://github.com/machinenativeops-platform/machinenativeops-v1/pull/247"
+    #   auto_assignees: ["@machinenativeops-quantum-team", "@machinenativeops-ai-team"]
     #   labels: ["enhancement", "quantum", "ai-ml"]
     
     local pr_number=$(gh pr view --json number -q '.number')
@@ -334,7 +334,7 @@ send_notifications() {
     if [ -n "$SLACK_WEBHOOK" ]; then
         local slack_payload=$(cat << EOF
 {
-    "channel": "#axiom-development",
+    "channel": "#machinenativeops-development",
     "username": "AXIOM PR Bot",
     "icon_emoji": ":robot_face:",
     "text": "${message}",
@@ -373,7 +373,7 @@ EOF
         # ↑ 模擬產生的物件：
         # SlackNotification:
         #   webhook_url: "https://hooks.slack.com/services/..."
-        #   channel: "#axiom-development"
+        #   channel: "#machinenativeops-development"
         #   message_sent: true
         #   response_code: 200
         #   timestamp: "2025-09-12T15:45:30Z"
@@ -432,11 +432,11 @@ generate_pr_report() {
     #   deployment_ready: true
     
     # Generate HTML report
-    local report_file="/tmp/axiom-pr-${pr_number}-report.html"
+    local report_file="/tmp/machinenativeops-pr-${pr_number}-report.html"
     `python3 .github/scripts/html_report_generator.py --input /tmp/pr-report.json --output ${report_file}`
     # ↑ 模擬產生的物件：
     # HTMLReport:
-    #   file_path: "/tmp/axiom-pr-247-report.html"
+    #   file_path: "/tmp/machinenativeops-pr-247-report.html"
     #   file_size_kb: 234.7
     #   sections: [
     #     "executive_summary",
@@ -537,7 +537,7 @@ main() {
         "complete")
             check_prerequisites
             trap cleanup EXIT
-            local branch="${2:-feature/axiom-enhancement-$(date +%Y%m%d_%H%M%S)}"
+            local branch="${2:-feature/machinenativeops-enhancement-$(date +%Y%m%d_%H%M%S)}"
             local title="${3:-AXIOM Platform Enhancement}"
             local desc="${4:-Automated enhancement via AXIOM PR workflow}"
             local target="${5:-main}"
@@ -559,19 +559,19 @@ COMMANDS:
 
 EXAMPLES:
   # Create a feature branch
-  ./axiom-pr-flow.sh create-branch feature/quantum-ml-enhancement
+  ./machinenativeops-pr-flow.sh create-branch feature/quantum-ml-enhancement
 
   # Run complete workflow
-  ./axiom-pr-flow.sh complete \
+  ./machinenativeops-pr-flow.sh complete \
     "feature/quantum-coherence-monitoring" \
     "Enhanced Quantum Coherence Monitoring" \
     "Add real-time quantum coherence monitoring with automated alerts"
 
   # Monitor specific PR
-  ./axiom-pr-flow.sh monitor 247 120
+  ./machinenativeops-pr-flow.sh monitor 247 120
 
   # Generate report for PR
-  ./axiom-pr-flow.sh report 247
+  ./machinenativeops-pr-flow.sh report 247
 
 ENVIRONMENT VARIABLES:
   SLACK_WEBHOOK_URL             Slack webhook for notifications
@@ -583,13 +583,13 @@ REQUIREMENTS:
   - python3 with required packages
   - Authenticated GitHub CLI (gh auth login)
 
-For more information, visit: https://docs.axiom.io/pr-workflow
+For more information, visit: https://docs.machinenativeops.io/pr-workflow
 
 HELP_EOF
             ;;
         *)
             log_error "Unknown command: $command"
-            echo "Use './axiom-pr-flow.sh help' for usage information"
+            echo "Use './machinenativeops-pr-flow.sh help' for usage information"
             exit 1
             ;;
     esac

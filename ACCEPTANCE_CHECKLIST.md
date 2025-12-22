@@ -105,7 +105,7 @@ python scripts/validation/validate-root-specs.py
 ```bash
 # 步驟 1: 測試各種 URN 格式
 urn:machinenativeops:module:governance-engine:v1  # 正確
-urn:axiom:module:governance-engine                # 錯誤：錯誤的 namespace
+urn:machinenativeops:module:governance-engine                # 錯誤：錯誤的 namespace
 urn:machinenativeops:Module:governance-engine     # 錯誤：大寫
 machinenativeops:module:governance-engine         # 錯誤：缺少 urn: 前綴
 

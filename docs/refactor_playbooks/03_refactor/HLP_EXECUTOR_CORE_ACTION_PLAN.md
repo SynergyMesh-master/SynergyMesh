@@ -297,11 +297,11 @@ class PartialRollbackManager:
 vector_alignment:
   hlp_executor:
     - intent: "task-execution"
-      embedding_model: "axiom-embed-v2"
+      embedding_model: "machinenativeops-embed-v2"
       dimension: 1024
       similarity_threshold: 0.85
     - intent: "state-management"
-      embedding_model: "axiom-embed-v2"
+      embedding_model: "machinenativeops-embed-v2"
       dimension: 1024
       similarity_threshold: 0.80
 ```

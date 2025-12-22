@@ -5,23 +5,23 @@ set -euo pipefail
 
 # Configuration
 ENVIRONMENT="${1:-dev}"  # Default to dev environment
-IMAGE_NAME="axiom-system/super-agent"
+IMAGE_NAME="machinenativeops/super-agent"
 DOCKERFILE="Dockerfile"
 
 # Environment-specific configuration
 case "${ENVIRONMENT}" in
     dev)
-        NAMESPACE="axiom-system-dev"
+        NAMESPACE="machinenativeops-dev"
         IMAGE_TAG="${IMAGE_TAG:-dev-latest}"
         RESOURCE_PREFIX="dev-"
         ;;
     staging)
-        NAMESPACE="axiom-system-staging"
+        NAMESPACE="machinenativeops-staging"
         IMAGE_TAG="${IMAGE_TAG:-staging-v1.0.0}"
         RESOURCE_PREFIX="staging-"
         ;;
     prod)
-        NAMESPACE="axiom-system"
+        NAMESPACE="machinenativeops"
         IMAGE_TAG="${IMAGE_TAG:-v1.0.0}"
         RESOURCE_PREFIX="prod-"
         ;;

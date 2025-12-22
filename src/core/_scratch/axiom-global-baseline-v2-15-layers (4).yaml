@@ -5,10 +5,10 @@
 # SHA3-512: [TO BE COMPUTED AFTER GENERATION]
 # BLAKE3: [TO BE COMPUTED AFTER GENERATION]
 
-apiVersion: axiom.io/v2
-kind: AxiomGlobalBaseline
+apiVersion: machinenativeops.io/v2
+kind: MachineNativeOpsGlobalBaseline
 metadata:
-  name: axiom-global-baseline-v2
+  name: machinenativeops-global-baseline-v2
   version: v2.0.0
   description: World's strongest 15-layer baseline architecture with quantum-AI integration
   generation_timestamp: "2025-10-08T00:00:00Z"

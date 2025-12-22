@@ -54,7 +54,7 @@
   - 檔案角色
   - 優先級（P0/P1/P2）
 - ✅ **命名空間與依賴適配策略**（新需求）
-  - `axiom-system` → `unmanned-island-system`
+  - `machinenativeops` → `unmanned-island-system`
   - 6項核心依賴適配方案
   - Priority Class、Image Registry、API Group適配
 - ✅ 引用關係分析（HLP → 現有系統，現有系統 → HLP）
@@ -169,20 +169,20 @@
 
 | 原始 | 適配後 | 影響範圍 |
 |------|--------|---------|
-| `axiom-system` | `unmanned-island-system` | 所有 K8s namespace 引用 |
-| `axiom-critical` | `system-cluster-critical` | Priority Class |
-| `registry.local/axiom/` | `ghcr.io/machinenativeops-admin/` | Container images |
-| `/etc/axiom/` | `/etc/unmanned-island/` | 配置與信任包路徑 |
-| `/var/lib/axiom/` | `/var/lib/unmanned-island/` | 狀態存儲路徑 |
-| `axiom.io` | `unmanned-island.io` | K8s API Group |
+| `machinenativeops` | `unmanned-island-system` | 所有 K8s namespace 引用 |
+| `machinenativeops-critical` | `system-cluster-critical` | Priority Class |
+| `registry.local/machinenativeops/` | `ghcr.io/machinenativeops-admin/` | Container images |
+| `/etc/machinenativeops/` | `/etc/unmanned-island/` | 配置與信任包路徑 |
+| `/var/lib/machinenativeops/` | `/var/lib/unmanned-island/` | 狀態存儲路徑 |
+| `machinenativeops.io` | `unmanned-island.io` | K8s API Group |
 
 **依賴適配策略**:
 
-- `axiom-quantum-runtime` → `quantum-scheduler` (Soft, 優雅降級)
-- `axiom-trust-bundle` → Unmanned Island trust bundle
-- `axiom-kernel-compute` → `core/` 計算模組
-- `axiom-bootstrap-core` → `core/unified_integration/`
-- `axiom-trace-collector` → OpenTelemetry Collector
+- `machinenativeops-quantum-runtime` → `quantum-scheduler` (Soft, 優雅降級)
+- `machinenativeops-trust-bundle` → Unmanned Island trust bundle
+- `machinenativeops-kernel-compute` → `core/` 計算模組
+- `machinenativeops-bootstrap-core` → `core/unified_integration/`
+- `machinenativeops-trace-collector` → OpenTelemetry Collector
 
 ---
 
@@ -441,7 +441,7 @@ mv docs/refactor_playbooks/_legacy_scratch/README.md \
 - ✅ **不修改 business 邏輯**: 只重新安排概念、規則、流程到合適位置
 - ✅ **優先整合到既有目錄**: 無新建頂層目錄，全部整合到既有結構
 - ✅ **保留舊資產暫存規則**: 有完整的清理計畫與時間表
-- ✅ **命名空間解構**: 已完成 axiom-system → unmanned-island-system 的全面適配
+- ✅ **命名空間解構**: 已完成 machinenativeops → unmanned-island-system 的全面適配
 
 ---
 
@@ -490,8 +490,8 @@ mv docs/refactor_playbooks/_legacy_scratch/README.md \
 | 日期 | 版本 | 變更內容 |
 |------|------|---------|
 | 2025-12-07 | 1.0.0 | 初始版本，完成解構與整合規劃 |
-| 2025-12-07 | 1.1.0 | 新增命名空間適配策略（axiom-system → unmanned-island-system） |
+| 2025-12-07 | 1.1.0 | 新增命名空間適配策略（machinenativeops → unmanned-island-system） |
 
 ---
 
-**總結**: 本次整合工作從 legacy_scratch 的 548 行 Quantum-YAML 規格中提取了53項邏輯元件，設計了50個新檔案和9個更新檔案的詳細整合方案，並完成了命名空間從 `axiom-system` 到 `unmanned-island-system` 的完整適配。所有文件已準備就緒，可立即開始執行 P0 行動。
+**總結**: 本次整合工作從 legacy_scratch 的 548 行 Quantum-YAML 規格中提取了53項邏輯元件，設計了50個新檔案和9個更新檔案的詳細整合方案，並完成了命名空間從 `machinenativeops` 到 `unmanned-island-system` 的完整適配。所有文件已準備就緒，可立即開始執行 P0 行動。

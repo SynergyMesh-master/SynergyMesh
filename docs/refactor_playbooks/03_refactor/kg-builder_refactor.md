@@ -45,7 +45,7 @@
 CREATE docs/ARCHITECTURE/plugin-architecture-pattern.md
 內容來源: _legacy_scratch/README.md (Lines 51-82: plugin_specification)
 抽象內容: 插件註冊機制、依賴管理、向量對齊策略
-移除內容: AXIOM 特定術語（axiom.io namespace, quantum_timestamp）
+移除內容: AXIOM 特定術語（machinenativeops.io namespace, quantum_timestamp）
 
 # P0-1.2: 創建知識圖譜處理文檔
 CREATE docs/ARCHITECTURE/knowledge-graph-processing.md
@@ -122,7 +122,7 @@ CREATE governance/policies/data-privacy-policy.yaml
 CREATE config/templates/plugin-specification-template.yaml
 內容來源: _legacy_scratch/README.md (Lines 1-564: 清理後的完整規範)
 抽象內容: 保留結構，移除 AXIOM 特定值，添加註釋說明
-移除內容: quantum_timestamp, axiom-specific namespaces
+移除內容: quantum_timestamp, machinenativeops-specific namespaces
 
 # P0-3.2: 擴展系統模組地圖
 EXTEND config/system-module-map.yaml

@@ -15,8 +15,8 @@
 # 文檔元數據與架構總覽
 # =============================================================================
 document_metadata:
-  unique_id: "axiom-complete-architecture-v1"
-  actual_filename: "axiom-complete-architecture-v1.yaml"
+  unique_id: "machinenativeops-complete-architecture-v1"
+  actual_filename: "machinenativeops-complete-architecture-v1.yaml"
   version: "v1"
   format_type: "kubernetes-enterprise"
   encoding: "utf-8"
@@ -25,8 +25,8 @@ document_metadata:
   creation_info:
     created_date: "2025-09-14T00:00:00Z"
     quantum_timestamp: "2025-09-14T00:00:00.000000000Z"
-    created_by: "axiom-total-architect"
-    target_system: "axiom-enterprise-v1"
+    created_by: "machinenativeops-total-architect"
+    target_system: "machinenativeops-enterprise-v1"
 
 # =============================================================================
 # 層級架構規劃 (Layer Architecture Planning)
@@ -117,70 +117,70 @@ performance_targets:
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: axiom-foundation
+  name: machinenativeops-foundation
   labels:
-    axiom.io/layer: "l1-enterprise-basics"
-    axiom.io/automation-level: "5"
-    axiom.io/criticality: "critical"
-    kubernetes.io/managed-by: "axiom-platform"
+    machinenativeops.io/layer: "l1-enterprise-basics"
+    machinenativeops.io/automation-level: "5"
+    machinenativeops.io/criticality: "critical"
+    kubernetes.io/managed-by: "machinenativeops-platform"
   annotations:
-    axiom.io/urn: "urn:axiom:namespace:foundation:v1"
-    axiom.io/description: "AXIOM 企業基礎設施核心命名空間"
-    axiom.io/infrastructure-scope: "on-premise"
-    axiom.io/network-mode: "internal-only"
-    axiom.io/automation-coverage: "100-percent"
+    machinenativeops.io/urn: "urn:machinenativeops:namespace:foundation:v1"
+    machinenativeops.io/description: "AXIOM 企業基礎設施核心命名空間"
+    machinenativeops.io/infrastructure-scope: "on-premise"
+    machinenativeops.io/network-mode: "internal-only"
+    machinenativeops.io/automation-coverage: "100-percent"
 
 ---
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: axiom-governance
+  name: machinenativeops-governance
   labels:
-    axiom.io/layer: "l4-governance-compliance"
-    axiom.io/automation-level: "5"
-    axiom.io/criticality: "critical"
-    kubernetes.io/managed-by: "axiom-platform"
+    machinenativeops.io/layer: "l4-governance-compliance"
+    machinenativeops.io/automation-level: "5"
+    machinenativeops.io/criticality: "critical"
+    kubernetes.io/managed-by: "machinenativeops-platform"
   annotations:
-    axiom.io/urn: "urn:axiom:namespace:governance:v1"
-    axiom.io/description: "AXIOM 治理合規執行命名空間"
-    axiom.io/infrastructure-scope: "on-premise"
-    axiom.io/network-mode: "internal-only"
-    axiom.io/compliance-frameworks: "ISO27001,SOC2,GDPR,PCI-DSS"
+    machinenativeops.io/urn: "urn:machinenativeops:namespace:governance:v1"
+    machinenativeops.io/description: "AXIOM 治理合規執行命名空間"
+    machinenativeops.io/infrastructure-scope: "on-premise"
+    machinenativeops.io/network-mode: "internal-only"
+    machinenativeops.io/compliance-frameworks: "ISO27001,SOC2,GDPR,PCI-DSS"
 
 ---
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: axiom-quantum
+  name: machinenativeops-quantum
   labels:
-    axiom.io/layer: "l6-quantum-specific"
-    axiom.io/automation-level: "5"
-    axiom.io/criticality: "high"
-    kubernetes.io/managed-by: "axiom-platform"
+    machinenativeops.io/layer: "l6-quantum-specific"
+    machinenativeops.io/automation-level: "5"
+    machinenativeops.io/criticality: "high"
+    kubernetes.io/managed-by: "machinenativeops-platform"
   annotations:
-    axiom.io/urn: "urn:axiom:namespace:quantum:v1"
-    axiom.io/description: "AXIOM 量子計算服務命名空間"
-    axiom.io/infrastructure-scope: "on-premise"
-    axiom.io/network-mode: "internal-only"
-    axiom.io/quantum-workload: "enabled"
-    axiom.io/qpu-backends: "ibm-quantum,d-wave,aws-braket"
+    machinenativeops.io/urn: "urn:machinenativeops:namespace:quantum:v1"
+    machinenativeops.io/description: "AXIOM 量子計算服務命名空間"
+    machinenativeops.io/infrastructure-scope: "on-premise"
+    machinenativeops.io/network-mode: "internal-only"
+    machinenativeops.io/quantum-workload: "enabled"
+    machinenativeops.io/qpu-backends: "ibm-quantum,d-wave,aws-braket"
 
 ---
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: axiom-automation
+  name: machinenativeops-automation
   labels:
-    axiom.io/layer: "l8-complete-zero-human"
-    axiom.io/automation-level: "5"
-    axiom.io/criticality: "high"
-    kubernetes.io/managed-by: "axiom-platform"
+    machinenativeops.io/layer: "l8-complete-zero-human"
+    machinenativeops.io/automation-level: "5"
+    machinenativeops.io/criticality: "high"
+    kubernetes.io/managed-by: "machinenativeops-platform"
   annotations:
-    axiom.io/urn: "urn:axiom:namespace:automation:v1"
-    axiom.io/description: "AXIOM 零人工干預自動化命名空間"
-    axiom.io/infrastructure-scope: "on-premise"
-    axiom.io/network-mode: "internal-only"
-    axiom.io/zero-human-intervention: "enabled"
+    machinenativeops.io/urn: "urn:machinenativeops:namespace:automation:v1"
+    machinenativeops.io/description: "AXIOM 零人工干預自動化命名空間"
+    machinenativeops.io/infrastructure-scope: "on-premise"
+    machinenativeops.io/network-mode: "internal-only"
+    machinenativeops.io/zero-human-intervention: "enabled"
 
 # =============================================================================
 # Layer 2: Autonomy Core - 完全自動化核心
@@ -192,17 +192,17 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: argocd-application-controller
-  namespace: axiom-foundation
+  namespace: machinenativeops-foundation
   labels:
-    axiom.io/layer: "l2-autonomy-core"
-    axiom.io/component: "gitops-controller"
+    machinenativeops.io/layer: "l2-autonomy-core"
+    machinenativeops.io/component: "gitops-controller"
     app.kubernetes.io/name: "argocd"
     app.kubernetes.io/version: "v2.8.0"
   annotations:
-    axiom.io/urn: "urn:axiom:component:argocd:application-controller:v1"
-    axiom.io/automation-role: "autonomous-deployment"
-    axiom.io/infrastructure-scope: "on-premise"
-    axiom.io/network-mode: "internal-only"
+    machinenativeops.io/urn: "urn:machinenativeops:component:argocd:application-controller:v1"
+    machinenativeops.io/automation-role: "autonomous-deployment"
+    machinenativeops.io/infrastructure-scope: "on-premise"
+    machinenativeops.io/network-mode: "internal-only"
 spec:
   replicas: 3
   selector:
@@ -212,14 +212,14 @@ spec:
   template:
     metadata:
       labels:
-        axiom.io/layer: "l2-autonomy-core"
+        machinenativeops.io/layer: "l2-autonomy-core"
         app.kubernetes.io/name: argocd
         app.kubernetes.io/component: application-controller
         app.kubernetes.io/version: "v2.8.0"
       annotations:
-        axiom.io/urn: "urn:axiom:pod:argocd:application-controller:v1"
-        axiom.io/infrastructure-scope: "on-premise"
-        axiom.io/network-mode: "internal-only"
+        machinenativeops.io/urn: "urn:machinenativeops:pod:argocd:application-controller:v1"
+        machinenativeops.io/infrastructure-scope: "on-premise"
+        machinenativeops.io/network-mode: "internal-only"
     spec:
       containers:
         - name: argocd-application-controller
@@ -257,17 +257,17 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: cluster-autoscaler
-  namespace: axiom-foundation
+  namespace: machinenativeops-foundation
   labels:
-    axiom.io/layer: "l2-autonomy-core"
-    axiom.io/component: "autoscaler"
+    machinenativeops.io/layer: "l2-autonomy-core"
+    machinenativeops.io/component: "autoscaler"
     app.kubernetes.io/name: "cluster-autoscaler"
     app.kubernetes.io/version: "v1.27.0"
   annotations:
-    axiom.io/urn: "urn:axiom:component:cluster-autoscaler:v1"
-    axiom.io/automation-role: "autonomous-scaling"
-    axiom.io/infrastructure-scope: "on-premise"
-    axiom.io/network-mode: "internal-only"
+    machinenativeops.io/urn: "urn:machinenativeops:component:cluster-autoscaler:v1"
+    machinenativeops.io/automation-role: "autonomous-scaling"
+    machinenativeops.io/infrastructure-scope: "on-premise"
+    machinenativeops.io/network-mode: "internal-only"
 spec:
   replicas: 1
   selector:
@@ -276,13 +276,13 @@ spec:
   template:
     metadata:
       labels:
-        axiom.io/layer: "l2-autonomy-core"
+        machinenativeops.io/layer: "l2-autonomy-core"
         app.kubernetes.io/name: cluster-autoscaler
         app.kubernetes.io/version: "v1.27.0"
       annotations:
-        axiom.io/urn: "urn:axiom:pod:cluster-autoscaler:v1"
-        axiom.io/infrastructure-scope: "on-premise"
-        axiom.io/network-mode: "internal-only"
+        machinenativeops.io/urn: "urn:machinenativeops:pod:cluster-autoscaler:v1"
+        machinenativeops.io/infrastructure-scope: "on-premise"
+        machinenativeops.io/network-mode: "internal-only"
     spec:
       containers:
         - name: cluster-autoscaler
@@ -294,7 +294,7 @@ spec:
             - --cloud-provider=aws
             - --skip-nodes-with-local-storage=false
             - --expander=least-waste
-            - --node-group-auto-discovery=asg:tag=k8s.io/cluster-autoscaler/enabled,k8s.io/cluster-autoscaler/axiom-cluster
+            - --node-group-auto-discovery=asg:tag=k8s.io/cluster-autoscaler/enabled,k8s.io/cluster-autoscaler/machinenativeops-cluster
           resources:
             requests:
               cpu: "100m"
@@ -313,17 +313,17 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: prometheus
-  namespace: axiom-foundation
+  namespace: machinenativeops-foundation
   labels:
-    axiom.io/layer: "l3-autonomy-metrics"
-    axiom.io/component: "monitoring"
+    machinenativeops.io/layer: "l3-autonomy-metrics"
+    machinenativeops.io/component: "monitoring"
     app.kubernetes.io/name: "prometheus"
     app.kubernetes.io/version: "v2.47.0"
   annotations:
-    axiom.io/urn: "urn:axiom:component:prometheus:v1"
-    axiom.io/automation-role: "autonomous-monitoring"
-    axiom.io/infrastructure-scope: "on-premise"
-    axiom.io/network-mode: "internal-only"
+    machinenativeops.io/urn: "urn:machinenativeops:component:prometheus:v1"
+    machinenativeops.io/automation-role: "autonomous-monitoring"
+    machinenativeops.io/infrastructure-scope: "on-premise"
+    machinenativeops.io/network-mode: "internal-only"
 spec:
   serviceName: prometheus
   replicas: 3
@@ -333,13 +333,13 @@ spec:
   template:
     metadata:
       labels:
-        axiom.io/layer: "l3-autonomy-metrics"
+        machinenativeops.io/layer: "l3-autonomy-metrics"
         app.kubernetes.io/name: prometheus
         app.kubernetes.io/version: "v2.47.0"
       annotations:
-        axiom.io/urn: "urn:axiom:pod:prometheus:v1"
-        axiom.io/infrastructure-scope: "on-premise"
-        axiom.io/network-mode: "internal-only"
+        machinenativeops.io/urn: "urn:machinenativeops:pod:prometheus:v1"
+        machinenativeops.io/infrastructure-scope: "on-premise"
+        machinenativeops.io/network-mode: "internal-only"
     spec:
       containers:
         - name: prometheus
@@ -391,17 +391,17 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: kyverno-controller
-  namespace: axiom-governance
+  namespace: machinenativeops-governance
   labels:
-    axiom.io/layer: "l4-governance-compliance"
-    axiom.io/component: "policy-engine"
+    machinenativeops.io/layer: "l4-governance-compliance"
+    machinenativeops.io/component: "policy-engine"
     app.kubernetes.io/name: "kyverno"
     app.kubernetes.io/version: "v1.10.0"
   annotations:
-    axiom.io/urn: "urn:axiom:component:kyverno:controller:v1"
-    axiom.io/automation-role: "autonomous-governance"
-    axiom.io/infrastructure-scope: "on-premise"
-    axiom.io/network-mode: "internal-only"
+    machinenativeops.io/urn: "urn:machinenativeops:component:kyverno:controller:v1"
+    machinenativeops.io/automation-role: "autonomous-governance"
+    machinenativeops.io/infrastructure-scope: "on-premise"
+    machinenativeops.io/network-mode: "internal-only"
 spec:
   replicas: 3
   selector:
@@ -411,14 +411,14 @@ spec:
   template:
     metadata:
       labels:
-        axiom.io/layer: "l4-governance-compliance"
+        machinenativeops.io/layer: "l4-governance-compliance"
         app.kubernetes.io/name: kyverno
         app.kubernetes.io/component: controller
         app.kubernetes.io/version: "v1.10.0"
       annotations:
-        axiom.io/urn: "urn:axiom:pod:kyverno:controller:v1"
-        axiom.io/infrastructure-scope: "on-premise"
-        axiom.io/network-mode: "internal-only"
+        machinenativeops.io/urn: "urn:machinenativeops:pod:kyverno:controller:v1"
+        machinenativeops.io/infrastructure-scope: "on-premise"
+        machinenativeops.io/network-mode: "internal-only"
     spec:
       containers:
         - name: kyverno
@@ -429,7 +429,7 @@ spec:
             - --v=2
             - --setupWebhook=true
             - --webhookTimeout=10
-            - --exceptionNamespace=axiom-governance
+            - --exceptionNamespace=machinenativeops-governance
           ports:
             - name: https
               containerPort: 9443
@@ -455,23 +455,23 @@ spec:
 apiVersion: kyverno.io/v1
 kind: ClusterPolicy
 metadata:
-  name: axiom-enterprise-governance-suite
+  name: machinenativeops-enterprise-governance-suite
   annotations:
     policies.kyverno.io/title: "AXIOM Enterprise Governance Suite"
     policies.kyverno.io/category: "AXIOM Enterprise"
     policies.kyverno.io/severity: "high"
     policies.kyverno.io/description: >-
       AXIOM 企業級治理政策套件，確保所有資源符合企業標準與合規要求
-    axiom.io/urn: "urn:axiom:policy:kyverno:enterprise-governance:v1"
-    axiom.io/policy-domain: "enterprise-governance"
-    axiom.io/automation-level: "5"
+    machinenativeops.io/urn: "urn:machinenativeops:policy:kyverno:enterprise-governance:v1"
+    machinenativeops.io/policy-domain: "enterprise-governance"
+    machinenativeops.io/automation-level: "5"
 spec:
   validationFailureAction: Enforce
   background: true
   failurePolicy: Fail
   rules:
     # Rule 1: 強制 AXIOM 標註
-    - name: require-axiom-annotations
+    - name: require-machinenativeops-annotations
       match:
         any:
           - resources:
@@ -484,26 +484,26 @@ spec:
                 - Job
                 - CronJob
               namespaces:
-                - axiom-foundation
-                - axiom-governance
-                - axiom-quantum
-                - axiom-automation
+                - machinenativeops-foundation
+                - machinenativeops-governance
+                - machinenativeops-quantum
+                - machinenativeops-automation
       validate:
         message: >-
           所有 AXIOM 資源必須包含以下標註：
-          - axiom.io/infrastructure-scope: on-premise
-          - axiom.io/network-mode: internal-only
-          - axiom.io/urn: urn:axiom:...
-          - axiom.io/layer: l1-l8
-          - axiom.io/automation-level: 1-5
+          - machinenativeops.io/infrastructure-scope: on-premise
+          - machinenativeops.io/network-mode: internal-only
+          - machinenativeops.io/urn: urn:machinenativeops:...
+          - machinenativeops.io/layer: l1-l8
+          - machinenativeops.io/automation-level: 1-5
         pattern:
           metadata:
             annotations:
-              axiom.io/infrastructure-scope: "on-premise"
-              axiom.io/network-mode: "internal-only"
-              axiom.io/urn: "urn:axiom:*"
-              axiom.io/layer: "l?-*"
-              axiom.io/automation-level: "?*"
+              machinenativeops.io/infrastructure-scope: "on-premise"
+              machinenativeops.io/network-mode: "internal-only"
+              machinenativeops.io/urn: "urn:machinenativeops:*"
+              machinenativeops.io/layer: "l?-*"
+              machinenativeops.io/automation-level: "?*"
     
     # Rule 2: 禁止特權容器
     - name: disallow-privileged-containers
@@ -550,17 +550,17 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: gatekeeper-controller-manager
-  namespace: axiom-governance
+  namespace: machinenativeops-governance
   labels:
-    axiom.io/layer: "l4-governance-compliance"
-    axiom.io/component: "opa-gatekeeper"
+    machinenativeops.io/layer: "l4-governance-compliance"
+    machinenativeops.io/component: "opa-gatekeeper"
     app: gatekeeper-controller-manager
     control-plane: controller-manager
   annotations:
-    axiom.io/urn: "urn:axiom:component:gatekeeper:controller:v1"
-    axiom.io/automation-role: "autonomous-policy-enforcement"
-    axiom.io/infrastructure-scope: "on-premise"
-    axiom.io/network-mode: "internal-only"
+    machinenativeops.io/urn: "urn:machinenativeops:component:gatekeeper:controller:v1"
+    machinenativeops.io/automation-role: "autonomous-policy-enforcement"
+    machinenativeops.io/infrastructure-scope: "on-premise"
+    machinenativeops.io/network-mode: "internal-only"
 spec:
   replicas: 3
   selector:
@@ -570,13 +570,13 @@ spec:
   template:
     metadata:
       labels:
-        axiom.io/layer: "l4-governance-compliance"
+        machinenativeops.io/layer: "l4-governance-compliance"
         app: gatekeeper-controller-manager
         control-plane: controller-manager
       annotations:
-        axiom.io/urn: "urn:axiom:pod:gatekeeper:controller:v1"
-        axiom.io/infrastructure-scope: "on-premise"
-        axiom.io/network-mode: "internal-only"
+        machinenativeops.io/urn: "urn:machinenativeops:pod:gatekeeper:controller:v1"
+        machinenativeops.io/infrastructure-scope: "on-premise"
+        machinenativeops.io/network-mode: "internal-only"
     spec:
       containers:
         - name: manager
@@ -620,17 +620,17 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: velero
-  namespace: axiom-foundation
+  namespace: machinenativeops-foundation
   labels:
-    axiom.io/layer: "l5-business-continuity"
-    axiom.io/component: "backup-restore"
+    machinenativeops.io/layer: "l5-business-continuity"
+    machinenativeops.io/component: "backup-restore"
     app.kubernetes.io/name: "velero"
     app.kubernetes.io/version: "v1.11.0"
   annotations:
-    axiom.io/urn: "urn:axiom:component:velero:v1"
-    axiom.io/automation-role: "autonomous-backup"
-    axiom.io/infrastructure-scope: "on-premise"
-    axiom.io/network-mode: "internal-only"
+    machinenativeops.io/urn: "urn:machinenativeops:component:velero:v1"
+    machinenativeops.io/automation-role: "autonomous-backup"
+    machinenativeops.io/infrastructure-scope: "on-premise"
+    machinenativeops.io/network-mode: "internal-only"
 spec:
   replicas: 1
   selector:
@@ -639,13 +639,13 @@ spec:
   template:
     metadata:
       labels:
-        axiom.io/layer: "l5-business-continuity"
+        machinenativeops.io/layer: "l5-business-continuity"
         app.kubernetes.io/name: velero
         app.kubernetes.io/version: "v1.11.0"
       annotations:
-        axiom.io/urn: "urn:axiom:pod:velero:v1"
-        axiom.io/infrastructure-scope: "on-premise"
-        axiom.io/network-mode: "internal-only"
+        machinenativeops.io/urn: "urn:machinenativeops:pod:velero:v1"
+        machinenativeops.io/infrastructure-scope: "on-premise"
+        machinenativeops.io/network-mode: "internal-only"
     spec:
       containers:
         - name: velero
@@ -667,7 +667,7 @@ spec:
             - name: VELERO_SCRATCH_DIR
               value: /scratch
             - name: VELERO_NAMESPACE
-              value: axiom-foundation
+              value: machinenativeops-foundation
             - name: LD_LIBRARY_PATH
               value: /plugins
 
@@ -681,18 +681,18 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: qiskit-runtime-service
-  namespace: axiom-quantum
+  namespace: machinenativeops-quantum
   labels:
-    axiom.io/layer: "l6-quantum-specific"
-    axiom.io/component: "quantum-runtime"
+    machinenativeops.io/layer: "l6-quantum-specific"
+    machinenativeops.io/component: "quantum-runtime"
     app.kubernetes.io/name: "qiskit-runtime"
     app.kubernetes.io/version: "v0.17.0"
   annotations:
-    axiom.io/urn: "urn:axiom:component:qiskit:runtime-service:v1"
-    axiom.io/automation-role: "autonomous-quantum-execution"
-    axiom.io/infrastructure-scope: "on-premise"
-    axiom.io/network-mode: "internal-only"
-    axiom.io/quantum-backends: "simulator,ibm-quantum"
+    machinenativeops.io/urn: "urn:machinenativeops:component:qiskit:runtime-service:v1"
+    machinenativeops.io/automation-role: "autonomous-quantum-execution"
+    machinenativeops.io/infrastructure-scope: "on-premise"
+    machinenativeops.io/network-mode: "internal-only"
+    machinenativeops.io/quantum-backends: "simulator,ibm-quantum"
 spec:
   replicas: 3
   selector:
@@ -701,15 +701,15 @@ spec:
   template:
     metadata:
       labels:
-        axiom.io/layer: "l6-quantum-specific"
+        machinenativeops.io/layer: "l6-quantum-specific"
         app.kubernetes.io/name: qiskit-runtime
         app.kubernetes.io/version: "v0.17.0"
-        axiom.io/quantum-workload: "enabled"
+        machinenativeops.io/quantum-workload: "enabled"
       annotations:
-        axiom.io/urn: "urn:axiom:pod:qiskit:runtime-service:v1"
-        axiom.io/infrastructure-scope: "on-premise"
-        axiom.io/network-mode: "internal-only"
-        axiom.io/quantum-job-types: "vqe,qaoa,qnn,qgan,qsvm"
+        machinenativeops.io/urn: "urn:machinenativeops:pod:qiskit:runtime-service:v1"
+        machinenativeops.io/infrastructure-scope: "on-premise"
+        machinenativeops.io/network-mode: "internal-only"
+        machinenativeops.io/quantum-job-types: "vqe,qaoa,qnn,qgan,qsvm"
     spec:
       containers:
         - name: qiskit-runtime
@@ -756,18 +756,18 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: quantum-job-scheduler
-  namespace: axiom-quantum
+  namespace: machinenativeops-quantum
   labels:
-    axiom.io/layer: "l6-quantum-specific"
-    axiom.io/component: "quantum-scheduler"
+    machinenativeops.io/layer: "l6-quantum-specific"
+    machinenativeops.io/component: "quantum-scheduler"
     app.kubernetes.io/name: "quantum-scheduler"
     app.kubernetes.io/version: "v1.0.0"
   annotations:
-    axiom.io/urn: "urn:axiom:component:quantum:scheduler:v1"
-    axiom.io/automation-role: "autonomous-quantum-scheduling"
-    axiom.io/infrastructure-scope: "on-premise"
-    axiom.io/network-mode: "internal-only"
-    axiom.io/implementation-note: "基於 Kubernetes Job Controller 擴展實現"
+    machinenativeops.io/urn: "urn:machinenativeops:component:quantum:scheduler:v1"
+    machinenativeops.io/automation-role: "autonomous-quantum-scheduling"
+    machinenativeops.io/infrastructure-scope: "on-premise"
+    machinenativeops.io/network-mode: "internal-only"
+    machinenativeops.io/implementation-note: "基於 Kubernetes Job Controller 擴展實現"
 spec:
   replicas: 2
   selector:
@@ -776,14 +776,14 @@ spec:
   template:
     metadata:
       labels:
-        axiom.io/layer: "l6-quantum-specific"
+        machinenativeops.io/layer: "l6-quantum-specific"
         app.kubernetes.io/name: quantum-scheduler
         app.kubernetes.io/version: "v1.0.0"
-        axiom.io/quantum-workload: "enabled"
+        machinenativeops.io/quantum-workload: "enabled"
       annotations:
-        axiom.io/urn: "urn:axiom:pod:quantum:scheduler:v1"
-        axiom.io/infrastructure-scope: "on-premise"
-        axiom.io/network-mode: "internal-only"
+        machinenativeops.io/urn: "urn:machinenativeops:pod:quantum:scheduler:v1"
+        machinenativeops.io/infrastructure-scope: "on-premise"
+        machinenativeops.io/network-mode: "internal-only"
     spec:
       containers:
         - name: quantum-scheduler
@@ -822,17 +822,17 @@ apiVersion: apps/v1
 kind: DaemonSet
 metadata:
   name: falco
-  namespace: axiom-foundation
+  namespace: machinenativeops-foundation
   labels:
-    axiom.io/layer: "l7-advanced-security"
-    axiom.io/component: "runtime-security"
+    machinenativeops.io/layer: "l7-advanced-security"
+    machinenativeops.io/component: "runtime-security"
     app.kubernetes.io/name: "falco"
     app.kubernetes.io/version: "v0.36.0"
   annotations:
-    axiom.io/urn: "urn:axiom:component:falco:v1"
-    axiom.io/automation-role: "autonomous-threat-detection"
-    axiom.io/infrastructure-scope: "on-premise"
-    axiom.io/network-mode: "internal-only"
+    machinenativeops.io/urn: "urn:machinenativeops:component:falco:v1"
+    machinenativeops.io/automation-role: "autonomous-threat-detection"
+    machinenativeops.io/infrastructure-scope: "on-premise"
+    machinenativeops.io/network-mode: "internal-only"
 spec:
   selector:
     matchLabels:
@@ -840,13 +840,13 @@ spec:
   template:
     metadata:
       labels:
-        axiom.io/layer: "l7-advanced-security"
+        machinenativeops.io/layer: "l7-advanced-security"
         app.kubernetes.io/name: falco
         app.kubernetes.io/version: "v0.36.0"
       annotations:
-        axiom.io/urn: "urn:axiom:pod:falco:v1"
-        axiom.io/infrastructure-scope: "on-premise"
-        axiom.io/network-mode: "internal-only"
+        machinenativeops.io/urn: "urn:machinenativeops:pod:falco:v1"
+        machinenativeops.io/infrastructure-scope: "on-premise"
+        machinenativeops.io/network-mode: "internal-only"
     spec:
       hostPID: true
       hostNetwork: true
@@ -931,19 +931,19 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ai-self-healing-controller
-  namespace: axiom-automation
+  namespace: machinenativeops-automation
   labels:
-    axiom.io/layer: "l8-complete-zero-human"
-    axiom.io/component: "ai-self-healing"
+    machinenativeops.io/layer: "l8-complete-zero-human"
+    machinenativeops.io/component: "ai-self-healing"
     app.kubernetes.io/name: "ai-self-healing"
     app.kubernetes.io/version: "v1.0.0"
   annotations:
-    axiom.io/urn: "urn:axiom:component:ai:self-healing:v1"
-    axiom.io/automation-role: "cognitive-automation"
-    axiom.io/infrastructure-scope: "on-premise"
-    axiom.io/network-mode: "internal-only"
-    axiom.io/zero-human-intervention: "enabled"
-    axiom.io/implementation-note: "需要基於 ML 模型開發"
+    machinenativeops.io/urn: "urn:machinenativeops:component:ai:self-healing:v1"
+    machinenativeops.io/automation-role: "cognitive-automation"
+    machinenativeops.io/infrastructure-scope: "on-premise"
+    machinenativeops.io/network-mode: "internal-only"
+    machinenativeops.io/zero-human-intervention: "enabled"
+    machinenativeops.io/implementation-note: "需要基於 ML 模型開發"
 spec:
   replicas: 2
   selector:
@@ -952,14 +952,14 @@ spec:
   template:
     metadata:
       labels:
-        axiom.io/layer: "l8-complete-zero-human"
+        machinenativeops.io/layer: "l8-complete-zero-human"
         app.kubernetes.io/name: ai-self-healing
         app.kubernetes.io/version: "v1.0.0"
       annotations:
-        axiom.io/urn: "urn:axiom:pod:ai:self-healing:v1"
-        axiom.io/infrastructure-scope: "on-premise"
-        axiom.io/network-mode: "internal-only"
-        axiom.io/zero-human-intervention: "enabled"
+        machinenativeops.io/urn: "urn:machinenativeops:pod:ai:self-healing:v1"
+        machinenativeops.io/infrastructure-scope: "on-premise"
+        machinenativeops.io/network-mode: "internal-only"
+        machinenativeops.io/zero-human-intervention: "enabled"
     spec:
       containers:
         - name: ai-controller
@@ -1006,17 +1006,17 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: harbor-core
-  namespace: axiom-foundation
+  namespace: machinenativeops-foundation
   labels:
-    axiom.io/layer: "l7-advanced-security"
-    axiom.io/component: "container-registry"
+    machinenativeops.io/layer: "l7-advanced-security"
+    machinenativeops.io/component: "container-registry"
     app.kubernetes.io/name: "harbor"
     app.kubernetes.io/version: "v2.9.0"
   annotations:
-    axiom.io/urn: "urn:axiom:component:harbor:core:v1"
-    axiom.io/automation-role: "autonomous-supply-chain"
-    axiom.io/infrastructure-scope: "on-premise"
-    axiom.io/network-mode: "internal-only"
+    machinenativeops.io/urn: "urn:machinenativeops:component:harbor:core:v1"
+    machinenativeops.io/automation-role: "autonomous-supply-chain"
+    machinenativeops.io/infrastructure-scope: "on-premise"
+    machinenativeops.io/network-mode: "internal-only"
 spec:
   serviceName: harbor-core
   replicas: 2
@@ -1027,14 +1027,14 @@ spec:
   template:
     metadata:
       labels:
-        axiom.io/layer: "l7-advanced-security"
+        machinenativeops.io/layer: "l7-advanced-security"
         app.kubernetes.io/name: harbor
         app.kubernetes.io/component: core
         app.kubernetes.io/version: "v2.9.0"
       annotations:
-        axiom.io/urn: "urn:axiom:pod:harbor:core:v1"
-        axiom.io/infrastructure-scope: "on-premise"
-        axiom.io/network-mode: "internal-only"
+        machinenativeops.io/urn: "urn:machinenativeops:pod:harbor:core:v1"
+        machinenativeops.io/infrastructure-scope: "on-premise"
+        machinenativeops.io/network-mode: "internal-only"
     spec:
       containers:
         - name: core
@@ -1044,7 +1044,7 @@ spec:
               containerPort: 8080
           env:
             - name: CORE_SECRET
-              value: "axiom-harbor-secret"
+              value: "machinenativeops-harbor-secret"
             - name: DATABASE_TYPE
               value: "postgresql"
             - name: POSTGRESQL_HOST
@@ -1082,28 +1082,28 @@ spec:
 apiVersion: kyverno.io/v2
 kind: ClusterPolicy
 metadata:
-  name: axiom-supply-chain-security
+  name: machinenativeops-supply-chain-security
   annotations:
     policies.kyverno.io/title: "AXIOM Supply Chain Security"
     policies.kyverno.io/category: "Supply Chain Security"
     policies.kyverno.io/severity: "critical"
-    axiom.io/urn: "urn:axiom:policy:kyverno:supply-chain:v1"
-    axiom.io/automation-level: "5"
+    machinenativeops.io/urn: "urn:machinenativeops:policy:kyverno:supply-chain:v1"
+    machinenativeops.io/automation-level: "5"
 spec:
   validationFailureAction: Enforce
   background: false
   failurePolicy: Fail
   rules:
-    - name: verify-axiom-images
+    - name: verify-machinenativeops-images
       match:
         any:
           - resources:
               kinds: ["Pod", "Job"]
               namespaces:
-                - axiom-foundation
-                - axiom-governance
-                - axiom-quantum
-                - axiom-automation
+                - machinenativeops-foundation
+                - machinenativeops-governance
+                - machinenativeops-quantum
+                - machinenativeops-automation
       verifyImages:
         - imageReferences:
             - "harbor.axiom.internal/*"
@@ -1121,7 +1121,7 @@ spec:
                 - all:
                     - key: "{{ attestation.predicate.buildType }}"
                       operator: Equals
-                      value: "https://axiom.io/build/v1"
+                      value: "https://machinenativeops.io/build/v1"
             - predicateType: https://spdx.dev/Document
               conditions:
                 - all:
@@ -1138,16 +1138,16 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: axiom-zero-trust-baseline
-  namespace: axiom-foundation
+  name: machinenativeops-zero-trust-baseline
+  namespace: machinenativeops-foundation
   labels:
-    axiom.io/layer: "l7-advanced-security"
-    axiom.io/component: "zero-trust-network"
+    machinenativeops.io/layer: "l7-advanced-security"
+    machinenativeops.io/component: "zero-trust-network"
   annotations:
-    axiom.io/urn: "urn:axiom:network-policy:zero-trust:v1"
-    axiom.io/automation-role: "autonomous-network-security"
-    axiom.io/infrastructure-scope: "on-premise"
-    axiom.io/network-mode: "internal-only"
+    machinenativeops.io/urn: "urn:machinenativeops:network-policy:zero-trust:v1"
+    machinenativeops.io/automation-role: "autonomous-network-security"
+    machinenativeops.io/infrastructure-scope: "on-premise"
+    machinenativeops.io/network-mode: "internal-only"
 spec:
   podSelector: {}
   policyTypes:
@@ -1161,20 +1161,20 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: axiom-internal-services
-  namespace: axiom-foundation
+  name: machinenativeops-internal-services
+  namespace: machinenativeops-foundation
   labels:
-    axiom.io/layer: "l7-advanced-security"
-    axiom.io/component: "internal-communication"
+    machinenativeops.io/layer: "l7-advanced-security"
+    machinenativeops.io/component: "internal-communication"
   annotations:
-    axiom.io/urn: "urn:axiom:network-policy:internal-services:v1"
-    axiom.io/automation-role: "autonomous-service-mesh"
-    axiom.io/infrastructure-scope: "on-premise"
-    axiom.io/network-mode: "internal-only"
+    machinenativeops.io/urn: "urn:machinenativeops:network-policy:internal-services:v1"
+    machinenativeops.io/automation-role: "autonomous-service-mesh"
+    machinenativeops.io/infrastructure-scope: "on-premise"
+    machinenativeops.io/network-mode: "internal-only"
 spec:
   podSelector:
     matchLabels:
-      kubernetes.io/managed-by: "axiom-platform"
+      kubernetes.io/managed-by: "machinenativeops-platform"
   policyTypes:
     - Ingress
     - Egress
@@ -1182,7 +1182,7 @@ spec:
     - from:
         - namespaceSelector:
             matchLabels:
-              kubernetes.io/managed-by: "axiom-platform"
+              kubernetes.io/managed-by: "machinenativeops-platform"
       ports:
         - protocol: TCP
           port: 8080
@@ -1194,7 +1194,7 @@ spec:
     - to:
         - namespaceSelector:
             matchLabels:
-              kubernetes.io/managed-by: "axiom-platform"
+              kubernetes.io/managed-by: "machinenativeops-platform"
     - to: []
       ports:
         - protocol: UDP
@@ -1210,14 +1210,14 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: prometheus-config
-  namespace: axiom-foundation
+  namespace: machinenativeops-foundation
   labels:
-    axiom.io/layer: "l3-autonomy-metrics"
-    axiom.io/component: "monitoring-config"
+    machinenativeops.io/layer: "l3-autonomy-metrics"
+    machinenativeops.io/component: "monitoring-config"
   annotations:
-    axiom.io/urn: "urn:axiom:config:prometheus:v1"
-    axiom.io/infrastructure-scope: "on-premise"
-    axiom.io/network-mode: "internal-only"
+    machinenativeops.io/urn: "urn:machinenativeops:config:prometheus:v1"
+    machinenativeops.io/infrastructure-scope: "on-premise"
+    machinenativeops.io/network-mode: "internal-only"
 data:
   prometheus.yml: |
     global:
@@ -1242,7 +1242,7 @@ data:
       
       - job_name: 'kyverno-metrics'
         static_configs:
-          - targets: ['kyverno-controller.axiom-governance:8000']
+          - targets: ['kyverno-controller.machinenativeops-governance:8000']
         metrics_path: /metrics
       
       - job_name: 'falco-metrics'
@@ -1258,7 +1258,7 @@ data:
       
       - job_name: 'quantum-services'
         static_configs:
-          - targets: ['qiskit-runtime-service.axiom-quantum:8080']
+          - targets: ['qiskit-runtime-service.machinenativeops-quantum:8080']
         metrics_path: /metrics
 
 ---
@@ -1267,16 +1267,16 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: opa-policies
-  namespace: axiom-governance
+  namespace: machinenativeops-governance
   labels:
-    axiom.io/layer: "l4-governance-compliance"
-    axiom.io/component: "opa-policies"
+    machinenativeops.io/layer: "l4-governance-compliance"
+    machinenativeops.io/component: "opa-policies"
   annotations:
-    axiom.io/urn: "urn:axiom:config:opa-policies:v1"
-    axiom.io/infrastructure-scope: "on-premise"
-    axiom.io/network-mode: "internal-only"
+    machinenativeops.io/urn: "urn:machinenativeops:config:opa-policies:v1"
+    machinenativeops.io/infrastructure-scope: "on-premise"
+    machinenativeops.io/network-mode: "internal-only"
 data:
-  axiom-security.rego: |
+  machinenativeops-security.rego: |
     package axiom.security
     
     # 拒絕使用不安全的映像
@@ -1301,18 +1301,18 @@ data:
     # 量子工作負載特殊規則
     deny[msg] {
       input.request.kind.kind == "Pod"
-      input.request.object.metadata.namespace == "axiom-quantum"
-      not input.request.object.metadata.labels["axiom.io/quantum-workload"]
+      input.request.object.metadata.namespace == "machinenativeops-quantum"
+      not input.request.object.metadata.labels["machinenativeops.io/quantum-workload"]
       msg := "量子命名空間中的 Pod 必須標記為量子工作負載"
     }
 
-  axiom-quantum.rego: |
+  machinenativeops-quantum.rego: |
     package axiom.quantum
     
     # 量子資源分配驗證
     deny[msg] {
       input.request.kind.kind == "Pod"
-      input.request.object.metadata.labels["axiom.io/quantum-workload"] == "enabled"
+      input.request.object.metadata.labels["machinenativeops.io/quantum-workload"] == "enabled"
       some i
       container := input.request.object.spec.containers[i]
       cpu_limit := to_number(replace(container.resources.limits.cpu, "m", ""))

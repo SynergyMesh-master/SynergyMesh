@@ -9,7 +9,7 @@ Auto-Fix Bot 2.0 是 Isynergymesh 專案的自動修復機器人配置系統，�
 - **版本**: 2.0.0
 - **配置檔案**: `auto-fix-bot.yml`
 - **架構模式**: 去AXIOM化重構策略
-- **合規標準**: SLSA-L3, in-toto, audit-trail, axiom-free
+- **合規標準**: SLSA-L3, in-toto, audit-trail, machinenativeops-free
 
 ## 🎯 核心功能
 

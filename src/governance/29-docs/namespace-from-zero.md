@@ -55,7 +55,7 @@ metadata:
 
 ## 與 SynergyMesh 治理對齊
 - **Canonical regex / labels**：參見 `governance/34-config/naming/canonical-naming-machine-spec.yaml`。
-- **舊→新映射**：參見 `governance/34-config/naming/namespace-mapping.yaml`（含 unmanned-island-system、axiom-system/axiom、island-ai、uav/ad production 等）。
+- **舊→新映射**：參見 `governance/34-config/naming/namespace-mapping.yaml`（含 unmanned-island-system、machinenativeops/axiom、island-ai、uav/ad production 等）。
 - **政策驗證**：`governance/23-policies/conftest/naming_policy.rego` 會使用 machine-spec regex 並強制環境標籤對齊。
 
 ## 推薦放置與使用

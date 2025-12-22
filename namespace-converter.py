@@ -4,10 +4,10 @@ MachineNativeOps Namespace Converter
 機器原生運維命名空間轉換器
 
 Converts legacy AXIOM namespace references to MachineNativeOps standards:
-- axiom.io → machinenativeops.io
-- axiom-system → machinenativeops
-- urn:axiom: → urn:machinenativeops:
-- AxiomGlobalBaseline → MachineNativeOpsGlobalBaseline
+- machinenativeops.io → machinenativeops.io
+- machinenativeops → machinenativeops
+- urn:machinenativeops: → urn:machinenativeops:
+- MachineNativeOpsGlobalBaseline → MachineNativeOpsGlobalBaseline
 """
 
 import re
@@ -30,26 +30,26 @@ class NamespaceConverter:
             r'axiom\.io': 'machinenativeops.io',
             
             # Resource type conversions
-            r'AxiomGlobalBaseline': 'MachineNativeOpsGlobalBaseline',
-            r'AxiomAgent': 'MachineNativeOpsAgent',
-            r'AxiomService': 'MachineNativeOpsService',
+            r'MachineNativeOpsGlobalBaseline': 'MachineNativeOpsGlobalBaseline',
+            r'MachineNativeOpsAgent': 'MachineNativeOpsAgent',
+            r'MachineNativeOpsService': 'MachineNativeOpsService',
             
             # URN conversions
-            r'urn:axiom:': 'urn:machinenativeops:',
+            r'urn:machinenativeops:': 'urn:machinenativeops:',
             
             # Namespace conversions
-            r'axiom-system': 'machinenativeops',
+            r'machinenativeops': 'machinenativeops',
             r'namespace:\s*axiom': 'namespace: machinenativeops',
             
             # Prefix conversions (for labels, etc.)
-            r'axiom-': 'machinenativeops-',
+            r'machinenativeops-': 'machinenativeops-',
             
             # Registry conversions
             r'registry\.axiom\.io': 'registry.machinenativeops.io',
             
             # Path conversions
-            r'etc/axiom/': 'etc/machinenativeops/',
-            r'/axiom/': '/machinenativeops/',
+            r'etc/machinenativeops/': 'etc/machinenativeops/',
+            r'/machinenativeops/': '/machinenativeops/',
         }
         
         self.stats = {

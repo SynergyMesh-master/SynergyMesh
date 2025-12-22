@@ -85,7 +85,7 @@
           "type": "array",
           "items": {
             "type": "string",
-            "enum": ["slsa-l3", "in-toto", "audit-trail", "axiom-free", "deep-validation"]
+            "enum": ["slsa-l3", "in-toto", "audit-trail", "machinenativeops-free", "deep-validation"]
           },
           "minItems": 1,
           "description": "Compliance tags"

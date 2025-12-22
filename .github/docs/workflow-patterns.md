@@ -64,7 +64,7 @@ code-quality:
 When migrating from legacy workflows:
 
 1. **Remove AXIOM Naming:**
-   - Replace `axiom-*` with `synergymesh-*`
+   - Replace `machinenativeops-*` with `synergymesh-*`
    - Update namespace references
    - Change repository references
 

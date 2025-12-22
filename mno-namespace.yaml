@@ -225,10 +225,10 @@ spec:
       - from: "axiom"
         to: "machinenativeops"
         auto_convert: true
-      - from: "axiom.io"
+      - from: "machinenativeops.io"
         to: "machinenativeops.io"
         auto_convert: true
-      - from: "AxiomGlobalBaseline"
+      - from: "MachineNativeOpsGlobalBaseline"
         to: "MachineNativeOpsGlobalBaseline"
         auto_convert: true
     
@@ -237,11 +237,11 @@ spec:
         replacement: "machinenativeops.io/v$1"
         scope: "api_version"
       
-      - pattern: "^urn:axiom:(.*)$"
+      - pattern: "^urn:machinenativeops:(.*)$"
         replacement: "urn:machinenativeops:$1"
         scope: "urn"
       
-      - pattern: "^axiom-(.*)$"
+      - pattern: "^machinenativeops-(.*)$"
         replacement: "machinenativeops-$1"
         scope: "resource_name"
 
@@ -620,13 +620,13 @@ spec:
       - pattern: "axiom\\.io"
         replacement: "machinenativeops.io"
         status: "deprecated"
-      - pattern: "AxiomGlobalBaseline"
+      - pattern: "MachineNativeOpsGlobalBaseline"
         replacement: "MachineNativeOpsGlobalBaseline"
         status: "deprecated"
-      - pattern: "urn:axiom:"
+      - pattern: "urn:machinenativeops:"
         replacement: "urn:machinenativeops:"
         status: "deprecated"
-      - pattern: "axiom-"
+      - pattern: "machinenativeops-"
         replacement: "machinenativeops-"
         status: "deprecated"
     

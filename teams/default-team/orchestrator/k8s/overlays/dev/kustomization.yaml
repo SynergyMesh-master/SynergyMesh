@@ -4,7 +4,7 @@ kind: Kustomization
 resources:
 - ../../base
 
-namespace: axiom-system-dev
+namespace: machinenativeops-dev
 
 namePrefix: dev-
 
@@ -15,7 +15,7 @@ labels:
 
 # Override image tag for dev environment
 images:
-- name: axiom-system/super-agent
+- name: machinenativeops/super-agent
   newTag: dev-latest
 
 # Override replicas for dev (lower resource usage)

@@ -55,13 +55,13 @@ python test_super_agent.py
 ### Docker Build & Test
 ```bash
 # Build image (with environment-specific tag)
-docker build -t axiom-system/super-agent:dev-latest .
+docker build -t machinenativeops/super-agent:dev-latest .
 
 # Run container
-docker run -p 8080:8080 axiom-system/super-agent:dev-latest
+docker run -p 8080:8080 machinenativeops/super-agent:dev-latest
 
 # Example: build a specific release tag
-# docker build -t axiom-system/super-agent:v1.0.0 .
+# docker build -t machinenativeops/super-agent:v1.0.0 .
 
 # Test container
 python test_super_agent.py http://localhost:8080
@@ -123,11 +123,11 @@ kubectl apply -f base/deployment.yaml
 
 # Port forward for local testing
 # dev
-kubectl port-forward -n axiom-system-dev svc/dev-super-agent 8080:8080
+kubectl port-forward -n machinenativeops-dev svc/dev-super-agent 8080:8080
 # staging
-# kubectl port-forward -n axiom-system-staging svc/staging-super-agent 8080:8080
+# kubectl port-forward -n machinenativeops-staging svc/staging-super-agent 8080:8080
 # prod
-# kubectl port-forward -n axiom-system svc/prod-super-agent 8080:8080
+# kubectl port-forward -n machinenativeops svc/prod-super-agent 8080:8080
 
 # Test deployed service
 python test_super_agent.py http://localhost:8080
@@ -139,9 +139,9 @@ Each environment has different default settings. Dev and staging environments in
 
 | Environment | Namespace | Image Tag | Replicas | HPA Range |
 |------------|-----------|-----------|----------|-----------|
-| **dev** | axiom-system-dev | dev-latest | 1 | 2-5 (from base) |
-| **staging** | axiom-system-staging | staging-v1.0.0 | 2 | 2-5 (from base) |
-| **prod** | axiom-system | v1.0.0 | 3 | 3-10 (custom) |
+| **dev** | machinenativeops-dev | dev-latest | 1 | 2-5 (from base) |
+| **staging** | machinenativeops-staging | staging-v1.0.0 | 2 | 2-5 (from base) |
+| **prod** | machinenativeops | v1.0.0 | 3 | 3-10 (custom) |
 
 **Overriding image tags:**
 
@@ -154,7 +154,7 @@ export IMAGE_TAG=v1.2.0
 ```
 
 This will:
-1. Build Docker image as `axiom-system/super-agent:v1.2.0`
+1. Build Docker image as `machinenativeops/super-agent:v1.2.0`
 2. Deploy that image to the production environment using Kustomize
 
 Alternatively, you can permanently change an environment's image tag by editing the overlay's `kustomization.yaml`:
@@ -162,7 +162,7 @@ Alternatively, you can permanently change an environment's image tag by editing 
 ```yaml
 # In overlays/prod/kustomization.yaml
 images:
-- name: axiom-system/super-agent
+- name: machinenativeops/super-agent
   newTag: v1.2.0  # Update version here
 ```
 ## 📡 API Endpoints
@@ -380,7 +380,7 @@ This allows you to safely deploy dev, staging, and production environments side-
 ```yaml
 # In overlays/prod/kustomization.yaml
 images:
-- name: axiom-system/super-agent
+- name: machinenativeops/super-agent
   newTag: v1.2.0  # Update version here
 ```
 

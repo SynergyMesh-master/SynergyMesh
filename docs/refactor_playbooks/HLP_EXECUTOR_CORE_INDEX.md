@@ -59,7 +59,7 @@ docs/refactor_playbooks/
 **內容摘要**:
 
 - ✅ **42項邏輯→目標位置對應表**（含邏輯名稱、說明、目標路徑、角色、優先級）
-- ✅ **命名空間適配策略**（axiom-system → unmanned-island-system）
+- ✅ **命名空間適配策略**（machinenativeops → unmanned-island-system）
 - ✅ **依賴適配方案**（6項核心依賴的映射規則）
 - ✅ 引用關係分析（HLP ↔ 現有系統）
 - ✅ 潛在衝突與解決方案
@@ -252,7 +252,7 @@ docs/refactor_playbooks/
 - [x] 提取 53 項邏輯元件
 - [x] 創建 6 份專業規劃文件
 - [x] 設計 50 個新檔案 + 9 個更新檔案
-- [x] 命名空間適配（axiom-system → unmanned-island-system）
+- [x] 命名空間適配（machinenativeops → unmanned-island-system）
 - [x] 依賴適配策略（6 項依賴）
 
 ### 🔄 進行中

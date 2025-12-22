@@ -107,7 +107,7 @@ knowledge_graph_integration:
     enabled: true
     
     embedding_model:
-      name: "axiom-embed-v2"
+      name: "machinenativeops-embed-v2"
       dimension: 1024
       max_sequence_length: 512
     

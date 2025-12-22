@@ -9,7 +9,7 @@
 ### 步驟 1：環境檢查
 ```bash
 git status
-git checkout -b feature/axiom-namespace-migration
+git checkout -b feature/machinenativeops-namespace-migration
 ```
 
 ### 步驟 2：試運行驗證

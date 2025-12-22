@@ -4,7 +4,7 @@ kind: Kustomization
 resources:
 - ../../base
 
-namespace: axiom-system
+namespace: machinenativeops
 
 labels:
 - pairs:
@@ -13,7 +13,7 @@ labels:
 
 # Override image tag for production environment
 images:
-- name: axiom-system/super-agent
+- name: machinenativeops/super-agent
   newTag: v1.0.0
 
 # Production uses higher replica count

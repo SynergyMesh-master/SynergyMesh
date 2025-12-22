@@ -34,17 +34,17 @@ xdg-open _build/html/index.html  # Linux
 
 ```bash
 # 克隆儲存庫
-git clone https://github.com/axmops/axiom-enterprise-platform.git
-cd axiom-enterprise-platform
+git clone https://github.com/axmops/machinenativeops-enterprise-platform.git
+cd machinenativeops-enterprise-platform
 
 # 配置環境
 # 命名空間必須全小寫，僅允許小寫字母、數字與連字號（符合 `^[a-z0-9-]+$`）
 export AXIOM_ENV=production
-export AXIOM_NAMESPACE=axiom-system
+export AXIOM_NAMESPACE=machinenativeops
 
 # 部署平台
 kubectl create namespace $AXIOM_NAMESPACE
-helm install axiom-infra charts/axiom-infrastructure \
+helm install machinenativeops-infra charts/machinenativeops-infrastructure \
   --namespace $AXIOM_NAMESPACE
 ```
 
@@ -104,4 +104,4 @@ AXIOM 平台實施多層次安全策略：
 
 ## 🔗 相關連結
 
-- Gate bundle baseline: `ops/axiom-axm-gate-fused-v2r1.yaml.txt`
+- Gate bundle baseline: `ops/machinenativeops-axm-gate-fused-v2r1.yaml.txt`

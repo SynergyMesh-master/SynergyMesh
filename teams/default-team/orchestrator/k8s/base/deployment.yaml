@@ -2,16 +2,16 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: axiom-system
+  name: machinenativeops
   labels:
-    name: axiom-system
+    name: machinenativeops
     purpose: multi-agent-orchestration
 ---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: super-agent
-  namespace: axiom-system
+  namespace: machinenativeops
   labels:
     app: super-agent
     component: control-plane
@@ -56,13 +56,13 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: super-agent
-  namespace: axiom-system
+  namespace: machinenativeops
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: super-agent
-  namespace: axiom-system
+  namespace: machinenativeops
   labels:
     app: super-agent
     component: control-plane
@@ -91,7 +91,7 @@ spec:
         fsGroup: 1000
       containers:
       - name: super-agent
-        image: axiom-system/super-agent:v1.0.0
+        image: machinenativeops/super-agent:v1.0.0
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8080
@@ -178,7 +178,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: super-agent
-  namespace: axiom-system
+  namespace: machinenativeops
   labels:
     app: super-agent
     component: control-plane
@@ -204,7 +204,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: super-agent-headless
-  namespace: axiom-system
+  namespace: machinenativeops
   labels:
     app: super-agent
 spec:
@@ -220,7 +220,7 @@ apiVersion: policy/v1
 kind: PodDisruptionBudget
 metadata:
   name: super-agent-pdb
-  namespace: axiom-system
+  namespace: machinenativeops
 spec:
   minAvailable: 1
   selector:
@@ -231,7 +231,7 @@ apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
   name: super-agent-hpa
-  namespace: axiom-system
+  namespace: machinenativeops
 spec:
   scaleTargetRef:
     apiVersion: apps/v1

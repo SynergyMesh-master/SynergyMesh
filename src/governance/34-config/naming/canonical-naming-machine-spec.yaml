@@ -53,7 +53,7 @@ required_labels:
   - tenant
   - app.kubernetes.io/managed-by
 
-urn_template: "urn:axiom:{domain}:{component}:env:{environment}:{version}"
+urn_template: "urn:machinenativeops:{domain}:{component}:env:{environment}:{version}"
 segment_mapping:
   domain: "{domain}"
   component: "{component}"
@@ -62,11 +62,11 @@ segment_mapping:
   version: "{version}"
   suffix: "suffix_map.*"
 segment_mapping_notes:
-  region: "region values are stored under annotations key axiom.io/qualifiers as region=<value>"
+  region: "region values are stored under annotations key machinenativeops.io/qualifiers as region=<value>"
   suffix: "suffix resolution uses suffix_map entries when present"
 annotations:
-  canonical_urn: "axiom.io/canonical-urn"
-  qualifiers: "axiom.io/qualifiers"
+  canonical_urn: "machinenativeops.io/canonical-urn"
+  qualifiers: "machinenativeops.io/qualifiers"
 
 validation:
   gatekeeper:

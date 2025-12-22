@@ -81,7 +81,7 @@ vocabulary_scanner:
         - "(?i)island[-_]?ai"
         - "(?i)synergy[-_]?mesh"
       mapping:
-        "axiom-system": "machinenativeops"
+        "machinenativeops": "machinenativeops"
         "axiom_system": "machinenativeops"
         "unmanned-island": "machinenativeops"
         "unmanned_island": "machinenativeops"

@@ -98,7 +98,7 @@ class NamespaceValidator:
             'NS-004': {
                 'description': 'No legacy axiom namespace references allowed',
                 'severity': Severity.ERROR,
-                'forbidden_pattern': r'\baxiom\.io/|\bAxiom[A-Z]|urn:axiom:',
+                'forbidden_pattern': r'\baxiom\.io/|\bAxiom[A-Z]|urn:machinenativeops:',
                 'suggestion': 'Replace axiom references with machinenativeops'
             },
             'NS-005': {
@@ -119,7 +119,7 @@ class NamespaceValidator:
                 'description': 'ETCD cluster must be super-agent-etcd-cluster',
                 'severity': Severity.ERROR,
                 'pattern': r'super-agent-etcd-cluster',
-                'forbidden_pattern': r'axiom-etcd-cluster',
+                'forbidden_pattern': r'machinenativeops-etcd-cluster',
                 'suggestion': 'Use "super-agent-etcd-cluster"'
             },
             'NS-008': {

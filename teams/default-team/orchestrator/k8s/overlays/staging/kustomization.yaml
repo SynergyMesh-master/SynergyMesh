@@ -4,7 +4,7 @@ kind: Kustomization
 resources:
 - ../../base
 
-namespace: axiom-system-staging
+namespace: machinenativeops-staging
 
 namePrefix: staging-
 
@@ -15,7 +15,7 @@ labels:
 
 # Override image tag for staging environment
 images:
-- name: axiom-system/super-agent
+- name: machinenativeops/super-agent
   newTag: v1.0.0-rc
 
 # Use default replicas (2) from base for staging

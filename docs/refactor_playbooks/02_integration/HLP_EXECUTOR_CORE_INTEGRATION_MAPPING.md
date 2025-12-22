@@ -63,7 +63,7 @@
 | 11.2 | Maintenance Procedures | Rolling-restart, State-cleanup | `docs/operations/runbooks/HLP_EXECUTOR_MAINTENANCE.md` | 維護程序手冊 | P1 |
 | 11.3 | SLO Metrics & Monitoring | DAG 解析延遲, RTO, 可用性 | `docs/operations/slo/HLP_EXECUTOR_SLO.md` | SLO 指標文件 | P1 |
 | **12. 依賴管理** | | | | | |
-| 12.1 | Hard Dependencies | axiom-kernel-compute, axiom-bootstrap-core | `config/dependencies.yaml` | 依賴配置（新增 HLP 依賴） | P0 |
+| 12.1 | Hard Dependencies | machinenativeops-kernel-compute, machinenativeops-bootstrap-core | `config/dependencies.yaml` | 依賴配置（新增 HLP 依賴） | P0 |
 | 12.2 | Soft Dependencies | quantum-scheduler (優雅降級) | `config/dependencies.yaml` | 軟依賴配置 | P1 |
 | **13. AI/自動化腳本** | | | | | |
 | 13.1 | DAG Execution Graph Builder | 拓撲排序 + 關鍵路徑分析 | `automation/intelligent/dag_executor.py` | DAG 執行器自動化腳本 | P2 |
@@ -122,7 +122,7 @@
 
 #### Namespace 適配（已完成）
 
-- ✅ **原始**: `axiom-system`
+- ✅ **原始**: `machinenativeops`
 - ✅ **適配**: `unmanned-island-system`
 - ✅ **理由**: 與 Unmanned Island 系統命名約定一致
 
@@ -130,28 +130,28 @@
 
 | 原始依賴 | 適配策略 | 優先級 |
 |---------|---------|--------|
-| `axiom-quantum-runtime` | 映射到 `quantum-scheduler` (Soft Dependency, 優雅降級) | P1 |
-| `axiom-trust-bundle` | 映射到 Unmanned Island 的 trust bundle (ConfigMap) | P0 |
-| `axiom-kernel-compute` | 映射到 `core/` 下的計算模組 | P1 |
-| `axiom-bootstrap-core` | 整合到 `core/unified_integration/` | P1 |
-| `axiom-trace-collector` | 使用標準 OpenTelemetry Collector | P1 |
-| `axiom.io` API Group | 改用 `unmanned-island.io` 或 `machinenativeops.io` | P0 |
+| `machinenativeops-quantum-runtime` | 映射到 `quantum-scheduler` (Soft Dependency, 優雅降級) | P1 |
+| `machinenativeops-trust-bundle` | 映射到 Unmanned Island 的 trust bundle (ConfigMap) | P0 |
+| `machinenativeops-kernel-compute` | 映射到 `core/` 下的計算模組 | P1 |
+| `machinenativeops-bootstrap-core` | 整合到 `core/unified_integration/` | P1 |
+| `machinenativeops-trace-collector` | 使用標準 OpenTelemetry Collector | P1 |
+| `machinenativeops.io` API Group | 改用 `unmanned-island.io` 或 `machinenativeops.io` | P0 |
 
 #### Priority Class 適配
 
-- **原始**: `axiom-critical`
+- **原始**: `machinenativeops-critical`
 - **適配**: `system-cluster-critical` (K8s 標準) 或自定義 `unmanned-island-critical`
 
 #### Image Registry 適配
 
-- **原始**: `registry.local/axiom/`
+- **原始**: `registry.local/machinenativeops/`
 - **適配**: 使用專案實際 registry（例如 `ghcr.io/machinenativeops-admin/`）
 
 #### 路徑與端點適配
 
-- **Trust Bundle**: `/etc/axiom/trust` → `/etc/unmanned-island/trust`
-- **Config**: `/etc/axiom/config` → `/etc/unmanned-island/config`
-- **State Storage**: `/var/lib/axiom/state` → `/var/lib/unmanned-island/state`
+- **Trust Bundle**: `/etc/machinenativeops/trust` → `/etc/unmanned-island/trust`
+- **Config**: `/etc/machinenativeops/config` → `/etc/unmanned-island/config`
+- **State Storage**: `/var/lib/machinenativeops/state` → `/var/lib/unmanned-island/state`
 
 ### 3.2 潛在衝突與解決方案
 
@@ -163,7 +163,7 @@
    - **解決方案**: 將 GPU 改為 Optional，或提供 CPU-only 部署變體
    - **配置**: 在 K8s Deployment 中將 GPU limits 設為註解狀態
 
-3. **Custom API Group**: `axiom.io` API group 可能不存在
+3. **Custom API Group**: `machinenativeops.io` API group 可能不存在
    - **解決方案**: 創建 `unmanned-island.io` API group 或使用標準 K8s resources
    - **替代方案**: 使用 ConfigMap + Annotations 代替 CRD（Phase 1）
 

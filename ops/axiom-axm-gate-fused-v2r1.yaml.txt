@@ -2,10 +2,10 @@
 schema_version: "axiom.baseline.v2"
 schema_type: "BaselineAttestationAndIndex"
 metadata:
-  name: axiom-axm-gate-fused
+  name: machinenativeops-axm-gate-fused
   version: "v2r1-frozen"
   description: "AXIOM × AXM Gate 統合凍結版（分域三層・可重播・SSOT-ready）"
-  bundle_name: "axiom-axm-gate-fused-v2r1.yaml.txt"
+  bundle_name: "machinenativeops-axm-gate-fused-v2r1.yaml.txt"
   generated_at: "2025-10-09T00:00:00Z"
   freeze_status: "freeze-candidate"
 immutable: true
@@ -18,7 +18,7 @@ ssot_hash:
   sha3_512: "<TO_BE_FILLED_BY_PIPELINE>"
   blake3: "<TO_BE_FILLED_BY_PIPELINE>"
 
-baseline_reference: "axiom-global-baseline-v2r1"
+baseline_reference: "machinenativeops-global-baseline-v2r1"
 baseline_hash:
   sha3_512: "<TO_BE_FILLED_BY_PIPELINE>"
   blake3: "<TO_BE_FILLED_BY_PIPELINE>"
@@ -152,10 +152,10 @@ spec:
         blake3: "<TO_BE_FILLED_BY_PIPELINE>"
 
 ---
-apiVersion: axiom.io/v1
+apiVersion: machinenativeops.io/v1
 kind: GateMapping
 metadata:
-  name: axiom-gates-01-48
+  name: machinenativeops-gates-01-48
   description: "AXIOM 01~48 全鏈路門閘映射（YAML 即是代碼）"
 spec:
   defaults:
@@ -473,7 +473,7 @@ spec:
       policy_ref: "policy://naming/urn-uri"
       checks:
         - key: identity.urn.regex
-          expect: '^urn:axiom:module:[a-z0-9\\-]+:v1$'
+          expect: '^urn:machinenativeops:module:[a-z0-9\\-]+:v1$'
       artifacts: {}
       remediation: "修正 URN/URI 以符合平臺規約。"
       exceptions:

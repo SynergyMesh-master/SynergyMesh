@@ -16,7 +16,7 @@ team-dev-platform-us
 ## 標準標籤與 URN
 - 必要標籤：`environment`, `tenant`, `app.kubernetes.io/managed-by`
 - 建議：`namespace.io/domain`, `namespace.io/region`, `namespace.io/team`
-- URN 樣板：`urn:axiom:{domain}:{component}:env:{environment}:{version}`
+- URN 樣板：`urn:machinenativeops:{domain}:{component}:env:{environment}:{version}`
 - 對應：`governance/34-config/naming/canonical-naming-machine-spec.yaml`
 
 ## 配額 (ResourceQuota) 範例
@@ -75,10 +75,10 @@ spec:
    ```bash
    ns=unmanned-island-system
    canon=prod-unmanned-island-system
-   urn="urn:axiom:unmanned-island:system:env:prod:v1"
-   kubectl label ns $ns environment=prod tenant=platform app.kubernetes.io/managed-by=axiom-naming-controller --overwrite
-   kubectl annotate ns $ns axiom.io/canonical-urn=$urn --overwrite
-   kubectl annotate ns $ns axiom.io/qualifiers="region=apac" --overwrite
+   urn="urn:machinenativeops:unmanned-island:system:env:prod:v1"
+   kubectl label ns $ns environment=prod tenant=platform app.kubernetes.io/managed-by=machinenativeops-naming-controller --overwrite
+   kubectl annotate ns $ns machinenativeops.io/canonical-urn=$urn --overwrite
+   kubectl annotate ns $ns machinenativeops.io/qualifiers="region=apac" --overwrite
    kubectl create namespace $canon --dry-run=client -o yaml | kubectl apply -f -
    ```
 3. 更新 GitOps/manifest：將 namespace 欄位換成 canonical 名稱並確保 labels/annotations 一致。

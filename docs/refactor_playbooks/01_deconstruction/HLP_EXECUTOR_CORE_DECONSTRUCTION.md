@@ -49,8 +49,8 @@
 **依賴**:
 
 - `kubernetes-api`
-- `axiom-quantum-runtime`
-- `axiom-trust-bundle`
+- `machinenativeops-quantum-runtime`
+- `machinenativeops-trust-bundle`
 
 ### 2.2 狀態管理模組（State Management）
 
@@ -126,12 +126,12 @@ PENDING → SCHEDULING → EXECUTING → VERIFYING → COMMIT
 
 - Replicas: 3（基本） → 20（最大，HPA）
 - Service Account: `hlp-executor-sa`
-- Priority Class: `axiom-critical`
+- Priority Class: `machinenativeops-critical`
 - Security Context: Non-root (UID 65534)
 
 **容器配置**:
 
-- Image: `registry.local/axiom/hlp-executor-core:v1.0.0@sha256:secure-digest`
+- Image: `registry.local/machinenativeops/hlp-executor-core:v1.0.0@sha256:secure-digest`
 - Ports: 8080 (HTTP), 9090 (Metrics), 50051 (gRPC)
 
 **資源需求**:
@@ -141,9 +141,9 @@ PENDING → SCHEDULING → EXECUTING → VERIFYING → COMMIT
 
 ### 3.2 Volume 掛載
 
-- **trust-bundle**: `/etc/axiom/trust` (ReadOnly)
-- **config**: `/etc/axiom/config` (ReadOnly)
-- **state-storage**: `/var/lib/axiom/state` (PVC)
+- **trust-bundle**: `/etc/machinenativeops/trust` (ReadOnly)
+- **config**: `/etc/machinenativeops/config` (ReadOnly)
+- **state-storage**: `/var/lib/machinenativeops/state` (PVC)
 
 ### 3.3 健康檢查
 
@@ -163,13 +163,13 @@ PENDING → SCHEDULING → EXECUTING → VERIFYING → COMMIT
 - Core API: pods, services, configmaps (CRUD)
 - Apps API: deployments, replicasets (CRUD except delete)
 - Batch API: jobs, cronjobs (CRUD)
-- Custom API (axiom.io): quantumjobs, executionplans (全權限)
+- Custom API (machinenativeops.io): quantumjobs, executionplans (全權限)
 
 ### 4.2 Network Policies
 
 **Ingress**:
 
-- 允許來源: `unmanned-island-system` namespace + `axiom-kernel` pod
+- 允許來源: `unmanned-island-system` namespace + `machinenativeops-kernel` pod
 - 允許端口: 8080 (TCP), 50051 (TCP)
 
 **Egress**:
@@ -187,7 +187,7 @@ PENDING → SCHEDULING → EXECUTING → VERIFYING → COMMIT
 - SBOM Format: SPDX-JSON
 - Vulnerability Scanning: Block Critical/High
 - SLSA Level: 3
-- Build Platform: axiom-secure-build
+- Build Platform: machinenativeops-secure-build
 
 ### 4.4 Compliance
 
@@ -219,7 +219,7 @@ PENDING → SCHEDULING → EXECUTING → VERIFYING → COMMIT
 
 - **OpenTelemetry**: 啟用
 - **Sampling Rate**: 0.1 (10%)
-- **Exporters**: Jaeger, axiom-trace-collector
+- **Exporters**: Jaeger, machinenativeops-trace-collector
 
 ---
 
@@ -260,7 +260,7 @@ PENDING → SCHEDULING → EXECUTING → VERIFYING → COMMIT
 
 - **Prometheus**: `prometheus.unmanned-island-system.svc.cluster.local:9090`
 - **Grafana**: `grafana.unmanned-island-system.svc.cluster.local:3000`
-- **Trace Collector**: `axiom-trace-collector.unmanned-island-system.svc.cluster.local:14268`
+- **Trace Collector**: `machinenativeops-trace-collector.unmanned-island-system.svc.cluster.local:14268`
 
 ---
 
@@ -334,8 +334,8 @@ PENDING → SCHEDULING → EXECUTING → VERIFYING → COMMIT
 
 ### 10.1 Hard Dependencies
 
-- `axiom-kernel-compute` (>= 1.0.0)
-- `axiom-bootstrap-core` (>= 1.0.0)
+- `machinenativeops-kernel-compute` (>= 1.0.0)
+- `machinenativeops-bootstrap-core` (>= 1.0.0)
 
 ### 10.2 Soft Dependencies
 

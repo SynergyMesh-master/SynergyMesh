@@ -41,7 +41,7 @@ Created minimal necessary subdirectories following surgical precision principle:
 
 - `docs/refactor_playbooks/02_integration/k8s/` - K8s integration resources
 - `docs/refactor_playbooks/03_refactor/quantum/` - Quantum orchestration
-- `docs/refactor_playbooks/03_refactor/axiom/` - Axiom architecture
+- `docs/refactor_playbooks/03_refactor/machinenativeops/` - Axiom architecture
 - `docs/refactor_playbooks/03_refactor/kg-builder/` - Knowledge graph builder
 - `docs/refactor_playbooks/03_refactor/misc/` - Miscellaneous refactoring
 
@@ -61,7 +61,7 @@ Created minimal necessary subdirectories following surgical precision principle:
 6. `baseline-06-quantum-orchestration.v1.0.yaml` - Quantum orchestration
 7. `l1-integration-guide.v1.0.md` - L1 integration guide
 
-**Axiom Architecture (5 files → `03_refactor/axiom/`):**
+**Axiom Architecture (5 files → `03_refactor/machinenativeops/`):**
 8. `axiom_pr_execution_script.txt` - PR execution script
 9. `axiom_governance_foundation.txt` - Governance foundation
 10. `axiom_complete_architecture.txt` - Complete architecture
@@ -93,11 +93,11 @@ The following files contain logic/skills/tools that should be embedded into exis
    - Action: Extract validation logic and integrate into quantum orchestration
 
 3. **axiom_pr_test_suite.py (1).txt** → Embed into axiom test suite
-   - Location: `03_refactor/axiom/`
+   - Location: `03_refactor/machinenativeops/`
    - Action: Extract test logic and integrate into axiom testing framework
 
 4. **axiom_pr_workflow (1).txt** → Embed into axiom workflow
-   - Location: `03_refactor/axiom/`
+   - Location: `03_refactor/machinenativeops/`
    - Action: Extract workflow logic and integrate into axiom orchestration
 
 5. **axiom_pr_rules_automation (1).txt** → Embed into automation rules
@@ -138,7 +138,7 @@ The following files contain logic/skills/tools that should be embedded into exis
 |----------------|------------|-----------------|---------|
 | K8s Baselines | 3 | `02_integration/k8s/` | Kubernetes integration resources |
 | Quantum Orchestration | 4 | `03_refactor/quantum/` | Quantum system orchestration |
-| Axiom Architecture | 5 | `03_refactor/axiom/` | Axiom system architecture |
+| Axiom Architecture | 5 | `03_refactor/machinenativeops/` | Axiom system architecture |
 | Naming Governance | 3 | `03_refactor/kg-builder/` | Knowledge graph naming standards |
 | Namespace Design | 5 | `03_refactor/misc/` | Namespace documentation |
 | Embedded Logic | 7 | Various | Logic to be extracted and embedded |
@@ -163,7 +163,7 @@ The following files contain logic/skills/tools that should be embedded into exis
 
 - Grouped related assets by functional domain
 - Separated integration resources from refactoring resources
-- Isolated quantum/axiom/kg-builder as distinct concerns
+- Isolated quantum/machinenativeops/kg-builder as distinct concerns
 
 ### 4. **Duplication Prevention**
 
@@ -260,7 +260,7 @@ The following files contain logic/skills/tools that should be embedded into exis
 
 - `docs/refactor_playbooks/02_integration/k8s/` (3 YAML files)
 - `docs/refactor_playbooks/03_refactor/quantum/` (3 YAML + 1 MD file)
-- `docs/refactor_playbooks/03_refactor/axiom/` (5 TXT files)
+- `docs/refactor_playbooks/03_refactor/machinenativeops/` (5 TXT files)
 - `docs/refactor_playbooks/03_refactor/kg-builder/` (3 DOCX files)
 - `docs/refactor_playbooks/03_refactor/misc/` (5 MD/DOCX files)
 

@@ -38,8 +38,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `app.kubernetes.io/managed-by`: 管理工具標識
 
 - **URN/URI 映射機制**:
-  - URN 格式: `urn:axiom:{domain}:{component}:env:{environment}:{version}`
-  - Annotation Key: `axiom.io/canonical-urn`
+  - URN 格式: `urn:machinenativeops:{domain}:{component}:env:{environment}:{version}`
+  - Annotation Key: `machinenativeops.io/canonical-urn`
   - 所有 Namespace 必須包含 URN annotation
 
 - **驗證規則**:

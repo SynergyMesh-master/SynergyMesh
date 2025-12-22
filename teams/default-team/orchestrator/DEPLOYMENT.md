@@ -31,7 +31,7 @@ k8s/
 
 ### Development (dev)
 
-- **Namespace**: `axiom-system-dev`
+- **Namespace**: `machinenativeops-dev`
 - **Image Tag**: `dev-latest`
 - **Replicas**: 1
 - **Log Level**: DEBUG
@@ -41,7 +41,7 @@ k8s/
 
 ### Staging (staging)
 
-- **Namespace**: `axiom-system-staging`
+- **Namespace**: `machinenativeops-staging`
 - **Image Tag**: `v1.0.0-rc` (release candidate)
 - **Replicas**: 2
 - **Log Level**: INFO
@@ -51,7 +51,7 @@ k8s/
 
 ### Production (prod)
 
-- **Namespace**: `axiom-system`
+- **Namespace**: `machinenativeops`
 - **Image Tag**: `v1.0.0` (stable release)
 - **Replicas**: 3
 - **Log Level**: WARN
@@ -123,7 +123,7 @@ To update the image version for a specific environment, edit the corresponding o
 ```yaml
 # k8s/overlays/prod/kustomization.yaml
 images:
-- name: axiom-system/super-agent
+- name: machinenativeops/super-agent
   newTag: v1.1.0  # Change this to the new version
 ```
 
@@ -136,7 +136,7 @@ Then redeploy:
 ```yaml
 # k8s/overlays/staging/kustomization.yaml
 images:
-- name: axiom-system/super-agent
+- name: machinenativeops/super-agent
   newTag: v1.1.0-rc  # Update to new release candidate
 ```
 
@@ -144,7 +144,7 @@ images:
 ```yaml
 # k8s/overlays/dev/kustomization.yaml
 images:
-- name: axiom-system/super-agent
+- name: machinenativeops/super-agent
   newTag: dev-latest  # Usually kept as latest or specific dev build
 ```
 
@@ -160,42 +160,42 @@ images:
 
 ```bash
 # For dev
-kubectl get pods -n axiom-system-dev -l app.kubernetes.io/name=super-agent
-kubectl get deploy -n axiom-system-dev dev-super-agent
+kubectl get pods -n machinenativeops-dev -l app.kubernetes.io/name=super-agent
+kubectl get deploy -n machinenativeops-dev dev-super-agent
 
 # For staging
-kubectl get pods -n axiom-system-staging -l app.kubernetes.io/name=super-agent
-kubectl get deploy -n axiom-system-staging staging-super-agent
+kubectl get pods -n machinenativeops-staging -l app.kubernetes.io/name=super-agent
+kubectl get deploy -n machinenativeops-staging staging-super-agent
 
 # For prod
-kubectl get pods -n axiom-system -l app.kubernetes.io/name=super-agent
-kubectl get deploy -n axiom-system super-agent
+kubectl get pods -n machinenativeops -l app.kubernetes.io/name=super-agent
+kubectl get deploy -n machinenativeops super-agent
 ```
 
 ### View Logs
 
 ```bash
 # Dev
-kubectl logs -n axiom-system-dev -l app.kubernetes.io/name=super-agent -f
+kubectl logs -n machinenativeops-dev -l app.kubernetes.io/name=super-agent -f
 
 # Staging
-kubectl logs -n axiom-system-staging -l app.kubernetes.io/name=super-agent -f
+kubectl logs -n machinenativeops-staging -l app.kubernetes.io/name=super-agent -f
 
 # Prod
-kubectl logs -n axiom-system -l app.kubernetes.io/name=super-agent -f
+kubectl logs -n machinenativeops -l app.kubernetes.io/name=super-agent -f
 ```
 
 ### Port Forward and Test
 
 ```bash
 # Dev
-kubectl port-forward -n axiom-system-dev svc/dev-super-agent 8080:8080
+kubectl port-forward -n machinenativeops-dev svc/dev-super-agent 8080:8080
 
 # Staging
-kubectl port-forward -n axiom-system-staging svc/staging-super-agent 8080:8080
+kubectl port-forward -n machinenativeops-staging svc/staging-super-agent 8080:8080
 
 # Prod
-kubectl port-forward -n axiom-system svc/super-agent 8080:8080
+kubectl port-forward -n machinenativeops svc/super-agent 8080:8080
 
 # Then test
 python3 test_super_agent.py http://localhost:8080
@@ -230,11 +230,11 @@ kustomize build k8s/overlays/prod
 
 ```bash
 # Rollback to previous version in prod
-kubectl rollout undo deployment/super-agent -n axiom-system
+kubectl rollout undo deployment/super-agent -n machinenativeops
 
 # Rollback to specific revision
-kubectl rollout history deployment/super-agent -n axiom-system
-kubectl rollout undo deployment/super-agent -n axiom-system --to-revision=2
+kubectl rollout history deployment/super-agent -n machinenativeops
+kubectl rollout undo deployment/super-agent -n machinenativeops --to-revision=2
 ```
 
 ### Using Git
@@ -313,7 +313,7 @@ docker images | grep super-agent
 Build if needed:
 
 ```bash
-docker build -t axiom-system/super-agent:v1.0.0 .
+docker build -t machinenativeops/super-agent:v1.0.0 .
 ```
 
 ### Deployment Not Starting
@@ -321,13 +321,13 @@ docker build -t axiom-system/super-agent:v1.0.0 .
 Check pod events:
 
 ```bash
-kubectl describe pod -n axiom-system -l app.kubernetes.io/name=super-agent
+kubectl describe pod -n machinenativeops -l app.kubernetes.io/name=super-agent
 ```
 
 Check logs:
 
 ```bash
-kubectl logs -n axiom-system -l app.kubernetes.io/name=super-agent --tail=50
+kubectl logs -n machinenativeops -l app.kubernetes.io/name=super-agent --tail=50
 ```
 
 ## CI/CD Integration
@@ -362,7 +362,7 @@ spec:
     path: agents/super-agent/k8s/overlays/prod
   destination:
     server: https://kubernetes.default.svc
-    namespace: axiom-system
+    namespace: machinenativeops
 ```
 
 ## Additional Resources

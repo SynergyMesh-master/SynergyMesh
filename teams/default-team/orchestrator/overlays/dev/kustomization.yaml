@@ -5,7 +5,7 @@ resources:
 - ../../base
 - namespace.yaml
 
-namespace: axiom-system-dev
+namespace: machinenativeops-dev
 
 # Add prefix to avoid ClusterRole/ClusterRoleBinding conflicts when deploying multiple environments
 namePrefix: dev-
@@ -20,5 +20,5 @@ replicas:
   count: 1
 
 images:
-- name: axiom-system/super-agent
+- name: machinenativeops/super-agent
   newTag: dev-latest

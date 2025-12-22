@@ -286,7 +286,7 @@ directory_mapping:
   vocabulary_mapping:
     # 命名空間映射
     namespaces:
-      "axiom-system": "machinenativeops"
+      "machinenativeops": "machinenativeops"
       "unmanned-island": "machinenativeops"
       "src/ai": "src/ai"
 

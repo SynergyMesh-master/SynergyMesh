@@ -72,10 +72,10 @@ tool_verification_matrix:
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: axiom-verified
+  name: machinenativeops-verified
   labels:
-    name: axiom-verified
-    app.kubernetes.io/managed-by: axiom-platform
+    name: machinenativeops-verified
+    app.kubernetes.io/managed-by: machinenativeops-platform
   annotations:
     description: "AXIOM 平台驗證環境 - 僅使用真實工具"
 
@@ -84,7 +84,7 @@ metadata:
 apiVersion: kyverno.io/v1
 kind: ClusterPolicy
 metadata:
-  name: axiom-verified-require-labels
+  name: machinenativeops-verified-require-labels
 spec:
   validationFailureAction: Enforce
   background: true
@@ -94,7 +94,7 @@ spec:
         any:
           - resources:
               kinds: ["Pod", "Deployment", "Service"]
-              namespaces: ["axiom-verified"]
+              namespaces: ["machinenativeops-verified"]
       validate:
         message: "所有資源必須包含 app 和 version 標籤"
         pattern:
@@ -109,7 +109,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: harbor-core
-  namespace: axiom-verified
+  namespace: machinenativeops-verified
 spec:
   replicas: 1
   selector:
@@ -143,7 +143,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: prometheus
-  namespace: axiom-verified
+  namespace: machinenativeops-verified
 spec:
   replicas: 1
   selector:
@@ -181,7 +181,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: trivy-scanner
-  namespace: axiom-verified
+  namespace: machinenativeops-verified
 spec:
   replicas: 1
   selector:
@@ -214,7 +214,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: quantum-service-verified
-  namespace: axiom-verified
+  namespace: machinenativeops-verified
 spec:
   replicas: 1
   selector:
@@ -251,17 +251,17 @@ spec:
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: axiom-verified-app
+  name: machinenativeops-verified-app
   namespace: argocd
 spec:
   project: default
   source:
-    repoURL: https://github.com/your-org/axiom-configs
+    repoURL: https://github.com/your-org/machinenativeops-configs
     targetRevision: main
     path: verified-configs
   destination:
     server: https://kubernetes.default.svc
-    namespace: axiom-verified
+    namespace: machinenativeops-verified
   syncPolicy:
     automated:
       prune: true
@@ -273,7 +273,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: opa-policies-verified
-  namespace: axiom-verified
+  namespace: machinenativeops-verified
 data:
   # 100% 真實的 Rego 語法
   security.rego: |
@@ -302,8 +302,8 @@ data:
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: axiom-verified-netpol
-  namespace: axiom-verified
+  name: machinenativeops-verified-netpol
+  namespace: machinenativeops-verified
 spec:
   podSelector:
     matchLabels:
@@ -333,7 +333,7 @@ spec:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  namespace: axiom-verified
+  namespace: machinenativeops-verified
   name: quantum-operator
 rules:
   - apiGroups: [""]
@@ -348,7 +348,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: quantum-operator-binding
-  namespace: axiom-verified
+  namespace: machinenativeops-verified
 subjects:
   - kind: User
     name: quantum-engineer@axiom.com
