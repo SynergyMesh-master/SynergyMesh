@@ -9,6 +9,7 @@ Manages versioning for compatibility:
 Ensures backwards compatibility during upgrades.
 """
 
+import functools
 import logging
 import re
 from dataclasses import dataclass, field
