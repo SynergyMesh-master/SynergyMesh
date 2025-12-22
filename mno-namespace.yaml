@@ -1,3 +1,322 @@
+# ═══════════════════════════════════════════════════════════════════════════════
+#                    MachineNativeOps Namespace Configuration
+#                    命名空間配置 - 統一命名標準
+# ═══════════════════════════════════════════════════════════════════════════════
+#
+# Version: 1.0.0
+# Purpose: Define and enforce MachineNativeOps namespace standards across all systems
+# Updated: 2025-12-22
+# ═══════════════════════════════════════════════════════════════════════════════
+
+apiVersion: machinenativeops.io/v1
+kind: NamespaceConfig
+metadata:
+  name: mno-namespace-config
+  namespace: machinenativeops
+  labels:
+    machinenativeops.io/tier: "core"
+    machinenativeops.io/version: "v1.0.0"
+    machinenativeops.io/component: "namespace"
+  annotations:
+    machinenativeops.io/description: "Unified namespace configuration for MachineNativeOps platform"
+    machinenativeops.io/enforcement: "strict"
+    machinenativeops.io/last-modified: "2025-12-22T06:40:00Z"
+
+spec:
+  version: 1
+  
+  # ============================================================================
+  # Core Namespace Definitions (核心命名空間定義)
+  # ============================================================================
+  namespaces:
+    primary:
+      name: "machinenativeops"
+      description: "Primary namespace for all MachineNativeOps resources"
+      scope: "global"
+      
+    subspaces:
+      - name: "machinenativeops-specs"
+        description: "Specifications and schemas"
+        parent: "machinenativeops"
+      
+      - name: "machinenativeops-modules"
+        description: "Core modules and services"
+        parent: "machinenativeops"
+      
+      - name: "machinenativeops-agents"
+        description: "Agent configurations and policies"
+        parent: "machinenativeops"
+      
+      - name: "machinenativeops-monitoring"
+        description: "Monitoring and observability"
+        parent: "machinenativeops"
+      
+      - name: "machinenativeops-security"
+        description: "Security and compliance"
+        parent: "machinenativeops"
+
+  # ============================================================================
+  # Domain Standards (域名標準)
+  # ============================================================================
+  domains:
+    primary: "machinenativeops.io"
+    aliases:
+      - "mno.io"
+      - "machinenative.io"
+    
+    registry:
+      host: "registry.machinenativeops.io"
+      protocol: "https"
+      port: 443
+      mirrors:
+        - "registry.mno.io"
+        - "ghcr.io/machinenativeops"
+    
+    api:
+      host: "api.machinenativeops.io"
+      versions:
+        - "v1"
+        - "v2"
+      endpoints:
+        health: "/health"
+        metrics: "/metrics"
+        status: "/status"
+
+  # ============================================================================
+  # Kubernetes Integration (Kubernetes 整合)
+  # ============================================================================
+  kubernetes:
+    namespace: "machinenativeops"
+    labels:
+      app.kubernetes.io/name: "machinenativeops"
+      app.kubernetes.io/instance: "{{ .Release.Name }}"
+      app.kubernetes.io/version: "{{ .Chart.AppVersion }}"
+      app.kubernetes.io/managed-by: "{{ .Release.Service }}"
+      machinenativeops.io/tier: "{{ .Values.tier }}"
+    
+    annotations:
+      machinenativeops.io/namespace: "machinenativeops"
+      machinenativeops.io/managed: "true"
+    
+    service_account:
+      name: "machinenativeops-sa"
+      namespace: "machinenativeops"
+
+  # ============================================================================
+  # File System Paths (檔案系統路徑)
+  # ============================================================================
+  filesystem:
+    base_path: "/opt/machinenativeops"
+    
+    directories:
+      config: "/etc/machinenativeops"
+      certificates: "/etc/machinenativeops/pkl"
+      data: "/var/lib/machinenativeops"
+      logs: "/var/log/machinenativeops"
+      cache: "/var/cache/machinenativeops"
+      tmp: "/tmp/machinenativeops"
+    
+    files:
+      config: "/etc/machinenativeops/config.yaml"
+      namespace: "/etc/machinenativeops/namespace.yaml"
+      certificates:
+        ca: "/etc/machinenativeops/pkl/ca.crt"
+        cert: "/etc/machinenativeops/pkl/tls.crt"
+        key: "/etc/machinenativeops/pkl/tls.key"
+
+  # ============================================================================
+  # ETCD Configuration (ETCD 配置)
+  # ============================================================================
+  etcd:
+    cluster_name: "super-agent-etcd-cluster"
+    namespace_prefix: "machinenativeops"
+    
+    endpoints:
+      - "https://etcd-0.super-agent-etcd-cluster.machinenativeops.svc.cluster.local:2379"
+      - "https://etcd-1.super-agent-etcd-cluster.machinenativeops.svc.cluster.local:2379"
+      - "https://etcd-2.super-agent-etcd-cluster.machinenativeops.svc.cluster.local:2379"
+    
+    paths:
+      config: "/machinenativeops/config"
+      modules: "/machinenativeops/modules"
+      agents: "/machinenativeops/agents"
+      state: "/machinenativeops/state"
+      locks: "/machinenativeops/locks"
+    
+    authentication:
+      enabled: true
+      cert_file: "/etc/machinenativeops/pkl/etcd-client.crt"
+      key_file: "/etc/machinenativeops/pkl/etcd-client.key"
+      ca_file: "/etc/machinenativeops/pkl/ca.crt"
+
+  # ============================================================================
+  # Container Registry (容器鏡像倉庫)
+  # ============================================================================
+  registry:
+    host: "registry.machinenativeops.io"
+    organization: "machinenativeops"
+    
+    repositories:
+      core:
+        - "machinenativeops/core"
+        - "machinenativeops/agent"
+        - "machinenativeops/mcp-server"
+      
+      monitoring:
+        - "machinenativeops/prometheus"
+        - "machinenativeops/grafana"
+        - "machinenativeops/alertmanager"
+      
+      security:
+        - "machinenativeops/scanner"
+        - "machinenativeops/validator"
+    
+    tagging_strategy:
+      pattern: "{{ .Version }}-{{ .BuildDate }}"
+      latest: true
+      semantic_versioning: true
+
+  # ============================================================================
+  # Naming Conventions (命名規範)
+  # ============================================================================
+  naming_conventions:
+    resource_types:
+      deployment: "{{ .Component }}-deployment"
+      service: "{{ .Component }}-service"
+      configmap: "{{ .Component }}-config"
+      secret: "{{ .Component }}-secret"
+      ingress: "{{ .Component }}-ingress"
+    
+    labels:
+      app: "machinenativeops"
+      component: "{{ .Component }}"
+      tier: "{{ .Tier }}"
+      version: "{{ .Version }}"
+    
+    annotations:
+      managed_by: "machinenativeops.io/managed-by"
+      version: "machinenativeops.io/version"
+      namespace: "machinenativeops.io/namespace"
+
+  # ============================================================================
+  # API Versioning (API 版本控制)
+  # ============================================================================
+  api_versioning:
+    current: "v1"
+    supported:
+      - version: "v1"
+        deprecated: false
+        sunset_date: null
+      - version: "v2"
+        deprecated: false
+        sunset_date: null
+    
+    format: "machinenativeops.io/{{ .Version }}"
+    
+    compatibility:
+      backward_compatible: true
+      forward_compatible: false
+
+  # ============================================================================
+  # Migration Rules (遷移規則)
+  # ============================================================================
+  migration:
+    legacy_namespaces:
+      - from: "axiom"
+        to: "machinenativeops"
+        auto_convert: true
+      - from: "axiom.io"
+        to: "machinenativeops.io"
+        auto_convert: true
+      - from: "AxiomGlobalBaseline"
+        to: "MachineNativeOpsGlobalBaseline"
+        auto_convert: true
+    
+    conversion_rules:
+      - pattern: "^axiom\\.io/v(\\d+)$"
+        replacement: "machinenativeops.io/v$1"
+        scope: "api_version"
+      
+      - pattern: "^urn:axiom:(.*)$"
+        replacement: "urn:machinenativeops:$1"
+        scope: "urn"
+      
+      - pattern: "^axiom-(.*)$"
+        replacement: "machinenativeops-$1"
+        scope: "resource_name"
+
+  # ============================================================================
+  # Validation Rules (驗證規則)
+  # ============================================================================
+  validation:
+    enabled: true
+    strict_mode: true
+    
+    rules:
+      - id: "NS-001"
+        description: "All resources must use machinenativeops namespace"
+        severity: "error"
+        pattern: "^machinenativeops"
+      
+      - id: "NS-002"
+        description: "API versions must follow domain/version format"
+        severity: "error"
+        pattern: "^machinenativeops\\.io/v\\d+$"
+      
+      - id: "NS-003"
+        description: "Resource names must use kebab-case"
+        severity: "error"
+        pattern: "^[a-z][a-z0-9-]*[a-z0-9]$"
+      
+      - id: "NS-004"
+        description: "No legacy axiom namespace references allowed"
+        severity: "error"
+        pattern: "^(?!.*axiom).*$"
+    
+    auto_fix:
+      enabled: false
+      dry_run: true
+
+  # ============================================================================
+  # Enforcement (執行策略)
+  # ============================================================================
+  enforcement:
+    level: "strict"
+    gates:
+      - name: "namespace-validation"
+        type: "pre-commit"
+        enabled: true
+      
+      - name: "api-version-check"
+        type: "pre-merge"
+        enabled: true
+      
+      - name: "resource-naming"
+        type: "ci"
+        enabled: true
+    
+    exceptions:
+      - resource: "legacy-migration-*"
+        reason: "Temporary exception during migration"
+        expires: "2026-01-31"
+
+# ============================================================================
+# Status (狀態)
+# ============================================================================
+status:
+  phase: "Active"
+  conditions:
+    - type: "Validated"
+      status: "True"
+      last_transition_time: "2025-12-22T06:40:00Z"
+      reason: "ConfigurationComplete"
+      message: "Namespace configuration is complete and active"
+  
+  statistics:
+    total_namespaces: 6
+    total_rules: 4
+    migration_paths: 3
+    enforcement_gates: 3
 ---
 # MachineNativeOps Namespace Configuration
 # 機器原生運維命名空間配置
