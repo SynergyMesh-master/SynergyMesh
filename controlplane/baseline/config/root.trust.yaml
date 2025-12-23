@@ -1,0 +1,59 @@
+# Root Trust Configuration
+# 信任配置
+
+apiVersion: machinenativeops.io/v2
+kind: MachineNativeOpsGlobalBaseline
+metadata:
+  name: root-trust
+  namespace: machinenativenops
+  labels:
+    machinenativeops.io/component: controlplane
+    machinenativeops.io/layer: baseline
+    machinenativeops.io/type: trust
+  annotations:
+    machinenativeops.io/description: "Root trust configuration"
+    machinenativeops.io/version: "v1.0.0"
+    machinenativeops.io/immutable: "true"
+
+spec:
+  # 信任根
+  trustRoots:
+    - name: "machinenativeops-ca"
+      type: "certificate"
+      path: "etc/machinenativeops/pki/ca.crt"
+      algorithm: "RSA-4096"
+    
+    - name: "github-verified"
+      type: "identity"
+      provider: "github.com"
+      organization: "MachineNativeOps"
+  
+  # 簽名驗證
+  signatureVerification:
+    enabled: true
+    algorithm: "ed25519"
+    requiredSigners: 1
+    
+    trustedSigners:
+      - name: "ci-cd-bot"
+        publicKey: "etc/machinenativeops/pki/ci-cd.pub"
+      - name: "admin"
+        publicKey: "etc/machinenativeops/pki/admin.pub"
+  
+  # 證書管理
+  certificates:
+    autoRenew: true
+    renewBefore: 30  # days
+    storage: "etc/machinenativeops/pki"
+  
+  # 信任策略
+  trustPolicy:
+    baseline:
+      requireSignature: true
+      requireVerification: true
+      allowSelfSigned: false
+    
+    overlay:
+      requireSignature: false
+      requireVerification: true
+      allowSelfSigned: true

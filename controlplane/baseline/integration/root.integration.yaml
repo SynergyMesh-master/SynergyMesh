@@ -1,0 +1,212 @@
+# Root Integration Configuration
+# Immutable baseline integration rules for cross-component coordination
+# Part of: controlplane/baseline (read-only governance truth)
+
+metadata:
+  integration_type: root_coordination
+  namespace: root
+  version: "1.0.0"
+  immutable: true
+  description: "Canonical integration rules for root namespace components"
+
+# Integration Points Between Components
+integration_points:
+  
+  # Config <-> Specifications Integration
+  config_specs:
+    description: "Configuration must align with specifications"
+    validation:
+      - "All config files must reference valid spec definitions"
+      - "Naming policies in config must match naming specs"
+      - "Trust policies must align with governance specs"
+    enforcement: strict
+    
+  # Modules <-> Devices Integration
+  modules_devices:
+    description: "Module loading must respect device requirements"
+    validation:
+      - "Modules can only access registered devices"
+      - "Device permissions must align with module trust levels"
+      - "Module dependencies must be satisfied before device access"
+    enforcement: strict
+    
+  # Governance <-> Trust Integration
+  governance_trust:
+    description: "Governance policies must align with trust model"
+    validation:
+      - "Trust levels must match governance classifications"
+      - "Provenance tracking required for all governed components"
+      - "Integrity checks must align with trust requirements"
+    enforcement: strict
+    
+  # Naming <-> Registry Integration
+  naming_registry:
+    description: "All registered items must follow naming policies"
+    validation:
+      - "Module names must match naming policy patterns"
+      - "Device names must follow device naming conventions"
+      - "Registry entries must use canonical names"
+    enforcement: strict
+
+# Cross-Component Validation Rules
+cross_validation:
+  
+  module_loading:
+    description: "Module loading requires multiple component checks"
+    required_checks:
+      - check: "Module exists in registry"
+        component: "registries/root.registry.modules.yaml"
+      - check: "Module name follows policy"
+        component: "config/root.naming-policy.yaml"
+      - check: "Module meets trust requirements"
+        component: "config/root.trust.yaml"
+      - check: "Module provenance verified"
+        component: "config/root.provenance.yaml"
+    failure_action: "reject_load"
+    
+  device_access:
+    description: "Device access requires permission validation"
+    required_checks:
+      - check: "Device exists in registry"
+        component: "registries/root.registry.devices.yaml"
+      - check: "Device mapped correctly"
+        component: "config/root.devices.map"
+      - check: "Access meets governance requirements"
+        component: "config/root.governance.yaml"
+    failure_action: "deny_access"
+    
+  kernel_operation:
+    description: "Kernel operations require comprehensive validation"
+    required_checks:
+      - check: "Kernel module registered"
+        component: "config/root.kernel.map"
+      - check: "Module in trusted registry"
+        component: "registries/root.registry.modules.yaml"
+      - check: "Integrity verified"
+        component: "config/root.integrity.yaml"
+      - check: "Super execution authorized"
+        component: "config/root.super-execution.yaml"
+    failure_action: "block_operation"
+
+# Data Flow Integration
+data_flows:
+  
+  bootstrap_flow:
+    description: "System bootstrap integration sequence"
+    sequence:
+      - step: 1
+        action: "Load root.config.yaml"
+        validates: "System configuration baseline"
+      - step: 2
+        action: "Load root.specs.*.yaml"
+        validates: "Specification compliance"
+      - step: 3
+        action: "Load registries"
+        validates: "Component registration"
+      - step: 4
+        action: "Apply governance policies"
+        validates: "Policy enforcement"
+      - step: 5
+        action: "Enable integrity checking"
+        validates: "System integrity"
+    
+  runtime_flow:
+    description: "Runtime operation integration"
+    sequence:
+      - step: 1
+        action: "Check naming policy"
+        component: "config/root.naming-policy.yaml"
+      - step: 2
+        action: "Verify trust level"
+        component: "config/root.trust.yaml"
+      - step: 3
+        action: "Validate against specs"
+        component: "specifications/"
+      - step: 4
+        action: "Check registry"
+        component: "registries/"
+      - step: 5
+        action: "Apply governance"
+        component: "config/root.governance.yaml"
+      - step: 6
+        action: "Record provenance"
+        component: "config/root.provenance.yaml"
+
+# Integration Constraints
+constraints:
+  
+  immutability:
+    description: "Baseline components are immutable"
+    rules:
+      - "No runtime modification of baseline files"
+      - "All changes must go through overlay"
+      - "Active view is read-only synthesis"
+    enforcement: "filesystem_permissions"
+    
+  consistency:
+    description: "Cross-component consistency required"
+    rules:
+      - "Registry entries must match config definitions"
+      - "Specs must align with actual configurations"
+      - "Trust levels must be consistent across components"
+    enforcement: "validation_gates"
+    
+  completeness:
+    description: "All required components must be present"
+    rules:
+      - "All referenced modules must be registered"
+      - "All referenced devices must be defined"
+      - "All policies must have enforcement mechanisms"
+    enforcement: "startup_validation"
+
+# Integration Testing
+integration_tests:
+  
+  config_consistency:
+    description: "Verify configuration consistency"
+    test_cases:
+      - "All config files parse correctly"
+      - "No conflicting policies"
+      - "All references resolve"
+    
+  registry_completeness:
+    description: "Verify registry completeness"
+    test_cases:
+      - "All modules have entries"
+      - "All devices are registered"
+      - "No orphaned references"
+    
+  spec_alignment:
+    description: "Verify specification alignment"
+    test_cases:
+      - "Configs match specs"
+      - "Naming follows policies"
+      - "Trust levels consistent"
+
+# Evidence Requirements
+evidence:
+  integration_validation:
+    description: "Evidence of successful integration validation"
+    required_artifacts:
+      - "Integration test results"
+      - "Cross-validation reports"
+      - "Consistency check logs"
+    storage: "overlay/evidence/integration/"
+    
+  runtime_coordination:
+    description: "Evidence of runtime coordination"
+    required_artifacts:
+      - "Component interaction logs"
+      - "Policy enforcement records"
+      - "Validation gate results"
+    storage: "overlay/evidence/runtime/"
+
+# Self-Healing Integration
+self_heal:
+  scope: "overlay only"
+  rules:
+    - "Can add overlay configurations"
+    - "Can extend registries via overlay"
+    - "Cannot modify baseline"
+    - "Must maintain integration constraints"
+  validation: "All self-heal actions must pass integration validation"

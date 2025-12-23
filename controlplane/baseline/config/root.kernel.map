@@ -1,0 +1,50 @@
+# Root Kernel Mapping
+# 內核映射配置
+
+# 內核模塊映射
+kernelModules:
+  core:
+    - name: "config-manager"
+      path: "opt/machinenativeops/modules/config-manager"
+      autoload: true
+      priority: 1
+    
+    - name: "auto-monitor"
+      path: "engine/machinenativenops-auto-monitor"
+      autoload: true
+      priority: 2
+  
+  agents:
+    - name: "super-agent"
+      path: "workspace/src/agents/super-agent"
+      autoload: false
+      priority: 10
+
+# 系統調用映射
+syscalls:
+  allowed:
+    - "read"
+    - "write"
+    - "open"
+    - "close"
+    - "stat"
+  
+  restricted:
+    - "chmod"  # 只允許 overlay
+    - "chown"  # 只允許 overlay
+  
+  forbidden:
+    - "rm"     # baseline 禁止刪除
+    - "unlink" # baseline 禁止刪除
+
+# 內核參數
+parameters:
+  fs.file-max: 1000000
+  fs.inotify.max_user_watches: 524288
+  net.core.somaxconn: 4096
+
+# 資源限制
+limits:
+  nofile: 65536
+  nproc: 4096
+  memlock: unlimited

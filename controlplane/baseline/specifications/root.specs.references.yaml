@@ -1,0 +1,59 @@
+# Root Specifications - References
+# 引用規格
+
+apiVersion: machinenativeops.io/v2
+kind: Specification
+metadata:
+  name: root-specs-references
+  namespace: machinenativenops
+  labels:
+    machinenativeops.io/component: controlplane
+    machinenativeops.io/layer: baseline
+    machinenativeops.io/type: specification
+  annotations:
+    machinenativeops.io/description: "Reference specifications and resolution"
+    machinenativeops.io/version: "v1.0.0"
+    machinenativeops.io/immutable: "true"
+
+spec:
+  # 引用格式
+  referenceFormats:
+    urn:
+      format: "urn:machinenativeops:{type}:{name}:{version}"
+      resolution: "registry"
+    
+    path:
+      format: "{layer}/{category}/{filename}"
+      resolution: "filesystem"
+    
+    url:
+      format: "https://{domain}/{path}"
+      resolution: "network"
+  
+  # 引用解析
+  resolution:
+    order:
+      - "local"
+      - "registry"
+      - "remote"
+    
+    cache:
+      enabled: true
+      ttl: 3600  # seconds
+      path: "var/cache/machinenativeops/references"
+  
+  # 依賴管理
+  dependencies:
+    tracking: true
+    validation: true
+    autoResolve: true
+    
+    conflicts:
+      resolution: "explicit"
+      onConflict: "fail"
+  
+  # 版本管理
+  versioning:
+    scheme: "semver"
+    pinning: "exact"
+    allowPrerelease: false

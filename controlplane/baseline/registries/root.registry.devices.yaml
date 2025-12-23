@@ -1,0 +1,152 @@
+# Root Device Registry
+# Immutable baseline device catalog for the root namespace
+# Part of: controlplane/baseline (read-only governance truth)
+
+metadata:
+  registry_type: devices
+  namespace: root
+  version: "1.0.0"
+  immutable: true
+  description: "Canonical device registry for root namespace"
+
+devices:
+  # Core System Devices
+  console:
+    path: /dev/console
+    type: character
+    major: 5
+    minor: 1
+    permissions: "0600"
+    owner: root
+    group: root
+    description: "System console device"
+    
+  null:
+    path: /dev/null
+    type: character
+    major: 1
+    minor: 3
+    permissions: "0666"
+    owner: root
+    group: root
+    description: "Null device (data sink)"
+    
+  zero:
+    path: /dev/zero
+    type: character
+    major: 1
+    minor: 5
+    permissions: "0666"
+    owner: root
+    group: root
+    description: "Zero device (infinite zeros)"
+    
+  random:
+    path: /dev/random
+    type: character
+    major: 1
+    minor: 8
+    permissions: "0666"
+    owner: root
+    group: root
+    description: "Random number generator"
+    
+  urandom:
+    path: /dev/urandom
+    type: character
+    major: 1
+    minor: 9
+    permissions: "0666"
+    owner: root
+    group: root
+    description: "Userspace random number generator"
+
+  # TTY Devices
+  tty:
+    path: /dev/tty
+    type: character
+    major: 5
+    minor: 0
+    permissions: "0666"
+    owner: root
+    group: tty
+    description: "Controlling terminal"
+    
+  ptmx:
+    path: /dev/ptmx
+    type: character
+    major: 5
+    minor: 2
+    permissions: "0666"
+    owner: root
+    group: tty
+    description: "PTY master multiplexer"
+
+  # Storage Devices (templates)
+  sda:
+    path: /dev/sda
+    type: block
+    major: 8
+    minor: 0
+    permissions: "0660"
+    owner: root
+    group: disk
+    description: "First SCSI disk"
+    
+  loop0:
+    path: /dev/loop0
+    type: block
+    major: 7
+    minor: 0
+    permissions: "0660"
+    owner: root
+    group: disk
+    description: "First loop device"
+
+device_classes:
+  character:
+    description: "Character devices (unbuffered I/O)"
+    naming_pattern: "^/dev/[a-z]+[0-9]*$"
+    
+  block:
+    description: "Block devices (buffered I/O)"
+    naming_pattern: "^/dev/(sd[a-z]|loop[0-9]+|nvme[0-9]+n[0-9]+)$"
+    
+  network:
+    description: "Network devices"
+    naming_pattern: "^(eth|wlan|lo)[0-9]*$"
+
+device_groups:
+  system:
+    - console
+    - null
+    - zero
+    - random
+    - urandom
+    
+  terminal:
+    - tty
+    - ptmx
+    
+  storage:
+    - sda
+    - loop0
+
+validation_rules:
+  - rule: "All devices must have valid major/minor numbers"
+    check: "major >= 0 and minor >= 0"
+    
+  - rule: "Device paths must start with /dev/"
+    check: "path.startswith('/dev/')"
+    
+  - rule: "Permissions must be valid octal"
+    check: "len(permissions) == 6 and permissions.startswith('0')"
+    
+  - rule: "Owner and group must be valid"
+    check: "owner in ['root'] and group in ['root', 'tty', 'disk']"
+
+immutability:
+  enforcement: strict
+  modification_policy: "Devices can only be added via overlay, never modified in baseline"
+  validation_required: true
+  evidence_tracking: true

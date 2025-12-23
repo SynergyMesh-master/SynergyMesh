@@ -1,0 +1,44 @@
+# Root Devices Mapping
+# 設備映射配置
+
+# 物理設備映射
+devices:
+  storage:
+    - name: "primary-storage"
+      type: "ssd"
+      mount: "/var/machinenativeops/data"
+      size: "100Gi"
+      
+    - name: "cache-storage"
+      type: "nvme"
+      mount: "/var/cache/machinenativeops"
+      size: "50Gi"
+  
+  network:
+    - name: "eth0"
+      type: "ethernet"
+      speed: "10Gbps"
+      
+    - name: "lo"
+      type: "loopback"
+      address: "127.0.0.1"
+
+# 虛擬設備映射
+virtualDevices:
+  - name: "overlay-fs"
+    type: "filesystem"
+    backend: "overlayfs"
+    layers:
+      - "baseline"
+      - "overlay"
+    target: "active"
+
+# 設備權限
+permissions:
+  storage:
+    baseline: "ro"
+    overlay: "rw"
+    active: "ro"
+  
+  network:
+    all: "rw"

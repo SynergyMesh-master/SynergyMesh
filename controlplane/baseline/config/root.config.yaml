@@ -1,0 +1,82 @@
+# Root Configuration - SSOT Entry Point
+# Controlplane 唯一真相入口
+
+apiVersion: machinenativeops.io/v2
+kind: MachineNativeOpsGlobalBaseline
+metadata:
+  name: root-config
+  namespace: machinenativenops
+  labels:
+    machinenativeops.io/component: controlplane
+    machinenativeops.io/layer: baseline
+    machinenativeops.io/type: config
+  annotations:
+    machinenativeops.io/description: "Root configuration - Single Source of Truth"
+    machinenativeops.io/version: "v1.0.0"
+    machinenativeops.io/immutable: "true"
+
+spec:
+  # Controlplane 配置
+  controlplane:
+    version: "v1.0.0"
+    mode: "production"
+    strictValidation: true
+    autoRepair: false
+    
+    # 路徑配置
+    paths:
+      baseline: "./controlplane/baseline"
+      overlay: "./controlplane/overlay"
+      active: "./controlplane/active"
+      workspace: "./workspace"
+    
+    # 必需文件
+    requiredFiles:
+      - "baseline/config/root.config.yaml"
+      - "baseline/config/root.governance.yaml"
+      - "baseline/registries/root.registry.modules.yaml"
+      - "baseline/validation/gate-root-specs.yml"
+    
+    # 入口點
+    entrypoints:
+      governance: "baseline/config/root.governance.yaml"
+      modules: "baseline/config/root.modules.yaml"
+      superExecution: "baseline/config/root.super-execution.yaml"
+      trust: "baseline/config/root.trust.yaml"
+      validation: "baseline/validation/validate-root-specs.py"
+  
+  # 寫入規則
+  writeRules:
+    allowedPaths:
+      - "overlay/patches/**"
+      - "overlay/hotfix/**"
+      - "overlay/evidence/**"
+      - "overlay/journal/**"
+    
+    forbiddenPaths:
+      - "baseline/**"
+      - "active/**"
+    
+    enforcement: "strict"
+  
+  # 驗證配置
+  validation:
+    enabled: true
+    runOnce: true
+    validator: "baseline/validation/validate-root-specs.py"
+    evidencePath: "overlay/evidence"
+    
+    outputs:
+      manifest: "overlay/evidence/controlplane.manifest.json"
+      report: "overlay/evidence/validation.report.json"
+  
+  # 健康檢查
+  healthCheck:
+    enabled: true
+    interval: 60
+    timeout: 10
+    quickCheck:
+      - "requiredFiles existence"
+      - "evidence digest validation"
+    
+    fullValidation: false  # 不重跑完整驗證

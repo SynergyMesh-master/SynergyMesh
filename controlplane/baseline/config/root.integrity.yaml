@@ -1,0 +1,71 @@
+# Root Integrity Configuration
+# 完整性配置
+
+apiVersion: machinenativeops.io/v2
+kind: MachineNativeOpsGlobalBaseline
+metadata:
+  name: root-integrity
+  namespace: machinenativenops
+  labels:
+    machinenativeops.io/component: controlplane
+    machinenativeops.io/layer: baseline
+    machinenativeops.io/type: integrity
+  annotations:
+    machinenativeops.io/description: "Root integrity verification"
+    machinenativeops.io/version: "v1.0.0"
+    machinenativeops.io/immutable: "true"
+
+spec:
+  # 完整性檢查
+  integrityCheck:
+    enabled: true
+    algorithm: "sha3-512"  # 或 blake3
+    frequency: "on-access"
+    
+    scope:
+      - "baseline/**"
+      - "active/**"
+    
+    exclude:
+      - "overlay/**"
+      - "*.log"
+      - "*.tmp"
+  
+  # 哈希驗證
+  hashVerification:
+    enabled: true
+    manifestPath: "overlay/evidence/controlplane.manifest.json"
+    
+    onMismatch:
+      action: "alert"  # alert | block | repair
+      notification: true
+      logging: true
+  
+  # 文件監控
+  fileMonitoring:
+    enabled: true
+    watchPaths:
+      - "baseline/**"
+    
+    events:
+      - "create"
+      - "modify"
+      - "delete"
+    
+    action: "log"  # log | alert | block
+  
+  # 自我修復
+  selfHealing:
+    enabled: false  # baseline 不允許自動修復
+    overlay:
+      enabled: true
+      maxAttempts: 3
+      backupBeforeRepair: true
+  
+  # 完整性報告
+  reporting:
+    enabled: true
+    path: "overlay/evidence"
+    format: "json"
+    includeTimestamp: true
+    includeDigests: true

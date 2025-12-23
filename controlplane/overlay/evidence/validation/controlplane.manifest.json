@@ -1,0 +1,9 @@
+{
+  "validation_id": "73b494b2fb7c1e1f",
+  "timestamp": "2025-12-23T05:09:49.202003",
+  "pass": true,
+  "reports": {
+    "json": "controlplane/overlay/evidence/validation/validation.report.json",
+    "markdown": "controlplane/overlay/evidence/validation/validation.report.md"
+  }
+}

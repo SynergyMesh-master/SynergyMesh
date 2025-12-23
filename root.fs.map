@@ -48,6 +48,28 @@ mno_bin:/opt/machinenativenops/bin:ext4:relatime,rw:-rwxr-xr-x:MachineNativeOps 
 mno_sbin:/opt/machinenativenops/sbin:ext4:relatime,rw:-rwxr-xr-x:MachineNativeOps system binaries
 mno_lib:/opt/machinenativenops/lib:ext4:relatime,rw:-r-xr-xr-x:MachineNativeOps libraries
 mno_lib64:/opt/machinenativenops/lib64:ext4:relatime,rw:-r-xr-xr-x:MachineNativeOps 64-bit libraries
+
+# === Controlplane 架構目錄 (Controlplane Architecture Directories) ===
+
+# Baseline (不可變治理真相)
+controlplane_root:/workspace/controlplane:ext4:relatime,rw:-rwxr-xr-x:Controlplane root directory
+controlplane_baseline:/workspace/controlplane/baseline:ext4:ro,relatime:-r-xr-xr-x:Immutable baseline governance truth
+controlplane_baseline_config:/workspace/controlplane/baseline/config:ext4:ro,relatime:-r-xr-xr-x:Baseline configuration files
+controlplane_baseline_specs:/workspace/controlplane/baseline/specifications:ext4:ro,relatime:-r-xr-xr-x:Baseline specifications
+controlplane_baseline_registries:/workspace/controlplane/baseline/registries:ext4:ro,relatime:-r-xr-xr-x:Baseline registries
+controlplane_baseline_integration:/workspace/controlplane/baseline/integration:ext4:ro,relatime:-r-xr-xr-x:Baseline integration rules
+controlplane_baseline_validation:/workspace/controlplane/baseline/validation:ext4:ro,relatime:-r-xr-xr-x:Baseline validation system
+controlplane_baseline_docs:/workspace/controlplane/baseline/documentation:ext4:ro,relatime:-r-xr-xr-x:Baseline documentation
+
+# Overlay (可寫運行時狀態)
+controlplane_overlay:/workspace/controlplane/overlay:ext4:relatime,rw:-rwxr-xr-x:Writable overlay runtime state
+controlplane_overlay_config:/workspace/controlplane/overlay/config:ext4:relatime,rw:-rwxr-xr-x:Overlay configuration extensions
+controlplane_overlay_evidence:/workspace/controlplane/overlay/evidence:ext4:relatime,rw:-rwxr-xr-x:Validation evidence storage
+controlplane_overlay_runtime:/workspace/controlplane/overlay/runtime:ext4:relatime,rw:-rwxr-xr-x:Runtime state data
+controlplane_overlay_logs:/workspace/controlplane/overlay/logs:ext4:relatime,rw:-rwxr-xr-x:Runtime logs
+
+# Active (唯讀合成視圖)
+controlplane_active:/workspace/controlplane/active:ext4:ro,relatime:-r-xr-xr-x:Read-only synthesized view
 mno_include:/opt/machinenativenops/include:ext4:ro,relatime:-r-xr-xr-x:MachineNativeOps header files
 mno_share:/opt/machinenativenops/share:ext4:ro,relatime:-r-xr-xr-x:MachineNativeOps shared data
 mno_etc:/etc/machinenativenops:ext4:relatime,rw:-rwxr-xr-x:MachineNativeOps configuration files

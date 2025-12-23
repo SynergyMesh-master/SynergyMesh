@@ -1,0 +1,73 @@
+# Root Governance Configuration
+# 治理配置
+
+apiVersion: machinenativeops.io/v2
+kind: MachineNativeOpsGlobalBaseline
+metadata:
+  name: root-governance
+  namespace: machinenativenops
+  labels:
+    machinenativeops.io/component: controlplane
+    machinenativeops.io/layer: baseline
+    machinenativeops.io/type: governance
+  annotations:
+    machinenativeops.io/description: "Root governance configuration"
+    machinenativeops.io/version: "v1.0.0"
+    machinenativeops.io/immutable: "true"
+
+spec:
+  # 治理模型
+  governanceModel:
+    type: "hierarchical"
+    enforcement: "strict"
+    auditEnabled: true
+  
+  # 審批流程
+  approvalProcess:
+    baseline:
+      required: true
+      approvers: 2
+      method: "PR + signature"
+    
+    overlay:
+      required: false
+      approvers: 1
+      method: "automated"
+  
+  # 權限控制
+  permissions:
+    baseline:
+      read: ["all"]
+      write: ["ci-cd", "admin"]
+      delete: ["admin"]
+    
+    overlay:
+      read: ["all"]
+      write: ["runtime", "self-heal", "admin"]
+      delete: ["admin"]
+    
+    active:
+      read: ["all"]
+      write: []  # 只能通過合成生成
+      delete: []
+  
+  # 變更管理
+  changeManagement:
+    baseline:
+      process: "controlled"
+      requiresPR: true
+      requiresSignature: true
+      requiresPromotion: true
+    
+    overlay:
+      process: "automated"
+      requiresPR: false
+      requiresSignature: false
+      requiresPromotion: false
+  
+  # 審計配置
+  audit:
+    enabled: true
+    logPath: "overlay/journal"
+    retention: 90  # days
+    includeReadOperations: false

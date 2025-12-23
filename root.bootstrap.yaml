@@ -9,8 +9,26 @@ metadata:
     machinenativeops.io/component: bootstrap-configuration
   annotations:
     machinenativeops.io/description: Root layer boot and initialization configuration
-    machinenativeops.io/last-modified: '2025-12-20T22:00:00Z'
+    machinenativeops.io/last-modified: '2025-12-23T05:10:00Z'
+    machinenativeops.io/controlplane: 'controlplane/baseline'
+    machinenativeops.io/architecture: 'baseline+overlay+active'
 spec:
+  # Controlplane Configuration
+  controlplane:
+    enabled: true
+    baseline_path: controlplane/baseline
+    overlay_path: controlplane/overlay
+    active_path: controlplane/active
+    validation:
+      enabled: true
+      validator: controlplane/baseline/validation/validate-root-specs.py
+      gate_config: controlplane/baseline/validation/gate-root-specs.yml
+      on_failure: halt_system
+    architecture:
+      type: baseline+overlay+active
+      immutability: strict
+      self_heal: overlay_only
+  
   init_sequence:
   - phase: pre_boot
     description: Pre-boot system preparation
@@ -18,6 +36,25 @@ spec:
     critical: true
     on_failure: halt_system
     steps:
+    - name: load_controlplane_baseline
+      description: Load immutable baseline configuration
+      module: controlplane-loader
+      action: load_baseline
+      parameters:
+        baseline_path: controlplane/baseline
+        validation_required: true
+        integrity_check: true
+      retry_policy:
+        max_attempts: 3
+        backoff: exponential
+        initial_delay: 2s
+      success_criteria:
+        - baseline_loaded
+        - validation_passed
+        - integrity_verified
+      failure_actions:
+        - log_detailed_error
+        - halt_with_error_code
     - name: verify_system_requirements
       description: Verify minimum system requirements
       module: system-validator

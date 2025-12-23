@@ -1,0 +1,55 @@
+# Root Modules Configuration
+# 模塊配置
+
+apiVersion: machinenativeops.io/v2
+kind: MachineNativeOpsGlobalBaseline
+metadata:
+  name: root-modules
+  namespace: machinenativenops
+  labels:
+    machinenativeops.io/component: controlplane
+    machinenativeops.io/layer: baseline
+    machinenativeops.io/type: modules
+  annotations:
+    machinenativeops.io/description: "Root modules configuration"
+    machinenativeops.io/version: "v1.0.0"
+    machinenativeops.io/immutable: "true"
+
+spec:
+  # 核心模塊
+  coreModules:
+    - name: config-manager
+      path: "opt/machinenativeops/modules/config-manager"
+      version: "v1.0.0"
+      required: true
+      autoLoad: true
+    
+    - name: auto-monitor
+      path: "engine/machinenativenops-auto-monitor"
+      version: "v1.0.0"
+      required: true
+      autoLoad: true
+    
+    - name: super-agent
+      path: "workspace/src/agents/super-agent"
+      version: "v1.0.0"
+      required: false
+      autoLoad: false
+  
+  # 模塊依賴
+  dependencies:
+    config-manager: []
+    auto-monitor: ["config-manager"]
+    super-agent: ["config-manager", "auto-monitor"]
+  
+  # 加載順序
+  loadOrder:
+    - config-manager
+    - auto-monitor
+    - super-agent
+  
+  # 模塊註冊
+  registry:
+    source: "baseline/registries/root.registry.modules.yaml"
+    autoSync: true
+    validation: true

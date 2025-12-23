@@ -1,0 +1,71 @@
+# Root Specifications - Naming
+# 命名規格
+
+apiVersion: machinenativeops.io/v2
+kind: Specification
+metadata:
+  name: root-specs-naming
+  namespace: machinenativenops
+  labels:
+    machinenativeops.io/component: controlplane
+    machinenativeops.io/layer: baseline
+    machinenativeops.io/type: specification
+  annotations:
+    machinenativeops.io/description: "Naming specifications and conventions"
+    machinenativeops.io/version: "v1.0.0"
+    machinenativeops.io/immutable: "true"
+
+spec:
+  # 命名約定
+  conventions:
+    files:
+      root:
+        prefix: "root."
+        format: "kebab-case"
+        extensions: ["yaml", "yml", "map", "sh"]
+      
+      baseline:
+        format: "kebab-case"
+        extensions: ["yaml", "yml", "py", "sh"]
+      
+      overlay:
+        format: "kebab-case"
+        extensions: ["yaml", "yml", "json", "log"]
+    
+    directories:
+      format: "kebab-case"
+      noSpaces: true
+      noUppercase: true
+      noUnderscores: true
+    
+    urns:
+      format: "urn:machinenativeops:{type}:{name}:{version}"
+      types: ["module", "agent", "service", "config"]
+    
+    labels:
+      prefix: "machinenativeops.io/"
+      format: "{prefix}{key}"
+  
+  # 驗證規則
+  validation:
+    rules:
+      - name: "no-double-extensions"
+        pattern: "^[^.]+\\.[^.]+$"
+        message: "Files must have single extension"
+      
+      - name: "lowercase-only"
+        pattern: "^[a-z0-9.-]+$"
+        message: "Use lowercase letters, numbers, dots, hyphens only"
+      
+      - name: "no-spaces"
+        pattern: "^[^\\s]+$"
+        message: "No spaces allowed in names"
+  
+  # 保留名稱
+  reserved:
+    - "root"
+    - "baseline"
+    - "overlay"
+    - "active"
+    - "controlplane"
+    - "workspace"

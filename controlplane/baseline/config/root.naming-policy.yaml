@@ -1,0 +1,95 @@
+# Root Naming Policy Configuration
+# 命名策略配置
+
+apiVersion: machinenativeops.io/v2
+kind: MachineNativeOpsGlobalBaseline
+metadata:
+  name: root-naming-policy
+  namespace: machinenativenops
+  labels:
+    machinenativeops.io/component: controlplane
+    machinenativeops.io/layer: baseline
+    machinenativeops.io/type: naming-policy
+  annotations:
+    machinenativeops.io/description: "Root naming policy and conventions"
+    machinenativeops.io/version: "v1.0.0"
+    machinenativeops.io/immutable: "true"
+
+spec:
+  # 文件命名規則
+  fileNaming:
+    patterns:
+      root:
+        pattern: "^root\\.[a-z-]+\\.(yaml|yml|map|sh)$"
+        description: "Root files must start with 'root.'"
+        examples:
+          - "root.config.yaml"
+          - "root.bootstrap.yaml"
+          - "root.env.sh"
+      
+      baseline:
+        pattern: "^[a-z][a-z0-9-]*\\.(yaml|yml|py|sh)$"
+        description: "Baseline files use lowercase with hyphens"
+        examples:
+          - "validate-root-specs.py"
+          - "gate-root-specs.yml"
+      
+      overlay:
+        pattern: "^[a-z][a-z0-9-]*\\.(yaml|yml|json|log)$"
+        description: "Overlay files for runtime data"
+        examples:
+          - "controlplane.manifest.json"
+          - "validation.report.json"
+    
+    forbidden:
+      - pattern: ".*\\..*\\..*"
+        description: "No double extensions"
+      - pattern: ".*[A-Z].*"
+        description: "No uppercase in filenames"
+      - pattern: ".*\\s.*"
+        description: "No spaces in filenames"
+  
+  # 目錄命名規則
+  directoryNaming:
+    patterns:
+      standard:
+        pattern: "^[a-z][a-z0-9-]*$"
+        description: "Lowercase with hyphens"
+        examples:
+          - "config"
+          - "specifications"
+          - "validation"
+    
+    forbidden:
+      - pattern: ".*[A-Z].*"
+        description: "No uppercase"
+      - pattern: ".*_.*"
+        description: "Use hyphens, not underscores"
+  
+  # URN 命名規則
+  urnNaming:
+    format: "urn:machinenativeops:{type}:{name}:{version}"
+    validation:
+      enabled: true
+      strictMode: true
+    
+    examples:
+      - "urn:machinenativeops:module:config-manager:v1.0.0"
+      - "urn:machinenativeops:agent:super-agent:v1.0.0"
+  
+  # 標籤命名規則
+  labelNaming:
+    prefix: "machinenativeops.io/"
+    format: "{prefix}{key}"
+    
+    standardLabels:
+      - "machinenativeops.io/component"
+      - "machinenativeops.io/layer"
+      - "machinenativeops.io/type"
+      - "machinenativeops.io/version"
+  
+  # 驗證配置
+  validation:
+    enabled: true
+    onViolation: "block"
+    reportPath: "overlay/evidence/naming-violations.json"

@@ -1,0 +1,86 @@
+# Root Registry - Modules
+# 模塊註冊表
+
+apiVersion: machinenativeops.io/v2
+kind: Registry
+metadata:
+  name: root-registry-modules
+  namespace: machinenativenops
+  labels:
+    machinenativeops.io/component: controlplane
+    machinenativeops.io/layer: baseline
+    machinenativeops.io/type: registry
+  annotations:
+    machinenativeops.io/description: "Module registry"
+    machinenativeops.io/version: "v1.0.0"
+    machinenativeops.io/immutable: "true"
+
+spec:
+  # 註冊的模塊
+  modules:
+    - urn: "urn:machinenativeops:module:config-manager:v1.0.0"
+      name: "config-manager"
+      version: "v1.0.0"
+      path: "opt/machinenativeops/modules/config-manager"
+      type: "core"
+      status: "active"
+      
+      metadata:
+        description: "Configuration management module"
+        author: "MachineNativeOps Team"
+        license: "MIT"
+      
+      dependencies: []
+      
+      entrypoint:
+        main: "main.py"
+        config: "config.yaml"
+    
+    - urn: "urn:machinenativeops:module:auto-monitor:v1.0.0"
+      name: "auto-monitor"
+      version: "v1.0.0"
+      path: "engine/machinenativenops-auto-monitor"
+      type: "core"
+      status: "active"
+      
+      metadata:
+        description: "Automated monitoring module"
+        author: "MachineNativeOps Team"
+        license: "MIT"
+      
+      dependencies:
+        - "urn:machinenativeops:module:config-manager:v1.0.0"
+      
+      entrypoint:
+        main: "src/machinenativenops_auto_monitor/__main__.py"
+        config: "config/monitor-config.yaml"
+    
+    - urn: "urn:machinenativeops:agent:super-agent:v1.0.0"
+      name: "super-agent"
+      version: "v1.0.0"
+      path: "workspace/src/agents/super-agent"
+      type: "agent"
+      status: "active"
+      
+      metadata:
+        description: "Super agent orchestrator"
+        author: "MachineNativeOps Team"
+        license: "MIT"
+      
+      dependencies:
+        - "urn:machinenativeops:module:config-manager:v1.0.0"
+        - "urn:machinenativeops:module:auto-monitor:v1.0.0"
+      
+      entrypoint:
+        main: "main.py"
+        config: "deployment.yaml"
+  
+  # 註冊表配置
+  registry:
+    autoSync: true
+    validation: true
+    allowDuplicates: false
+    
+    updatePolicy:
+      baseline: "controlled"  # 需要 PR
+      overlay: "automated"    # 可自動更新

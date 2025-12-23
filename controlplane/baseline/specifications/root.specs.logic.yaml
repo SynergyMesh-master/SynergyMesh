@@ -1,0 +1,75 @@
+# Root Specifications - Logic
+# 邏輯規格
+
+apiVersion: machinenativeops.io/v2
+kind: Specification
+metadata:
+  name: root-specs-logic
+  namespace: machinenativenops
+  labels:
+    machinenativeops.io/component: controlplane
+    machinenativeops.io/layer: baseline
+    machinenativeops.io/type: specification
+  annotations:
+    machinenativeops.io/description: "Logic specifications and rules"
+    machinenativeops.io/version: "v1.0.0"
+    machinenativeops.io/immutable: "true"
+
+spec:
+  # 邏輯規則
+  rules:
+    baseline:
+      - name: "immutability"
+        description: "Baseline files cannot be modified at runtime"
+        enforcement: "strict"
+        
+      - name: "validation-once"
+        description: "Full validation runs only once"
+        enforcement: "strict"
+      
+      - name: "no-self-heal"
+        description: "Baseline cannot be self-healed"
+        enforcement: "strict"
+    
+    overlay:
+      - name: "write-allowed"
+        description: "Overlay can be written at runtime"
+        enforcement: "permissive"
+      
+      - name: "self-heal-enabled"
+        description: "Overlay supports self-healing"
+        enforcement: "permissive"
+    
+    active:
+      - name: "read-only"
+        description: "Active is read-only, generated from baseline+overlay"
+        enforcement: "strict"
+  
+  # 執行邏輯
+  execution:
+    startup:
+      - "Load root.bootstrap.yaml"
+      - "Validate requiredFiles existence"
+      - "Run validate-root-specs.py (once)"
+      - "Generate evidence to overlay/evidence/"
+      - "Quick check: evidence digest validation"
+    
+    runtime:
+      - "Read from active/ (merged view)"
+      - "Write to overlay/ only"
+      - "Never modify baseline/"
+    
+    shutdown:
+      - "Flush overlay journals"
+      - "Generate final evidence"
+      - "Clean temporary files"
+  
+  # 合成邏輯
+  synthesis:
+    enabled: true
+    method: "overlay-merge"
+    priority: "overlay-over-baseline"
+    
+    conflicts:
+      resolution: "overlay-wins"
+      logging: true

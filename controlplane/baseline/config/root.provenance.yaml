@@ -1,0 +1,67 @@
+# Root Provenance Configuration
+# 來源配置
+
+apiVersion: machinenativeops.io/v2
+kind: MachineNativeOpsGlobalBaseline
+metadata:
+  name: root-provenance
+  namespace: machinenativenops
+  labels:
+    machinenativeops.io/component: controlplane
+    machinenativeops.io/layer: baseline
+    machinenativeops.io/type: provenance
+  annotations:
+    machinenativeops.io/description: "Root provenance tracking"
+    machinenativeops.io/version: "v1.0.0"
+    machinenativeops.io/immutable: "true"
+
+spec:
+  # 來源追蹤
+  tracking:
+    enabled: true
+    format: "SLSA"
+    level: 3
+    
+    metadata:
+      - source: "git"
+        fields: ["commit", "branch", "author", "timestamp"]
+      - source: "build"
+        fields: ["builder", "buildId", "artifacts"]
+      - source: "deploy"
+        fields: ["deployer", "environment", "timestamp"]
+  
+  # 供應鏈安全
+  supplyChain:
+    verification:
+      enabled: true
+      method: "signature"
+      algorithm: "ed25519"
+    
+    sbom:
+      enabled: true
+      format: "SPDX"
+      path: "overlay/evidence/sbom"
+    
+    attestation:
+      enabled: true
+      format: "in-toto"
+      path: "overlay/evidence/attestation"
+  
+  # 審計日誌
+  auditLog:
+    enabled: true
+    path: "overlay/journal/provenance"
+    retention: 365  # days
+    includeReadOperations: false
+  
+  # 來源驗證
+  verification:
+    baseline:
+      requireProvenance: true
+      requireSignature: true
+      requireAttestation: true
+    
+    overlay:
+      requireProvenance: false
+      requireSignature: false
+      requireAttestation: false

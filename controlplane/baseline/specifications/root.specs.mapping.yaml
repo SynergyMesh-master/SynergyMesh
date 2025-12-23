@@ -1,0 +1,71 @@
+# Root Specifications - Mapping
+# 映射規格
+
+apiVersion: machinenativeops.io/v2
+kind: Specification
+metadata:
+  name: root-specs-mapping
+  namespace: machinenativenops
+  labels:
+    machinenativeops.io/component: controlplane
+    machinenativeops.io/layer: baseline
+    machinenativeops.io/type: specification
+  annotations:
+    machinenativeops.io/description: "Mapping specifications for paths and resources"
+    machinenativeops.io/version: "v1.0.0"
+    machinenativeops.io/immutable: "true"
+
+spec:
+  # 路徑映射
+  pathMapping:
+    controlplane:
+      baseline: "./controlplane/baseline"
+      overlay: "./controlplane/overlay"
+      active: "./controlplane/active"
+    
+    workspace:
+      root: "./workspace"
+      src: "./workspace/src"
+      docs: "./workspace/docs"
+      tests: "./workspace/tests"
+    
+    fhs:
+      bin: "./bin"
+      sbin: "./sbin"
+      etc: "./etc"
+      lib: "./lib"
+      var: "./var"
+      usr: "./usr"
+  
+  # 資源映射
+  resourceMapping:
+    configs:
+      source: "baseline/config"
+      target: "active/config"
+      merge: "overlay/patches/config"
+    
+    specs:
+      source: "baseline/specifications"
+      target: "active/specifications"
+      merge: "overlay/patches/specifications"
+  
+  # 掛載點映射
+  mountMapping:
+    - source: "baseline"
+      target: "/controlplane/baseline"
+      mode: "ro"
+    
+    - source: "overlay"
+      target: "/controlplane/overlay"
+      mode: "rw"
+    
+    - source: "active"
+      target: "/controlplane/active"
+      mode: "ro"
+  
+  # 符號鏈接映射
+  symlinkMapping:
+    enabled: false
+    allowedTargets:
+      - "baseline/**"
+      - "active/**"

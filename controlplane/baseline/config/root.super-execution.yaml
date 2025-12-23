@@ -1,0 +1,67 @@
+# Root Super Execution Configuration
+# 超級執行配置
+
+apiVersion: machinenativeops.io/v2
+kind: MachineNativeOpsGlobalBaseline
+metadata:
+  name: root-super-execution
+  namespace: machinenativenops
+  labels:
+    machinenativeops.io/component: controlplane
+    machinenativeops.io/layer: baseline
+    machinenativeops.io/type: execution
+  annotations:
+    machinenativeops.io/description: "Root super execution configuration"
+    machinenativeops.io/version: "v1.0.0"
+    machinenativeops.io/immutable: "true"
+
+spec:
+  # 執行模式
+  executionMode:
+    type: "autonomous"
+    parallelism: 4
+    timeout: 3600  # seconds
+    retryPolicy:
+      maxRetries: 3
+      backoff: "exponential"
+  
+  # 資源限制
+  resources:
+    cpu:
+      request: "1000m"
+      limit: "2000m"
+    memory:
+      request: "1Gi"
+      limit: "4Gi"
+    storage:
+      request: "10Gi"
+      limit: "50Gi"
+  
+  # 安全策略
+  security:
+    runAsNonRoot: true
+    readOnlyRootFilesystem: false
+    allowPrivilegeEscalation: false
+    capabilities:
+      drop: ["ALL"]
+      add: ["NET_BIND_SERVICE"]
+  
+  # 執行環境
+  environment:
+    variables:
+      CONTROLPLANE_PATH: "./controlplane"
+      WORKSPACE_PATH: "./workspace"
+      BOOT_MODE: "production"
+    
+    secrets:
+      - name: "github-token"
+        path: "etc/machinenativeops/secrets/github"
+      - name: "api-keys"
+        path: "etc/machinenativeops/secrets/api"
+  
+  # 監控配置
+  monitoring:
+    enabled: true
+    metricsPath: "var/machinenativeops/metrics"
+    logsPath: "var/log/machinenativeops"
+    tracingEnabled: true
