@@ -44,9 +44,9 @@
 - `archive/` → `workspace/archive/legacy/archive/`
 - `current-repo/` → `workspace/archive/legacy/current-repo/`
 - `reference-repo/` → `workspace/archive/legacy/reference-repo/`
-- `machine-native-ops-aaps/` → `workspace/archive/legacy/machine-native-ops-aaps/`
-- `machine-native-ops-aaps-fresh/` → `workspace/archive/legacy/machine-native-ops-aaps-fresh/`
-- `machine-native-ops-aaps-new/` → `workspace/archive/legacy/machine-native-ops-aaps-new/`
+- `machine-native-ops/` → `workspace/archive/legacy/machine-native-ops/`
+- `machine-native-ops-fresh/` → `workspace/archive/legacy/machine-native-ops-fresh/`
+- `machine-native-ops-new/` → `workspace/archive/legacy/machine-native-ops-new/`
 - `MachineNativeOps/` → `workspace/archive/legacy/MachineNativeOps/`
 
 ### 9. 團隊和對話 → workspace/archive/conversations/

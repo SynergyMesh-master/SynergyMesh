@@ -35,7 +35,7 @@
 
 **執行的命令**:
 ```bash
-gh pr close 716 --repo MachineNativeOps/machine-native-ops-aaps
+gh pr close 716 --repo MachineNativeOps/machine-native-ops
 ```
 
 **結果**: ✅ PR #716 已成功關閉
@@ -294,8 +294,8 @@ wrangler r2 bucket create machinenativeops-assets-prod
 3. [PR_REVIEW_COMPLETION_REPORT.md](PR_REVIEW_COMPLETION_REPORT.md) - 本文件
 
 ### GitHub 資源
-- [PR #715](https://github.com/MachineNativeOps/machine-native-ops-aaps/pull/715) - 已合併
-- [PR #716](https://github.com/MachineNativeOps/machine-native-ops-aaps/pull/716) - 已關閉
+- [PR #715](https://github.com/MachineNativeOps/machine-native-ops/pull/715) - 已合併
+- [PR #716](https://github.com/MachineNativeOps/machine-native-ops/pull/716) - 已關閉
 
 ### Cloudflare 文檔
 - [Wrangler Configuration](https://developers.cloudflare.com/workers/wrangler/configuration/)

@@ -562,7 +562,7 @@ class UltimateSupplyChainVerifier:
                 'timestamp': datetime.now(timezone.utc).isoformat(),
                 'component': {
                     'type': 'application',
-                    'name': 'machine-native-ops-aaps',
+                    'name': 'machine-native-ops',
                     'version': '1.0.0',
                     'supplier': {
                         'name': 'MachineNativeOps'
@@ -814,20 +814,20 @@ class UltimateSupplyChainVerifier:
             'predicateType': 'https://slsa.dev/provenance/v1',
             'subject': [
                 {
-                    'name': 'machine-native-ops-aaps',
+                    'name': 'machine-native-ops',
                     'digest': {
-                        'sha256': hashlib.sha256(b'machine-native-ops-aaps-source').hexdigest()
+                        'sha256': hashlib.sha256(b'machine-native-ops-source').hexdigest()
                     }
                 }
             ],
             'predicate': {
                 'buildType': 'https://github.com/actions',
                 'builder': {
-                    'id': f'https://github.com/{os.getenv("GITHUB_REPOSITORY", "MachineNativeOps/machine-native-ops-aaps")}/actions/runs/{os.getenv("GITHUB_RUN_ID", "123456789")}'
+                    'id': f'https://github.com/{os.getenv("GITHUB_REPOSITORY", "MachineNativeOps/machine-native-ops")}/actions/runs/{os.getenv("GITHUB_RUN_ID", "123456789")}'
                 },
                 'invocation': {
                     'configSource': {
-                        'uri': f'git+https://github.com/{os.getenv("GITHUB_REPOSITORY", "MachineNativeOps/machine-native-ops-aaps")}@{os.getenv("GITHUB_REF", "refs/heads/main")}',
+                        'uri': f'git+https://github.com/{os.getenv("GITHUB_REPOSITORY", "MachineNativeOps/machine-native-ops")}@{os.getenv("GITHUB_REF", "refs/heads/main")}',
                         'digest': {
                             'sha256': os.getenv('GITHUB_SHA', hashlib.sha256(b'source').hexdigest())
                         },
@@ -855,7 +855,7 @@ class UltimateSupplyChainVerifier:
                 },
                 'materials': [
                     {
-                        'uri': 'git+https://github.com/MachineNativeOps/machine-native-ops-aaps',
+                        'uri': 'git+https://github.com/MachineNativeOps/machine-native-ops',
                         'digest': {
                             'sha256': os.getenv('GITHUB_SHA', hashlib.sha256(b'source').hexdigest())
                         }
@@ -876,7 +876,7 @@ class UltimateSupplyChainVerifier:
             'predicateType': 'https://in-toto.io/attestation/v0.1',
             'subject': [
                 {
-                    'name': 'machine-native-ops-aaps',
+                    'name': 'machine-native-ops',
                     'digest': {
                         'sha256': hashlib.sha256(b'source').hexdigest()
                     }
@@ -914,7 +914,7 @@ class UltimateSupplyChainVerifier:
             'predicateType': 'https://in-toto.io/attestation/v0.1',
             'subject': [
                 {
-                    'name': 'machine-native-ops-aaps',
+                    'name': 'machine-native-ops',
                     'digest': {
                         'sha256': hashlib.sha256(b'source').hexdigest()
                     }

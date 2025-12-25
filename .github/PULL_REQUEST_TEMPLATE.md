@@ -33,10 +33,10 @@ deleted_files:
 
 ### 📋 四大核心證據
 ```yaml
-- repo: https://github.com/MachineNativeOps/machine-native-ops-aaps
+- repo: https://github.com/MachineNativeOps/machine-native-ops
 - branch: [分支名稱]
 - commit: [完整40字元Commit SHA]
-- PR: https://github.com/MachineNativeOps/machine-native-ops-aaps/pull/[PR編號]
+- PR: https://github.com/MachineNativeOps/machine-native-ops/pull/[PR編號]
 ```
 
 ### 🏛️ 第五證據：命名規範遵循 **[若變更根層檔案則必填]**

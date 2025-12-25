@@ -11,7 +11,7 @@ metadata:
     machinenativeops.io/name: mno-namespace-baseline
     machinenativeops.io/version: v2.0.0
     machinenativeops.io/component: namespace-configuration
-    machinenativeops.io/managed-by: machine-native-ops-aaps
+    machinenativeops.io/managed-by: machine-native-ops
   annotations:
     machinenativeops.io/description: "MachineNativeOps namespace baseline configuration"
     machinenativeops.io/created-by: "namespace-alignment-tool"
@@ -605,11 +605,11 @@ validation:
 # ============================================================================
 migration:
   legacy_namespaces:
-    - "machine-native-ops-aaps"
+    - "machine-native-ops"
     - "aaps"
     
   mapping:
-    "machine-native-ops-aaps": "machinenativeops"
+    "machine-native-ops": "machinenativeops"
     "aaps": "machinenativeops"
     
   deprecation_date: "2026-06-01"

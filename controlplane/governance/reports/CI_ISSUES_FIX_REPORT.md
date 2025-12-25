@@ -13,7 +13,7 @@
 ### 問題1：GitHub Actions SHA Pinning 錯誤
 **錯誤訊息**：
 ```
-The actions actions/checkout@v4, actions/setup-python@v5, and actions/upload-artifact@v4 are not allowed in MachineNativeOps/machine-native-ops-aaps because all actions must be pinned to a full-length commit SHA.
+The actions actions/checkout@v4, actions/setup-python@v5, and actions/upload-artifact@v4 are not allowed in MachineNativeOps/machine-native-ops because all actions must be pinned to a full-length commit SHA.
 ```
 
 **根本原因**：倉庫設定要求所有 GitHub Actions 必須使用完整 commit SHA，而不是版本標籤。

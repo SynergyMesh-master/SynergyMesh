@@ -156,9 +156,9 @@ After sourcing `root.env.sh`, you have access to:
 
 ## 🔗 Links
 
-- **GitHub Repository**: [MachineNativeOps/machine-native-ops-aaps](https://github.com/MachineNativeOps/machine-native-ops-aaps)
-- **Issues**: [GitHub Issues](https://github.com/MachineNativeOps/machine-native-ops-aaps/issues)
-- **Pull Requests**: [GitHub PRs](https://github.com/MachineNativeOps/machine-native-ops-aaps/pulls)
+- **GitHub Repository**: [MachineNativeOps/machine-native-ops](https://github.com/MachineNativeOps/machine-native-ops)
+- **Issues**: [GitHub Issues](https://github.com/MachineNativeOps/machine-native-ops/issues)
+- **Pull Requests**: [GitHub PRs](https://github.com/MachineNativeOps/machine-native-ops/pulls)
 
 ## 📝 License
 

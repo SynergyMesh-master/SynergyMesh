@@ -27,7 +27,7 @@ class RealModuleLauncher:
     """Real module launcher that starts and manages actual processes"""
     
     def __init__(self):
-        self.root_dir = Path(os.getenv('ROOT_DIR', '/workspace/machine-native-ops-aaps'))
+        self.root_dir = Path(os.getenv('ROOT_DIR', '/workspace/machine-native-ops'))
         self.modules_dir = self.root_dir / 'modules'
         self.running_modules = {}
         self.module_configs = {}

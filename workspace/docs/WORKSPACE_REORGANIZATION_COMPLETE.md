@@ -72,9 +72,9 @@ workspace/
 │       ├── archive/
 │       ├── current-repo/
 │       ├── reference-repo/
-│       ├── machine-native-ops-aaps/
-│       ├── machine-native-ops-aaps-fresh/
-│       ├── machine-native-ops-aaps-new/
+│       ├── machine-native-ops/
+│       ├── machine-native-ops-fresh/
+│       ├── machine-native-ops-new/
 │       └── MachineNativeOps/
 │
 ├── artifacts/                    # 構建產物
@@ -189,9 +189,9 @@ workspace/
 - ✅ `archive/`
 - ✅ `current-repo/`
 - ✅ `reference-repo/`
-- ✅ `machine-native-ops-aaps/`
-- ✅ `machine-native-ops-aaps-fresh/`
-- ✅ `machine-native-ops-aaps-new/`
+- ✅ `machine-native-ops/`
+- ✅ `machine-native-ops-fresh/`
+- ✅ `machine-native-ops-new/`
 - ✅ `MachineNativeOps/`
 
 ### 9. 對話 → workspace/archive/conversations/

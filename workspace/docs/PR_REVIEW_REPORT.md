@@ -13,7 +13,7 @@
 ### 基本信息
 - **標題**: feat: Implement complete FHS 3.0 standard directory structure
 - **狀態**: ✅ **MERGED** (已合併)
-- **URL**: https://github.com/MachineNativeOps/machine-native-ops-aaps/pull/715
+- **URL**: https://github.com/MachineNativeOps/machine-native-ops/pull/715
 - **合併狀態**: UNKNOWN (已合併後)
 
 ### CI/CD 檢查狀態
@@ -77,7 +77,7 @@
 ### 基本信息
 - **標題**: Merge pull request #715 from MachineNativeOps/feature/fhs-standard-im…
 - **狀態**: 🔴 **OPEN** (開放中)
-- **URL**: https://github.com/MachineNativeOps/machine-native-ops-aaps/pull/716
+- **URL**: https://github.com/MachineNativeOps/machine-native-ops/pull/716
 - **合併狀態**: ⚠️ **CONFLICTING** (有衝突)
 - **分支**: main → feature/fhs-standard-implementation
 
@@ -165,7 +165,7 @@
 
 #### 1. 關閉 PR #716 ❌
 ```bash
-gh pr close 716 --repo MachineNativeOps/machine-native-ops-aaps \
+gh pr close 716 --repo MachineNativeOps/machine-native-ops \
   --comment "Closing this PR as it has the wrong merge direction. PR #715 has already been merged to main successfully."
 ```
 
@@ -275,7 +275,7 @@ c. 確保部署路徑與新的專案結構匹配
 
 ```bash
 # 關閉 PR #716
-gh pr close 716 --repo MachineNativeOps/machine-native-ops-aaps \
+gh pr close 716 --repo MachineNativeOps/machine-native-ops \
   --comment "Closing this PR as it has the wrong merge direction. PR #715 has already been merged to main successfully. The feature branch should not be updated from main after the feature has been merged."
 ```
 

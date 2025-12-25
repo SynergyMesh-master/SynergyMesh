@@ -178,7 +178,7 @@ Overall Status: ✅ PASS
 
 **Commit Hash**: `9c9076f`  
 **Branch**: `main`  
-**Remote**: `origin` (https://github.com/MachineNativeOps/machine-native-ops-aaps.git)
+**Remote**: `origin` (https://github.com/MachineNativeOps/machine-native-ops.git)
 
 **Commit Message**:
 ```

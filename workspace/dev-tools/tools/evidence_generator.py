@@ -70,7 +70,7 @@ def main():
     now = datetime.now(timezone.utc).isoformat()
     provenance = {
         "system": "aaps",
-        "repo": os.getenv("GITHUB_REPOSITORY", "machine-native-ops-aaps"),
+        "repo": os.getenv("GITHUB_REPOSITORY", "machine-native-ops"),
         "commit": os.getenv("GITHUB_SHA", "local"),
         "run_id": os.getenv("GITHUB_RUN_ID", "local"),
         "timestamp": now,

@@ -445,8 +445,8 @@ rules:
 ## Support
 
 - **Documentation**: https://docs.machinenativenops.io
-- **Issues**: https://github.com/MachineNativeOps/machine-native-ops-aaps/issues
-- **Community**: https://github.com/MachineNativeOps/machine-native-ops-aaps/discussions
+- **Issues**: https://github.com/MachineNativeOps/machine-native-ops/issues
+- **Community**: https://github.com/MachineNativeOps/machine-native-ops/discussions
 
 ## References
 
