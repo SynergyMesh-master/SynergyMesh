@@ -4,6 +4,8 @@ Controlplane 配置讀取庫
 提供簡單的 API 讓其他 Python 腳本使用 controlplane 配置
 """
 
+import json
+import re
 import yaml
 from pathlib import Path
 from typing import Dict, Any, List, Optional, Tuple
@@ -129,25 +131,23 @@ class ControlplaneConfig:
         Returns:
             (是否有效, 錯誤訊息)
         """
-        import re
         
         # 根據類型獲取規則
         if name_type == "file":
-            # 特殊處理：允許 root.*.yaml 格式的文件
-            if name.startswith("root.") and name.count('.') == 2:
-                parts = name.split('.')
-                if len(parts) == 3 and parts[2] in ['yaml', 'yml', 'map', 'sh']:
-                    return True, None
+            naming_policy = self.get_naming_rules().get("naming", {}).get("file", {})
+            pattern = naming_policy.get("kebab_regex", r'^[a-z][a-z0-9-]*(\.[a-z0-9-]+)*$')
+            if not _compile_regex(pattern).match(name):
+                return False, f"File name must be kebab-case (dots allowed as segments): {name}"
             
-            pattern = r'^[a-z][a-z0-9-]*(\.[a-z0-9]+)*$'
-            if not re.match(pattern, name):
-                return False, f"File name must be kebab-case: {name}"
-            
-            # 檢查雙重擴展名（排除已允許的特例）
-            if name.count('.') > 1:
-                # 允許 root.*.(yaml|yml|map|sh) 這類三段式名稱
-                if not (name.startswith("root.") and len(name.split('.')) == 3):
-                    return False, f"File has double extension: {name}"
+            if re.search(r'\.(yaml|yml|json|toml|sh)\.txt$', name):
+                return False, f"Forbidden double-extension wrapper (use a single real extension): {name}"
+
+            dot_count = name.count('.')
+            if dot_count > 1:
+                allowlist = naming_policy.get("multi_dot_allow_regexes", [])
+                allowed = validate_name_allowlist(name, json.dumps(allowlist))
+                if not allowed and not _compile_regex(r'^root\.[a-z][a-z0-9-]*\.(yaml|yml|map|sh)$').match(name):
+                    return False, f"File has double extension (forbidden): {name}"
         
         elif name_type == "directory":
             pattern = r'^[a-z][a-z0-9-]*$'
@@ -301,6 +301,30 @@ def get_namespaces() -> List[Dict[str, Any]]:
 def validate_name(name: str, name_type: str = "file") -> Tuple[bool, Optional[str]]:
     """快速驗證名稱"""
     return get_config().validate_name(name, name_type)
+
+
+@lru_cache(maxsize=64)
+def _compile_regex(pattern: str):
+    return re.compile(pattern)
+
+
+@lru_cache(maxsize=64)
+def _compile_allowlist(patterns: Tuple[str, ...]):
+    return [_compile_regex(p) for p in patterns if p]
+
+
+def validate_name_allowlist(name: str, allowlist_json: str) -> bool:
+    """
+    供 shell 重用的 allowlist 檢查（避免重複內聯 Python）
+    """
+    try:
+        rules = json.loads(allowlist_json) if allowlist_json else []
+    except Exception:
+        rules = []
+    if not isinstance(rules, list):
+        rules = []
+    compiled = _compile_allowlist(tuple(rules))
+    return any(r.match(name) for r in compiled)
 
 def get_naming_rules() -> Dict[str, Any]:
     """快速獲取命名規則"""

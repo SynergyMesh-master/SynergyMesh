@@ -3,10 +3,26 @@
 # 這是 controlplane 實際應用的示例
 
 # 不使用 set -e，因為我們需要收集所有錯誤後再決定是否退出
+set -u
+set -o pipefail
 
 # 載入 controlplane 庫
-REPO_ROOT="$(git rev-parse --show-toplevel)"
-source "$REPO_ROOT/lib/controlplane.sh"
+REPO_ROOT="$(git rev-parse --show-toplevel 2>/dev/null)" || {
+    echo "[pre-commit] ERROR: not a git repository (git rev-parse failed)"
+    exit 1
+}
+
+CONTROLPLANE_LIB="$REPO_ROOT/lib/controlplane.sh"
+if [[ ! -f "$CONTROLPLANE_LIB" ]]; then
+    echo "[pre-commit] WARNING: $CONTROLPLANE_LIB not found, skipping validation"
+    exit 0
+fi
+
+# shellcheck source=/dev/null
+source "$CONTROLPLANE_LIB" || {
+    echo "[pre-commit] ERROR: failed to source $CONTROLPLANE_LIB"
+    exit 1
+}
 
 echo "🔍 Running pre-commit validation with controlplane..."
 echo ""
@@ -18,9 +34,10 @@ if ! cp_check_exists; then
 fi
 
 # 獲取暫存的文件
-staged_files=$(git diff --cached --name-only --diff-filter=ACM)
+staged_files=()
+mapfile -t staged_files < <(git diff --cached --name-only --diff-filter=ACM)
 
-if [[ -z "$staged_files" ]]; then
+if [[ ${#staged_files[@]} -eq 0 ]]; then
     cp_log_info "No files staged for commit"
     exit 0
 fi
@@ -32,9 +49,9 @@ validated_files=()
 invalid_file_list=()
 
 # 驗證每個文件的命名
-while IFS= read -r file; do
+for file in "${staged_files[@]}"; do
     # 跳過特殊文件和目錄
-    if [[ "$file" == .git* ]] || [[ "$file" == .github* ]] || [[ -d "$file" ]]; then
+    if [[ "$file" == .git* ]] || [[ -d "$file" ]]; then
         continue
     fi
     
@@ -56,7 +73,7 @@ while IFS= read -r file; do
         invalid_files=$((invalid_files + 1))
         invalid_file_list+=("$file")
     fi
-done <<< "$staged_files"
+done
 
 # 顯示結果
 echo ""
@@ -69,12 +86,11 @@ if [[ $invalid_files -gt 0 ]]; then
     echo ""
     cp_log_error "The following files have invalid names:"
     for file in "${invalid_file_list[@]}"; do
-        echo "  ❌ $file"
+        echo "  - $file"
     done
     echo ""
     cp_log_error "Please rename files to follow kebab-case naming convention"
     cp_log_info "Example: MyFile.yaml → my-file.yaml"
-    echo ""
     cp_log_info "To bypass this check (not recommended): git commit --no-verify"
     exit 1
 fi
@@ -83,7 +99,7 @@ cp_log_success "All file names are valid!"
 echo ""
 
 # 可選：運行完整驗證（如果修改了 controlplane 文件）
-if echo "$staged_files" | grep -q "^controlplane/"; then
+if printf '%s\n' "${staged_files[@]}" | grep -q "^controlplane/"; then
     cp_log_info "Controlplane files modified, running full validation..."
     if ! cp_run_validation; then
         cp_log_error "Controlplane validation failed"

@@ -60,55 +60,60 @@ cp_get_yaml_value() {
     local key_path="$2"
     local default_value="${3:-}"
     
-    if [[ -z "$yaml_file" || -z "$key_path" ]]; then
+    if [[ -z "$yaml_file" || -z "$key_path" || ! -f "$yaml_file" ]]; then
         echo "$default_value"
         return 1
     fi
     
-    if [[ ! -f "$yaml_file" ]]; then
-        echo "$default_value"
-        return 1
-    fi
-    
-    # 嘗試使用 yq
-    if command -v yq &> /dev/null; then
+    # 優先 yq
+    if command -v yq >/dev/null 2>&1; then
         local value
-        value=$(yq eval "$key_path" "$yaml_file" 2>/dev/null)
-        if [[ "$value" != "null" && -n "$value" ]]; then
+        value="$(yq eval "$key_path" "$yaml_file" 2>/dev/null)"
+        if [[ -n "$value" && "$value" != "null" ]]; then
             echo "$value"
             return 0
         fi
     fi
     
-    # 回退到 Python
-    if command -v python3 &> /dev/null; then
+    # Python fallback（dot path）
+    if command -v python3 >/dev/null 2>&1; then
         python3 - "$yaml_file" "$key_path" "$default_value" <<'PY'
-import sys
-import yaml
-
+import sys, json
 try:
-    with open('${yaml_file}', 'r') as f:
-        data = yaml.safe_load(f)
-    keys = '${key_path}'.split('.')
-    with open(sys.argv[1], 'r') as f:
-        data = yaml.safe_load(f)
-    keys = sys.argv[2].split('.')
-    value = data
-    for key in keys:
-        if isinstance(value, dict):
-            value = value.get(key)
-        else:
-            value = None
-            break
-    print(value if value is not None else '${default_value}')
-except:
-    print('${default_value}')
-"
-    print(value if value is not None else sys.argv[3])
+    import yaml
 except Exception:
     print(sys.argv[3])
+    sys.exit(1)
+
+yaml_file, key_path, default_value = sys.argv[1], sys.argv[2], sys.argv[3]
+
+try:
+    with open(yaml_file, "r", encoding="utf-8") as f:
+        data = yaml.safe_load(f)
+except Exception:
+    print(default_value)
+    sys.exit(1)
+
+value = data
+for key in key_path.split("."):
+    if isinstance(value, dict) and key in value:
+        value = value[key]
+    else:
+        value = None
+        break
+
+if value is None:
+    print(default_value)
+    sys.exit(1)
+
+# scalar -> print as is; list/dict -> json string
+if isinstance(value, (dict, list)):
+    print(json.dumps(value, ensure_ascii=False))
+else:
+    print(value)
+sys.exit(0)
 PY
-        return 0
+        return $?
     fi
     
     echo "$default_value"
@@ -167,21 +172,47 @@ cp_validate_name() {
     
     case "$name_type" in
         file)
-            # 檢查 kebab-case 和擴展名
-            if [[ ! "$name" =~ ^[a-z][a-z0-9-]*(\.[a-z0-9]+)*$ ]]; then
-                cp_log_error "File name must be kebab-case: $name"
+            # 檢查 kebab-case，允許以點分段的名稱（仍保守）
+            if [[ ! "$name" =~ ^[a-z][a-z0-9-]*(\.[a-z0-9-]+)*$ ]]; then
+                cp_log_error "File name must be kebab-case (dots allowed as segments): $name"
                 return 1
             fi
-            
-            # 檢查雙重擴展名
-            local dot_count=$(echo "$name" | tr -cd '.' | wc -c)
+
+            # 明確禁止雙副檔名封裝
+            if [[ "$name" =~ \.(yaml|yml|json|toml|sh)\.txt$ ]]; then
+                cp_log_error "Forbidden double-extension wrapper (use a single real extension): $name"
+                return 1
+            fi
+
+            # 檢查雙重擴展名（多個 dot）
+            local dot_count
+            dot_count="$(echo "$name" | tr -cd '.' | wc -c | tr -d ' ')"
+
             if [[ $dot_count -gt 1 ]]; then
-                # 允許 root.*.yaml 和 root.*.yml 和 root.*.map 和 root.*.sh 這類三段式名稱
-                if [[ "$name" =~ ^root\.[a-z][a-z0-9-]*\.(yaml|yml|map|sh)$ ]]; then
-                    : # 允許此格式
-                else
-                    cp_log_error "File has double extension: $name"
-                    return 1
+                # 從 baseline 讀取多段檔名允許清單（預設 []）
+                local rules_json
+                rules_json="$(cp_get_baseline_config "root.naming-policy.yaml" "naming.file.multi_dot_allow_regexes" "[]")"
+
+                local allowed="false"
+                if command -v python3 >/dev/null 2>&1; then
+                    allowed="$(PYTHONPATH="$CP_REPO_ROOT/lib:${PYTHONPATH:-}" python3 - "$name" "$rules_json" <<'PY'
+import sys
+from controlplane import validate_name_allowlist
+name = sys.argv[1]
+raw = sys.argv[2]
+print("true" if validate_name_allowlist(name, raw) else "false")
+PY
+)"
+                fi
+
+                # 若未命中 allowlist：回退到現行保守允許（維持既有行為）
+                if [[ "$allowed" != "true" ]]; then
+                    if [[ "$name" =~ ^root\.[a-z][a-z0-9-]*\.(yaml|yml|map|sh)$ ]]; then
+                        : # 允許此格式（保守回退）
+                    else
+                        cp_log_error "File has double extension (forbidden): $name"
+                        return 1
+                    fi
                 fi
             fi
             ;;
