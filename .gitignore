@@ -140,3 +140,11 @@ vite.config.ts.timestamp-*
 outputs/
 /outputs/
 outputs/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Controlplane generated files
+controlplane/active/
