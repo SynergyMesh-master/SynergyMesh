@@ -1,18 +1,37 @@
 # MachineNativeOps AAPS
 
-**Autonomous Agent Platform System** - A minimal system skeleton with immutable governance and self-healing capabilities.
+**Autonomous Agent Platform System** - A minimal system skeleton with immutable
+governance and self-healing capabilities.
 
 ## 🏗️ Architecture
 
-This project follows a **minimal system skeleton** design with clear separation between governance and workspace:
+This project follows a **FHS-compliant minimal system skeleton** design with
+clear separation between governance and workspace:
 
 ```
 /
+├── bin/                   # Essential user command binaries (FHS)
+├── etc/                   # Host-specific system configuration (FHS)
+├── home/                  # User home directories (FHS)
+├── lib/                   # Essential shared libraries (FHS)
+├── sbin/                  # System administration binaries (FHS)
+├── srv/                   # Service data (FHS)
+├── usr/                   # Secondary hierarchy for user data (FHS)
+├── var/                   # Variable data (FHS)
+│
 ├── controlplane/          # Governance Layer (Immutable)
 │   ├── baseline/          # Immutable baseline configuration
-│   ├── overlay/           # Runtime state and evidence
-│   ├── active/            # Synthesized read-only view
-│   └── governance/        # Governance documents and policies
+│   │   ├── config/        # Core configuration files (12 files)
+│   │   ├── registries/    # Module and URN registries (4 files)
+│   │   ├── specifications/# System specifications (8 files)
+│   │   ├── integration/   # Integration configuration (1 file)
+│   │   ├── documentation/ # Architecture documentation
+│   │   └── validation/    # Validation scripts and tools
+│   ├── governance/        # Governance documentation and policies
+│   │   ├── docs/          # All governance documentation
+│   │   ├── policies/      # Governance policies
+│   │   └── reports/       # Implementation reports
+│   └── overlay/           # Runtime overlays and evidence
 │
 ├── workspace/             # Work Layer (Mutable)
 │   ├── projects/          # Project files and scripts
@@ -25,6 +44,17 @@ This project follows a **minimal system skeleton** design with clear separation 
 └── root.fs.map            # Filesystem mappings
 ```
 
+### FHS Compliance
+
+This project follows the Filesystem Hierarchy Standard (FHS) 3.0:
+
+- ✅ **8/8 applicable FHS directories** implemented
+- ✅ **Clean root layer** with only 3 bootstrap files
+- ✅ **Standards-compliant** structure
+- ✅ **Industry best practices** followed
+
+See [FHS_IMPLEMENTATION.md](FHS_IMPLEMENTATION.md) for detailed documentation.
+
 ## 🚀 Quick Start
 
 ### 1. Setup Environment
@@ -34,8 +64,8 @@ This project follows a **minimal system skeleton** design with clear separation 
 source root.env.sh
 
 # Verify controlplane paths
-echo $MACHINENATIVEOPS_CONTROLPLANE
-echo $MACHINENATIVEOPS_BASELINE
+echo $CONTROLPLANE_PATH
+echo $WORKSPACE_PATH
 ```
 
 ### 2. Run Validation
@@ -58,42 +88,56 @@ ls -la controlplane/baseline/config/
 ls -la controlplane/governance/docs/
 
 # View project files
-ls -la workspace/projects/
+ls -la workspace/
 ```
 
 ## 📚 Documentation
 
-### Controlplane Documentation
+### Core Documentation
+
+- **FHS Implementation**: [FHS_IMPLEMENTATION.md](FHS_IMPLEMENTATION.md)
 - **Architecture**: [controlplane/baseline/documentation/BASELINE_ARCHITECTURE.md](controlplane/baseline/documentation/BASELINE_ARCHITECTURE.md)
 - **Usage Guide**: [controlplane/CONTROLPLANE_USAGE.md](controlplane/CONTROLPLANE_USAGE.md)
 
 ### Governance Documentation
+
 - **Governance Docs**: [controlplane/governance/docs/](controlplane/governance/docs/)
 - **Policies**: [controlplane/governance/policies/](controlplane/governance/policies/)
 - **Reports**: [controlplane/governance/reports/](controlplane/governance/reports/)
 
 ### Project Documentation
+
 - **Project Docs**: [workspace/docs/](workspace/docs/)
 - **Configuration**: [workspace/config/](workspace/config/)
 
 ## 🎯 Key Principles
 
-### 1. Minimal System Skeleton
-- Root directory contains only essential bootstrap files
+### 1. FHS Compliance
+
+- Follows Filesystem Hierarchy Standard (FHS) 3.0
+- Industry-standard directory structure
+- Clean separation of concerns
+
+### 2. Minimal System Skeleton
+
+- Root directory contains only FHS directories and 3 bootstrap files
 - All governance in `controlplane/`
 - All work in `workspace/`
 
-### 2. Immutable Governance
+### 3. Immutable Governance
+
 - `controlplane/baseline/` is read-only
 - Changes require explicit governance approval
 - Version control tracks all governance changes
 
-### 3. Self-Healing Without Pollution
+### 4. Self-Healing Without Pollution
+
 - Runtime state in `controlplane/overlay/`
 - Self-healing writes only to overlay
 - Baseline remains pristine
 
-### 4. Evidence-Based Validation
+### 5. Evidence-Based Validation
+
 - All operations produce evidence
 - Evidence stored in `controlplane/overlay/evidence/`
 - Comprehensive validation system (50 checks)
@@ -130,25 +174,28 @@ cat controlplane/overlay/evidence/validation/controlplane.manifest.json
 
 ### Project Structure
 
-- **Baseline Configuration**: `controlplane/baseline/config/` (10 files)
-- **Specifications**: `controlplane/baseline/specifications/` (5 files)
-- **Registries**: `controlplane/baseline/registries/` (2 files)
+- **Baseline Configuration**: `controlplane/baseline/config/` (12 files)
+- **Specifications**: `controlplane/baseline/specifications/` (8 files)
+- **Registries**: `controlplane/baseline/registries/` (4 files)
 - **Integration Rules**: `controlplane/baseline/integration/` (1 file)
-- **Validation System**: `controlplane/baseline/validation/` (3 files)
+- **Validation System**: `controlplane/baseline/validation/` (multiple files)
 
 ### Environment Variables
 
 After sourcing `root.env.sh`, you have access to:
 
-- `MACHINENATIVEOPS_CONTROLPLANE`: Controlplane root
-- `MACHINENATIVEOPS_BASELINE`: Baseline directory
-- `MACHINENATIVEOPS_OVERLAY`: Overlay directory
-- `MACHINENATIVEOPS_ACTIVE`: Active view
-- And 14 more subdirectory paths
+- `CONTROLPLANE_PATH`: Controlplane root
+- `CONTROLPLANE_CONFIG`: Configuration directory
+- `CONTROLPLANE_SPECS`: Specifications directory
+- `CONTROLPLANE_REGISTRIES`: Registries directory
+- `CONTROLPLANE_VALIDATION`: Validation directory
+- `WORKSPACE_PATH`: Workspace root
+- `FHS_BIN`, `FHS_SBIN`, `FHS_ETC`, etc.: FHS directories
 
 ## 📊 Status
 
-- ✅ **Controlplane Architecture**: Complete
+- ✅ **FHS Compliance**: Complete (8/8 applicable directories)
+- ✅ **Controlplane Architecture**: Complete (26 files)
 - ✅ **Validation System**: Operational (50/50 checks passing)
 - ✅ **Evidence Generation**: Working
 - ✅ **Documentation**: Complete
@@ -166,6 +213,6 @@ See LICENSE file for details.
 
 ---
 
-**Version**: 1.0.0  
-**Last Updated**: 2025-12-23  
+**Version**: 2.0.0 (FHS Compliant)
+**Last Updated**: 2025-12-25
 **Maintained By**: MachineNativeOps Team
