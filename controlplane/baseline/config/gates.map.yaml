@@ -1,5 +1,5 @@
 # Gates Mapping Configuration
-# 閘門映對配置
+# 閘門映射配置
 # 這個文件定義了各種驗證閘門的映射關係
 
 version: "1.0.0"
