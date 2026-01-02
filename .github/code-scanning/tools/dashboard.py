@@ -157,8 +157,8 @@ def download_report(filename):
         resolved_path = report_path.resolve()
         
         # Check that the resolved path is under the base directory
-        # Using relative_to() which raises ValueError if path is outside base
-        resolved_path.relative_to(base_path)
+        # Using relative_to() for validation - raises ValueError if path is outside base
+        _ = resolved_path.relative_to(base_path)  # Intentionally checking side effect
         
         # Ensure it's not the base directory itself and is a file
         if resolved_path == base_path or not resolved_path.is_file():
@@ -205,7 +205,8 @@ def main() -> None:
     
     # 驗證 host 格式
     if host not in ALLOWED_HOSTS:
-        print(f"⚠️  警告：無效的 DASHBOARD_HOST 值 '{host}'，使用預設值 {DEFAULT_HOST}")
+        # Don't display the invalid host value to avoid potential info leak
+        print(f"⚠️  警告：無效的 DASHBOARD_HOST 值，使用預設值 {DEFAULT_HOST}")
         host = DEFAULT_HOST
     
     # 驗證並解析端口
