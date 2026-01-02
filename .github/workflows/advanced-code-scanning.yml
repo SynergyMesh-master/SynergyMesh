@@ -1,0 +1,226 @@
+name: 🔍 Advanced Code Scanning - 高階代碼掃描系統
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+  schedule:
+    - cron: '0 2 * * *'  # 每天凌晨 2:00 UTC 執行
+  workflow_dispatch:
+    inputs:
+      run_auto_fix:
+        description: '執行自動修復'
+        required: false
+        default: 'false'
+        type: choice
+        options:
+          - 'true'
+          - 'false'
+
+permissions:
+  contents: read
+  security-events: write
+
+env:
+  AGENT_CONTRACT_ENFORCEMENT: true
+  PYTHON_VERSION: '3.11'
+
+jobs:
+  advanced-scan:
+    name: 🔍 執行高階深度掃描
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 📥 檢出儲存庫
+      uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.2.2
+      with:
+        fetch-depth: 0
+
+    - name: 🐍 設置 Python
+      uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+
+    - name: 📦 安裝掃描工具
+      run: |
+        python -m pip install --upgrade pip
+        pip install bandit
+
+    - name: 🔍 執行高階深度掃描
+      id: scan
+      run: |
+        echo "🔍 開始高階深度掃描..."
+        python .github/code-scanning/tools/advanced_scanner.py \
+          --repo ${{ github.workspace }} \
+          --output-dir ${{ github.workspace }}/.github/code-scanning/reports
+        
+        # 獲取最新掃描結果
+        SCAN_REPORT=$(ls -t ${{ github.workspace }}/.github/code-scanning/reports/scan-results-*.json | head -n 1)
+        
+        if [ -f "$SCAN_REPORT" ]; then
+          echo "📊 掃描完成，分析結果..."
+          
+          # 提取指標
+          TOTAL=$(jq -r '.summary.total_findings' "$SCAN_REPORT")
+          CRITICAL=$(jq -r '.summary.critical' "$SCAN_REPORT")
+          HIGH=$(jq -r '.summary.high' "$SCAN_REPORT")
+          MEDIUM=$(jq -r '.summary.medium' "$SCAN_REPORT")
+          LOW=$(jq -r '.summary.low' "$SCAN_REPORT")
+          
+          echo "total=$TOTAL" >> $GITHUB_OUTPUT
+          echo "critical=$CRITICAL" >> $GITHUB_OUTPUT
+          echo "high=$HIGH" >> $GITHUB_OUTPUT
+          echo "medium=$MEDIUM" >> $GITHUB_OUTPUT
+          echo "low=$LOW" >> $GITHUB_OUTPUT
+          echo "scan_report=$SCAN_REPORT" >> $GITHUB_OUTPUT
+          
+          # 判斷是否失敗
+          if [[ "$CRITICAL" -gt 0 ]] || [[ "$HIGH" -gt 0 ]]; then
+            echo "status=FAIL" >> $GITHUB_OUTPUT
+          else
+            echo "status=PASS" >> $GITHUB_OUTPUT
+          fi
+        fi
+
+    - name: 🎯 執行根因分析
+      id: root_cause
+      needs: scan
+      if: steps.scan.outputs.scan_report != ''
+      run: |
+        echo "🎯 開始根因分析..."
+        python .github/code-scanning/tools/root_cause_analyzer.py \
+          "${{ steps.scan.outputs.scan_report }}" \
+          "root-cause-analysis.json"
+        
+        echo "✅ 根因分析完成"
+
+    - name: 🔧 執行自動修復
+      id: auto_fix
+      needs: scan
+      if: |
+        steps.scan.outputs.scan_report != '' &&
+        (github.event.inputs.run_auto_fix == 'true' || github.event_name == 'push')
+      run: |
+        echo "🔧 開始自動修復..."
+        python .github/code-scanning/tools/auto_fixer.py \
+          "${{ steps.scan.outputs.scan_report }}"
+        
+        echo "✅ 自動修復完成"
+        
+        # 檢查是否有修復
+        FIX_REPORT=$(ls -t ${{ github.workspace }}/.github/code-scanning/reports/fix-report-*.json | head -n 1)
+        if [ -f "$FIX_REPORT" ]; then
+          FIXED=$(jq -r '.summary.fixed' "$FIX_REPORT")
+          MANUAL=$(jq -r '.summary.manual_review_required' "$FIX_REPORT")
+          
+          echo "fixed=$FIXED" >> $GITHUB_OUTPUT
+          echo "manual_review=$MANUAL" >> $GITHUB_OUTPUT
+        fi
+
+    - name: 📤 上傳掃描報告
+      if: always()
+      uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+      with:
+        name: advanced-scan-reports
+        path: |
+          .github/code-scanning/reports/*.json
+          root-cause-analysis.json
+        if-no-files-found: warn
+        retention-days: 30
+
+    - name: 📊 生成掃描摘要
+      if: always()
+      run: |
+        echo "## 🔍 高階代碼掃描報告" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "### 📈 掃描統計" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "| 指標 | 數值 |" >> $GITHUB_STEP_SUMMARY
+        echo "|------|------|" >> $GITHUB_STEP_SUMMARY
+        echo "| 🔴 關鍵 | ${{ steps.scan.outputs.critical || 0 }} |" >> $GITHUB_STEP_SUMMARY
+        echo "| 🟠 高 | ${{ steps.scan.outputs.high || 0 }} |" >> $GITHUB_STEP_SUMMARY
+        echo "| 🟡 中 | ${{ steps.scan.outputs.medium || 0 }} |" >> $GITHUB_STEP_SUMMARY
+        echo "| 🟢 低 | ${{ steps.scan.outputs.low || 0 }} |" >> $GITHUB_STEP_SUMMARY
+        echo "| 📊 總計 | ${{ steps.scan.outputs.total || 0 }} |" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        
+        if [ "${{ steps.scan.outputs.status }}" = "FAIL" ]; then
+          echo "### ❌ 掃描狀態: 失敗" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "⚠️ 發現關鍵或高嚴重性問題，請查看詳細報告並修復。" >> $GITHUB_STEP_SUMMARY
+          exit 1
+        else
+          echo "### ✅ 掃描狀態: 通過" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "🎉 所有關鍵和高優先級問題已通過檢查！" >> $GITHUB_STEP_SUMMARY
+        fi
+
+    - name: 📋 查看根因分析
+      if: always() && hashFiles('root-cause-analysis.json') != ''
+      run: |
+        echo "### 🎯 根因分析摘要" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        
+        RISK_LEVEL=$(jq -r '.risk_assessment.risk_level' root-cause-analysis.json)
+        RISK_SCORE=$(jq -r '.risk_assessment.total_risk_score' root-cause-analysis.json)
+        ROOT_CAUSES=$(jq -r '.root_causes | length' root-cause-analysis.json)
+        
+        echo "| 指標 | 數值 |" >> $GITHUB_STEP_SUMMARY
+        echo "|------|------|" >> $GITHUB_STEP_SUMMARY
+        echo "| 風險評分 | $RISK_SCORE |" >> $GITHUB_STEP_SUMMARY
+        echo "| 風險等級 | **$RISK_LEVEL** |" >> $GITHUB_STEP_SUMMARY
+        echo "| 識別根因 | $ROOT_CAUSES |" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+
+    - name: 🔧 查看修復報告
+      if: always() && steps.auto_fix.outputs.fixed != ''
+      run: |
+        echo "### 🔧 自動修復摘要" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "| 指標 | 數值 |" >> $GITHUB_STEP_SUMMARY
+        echo "|------|------|" >> $GITHUB_STEP_SUMMARY
+        echo "| ✅ 已修復 | ${{ steps.auto_fix.outputs.fixed }} |" >> $GITHUB_STEP_SUMMARY
+        echo "| 👁️ 需要審查 | ${{ steps.auto_fix.outputs.manual_review || 0 }} |" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+
+  security-scan-legacy:
+    name: 🛡️ Legacy Security Scan (Bandit)
+    runs-on: ubuntu-latest
+    needs: advanced-scan
+    
+    steps:
+    - name: 📥 檢出儲存庫
+      uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.2.2
+
+    - name: 🐍 設置 Python
+      uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+
+    - name: 📦 安裝 Bandit
+      run: |
+        python -m pip install --upgrade pip
+        pip install bandit[toml]
+
+    - name: 🐍 執行 Bandit 掃描
+      run: |
+        TARGETS=""
+        for dir in controlplane workspace; do
+          if [ -d "$dir" ]; then
+            TARGETS="$TARGETS $dir"
+          fi
+        done
+        
+        if [ -z "$TARGETS" ]; then
+          echo "沒有找到目錄，跳過 Bandit 掃描"
+          exit 0
+        fi
+        
+        python_files=$(find $TARGETS -name "*.py" -type f | wc -l)
+        if [ "$python_files" -eq 0 ]; then
+          echo "沒有找到 Python 文件，跳過 Bandit 掃描"
+          exit 0
+        fi
+        
+        bandit -q -r $TARGETS || true

@@ -1,0 +1,23 @@
+# 高階代碼掃描系統依賴
+# Advanced Code Scanning System Dependencies
+
+# 安全掃描工具
+bandit>=1.7.5
+safety>=2.3.5
+
+# Web 框架
+flask>=3.0.0
+werkzeug>=3.0.1
+
+# 數據處理
+# Python 標準庫已包含所需模組：
+# - json
+# - os
+# - sys
+# - re
+# - ast
+# - pathlib
+# - datetime
+# - typing
+# - dataclasses
+# - collections
