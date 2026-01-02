@@ -14,7 +14,7 @@ from flask import Flask, render_template, jsonify, send_file
 from pathlib import Path
 import json
 from datetime import datetime
-from typing import Dict, List
+from typing import Dict
 
 app = Flask(__name__)
 
