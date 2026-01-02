@@ -106,11 +106,18 @@ python .github/code-scanning/tools/dashboard.py
 
 **安全配置：**
 - 預設情況下，儀表板僅監聽 `127.0.0.1`（本機訪問），確保安全性
-- 如需允許外部訪問，請設置環境變數：
-  ```bash
-  DASHBOARD_HOST=0.0.0.0 python .github/code-scanning/tools/dashboard.py
-  ```
-- 可通過 `DASHBOARD_PORT` 環境變數自定義端口（預設：5000）
+- 支援通過環境變數配置：
+  - `DASHBOARD_HOST`: 監聽地址（預設：127.0.0.1）
+  - `DASHBOARD_PORT`: 監聽端口（預設：5000）
+  - `DASHBOARD_DEBUG`: Flask 除錯模式（預設：false）
+  
+**開發環境允許外部訪問：**
+```bash
+# 僅限受信任的開發環境使用
+DASHBOARD_HOST=0.0.0.0 python .github/code-scanning/tools/dashboard.py
+```
+
+⚠️ **安全警告：** 切勿在生產或共享環境中將儀表板綁定到 `0.0.0.0` 或啟用除錯模式
 
 ### GitHub Actions 集成
 
@@ -327,11 +334,18 @@ lsof -i :5000
 # 使用不同端口啟動
 DASHBOARD_PORT=8080 python .github/code-scanning/tools/dashboard.py
 
-# 允許外部訪問（僅限安全環境）
+# 開發環境允許外部訪問（切勿用於生產）
 DASHBOARD_HOST=0.0.0.0 python .github/code-scanning/tools/dashboard.py
+
+# 啟用除錯模式（僅限開發環境）
+DASHBOARD_DEBUG=true python .github/code-scanning/tools/dashboard.py
 ```
 
-**注意：** 預設情況下，儀表板僅允許本機訪問（127.0.0.1）以確保安全性。在生產或共享環境中，切勿將儀表板綁定到 0.0.0.0，除非您完全了解安全風險。
+**安全最佳實踐：**
+- ✅ **開發環境：** 可使用 `DASHBOARD_HOST=0.0.0.0` 方便團隊訪問
+- ❌ **生產/共享環境：** 切勿綁定到 `0.0.0.0`，保持預設的 `127.0.0.1`
+- ❌ **除錯模式：** 切勿在生產環境啟用，會暴露敏感資訊和安全漏洞
+- ✅ **建議：** 使用反向代理（如 nginx）並配置適當的身份驗證
 
 ## 貢獻指南
 
