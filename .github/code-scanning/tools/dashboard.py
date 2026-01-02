@@ -131,6 +131,13 @@ def findings():
 @app.route('/api/reports/<filename>')
 def download_report(filename):
     """下載報告"""
+    # Basic validation of the user-supplied filename to avoid path traversal
+    if not filename or filename in {'.', '..'}:
+        return jsonify({'error': 'Report not found'}), 404
+    # Disallow directory separators in the filename
+    if '/' in filename or '\\' in filename or os.sep in filename:
+        return jsonify({'error': 'Report not found'}), 404
+
     # Resolve the requested path and ensure it stays within REPORTS_DIR
     try:
         base_path = REPORTS_DIR.resolve()
@@ -140,7 +147,7 @@ def download_report(filename):
         return jsonify({'error': 'Report not found'}), 404
 
     # Prevent directory traversal by ensuring the resolved path is under REPORTS_DIR
-    if base_path != report_path and base_path not in report_path.parents:
+    if report_path == base_path or base_path not in report_path.parents:
         return jsonify({'error': 'Report not found'}), 404
 
     if report_path.exists():
