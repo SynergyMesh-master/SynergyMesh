@@ -11,6 +11,7 @@ Advanced Code Scanning Dashboard
 """
 
 from flask import Flask, render_template, jsonify, send_file
+from werkzeug.utils import secure_filename
 from pathlib import Path
 import json
 from datetime import datetime
@@ -129,30 +130,37 @@ def findings():
 
 @app.route('/api/reports/<filename>')
 def download_report(filename):
-    """下載報告"""
-    # Basic validation of the user-supplied filename to avoid path traversal
-    if not filename or filename in {'.', '..'}:
-        return jsonify({'error': 'Report not found'}), 404
-    # Disallow directory separators in the filename
-    if '/' in filename or '\\' in filename or os.sep in filename:
-        return jsonify({'error': 'Report not found'}), 404
-
-    # Resolve the requested path and ensure it stays within REPORTS_DIR
+    """下載報告 / Download report"""
+    # Sanitize the filename to prevent path traversal attacks
+    # This removes any directory components and dangerous characters
+    safe_filename = secure_filename(filename)
+    
+    # Additional validation: ensure the sanitized filename is not empty
+    if not safe_filename:
+        return jsonify({'error': 'Invalid filename'}), 400
+    
+    # Construct the safe path within REPORTS_DIR
+    report_path = REPORTS_DIR / safe_filename
+    
+    # Ensure the resolved path is still within REPORTS_DIR (defense in depth)
     try:
         base_path = REPORTS_DIR.resolve()
-        report_path = (REPORTS_DIR / filename).resolve()
-    except OSError:
-        # Invalid path (e.g., contains characters not allowed by the OS)
-        return jsonify({'error': 'Report not found'}), 404
-
-    # Prevent directory traversal by ensuring the resolved path is under REPORTS_DIR
-    if report_path == base_path or base_path not in report_path.parents:
-        return jsonify({'error': 'Report not found'}), 404
-
-    if report_path.exists():
-        return send_file(report_path, as_attachment=True)
+        resolved_path = report_path.resolve()
+        
+        # Check that the resolved path is under the base directory
+        # Using relative_to() which raises ValueError if path is outside base
+        resolved_path.relative_to(base_path)
+        
+        # Ensure it's not the base directory itself and is a file
+        if resolved_path == base_path or not resolved_path.is_file():
+            return jsonify({'error': 'Report not found'}), 404
+            
+    except (OSError, ValueError):
+        # Invalid path or path outside base directory
+        return jsonify({'error': 'Invalid path'}), 400
     
-    return jsonify({'error': 'Report not found'}), 404
+    # Return the safe file
+    return send_file(resolved_path, as_attachment=True)
 
 @app.route('/dashboard')
 def dashboard():
