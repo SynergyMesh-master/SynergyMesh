@@ -8,6 +8,11 @@ safety==2.3.5
 
 # Web 框架
 # Pinned to exact versions to prevent supply-chain risks from unvetted releases
+# 安全掃描工具 - 固定版本以防供應鏈攻擊
+bandit==1.7.10
+safety==3.2.11
+
+# Web 框架 - 固定版本以防供應鏈攻擊
 flask==3.0.3
 werkzeug==3.0.6
 
@@ -17,7 +22,6 @@ werkzeug==3.0.6
 # - os
 # - sys
 # - re
-# - ast
 # - pathlib
 # - datetime
 # - typing
