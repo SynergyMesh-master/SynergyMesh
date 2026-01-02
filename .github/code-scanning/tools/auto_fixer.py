@@ -13,7 +13,6 @@ One-Click Auto Fix System
 import os
 import json
 import re
-import ast
 from typing import Dict, List, Tuple
 from dataclasses import dataclass, asdict
 from pathlib import Path
