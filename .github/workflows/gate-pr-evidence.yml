@@ -19,11 +19,11 @@ jobs:
       pull-requests: read
     steps:
       - name: 📥 Checkout repository
-        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.2.2
 
       - name: 驗證四大核心證據
         id: validation
-        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd
+        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v7.0.2
         with:
           script: |
             const fs = require('fs');
