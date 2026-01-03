@@ -1,8 +1,8 @@
-# AAPS Multi-Agent MPC Architecture Design Response
+# MachineNativeOps Multi-Agent MPC Architecture Design Response
 
 ## 🎯 Executive Summary
 
-基於您的架構設計，我們將在現有AAPS平台基礎上實施企業級多代理MPC系統，實現「觀測→推導→提案→協商→審批→執行→驗證→固化→持續監控」的完整閉環。
+基於您的架構設計，我們將在現有MachineNativeOps平台基礎上實施企業級多代理MPC系統，實現「觀測→推導→提案→協商→審批→執行→驗證→固化→持續監控」的完整閉環。
 
 ---
 
@@ -43,7 +43,7 @@ secondary_sources:
 
 ### 3) MVP Top-3 自動處理事故類型
 
-基於AAPS平台現狀，選擇高頻、低風險、高回報場景：
+基於MachineNativeOps平台現狀，選擇高頻、低風險、高回報場景：
 
 1. **ConfigMap/Secret 配置錯誤**
 
@@ -111,7 +111,7 @@ require_human_approval:
 
 ---
 
-## 🏗️ AAPS平台多代理實施架構
+## 🏗️ MachineNativeOps平台多代理實施架構
 
 ### 現有基礎（Phase 1已完成）
 
@@ -128,7 +128,7 @@ require_human_approval:
 ### 多代理架構層級
 
 ```
-📦 AAPS Multi-Agent Stack
+📦 MachineNativeOps Multi-Agent Stack
 ├── 🎯 Control Plane (編排決策層)
 │   ├── SuperAgent (Orchestrator)
 │   ├── StrategyAgent (Policy/Risk)
@@ -325,7 +325,7 @@ Week 7-8: MPC Enhancement
 
 1. **MVP閉環驗證** - 端到端自動修復
 2. **權限邊界定義** - RBAC最小權限原則
-3. **測試環境部署** - AAPS平台多代理測試
+3. **測試環境部署** - MachineNativeOps平台多代理測試
 
 ### 一個月內目標
 
@@ -337,12 +337,12 @@ Week 7-8: MPC Enhancement
 
 ## 💡 關鍵成功因素
 
-1. **從現有基礎出發** - AAPS平台已具備治理、GitOps、自癒底座
+1. **從現有基礎出發** - MachineNativeOps平台已具備治理、GitOps、自癒底座
 2. **分階段實施** - MVP → 治理 → 學習，降低風險
 3. **可證明閉環** - 每個輸出都是可驗證的結構化結果
 4. **失敗保守原則** - 安全邊界明確，必要時人工介入
 5. **持續學習機制** - 經驗累積，越用越強
 
-這個架構將把AAPS平台從「單代理智能」提升到「多代理協同智能」，真正實現您倡導的「解決根本問題」而非「繞過問題」的工程哲學。
+這個架構將把MachineNativeOps平台從「單代理智能」提升到「多代理協同智能」，真正實現您倡導的「解決根本問題」而非「繞過問題」的工程哲學。
 
 準備好開始實施嗎？

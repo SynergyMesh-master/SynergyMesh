@@ -109,7 +109,7 @@
 **修復文件列表**:
 
 ```
-✅ .github/workflows/aaps-unified-gates.yml (3 violations)
+✅ .github/workflows/machine-native-ops-unified-gates.yml (3 violations)
 ✅ .github/workflows/auto-memory-update.yml (2 violations)
 ✅ .github/workflows/autonomous-ci-guardian.yml (8 violations)
 ✅ .github/workflows/cd.yml (15 violations)

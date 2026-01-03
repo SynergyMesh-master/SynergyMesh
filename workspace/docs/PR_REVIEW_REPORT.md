@@ -47,8 +47,8 @@
    - URL: <https://dash.cloudflare.com/pages/view/machine-native-ops>
    - 原因: 部署配置問題
 
-2. Workers Builds: aaps-worker - FAILURE
-   - URL: <https://dash.cloudflare.com/workers/services/view/aaps-worker>
+2. Workers Builds: machine-native-ops-worker - FAILURE
+   - URL: <https://dash.cloudflare.com/workers/services/view/machine-native-ops-worker>
    - 原因: Worker 構建失敗
 
 3. Workers Builds: machine-native-ops - FAILURE
@@ -119,7 +119,7 @@
 **Cloudflare 部署失敗** ❌
 
 1. Cloudflare Pages - FAILURE
-2. Workers Builds: aaps-worker - FAILURE
+2. Workers Builds: machine-native-ops-worker - FAILURE
 3. Workers Builds: machine-native-ops - FAILURE
 4. Workers Builds: machinenativeai - FAILURE (新增)
 

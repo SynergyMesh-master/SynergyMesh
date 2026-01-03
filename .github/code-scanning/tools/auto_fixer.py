@@ -81,6 +81,18 @@ class HardcodedPasswordFixer(VulnerabilityFixer):
                 r'(?P<lhs>\b(?P<var>\w*password\w*)\s*=\s*)["\'][^"\']+["\']',
                 _replace_password,
                 original_line
+                lhs = match.group(1)
+                var_name = match.group('var')
+                # 將變量名轉換為環境變量名，例如 api_password -> API_PASSWORD
+                env_name = re.sub(r'\W+', '_', var_name).upper()
+                if not env_name or env_name == '_':
+                    env_name = 'PASSWORD'
+                return f"{lhs}os.environ.get('{env_name}')"
+            
+            fixed_line = re.sub(
+                r'(?P<lhs>\b(?P<var>\w*password\w*)\s*=\s*)["\'][^"\']+["\']',
+                _replace_password,
+                original_line
             )
             
             # 檢查是否需要添加 import
@@ -268,6 +280,49 @@ class LongLineFixer(VulnerabilityFixer):
         vuln_type = vulnerability.get('type', '').lower()
         return vuln_type == 'long line'
     
+    def _detect_indentation(self, lines: List[str]) -> str:
+        """
+        檢測文件的縮進風格
+        
+        Args:
+            lines: 文件內容行列表
+            
+        Returns:
+            縮進字符串（'    ' 表示4空格，'  ' 表示2空格，'\t' 表示tab）
+        """
+        indent_counts = {2: 0, 4: 0, 8: 0, 'tab': 0}
+        
+        for line in lines:
+            if not line.strip():
+                continue
+            
+            # 計算前導空格
+            stripped = line.lstrip(' ')
+            if stripped == line:
+                # 檢查是否為 tab
+                if line.startswith('\t'):
+                    indent_counts['tab'] += 1
+                continue
+            
+            spaces = len(line) - len(stripped)
+            # 只統計精確為 2/4/8 個空格的縮進，避免將多級縮進誤判為基本縮進風格
+            if spaces == 8:
+                indent_counts[8] += 1
+            elif spaces == 4:
+                indent_counts[4] += 1
+            elif spaces == 2:
+                indent_counts[2] += 1
+        
+        # 返回最常用的縮進風格
+        if indent_counts['tab'] > max(indent_counts[2], indent_counts[4], indent_counts[8]):
+            return '\t'
+        elif indent_counts[8] > max(indent_counts[2], indent_counts[4]):
+            return ' ' * 8
+        elif indent_counts[4] > indent_counts[2]:
+            return ' ' * 4
+        else:
+            return '  '  # 默認2空格
+    
     def fix(self, file_path: str, vulnerability: Dict) -> Tuple[bool, str, str]:
         try:
             with open(file_path, 'r') as f:
@@ -279,6 +334,7 @@ class LongLineFixer(VulnerabilityFixer):
             if len(original_line) <= 120:
                 return False, original_line, "行長度已符合要求"
             
+            # 檢查是否為註釋（不適合自動拆分）
             # 簡單的拆分策略（實際需要更智能的 AST 分析）
             # 在逗號或操作符處拆分
             # 檢查是否為字符串字面量或註釋（不適合自動拆分）
@@ -288,6 +344,7 @@ class LongLineFixer(VulnerabilityFixer):
             
             # 若此行主要為字符串字面量（可選的簡單賦值之後緊跟字符串），則跳過自動拆分
             stripped_after_assign = re.sub(r'^[\w\.\[\]\(\)\s]+= *', '', stripped)
+            stripped_after_assign = re.sub(r'^\w+\s*=\s*', '', stripped)
             if stripped_after_assign.startswith('"') or stripped_after_assign.startswith("'"):
                 return False, original_line, "此行主要為字符串字面量，需要人工檢查"
             

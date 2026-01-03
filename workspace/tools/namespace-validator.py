@@ -718,7 +718,6 @@ Examples:
         # Check for incorrect certificate paths
         incorrect_paths = [
             r'/etc/machine-native-ops',
-            r'/etc/aaps',
             r'/etc/apps',
         ]
         
@@ -739,7 +738,7 @@ Examples:
         
         # Check for legacy cluster tokens
         legacy_tokens = [
-            'aaps-etcd-cluster',
+            'machine-native-ops-etcd-cluster',
             'machine-native-ops-etcd',
         ]
         

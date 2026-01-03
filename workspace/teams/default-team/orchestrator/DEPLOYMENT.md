@@ -375,4 +375,4 @@ spec:
 - [Kustomize Documentation](https://kustomize.io/)
 - [kubectl Kustomize Integration](https://kubernetes.io/docs/tasks/manage-kubernetes-objects/kustomization/)
 - [SuperAgent README](./README.md)
-- [AAPS Architecture](../../docs/architecture.md)
+- [MachineNativeOps Architecture](../../docs/architecture.md)

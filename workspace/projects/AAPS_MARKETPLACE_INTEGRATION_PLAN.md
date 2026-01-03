@@ -1,8 +1,8 @@
-# AAPS GitHub Marketplace 整合計畫
+# MachineNativeOps GitHub Marketplace 整合計畫
 
 ## 📋 執行摘要
 
-基於您提供的完整 AAPS 戰略方案，我制定了一個**分階段、可執行的整合計畫**，將計畫書中的核心功能整合到現有的 MachineNativeOps/SuperAgent 架構中。
+基於您提供的完整 MachineNativeOps 戰略方案，我制定了一個**分階段、可執行的整合計畫**，將計畫書中的核心功能整合到現有的 MachineNativeOps/SuperAgent 架構中。
 
 ## 🎯 整合策略
 
@@ -188,7 +188,7 @@
 ### 現有架構映射
 
 ```yaml
-SuperAgent 架構 → AAPS 功能映射:
+SuperAgent 架構 → MachineNativeOps 功能映射:
   
   SuperAgent (Orchestrator):
     → 整合 Marketplace webhook 處理
@@ -377,8 +377,8 @@ machine-native-ops/
 ### 配置管理
 
 ```yaml
-# config/aaps.yaml
-aaps:
+# config/machine-native-ops.yaml
+machine-native-ops:
   marketplace:
     github_app_id: ${GITHUB_APP_ID}
     client_id: ${GITHUB_CLIENT_ID}
@@ -387,7 +387,7 @@ aaps:
   
   storage:
     type: s3  # or minio
-    bucket: aaps-artifacts
+    bucket: machine-native-ops-artifacts
     region: us-west-2
   
   databases:
@@ -396,7 +396,7 @@ aaps:
       pool_size: 20
     clickhouse:
       url: ${CLICKHOUSE_URL}
-      database: aaps
+      database: machine-native-ops
     redis:
       url: ${REDIS_URL}
       streams:
@@ -445,7 +445,7 @@ aaps:
 
 ```bash
 # 1. 創建新分支
-git checkout -b feature/aaps-marketplace-integration
+git checkout -b feature/machine-native-ops-marketplace-integration
 
 # 2. 設置 Workspace 結構
 # 2.1 創建 TypeScript 應用目錄
@@ -489,14 +489,14 @@ pytest tests/
 ./scripts/verify-deployment.sh
 
 # 7. 創建 PR
-gh pr create --title "AAPS Marketplace Integration Phase 1"
+gh pr create --title "MachineNativeOps Marketplace Integration Phase 1"
 ```
 
 ### Phase 2 部署 (Week 3-6)
 
 ```bash
 # 1. 繼續在同一分支開發
-git checkout feature/aaps-marketplace-integration
+git checkout feature/machine-native-ops-marketplace-integration
 
 # 2. 實施企業級功能
 # - 多語言支援
@@ -557,7 +557,7 @@ npm run test:e2e
 
 ## 💡 總結
 
-這個整合計畫將 AAPS 計畫書的核心價值與我們現有的 SuperAgent 架構完美結合，實現:
+這個整合計畫將 MachineNativeOps 計畫書的核心價值與我們現有的 SuperAgent 架構完美結合，實現:
 
 1. **技術創新**: 企業級 AI Observability + Artifact 管理
 2. **商業價值**: 30-50% 成本節省 + 60% 效率提升
