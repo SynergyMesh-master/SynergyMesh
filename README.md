@@ -19,6 +19,8 @@ clear separation between governance and workspace:
 ├── usr/                   # Secondary hierarchy for user data (FHS)
 ├── var/                   # Variable data (FHS)
 │
+├── governance/            # Symlink to workspace/src/governance (AI Agent governance)
+│
 ├── controlplane/          # Governance Layer (Immutable)
 │   ├── baseline/          # Immutable baseline configuration
 │   │   ├── config/        # Core configuration files (12 files)
@@ -37,6 +39,7 @@ clear separation between governance and workspace:
 │   ├── projects/          # Project files and scripts
 │   ├── config/            # Project configurations
 │   ├── docs/              # Project documentation
+│   ├── src/governance/    # AI Agent governance framework (30-agents, etc.)
 │   └── artifacts/         # Build artifacts and reports
 │
 ├── root.bootstrap.yaml    # System bootstrap configuration
@@ -104,6 +107,14 @@ ls -la workspace/
 - **Governance Docs**: [controlplane/governance/docs/](controlplane/governance/docs/)
 - **Policies**: [controlplane/governance/policies/](controlplane/governance/policies/)
 - **Reports**: [controlplane/governance/reports/](controlplane/governance/reports/)
+
+### AI Agent Governance
+
+- **30-agents Framework**: [governance/30-agents/README.md](governance/30-agents/README.md)
+- **Agent Catalog**: [governance/30-agents/registry/agent-catalog.yaml](governance/30-agents/registry/agent-catalog.yaml)
+- **RBAC Policies**: [governance/30-agents/permissions/rbac-policies.yaml](governance/30-agents/permissions/rbac-policies.yaml)
+
+> **Note**: The `governance/` directory at root level is a symlink to `workspace/src/governance/` for convenient access to AI agent governance framework.
 
 ### Project Documentation
 
