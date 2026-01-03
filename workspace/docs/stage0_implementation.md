@@ -391,14 +391,6 @@ runtime.spawn(agent);
 
 EOF
 
-````
-=======
-```
-
-EOF
-
-```
->>>>>>> origin/copilot/sub-pr-402
 
 #### 1.5 服務目錄創建（2天）
 
@@ -464,12 +456,6 @@ EOF
 
 ````
 
-=======
-
-EOF
-
-```
->>>>>>> origin/copilot/sub-pr-402
 
 #### 1.6 Agents 目錄創建（3天）
 

@@ -416,12 +416,3 @@ docker logs synergymesh-postgres
 
 ---
 
-__最後更新 / Last Updated__: 2025-01-15  
-__版本 / Version__: 4.0.0  
-__維護者 / Maintainer__: SynergyMesh Team
-=======
-
-__最後更新 / Last Updated__: 2025-01-15  
-__版本 / Version__: 4.0.0  
-__維護者 / Maintainer__: SynergyMesh Team
->>>>>>> origin/copilot/sub-pr-402

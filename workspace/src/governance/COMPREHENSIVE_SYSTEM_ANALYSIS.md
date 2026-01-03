@@ -844,12 +844,6 @@ security = 100 - (critical×10 + high×5 + medium×2 + low×0.5)
 
 **自動化流程**:
 
-1. Tag push (v\*)
-=======
-
-1. Tag push (v*)
-
->>>>>>> origin/copilot/sub-pr-402
 1. GitHub Actions 自動執行
 2. 構建所有平台安裝包
 3. 代碼簽名與公證

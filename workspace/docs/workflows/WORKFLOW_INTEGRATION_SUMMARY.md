@@ -110,16 +110,6 @@
 
 #### ❌ `docker-compose.workflow.yml`
 
-- **Status:** Can be deleted (functionality integrated into main
-  docker-compose.yml)
-- **Reason:** Workflow services added to main docker-compose.yml with profile
-  support
-=======
-
-- **Status:** Can be deleted (functionality integrated into main docker-compose.yml)
-- **Reason:** Workflow services added to main docker-compose.yml with profile support
-
->>>>>>> origin/copilot/sub-pr-402
 
 ---
 
@@ -341,13 +331,6 @@ The workflow system integration follows SynergyMesh's three-systems architecture
 
 ### 2. Structural Governance
 
-- **Behavior Contracts**
-  (`governance/policies/workflow/behavior-contracts.yaml`)
-=======
-
-- **Behavior Contracts** (`governance/policies/workflow/behavior-contracts.yaml`)
-
->>>>>>> origin/copilot/sub-pr-402
 
 - **Validation Rules** (`governance/policies/workflow/validation-rules.yaml`)
 - **System Manifest** (`config/system-manifest.yaml` - workflow_system section)

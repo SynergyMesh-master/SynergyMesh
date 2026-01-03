@@ -618,9 +618,6 @@ const reports = await runStageOne({
 | [governance/35-scripts/validate-python-syntax.py](./governance/35-scripts/validate-python-syntax.py) ⭐ **NEW**              | Python 語法驗證器 | 自動化語法檢查工具 |
 | [governance/environment-matrix/LANGUAGE_DIMENSION_MAPPING.md](./governance/environment-matrix/LANGUAGE_DIMENSION_MAPPING.md) | 語言維度映射      | 多語言配置    |
 | [governance/policies/conftest/matechat-integration/README.md](./governance/policies/conftest/matechat-integration/README.md) | MateChat 整合策略 | Conftest 策略 |
-=======
-
->>>>>>> origin/copilot/sub-pr-402
 
 ### 重構 Playbooks (`docs/refactor_playbooks/`) ⭐ **NEW**
 

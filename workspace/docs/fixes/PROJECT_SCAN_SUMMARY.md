@@ -124,13 +124,6 @@ module.exports = config;
 
 ### Contracts L1
 
-- `core/contract_service/contracts-L1/contracts/jest.config.ts` →
-  `jest.config.cjs`
-=======
-
-- `core/contract_service/contracts-L1/contracts/jest.config.ts` → `jest.config.cjs`
-
->>>>>>> origin/copilot/sub-pr-402
 
 - `core/contract_service/contracts-L1/contracts/package.json`
 

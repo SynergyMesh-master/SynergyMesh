@@ -11,10 +11,6 @@
 This PR implements an enterprise-grade **Language Governance Dashboard** system
 with:
 
-=======
-This PR implements an enterprise-grade **Language Governance Dashboard** system with:
-
->>>>>>> origin/copilot/sub-pr-402
 
 - ✅ **7 commits** delivering 4 major visualization components
 - ✅ **Health scoring** with 85/100 current baseline (Grade B)
@@ -45,9 +41,6 @@ This PR implements an enterprise-grade **Language Governance Dashboard** system 
 | `tools/generate-sankey-data.py` | Violation flow analysis | `governance/sankey-data.json` |
 | `tools/generate-hotspot-heatmap.py` | Intensity scoring | `governance/hotspot-data.json`, `docs/HOTSPOT_HEATMAP.md` |
 | `tools/generate-migration-flow.py` | Cluster migration tracking | `governance/migration-flow.json`, `docs/MIGRATION_FLOW.md` |
-=======
-
->>>>>>> origin/copilot/sub-pr-402
 
 ### 3. Governance Data Layer ✅
 
@@ -194,11 +187,6 @@ docs/
    - [ ] Link to language governance dashboard
    - [ ] Add policy compliance section
 
-2. **governance/policies/\*.md**
-=======
-3. **governance/policies/*.md**
-
->>>>>>> origin/copilot/sub-pr-402
 
 - [ ] Reference new enforcement tooling
 - [ ] Link to hotspot heatmap for violation tracking
@@ -229,12 +217,6 @@ docs/
 
    **For each file, add:**
 
-- [ ] "Language Governance" subsection
-- [ ] Links to relevant hotspot/violation data
-- [ ] Reference dashboard for real-time monitoring
-=======
-
->>>>>>> origin/copilot/sub-pr-402
 
 #### D. Create Cross-Reference Documentation
 
@@ -256,14 +238,6 @@ docs/
     - [ ] Include troubleshooting guide
     - [ ] Add FAQ section
 
-3. **tools/docs/GENERATOR_SCRIPTS_GUIDE.md** (NEW)
-    - [ ] Document all 3 generator scripts
-    - [ ] Usage examples for each
-    - [ ] Integration with CI/CD
-    - [ ] Manual execution procedures
-=======
-
->>>>>>> origin/copilot/sub-pr-402
 
 ### Phase 2: Feature Enhancements (Short-term) 🚀
 
@@ -294,13 +268,6 @@ docs/
     - [ ] Enable click-to-drill on flow paths
     - [ ] Show violation severity in flow thickness
 
-5. **Hotspot Heatmap Improvements**
-    - [ ] Add click-to-navigate to file location
-    - [ ] Implement hover tooltips with full violation details
-    - [ ] Enable layer filtering (show only L4, only L1, etc.)
-=======
-
->>>>>>> origin/copilot/sub-pr-402
 
 #### B. Automation Enhancements
 
@@ -329,13 +296,6 @@ docs/
     - [ ] Notify on new critical hotspots (score ≥ 70)
     - [ ] Weekly summary report generation
 
-5. **Historical Trend Tracking**
-    - [ ] Store daily snapshots of health scores
-    - [ ] Generate trend charts (30-day, 90-day)
-    - [ ] Predict future health score trajectory
-=======
-
->>>>>>> origin/copilot/sub-pr-402
 
 ### Phase 3: Integration & Scaling (Medium-term) 📊
 
@@ -356,13 +316,6 @@ docs/
     - [ ] Link violations to knowledge base entries
     - [ ] Enable semantic search across governance reports
 
-3. **Documentation Health Scoring**
-    - [ ] Extend health score to include documentation quality
-    - [ ] Track documentation coverage per layer
-    - [ ] Flag outdated/missing docs
-=======
-
->>>>>>> origin/copilot/sub-pr-402
 
 #### B. Developer Experience
 
@@ -381,13 +334,6 @@ docs/
     - [ ] Quick-fix suggestions based on governance rules
     - [ ] Local health score preview
 
-3. **Pre-commit Hooks**
-    - [ ] Block commits that worsen health score
-    - [ ] Show violation preview before commit
-    - [ ] Suggest alternative approaches
-=======
-
->>>>>>> origin/copilot/sub-pr-402
 
 ### Phase 4: Advanced Analytics (Long-term) 📈
 
@@ -408,29 +354,11 @@ docs/
     - [ ] Predict future hotspots before they emerge
     - [ ] Recommend proactive refactoring
 
-3. **Auto-migration Path Optimization**
-    - [ ] Use graph algorithms to find optimal migration sequences
-    - [ ] Minimize disruption while maximizing health improvement
-    - [ ] Generate step-by-step migration plans
-=======
-
->>>>>>> origin/copilot/sub-pr-402
 
 #### B. Multi-Repository Support
 
 **Timeline**: 3-4 months
 
-1. **Cross-repo Governance Dashboard**
-   - [ ] Aggregate health scores across multiple repositories
-   - [ ] Track organization-wide language compliance
-   - [ ] Enable portfolio-level decision making
-=======
-1. **Cross-repo Governance Dashboard**
-    - [ ] Aggregate health scores across multiple repositories
-    - [ ] Track organization-wide language compliance
-    - [ ] Enable portfolio-level decision making
-
->>>>>>> origin/copilot/sub-pr-402
 
 ---
 
@@ -479,9 +407,6 @@ docs/
 | Fix Success Rate | 87% | 92% | 95% |
 | Documentation Coverage | ~60%* | 85% | 95% |
 | CI/CD Uptime | 100% | 100% | 100% |
-=======
-
->>>>>>> origin/copilot/sub-pr-402
 
 *Estimated: 4 of 129 markdown files updated with governance references (3.1% complete), baseline ~60% includes other documentation
 
@@ -548,13 +473,6 @@ docs/
 
 ### For Engineering Team
 
-**Key Message**: "New language governance dashboard provides real-time
-visibility into code quality, with automated CI/CD enforcement and actionable
-insights."
-=======
-
-**Key Message**: "New language governance dashboard provides real-time visibility into code quality, with automated CI/CD enforcement and actionable insights."
->>>>>>> origin/copilot/sub-pr-402
 
 **Next Steps for Team**:
 
@@ -565,13 +483,6 @@ insights."
 
 ### For Management
 
-**Key Message**: "Delivered enterprise-grade governance system tracking health
-score of 85/100 across 6-layer architecture, with 87% fix success rate and
-automated enforcement."
-=======
-
-**Key Message**: "Delivered enterprise-grade governance system tracking health score of 85/100 across 6-layer architecture, with 87% fix success rate and automated enforcement."
->>>>>>> origin/copilot/sub-pr-402
 
 **Business Value**:
 
@@ -582,12 +493,6 @@ automated enforcement."
 
 ### For External Contributors
 
-**Key Message**: "Language governance dashboard ensures consistent code quality.
-Check health score before submitting PRs."
-=======
-
-**Key Message**: "Language governance dashboard ensures consistent code quality. Check health score before submitting PRs."
->>>>>>> origin/copilot/sub-pr-402
 
 **Contribution Guidelines Update Needed**:
 
@@ -624,14 +529,6 @@ Check health score before submitting PRs."
 
 ### Operational Risks
 
-| Risk | Probability | Impact | Mitigation |
-|------|-------------|--------|------------|
-| Developer resistance to adoption | Medium | Medium | Training sessions, clear value demonstration |
-| Documentation drift continues | High | Low | Automate doc synchronization in CI |
-| Maintenance burden increases | Low | Medium | Clear ownership model, runbook documentation |
-=======
-
->>>>>>> origin/copilot/sub-pr-402
 
 ---
 
@@ -640,10 +537,6 @@ Check health score before submitting PRs."
 PR #2 successfully delivers a comprehensive **Language Governance Dashboard**
 system that provides:
 
-=======
-PR #2 successfully delivers a comprehensive **Language Governance Dashboard** system that provides:
-
->>>>>>> origin/copilot/sub-pr-402
 
 - ✅ **Real-time monitoring** of code quality across 6 architectural layers
 - ✅ **4 visualization types** for actionable insights

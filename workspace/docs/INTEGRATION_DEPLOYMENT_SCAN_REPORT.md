@@ -126,13 +126,6 @@
    make all-kg
    ```
 
-   這將更新 `docs/knowledge-graph.yaml` 和 `docs/superroot-entities.yaml`
-   中的路徑引用。
-=======
-
-   這將更新 `docs/knowledge-graph.yaml` 和 `docs/superroot-entities.yaml` 中的路徑引用。
-
->>>>>>> origin/copilot/sub-pr-402
 
 1. **清理重複目錄** (可選)
    考慮在未來版本中合併 `services/mcp/` 到 `mcp-servers/`，並更新所有引用。

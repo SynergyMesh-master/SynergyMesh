@@ -157,13 +157,6 @@
     - Troubleshooting
     - Security considerations
 
-5. ✅ **docs/VALIDATION_GUIDE.md**
-    - Validation layer details
-    - Customization guide
-    - Rule configuration
-=======
-
->>>>>>> origin/copilot/sub-pr-402
 
 ### Testing | 測試
 
@@ -203,13 +196,6 @@
     - Entry points
     - Dependencies
 
-5. ✅ **requirements-workflow.txt** (13 dependencies)
-    - Core dependencies
-    - Testing tools
-    - Quality tools
-=======
-
->>>>>>> origin/copilot/sub-pr-402
 
 ## Statistics | 統計
 

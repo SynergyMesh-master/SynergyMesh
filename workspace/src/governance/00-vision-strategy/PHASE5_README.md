@@ -151,12 +151,6 @@ strategies:
 
 **執行 / Execution**:
 
-- 模式: SCHEDULED
-- 頻率: 每 6 小時 (0 _/6_ \*\*)
-=======
-- 頻率: 每 6 小時 (0 _/6_ **)
-
->>>>>>> origin/copilot/sub-pr-402
 
 - 自動分發: YES
 - 責任: AI AUTONOMOUS

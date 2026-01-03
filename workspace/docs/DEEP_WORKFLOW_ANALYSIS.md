@@ -10,10 +10,6 @@ After thorough investigation, the 7 failing workflows all have
 **"startup_failure"** conclusions, meaning they fail before any jobs execute.
 This is NOT caused by:
 
-=======
-After thorough investigation, the 7 failing workflows all have **"startup_failure"** conclusions, meaning they fail before any jobs execute. This is NOT caused by:
-
->>>>>>> origin/copilot/sub-pr-402
 
 - ❌ YAML syntax errors (all files validated)
 - ❌ Repository code issues
@@ -107,10 +103,6 @@ jobs:
 **Hypothesis**: If this PR only modifies documentation/workflow files, NO code
 paths trigger, so:
 
-=======
-**Hypothesis**: If this PR only modifies documentation/workflow files, NO code paths trigger, so:
-
->>>>>>> origin/copilot/sub-pr-402
 
 1. `detect-changes` runs and outputs all `false`
 2. All test jobs are skipped (condition not met)

@@ -769,14 +769,6 @@ Stage 3: 閉環優化 (6-12 months)
    python governance/scripts/auto-fix-medium-issues.py --fix-compliance
    ```
 
-   **時間估計**: < 1 hour (自動化執行) ⚡ **成功標準**: 95 個 MEDIUM 問題降至 <
-   10
-=======
-
-   **時間估計**: < 1 hour (自動化執行) ⚡
-   **成功標準**: 95 個 MEDIUM 問題降至 < 10
-
->>>>>>> origin/copilot/sub-pr-402
 
 1. **建立維度 Owner 責任制**
 
@@ -812,13 +804,6 @@ Stage 3: 閉環優化 (6-12 months)
      - 自動優化決策引擎
    ```
 
-   **時間估計**: < 2 weeks ⚡ **成功標準**: 可視化 dashboard + 自動預警
-=======
-
-   **時間估計**: < 2 weeks ⚡
-   **成功標準**: 可視化 dashboard + 自動預警
-
->>>>>>> origin/copilot/sub-pr-402
 
 1. **完善文檔與培訓**
 
@@ -857,17 +842,6 @@ Stage 3: 閉環優化 (6-12 months)
    - 預測性問題檢測（機器學習）
    - 自適應策略優化
 
-2. **語意網整合**
-   - RDF/OWL ontology for governance
-   - 知識圖譜驅動推理
-   - 跨系統語意一致性
-=======
-3. **語意網整合**
-    - RDF/OWL ontology for governance
-    - 知識圖譜驅動推理
-    - 跨系統語意一致性
-
->>>>>>> origin/copilot/sub-pr-402
 
 ---
 

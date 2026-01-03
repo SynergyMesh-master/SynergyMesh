@@ -1016,12 +1016,6 @@ spec:
 **重構計畫完成時間 (Refactor Plan Completed)**: 2025-12-07T10:19:24Z  
 **前置文檔 (Previous)**:
 
-- `01_deconstruction/kg-builder_deconstruction.md` ✅
-=======
-
-- `01_deconstruction/kg-builder_deconstruction.md` ✅  
-
->>>>>>> origin/copilot/sub-pr-402
 
 - `02_integration/kg-builder_integration.md` ✅  
 **執行狀態 (Execution Status)**: ⏳ Ready for P0 Execution  

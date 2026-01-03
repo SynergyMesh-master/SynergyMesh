@@ -58,13 +58,6 @@ alerting_rules:
 
 #### 明顯症狀 | Observable Symptoms
 
-- ❌ 所有 `/healthz` 端點返回 503 或無回應 | All `/healthz` endpoints return 503
-  or no response
-=======
-
-- ❌ 所有 `/healthz` 端點返回 503 或無回應 | All `/healthz` endpoints return 503 or no response
-
->>>>>>> origin/copilot/sub-pr-402
 
 - ❌ Prometheus 顯示 0 個健康副本 | Prometheus shows 0 healthy replicas
 - ❌ kubectl 顯示所有 Pod 處於 CrashLoopBackOff、Error 或 Pending 狀態
@@ -172,12 +165,6 @@ kubectl describe pod -n unmanned-island-system -l app=hlp-executor-core | \
 
 #### 恢復路徑 A: 快速重啟 (應用層問題)
 
-**使用場景**: 暫時性應用崩潰，配置正確 | Transient application crash,
-configuration correct
-=======
-
-**使用場景**: 暫時性應用崩潰，配置正確 | Transient application crash, configuration correct
->>>>>>> origin/copilot/sub-pr-402
 
 ```bash
 # Step 1: Force restart all pods
@@ -224,12 +211,6 @@ kubectl logs -n unmanned-island-system -l app=hlp-executor-core -f --tail=50
 
 #### 恢復路徑 C: 資源調整 (資源不足)
 
-**使用場景**: 節點資源不足，Pod 無法調度 | Insufficient node resources, pods
-cannot be scheduled
-=======
-
-**使用場景**: 節點資源不足，Pod 無法調度 | Insufficient node resources, pods cannot be scheduled
->>>>>>> origin/copilot/sub-pr-402
 
 ```bash
 # Step 1: Reduce resource requests temporarily (emergency only!)
@@ -352,13 +333,6 @@ alerting_rules:
 
 #### 明顯症狀 | Observable Symptoms
 
-- ⚠️ 執行卡在相同階段超過預期時間 | Executions stuck in same phase beyond
-  expected time
-=======
-
-- ⚠️ 執行卡在相同階段超過預期時間 | Executions stuck in same phase beyond expected time
-
->>>>>>> origin/copilot/sub-pr-402
 
 - ⚠️ 狀態轉換驗證失敗 | State transition validation failures
 - ⚠️ Checkpoint 無法恢復或驗證失敗 | Checkpoints cannot be restored or validation fails
@@ -367,13 +341,6 @@ alerting_rules:
 
 #### 業務影響 | Business Impact
 
-- ⚠️ 部分 HLP 執行可能進入不一致狀態 | Some HLP executions may enter
-  inconsistent state
-=======
-
-- ⚠️ 部分 HLP 執行可能進入不一致狀態 | Some HLP executions may enter inconsistent state
-
->>>>>>> origin/copilot/sub-pr-402
 
 - ⚠️ 回滾功能可能受損 | Rollback functionality may be impaired
 - ⚠️ 執行時間增加 | Execution time increased
@@ -477,12 +444,6 @@ done
 
 #### 恢復路徑 B: 重建狀態索引 (廣泛問題)
 
-**使用場景**: 多個執行受影響，狀態索引可能損壞 | Multiple executions affected,
-state index may be corrupted
-=======
-
-**使用場景**: 多個執行受影響，狀態索引可能損壞 | Multiple executions affected, state index may be corrupted
->>>>>>> origin/copilot/sub-pr-402
 
 ```bash
 # Step 1: Enable maintenance mode (new executions queued)
@@ -517,12 +478,6 @@ kubectl exec -it deployment/hlp-executor-core -n unmanned-island-system -- \
 
 #### 恢復路徑 C: 完整回滾與重啟 (嚴重損壞)
 
-**使用場景**: 狀態嚴重損壞，無法在線修復 | Severe corruption, cannot be fixed
-online
-=======
-
-**使用場景**: 狀態嚴重損壞，無法在線修復 | Severe corruption, cannot be fixed online
->>>>>>> origin/copilot/sub-pr-402
 
 ```bash
 # Step 1: Stop all new executions (circuit breaker)
@@ -592,13 +547,6 @@ T+2hr:   If not resolved → Schedule incident review
 
 ### 24 小時內
 
-- [ ] 完成詳細事件報告 (Post-Mortem) | Complete detailed incident report
-      (Post-Mortem)
-=======
-
-- [ ] 完成詳細事件報告 (Post-Mortem) | Complete detailed incident report (Post-Mortem)
-
->>>>>>> origin/copilot/sub-pr-402
 
 - [ ] 識別根本原因 | Identify root cause
 - [ ] 列出行動項目 (Action Items) | List action items

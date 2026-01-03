@@ -133,10 +133,6 @@ Generated plans follow this structure:
 
 ````
 
-=======
-
-```
->>>>>>> origin/copilot/sub-pr-402
 
 ## 🔄 Integration with Ecosystem Orchestrator
 
