@@ -1,6 +1,6 @@
-# AAPS 專案深度分析報告
+# MachineNativeOps 專案深度分析報告
 
-**MachineNativeOps AAPS (AI Architecture & Artifact Provisioning System)**
+**MachineNativeOps MachineNativeOps (AI Architecture & Artifact Provisioning System)**
 
 **分析日期**: 2025-12-21
 **分析版本**: v5.0.0
@@ -104,7 +104,7 @@
 
 與同類產品比較：
 
-| 功能 | AAPS | Snyk | GitGuardian | Dependabot |
+| 功能 | MachineNativeOps | Snyk | GitGuardian | Dependabot |
 |------|------|------|-------------|------------|
 | Token 監控 | 計畫中 | 無 | 無 | 無 |
 | Artifact 管理 | 計畫中 | 有 | 有 | 無 |
@@ -313,7 +313,7 @@
 
 ---
 
-**報告總結：** AAPS 專案擁有優秀的架構設計和完整的治理框架，但存在嚴重的「過度設計、實現不足」問題。建議立即轉向執行模式，聚焦 MVP，並以 4-6 週為目標推出可驗證的產品。
+**報告總結：** MachineNativeOps 專案擁有優秀的架構設計和完整的治理框架，但存在嚴重的「過度設計、實現不足」問題。建議立即轉向執行模式，聚焦 MVP，並以 4-6 週為目標推出可驗證的產品。
 
 ---
 

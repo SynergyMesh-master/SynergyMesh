@@ -4,7 +4,7 @@
 
 ### 1. GitHub Actions SHA Pinning 修復
 
-**檔案**: `.github/workflows/aaps-phase1-gates.yml`
+**檔案**: `.github/workflows/machine-native-ops-phase1-gates.yml`
 
 **變更**:
 

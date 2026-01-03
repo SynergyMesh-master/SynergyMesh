@@ -1,4 +1,4 @@
-# AAPS Multi-Agent MPC v1 Specification Package
+# MachineNativeOps Multi-Agent MPC v1 Specification Package
 
 ## 📦 Package Overview
 
@@ -13,7 +13,7 @@
 ```json
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "AAPS Agent Message Envelope",
+  "title": "MachineNativeOps Agent Message Envelope",
   "type": "object",
   "required": ["meta", "context", "payload"],
   "properties": {
@@ -415,7 +415,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/MachineNativeOps/machine-native-ops-aaps.git
+    repoURL: https://github.com/MachineNativeOps/machine-native-ops-machine-native-ops.git
     targetRevision: main
     path: deployments/multi-agent
   destination:
@@ -727,10 +727,10 @@ spec:
 set -euo pipefail
 
 NAMESPACE="machinenativeops"
-REPO="https://github.com/MachineNativeOps/machine-native-ops-aaps.git"
+REPO="https://github.com/MachineNativeOps/machine-native-ops-machine-native-ops.git"
 BRANCH="main"
 
-echo "🚀 部署AAPS多代理MPC系統..."
+echo "🚀 部署MachineNativeOps多代理MPC系統..."
 
 # 1. 創建命名空間
 kubectl create namespace $NAMESPACE --dry-run=client -o yaml | kubectl apply -f -
@@ -902,7 +902,7 @@ SUPER_AGENT_IP=$(kubectl get svc super-agent -n $NAMESPACE -o jsonpath='{.spec.c
 curl -X GET "http://$SUPER_AGENT_IP:8080/health" || echo "等待服務啟動..."
 
 echo ""
-echo "🎉 AAPS多代理MPC系統部署完成！"
+echo "🎉 MachineNativeOps多代理MPC系統部署完成！"
 echo ""
 echo "📋 下一步操作："
 echo "1. 檢查代理狀態: kubectl get pods -n $NAMESPACE"
@@ -910,7 +910,7 @@ echo "2. 查看日誌: kubectl logs -f deployment/super-agent -n $NAMESPACE"
 echo "3. 測試API: curl http://$SUPER_AGENT_IP:8080/health"
 echo "4. 部署其他代理: 繼續部署monitoring-agent, problem-solver-agent, maintenance-agent"
 echo ""
-echo "📚 詳細文檔: https://github.com/MachineNativeOps/machine-native-ops-aaps/tree/main/docs/multi-agent"
+echo "📚 詳細文檔: https://github.com/MachineNativeOps/machine-native-ops-machine-native-ops/tree/main/docs/multi-agent"
 ```
 
 ---

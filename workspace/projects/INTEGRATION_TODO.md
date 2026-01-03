@@ -1,4 +1,4 @@
-# AAPS Marketplace 整合任務清單
+# MachineNativeOps Marketplace 整合任務清單
 
 ## 📋 Phase 1: 核心基礎整合 (Week 1-2)
 

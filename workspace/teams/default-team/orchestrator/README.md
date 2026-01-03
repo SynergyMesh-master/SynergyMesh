@@ -1,6 +1,6 @@
-# AAPS SuperAgent
+# MachineNativeOps SuperAgent
 
-SuperAgent is the central orchestrator in the AAPS Multi-Agent MPC architecture. It coordinates all other agents and manages the incident lifecycle state machine.
+SuperAgent is the central orchestrator in the MachineNativeOps Multi-Agent MPC architecture. It coordinates all other agents and manages the incident lifecycle state machine.
 
 ## 🎯 Purpose
 
@@ -568,6 +568,6 @@ SuperAgent integrates with:
 
 ---
 
-**SuperAgent is the heart of the AAPS Multi-Agent MPC system, enabling truly intelligent, collaborative problem-solving.**
+**SuperAgent is the heart of the MachineNativeOps Multi-Agent MPC system, enabling truly intelligent, collaborative problem-solving.**
 
-# machine-native-ops #aaps #multi-agent #super-agent #orchestration
+# machine-native-ops #machine-native-ops #multi-agent #super-agent #orchestration

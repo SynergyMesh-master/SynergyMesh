@@ -21,7 +21,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   - Enhanced evidence chain requirements
   - Improved mobile device friendliness
   - Added logical consistency rules
-- Pinned GitHub Actions to full commit SHAs in aaps-phase1-gates.yml:
+- Pinned GitHub Actions to full commit SHAs in machine-native-ops-phase1-gates.yml:
   - actions/checkout@v4 → @0ad4b8f3a27c304e21892351cbf9860471245599
   - actions/setup-python@v5 → @82c7e631bb3cdc910f68e0081d534527d238d7a7
   - actions/upload-artifact@v4 → @65462800fd760344b1a7b4382951275a0abb4808
