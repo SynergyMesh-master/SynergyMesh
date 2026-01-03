@@ -54,6 +54,9 @@ config/
 ├── auto-scaffold.json                  # 自動生成腳本
 ├── peachy-build.toml                   # 構建配置
 │
+├── ☁️ 雲端部署 / Cloud Deployment
+├── wrangler.toml                       # Cloudflare Workers 配置
+│
 ├── 🔄 工具鏈 / Toolchain
 ├── conftest/                           # Conftest 策略目錄
 │   ├── deployment.rego
@@ -103,6 +106,17 @@ system:
 - Prometheus 指標收集
 - Grafana 儀表板定義
 - 告警規則配置
+
+### Cloudflare Workers 配置 (wrangler.toml)
+
+- Workers 部署設定
+- KV Namespace 綁定（快取、會話）
+- D1 資料庫綁定
+- R2 物件儲存綁定
+- Durable Objects 配置
+- 環境分離（development、staging、production）
+
+**注意**：根目錄的 `wrangler.toml` 是指向 `workspace/config/wrangler.toml` 的符號連結。
 
 ---
 
