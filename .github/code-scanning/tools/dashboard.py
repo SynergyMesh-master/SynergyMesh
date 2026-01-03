@@ -150,6 +150,20 @@ def download_report(filename):
     try:
         base_path = REPORTS_DIR.resolve()
         report_path = (REPORTS_DIR / safe_filename).resolve()
+    except OSError:
+        # Invalid path (e.g., contains characters not allowed by the OS)
+        return jsonify({'error': 'Report not found'}), 404
+
+    # Prevent directory traversal by ensuring the resolved path is within REPORTS_DIR
+    try:
+        report_path.relative_to(base_path)
+    except ValueError:
+        # Path is not relative to base_path (i.e., outside REPORTS_DIR)
+        return jsonify({'error': 'Report not found'}), 404
+
+    if report_path.exists():
+        return send_file(report_path, as_attachment=True)
+        resolved_path = report_path.resolve()
         
         # Prevent directory traversal by ensuring the resolved path is within REPORTS_DIR
         report_path.relative_to(base_path)
