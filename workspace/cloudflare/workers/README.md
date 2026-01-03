@@ -119,6 +119,12 @@ await worker.stop();
 
 ## 🧪 Test Files
 
+- **`examples.test.ts`** ⭐ **Start Here** - Minimal working examples
+  - No binding configuration required
+  - Demonstrates `getPlatformProxy` API
+  - All tests pass out of the box
+  - Best for learning the APIs
+
 - **`index.test.ts`** - Main integration tests using `unstable_startWorker`
   - Health check endpoints
   - CORS handling
