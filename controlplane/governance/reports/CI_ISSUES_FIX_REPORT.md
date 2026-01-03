@@ -31,7 +31,7 @@ The actions actions/checkout@v4, actions/setup-python@v5, and actions/upload-art
 
 ### 修復1：GitHub Actions SHA Pinning
 
-已修復 `.github/workflows/aaps-phase1-gates.yml`：
+已修復 `.github/workflows/machine-native-ops-phase1-gates.yml`：
 
 ```yaml
 # 修復前

@@ -1,4 +1,4 @@
-# MachineNativeOps 命名空間標準化計劃（AAPS Profile）
+# MachineNativeOps 命名空間標準化計劃（MachineNativeOps Profile）
 
 ## 📋 項目概述
 
@@ -53,7 +53,7 @@ MachineNativeOps/
 └── root.naming-policy.yaml       # 命名規範政策
 ```
 
-### AAPS 層配置
+### MachineNativeOps 層配置
 
 ```
 engine/
@@ -179,7 +179,7 @@ echo "✅ 命名空間驗證通過"
 - ✅ root/ 目錄結構標準化
 - ✅ FHS 標準目錄對齊
 
-### 階段 2: AAPS Engine Layer（進行中）
+### 階段 2: MachineNativeOps Engine Layer（進行中）
 
 - ✅ config-manager 重新安置到 opt/machinenativenops/modules/
 - ⏳ auto-monitor 命名空間標準化
@@ -217,7 +217,7 @@ echo "✅ 命名空間驗證通過"
 
 ### 模板文件
 
-- `templates/aaps-mno-baseline-skeleton.yaml` - AAPS 標準骨架
+- `templates/machine-native-ops-mno-baseline-skeleton.yaml` - MachineNativeOps 標準骨架
 - `root/spec/*.yaml` - Root Layer 規範
 - `root/schemas/*.yaml` - Schema 定義
 
@@ -230,7 +230,7 @@ echo "✅ 命名空間驗證通過"
 ### 文檔
 
 - `ROOT_ARCHITECTURE.md` - Root Layer 架構
-- `AAPS_INTEGRATION_SUMMARY.md` - AAPS 整合摘要
+- `AAPS_INTEGRATION_SUMMARY.md` - MachineNativeOps 整合摘要
 - `docs/AUTO_MONITOR_INTEGRATION.md` - Auto-Monitor 整合指南
 
 ## 🔄 持續改進

@@ -27,7 +27,7 @@
 ```
 usr/
 ├── bin/                    # 用戶程式
-│   ├── aaps-engine          # AAPS 核心引擎
+│   ├── machine-native-ops-engine          # MachineNativeOps 核心引擎
 │   ├── mn-monitor           # 監控工具
 │   ├── mn-config            # 配置工具
 │   └── mn-deploy            # 部署工具
@@ -36,7 +36,7 @@ usr/
 │   ├── mn-service           # 服務管理
 │   └── mn-update            # 系統更新
 ├── lib/                    # 函式庫
-│   ├── libaaps.so           # AAPS 核心函式庫
+│   ├── libmachinenativeops.so           # MachineNativeOps 核心函式庫
 │   ├── libmn-common.so      # 通用函式庫
 │   └── libmn-security.so    # 安全函式庫
 ├── share/                  # 共享資料
@@ -135,15 +135,15 @@ etc/
 
 ### Phase 2.2: 核心服務部署 (6小時)
 
-#### 🚀 AAPS 引擎服務
+#### 🚀 MachineNativeOps 引擎服務
 
 ```yaml
 # 服務配置
 
 service:
-  name: aaps-engine
+  name: machine-native-ops-engine
   version: 1.0.0
-  executable: /usr/bin/aaps-engine
+  executable: /usr/bin/machine-native-ops-engine
   config: /etc/machine-native-ops/services/engine.yaml
   user: machinenativeops
   group: machinenativeops
@@ -151,7 +151,7 @@ service:
   
 部署任務:
 
-- [ ] 📦 編譯和打包 AAPS 引擎
+- [ ] 📦 編譯和打包 MachineNativeOps 引擎
 - [ ] 🔧 創建 Systemd 服務檔
 - [ ] ⚙️ 配置服務參數
 - [ ] 🔐 設定安全權限
@@ -296,7 +296,7 @@ security:
   - etc/ 目錄配置完善
   
 - **13:00-17:00**: 核心服務部署
-  - AAPS 引擎安裝配置
+  - MachineNativeOps 引擎安裝配置
   - 監控服務部署
   - API 網關設定
 
@@ -350,7 +350,7 @@ security:
 
 ### 2. 核心服務部署包
 
-- AAPS 引擎 v1.0.0
+- MachineNativeOps 引擎 v1.0.0
 - 監控服務 v1.0.0
 - API 網關 v1.0.0
 - 自動化部署腳本

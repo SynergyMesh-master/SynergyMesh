@@ -1,8 +1,8 @@
-# MachineNativeOps AAPS 通用命名空間遷移與管理計劃
+# MachineNativeOps MachineNativeOps 通用命名空間遷移與管理計劃
 
 ## 🚀 項目概述
 
-本計劃為 MachineNativeOps AAPS (Advanced Application Platform System) 提供完整的命名空間管理方案，不僅是遷移，更是整個生命週期的統一管理系統，適用於架構設計、部署、重構、重建、集成和整合等所有場景。
+本計劃為 MachineNativeOps MachineNativeOps (Advanced Application Platform System) 提供完整的命名空間管理方案，不僅是遷移，更是整個生命週期的統一管理系統，適用於架構設計、部署、重構、重建、集成和整合等所有場景。
 
 ## 🎯 核心目標
 
@@ -40,41 +40,41 @@
 
 ```bash
 # 基礎試運行
-python scripts/migration/machinenativeops-aaps-converter.py --dry-run .
+python scripts/migration/machinenativeops-machine-native-ops-converter.py --dry-run .
 
 # 多模式轉換
-python scripts/migration/machinenativeops-aaps-converter.py --mode=architecture .
-python scripts/migration/machinenativeops-aaps-converter.py --mode=deployment .
-python scripts/migration/machinenativeops-aaps-converter.py --mode=rebuild .
-python scripts/migration/machinenativeops-aaps-converter.py --mode=integration .
+python scripts/migration/machinenativeops-machine-native-ops-converter.py --mode=architecture .
+python scripts/migration/machinenativeops-machine-native-ops-converter.py --mode=deployment .
+python scripts/migration/machinenativeops-machine-native-ops-converter.py --mode=rebuild .
+python scripts/migration/machinenativeops-machine-native-ops-converter.py --mode=integration .
 
 # 全模式轉換
-python scripts/migration/machinenativeops-aaps-converter.py --mode=all --backup .
+python scripts/migration/machinenativeops-machine-native-ops-converter.py --mode=all --backup .
 ```
 
 ### 🔍 驗證工具套件
 
 ```bash
 # 完整驗證
-python scripts/migration/machinenativeops-aaps-validator.py .
+python scripts/migration/machinenativeops-machine-native-ops-validator.py .
 
 # 模式特定驗證
-python scripts/migration/machinenativeops-aaps-validator.py --mode=architecture .
-python scripts/migration/machinenativeops-aaps-validator.py --mode=deployment .
-python scripts/migration/machinenativeops-aaps-validator.py --mode=security .
+python scripts/migration/machinenativeops-machine-native-ops-validator.py --mode=architecture .
+python scripts/migration/machinenativeops-machine-native-ops-validator.py --mode=deployment .
+python scripts/migration/machinenativeops-machine-native-ops-validator.py --mode=security .
 
 # 報告生成
-python scripts/migration/machinenativeops-aaps-validator.py --report=validation_report.json .
+python scripts/migration/machinenativeops-machine-native-ops-validator.py --report=validation_report.json .
 ```
 
 ### 📊 監控與報告
 
 ```bash
 # 即時監控
-python scripts/migration/machinenativeops-aaps-converter.py --monitor .
+python scripts/migration/machinenativeops-machine-native-ops-converter.py --monitor .
 
 # 詳細報告
-python scripts/migration/machinenativeops-aaps-converter.py --report=html --output=report.html .
+python scripts/migration/machinenativeops-machine-native-ops-converter.py --report=html --output=report.html .
 ```
 
 ## 📁 核心檔案架構
@@ -82,7 +82,7 @@ python scripts/migration/machinenativeops-aaps-converter.py --report=html --outp
 ### 🎛️ 配置檔案層次
 
 ```
-config/machinenativeops-aaps/
+config/machinenativeops-machine-native-ops/
 ├── global-baseline-v2.yaml              # 全域基線配置
 ├── architecture-patterns.yaml           # 架構模式定義
 ├── deployment-templates.yaml            # 部署模板集合
@@ -97,8 +97,8 @@ config/machinenativeops-aaps/
 
 ```
 scripts/migration/
-├── machinenativeops-aaps-converter.py    # 主轉換工具
-├── machinenativeops-aaps-validator.py    # 主驗證工具
+├── machinenativeops-machine-native-ops-converter.py    # 主轉換工具
+├── machinenativeops-machine-native-ops-validator.py    # 主驗證工具
 ├── architecture-migrator.py              # 架構專用遷移
 ├── deployment-optimizer.py               # 部署優化工具
 ├── integration-orchestrator.py           # 集成編排工具
@@ -111,7 +111,7 @@ scripts/migration/
 
 ```
 docs/migration/
-├── machinenativeops-aaps-universal-migration-guide.md  # 通用指南
+├── machinenativeops-machine-native-ops-universal-migration-guide.md  # 通用指南
 ├── architecture-migration-patterns.md                  # 架構遷移模式
 ├── deployment-automation-guide.md                     # 部署自動化
 ├── rebuild-best-practices.md                          # 重構最佳實踐
@@ -231,7 +231,7 @@ docs/migration/
 
 ### ✅ 技術標準
 
-- [ ] 所有配置文件符合 MachineNativeOps AAPS 標準
+- [ ] 所有配置文件符合 MachineNativeOps MachineNativeOps 標準
 - [ ] 無遺留的舊命名空間引用
 - [ ] 系統功能完整性保持
 - [ ] 性能無顯著下降
@@ -258,7 +258,7 @@ docs/migration/
 
 - **文檔**: `docs/migration/` 完整指南
 - **工具**: `scripts/migration/` 工具套件
-- **配置**: `config/machinenativeops-aaps/` 範例
+- **配置**: `config/machinenativeops-machine-native-ops/` 範例
 - **範例**: `examples/` 最佳實踐
 
 ### 🤝 社群支持
@@ -272,5 +272,5 @@ docs/migration/
 
 *最後更新: 2025-12-22*  
 *版本: v2.0*  
-*適用範圍: MachineNativeOps AAPS 全平台*  
+*適用範圍: MachineNativeOps MachineNativeOps 全平台*  
 *狀態: 持續維護與升級中*
