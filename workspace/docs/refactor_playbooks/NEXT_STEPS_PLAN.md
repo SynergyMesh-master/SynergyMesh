@@ -16,7 +16,9 @@ Following the successful extraction and integration of the three-phase refactor 
 
 - ✅ Three-phase playbook system (01_deconstruction → 02_integration → 03_refactor)
 - ✅ Config integration (system-module-map.yaml v1.2.0, unified-config-index.yaml)
+
 >>>>>>> origin/copilot/sub-pr-402
+
 - ✅ Global defaults (language_policy, quality_thresholds)
 - ✅ Architecture constraints (dependencies, skeleton rules, language strategy)
 - ✅ Proposer/Critic AI workflow
@@ -46,7 +48,7 @@ modules:
 ### Objective
 
 Create a complete, replicable template by executing the full refactor cycle on
-`core/architecture-stability` cluster.
+`core/architecture-stability` cluster
 =======
 
 Create a complete, replicable template by executing the full refactor cycle on `core/architecture-stability` cluster.
@@ -66,7 +68,9 @@ Create a complete, replicable template by executing the full refactor cycle on `
 
 - [ ] Create `docs/refactor_playbooks/01_deconstruction/core/core__architecture_deconstruction.md`
 - [ ] Analyze `core/unified_integration/`, `core/mind_matrix/`, `core/lifecycle_systems/`
+
 >>>>>>> origin/copilot/sub-pr-402
+
 - [ ] Document architecture patterns, anti-patterns, technical debt
 - [ ] Identify legacy asset dependencies
 - [ ] Update `legacy_assets_index.yaml` with core-specific entries
@@ -91,7 +95,9 @@ Create a complete, replicable template by executing the full refactor cycle on `
 =======
 
 - [ ] Create `docs/refactor_playbooks/02_integration/core/core__architecture_integration.md`
+
 >>>>>>> origin/copilot/sub-pr-402
+
 - [ ] Design new architecture respecting skeleton rules
 - [ ] Map old → new component transitions
 - [ ] Define API boundaries and interfaces
@@ -117,7 +123,9 @@ Create a complete, replicable template by executing the full refactor cycle on `
 =======
 
 - [ ] Create `docs/refactor_playbooks/03_refactor/core/core__architecture_refactor.md`
+
 >>>>>>> origin/copilot/sub-pr-402
+
 - [ ] Implement P0 refactorings (critical fixes)
 - [ ] Implement P1 refactorings (high priority)
 - [ ] Implement P2 refactorings (nice-to-have)
@@ -315,8 +323,9 @@ assistance.
 
 ### Risk 4: Resource Constraints
 
-**Mitigation**: Prioritize P0 clusters. Automate repetitive tasks. Use AI for assistance.
+**Mitigation**: Prioritize P0 clusters. Automate repetitive tasks. Use AI for assistance
 =======
+>>>>>>>
 >>>>>>> origin/copilot/sub-pr-402
 
 ---

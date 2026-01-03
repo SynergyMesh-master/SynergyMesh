@@ -12,6 +12,7 @@
 ## 📋 任務回顧 (Task Overview)
 
 ### 原始需求
+
 用戶要求:
 
 1. 翻譯英文: "Development Successfully merging this pull request may close these
@@ -21,9 +22,10 @@
 用戶要求:
 
 1. 翻譯英文: "Development Successfully merging this pull request may close these issues."
+
 >>>>>>> origin/copilot/sub-pr-402
-2. 找到並深度分析 PR #106
-3. 全面理解 PR #106 的結構變更
+1. 找到並深度分析 PR #106
+2. 全面理解 PR #106 的結構變更
 
 ### 發現的問題
 

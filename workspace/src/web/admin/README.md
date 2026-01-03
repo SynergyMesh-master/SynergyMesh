@@ -22,7 +22,9 @@
 >
 > - **靜態部署**（前端）：僅需要 Node.js 和 npm，執行 `npm run build` 生成靜態文件到 `dist/` 目錄
 > - **後端服務部署**：需要 Python 3.11+，依賴 `requirements.txt` 中的套件（FastAPI、uvicorn 等）
+>
 >>>>>>> origin/copilot/sub-pr-402
+>
 > - 如果只需要靜態前端，不需要安裝 Python 依賴或執行後端服務
 > - 對於完整功能，建議使用「自動擴充」或「預留虛擬機器」部署類型以支持後端 API
 

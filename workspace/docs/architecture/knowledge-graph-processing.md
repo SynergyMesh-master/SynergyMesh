@@ -514,7 +514,9 @@ metrics:
 =======
 
 - Dong, X. et al. (2014). "Knowledge Vault: A Web-Scale Approach to Probabilistic Knowledge Fusion"
+
 >>>>>>> origin/copilot/sub-pr-402
+
 - Suchanek, F. et al. (2007). "YAGO: A Core of Semantic Knowledge"
 
 ### 相關架構文檔

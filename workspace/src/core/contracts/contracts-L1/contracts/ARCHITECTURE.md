@@ -38,7 +38,9 @@ The service implements a **3-tier layered architecture**:
 =======
 
 - **Controllers** (`controllers/`): Handle HTTP requests, orchestrate service calls, format responses
+
 >>>>>>> origin/copilot/sub-pr-402
+
 - **Routes** (`routes.ts`): Define API endpoints and map them to controllers
 - **Middleware** (`middleware/`): Cross-cutting concerns (logging, validation, error handling, rate limiting)
 
@@ -84,7 +86,9 @@ export class ProvenanceController {
 - **Attestation Service** (`services/attestation.ts`): Handles Sigstore attestation creation/verification
 - **Provenance Service** (`services/provenance.ts`): Manages build provenance tracking
 - **Assignment Engine** (`services/assignment/`): Automated responsibility assignment system
+
 >>>>>>> origin/copilot/sub-pr-402
+
 - **Escalation Engine** (`services/escalation/`): Incident escalation workflows
 
 **Key Principles:**

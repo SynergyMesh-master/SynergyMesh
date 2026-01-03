@@ -91,7 +91,9 @@ The `useESM: true` in ts-jest config is correct because:
 =======
 
 - It's for handling ES modules in the TypeScript **source code**, not the config file
+
 >>>>>>> origin/copilot/sub-pr-402
+
 - The source files use ES module imports/exports
 - The config file itself is CommonJS (`.cjs`)
 

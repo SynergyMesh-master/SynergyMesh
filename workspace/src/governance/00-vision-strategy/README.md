@@ -122,13 +122,15 @@ kubectl apply -k gitops/kustomization-instances.yaml
 =======
 
 - **[AUTONOMOUS_AGENT_STATE.md](./AUTONOMOUS_AGENT_STATE.md)** ⚡ **AI AGENTS START HERE**
+
 >>>>>>> origin/copilot/sub-pr-402
-  - < 1 second instant project state loading
-  - Machine-readable JSON/YAML format
-  - Instant execution commands
-  - Autonomous decision tree
-  - Zero delay, instant execution, fully autonomous
-  - AI 代理 < 1 秒即時載入，立即執行
+
+- < 1 second instant project state loading
+- Machine-readable JSON/YAML format
+- Instant execution commands
+- Autonomous decision tree
+- Zero delay, instant execution, fully autonomous
+- AI 代理 < 1 秒即時載入，立即執行
 
 ### Deployment / 部署
 
@@ -160,6 +162,7 @@ kubectl apply -k gitops/kustomization-instances.yaml
 - **[PROJECT_STATE_SNAPSHOT.md](./PROJECT_STATE_SNAPSHOT.md)** - Complete project state | 完整項目狀態
 - **[README.gac-deployment.md](./README.gac-deployment.md)** - GaC deployment overview | GaC 部署概覽
 =======
+
 >>>>>>> origin/copilot/sub-pr-402
 
 ## 🔗 Dependencies | 依賴關係

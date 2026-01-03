@@ -246,6 +246,7 @@ PENDING → SCHEDULING → EXECUTING → VERIFYING → COMMIT
 - **KG Builder**: `kg-graph-builder.unmanned-island-system.svc.cluster.local:8890`
 - **Vector Search**: `kg-vector-hybrid.unmanned-island-system.svc.cluster.local:8891`
 =======
+
 >>>>>>> origin/copilot/sub-pr-402
 
 ### 6.3 Observability Stack

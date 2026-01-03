@@ -14,7 +14,7 @@
 ### 清理前提條件
 
 在刪除 `docs/refactor_playbooks/_legacy_scratch/README.md`
-之前，必須確認以下所有條件滿足：
+之前，必須確認以下所有條件滿足
 =======
 
 在刪除 `docs/refactor_playbooks/_legacy_scratch/README.md` 之前，必須確認以下所有條件滿足：
@@ -217,7 +217,9 @@ ls -la docs/refactor_playbooks/_legacy_scratch/
 =======
 
 - [ ] `infrastructure/monitoring/prometheus/servicemonitors/hlp-executor-metrics.yaml` 存在
+
 >>>>>>> origin/copilot/sub-pr-402
+
 - [ ] `config/monitoring.yaml` 包含 HLP 日誌配置
 
 #### 運維手冊完整性

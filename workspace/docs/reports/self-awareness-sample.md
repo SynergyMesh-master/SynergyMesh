@@ -28,6 +28,7 @@
 - Maintain agent role definitions so every delegate knows responsibilities and limitations before touching the codebase.
 - Keep [docs/troubleshooting/INDEX.md](docs/troubleshooting/INDEX.md) and [docs/issues/known-failures.md](docs/issues/known-failures.md) current so automation alerts map directly to a remediation playbook.
 =======
+
 >>>>>>> origin/copilot/sub-pr-402
 
 **Guardrails / Anti-Goals**
@@ -55,6 +56,7 @@
 - ✅ `.github/workflows/project-self-awareness-nightly.yml` raises an issue when automation signals fail and links to the troubleshooting index for context.
 - ✅ `docs/troubleshooting/INDEX.md` maps every self-awareness signal to the appropriate runbook or known-failure entry.
 =======
+
 >>>>>>> origin/copilot/sub-pr-402
 
 **Automation Signals**

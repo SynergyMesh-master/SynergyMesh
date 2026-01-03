@@ -154,8 +154,10 @@ strategies:
 - 模式: SCHEDULED
 - 頻率: 每 6 小時 (0 _/6_ \*\*)
 =======
-- 頻率: 每 6 小時 (0 */6* **)
+- 頻率: 每 6 小時 (0 _/6_ **)
+
 >>>>>>> origin/copilot/sub-pr-402
+
 - 自動分發: YES
 - 責任: AI AUTONOMOUS
 
@@ -451,6 +453,6 @@ phase_5_status:
 
 ---
 
-*文檔生成時間 / Documentation Generated: 2025-12-11T05:16:00Z*  
-*責任 / Responsibility: AI AUTONOMOUS*  
-*人工批准 / Human Approval: NOT REQUIRED*
+_文檔生成時間 / Documentation Generated: 2025-12-11T05:16:00Z_  
+_責任 / Responsibility: AI AUTONOMOUS_  
+_人工批准 / Human Approval: NOT REQUIRED_

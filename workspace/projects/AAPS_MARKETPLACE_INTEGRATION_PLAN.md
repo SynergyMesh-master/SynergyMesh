@@ -7,6 +7,7 @@
 ## 🎯 整合策略
 
 ### 核心原則
+
 1. **漸進式整合**: 不破壞現有功能，逐步添加新能力
 2. **架構兼容**: 充分利用現有的 SuperAgent MPC 架構
 3. **快速驗證**: 優先實現高價值、可快速驗證的功能
@@ -35,6 +36,7 @@
 **實施步驟**:
 
 #### Step 1: 擴展 MonitoringAgent
+
 ```yaml
 新增功能:
   - Token 事件實時追蹤
@@ -51,6 +53,7 @@
 ```
 
 #### Step 2: 成本管理與告警
+
 ```yaml
 新增功能:
   - 預算配額管理
@@ -72,6 +75,7 @@
 **實施步驟**:
 
 #### Step 1: 元數據提取器
+
 ```yaml
 支援生態系統:
   - Python (.whl)
@@ -86,6 +90,7 @@
 ```
 
 #### Step 2: 存儲與檢索
+
 ```yaml
 功能:
   - S3/MinIO 對象存儲
@@ -107,6 +112,7 @@
 **實施步驟**:
 
 #### Step 1: GitHub OAuth 認證
+
 ```yaml
 功能:
   - GitHub App 安裝流程
@@ -122,6 +128,7 @@
 ```
 
 #### Step 2: Webhook 處理
+
 ```yaml
 支援事件:
   - marketplace_purchase (購買/取消)
@@ -142,6 +149,7 @@
 **支援語言**: Go, Java/Maven, Rust/Cargo
 
 **實施計畫**:
+
 - Week 3: Go 模組支援 (go.mod 解析)
 - Week 4: Java/Maven 支援 (pom.xml 解析)
 - Week 5: Rust/Cargo 支援 (Cargo.toml 解析)
@@ -149,12 +157,14 @@
 ### 2.2 團隊管理與 RBAC
 
 **核心功能**:
+
 - 團隊創建與管理
 - 成員邀請與角色分配
 - 基於角色的權限控制 (RBAC)
 - 資源隔離與訪問控制
 
 **實施計畫**:
+
 - Week 3-4: 數據模型與 API
 - Week 5: 前端 UI 組件
 - Week 6: 權限中間件與測試
@@ -162,12 +172,14 @@
 ### 2.3 Prompt-as-Code 系統
 
 **核心功能**:
+
 - Prompt 版本控制
 - 模組化 Prompt 設計
 - A/B 測試框架
 - 性能評分與優化
 
 **實施計畫**:
+
 - Week 4-5: 後端 API 與存儲
 - Week 6: 前端編輯器與測試工具
 
@@ -414,12 +426,14 @@ aaps:
 ## 📈 成功指標
 
 ### 技術指標
+
 - Token 監控延遲 < 100ms
 - Artifact 上傳成功率 > 99%
 - API 響應時間 P95 < 500ms
 - 系統可用性 > 99.9%
 
 ### 商業指標
+
 - AI 成本節省 30-50%
 - 開發效率提升 60%
 - 用戶滿意度 > 90%
@@ -428,6 +442,7 @@ aaps:
 ## 🔄 部署策略
 
 ### Phase 1 部署 (Week 1-2)
+
 ```bash
 # 1. 創建新分支
 git checkout -b feature/aaps-marketplace-integration
@@ -478,6 +493,7 @@ gh pr create --title "AAPS Marketplace Integration Phase 1"
 ```
 
 ### Phase 2 部署 (Week 3-6)
+
 ```bash
 # 1. 繼續在同一分支開發
 git checkout feature/aaps-marketplace-integration
@@ -501,18 +517,21 @@ npm run test:e2e
 ## 🎯 下一步行動
 
 ### 立即開始 (今天)
+
 1. ✅ 創建整合計畫文檔 (本文檔)
 2. 📋 創建 GitHub Issue 追蹤進度
 3. 📋 建立開發分支
 4. 📋 實施 Token 監控核心功能
 
 ### 本週任務
+
 1. 完成 AI Observability 整合
 2. 實現成本管理與告警
 3. 建立 Artifact 管理基礎
 4. 完成 GitHub OAuth 整合
 
 ### 下週任務
+
 1. 實施多語言支援
 2. 開發團隊管理功能
 3. 建立 Prompt-as-Code 系統
@@ -521,6 +540,7 @@ npm run test:e2e
 ## 📝 風險管控
 
 ### 技術風險
+
 | 風險 | 影響 | 緩解策略 |
 |-----|------|---------|
 | 系統複雜度增加 | 高 | 模組化設計、完整測試 |
@@ -528,6 +548,7 @@ npm run test:e2e
 | 數據一致性 | 高 | 事務管理、分布式鎖 |
 
 ### 進度風險
+
 | 風險 | 影響 | 緩解策略 |
 |-----|------|---------|
 | 開發時間超期 | 中 | 敏捷開發、每週評估 |

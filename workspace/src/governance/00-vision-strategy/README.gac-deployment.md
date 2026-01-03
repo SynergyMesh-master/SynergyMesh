@@ -205,7 +205,9 @@ argocd app get governance-00-vision-strategy
 =======
 
 - Mixed concerns: Strategic docs (completed) vs infrastructure code (separate PR)
+
 >>>>>>> origin/copilot/sub-pr-402
+
 - Validation needs: K8s deployment requires test cluster
 - Atomic changes: Keep PRs focused and reviewable
 

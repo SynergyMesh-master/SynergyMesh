@@ -724,7 +724,8 @@ kubectl apply -f custom-allow-policy.yaml
 8. **CNCF Security Best Practices**:
    <https://www.cncf.io/blog/2022/06/07/cncf-kubernetes-security-best-practices/>
 =======
-8. **CNCF Security Best Practices**: <https://www.cncf.io/blog/2022/06/07/cncf-kubernetes-security-best-practices/>
+9. **CNCF Security Best Practices**: <https://www.cncf.io/blog/2022/06/07/cncf-kubernetes-security-best-practices/>
+
 >>>>>>> origin/copilot/sub-pr-402
 
 ---

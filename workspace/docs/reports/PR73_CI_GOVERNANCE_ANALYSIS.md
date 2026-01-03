@@ -25,6 +25,7 @@ This report provides a comprehensive analysis of the CI governance framework imp
 | Component | Location | Purpose |
 |-----------|----------|---------|
 | CI Agent Configuration | `config/ci-agent-config.yaml` | Defines CI Copilot agent behavior |
+
 >>>>>>> origin/copilot/sub-pr-402
 | Governance Validation Workflow | `.github/workflows/arch-governance-validation.yml` | Automated architecture & governance checks |
 | Error Handler Enhancement | `config/ci-error-handler.yaml` | Error → Action mapping for AI agents |
@@ -156,6 +157,7 @@ Validated skeleton mappings:
 | P1 | 48 hours | BUILD_ERROR, TEST_FAILURE, SECURITY_SCAN |
 | P2 | 1 week | LINT_ERROR, TYPE_ERROR, DEPENDENCY_ERROR |
 =======
+
 >>>>>>> origin/copilot/sub-pr-402
 
 **New Features Added:**

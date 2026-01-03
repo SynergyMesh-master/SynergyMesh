@@ -1020,7 +1020,9 @@ spec:
 =======
 
 - `01_deconstruction/kg-builder_deconstruction.md` ✅  
+
 >>>>>>> origin/copilot/sub-pr-402
+
 - `02_integration/kg-builder_integration.md` ✅  
 **執行狀態 (Execution Status)**: ⏳ Ready for P0 Execution  
 **總體狀態 (Overall Status)**: ✅ Refactor Planning Complete - Awaiting Execution Approval

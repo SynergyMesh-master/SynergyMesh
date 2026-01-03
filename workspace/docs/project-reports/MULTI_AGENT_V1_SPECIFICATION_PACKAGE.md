@@ -1,6 +1,7 @@
 # AAPS Multi-Agent MPC v1 Specification Package
 
 ## 📦 Package Overview
+
 立即可用的v1規格包，包含多代理系統實施的所有必要組件。
 
 ---
@@ -8,6 +9,7 @@
 ## 🔄 統一訊息 Schema (JSON Schema)
 
 ### Message Envelope
+
 ```json
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
@@ -61,6 +63,7 @@
 ### Core Event Payloads
 
 #### IncidentSignal
+
 ```json
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
@@ -89,6 +92,7 @@
 ```
 
 #### FixProposal
+
 ```json
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
@@ -128,6 +132,7 @@
 ```
 
 #### VerificationReport
+
 ```json
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
@@ -166,6 +171,7 @@
 ## 🏃‍♂️ 事件狀態機 (Workflow Definition)
 
 ### Incident Lifecycle State Machine
+
 ```yaml
 state_machine:
   name: "incident_lifecycle"
@@ -257,6 +263,7 @@ state_machine:
 ## 🛡️ RBAC 最小權限清單
 
 ### ServiceAccount 權限定義
+
 ```yaml
 # SuperAgent ServiceAccount
 apiVersion: v1
@@ -395,6 +402,7 @@ subjects:
 ## 🔧 GitOps/ArgoCD 整合點
 
 ### ArgoCD Application 定義
+
 ```yaml
 apiVersion: argoproj.io/v1alpha1
 kind: Application
@@ -451,6 +459,7 @@ spec:
 ```
 
 ### Agent Deployment Templates
+
 ```yaml
 # SuperAgent Deployment
 apiVersion: apps/v1
@@ -534,6 +543,7 @@ spec:
 ## 🔍 七階段驗證 Gate (含策略閾值)
 
 ### Verification Pipeline Definition
+
 ```yaml
 apiVersion: v1
 kind: ConfigMap
@@ -627,6 +637,7 @@ data:
 ```
 
 ### Policy Engine Rules (OPA/Kyverno)
+
 ```yaml
 # Security Policy
 apiVersion: kyverno.io/v1
@@ -708,6 +719,7 @@ spec:
 ## 🚀 立即部署腳本
 
 ### Quick Start Script
+
 ```bash
 #!/bin/bash
 # deploy-multi-agent.sh - 一鍵部署多代理系統
@@ -906,6 +918,7 @@ echo "📚 詳細文檔: https://github.com/MachineNativeOps/machine-native-ops-
 ## 📊 監控配置
 
 ### Prometheus Monitoring Rules
+
 ```yaml
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
@@ -958,6 +971,7 @@ spec:
 ## 🎯 驗收檢查清單
 
 ### MVP 驗收標準
+
 ```yaml
 mvp_acceptance_criteria:
   functional:
@@ -1011,6 +1025,7 @@ success_metrics:
 ✅ **一鍵部署腳本** - 立即可用
 
 **執行部署**：
+
 ```bash
 chmod +x deploy-multi-agent.sh
 ./deploy-multi-agent.sh

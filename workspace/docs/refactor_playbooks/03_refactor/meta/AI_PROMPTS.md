@@ -37,7 +37,9 @@
 =======
 
 - ✅ **允許依賴**：從 `config/system-module-map.yaml` 讀取 `allowed_dependencies`
+
 >>>>>>> origin/copilot/sub-pr-402
+
 - ❌ **禁止依賴**：從 `config/system-module-map.yaml` 讀取 `banned_dependencies`
 - 🏗️ **骨架規則**：遵守 `skeleton_rules` 連結的架構骨架
 
@@ -267,6 +269,7 @@ apps/ (presentation)
   ↓ ❌ must not depend on: core/ (MUST go through services/)
 
 >>>>>>> origin/copilot/sub-pr-402
+
 ```
 
 **邊界修復計畫：**

@@ -21,7 +21,9 @@ Successfully completed the automated refactoring evolution workflow for 27 legac
 =======
 
 - **Batch Analysis Results:** Reviewed pre-existing analysis at `/tmp/legacy_batch_results.yaml`
+
 >>>>>>> origin/copilot/sub-pr-402
+
 - **27 Legacy Assets Identified:**
   - 6 YAML baseline configurations (namespace, security, resources, network, compliance, quantum)
   - 2 Shell scripts (deployment and validation)
@@ -116,7 +118,9 @@ The following files contain logic/skills/tools that should be embedded into exis
 =======
 
 - All 27 files successfully deleted from `docs/refactor_playbooks/_legacy_scratch/`
+
 >>>>>>> origin/copilot/sub-pr-402
+
 - Only `.gitkeep` file retained to preserve directory structure
 - No duplication remains in the legacy scratch directory
 
@@ -219,9 +223,9 @@ The following files contain logic/skills/tools that should be embedded into exis
    `_legacy_scratch` paths and update them
 3. **Validation Scripts:** Run existing validation scripts to ensure no
    regressions
-1. **Manual Embedded Integration:** Review the 7 embedded integration assets and extract their logic into appropriate project files
-2. **Index Updates:** Run `python tools/refactor/update_indexes.py` to update documentation indexes
-3. **Knowledge Graph Sync:** Execute `make all-kg` to regenerate knowledge graph with new structure
+4. **Manual Embedded Integration:** Review the 7 embedded integration assets and extract their logic into appropriate project files
+5. **Index Updates:** Run `python tools/refactor/update_indexes.py` to update documentation indexes
+6. **Knowledge Graph Sync:** Execute `make all-kg` to regenerate knowledge graph with new structure
 
 ### Future Considerations
 
@@ -229,8 +233,9 @@ The following files contain logic/skills/tools that should be embedded into exis
 2. **Cross-Reference Updates:** Search for any references to old `_legacy_scratch` paths and update them
 3. **Validation Scripts:** Run existing validation scripts to ensure no regressions
 =======
+
 >>>>>>> origin/copilot/sub-pr-402
-4. **CI/CD Integration:** Update CI workflows if they reference any moved files
+1. **CI/CD Integration:** Update CI workflows if they reference any moved files
 
 ---
 
@@ -249,9 +254,11 @@ The following files contain logic/skills/tools that should be embedded into exis
 - All 27 files from `docs/refactor_playbooks/_legacy_scratch/` (except
   `.gitkeep`)
 =======
+
 ### Deleted
 
 - All 27 files from `docs/refactor_playbooks/_legacy_scratch/` (except `.gitkeep`)
+
 >>>>>>> origin/copilot/sub-pr-402
 
 ### Modified

@@ -233,6 +233,7 @@ The 3 failing tests are related to validation error format expectations and don'
 =======
 
 1. `core/contract_service/contracts-L1/contracts/tsconfig.json` - Node types configuration
+
 >>>>>>> origin/copilot/sub-pr-402
 
 ## 🎓 Lessons & Best Practices

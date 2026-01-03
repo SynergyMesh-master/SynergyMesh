@@ -45,14 +45,17 @@ Stage 5: super-execution-engine
 ## Resource Allocation
 
 ### CPU Resources
+
 - **Request**: 200m (0.2 CPU cores)
 - **Limit**: 1000m (1.0 CPU core)
 
 ### Memory Resources
+
 - **Request**: 256Mi
 - **Limit**: 1Gi
 
 ### Storage Resources
+
 - **Request**: 500Mi
 - **Limit**: 5Gi
 
@@ -73,6 +76,7 @@ The Auto-Monitor is configured through the following environment variables:
 ### Configuration File
 
 The Auto-Monitor can also be configured via YAML file at:
+
 - `/etc/machinenativenops/monitor_config.yaml` (system-wide)
 - Custom path via `MNO_CONFIG_FILE` environment variable
 
@@ -123,12 +127,16 @@ Auto-Monitor metrics are included in the comprehensive gate validation report:
 ## System Metrics
 ### Auto-Monitor Metrics
 ```
+
 $(cat gate_metrics.txt)
+
 ```
 
 ### System Status
 ```
+
 $(cat system_status.txt)
+
 ```
 ```
 
@@ -444,9 +452,9 @@ rules:
 
 ## Support
 
-- **Documentation**: https://docs.machinenativenops.io
-- **Issues**: https://github.com/MachineNativeOps/machine-native-ops-aaps/issues
-- **Community**: https://github.com/MachineNativeOps/machine-native-ops-aaps/discussions
+- **Documentation**: <https://docs.machinenativenops.io>
+- **Issues**: <https://github.com/MachineNativeOps/machine-native-ops-aaps/issues>
+- **Community**: <https://github.com/MachineNativeOps/machine-native-ops-aaps/discussions>
 
 ## References
 

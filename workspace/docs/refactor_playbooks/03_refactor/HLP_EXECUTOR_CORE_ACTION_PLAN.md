@@ -654,6 +654,7 @@ knowledge_graph_integration:
 
 | 指標 | 目標值 | 測量方法 |
 |------|--------|---------|
+
 >>>>>>> origin/copilot/sub-pr-402
 | DAG 解析延遲 (P95) | < 120ms | Prometheus histogram |
 | 狀態轉換延遲 (P90) | < 50ms | Prometheus histogram |

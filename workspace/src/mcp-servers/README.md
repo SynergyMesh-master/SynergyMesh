@@ -190,7 +190,9 @@ npm run check:strict
 =======
 
 - ✅ **Authenticity checks**: Detects suspicious patterns (eval, dynamic functions)
+
 >>>>>>> origin/copilot/sub-pr-402
+
 - ✅ **Obfuscation detection**: Identifies potentially obfuscated code
 - ✅ **Integrity hashing**: SHA-256 hash for code verification
 - ✅ **Logic validation**: Detects unreachable code, infinite loops, empty catch blocks

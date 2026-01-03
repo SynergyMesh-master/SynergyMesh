@@ -224,6 +224,7 @@
 | 83-integration | Integration & Coordination | unmanned-island-integration-manifest.md | ✅ 100% |
 | 39-automation | Automation & Orchestration | unmanned_island_integration_engine.py | ✅ 100% |
 =======
+
 >>>>>>> origin/copilot/sub-pr-402
 
 ---
@@ -422,6 +423,7 @@ print(result)
   (deprecated)/unmanned-island-integration-manifest.md)
 =======
 - [整合清單](governance/dimensions/83-integration/unmanned-island-integration-manifest.md)
+
 >>>>>>> origin/copilot/sub-pr-402
 
 ### 代碼與腳本

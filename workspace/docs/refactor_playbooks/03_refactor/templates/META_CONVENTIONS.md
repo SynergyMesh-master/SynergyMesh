@@ -251,7 +251,9 @@ python tools/generate-refactor-playbook.py \
 - 程式碼區塊使用語法高亮（`yaml,`bash 等）
 =======
 - 程式碼區塊使用語法高亮（```yaml,```bash 等）
+
 >>>>>>> origin/copilot/sub-pr-402
+
 - 清單使用一致的縮排（2 空格）
 
 ### 一致性

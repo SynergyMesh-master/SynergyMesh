@@ -63,7 +63,9 @@ alerting_rules:
 =======
 
 - ❌ 所有 `/healthz` 端點返回 503 或無回應 | All `/healthz` endpoints return 503 or no response
+
 >>>>>>> origin/copilot/sub-pr-402
+
 - ❌ Prometheus 顯示 0 個健康副本 | Prometheus shows 0 healthy replicas
 - ❌ kubectl 顯示所有 Pod 處於 CrashLoopBackOff、Error 或 Pending 狀態
 - ❌ 用戶報告無法提交新的 HLP 執行 | Users report inability to submit new HLP executions
@@ -355,7 +357,9 @@ alerting_rules:
 =======
 
 - ⚠️ 執行卡在相同階段超過預期時間 | Executions stuck in same phase beyond expected time
+
 >>>>>>> origin/copilot/sub-pr-402
+
 - ⚠️ 狀態轉換驗證失敗 | State transition validation failures
 - ⚠️ Checkpoint 無法恢復或驗證失敗 | Checkpoints cannot be restored or validation fails
 - ⚠️ 日誌中出現 "state_machine_error" 或 "invalid_state_transition" | Logs show "state_machine_error" or "invalid_state_transition"
@@ -368,7 +372,9 @@ alerting_rules:
 =======
 
 - ⚠️ 部分 HLP 執行可能進入不一致狀態 | Some HLP executions may enter inconsistent state
+
 >>>>>>> origin/copilot/sub-pr-402
+
 - ⚠️ 回滾功能可能受損 | Rollback functionality may be impaired
 - ⚠️ 執行時間增加 | Execution time increased
 - 📊 SLO 影響: State transition latency > P90 50ms | SLO impact: State transition latency > P90 50ms
@@ -591,7 +597,9 @@ T+2hr:   If not resolved → Schedule incident review
 =======
 
 - [ ] 完成詳細事件報告 (Post-Mortem) | Complete detailed incident report (Post-Mortem)
+
 >>>>>>> origin/copilot/sub-pr-402
+
 - [ ] 識別根本原因 | Identify root cause
 - [ ] 列出行動項目 (Action Items) | List action items
 - [ ] 安排事件檢討會議 | Schedule incident review meeting

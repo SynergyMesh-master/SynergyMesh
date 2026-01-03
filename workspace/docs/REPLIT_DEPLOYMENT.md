@@ -253,6 +253,7 @@ npm test
 Check that `main.tsx` imports React:
 
 >>>>>>> origin/copilot/sub-pr-402
+
 ```typescript
 import React from 'react';
 import { createRoot } from 'react-dom/client';
@@ -267,6 +268,7 @@ import { createRoot } from 'react-dom/client';
 Ensure `HashRouter` is used (not `BrowserRouter`):
 
 >>>>>>> origin/copilot/sub-pr-402
+
 ```typescript
 import { HashRouter } from 'react-router';
 // ... use <HashRouter> in App.tsx

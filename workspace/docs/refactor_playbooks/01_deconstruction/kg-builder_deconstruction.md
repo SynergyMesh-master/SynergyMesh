@@ -333,6 +333,7 @@ Configuration Categories:
 
 - Kubernetes 部署模板 → `infrastructure/kubernetes/templates/knowledge-processor-deployment.yaml`
 - 資源配額模板 → `infrastructure/kubernetes/templates/resource-quota-template.yaml`
+
 >>>>>>> origin/copilot/sub-pr-402
 
 #### E. 工具與腳本 (Tools & Scripts)

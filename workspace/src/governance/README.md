@@ -57,6 +57,7 @@ This framework makes architecture governance **explicit, measurable, and automat
 
 =======
 >>>>>>> origin/copilot/sub-pr-402
+
 ```
 governance/
 ├── ARCHITECTURE_GOVERNANCE_MATRIX.md     # 🎯 架構治理矩陣（核心文檔）
@@ -143,6 +144,7 @@ governance/
 
 =======
 >>>>>>> origin/copilot/sub-pr-402
+>>>>>>>
 ## 🎯 What This Directory Does 本目錄負責什麼
 
 ### ✅ Responsibilities 職責
@@ -347,4 +349,5 @@ SynergyMesh follows SLSA (Supply-chain Levels for Software Artifacts) framework:
 
 Last updated: 2025-12-12
 =======
+>>>>>>>
 >>>>>>> origin/copilot/sub-pr-402

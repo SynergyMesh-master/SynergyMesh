@@ -60,11 +60,13 @@
 ### 為什麼會出現這些目錄？
 
 **原因**:
+
 1. 在之前的操作中，使用了 `gh repo clone` 或 `git clone` 命令
 2. 這些命令將倉庫克隆到了當前工作目錄 (`/workspace`)
 3. 而不是克隆到臨時目錄或子目錄中
 
 **影響**:
+
 - ❌ 工作空間混亂
 - ❌ Git 狀態顯示大量未追蹤文件
 - ❌ 佔用額外磁碟空間
@@ -73,23 +75,28 @@
 ### 如何避免未來出現類似問題？
 
 **最佳實踐**:
+
 1. **使用臨時目錄**: 克隆到 `/tmp` 或專用目錄
+
    ```bash
    cd /tmp && gh repo clone owner/repo
    ```
 
 2. **使用子目錄**: 創建專用的工作目錄
+
    ```bash
    mkdir -p /workspace/temp-clones
    cd /workspace/temp-clones && gh repo clone owner/repo
    ```
 
 3. **清理後操作**: 完成後立即清理
+
    ```bash
    rm -rf /tmp/cloned-repo
    ```
 
 4. **使用 .gitignore**: 添加臨時目錄到 `.gitignore`
+
    ```
    temp-clones/
    *-clone/
@@ -108,6 +115,7 @@
    - 選項 C: 刪除（如果不再需要）
 
 2. **更新 .gitignore**:
+
    ```bash
    # 添加以下規則到 .gitignore
    *_REPORT.md
@@ -117,6 +125,7 @@
    ```
 
 3. **驗證工作空間狀態**:
+
    ```bash
    git status
    ls -la /workspace | wc -l
@@ -160,6 +169,7 @@ ls -la /workspace | grep "^d" | wc -l
 ### 前後對比
 
 **清理前**:
+
 ```
 ❌ 7 個不需要的克隆目錄
 ❌ 90+ 個未追蹤文件
@@ -168,6 +178,7 @@ ls -la /workspace | grep "^d" | wc -l
 ```
 
 **清理後**:
+
 ```
 ✅ 0 個克隆目錄
 ✅ 6 個未追蹤文件（報告）
@@ -191,18 +202,21 @@ ls -la /workspace | grep "^d" | wc -l
 ### 清理成功 ✅
 
 **主要成就**:
+
 - ✅ 移除了所有不需要的克隆目錄
 - ✅ 清理了大量臨時文件
 - ✅ 恢復了乾淨的工作空間
 - ✅ 改善了 Git 狀態可讀性
 
 **當前狀態**:
+
 - 🟢 工作空間乾淨整潔
 - 🟢 Git 狀態正常
 - 🟢 項目結構完整
 - 🟢 準備繼續工作
 
 **建議**:
+
 - 📝 決定報告文件的處理方式
 - 🔧 更新 `.gitignore` 防止未來問題
 - 📚 記錄最佳實踐避免重複
