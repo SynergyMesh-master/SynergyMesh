@@ -538,7 +538,7 @@ def main() -> None:
         print("⚠️  干運行模式尚未完全實現，將跳過文件寫入操作")
         # Note: 完整的干運行模式需要在各個修復器中添加dry_run參數支持
     else:
-        report = fixer.auto_fix_all(scan_results)
+        fixer.auto_fix_all(scan_results)
         print(json.dumps(report, ensure_ascii=False, indent=2))
 
 if __name__ == "__main__":
