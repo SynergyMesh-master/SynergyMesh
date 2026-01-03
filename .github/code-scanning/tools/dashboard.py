@@ -15,6 +15,7 @@ from werkzeug.utils import secure_filename
 from pathlib import Path
 import json
 import os
+import secrets
 import ipaddress
 from datetime import datetime
 from typing import Dict
@@ -37,6 +38,11 @@ TEMPLATE_DIR.mkdir(parents=True, exist_ok=True)
 
 app = Flask(__name__, template_folder=str(TEMPLATE_DIR))
 
+# 安全配置：從環境變量讀取 SECRET_KEY 或生成隨機密鑰
+# Security configuration: Load SECRET_KEY from environment or generate random key
+# WARNING: If FLASK_SECRET_KEY is not set, a random key is generated on each restart,
+# which will invalidate existing sessions. Always set FLASK_SECRET_KEY in production.
+app.config['SECRET_KEY'] = os.environ.get('FLASK_SECRET_KEY') or secrets.token_hex(32)
 # Flask security configuration
 flask_secret_key = os.environ.get('FLASK_SECRET_KEY')
 if not flask_secret_key:
@@ -173,19 +179,39 @@ def download_report(filename):
     # Ensure the resolved path is still within REPORTS_DIR (defense in depth)
     try:
         base_path = REPORTS_DIR.resolve()
+        report_path = (REPORTS_DIR / safe_filename).resolve()
+    except OSError:
+        # Invalid path (e.g., contains characters not allowed by the OS)
+        return jsonify({'error': 'Report not found'}), 404
+
+    # Prevent directory traversal by ensuring the resolved path is within REPORTS_DIR
+    try:
+        report_path.relative_to(base_path)
+    except ValueError:
+        # Path is not relative to base_path (i.e., outside REPORTS_DIR)
+        return jsonify({'error': 'Report not found'}), 404
+
+    # Ensure it's not the base directory itself and is a file
+    if report_path == base_path or not report_path.is_file():
+        return jsonify({'error': 'Report not found'}), 404
+
+    if report_path.exists():
+        return send_file(report_path, as_attachment=True)
+    
+    return jsonify({'error': 'Report not found'}), 404
         resolved_path = (REPORTS_DIR / safe_filename).resolve()
         
         # Prevent directory traversal by ensuring the resolved path is within REPORTS_DIR
         resolved_path.relative_to(base_path)
-        report_path.relative_to(base_path)
         # Validate path is within base directory - raises ValueError if outside
         _ = resolved_path.relative_to(base_path)
         
         # Ensure it's not the base directory itself and is a file
-        if resolved_path == base_path or not resolved_path.is_file():
+        if not report_path.exists() or report_path == base_path or not report_path.is_file():
             return jsonify({'error': 'Report not found'}), 404
             
     except (OSError, ValueError):
+        # Invalid path or path outside base directory
         # Invalid path, path outside base directory, or file doesn't exist
         return jsonify({'error': 'Report not found'}), 404
     

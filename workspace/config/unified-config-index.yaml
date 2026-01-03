@@ -399,6 +399,7 @@ root_files_consolidation:
     - "nginx.conf"
     - "deploy.sh"
     - "automation-entry.sh"
+    - "wrangler.toml"  # Symlink to workspace/config/wrangler.toml
 
 # ============================================================================
 # Unified Capability Registry (統一能力註冊表)
@@ -505,6 +506,14 @@ unified_capabilities:
       provider: ".github/workflows/"
     monitoring_setup:
       provider: "monitoring/"
+    cloudflare_workers:
+      provider: "workspace/config/wrangler.toml"
+      description: "Cloudflare Workers deployment configuration (KV/D1/R2/Durable Objects) | Cloudflare Workers 部署配置（KV/D1/R2/Durable Objects）"
+      symlink: "wrangler.toml"
+      environments:
+        - development
+        - staging
+        - production
 
   # Governance (治理)
   governance:

@@ -73,6 +73,13 @@
 - **職責**：YAML 模組系統配置
 - **功能**：YAML 為基礎的模組定義和載入
 
+### wrangler.toml
+
+- **職責**：Cloudflare Workers 部署配置
+- **功能**：定義 Workers、KV、D1、R2 等 Cloudflare 資源的部署設定
+- **位置**：`workspace/config/wrangler.toml`（根目錄有符號連結）
+- **文檔**：https://developers.cloudflare.com/workers/wrangler/configuration/
+
 ## 配置層級
 
 ```
