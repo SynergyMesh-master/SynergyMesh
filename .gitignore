@@ -82,6 +82,10 @@ out
 .nuxt
 dist
 
+# Python build directories
+build/
+*.egg-info/
+
 # Gatsby files
 .cache/
 # Comment in the public line in if your project uses Gatsby and not Next.js
@@ -155,3 +159,5 @@ __pycache__/
 # Controlplane active and overlay generated files
 controlplane/active/
 controlplane/overlay/evidence/
+# Code scanning reports (generated files)
+.github/code-scanning/reports/
