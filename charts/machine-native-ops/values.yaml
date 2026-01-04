@@ -1,0 +1,402 @@
+# MachineNativeOps Helm Chart - 默認配置
+# 適用於開發環境
+
+global:
+  # 環境標識 (dev, staging, prod)
+  environment: dev
+  
+  # 鏡像配置
+  image:
+    repository: ghcr.io/machine-native-ops/machine-native-ops
+    pullPolicy: IfNotPresent
+    tag: "latest"
+  
+  # 鏡像拉取密鑰
+  imagePullSecrets: []
+  
+  # 存儲配置
+  storageClass: "standard"
+
+# 應用基本配置
+nameOverride: ""
+fullnameOverride: ""
+
+# 副本數配置
+replicaCount: 1
+
+# ServiceAccount 配置
+serviceAccount:
+  create: true
+  annotations: {}
+  name: ""
+
+# Pod 註解
+podAnnotations: {}
+
+# Pod 標籤
+podLabels: {}
+
+# Pod 安全上下文
+podSecurityContext:
+  fsGroup: 2000
+  runAsNonRoot: true
+  runAsUser: 1000
+
+# 容器安全上下文
+securityContext:
+  allowPrivilegeEscalation: false
+  capabilities:
+    drop:
+      - ALL
+  readOnlyRootFilesystem: true
+  runAsNonRoot: true
+  runAsUser: 1000
+
+# 主容器配置
+container:
+  name: machine-native-ops
+  image:
+    repository: ghcr.io/machine-native-ops/machine-native-ops
+    pullPolicy: IfNotPresent
+    tag: "latest"
+  
+  # 端口配置
+  ports:
+    - name: http
+      containerPort: 8080
+      protocol: TCP
+    - name: metrics
+      containerPort: 9090
+      protocol: TCP
+    - name: health
+      containerPort: 8081
+      protocol: TCP
+  
+  # 環境變量
+  env:
+    - name: ENV
+      value: "dev"
+    - name: LOG_LEVEL
+      value: "info"
+    - name: METRICS_ENABLED
+      value: "true"
+  
+  # 從 ConfigMap/Secret 掛載的環境變量
+  envFrom: []
+
+# 服務配置
+service:
+  type: ClusterIP
+  ports:
+    - port: 8080
+      targetPort: http
+      protocol: TCP
+      name: http
+    - port: 9090
+      targetPort: metrics
+      protocol: TCP
+      name: metrics
+  sessionAffinity: None
+
+# Ingress 配置
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+  hosts:
+    - host: machine-native-ops.local
+      paths:
+        - path: /
+          pathType: Prefix
+  tls: []
+
+# 資源限制和請求
+resources:
+  limits:
+    cpu: 500m
+    memory: 512Mi
+  requests:
+    cpu: 250m
+    memory: 256Mi
+
+# 自動擴縮配置
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+  targetMemoryUtilizationPercentage: 80
+  behavior:
+    scaleDown:
+      stabilizationWindowSeconds: 300
+      policies:
+        - type: Percent
+          value: 10
+          periodSeconds: 60
+    scaleUp:
+      stabilizationWindowSeconds: 60
+      policies:
+        - type: Percent
+          value: 50
+          periodSeconds: 60
+
+# 節點選擇
+nodeSelector: {}
+
+# 容忍度
+tolerations: []
+
+# 親和性
+affinity: {}
+
+# 探針配置
+livenessProbe:
+  httpGet:
+    path: /health
+    port: health
+  initialDelaySeconds: 30
+  periodSeconds: 10
+  timeoutSeconds: 5
+  failureThreshold: 3
+  successThreshold: 1
+
+readinessProbe:
+  httpGet:
+    path: /ready
+    port: health
+  initialDelaySeconds: 5
+  periodSeconds: 5
+  timeoutSeconds: 3
+  failureThreshold: 3
+  successThreshold: 1
+
+startupProbe:
+  httpGet:
+    path: /health
+    port: health
+  initialDelaySeconds: 10
+  periodSeconds: 10
+  timeoutSeconds: 5
+  failureThreshold: 30
+  successThreshold: 1
+
+# 持久化存儲
+persistence:
+  enabled: false
+  storageClass: ""
+  accessMode: ReadWriteOnce
+  size: 1Gi
+  annotations: {}
+
+# ConfigMap 配置
+configMap:
+  enabled: true
+  name: machine-native-ops-config
+  data:
+    app.properties: |
+      server.port=8080
+      management.endpoints.web.exposure.include=health,info,metrics
+      logging.level.root=INFO
+      spring.profiles.active=dev
+
+# Secret 配置
+secret:
+  enabled: true
+  name: machine-native-ops-secret
+  data: {}
+  stringData: {}
+
+# FHS (Filesystem Hierarchy Standard) 實現
+fhs:
+  enabled: true
+  
+  # FHS 目錄結構
+  directories:
+    - path: /etc/machine-native-ops
+      mode: "0755"
+      type: config
+      description: "Configuration files"
+    
+    - path: /var/lib/machine-native-ops
+      mode: "0755"
+      type: data
+      description: "Application data"
+    
+    - path: /var/log/machine-native-ops
+      mode: "0755"
+      type: log
+      description: "Log files"
+    
+    - path: /var/cache/machine-native-ops
+      mode: "0755"
+      type: cache
+      description: "Cache files"
+    
+    - path: /opt/machine-native-ops
+      mode: "0755"
+      type: opt
+      description: "Optional software"
+    
+    - path: /tmp/machine-native-ops
+      mode: "1777"
+      type: tmp
+      description: "Temporary files"
+  
+  # 掛載配置
+  mounts:
+    - name: config
+      mountPath: /etc/machine-native-ops
+      readOnly: true
+    
+    - name: data
+      mountPath: /var/lib/machine-native-ops
+      readOnly: false
+    
+    - name: logs
+      mountPath: /var/log/machine-native-ops
+      readOnly: false
+    
+    - name: cache
+      mountPath: /var/cache/machine-native-ops
+      readOnly: false
+
+# 監控配置
+monitoring:
+  enabled: true
+  
+  # Prometheus ServiceMonitor
+  serviceMonitor:
+    enabled: false
+    namespace: ""
+    labels: {}
+    annotations: {}
+    interval: 30s
+    scrapeTimeout: 10s
+    relabelings: []
+    targetLabels: []
+  
+  # PodMonitor
+  podMonitor:
+    enabled: false
+    namespace: ""
+    labels: {}
+    annotations: {}
+    interval: 30s
+    scrapeTimeout: 10s
+  
+  # Prometheus 規則
+  prometheusRule:
+    enabled: false
+    namespace: ""
+    labels: {}
+    annotations: {}
+    rules: {}
+
+# 日誌配置
+logging:
+  # 日誌級別 (debug, info, warn, error)
+  level: "info"
+  
+  # 日誌格式 (json, text)
+  format: "json"
+  
+  # 日誌輪轉
+  rotation:
+    enabled: true
+    maxFiles: 10
+    maxSize: "100M"
+  
+  # 結構化日誌字段
+  structured:
+    includeTimestamp: true
+    includeLevel: true
+    includeLogger: true
+    includeThread: false
+    includeStackTrace: true
+
+# 安全配置
+security:
+  # Pod Security Policy
+  podSecurityPolicy:
+    enabled: false
+  
+  # Network Policy
+  networkPolicy:
+    enabled: false
+    ingress: []
+    egress: []
+  
+  # RBAC
+  rbac:
+    create: true
+    rules: []
+
+# 備份配置
+backup:
+  enabled: false
+  schedule: "0 2 * * *"  # 每天凌晨2點
+  retention: "7d"
+  storageClass: ""
+  size: 10Gi
+
+# 災難恢復
+disasterRecovery:
+  enabled: false
+  rpo: "1h"  # 恢復點目標
+  rto: "15m" # 恢復時間目標
+  
+  # 自動回滾配置
+  rollback:
+    enabled: false
+    threshold: 5      # 連續失敗次數
+    timeout: "10m"    # 回滾超時時間
+  
+  # 健康檢查
+  healthCheck:
+    interval: "30s"
+    timeout: "5s"
+    retries: 3
+
+# 測試配置
+testing:
+  enabled: false
+  
+  # 壓力測試
+  loadTest:
+    enabled: false
+    duration: "10m"
+    concurrency: 50
+  
+  # 混沌測試
+  chaosTest:
+    enabled: false
+    experiments: []
+
+# 合規配置
+compliance:
+  # NIST SP 800-204
+  nist:
+    enabled: false
+    controls: []
+  
+  # SLSA
+  slsa:
+    level: 3
+    attestation: true
+  
+  # SOC 2
+  soc2:
+    enabled: false
+    controls: []
+
+# 初始化容器
+initContainers: []
+
+# 邊車容器
+sidecars: []
+
+# 額外標籤
+commonLabels: {}
+
+# 額外註解
+commonAnnotations: {}

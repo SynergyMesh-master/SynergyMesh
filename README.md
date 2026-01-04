@@ -1,229 +1,328 @@
-# MachineNativeOps
+# MachineNativeOps CI/CD System
 
-**MachineNativeOps Platform** - A minimal system skeleton with immutable
-governance and self-healing capabilities.
+## Overview
 
-## 🏗️ Architecture
+This repository contains a comprehensive, enterprise-grade CI/CD implementation for the MachineNativeOps project. The system features automated deployments, canary releases, intelligent rollbacks, comprehensive monitoring, and disaster recovery capabilities.
 
-This project follows a **FHS-compliant minimal system skeleton** design with
-clear separation between governance and workspace:
+## 🎯 Key Features
+
+- **Automated CI/CD Pipeline** with GitHub Actions
+- **Progressive Canary Deployments** using Argo Rollouts
+- **Intelligent Rollback Mechanism** with automated failure detection
+- **Comprehensive Monitoring** with Prometheus and Grafana
+- **Security Compliance** (SLSA L3, NIST SP 800-204)
+- **Automated Secrets Rotation** with audit logging
+- **Team Training Tools** with drill simulations
+- **Disaster Recovery** procedures and automation
+
+## 📁 Project Structure
 
 ```
-/
-├── bin/                   # Essential user command binaries (FHS)
-├── etc/                   # Host-specific system configuration (FHS)
-├── home/                  # User home directories (FHS)
-├── lib/                   # Essential shared libraries (FHS)
-├── sbin/                  # System administration binaries (FHS)
-├── srv/                   # Service data (FHS)
-├── usr/                   # Secondary hierarchy for user data (FHS)
-├── var/                   # Variable data (FHS)
+.
+├── scripts/
+│   ├── secrets_rotation.py          # Automated secret management
+│   ├── rollback-mechanism.sh        # Intelligent rollback system
+│   ├── drill-simulation.sh          # Team training drills
+│   └── ci-cd-validation.sh          # System validation suite
 │
-├── governance/            # Symlink to workspace/src/governance (AI Agent governance)
+├── charts/
+│   ├── argo-rollout.yaml            # Canary deployment config
+│   ├── analysis-template-success-rate.yaml
+│   ├── analysis-template-error-rate.yaml
+│   └── analysis-template-response-time.yaml
 │
-├── controlplane/          # Governance Layer (Immutable)
-│   ├── baseline/          # Immutable baseline configuration
-│   │   ├── config/        # Core configuration files (12 files)
-│   │   ├── registries/    # Module and URN registries (4 files)
-│   │   ├── specifications/# System specifications (8 files)
-│   │   ├── integration/   # Integration configuration (1 file)
-│   │   ├── documentation/ # Architecture documentation
-│   │   └── validation/    # Validation scripts and tools
-│   ├── governance/        # Governance documentation and policies
-│   │   ├── docs/          # All governance documentation
-│   │   ├── policies/      # Governance policies
-│   │   └── reports/       # Implementation reports
-│   └── overlay/           # Runtime overlays and evidence
+├── monitoring/
+│   ├── grafana-dashboard.json       # Monitoring dashboard
+│   ├── prometheus-alerts.yaml       # Alerting rules
+│   └── setup-monitoring.sh          # Deployment script
 │
-├── workspace/             # Work Layer (Mutable)
-│   ├── projects/          # Project files and scripts
-│   ├── config/            # Project configurations
-│   ├── docs/              # Project documentation
-│   ├── src/governance/    # AI Agent governance framework (30-agents, etc.)
-│   └── artifacts/         # Build artifacts and reports
+├── docs/
+│   ├── github-secrets-setup-guide.md
+│   └── team-training-guide.md
 │
-├── root.bootstrap.yaml    # System bootstrap configuration
-├── root.env.sh            # Environment variables
-└── root.fs.map            # Filesystem mappings
+├── IMPLEMENTATION_SUMMARY.md        # Complete implementation details
+└── README.md                        # This file
 ```
-
-### FHS Compliance
-
-This project follows the Filesystem Hierarchy Standard (FHS) 3.0:
-
-- ✅ **8/8 applicable FHS directories** implemented
-- ✅ **Clean root layer** with only 3 bootstrap files
-- ✅ **Standards-compliant** structure
-- ✅ **Industry best practices** followed
-
-See [FHS_IMPLEMENTATION.md](FHS_IMPLEMENTATION.md) for detailed documentation.
 
 ## 🚀 Quick Start
 
-### 1. Setup Environment
+### Prerequisites
 
+- Kubernetes cluster (v1.24+)
+- kubectl configured and authenticated
+- Argo Rollouts installed
+- GitHub CLI installed and authenticated
+- Container registry access
+
+### Installation
+
+#### 1. Deploy Monitoring Stack
 ```bash
-# Source environment variables
-source root.env.sh
-
-# Verify controlplane paths
-echo $CONTROLPLANE_PATH
-echo $WORKSPACE_PATH
+./monitoring/setup-monitoring.sh
 ```
 
-### 2. Run Validation
-
+#### 2. Configure GitHub Secrets
 ```bash
-# Execute validation system
-python3 controlplane/baseline/validation/validate-root-specs.py
-
-# View validation results
-cat controlplane/overlay/evidence/validation/validation.report.json
+# Follow the comprehensive guide
+cat docs/github-secrets-setup-guide.md
 ```
 
-### 3. Explore Structure
-
+#### 3. Deploy Application
 ```bash
-# View baseline configuration
-ls -la controlplane/baseline/config/
+kubectl apply -f charts/argo-rollout.yaml
+kubectl apply -f charts/analysis-template-*.yaml
+```
 
-# View governance documents
-ls -la controlplane/governance/docs/
+#### 4. Validate Installation
+```bash
+./scripts/ci-cd-validation.sh all
+```
 
-# View project files
-ls -la workspace/
+#### 5. Access Dashboards
+```bash
+# Grafana
+kubectl port-forward svc/grafana 3000:3000 -n monitoring
+# URL: http://localhost:3000
+# Username: admin / Password: admin
+
+# Prometheus
+kubectl port-forward svc/prometheus 9090:9090 -n monitoring
+# URL: http://localhost:9090
 ```
 
 ## 📚 Documentation
 
 ### Core Documentation
 
-- **FHS Implementation**: [FHS_IMPLEMENTATION.md](FHS_IMPLEMENTATION.md)
-- **Architecture**: [controlplane/baseline/documentation/BASELINE_ARCHITECTURE.md](controlplane/baseline/documentation/BASELINE_ARCHITECTURE.md)
-- **Usage Guide**: [controlplane/CONTROLPLANE_USAGE.md](controlplane/CONTROLPLANE_USAGE.md)
+- **[Implementation Summary](IMPLEMENTATION_SUMMARY.md)** - Complete system overview and implementation details
+- **[Team Training Guide](docs/team-training-guide.md)** - Comprehensive training material and procedures
+- **[GitHub Secrets Setup Guide](docs/github-secrets-setup-guide.md)** - Security configuration and best practices
 
-### Governance Documentation
+### Script Documentation
 
-- **Governance Docs**: [controlplane/governance/docs/](controlplane/governance/docs/)
-- **Policies**: [controlplane/governance/policies/](controlplane/governance/policies/)
-- **Reports**: [controlplane/governance/reports/](controlplane/governance/reports/)
-
-### AI Agent Governance
-
-- **30-agents Framework**: [governance/30-agents/README.md](governance/30-agents/README.md)
-- **Agent Catalog**: [governance/30-agents/registry/agent-catalog.yaml](governance/30-agents/registry/agent-catalog.yaml)
-- **RBAC Policies**: [governance/30-agents/permissions/rbac-policies.yaml](governance/30-agents/permissions/rbac-policies.yaml)
-
-> **Note**: The `governance/` directory at root level is a symlink to `workspace/src/governance/` for convenient access to AI agent governance framework.
-
-### Project Documentation
-
-- **Project Docs**: [workspace/docs/](workspace/docs/)
-- **Configuration**: [workspace/config/](workspace/config/)
-
-## 🎯 Key Principles
-
-### 1. FHS Compliance
-
-- Follows Filesystem Hierarchy Standard (FHS) 3.0
-- Industry-standard directory structure
-- Clean separation of concerns
-
-### 2. Minimal System Skeleton
-
-- Root directory contains only FHS directories and 3 bootstrap files
-- All governance in `controlplane/`
-- All work in `workspace/`
-
-### 3. Immutable Governance
-
-- `controlplane/baseline/` is read-only
-- Changes require explicit governance approval
-- Version control tracks all governance changes
-
-### 4. Self-Healing Without Pollution
-
-- Runtime state in `controlplane/overlay/`
-- Self-healing writes only to overlay
-- Baseline remains pristine
-
-### 5. Evidence-Based Validation
-
-- All operations produce evidence
-- Evidence stored in `controlplane/overlay/evidence/`
-- Comprehensive validation system (50 checks)
-
-## 🔧 Validation System
-
-The project includes a comprehensive validation system:
-
-- **5 Validation Stages**: Structural, Syntax, Semantic, Integration, Security
-- **50 Automated Checks**: Complete coverage of baseline configuration
-- **Evidence Generation**: All validation produces auditable evidence
-- **Pass/Fail Reporting**: Clear validation status
-
-### Run Validation
-
+#### Secrets Rotation
 ```bash
-python3 controlplane/baseline/validation/validate-root-specs.py
+# Rotate all secrets
+python3 scripts/secrets_rotation.py \
+  --repo MachineNativeOps/machine-native-ops \
+  --secret API_TOKEN
+
+# Dry run to preview
+python3 scripts/secrets_rotation.py \
+  --repo MachineNativeOps/machine-native-ops \
+  --secret API_TOKEN \
+  --dry-run
+
+# Verify rotation
+python3 scripts/secrets_rotation.py \
+  --repo MachineNativeOps/machine-native-ops \
+  --secret API_TOKEN \
+  --verify
 ```
 
-### View Results
-
+#### Rollback Mechanism
 ```bash
-# JSON report
-cat controlplane/overlay/evidence/validation/validation.report.json
+# Monitor deployment and auto-rollback on failure
+./scripts/rollback-mechanism.sh monitor
 
-# Markdown report
-cat controlplane/overlay/evidence/validation/validation.report.md
+# Manual rollback
+./scripts/rollback-mechanism.sh rollback "Performance degradation"
 
-# Manifest
-cat controlplane/overlay/evidence/validation/controlplane.manifest.json
+# Rollback to specific revision
+./scripts/rollback-mechanism.sh manual-rollback 3
+
+# List rollback points
+./scripts/rollback-mechanism.sh list
+
+# Check status
+./scripts/rollback-mechanism.sh status
+
+# Clean up old snapshots
+./scripts/rollback-mechanism.sh cleanup
 ```
 
-## 🛠️ Development
+#### Drill Simulation
+```bash
+# Run all drill scenarios
+./scripts/drill-simulation.sh all
 
-### Project Structure
+# Run specific scenarios
+./scripts/drill-simulation.sh pod-failure
+./scripts/drill-simulation.sh high-latency
+./scripts/drill-simulation.sh canary-failure
+./scripts/drill-simulation.sh secret-rotation
+./scripts/drill-simulation.sh resource-exhaustion
+./scripts/drill-simulation.sh emergency-rollback
+./scripts/drill-simulation.sh monitoring-alerts
+```
 
-- **Baseline Configuration**: `controlplane/baseline/config/` (12 files)
-- **Specifications**: `controlplane/baseline/specifications/` (8 files)
-- **Registries**: `controlplane/baseline/registries/` (4 files)
-- **Integration Rules**: `controlplane/baseline/integration/` (1 file)
-- **Validation System**: `controlplane/baseline/validation/` (multiple files)
+#### Validation
+```bash
+# Run all validation tests
+./scripts/ci-cd-validation.sh all
 
-### Environment Variables
+# Run specific test categories
+./scripts/ci-cd-validation.sh infrastructure
+./scripts/ci-cd-validation.sh deployment
+./scripts/ci-cd-validation.sh rollouts
+./scripts/ci-cd-validation.sh monitoring
+./scripts/ci-cd-validation.sh scripts
+./scripts/ci-cd-validation.sh docs
+```
 
-After sourcing `root.env.sh`, you have access to:
+## 🔧 Operational Procedures
 
-- `CONTROLPLANE_PATH`: Controlplane root
-- `CONTROLPLANE_CONFIG`: Configuration directory
-- `CONTROLPLANE_SPECS`: Specifications directory
-- `CONTROLPLANE_REGISTRIES`: Registries directory
-- `CONTROLPLANE_VALIDATION`: Validation directory
-- `WORKSPACE_PATH`: Workspace root
-- `FHS_BIN`, `FHS_SBIN`, `FHS_ETC`, etc.: FHS directories
+### Daily Operations
+```bash
+# Check deployment status
+kubectl argo rollouts get machine-native-ops -n default
 
-## 📊 Status
+# Review monitoring dashboard
+# Access: http://localhost:3000/d/machine-native-ops-cicd
 
-- ✅ **FHS Compliance**: Complete (8/8 applicable directories)
-- ✅ **Controlplane Architecture**: Complete (26 files)
-- ✅ **Validation System**: Operational (50/50 checks passing)
-- ✅ **Evidence Generation**: Working
-- ✅ **Documentation**: Complete
-- ✅ **Root Integration**: Complete
+# Check for alerts
+kubectl get alerts -n monitoring
+```
 
-## 🔗 Links
+### Emergency Response
+```bash
+# Trigger immediate rollback
+./scripts/rollback-mechanism.sh rollback "Critical incident"
 
-- **GitHub Repository**: [MachineNativeOps/machine-native-ops](https://github.com/MachineNativeOps/machine-native-ops)
-- **Issues**: [GitHub Issues](https://github.com/MachineNativeOps/machine-native-ops/issues)
-- **Pull Requests**: [GitHub PRs](https://github.com/MachineNativeOps/machine-native-ops/pulls)
+# Monitor recovery
+watch kubectl argo rollouts get machine-native-ops -n default
 
-## 📝 License
+# Check logs
+kubectl logs -n default -l app=machine-native-ops --tail=100
+```
+
+### Regular Maintenance
+```bash
+# Weekly: Clean up old snapshots
+./scripts/rollback-mechanism.sh cleanup
+
+# Weekly: Verify secrets
+python3 scripts/secrets_rotation.py --verify
+
+# Monthly: Run drill simulations
+./scripts/drill-simulation.sh all
+```
+
+## 🎓 Training
+
+### Team Training Exercises
+
+1. **Deploy a Test Change**
+   ```bash
+   echo "Test deployment" > test.txt
+   git add test.txt
+   git commit -m "test: Verify deployment pipeline"
+   git push origin feature/test-deployment
+   gh pr create --title "Test deployment" --body "Testing deployment pipeline"
+   ```
+
+2. **Trigger and Monitor Rollback**
+   ```bash
+   kubectl argo rollouts set image machine-native-ops \
+     machine-native-ops=nginx:broken -n default
+   ./scripts/rollback-mechanism.sh rollback "Test rollback procedure"
+   ```
+
+3. **Run Drill Simulation**
+   ```bash
+   ./scripts/drill-simulation.sh all
+   cat /var/log/drill-simulation.log
+   ```
+
+For comprehensive training, see [Team Training Guide](docs/team-training-guide.md).
+
+## 🏗️ Architecture
+
+### CI/CD Pipeline Flow
+```mermaid
+graph LR
+    A[Code Push] --> B[GitHub Actions CI]
+    B --> C[Security Scan]
+    C --> D[Automated Testing]
+    D --> E[Build Image]
+    E --> F[Push to Registry]
+    F --> G[ArgoCD Sync]
+    G --> H[Canary Deployment]
+    H --> I{Health Check}
+    I -->|Pass| J[Full Rollout]
+    I -->|Fail| K[Auto Rollback]
+```
+
+### Monitoring Stack
+- **Prometheus**: Metrics collection and alerting
+- **Grafana**: Real-time dashboards with 12 panels
+- **AlertManager**: Alert routing and notifications
+
+### Deployment Strategy
+- **Progressive Canary**: 10% → 30% → 50% → 80% → 100%
+- **Automated Analysis**: Success rate, error rate, response time
+- **Intelligent Rollback**: Automatic failure detection and recovery
+
+## 🔒 Security
+
+### Compliance
+- ✅ **SLSA L3**: Provenance generation and verification
+- ✅ **NIST SP 800-204**: Security configuration and controls
+- ✅ **SOC 2 Ready**: Control implementation for enterprise compliance
+
+### Security Features
+- Environment-isolated secrets
+- Automated secret rotation (30-day cycle)
+- Container image signing with Cosign
+- SBOM generation and attestation
+- Comprehensive audit logging
+
+## 📊 Monitoring
+
+### Key Metrics
+- **Deployment Health**: Rollout phase, replica count
+- **Application Metrics**: Success rate (≥95%), error rate (<1%), P95 response time (<500ms)
+- **Resource Usage**: CPU, memory, network
+- **Canary Analysis**: Traffic distribution, performance comparison
+
+### Alerts
+- **Critical Alerts**: Rollout degraded, high error rate, pod crash looping
+- **Warning Alerts**: High CPU/memory usage, canary failure rate, high response time
+
+## 🤝 Contributing
+
+For contribution guidelines and development procedures, please refer to the [Team Training Guide](docs/team-training-guide.md).
+
+## 📞 Support
+
+### Resources
+- **Documentation**: See `docs/` directory
+- **Implementation Details**: [IMPLEMENTATION_SUMMARY.md](IMPLEMENTATION_SUMMARY.md)
+- **External Resources**:
+  - [Argo Rollouts](https://argoproj.github.io/argo-rollouts/)
+  - [Prometheus](https://prometheus.io/docs/)
+  - [Grafana](https://grafana.com/docs/)
+  - [GitHub Actions](https://docs.github.com/actions/)
+
+### Contact
+- **On-Call Engineer**: Check rotation schedule
+- **Engineering Team**: engineering@machinenativeops.com
+- **DevOps Team**: devops@machinenativeops.com
+
+## 📜 License
 
 See LICENSE file for details.
 
+## 🙏 Acknowledgments
+
+Built with best practices from:
+- Argo Project
+- Prometheus Ecosystem
+- CNCF Community
+- DevOps Best Practices
+
 ---
 
-**Version**: 2.0.0 (FHS Compliant)
-**Last Updated**: 2025-12-25
-**Maintained By**: MachineNativeOps Team
+**Status**: ✅ Production Ready  
+**Implementation Date**: 2025  
+**Version**: 1.0.0

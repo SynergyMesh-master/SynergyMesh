@@ -1,0 +1,27 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AnalysisTemplate
+metadata:
+  name: response-time
+  namespace: default
+spec:
+  args:
+    - name: service-name
+    - name: latency-threshold
+      value: "500"
+  
+  metrics:
+    - name: p95-response-time
+      interval: 5m
+      failureLimit: 2
+      successCondition: result[0] < {{ args.latency-threshold }}
+      
+      provider:
+        prometheus:
+          address: http://prometheus:9090
+          query: |
+            histogram_quantile(0.95,
+              sum(rate(http_request_duration_seconds_bucket{
+                service="{{ args.service-name }}",
+                namespace="default"
+              }[5m])) by (le)
+            ) * 1000

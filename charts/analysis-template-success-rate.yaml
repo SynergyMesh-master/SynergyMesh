@@ -1,0 +1,33 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AnalysisTemplate
+metadata:
+  name: success-rate
+  namespace: default
+spec:
+  args:
+    - name: service-name
+    - name: success-threshold
+      value: "0.95"
+  
+  metrics:
+    - name: request-success-rate
+      interval: 5m
+      # Number of consecutive failures before rollback
+      failureLimit: 2
+      # Number of consecutive successes required
+      successCondition: result[0] >= {{ args.success-threshold }}
+      
+      provider:
+        prometheus:
+          address: http://prometheus:9090
+          query: |
+            sum(rate(http_requests_total{
+              status=~"2..",
+              service="{{ args.service-name }}",
+              namespace="default"
+            }[5m]))
+            /
+            sum(rate(http_requests_total{
+              service="{{ args.service-name }}",
+              namespace="default"
+            }[5m]))

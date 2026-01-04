@@ -1,0 +1,503 @@
+# MachineNativeOps 生產環境配置
+# 繼承默認配置並覆蓋生產環境特定值
+
+# 環境配置
+global:
+  environment: production
+  image:
+    tag: "v1.2.3"
+    pullPolicy: IfNotPresent
+
+# 生產環境副本配置
+replicaCount: 3
+
+# 生產環境資源配置
+resources:
+  limits:
+    cpu: 2000m
+    memory: 4Gi
+    ephemeral-storage: 2Gi
+  requests:
+    cpu: 1000m
+    memory: 2Gi
+    ephemeral-storage: 1Gi
+
+# 自動擴縮配置
+autoscaling:
+  enabled: true
+  minReplicas: 3
+  maxReplicas: 20
+  targetCPUUtilizationPercentage: 70
+  targetMemoryUtilizationPercentage: 75
+  behavior:
+    scaleDown:
+      stabilizationWindowSeconds: 300
+      policies:
+        - type: Percent
+          value: 10
+          periodSeconds: 60
+        - type: Pods
+          value: 2
+          periodSeconds: 60
+      selectPolicy: Min
+    scaleUp:
+      stabilizationWindowSeconds: 60
+      policies:
+        - type: Percent
+          value: 50
+          periodSeconds: 60
+        - type: Pods
+          value: 4
+          periodSeconds: 60
+      selectPolicy: Max
+
+# 生產環境服務配置
+service:
+  type: ClusterIP
+  ports:
+    - port: 8080
+      targetPort: http
+      protocol: TCP
+      name: http
+    - port: 9090
+      targetPort: metrics
+      protocol: TCP
+      name: metrics
+
+# 生產環境 Ingress 配置
+ingress:
+  enabled: true
+  className: "nginx"
+  annotations:
+    # SSL/TLS 配置
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    # 速率限制
+    nginx.ingress.kubernetes.io/rate-limit: "100"
+    nginx.ingress.kubernetes.io/rate-limit-window: "1m"
+    # 連接限制
+    nginx.ingress.kubernetes.io/limit-connections: "1000"
+    nginx.ingress.kubernetes.io/limit-rps: "200"
+    # 安全頭部
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      add_header X-Frame-Options "SAMEORIGIN" always;
+      add_header X-Content-Type-Options "nosniff" always;
+      add_header X-XSS-Protection "1; mode=block" always;
+      add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+      add_header Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:;" always;
+    # WebSocket 支持
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
+    # 壓縮
+    nginx.ingress.kubernetes.io/enable-compression: "true"
+    nginx.ingress.kubernetes.io/compression-type: "gzip"
+  hosts:
+    - host: machine-native-ops.com
+      paths:
+        - path: /
+          pathType: Prefix
+  tls:
+    - secretName: machine-native-ops-tls
+      hosts:
+        - machine-native-ops.com
+
+# 生產環境持久化存儲
+persistence:
+  enabled: true
+  storageClass: "ssd"
+  accessMode: ReadWriteOnce
+  size: 50Gi
+  annotations:
+    "volume.beta.kubernetes.io/storage-class": "ssd"
+
+# 生產環境 ConfigMap
+configMap:
+  name: machine-native-ops-prod-config
+  data:
+    app.properties: |
+      server.port=8080
+      management.endpoints.web.exposure.include=health,info,metrics,prometheus
+      logging.level.root=WARN
+      logging.level.com.machine-native=INFO
+      spring.profiles.active=prod
+      # 生產環境特定配置
+      server.tomcat.max-threads=200
+      server.tomcat.min-spare-threads=20
+      management.metrics.export.prometheus.enabled=true
+      management.endpoint.health.show-details=when-authorized
+    
+    logging-prod.yml: |
+      level:
+        root: WARN
+        com.machine-native: INFO
+        org.springframework.security: INFO
+        org.springframework.web: WARN
+      pattern:
+        console: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
+        file: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
+      file:
+        name: /var/log/machine-native-ops/application.log
+        max-size: 100MB
+        max-history: 30
+
+# 生產環境 Secret
+secret:
+  name: machine-native-ops-prod-secret
+  stringData:
+    # 數據庫配置
+    database-url: "postgresql://prod_user:${DB_PASSWORD}@db-prod.internal:5432/machine_native_ops"
+    # 外部服務配置
+    external-api-key: "${EXTERNAL_API_KEY}"
+    # JWT 配置
+    jwt-secret: "${JWT_SECRET}"
+    # 監控配置
+    prometheus-token: "${PROMETHEUS_TOKEN}"
+
+# 增強的 FHS 實現
+fhs:
+  enabled: true
+  directories:
+    - path: /etc/machine-native-ops
+      mode: "0755"
+      type: config
+      description: "Configuration files"
+    
+    - path: /var/lib/machine-native-ops
+      mode: "0755"
+      type: data
+      description: "Application data"
+    
+    - path: /var/log/machine-native-ops
+      mode: "0755"
+      type: log
+      description: "Log files"
+    
+    - path: /var/cache/machine-native-ops
+      mode: "0755"
+      type: cache
+      description: "Cache files"
+    
+    - path: /opt/machine-native-ops
+      mode: "0755"
+      type: opt
+      description: "Optional software"
+    
+    - path: /tmp/machine-native-ops
+      mode: "1777"
+      type: tmp
+      description: "Temporary files"
+    
+    # 生產環境額外目錄
+    - path: /var/backup/machine-native-ops
+      mode: "0700"
+      type: backup
+      description: "Backup files"
+
+# 增強的監控配置
+monitoring:
+  enabled: true
+  
+  serviceMonitor:
+    enabled: true
+    namespace: monitoring
+    labels:
+      release: prometheus
+      app: machine-native-ops
+    annotations:
+      prometheus.io/scrape: "true"
+      prometheus.io/port: "9090"
+      prometheus.io/path: "/metrics"
+    interval: 30s
+    scrapeTimeout: 10s
+    relabelings:
+      - sourceLabels: [__meta_kubernetes_pod_annotation_prometheus_io_scrape]
+        action: keep
+        regex: true
+      - sourceLabels: [__meta_kubernetes_pod_annotation_prometheus_io_path]
+        action: replace
+        targetLabel: __metrics_path__
+        regex: (.+)
+  
+  prometheusRule:
+    enabled: true
+    namespace: monitoring
+    labels:
+      release: prometheus
+    rules:
+      - alert: MachineNativeOpsHighErrorRate
+        expr: rate(http_requests_total{status=~"5.."}[5m]) > 0.05
+        for: 5m
+        labels:
+          severity: critical
+          service: machine-native-ops
+        annotations:
+          summary: "High error rate detected"
+          description: "Error rate is {{ $value }} errors per second"
+      
+      - alert: MachineNativeOpsHighMemoryUsage
+        expr: container_memory_usage_bytes{pod=~"machine-native-ops.*"} / container_spec_memory_limit_bytes > 0.9
+        for: 10m
+        labels:
+          severity: warning
+          service: machine-native-ops
+        annotations:
+          summary: "High memory usage"
+          description: "Memory usage is above 90%"
+      
+      - alert: MachineNativeOpsPodRestart
+        expr: rate(kube_pod_container_status_restarts_total{pod=~"machine-native-ops.*"}[15m]) > 0
+        for: 5m
+        labels:
+          severity: warning
+          service: machine-native-ops
+        annotations:
+          summary: "Pod restart detected"
+          description: "Pod {{ $labels.pod }} is restarting"
+
+# 增強的安全配置
+security:
+  # Network Policy
+  networkPolicy:
+    enabled: true
+    ingress:
+      - from:
+          - namespaceSelector:
+              matchLabels:
+                name: ingress-nginx
+          - namespaceSelector:
+              matchLabels:
+                name: monitoring
+        ports:
+          - protocol: TCP
+            port: 8080
+          - protocol: TCP
+            port: 9090
+    egress:
+      - to:
+          - namespaceSelector:
+              matchLabels:
+                name: kube-system
+        - to:
+          - namespaceSelector:
+              matchLabels:
+                name: monitoring
+        - to: []
+          ports:
+            - protocol: TCP
+              port: 53
+            - protocol: UDP
+              port: 53
+            - protocol: TCP
+              port: 443
+            - protocol: TCP
+              port: 80
+  
+  # RBAC
+  rbac:
+    create: true
+    rules:
+      - apiGroups: [""]
+        resources: ["configmaps", "secrets"]
+        verbs: ["get", "list", "watch"]
+      - apiGroups: [""]
+        resources: ["pods"]
+        verbs: ["get", "list", "watch"]
+      - apiGroups: ["apps"]
+        resources: ["deployments"]
+        verbs: ["get", "list", "watch"]
+
+# 增強的日誌配置
+logging:
+  level: "warn"
+  format: "json"
+  rotation:
+    enabled: true
+    maxFiles: 30
+    maxSize: "500M"
+  structured:
+    includeTimestamp: true
+    includeLevel: true
+    includeLogger: true
+    includeThread: true
+    includeStackTrace: true
+    includeMDC: true
+    includeStructuredArguments: true
+
+# 生產環境備份配置
+backup:
+  enabled: true
+  schedule: "0 2 * * *"  # 每天凌晨2點
+  retention: "30d"
+  storageClass: "backup"
+  size: 100Gi
+  annotations:
+    "backup.velero.io/schedule": "daily"
+    "backup.velero.io/ttl": "720h"
+
+# 災難恢復配置
+disasterRecovery:
+  enabled: true
+  rpo: "15m"  # 恢復點目標
+  rto: "5m"   # 恢復時間目標
+  
+  rollback:
+    enabled: true
+    threshold: 3
+    timeout: "5m"
+  
+  healthCheck:
+    interval: "15s"
+    timeout: "3s"
+    retries: 5
+    failureThreshold: 3
+    successThreshold: 2
+
+# 生產環境合規配置
+compliance:
+  nist:
+    enabled: true
+    controls:
+      - AC-1
+      - AC-2
+      - AC-3
+      - AU-2
+      - CM-2
+      - SC-8
+      - SI-1
+  
+  slsa:
+    level: 3
+    attestation: true
+    provenance: true
+  
+  soc2:
+    enabled: true
+    controls:
+      - A1
+      - A2
+      - CC2
+      - CC6
+      - CC7
+
+# 生產環境探針配置（更嚴格）
+livenessProbe:
+  httpGet:
+    path: /health/live
+    port: health
+    scheme: HTTPS
+  initialDelaySeconds: 60
+  periodSeconds: 10
+  timeoutSeconds: 5
+  failureThreshold: 3
+  successThreshold: 1
+
+readinessProbe:
+  httpGet:
+    path: /health/ready
+    port: health
+    scheme: HTTPS
+  initialDelaySeconds: 10
+  periodSeconds: 5
+  timeoutSeconds: 3
+  failureThreshold: 3
+  successThreshold: 1
+
+startupProbe:
+  httpGet:
+    path: /health/startup
+    port: health
+    scheme: HTTPS
+  initialDelaySeconds: 30
+  periodSeconds: 10
+  timeoutSeconds: 5
+  failureThreshold: 30
+  successThreshold: 1
+
+# 生產環境初始化容器
+initContainers:
+  - name: wait-for-db
+    image: postgres:15-alpine
+    command:
+      - sh
+      - -c
+      - |
+        until pg_isready -h db-prod.internal -p 5432 -U prod_user; do
+          echo "等待數據庫啟動..."
+          sleep 5
+        done
+        echo "數據庫已就緒"
+    resources:
+      limits:
+        cpu: 100m
+        memory: 128Mi
+      requests:
+        cpu: 50m
+        memory: 64Mi
+
+# 生產環境邊車容器
+sidecars:
+  - name: log-shipper
+    image: fluent/fluent-bit:2.2
+    resources:
+      limits:
+        cpu: 200m
+        memory: 256Mi
+      requests:
+        cpu: 100m
+        memory: 128Mi
+    volumeMounts:
+      - name: logs
+        mountPath: /var/log/machine-native-ops
+        readOnly: true
+    env:
+      - name: FLUENT_BIT_CONF
+        value: |
+          [INPUT]
+              Name tail
+              Path /var/log/machine-native-ops/*.log
+              Tag machine-native-ops.*
+              
+          [OUTPUT]
+              Name forward
+              Match *
+              Host fluentd.monitoring.svc.cluster.local
+              Port 24224
+
+# 生產環境節點選擇和親和性
+nodeSelector:
+  node-type: application
+  performance: high
+
+tolerations:
+  - key: "dedicated"
+    operator: "Equal"
+    value: "application"
+    effect: "NoSchedule"
+
+affinity:
+  podAntiAffinity:
+    preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 100
+        podAffinityTerm:
+          labelSelector:
+            matchExpressions:
+              - key: app.kubernetes.io/name
+                operator: In
+                values:
+                  - machine-native-ops
+          topologyKey: kubernetes.io/hostname
+
+# 生產環境額外標籤
+commonLabels:
+  env: production
+  tier: application
+  component: machine-native-ops
+  managed-by: helm
+  version: "v1.2.3"
+
+# 生產環境額外註解
+commonAnnotations:
+  configmap.reloader.stakater.com/reload: "machine-native-ops-prod-config"
+  secret.reloader.stakater.com/reload: "machine-native-ops-prod-secret"
+  prometheus.io/scrape: "true"
+  prometheus.io/port: "9090"
+  prometheus.io/path: "/metrics"

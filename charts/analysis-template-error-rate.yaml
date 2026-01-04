@@ -1,0 +1,31 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AnalysisTemplate
+metadata:
+  name: error-rate
+  namespace: default
+spec:
+  args:
+    - name: service-name
+    - name: error-threshold
+      value: "0.01"
+  
+  metrics:
+    - name: request-error-rate
+      interval: 5m
+      failureLimit: 1
+      successCondition: result[0] < {{ args.error-threshold }}
+      
+      provider:
+        prometheus:
+          address: http://prometheus:9090
+          query: |
+            sum(rate(http_requests_total{
+              status=~"5..",
+              service="{{ args.service-name }}",
+              namespace="default"
+            }[5m]))
+            /
+            sum(rate(http_requests_total{
+              service="{{ args.service-name }}",
+              namespace="default"
+            }[5m]))
