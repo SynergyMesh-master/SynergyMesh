@@ -4,91 +4,114 @@
 
 metadata:
   name: "AI Agent Catalog"
-  version: "1.0.0"
-  description: "Central registry for all AI agents in SynergyMesh system"
+  version: "2.0.0"
+  description: "Central registry for all AI agents in MachineNativeOps platform"
   owner: "AI Agent Governance Team"
+  platform: "MachineNativeOps"
   created_at: "2025-12-11"
-  updated_at: "2025-12-11"
+  updated_at: "2026-01-04"
 
 # Agent Registry
 agents:
-  - agent_id: "unmanned-island-agent"
-    name: "Unmanned Island Agent"
-    description: "Intelligent automation agent for the Unmanned Island System platform"
-    version: "2.0.0"
+  - agent_id: "mno-orchestrator-agent"
+    name: "MachineNativeOps Orchestrator Agent"
+    description: "Enterprise-grade orchestration agent for the MachineNativeOps platform with full governance integration and multi-layer coordination capabilities"
+    version: "3.0.0"
     status: "active"
-    
+
     # Lifecycle
     lifecycle:
       stage: "production"
-      deployed_at: "2025-12-11T16:00:00Z"
-      last_updated: "2025-12-11T16:00:00Z"
-      next_review: "2026-03-11T16:00:00Z"
-    
+      deployed_at: "2026-01-04T00:00:00Z"
+      last_updated: "2026-01-04T00:00:00Z"
+      next_review: "2026-04-04T00:00:00Z"
+
     # Owner & Responsibility
     ownership:
-      team: "SynergyMesh Core Team"
+      team: "MachineNativeOps Core Team"
       owner: "AI Agent Governance Team"
       contact: "governance@machinenativeops.io"
       on_call: "platform-team"
-    
+
     # Capabilities
     capabilities:
-      - intelligent_automation
-      - platform_integration
+      - multi_layer_orchestration
+      - governance_enforcement
+      - policy_validation
       - autonomous_operation
-      - governance_compliance
-      - behavior_contract_enforcement
-    
+      - self_healing
+      - chatops_integration
+      - compliance_monitoring
+      - audit_trail_generation
+      - quantum_ready_processing
+
     # Permissions
     permissions:
       read:
-        - "config/*"
-        - "governance/*"
-        - "core/*"
-        - "automation/*"
+        - "controlplane/baseline/*"
+        - "workspace/src/governance/*"
+        - "workspace/src/core/*"
+        - "workspace/src/automation/*"
+        - "workspace/src/autonomous/*"
+        - "chatops/*"
       write:
-        - "reports/automation/*"
-        - "logs/agent/*"
+        - "controlplane/overlay/*"
+        - "workspace/reports/*"
+        - "workspace/logs/*"
+        - "var/evidence/*"
       execute:
-        - "automation.deploy"
-        - "automation.monitor"
-        - "automation.heal"
-    
+        - "automation.orchestrate"
+        - "governance.validate"
+        - "healing.execute"
+        - "deploy.coordinate"
+        - "chatops.dispatch"
+
     # Resource Limits
     resource_limits:
-      memory: "2GB"
-      cpu: "1 core"
-      network_bandwidth: "50 Mbps"
-      max_concurrent_tasks: 10
-    
+      memory: "8GB"
+      cpu: "4 cores"
+      network_bandwidth: "200 Mbps"
+      max_concurrent_tasks: 50
+
     # Compliance
     compliance:
       standards:
         - "ISO/IEC 42001"
         - "NIST AI RMF"
+        - "EU AI Act"
+        - "SLSA Level 3"
         - "AI Behavior Contract"
       audit_frequency: "monthly"
-      last_audit: "2025-12-11"
-      next_audit: "2026-01-11"
-    
+      last_audit: "2026-01-04"
+      next_audit: "2026-02-04"
+
     # Integration
     integrations:
-      - name: "SynergyMesh Core"
-        type: "core_engine"
+      - name: "Controlplane Governance"
+        type: "governance_layer"
+        path: "controlplane/baseline/"
         status: "active"
-      - name: "Governance Framework"
+      - name: "Workspace Operations"
+        type: "operations_layer"
+        path: "workspace/src/"
+        status: "active"
+      - name: "55-Dimension Governance Framework"
         type: "policy_framework"
+        path: "workspace/src/governance/"
         status: "active"
-      - name: "Autonomous System"
-        type: "automation_framework"
+      - name: "ChatOps Integration"
+        type: "chatops"
+        path: "chatops/"
         status: "active"
-      - name: "v2-multi-islands Orchestrator"
-        type: "orchestration"
+      - name: "Super Agent Baseline"
+        type: "orchestrator_baseline"
+        path: "workspace/teams/default-team/orchestrator/mno-super-agent-baseline.yaml"
         status: "active"
-        module: "v2-multi-islands/orchestrator/island_orchestrator.py"
-        governance_module: "v2-multi-islands/governance_integration.py"
-    
+      - name: "Self-Healing System"
+        type: "automation"
+        path: "workspace/src/governance/40-self-healing/"
+        status: "active"
+
     # Monitoring
     monitoring:
       health_check_url: "/health"
@@ -97,7 +120,8 @@ agents:
       alert_channels:
         - "slack://platform-alerts"
         - "email://governance@machinenativeops.io"
-    
+        - "pagerduty://mno-critical"
+
     # Deployment
     deployment:
       method: "instant"
@@ -105,26 +129,44 @@ agents:
       rollback_enabled: true
       canary_enabled: true
       auto_scaling: true
-    
+      quantum_ready: true
+
     # Documentation
     documentation:
       agent_file: ".github/agents/my-agent.agent.md"
       behavior_contract: ".github/AI-BEHAVIOR-CONTRACT.md"
       technical_guide: ".github/copilot-instructions.md"
-      code_standards: ".github/src/ai-instructions.md"
-      orchestrator_readme: "v2-multi-islands/README.md"
-      governance_integration: "v2-multi-islands/governance_integration.py"
+      governance_framework: "workspace/src/governance/30-agents/framework.yaml"
+      rbac_policies: "workspace/src/governance/30-agents/permissions/rbac-policies.yaml"
+      controlplane_guide: "controlplane/CONTROLPLANE_USAGE.md"
+
+# Supporting Agents (Reference to Private Agents)
+supporting_agents:
+  - agent_id: "code-review-agent"
+    reference: ".github/private/agents/code-review.agent.md"
+    status: "active"
+  - agent_id: "security-scanner-agent"
+    reference: ".github/private/agents/security-scanner.agent.md"
+    status: "active"
+  - agent_id: "dependency-updater-agent"
+    reference: ".github/private/agents/dependency-updater.agent.md"
+    status: "active"
+  - agent_id: "workflow-optimizer-agent"
+    reference: ".github/private/agents/workflow-optimizer.agent.md"
+    status: "active"
 
 # Catalog Statistics
 statistics:
-  total_agents: 1
-  active_agents: 1
+  total_agents: 5
+  active_agents: 5
   deprecated_agents: 0
   under_development: 0
-  
+  primary_orchestrator: "mno-orchestrator-agent"
+
 # Catalog Metadata
 catalog_metadata:
-  last_sync: "2025-12-11T16:00:00Z"
+  last_sync: "2026-01-04T00:00:00Z"
   sync_frequency: "real-time"
   validation_status: "passed"
-  schema_version: "1.0.0"
+  schema_version: "2.0.0"
+  platform_version: "MachineNativeOps v3.0"

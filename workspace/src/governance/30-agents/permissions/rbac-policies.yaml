@@ -4,14 +4,15 @@
 
 metadata:
   name: "Agent RBAC Policies"
-  version: "1.0.0"
-  description: "Role-Based Access Control policies for AI agents"
+  version: "2.0.0"
+  description: "Role-Based Access Control policies for AI agents in MachineNativeOps platform"
+  platform: "MachineNativeOps"
   created_at: "2025-12-11"
-  updated_at: "2025-12-11"
+  updated_at: "2026-01-04"
 
 # Role Definitions
 roles:
-  
+
   # Basic Agent Role
   agent_basic:
     description: "Basic agent with read-only access"
@@ -24,7 +25,7 @@ roles:
       memory: "1GB"
       cpu: "0.5 cores"
       network_bandwidth: "25 Mbps"
-    
+
   # Advanced Agent Role
   agent_advanced:
     description: "Advanced agent with automation capabilities"
@@ -38,7 +39,7 @@ roles:
       memory: "2GB"
       cpu: "1 core"
       network_bandwidth: "50 Mbps"
-  
+
   # Autonomous Agent Role
   agent_autonomous:
     description: "Fully autonomous agent with self-healing"
@@ -51,7 +52,7 @@ roles:
       memory: "4GB"
       cpu: "2 cores"
       network_bandwidth: "100 Mbps"
-  
+
   # Security Agent Role
   agent_security:
     description: "Security-focused agent"
@@ -65,7 +66,7 @@ roles:
       memory: "2GB"
       cpu: "1 core"
       network_bandwidth: "50 Mbps"
-  
+
   # Deployment Agent Role
   agent_deployment:
     description: "Deployment and configuration management agent"
@@ -80,134 +81,262 @@ roles:
       network_bandwidth: "100 Mbps"
     approval_required: true
 
+  # Orchestrator Agent Role (NEW - High-Level)
+  agent_orchestrator:
+    description: "Enterprise-grade orchestrator with multi-layer coordination"
+    inherits:
+      - "agent_autonomous"
+      - "agent_security"
+      - "agent_deployment"
+    permissions:
+      - "controlplane:read"
+      - "controlplane:overlay_write"
+      - "governance:validate"
+      - "governance:enforce"
+      - "orchestration:coordinate"
+      - "chatops:dispatch"
+      - "quantum:process"
+    resource_limits:
+      memory: "8GB"
+      cpu: "4 cores"
+      network_bandwidth: "200 Mbps"
+      max_concurrent_tasks: 50
+    approval_required: false  # Autonomous operation enabled
+
 # Permission Definitions
 permissions:
-  
+
   # Config Permissions
   "config:read":
     scope: "config/*"
     actions: ["read", "list"]
-    
+
   "config:write":
     scope: "config/*"
     actions: ["create", "update", "delete"]
     approval_required: true
-  
+
   # Governance Permissions
   "governance:read":
-    scope: "governance/*"
+    scope: "workspace/src/governance/*"
     actions: ["read", "list"]
-    
+
   "governance:validate":
-    scope: "governance/policies/*"
-    actions: ["execute"]
-  
+    scope: "workspace/src/governance/*/policies/*"
+    actions: ["execute", "validate"]
+
+  "governance:enforce":
+    scope: "workspace/src/governance/*"
+    actions: ["execute", "enforce"]
+    audit_required: true
+
+  # Controlplane Permissions
+  "controlplane:read":
+    scope: "controlplane/baseline/*"
+    actions: ["read", "list"]
+
+  "controlplane:overlay_write":
+    scope: "controlplane/overlay/*"
+    actions: ["create", "update"]
+    audit_required: true
+
   # Core Permissions
   "core:read":
-    scope: "core/*"
+    scope: "workspace/src/core/*"
     actions: ["read", "list"]
-  
+
   # Automation Permissions
   "automation:read":
-    scope: "automation/*"
+    scope: "workspace/src/automation/*"
     actions: ["read", "list"]
-    
+
   "automation:execute":
-    scope: "automation/*"
+    scope: "workspace/src/automation/*"
     actions: ["execute"]
-    
+
   "automation:deploy":
-    scope: "automation/src/autonomous/deployment/*"
+    scope: "workspace/src/autonomous/deployment/*"
     actions: ["create", "execute"]
     approval_required: true
-    
+
   "automation:monitor":
-    scope: "automation/monitoring/*"
+    scope: "workspace/src/automation/monitoring/*"
     actions: ["read", "list"]
-    
+
   "automation:heal":
-    scope: "automation/healing/*"
+    scope: "workspace/src/governance/40-self-healing/*"
     actions: ["execute"]
-  
+
+  # Orchestration Permissions
+  "orchestration:coordinate":
+    scope: "workspace/teams/*/orchestrator/*"
+    actions: ["execute", "coordinate"]
+
+  # ChatOps Permissions
+  "chatops:dispatch":
+    scope: "chatops/*"
+    actions: ["execute", "dispatch"]
+
+  # Quantum Permissions
+  "quantum:process":
+    scope: "quantum/*"
+    actions: ["execute"]
+    feature_flag: "quantum_ready"
+
   # Security Permissions
   "security:scan":
     scope: "security/*"
     actions: ["execute"]
-    
+
   "security:audit":
     scope: "security/audit/*"
     actions: ["read", "write"]
-  
+
   # Service Permissions
   "service:restart":
     scope: "services/*"
     actions: ["restart"]
-    
+
   "service:manage":
     scope: "services/*"
     actions: ["start", "stop", "restart", "update"]
     approval_required: true
-  
+
   # Deploy Permissions
   "deploy:execute":
-    scope: "src/autonomous/deployment/*"
+    scope: "workspace/src/autonomous/deployment/*"
     actions: ["execute"]
     approval_required: true
-  
+
   # Report Permissions
   "reports:write":
-    scope: "reports/*"
+    scope: "workspace/reports/*"
     actions: ["create", "update"]
-  
+
   # Log Permissions
   "logs:write":
-    scope: "logs/*"
+    scope: "workspace/logs/*"
     actions: ["create", "append"]
-  
+
   # Alert Permissions
   "alert:create":
     scope: "alerts/*"
     actions: ["create"]
-    
+
   "alert:resolve":
     scope: "alerts/*"
     actions: ["update"]
 
 # Agent Role Assignments
 agent_assignments:
-  
-  unmanned-island-agent:
+
+  # Primary Orchestrator Agent
+  mno-orchestrator-agent:
     roles:
-      - "agent_autonomous"
+      - "agent_orchestrator"
     custom_permissions:
       - "governance:validate"
-    
+      - "governance:enforce"
+      - "orchestration:coordinate"
+      - "chatops:dispatch"
+
     restrictions:
       time_based:
         enabled: false
-      
+
       ip_based:
         enabled: false
-      
+
+      rate_limiting:
+        enabled: true
+        max_requests_per_minute: 500
+
+    capabilities:
+      multi_layer_orchestration: true
+      governance_enforcement: true
+      self_healing: true
+      quantum_ready: true
+
+  # Code Review Agent
+  code-review-agent:
+    roles:
+      - "agent_basic"
+    custom_permissions:
+      - "security:scan"
+    restrictions:
       rate_limiting:
         enabled: true
         max_requests_per_minute: 100
 
+  # Security Scanner Agent
+  security-scanner-agent:
+    roles:
+      - "agent_security"
+    custom_permissions: []
+    restrictions:
+      rate_limiting:
+        enabled: true
+        max_requests_per_minute: 50
+
+  # Dependency Updater Agent
+  dependency-updater-agent:
+    roles:
+      - "agent_advanced"
+    custom_permissions:
+      - "config:write"
+    restrictions:
+      rate_limiting:
+        enabled: true
+        max_requests_per_minute: 30
+    approval_required: true
+
+  # Workflow Optimizer Agent
+  workflow-optimizer-agent:
+    roles:
+      - "agent_advanced"
+    custom_permissions:
+      - "automation:execute"
+    restrictions:
+      rate_limiting:
+        enabled: true
+        max_requests_per_minute: 50
+
 # Policy Enforcement
 enforcement:
   mode: "strict"
-  
+
   validation:
     on_access: true
     on_deployment: true
     on_runtime: true
-  
+
   violation_handling:
     action: "deny"
     log_level: "error"
     alert: true
-  
+    escalation:
+      enabled: true
+      channels:
+        - "slack://security-alerts"
+        - "pagerduty://mno-security"
+
   audit_logging:
     enabled: true
     log_all_access: true
     retention_days: 90
+    compliance_reports:
+      - "ISO/IEC 42001"
+      - "NIST AI RMF"
+      - "EU AI Act"
+
+# Cross-Agent Coordination
+coordination:
+  primary_orchestrator: "mno-orchestrator-agent"
+  delegation_enabled: true
+  delegation_rules:
+    - from: "mno-orchestrator-agent"
+      to: ["code-review-agent", "security-scanner-agent"]
+      permissions: ["security:scan"]
+    - from: "mno-orchestrator-agent"
+      to: ["dependency-updater-agent", "workflow-optimizer-agent"]
+      permissions: ["automation:execute"]
