@@ -54,7 +54,6 @@ jobs:
 
     steps:
       - name: "📥 檢出代碼"
-        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.2.2
         uses: actions/checkout@0ad4b8f3a27c304e21892351cbf9860471245599
         with:
           fetch-depth: 0
@@ -66,15 +65,18 @@ jobs:
             echo "This workflow requires the contract service to be implemented first."
             exit 1
           fi
+          if [ ! -f "$GITHUB_WORKSPACE/src/core/contract_service/contracts-L1/contracts/package-lock.json" ]; then
+            echo "::warning::package-lock.json does not exist: src/core/contract_service/contracts-L1/contracts/package-lock.json"
+            echo "NPM cache will be disabled for this workflow run."
+          fi
         working-directory: ${{ github.workspace }}
 
       - name: "⚙️ 設置 Node.js 環境"
-        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         uses: actions/setup-node@1e60f620b9541d16bece96c5465dc8ee9832be0b
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: 'npm'
-          cache-dependency-path: 'src/core/contract_service/contracts-L1/contracts/package-lock.json'
+          cache: ${{ hashFiles('src/core/contract_service/contracts-L1/contracts/package-lock.json') && 'npm' || '' }}
+          cache-dependency-path: ${{ hashFiles('src/core/contract_service/contracts-L1/contracts/package-lock.json') && 'src/core/contract_service/contracts-L1/contracts/package-lock.json' || '' }}
 
       - name: "📦 Install dependencies"
         run: |
@@ -139,7 +141,6 @@ jobs:
           npm audit --audit-level=moderate || echo "⚠️ 發現中等風險（非阻塞）"
           
       - name: "📦 上傳構建產物"
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808
         with:
           name: contracts-l1-dist
@@ -168,7 +169,6 @@ jobs:
           cat contracts-l1-report.md
           
       - name: "📤 上傳服務報告"
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808
         if: always()
         with:
@@ -194,18 +194,14 @@ jobs:
     
     steps:
       - name: "📥 檢出代碼"
-        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.2.2
-
-      - name: "⚙️ 設置 Node.js 環境"
-        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         uses: actions/checkout@0ad4b8f3a27c304e21892351cbf9860471245599
 
       - name: "⚙️ 設置 Node.js 環境"
         uses: actions/setup-node@1e60f620b9541d16bece96c5465dc8ee9832be0b
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: 'npm'
-          cache-dependency-path: ${{ matrix.workspace }}/package-lock.json
+          cache: ${{ hashFiles(format('{0}/package-lock.json', matrix.workspace)) && 'npm' || '' }}
+          cache-dependency-path: ${{ hashFiles(format('{0}/package-lock.json', matrix.workspace)) && format('{0}/package-lock.json', matrix.workspace) || '' }}
 
       - name: "📦 安裝工作區依賴"
         working-directory: ${{ matrix.workspace }}
@@ -268,10 +264,6 @@ jobs:
     
     steps:
       - name: "📥 檢出代碼"
-        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.2.2
-
-      - name: "⚙️ 設置 Node.js 環境"
-        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         uses: actions/checkout@0ad4b8f3a27c304e21892351cbf9860471245599
 
       - name: "⚙️ 設置 Node.js 環境"
@@ -281,7 +273,6 @@ jobs:
           cache: 'npm'
 
       - name: "⚙️ 設置 Python 環境"
-        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
         uses: actions/setup-python@82c7e631bb3cdc910f68e0081d534527d238d7a7
         with:
           python-version: ${{ env.PYTHON_VERSION }}
@@ -354,7 +345,6 @@ jobs:
           cat integration-report.md
           
       - name: "📤 上傳整合報告"
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808
         if: always()
         with:
@@ -374,10 +364,6 @@ jobs:
     
     steps:
       - name: "📥 檢出代碼"
-        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.2.2
-
-      - name: "📥 下載所有構建產物"
-        uses: actions/download-artifact@fa0a91b85d4f404e444e00e005971372dc801d16 # v4
         uses: actions/checkout@0ad4b8f3a27c304e21892351cbf9860471245599
 
       - name: "📥 下載所有構建產物"
@@ -424,7 +410,6 @@ jobs:
           cat deployment-prep-report.md
           
       - name: "📤 上傳部署準備報告"
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808
         with:
           name: deployment-preparation-report
@@ -442,7 +427,6 @@ jobs:
     
     steps:
       - name: "📥 下載所有報告"
-        uses: actions/download-artifact@fa0a91b85d4f404e444e00e005971372dc801d16 # v4
         uses: actions/download-artifact@6b208ae046db98c579e8a328f74b955651f427c0
         with:
           pattern: "*-report"
@@ -495,7 +479,6 @@ jobs:
           
       - name: "📢 評論 PR（如果失敗）"
         if: ${{ github.event_name == 'pull_request' && (contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled')) }}
-        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v7.0.2
         uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea
         with:
           script: |
@@ -513,7 +496,6 @@ jobs:
             }
             
       - name: "📤 上傳總結報告"
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808
         with:
           name: pipeline-summary
