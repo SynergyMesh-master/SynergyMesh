@@ -1,0 +1,36 @@
+{
+  "name": "machine-native-ops-root",
+  "version": "1.0.0",
+  "description": "MachineNativeOps - Enterprise-grade orchestration platform (root workspace)",
+  "private": true,
+  "workspaces": [
+    "workspace"
+  ],
+  "scripts": {
+    "lint": "npm run lint --workspace=workspace",
+    "test": "npm run test --workspace=workspace",
+    "build": "npm run build --workspace=workspace",
+    "dev:stack": "npm run dev:stack --workspace=workspace",
+    "docs:lint": "npm run docs:lint --workspace=workspace",
+    "clean": "npm run clean --workspace=workspace && rm -rf node_modules",
+    "cf:dev": "npm run cf:dev --workspace=workspace",
+    "cf:deploy": "npm run cf:deploy --workspace=workspace"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MachineNativeOps/machine-native-ops.git"
+  },
+  "keywords": [
+    "machine-native",
+    "ops",
+    "automation",
+    "governance",
+    "cloud-native"
+  ],
+  "author": "MachineNativeOps",
+  "license": "BSL-1.0",
+  "bugs": {
+    "url": "https://github.com/MachineNativeOps/machine-native-ops/issues"
+  },
+  "homepage": "https://github.com/MachineNativeOps/machine-native-ops#readme"
+}
