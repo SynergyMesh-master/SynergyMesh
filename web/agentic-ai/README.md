@@ -23,7 +23,7 @@ The website covers:
 
 ## 📊 Statistics Highlights
 
-- Market growing from $5.25B to $199B by 2034
+- Market growing from $0.25B to $99B by 2034
 - 79% adoption rate among organizations
 - 171% average ROI
 - 4-7x conversion rate improvements

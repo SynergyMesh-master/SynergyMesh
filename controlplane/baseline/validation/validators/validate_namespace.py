@@ -69,10 +69,19 @@ def validate_namespace_syntax(namespace: str, spec: Dict[str, Any]) -> Tuple[Lis
     pattern = syntax['pattern']
     min_length = syntax['minLength']
     max_length = syntax['maxLength']
+    hierarchy = spec['spec'].get('hierarchy', {})
+    separator = hierarchy.get('separator', '.')
+    
+    # Allow hierarchical namespaces using the configured separator
+    hierarchical_pattern = None
+    if separator.strip():
+        sep_escaped = re.escape(separator)
+        hierarchical_pattern = rf"^[a-z][a-z0-9-]*(?:{sep_escaped}[a-z][a-z0-9-]*)*$"
     
     # Check pattern
-    if not re.match(pattern, namespace):
-        errors.append(f"Namespace '{namespace}' must match pattern: {pattern}")
+    effective_pattern = hierarchical_pattern if hierarchical_pattern else pattern
+    if not re.match(effective_pattern, namespace):
+        errors.append(f"Namespace '{namespace}' must match pattern: {effective_pattern}")
     
     # Check length
     if len(namespace) < min_length:
@@ -103,8 +112,8 @@ def validate_namespace_syntax(namespace: str, spec: Dict[str, Any]) -> Tuple[Lis
             if '_' in namespace:
                 errors.append(f"Namespace '{namespace}' contains underscores")
         elif char_type == "dots (.)":
-            if '.' in namespace:
-                errors.append(f"Namespace '{namespace}' contains dots (use hyphens for hierarchy)")
+            if '.' in namespace and separator != '.':
+                errors.append(f"Namespace '{namespace}' contains dots but separator is '{separator}' (use configured separator)")
         elif char_type == "spaces":
             if ' ' in namespace:
                 errors.append(f"Namespace '{namespace}' contains spaces")

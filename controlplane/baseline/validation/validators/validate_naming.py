@@ -9,11 +9,19 @@ import yaml
 from pathlib import Path
 from typing import Dict, List, Tuple, Any
 
+_compiled_patterns: Dict[str, re.Pattern] = {}
+
 def load_naming_spec() -> Dict[str, Any]:
     """Load naming specification from baseline."""
     spec_path = Path(__file__).parent.parent.parent / "specifications" / "root.specs.naming.yaml"
     with open(spec_path, 'r') as f:
         return yaml.safe_load(f)
+
+def _get_compiled_pattern(pattern: str) -> re.Pattern:
+    """Return a cached compiled regex pattern."""
+    if pattern not in _compiled_patterns:
+        _compiled_patterns[pattern] = re.compile(pattern)
+    return _compiled_patterns[pattern]
 
 def validate_naming(target: str, target_type: str) -> Tuple[bool, List[str], List[str]]:
     """
@@ -53,9 +61,21 @@ def validate_file_name(filename: str, spec: Dict[str, Any]) -> Tuple[List[str], 
     
     # Get validation rules
     rules = spec['spec']['validation']['rules']
+    file_conventions = spec['spec'].get('conventions', {}).get('files', {})
+    
+    # Allow root-prefixed files that follow the documented root pattern (e.g., root.config.yaml)
+    root_pattern = file_conventions.get('root', {}).get('pattern')
+    root_match = False
+    if root_pattern:
+        try:
+            compiled_root = _get_compiled_pattern(root_pattern)
+            if compiled_root.match(filename):
+                root_match = True
+        except re.error as exc:
+            errors.append(f"Invalid root pattern '{root_pattern}' for '{filename}': {exc}")
     
     # Check for double extensions
-    if filename.count('.') > 1:
+    if filename.count('.') > 1 and not root_match:
         errors.append(f"File '{filename}' has double extension (rule: no-double-extensions)")
     
     # Check for lowercase only
@@ -72,7 +92,7 @@ def validate_file_name(filename: str, spec: Dict[str, Any]) -> Tuple[List[str], 
     
     # Check kebab-case format (excluding extension)
     name_without_ext = filename.rsplit('.', 1)[0] if '.' in filename else filename
-    if not re.match(r'^[a-z][a-z0-9-]*$', name_without_ext):
+    if not root_match and not re.match(r'^[a-z][a-z0-9-]*$', name_without_ext):
         errors.append(f"File name '{name_without_ext}' must follow kebab-case format (rule: kebab-case-format)")
     
     # Check for consecutive hyphens

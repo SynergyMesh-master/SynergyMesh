@@ -81,39 +81,40 @@ def check_root_structure(path: str, spec: Dict[str, Any]) -> Tuple[List[str], Li
     
     root_structure = spec['spec']['rootStructure']
     
+    normalized_path = Path(path).as_posix().lstrip("./")
     # Check if path is in root (no directory prefix)
-    if '/' not in path or not path.startswith('./'):
+    if '/' not in normalized_path:
         # This is a root-level file
         allowed_in_root = root_structure['allowedInRoot']
         
         # Check if it's a boot pointer
-        if path in allowed_in_root['bootPointers']:
+        if normalized_path in allowed_in_root['bootPointers']:
             return errors, warnings
         
         # Check if it's a git file
-        if any(path.startswith(gf.rstrip('/')) for gf in allowed_in_root['gitFiles']):
+        if any(normalized_path.startswith(gf.rstrip('/')) for gf in allowed_in_root['gitFiles']):
             return errors, warnings
         
         # Check if it's a project file
-        if path in allowed_in_root['projectFiles']:
+        if normalized_path in allowed_in_root['projectFiles']:
             return errors, warnings
         
         # Check if it's a primary directory
-        if path.rstrip('/') + '/' in allowed_in_root['primaryDirectories']:
+        if normalized_path.rstrip('/') + '/' in allowed_in_root['primaryDirectories']:
             return errors, warnings
         
         # Check if it's an FHS directory
-        if '/' + path.rstrip('/') + '/' in allowed_in_root['fhsDirectories']:
+        if '/' + normalized_path.rstrip('/') + '/' in allowed_in_root['fhsDirectories']:
             return errors, warnings
         
         # If none of the above, it's prohibited in root
         prohibited = root_structure['prohibitedInRoot']
         for item in prohibited:
-            if 'governance' in item.lower() and ('config' in path or 'spec' in path or 'registry' in path):
+            if 'governance' in item.lower() and ('config' in normalized_path or 'spec' in normalized_path or 'registry' in normalized_path):
                 errors.append(f"Governance file '{path}' must be in controlplane/baseline/")
-            elif 'source code' in item.lower() and path.endswith('.py'):
+            elif 'source code' in item.lower() and normalized_path.endswith('.py'):
                 errors.append(f"Source code '{path}' must be in workspace/src/")
-            elif 'configuration' in item.lower() and ('config' in path or path.endswith('.yaml')):
+            elif 'configuration' in item.lower() and ('config' in normalized_path or normalized_path.endswith('.yaml')):
                 errors.append(f"Configuration file '{path}' must be in workspace/config/ or controlplane/baseline/config/")
     
     return errors, warnings
