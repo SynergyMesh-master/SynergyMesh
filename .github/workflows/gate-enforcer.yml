@@ -37,8 +37,6 @@ jobs:
         env:
           GITHUB_BASE_REF: ${{ github.base_ref }}
         run: |
-          chmod +x .github/scripts/gate-enforcer.py
-
           # 運行閘門強制器並捕獲輸出
           python .github/scripts/gate-enforcer.py \
             --pr-body-file /tmp/pr_body.md \
@@ -52,6 +50,58 @@ jobs:
 
           # 使用 Python 解析 JSON 報告並直接寫入 GITHUB_OUTPUT
           python - << 'PY'
+          import json
+          import os
+          import pathlib
+          import sys
+
+          report_path = pathlib.Path("/tmp/gate_report.txt")
+          try:
+              text = report_path.read_text(encoding="utf-8")
+          except Exception as e:
+              print(f"::error::無法讀取報告檔案 {report_path}: {e}", file=sys.stderr)
+              sys.exit(1)
+
+          json_lines = []
+          started = False
+          for line in text.splitlines():
+              if not started and line.lstrip().startswith("{"):
+                  started = True
+              if started:
+                  json_lines.append(line)
+
+          if not json_lines:
+              print("::error::在 gate_report.txt 中找不到 JSON 報告（以 '{' 開頭的區塊）", file=sys.stderr)
+              sys.exit(1)
+
+          json_text = "\n".join(json_lines)
+          try:
+              data = json.loads(json_text)
+          except Exception as e:
+              print(f"::error::解析 JSON 報告失敗: {e}", file=sys.stderr)
+              sys.exit(1)
+
+          required_keys = ("score", "passed", "failed")
+          missing = [k for k in required_keys if k not in data]
+          if missing:
+              print(f"::error::JSON 報告中缺少必要欄位: {', '.join(missing)}", file=sys.stderr)
+              sys.exit(1)
+
+          github_output = os.environ.get("GITHUB_OUTPUT")
+          if not github_output:
+              print("::error::GITHUB_OUTPUT 環境變數未設定，無法匯出輸出值", file=sys.stderr)
+              sys.exit(1)
+
+          try:
+              with open(github_output, "a", encoding="utf-8") as fh:
+                  fh.write(f"score={data['score']}\n")
+                  fh.write(f"passed={data['passed']}\n")
+                  fh.write(f"failed={data['failed']}\n")
+          except Exception as e:
+              print(f"::error::寫入 GITHUB_OUTPUT 失敗: {e}", file=sys.stderr)
+              sys.exit(1)
+          PY
+
 import json
 import os
 import pathlib
@@ -190,7 +240,7 @@ PY
           retention-days: 30
 
       - name: 🚫 Fail if Gates Failed
-        if: ${{ steps.gate-enforcer.outputs.failed > 0 }}
+        if: ${{ steps.gate-enforcer.outputs.failed != '0' }}
         run: |
           echo "::error::閘門檢查失敗: ${{ steps.gate-enforcer.outputs.failed }} 個閘門未通過"
           echo "請修復上述問題後重新提交"

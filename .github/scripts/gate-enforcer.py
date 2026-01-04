@@ -283,19 +283,50 @@ class GateEnforcer:
         )
 
     def validate_naming_convention(self, _gate_def: dict) -> GateResult:
-        """驗證命名規範"""
+        """驗證命名規範
+        
+        Aligns with project naming policy (root.naming-policy.yaml):
+        - Base rule: kebab-case (lowercase with hyphens)
+        - Standard exceptions: README.md, LICENSE, etc.
+        - Config file patterns: Chart.yaml, Taskfile.yml, etc.
+        - Report/state patterns: *_REPORT.json, *_STATE.yaml, etc.
+        """
         if not self.changed_files:
             self.get_changed_files()
 
         violations = []
         for f in self.changed_files:
             basename = Path(f).name
-            # 檢查大寫字母（排除特定檔案）
+            
+            # 檢查大寫字母（排除特定檔案和模式）
             if re.search(r'[A-Z]', basename):
-                # 排除允許大寫的檔案
-                allowed = ['README.md', 'LICENSE', 'Dockerfile', 'Makefile',
-                          'CHANGELOG.md', 'CONTRIBUTING.md', 'CODEOWNERS']
-                if basename not in allowed:
+                # 排除允許大寫的檔案（標準專案檔案）
+                allowed_files = [
+                    'README.md', 'LICENSE', 'Dockerfile', 'Makefile',
+                    'CHANGELOG.md', 'CONTRIBUTING.md', 'CODEOWNERS',
+                    'FUNDING.yml', 'PULL_REQUEST_TEMPLATE.md'
+                ]
+                
+                # 排除允許大寫的模式
+                allowed_patterns = [
+                    r'\.md$',  # Markdown files (can contain uppercase)
+                    r'^Chart\.yaml$',  # Helm Chart.yaml
+                    r'^Taskfile\.yml$',  # Task Taskfile.yml
+                    r'_REPORT\.(json|yaml|yml)$',  # Report files
+                    r'_STATE\.(json|yaml|yml)$',  # State files
+                    r'_CONFIG\.(json|yaml|yml)$',  # Config files with uppercase
+                    r'_MANIFEST\.(json|yaml|yml)$',  # Manifest files
+                    r'_MAP\.(json|yaml|yml)$',  # Map files
+                    r'_VALIDATION\.(json|yaml|yml)$',  # Validation files
+                    r'^[A-Z][A-Z0-9_-]*\.(yaml|yml|json)$',  # All-caps config files
+                ]
+                
+                # Check if basename matches any allowed pattern
+                is_allowed = basename in allowed_files or any(
+                    re.search(pattern, basename) for pattern in allowed_patterns
+                )
+                
+                if not is_allowed:
                     violations.append(f)
 
         if violations:
@@ -341,11 +372,58 @@ class GateEnforcer:
                 auto_verified=True
             )
 
+        # 解析 modified_files 區塊中的檔案列表
+        documented_block = match.group(1)
+        documented_files = []
+        for line in documented_block.splitlines():
+            stripped = line.strip()
+            if not stripped or not stripped.startswith("-"):
+                continue
+            # 移除前綴的 "-" 並取得路徑
+            path_str = stripped[1:].strip()
+            if path_str:
+                documented_files.append(path_str)
+
+        # 正規化路徑後比對實際變更檔案與 PR 中記錄的檔案
+        normalized_changed = {
+            Path(p).as_posix().lstrip("./") for p in self.changed_files
+        }
+        normalized_documented = {
+            Path(p).as_posix().lstrip("./") for p in documented_files
+        }
+
+        missing_in_docs = sorted(normalized_changed - normalized_documented)
+        extra_in_docs = sorted(normalized_documented - normalized_changed)
+
+        if not missing_in_docs and not extra_in_docs:
+            return GateResult(
+                gate_id="files.modified_documented",
+                name="Files Documented",
+                status=GateStatus.PASS,
+                message=f"已完整記錄 {len(self.changed_files)} 個變更檔案",
+                auto_verified=True
+            )
+
+        # 若有不一致，回報詳細資訊以便修正
+        message_parts = []
+        if missing_in_docs:
+            preview_missing = ", ".join(missing_in_docs[:5])
+            more_missing = "..." if len(missing_in_docs) > 5 else ""
+            message_parts.append(
+                f"有 {len(missing_in_docs)} 個變更檔案未在 modified_files 中記錄：{preview_missing}{more_missing}"
+            )
+        if extra_in_docs:
+            preview_extra = ", ".join(extra_in_docs[:5])
+            more_extra = "..." if len(extra_in_docs) > 5 else ""
+            message_parts.append(
+                f"modified_files 中包含 {len(extra_in_docs)} 個未變更的檔案：{preview_extra}{more_extra}"
+            )
+
         return GateResult(
             gate_id="files.modified_documented",
             name="Files Documented",
-            status=GateStatus.PASS,
-            message=f"已記錄 {len(self.changed_files)} 個變更檔案",
+            status=GateStatus.FAIL,
+            message="；".join(message_parts),
             auto_verified=True
         )
 
@@ -430,9 +508,20 @@ class GateEnforcer:
         manual_passed = 0
         manual_total = 0
 
+        # 建立自動驗證閘門名稱的標準化集合，避免以子字串方式誤判
+        auto_gate_names = {
+            gate.name.strip().lower()
+            for gate in self.report.gates
+            if getattr(gate, "name", None)
+        }
+
         for cb in checkboxes:
-            # 跳過自動驗證的項目
-            if any(gate.name.lower() in cb['text'].lower() for gate in self.report.gates):
+            # 跳過自動驗證的項目（使用精確匹配而非子字串匹配）
+            cb_text = cb.get("text", "")
+            if not isinstance(cb_text, str):
+                cb_text = str(cb_text)
+            normalized_cb_text = cb_text.strip().lower()
+            if normalized_cb_text in auto_gate_names:
                 continue
 
             manual_total += 1
