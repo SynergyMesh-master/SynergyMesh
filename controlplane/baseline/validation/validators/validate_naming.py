@@ -53,6 +53,12 @@ def validate_file_name(filename: str, spec: Dict[str, Any]) -> Tuple[List[str], 
     
     # Get validation rules
     rules = spec['spec']['validation']['rules']
+    file_conventions = spec['spec'].get('conventions', {}).get('files', {})
+    
+    # Allow root-prefixed files that follow the documented root pattern (e.g., root.config.yaml)
+    root_pattern = file_conventions.get('root', {}).get('pattern')
+    if root_pattern and re.match(root_pattern, filename):
+        return errors, warnings
     
     # Check for double extensions
     if filename.count('.') > 1:
