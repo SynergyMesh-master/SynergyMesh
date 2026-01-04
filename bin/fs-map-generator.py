@@ -33,7 +33,11 @@ from dataclasses import dataclass, field
 
 
 def normalize_physical_path(physical_path: str) -> str:
-    """Normalize physical paths for consistent coverage calculations."""
+    """Normalize physical paths for consistent coverage calculations.
+
+    Example:
+        normalize_physical_path("./") -> "."
+    """
     normalized = physical_path.lstrip('./')
     return normalized or '.'
 
@@ -105,6 +109,15 @@ class FsMapEntry:
 
     def to_line(self) -> str:
         return f"{self.logical_name}:{self.physical_path}:{self.fs_type}:{self.mount_options}:{self.permissions}:{self.description}"
+
+
+def get_mapped_directories(generated_maps: Dict[str, List["FsMapEntry"]]) -> Set[str]:
+    """Return normalized mapped directory paths from generated maps."""
+    return {
+        normalize_physical_path(entry.physical_path)
+        for entries in generated_maps.values()
+        for entry in entries
+    }
 
 
 # =============================================================================
@@ -394,11 +407,7 @@ class IndexUpdater:
             if d.is_dir() and not any(p in str(d) for p in self.config.exclude_patterns)
         ])
 
-        mapped_dirs = {
-            normalize_physical_path(entry.physical_path)
-            for entries in generated_maps.values()
-            for entry in entries
-        }
+        mapped_dirs = get_mapped_directories(generated_maps)
 
         if total_dirs == 0:
             return 100.0
@@ -687,11 +696,7 @@ class ReportGenerator:
         total_dirs = len(scanner.directories)
         module_boundaries = len([d for d in scanner.directories.values() if d.is_module_boundary])
         total_mappings = sum(len(entries) for entries in generator.generated_maps.values())
-        mapped_dirs = {
-            normalize_physical_path(entry.physical_path)
-            for entries in generator.generated_maps.values()
-            for entry in entries
-        }
+        mapped_dirs = get_mapped_directories(generator.generated_maps)
         coverage_percentage = round((len(mapped_dirs) / total_dirs * 100) if total_dirs else 0, 2)
 
         report = f"""# Filesystem Mapping Report
