@@ -1,0 +1,19 @@
+runtime_module:
+  root: platform/foundation/security-observability
+
+  docs:
+    security_model: platform/foundation/security-observability/docs/security-model.md
+    observability_standards: platform/foundation/security-observability/docs/observability-standards.md
+    audit_requirements: platform/foundation/security-observability/docs/audit-requirements.md
+
+  config:
+    rbac_policies: platform/foundation/security-observability/config/rbac-policies.yaml
+    log_schema: platform/foundation/security-observability/config/log-schema.json
+    trace_config: platform/foundation/security-observability/config/trace-config.yaml
+
+  tools:
+    security_scanner: platform/foundation/security-observability/tools/security-scan.ts
+    log_validator: platform/foundation/security-observability/tools/log-validator.ts
+
+  tests:
+    security_tests: platform/foundation/security-observability/tests/security.test.ts

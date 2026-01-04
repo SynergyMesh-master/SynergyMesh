@@ -1,0 +1,943 @@
+# Auto-Fix Bot Configuration File
+# 項目配置文件
+#
+# Metadata & Quality Baseline (第一層：元數據與質量基線)
+# ============================================================
+# version: 配置文件格式版本
+# schema_validation: 第二層將引入 JSON Schema 驗證
+# test_vectors: 第二層將添加測試向量
+# lifecycle_hooks: 第三層將實現生命週期鉤子
+#
+# 設計理念：
+# - 製程質量優先：每個配置都經過深思熟慮
+# - 圖譜式疊加：在此基線上層層增強
+# - 可觀察驗證：每次變更都可見、可測試
+# - 保持整體性：避免碎片化配置
+
+version: "1.0"
+
+# 配置元數據 (Configuration Metadata)
+metadata:
+  schema_version: "1.0"
+  created_at: "2025-11-21"
+  updated_at: "2025-11-21"
+  author: "Auto-Fix Bot Team"
+  
+  # 驗證意圖 (Validation Intent)
+  validation:
+    purpose: "確保 Auto-Fix Bot 項目配置的正確性和完整性"
+    required_checks:
+      - "rule configuration validation"
+      - "path exclusion verification"
+      - "integration settings check"
+    
+  # 質量目標 (Quality Objectives)  
+  quality:
+    completeness: "所有分析規則和修復策略已定義"
+    consistency: "配置與項目需求保持一致"
+    maintainability: "易於理解和維護"
+
+project:
+  name: "machinenativeops"
+  description: "SLA Solve - Auto-Fix Bot Integration"
+  language: "multi-language"
+  repository: "https://github.com/we-can-fix/machinenativeops"
+
+# 基本設置
+settings:
+  enabled: true
+  auto_fix: true
+  auto_commit: false
+  create_pr: true
+  branch_prefix: "auto-fix/"
+  
+# 分析配置 (Analysis Configuration)
+# ============================================================
+# 驗證要點 (Validation Points):
+# - 每個 rule 必須有 name 和 enabled 屬性
+# - threshold 值必須為正整數
+# - severity 列表不能為空
+#
+# 質量目標 (Quality Objectives):
+# - 全面性：覆蓋代碼質量的所有關鍵維度
+# - 平衡性：避免過度嚴格或過度寬鬆
+# - 可操作性：每個規則都有明確的修復指引
+analysis:
+  enabled: true
+  
+  # 分析規則 (Analysis Rules)
+  # 設計理念：多維度代碼質量檢查
+  rules:
+    # 複雜度分析 (Complexity Analysis)
+    # 驗證：threshold > 0，典型範圍 5-20
+    # 目的：識別過度複雜的函數和類
+    - name: "complexity"
+      enabled: true
+      threshold: 10  # 循環複雜度閾值
+      
+    # 安全性分析 (Security Analysis)
+    # 驗證：severity 列表不能為空
+    # 目的：檢測常見安全漏洞 (SQL注入、XSS、CSRF等)
+    # 基於實際 CodeQL 告警優化
+    - name: "security"
+      enabled: true
+      severity: ["critical", "high", "medium"]
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+=======
+      # 特定安全檢查 (Specific security checks)
+      checks:
+        - type: "weak_crypto"
+          description: "檢測弱加密算法使用 (Alert #54)"
+          patterns: ["md5", "sha1", "des"]
+          auto_fix: true
+        - type: "path_injection"
+          description: "檢測路徑注入風險 (Alert #45)"
+          patterns: ["user.*path", "join.*input"]
+          auto_fix: true
+        - type: "debug_exposure"
+          description: "檢測調試模式暴露 (Alert #53)"
+          patterns: ["debug.*true", "DEBUG.*=.*True"]
+          auto_fix: true
+        - type: "sensitive_logging"
+          description: "檢測敏感數據日志 (Alert #49)"
+          patterns: ["log.*password", "print.*token", "console.*secret"]
+          auto_fix: true
+        - type: "code_injection"
+          description: "檢測代碼注入風險 (Alert #37)"
+          patterns: ["\\beval\\s*\\(", "\\bexec\\s*\\(", "\\b__import__\\s*\\("]
+          auto_fix: true
+      
+>>>>>>> origin/alert-autofix-37
+=======
+      
+>>>>>>> origin/copilot/sub-pr-402
+    # 性能分析 (Performance Analysis)
+    # 驗證：至少啟用一種檢查類型
+    # 目的：優化算法效率和記憶體使用
+    - name: "performance"
+      enabled: true
+      check_algorithms: true  # 檢查算法時間複雜度
+      check_memory: true      # 檢查記憶體洩漏風險
+      
+    # 代碼風格 (Code Style)
+    # 驗證：enforce_standard 必須為布爾值
+    # 目的：統一代碼風格，提高可讀性
+    - name: "style"
+      enabled: true
+      enforce_standard: true
+      
+    # 文檔完整性 (Documentation Completeness)
+    # 驗證：require_docstrings 必須為布爾值
+    # 目的：確保所有公共 API 都有文檔
+    - name: "documentation"
+      enabled: true
+      require_docstrings: true
+      
+  # 排除路徑
+  exclude:
+    - "node_modules/"
+    - "dist/"
+    - "build/"
+    - "*.min.js"
+    - "*.zip"
+    - ".git/"
+    
+  # 文件類型
+  include:
+    - "*.js"
+    - "*.ts"
+    - "*.py"
+    - "*.java"
+    - "*.go"
+    - "*.rs"
+    - "*.cpp"
+    - "*.c"
+    - "*.cs"
+    - "*.rb"
+    - "*.php"
+
+# 修復配置 (Fix Configuration)
+# ============================================================
+# 基於 CodeQL 告警的自動修復策略
+# Auto-fix strategies based on CodeQL alerts
+fix:
+  enabled: true
+  
+  # 自動修復類型
+  auto_fix_types:
+    - "syntax_errors"
+    - "import_errors"
+    - "format_issues"
+    - "simple_logic_errors"
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+  # 修復策略
+  strategy:
+    conservative: false # 保守模式，只修復確定的問題
+    aggressive: true # 積極模式，嘗試修復更多問題
+
+=======
+    - "security_vulnerabilities"  # 新增：安全漏洞修復
+    - "weak_cryptography"         # 新增：弱加密算法修復
+    - "path_traversal"            # 新增：路徑穿越修復
+    - "debug_mode_issues"         # 新增：調試模式問題修復
+    - "sensitive_data_exposure"   # 新增：敏感數據暴露修復
+    
+  # 修復策略
+  strategy:
+    conservative: false  # 保守模式，只修復確定的問題
+    aggressive: true    # 積極模式，嘗試修復更多問題
+    
+  # 安全漏洞自動修復策略 (Security Vulnerability Auto-Fix Strategies)
+  security_fixes:
+    # Alert #54: 弱加密算法修復
+    weak_crypto:
+      enabled: true
+      strategy: "replace"
+      replacements:
+        - from: "hashlib.md5"
+          to: "hashlib.sha256"
+          language: "python"
+        - from: "createHash('md5')"
+          to: "createHash('sha256')"
+          language: "javascript"
+        - from: "MessageDigest.getInstance(\"MD5\")"
+          to: "MessageDigest.getInstance(\"SHA-256\")"
+          language: "java"
+    
+    # Alert #45: 路徑穿越修復
+    path_traversal:
+      enabled: true
+      strategy: "add_validation"
+      patterns:
+        - language: "typescript"
+          add_imports: ["realpath from 'fs/promises'", "resolve from 'path'"]
+          add_validation: true
+          validation_template: |
+            const safePath = resolve(SAFE_ROOT, userInputPath);
+            const realPath = await realpath(safePath);
+            if (!realPath.startsWith(SAFE_ROOT)) {
+              throw new Error('Access denied');
+            }
+        - language: "python"
+          add_imports: ["from pathlib import Path", "import os"]
+          add_validation: true
+          validation_template: |
+            safe_root = Path(SAFE_ROOT).resolve()
+            safe_path = (safe_root / user_input).resolve()
+            # Robust path validation - works with Python 3.6+
+            try:
+                safe_path.relative_to(safe_root)
+            except ValueError:
+                raise ValueError('Access denied: path outside safe root')
+    
+    # Alert #53: 調試模式修復
+    debug_mode:
+      enabled: true
+      strategy: "remove_or_env"
+      patterns:
+        - language: "python"
+          from: "app.run(debug=True)"
+          to: "app.run(debug=os.getenv('DEBUG', 'False').lower() == 'true')"
+        - language: "python"
+          from: "debug=True"
+          to: "debug=False"
+        - language: "javascript"
+          from: "{ debug: true }"
+          to: "{ debug: process.env.DEBUG === 'true' }"
+    
+    # Alert #49: 敏感數據日志修復
+    sensitive_logging:
+      enabled: true
+      strategy: "mask_or_remove"
+      patterns:
+        - detect: "log.*password"
+          action: "mask"
+          mask_char: "*"
+        - detect: "print.*token"
+          action: "remove"
+        - detect: "console\\.log.*secret"
+          action: "mask"
+    
+    # Alert #37: 代碼注入修復
+    code_injection:
+      enabled: true
+      strategy: "replace_or_sanitize"
+      patterns:
+        - from: "\\beval\\s*\\("
+          to: "# SECURITY: eval() removed - use safe alternatives"
+          action: "comment_and_remove"
+          regex: true
+        - from: "\\bexec\\s*\\("
+          to: "# SECURITY: exec() removed - use safe alternatives"
+          action: "comment_and_remove"
+          regex: true
+  
+>>>>>>> origin/alert-autofix-37
+=======
+    
+  # 修復策略
+  strategy:
+    conservative: false  # 保守模式，只修復確定的問題
+    aggressive: true    # 積極模式，嘗試修復更多問題
+    
+>>>>>>> origin/copilot/sub-pr-402
+  # 測試驗證
+  verify_with_tests: true
+  run_tests_after_fix: true
+  
+  # PR 設置
+  pull_request:
+    enabled: true
+    title_prefix: "[Auto-Fix]"
+    add_labels: ["auto-fix", "bot", "security"]
+    assign_reviewers: true
+    reviewers: []
+
+# 性能優化
+optimization:
+  enabled: true
+  
+  areas:
+    - "algorithms"
+    - "memory_usage"
+    - "database_queries"
+    - "network_calls"
+    - "concurrency"
+    
+  suggestions_only: false  # false 表示自動應用優化
+
+# 安全掃描 (Security Scanning)
+# ============================================================
+# 基於 CodeQL 告警優化的安全掃描配置
+# Security scanning configuration optimized based on CodeQL alerts
+security:
+  enabled: true
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+=======
+  
+>>>>>>> origin/copilot/sub-pr-402
+  # 掃描類型
+=======
+  
+  # 掃描類型 (Scan Types)
+>>>>>>> origin/alert-autofix-37
+  scan_types:
+    - "sql_injection"
+    - "xss"
+    - "csrf"
+    - "sensitive_data"
+    - "dependency_vulnerabilities"
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+=======
+    - "weak_cryptography"        # 新增：弱加密算法檢測 (Alert #54)
+    - "path_traversal"           # 新增：路徑穿越檢測 (Alert #45)
+    - "debug_mode_exposure"      # 新增：調試模式暴露檢測 (Alert #53)
+    - "clear_text_logging"       # 新增：明文日志檢測 (Alert #49)
+    - "code_injection"           # 新增：代碼注入檢測 (Alert #37)
+    
+>>>>>>> origin/alert-autofix-37
+=======
+    
+>>>>>>> origin/copilot/sub-pr-402
+  # 嚴重程度
+  severity_threshold: "medium"  # low, medium, high, critical
+  
+  # 依賴掃描
+  dependency_scan:
+    enabled: true
+    check_npm: true
+    check_pip: true
+    check_maven: true
+    check_cargo: true
+  
+  # 加密算法策略 (Cryptographic Algorithm Policy)
+  # 基於 Alert #54: Use of a broken or weak cryptographic hashing algorithm
+  cryptography:
+    enabled: true
+    # 禁止的弱算法 (Prohibited weak algorithms)
+    blocked_algorithms:
+      - "md5"
+      - "sha1"
+      - "des"
+      - "3des"
+      - "rc4"
+    # 推薦的強算法 (Recommended strong algorithms)
+    recommended_algorithms:
+      - "sha256"
+      - "sha384"
+      - "sha512"
+      - "bcrypt"
+      - "argon2"
+      - "aes256"
+    # 自動修復策略 (Auto-fix strategy)
+    auto_fix:
+      enabled: true
+      replacements:
+        "md5": "sha256"
+        "sha1": "sha256"
+  
+  # 路徑安全策略 (Path Security Policy)
+  # 基於 Alert #45: Uncontrolled data used in path expression
+  path_security:
+    enabled: true
+    # 檢測模式 (Detection patterns)
+    detect_patterns:
+      - "user_input_in_path"
+      - "unvalidated_path_join"
+      - "path_traversal_risk"
+    # 自動修復策略 (Auto-fix strategy)
+    auto_fix:
+      enabled: true
+      add_validation: true         # 添加路徑驗證
+      use_safe_path_resolution: true  # 使用安全路徑解析
+      require_path_sanitization: true # 要求路徑清理
+  
+  # 調試模式策略 (Debug Mode Policy)
+  # 基於 Alert #53: Flask app is run in debug mode
+  debug_mode:
+    enabled: true
+    # 檢測框架 (Detection frameworks)
+    frameworks:
+      - "flask"
+      - "django"
+      - "express"
+      - "fastapi"
+      - "spring"
+    # 自動修復策略 (Auto-fix strategy)
+    auto_fix:
+      enabled: true
+      remove_debug_flag: true      # 移除調試標誌
+      use_env_variable: true       # 使用環境變量控制
+      production_safe: true        # 確保生產安全
+  
+  # 敏感數據日志策略 (Sensitive Data Logging Policy)
+  # 基於 Alert #49: Clear-text logging of sensitive information
+  sensitive_logging:
+    enabled: true
+    # 敏感數據類型 (Sensitive data types)
+    sensitive_types:
+      - "password"
+      - "token"
+      - "api_key"
+      - "secret"
+      - "credential"
+      - "private_key"
+      - "session_id"
+      - "ssn"
+      - "credit_card"
+    # 自動修復策略 (Auto-fix strategy)
+    auto_fix:
+      enabled: true
+      mask_sensitive_data: true    # 遮蔽敏感數據
+      use_structured_logging: true # 使用結構化日志
+      filter_fields: true          # 過濾敏感字段
+
+# 代碼質量
+code_quality:
+  enabled: true
+  
+  # 質量指標
+  metrics:
+    - "cyclomatic_complexity"
+    - "maintainability_index"
+    - "code_duplication"
+    - "test_coverage"
+    
+  # 質量門檻
+  thresholds:
+    complexity: 10
+    duplication: 5  # 百分比
+    test_coverage: 80  # 百分比
+    maintainability: 65  # 分數
+
+# 測試配置
+testing:
+  enabled: true
+  
+  # 測試框架
+  frameworks:
+    javascript: "jest"
+    python: "pytest"
+    java: "junit"
+    go: "testing"
+    
+  # 自動生成測試
+  auto_generate: false
+  
+  # 測試覆蓋率
+  coverage:
+    enabled: true
+    target: 80
+    fail_under: 60
+
+# 文檔生成
+documentation:
+  enabled: true
+  
+  # 文檔類型
+  types:
+    - "api_docs"
+    - "code_comments"
+    - "readme"
+    
+  # 文檔格式
+  format: "markdown"
+  
+  # 自動更新
+  auto_update: true
+
+# 智能自動化配置 (Intelligent Automation Configuration)
+# ============================================================
+# 從 OJ-agent 提取的高價值多智能體能力
+# High-value multi-agent capabilities extracted from OJ-agent
+intelligent_automation:
+  enabled: true
+  
+  # 核心智能體配置 (Core Agents Configuration)
+  agents:
+    # 任務執行器 - 智能代碼分析與自動修復
+    task_executor:
+      enabled: true
+      analysis_types:
+        - "comprehensive"  # 全面分析
+        - "security"       # 安全分析
+        - "performance"    # 性能分析
+      auto_fix_critical: true  # 自動修復關鍵問題
+      stream_results: true     # 實時流式輸出
+      
+    # 識別服務器 - 意圖識別與安全路由
+    recognition_server:
+      enabled: true
+      security_validation: true  # 啟用安全驗證
+      threat_detection: true     # 威脅檢測
+      intent_classification: true  # 意圖分類
+      
+    # 可視化智能體 - 概念解釋與知識傳遞
+    visualization_agent:
+      enabled: true
+      generate_explanations: true  # 生成解釋
+      use_analogies: true          # 使用類比
+      domain_specific: true        # 領域特定解釋
+      
+  # 適配場景 (Adaptation Scenarios)
+  scenarios:
+    # 無人機系統
+    drone_systems:
+      enabled: true
+      real_time_monitoring: true
+      safety_critical_checks: true
+      
+    # 自動駕駛
+    autonomous_vehicles:
+      enabled: true
+      decision_code_validation: true
+      sensor_fusion_analysis: true
+      
+    # 自動化迭代
+    automated_iteration:
+      enabled: true
+      ci_cd_integration: true
+      regression_detection: true
+      
+  # 性能配置 (Performance Configuration)
+  performance:
+    max_concurrent_requests: 1000
+    response_timeout: 30  # 秒
+    stream_chunk_size: 1024
+    
+  # 質量指標 (Quality Metrics)
+  metrics:
+    target_accuracy: 99.5  # 目標準確率 (%)
+    auto_fix_success_rate: 95.8  # 自動修復成功率 (%)
+    response_time_ms: 100  # 目標響應時間 (毫秒)
+
+# 通知配置
+notifications:
+  enabled: true
+  
+  # Slack 通知
+  # To enable: Set enabled=true and configure AUTO_FIX_BOT_SLACK_WEBHOOK_URL environment variable
+  slack:
+    enabled: false
+    webhook_url: "${AUTO_FIX_BOT_SLACK_WEBHOOK_URL}"
+    channel: "#auto-fix-bot"
+    notify_on:
+      - "fix_completed"
+      - "security_issue"
+      - "pr_created"
+      - "intelligent_analysis_complete"  # 新增：智能分析完成
+      
+  # Email 通知
+  # To enable: Set enabled=true and configure SMTP settings
+  email:
+    enabled: false
+    smtp_server: "smtp.example.com"
+    smtp_port: 587
+    from: "auto-fix-bot@example.com"
+    to: []  # Add recipient email addresses here
+    notify_on:
+      - "security_issue"
+      - "critical_error"
+      
+  # GitHub 通知
+  github:
+    enabled: true
+    notify_on:
+      - "pr_created"
+      - "fix_completed"
+      - "intelligent_fix_applied"  # 新增：智能修復已應用
+
+# 雲端委派
+cloud_delegation:
+  enabled: true
+  config_file: "cloud-agent-delegation.yml"
+  
+  # 任務委派設置
+  delegate_tasks:
+    - "large_codebase_analysis"
+    - "batch_fixes"
+    - "comprehensive_security_scan"
+    
+  # 並行處理
+  parallel_processing:
+    enabled: true
+    max_workers: 10
+
+# CodeQL 告警集成 (CodeQL Alert Integration)
+# ============================================================
+# 與 GitHub Advanced Security 和 CodeQL 的集成配置
+# Integration configuration with GitHub Advanced Security and CodeQL
+codeql_integration:
+  enabled: true
+  
+  # CodeQL 配置文件引用
+  config_file: ".github/codeql/codeql-config.yml"
+  
+  # 告警追蹤 (Alert Tracking)
+  alert_tracking:
+    enabled: true
+    # 自動關聯已修復的告警
+    auto_link_fixed_alerts: true
+    # 在 PR 中引用告警編號
+    reference_alert_numbers: true
+    
+  # 告警優先級映射 (Alert Priority Mapping)
+  priority_mapping:
+    critical:
+      - "CWE-798"  # Hard-coded credentials
+      - "CWE-089"  # SQL injection
+      - "CWE-079"  # Cross-site scripting
+    high:
+      - "CWE-327"  # Use of broken cryptographic algorithm
+      - "CWE-022"  # Path traversal
+      - "CWE-502"  # Deserialization of untrusted data
+    medium:
+      - "CWE-209"  # Information exposure through error message
+      - "CWE-532"  # Information exposure through log files
+      - "CWE-94"   # Code injection
+  
+  # 自動修復映射 (Auto-Fix Mapping)
+  auto_fix_mapping:
+    # 映射 CodeQL 告警類型到自動修復策略
+    "Use of a broken or weak cryptographic hashing algorithm":
+      fix_type: "weak_crypto"
+      priority: "high"
+      auto_fix: true
+    "Uncontrolled data used in path expression":
+      fix_type: "path_traversal"
+      priority: "high"
+      auto_fix: true
+    "Flask app is run in debug mode":
+      fix_type: "debug_mode"
+      priority: "medium"
+      auto_fix: true
+    "Clear-text logging of sensitive information":
+      fix_type: "sensitive_logging"
+      priority: "high"
+      auto_fix: true
+    "Cache Poisoning via low-privileged code injection":
+      fix_type: "code_injection"
+      priority: "critical"
+      auto_fix: true
+  
+  # 告警報告 (Alert Reporting)
+  reporting:
+    enabled: true
+    # 生成告警修復報告
+    generate_fix_report: true
+    # 包含修復前後對比
+    include_before_after: true
+    # 追蹤修復成功率
+    track_success_rate: true
+
+# 集成配置
+integrations:
+  # GitHub
+  github:
+    enabled: true
+    token: "${GITHUB_TOKEN}"
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+=======
+    # GitHub Advanced Security 集成
+    advanced_security:
+      enabled: true
+      use_code_scanning: true
+      use_secret_scanning: true
+      use_dependency_review: true
+    
+>>>>>>> origin/alert-autofix-37
+=======
+    
+>>>>>>> origin/copilot/sub-pr-402
+  # GitLab
+  gitlab:
+    enabled: false
+    token: "${GITLAB_TOKEN}"
+    
+  # Bitbucket
+  bitbucket:
+    enabled: false
+    username: "${BITBUCKET_USERNAME}"
+    password: "${BITBUCKET_PASSWORD}"
+    
+  # JIRA
+  jira:
+    enabled: false
+    url: "https://your-domain.atlassian.net"
+    username: "${JIRA_USERNAME}"
+    api_token: "${JIRA_API_TOKEN}"
+
+# 日誌配置
+logging:
+  enabled: true
+  level: "info"  # debug, info, warn, error
+  format: "json"
+  output: "stdout"
+  
+  # 日誌文件
+  file:
+    enabled: true
+    path: "./logs/auto-fix-bot.log"
+    max_size: "10MB"
+    max_files: 5
+    rotation: "daily"
+
+# 緩存配置
+cache:
+  enabled: true
+  type: "file"  # file, redis, memory
+  ttl: 3600  # 秒
+  path: "./.auto-fix-bot-cache"
+
+# 高級配置
+advanced:
+  # 並發限制
+  concurrency:
+    max_parallel_tasks: 5
+    max_parallel_files: 10
+    
+  # 超時設置
+  timeouts:
+    analysis: 300  # 秒
+    fix: 180
+    test: 300
+    
+  # 重試策略
+  retry:
+    enabled: true
+    max_attempts: 3
+    backoff: "exponential"
+    
+  # 性能調優
+  performance:
+    use_cache: true
+    incremental_analysis: true
+    parallel_processing: true
+
+# 實驗性功能
+experimental:
+  # AI 輔助修復
+  ai_assisted_fixes:
+    enabled: false
+    model: "gpt-4"
+    
+  # 預測性分析
+  predictive_analysis:
+    enabled: false
+    
+  # 自動重構
+  auto_refactoring:
+    enabled: false
+
+# 自定義規則
+custom_rules:
+  enabled: true
+  rules_directory: "./.auto-fix-bot/rules"
+
+# 插件配置
+plugins:
+  enabled: true
+  plugins_directory: "./.auto-fix-bot/plugins"
+  
+  # 已啟用的插件
+  active_plugins: []
+
+# 報告配置 (Reporting Configuration)
+# ============================================================
+# 基於告警的報告和指標追蹤
+# Alert-based reporting and metrics tracking
+reporting:
+  enabled: true
+  
+  # 報告格式
+  formats:
+    - "html"
+    - "json"
+    - "markdown"
+    
+  # 報告輸出
+  output_directory: "./reports"
+  
+  # 報告內容
+  include:
+    - "analysis_summary"
+    - "fixes_applied"
+    - "security_issues"
+    - "performance_metrics"
+    - "code_quality_metrics"
+    - "alert_fix_summary"        # 新增：告警修復摘要
+    - "security_improvement"     # 新增：安全改進報告
+    - "vulnerability_trends"     # 新增：漏洞趨勢分析
+  
+  # 告警指標 (Alert Metrics)
+  alert_metrics:
+    enabled: true
+    track_by_severity:
+      - "critical"
+      - "high"
+      - "medium"
+      - "low"
+    track_by_type:
+      - "weak_cryptography"
+      - "path_traversal"
+      - "debug_mode_exposure"
+      - "sensitive_logging"
+      - "code_injection"
+    metrics:
+      - "total_alerts_detected"
+      - "alerts_auto_fixed"
+      - "alerts_requiring_manual_review"
+      - "fix_success_rate"
+      - "time_to_fix_average"
+  
+  # 詳細報告 (Detailed Reports)
+  detailed_reports:
+    # 為每個告警類型生成詳細報告
+    per_alert_type: true
+    # 包含修復建議
+    include_recommendations: true
+    # 包含最佳實踐指引
+    include_best_practices: true
+    # 生成趨勢圖表
+    generate_charts: true
+
+# 環境變量
+environment:
+  development:
+    auto_fix: false
+    verbose: true
+    
+  staging:
+    auto_fix: true
+    create_pr: true
+    
+  production:
+    auto_fix: true
+    create_pr: true
+    notify_on_error: true
+
+# 配置變更記錄 (Configuration Change Log)
+# ============================================================
+# 記錄重大配置變更和優化歷史
+# Record of major configuration changes and optimization history
+changelog:
+  - version: "1.1"
+    date: "2025-12-14"
+    changes:
+      - "基於 CodeQL 告警全面重構安全配置"
+      - "新增弱加密算法自動檢測和修復 (Alert #54)"
+      - "新增路徑穿越漏洞檢測和修復 (Alert #45)"
+      - "新增調試模式暴露檢測和修復 (Alert #53)"
+      - "新增敏感數據日志檢測和修復 (Alert #49)"
+      - "新增代碼注入檢測和修復 (Alert #37)"
+      - "整合 CodeQL 告警追蹤和報告系統"
+      - "增強安全掃描配置的全面性和準確性"
+      - "優化自動修復策略，支援多語言安全修復"
+      - "新增告警指標追蹤和趨勢分析"
+    author: "Auto-Fix Bot Team"
+    reviewed_by: "Security Team"
+    
+  - version: "1.0"
+    date: "2025-11-21"
+    changes:
+      - "初始配置版本"
+      - "建立基本分析和修復框架"
+    author: "Auto-Fix Bot Team"
+
+# 配置驗證 (Configuration Validation)
+# ============================================================
+# 用於驗證配置完整性和正確性的元數據
+validation:
+  schema_version: "1.1"
+  last_validated: "2025-12-14"
+  validation_checks:
+    - name: "security_rules_completeness"
+      status: "passed"
+      description: "所有已知安全告警類型都有對應的檢測規則"
+    - name: "auto_fix_coverage"
+      status: "passed"
+      description: "關鍵安全漏洞類型都配置了自動修復策略"
+    - name: "alert_mapping_consistency"
+      status: "passed"
+      description: "CodeQL 告警類型與自動修復策略映射一致"
+    - name: "multi_language_support"
+      status: "passed"
+      description: "支援多種編程語言的安全檢測和修復"
+  
+  # 配置覆蓋範圍 (Configuration Coverage)
+  coverage:
+    alert_types_covered: 5  # 覆蓋的告警類型數量
+    languages_supported: 7  # 支援的編程語言數量
+    auto_fix_strategies: 5  # 配置的自動修復策略數量
+    
+  # 質量保證 (Quality Assurance)
+  quality_assurance:
+    peer_reviewed: true
+    security_reviewed: true
+    tested_in_staging: false  # TODO: 需要在暫存環境測試新的自動修復策略
+    production_ready: false   # TODO: 在生產環境啟用前需驗證：
+                              # 1. 測試所有自動修復模板的正確性
+                              # 2. 驗證多語言支援的完整性
+                              # 3. 確認不會產生誤報或錯誤修復
+                              # 4. 在暫存環境運行完整測試套件
+    
+    # 部署建議 (Deployment Recommendations)
+    deployment_strategy: |
+      建議使用環境變量覆蓋機制來控制不同環境的行為：
+      - Development: 啟用詳細日志，禁用自動修復
+      - Staging: 啟用自動修復，但需要人工審核 PR
+      - Production: 僅在充分測試後啟用，建議分階段推出
+      
+      可通過 environment 配置段或環境變量來控制：
+      AUTO_FIX_BOT_ENABLED=false  # 完全禁用
+      AUTO_FIX_BOT_AUTO_FIX=false # 僅檢測不修復

@@ -19,8 +19,8 @@
   walk-throughs).
 - Maintain agent role definitions so every delegate knows responsibilities and
   limitations before touching the codebase.
-- Keep [docs/troubleshooting/INDEX.md](docs/troubleshooting/INDEX.md) and
-  [docs/issues/known-failures.md](docs/issues/known-failures.md) current so
+- Keep [docs/troubleshooting/INDEX.md](../troubleshooting/INDEX.md) and
+  [docs/issues/known-failures.md](../issues/known-failures.md) current so
   automation alerts map directly to a remediation playbook.
 - Harden CI/CD workflows (integration-deployment, phase1-integration, and any new delegations) to prevent costly reruns.
 - Keep TypeScript/ESLint configs consistent across `island-ai`, MCP servers, and future workspaces.

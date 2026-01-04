@@ -1,0 +1,65 @@
+version: "1.0.0"
+skeleton_id: "security-observability"
+
+input:
+  schema:
+    type: "object"
+    required: ["action_type", "context"]
+    properties:
+      action_type:
+        enum:
+          - "design_security_mechanism"
+          - "setup_monitoring"
+          - "configure_alerts"
+          - "trace_issue"
+          - "audit_compliance"
+      context:
+        type: "object"
+        properties:
+          component_name: { type: "string" }
+          threat_model: { type: "object" }
+          sla_targets: { type: "object" }
+
+output:
+  schema:
+    type: "object"
+    properties:
+      status: { enum: ["success", "needs_review", "blocked"] }
+      security_design:
+        type: "object"
+        properties:
+          layers:
+            type: "array"
+            items: { type: "string" }
+          controls:
+            type: "array"
+            items:
+              type: "object"
+              properties:
+                control_id: { type: "string" }
+                description: { type: "string" }
+                implementation: { type: "string" }
+      monitoring_plan:
+        type: "object"
+        properties:
+          metrics:
+            type: "array"
+          alerts:
+            type: "array"
+          dashboards:
+            type: "array"
+
+validation_rules:
+  - rule: "zero_trust_applied"
+    description: "必須應用零信任原則"
+
+  - rule: "encryption_enabled"
+    description: "傳輸中和靜止時都需加密"
+
+  - rule: "audit_logging"
+    description: "所有安全操作必須有審計日誌"
+
+error_codes:
+  SEC_001:
+    message: "缺少加密配置"
+    solution: "檢查 config/safety-mechanisms.yaml"

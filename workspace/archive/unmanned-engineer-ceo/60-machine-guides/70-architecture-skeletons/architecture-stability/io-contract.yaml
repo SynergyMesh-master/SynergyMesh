@@ -1,0 +1,438 @@
+# ═════════════════════════════════════════════════════════════════════════════
+# 架構穩定性骨架 - AI 互動協議
+# Architecture Stability Skeleton - AI I/O Contract
+# ═════════════════════════════════════════════════════════════════════════════
+#
+# 定義 AI 與此骨架互動時的標準化輸入/輸出格式。
+# Defines standardized input/output formats for AI interaction with this skeleton.
+
+version: "1.0.0"
+skeleton_id: "architecture-stability"
+
+# ═════════════════════════════════════════════════════════════════════════════
+# 輸入契約 / INPUT CONTRACT
+# ═════════════════════════════════════════════════════════════════════════════
+
+input:
+  description: "AI 向此骨架提交的架構設計或修改請求"
+
+  schema:
+    $schema: "http://json-schema.org/draft-07/schema#"
+    type: "object"
+    required:
+      - "action_type"
+      - "context"
+    properties:
+      action_type:
+        type: "string"
+        enum:
+          - "design_service" # 設計新服務
+          - "define_boundary" # 定義服務邊界
+          - "analyze_dependencies" # 分析依賴
+          - "refactor_architecture" # 重構架構
+          - "validate_design" # 驗證設計
+          - "propose_change" # 提出架構變更提案
+        description: "請求的操作類型"
+
+      change_proposal:
+        type: "object"
+        description: "架構變更提案（當 action_type = 'propose_change' 時必填）"
+        required: ["id", "description", "changes"]
+        properties:
+          id:
+            type: "string"
+            description: "提案唯一識別碼"
+            example: "PROP-2025-001"
+
+          description:
+            type: "string"
+            description: "用人類可讀文字描述變更目的（例如：新增 reporting-service）"
+
+          changes:
+            type: "array"
+            description: "具體變更項目"
+            items:
+              type: "object"
+              required: ["action", "target_module"]
+              properties:
+                action:
+                  type: "string"
+                  enum:
+                    [
+                      "add_module",
+                      "remove_module",
+                      "change_dependency",
+                      "modify_interface",
+                      "refactor_layer",
+                    ]
+                  description: "變更動作"
+
+                target_module:
+                  type: "string"
+                  description: "受影響模組 ID"
+
+                details:
+                  type: "object"
+                  description: "與 action 相關的額外欄位（例如新增依賴的 from/to）"
+
+      context:
+        type: "object"
+        description: "操作上下文"
+        properties:
+          project_name:
+            type: "string"
+            description: "專案或服務名稱"
+
+          description:
+            type: "string"
+            description: "需求或設計說明"
+
+          scope:
+            type: "string"
+            enum: ["microservice", "module", "layer", "system"]
+            description: "設計範圍"
+
+          constraints:
+            type: "array"
+            items: { type: "string" }
+            description: "設計約束條件"
+
+      affected_components:
+        type: "array"
+        description: "涉及的現有元件"
+        items:
+          type: "object"
+          properties:
+            component_id:
+              type: "string"
+            path:
+              type: "string"
+            current_responsibility:
+              type: "string"
+
+      success_criteria:
+        type: "array"
+        items: { type: "string" }
+        description: "成功標準"
+
+  examples:
+    - action_type: "design_service"
+      context:
+        project_name: "notification-service"
+        description: "設計新的通知服務，支援多通道"
+        scope: "microservice"
+        constraints:
+          - "必須與現有 User Service 整合"
+          - "需要異步處理隊列"
+      affected_components:
+        - component_id: "user-service"
+          path: "services/agents/..."
+      success_criteria:
+        - "服務邊界清晰"
+        - "依賴無衝突"
+        - "可測試性良好"
+
+# ═════════════════════════════════════════════════════════════════════════════
+# 輸出契約 / OUTPUT CONTRACT
+# ═════════════════════════════════════════════════════════════════════════════
+
+output:
+  description: "此骨架返回給 AI 的架構設計結果"
+
+  schema:
+    $schema: "http://json-schema.org/draft-07/schema#"
+    type: "object"
+    required:
+      - "status"
+      - "design"
+      - "validation_result"
+    properties:
+      status:
+        type: "string"
+        enum: ["success", "needs_revision", "conflict_detected"]
+        description: "操作狀態"
+
+      design:
+        type: "object"
+        description: "設計結果"
+        properties:
+          service_name:
+            type: "string"
+
+          service_id:
+            type: "string"
+
+          boundaries:
+            type: "object"
+            description: "服務邊界定義"
+            properties:
+              responsibilities:
+                type: "array"
+                items: { type: "string" }
+
+              external_dependencies:
+                type: "array"
+                items:
+                  type: "object"
+                  properties:
+                    service_id: { type: "string" }
+                    interface_type: { type: "string" }
+                    direction: { enum: ["inbound", "outbound"] }
+
+              internal_modules:
+                type: "array"
+                items:
+                  type: "object"
+                  properties:
+                    module_id: { type: "string" }
+                    responsibility: { type: "string" }
+
+          architecture_diagram:
+            type: "string"
+            description: "ASCII 或 PlantUML 架構圖"
+
+      dependency_analysis:
+        type: "object"
+        description: "依賴分析結果"
+        properties:
+          dependency_graph:
+            type: "array"
+            items:
+              type: "object"
+              properties:
+                from: { type: "string" }
+                to: { type: "string" }
+                type: { enum: ["direct", "transitive"] }
+
+          circular_dependencies:
+            type: "array"
+            description: "檢測到的循環依賴"
+            items: { type: "string" }
+
+          severity_level:
+            type: "string"
+            enum: ["none", "warning", "error"]
+
+      validation_result:
+        type: "object"
+        properties:
+          valid:
+            type: "boolean"
+
+          issues:
+            type: "array"
+            items:
+              type: "object"
+              properties:
+                issue_type:
+                  type: "string"
+                  enum:
+                    [
+                      "boundary_violation",
+                      "circular_dependency",
+                      "missing_interface",
+                    ]
+
+                severity:
+                  type: "string"
+                  enum: ["error", "warning", "info"]
+
+                description:
+                  type: "string"
+
+                recommendation:
+                  type: "string"
+
+      stability_report:
+        type: "object"
+        description: "對某個 dependency_graph + change_proposal 的架構穩定性檢查報告"
+        required: ["proposal_id", "overall_status", "violations"]
+        properties:
+          proposal_id:
+            type: "string"
+            description: "對應的 change_proposal.id"
+
+          overall_status:
+            type: "string"
+            enum: ["pass", "fail", "warning"]
+            description: "整體結果：通過 / 不通過 / 有警告"
+
+          violations:
+            type: "array"
+            description: "違反架構規則的清單"
+            items:
+              type: "object"
+              required:
+                ["rule_id", "severity", "explanation", "related_modules"]
+              properties:
+                rule_id:
+                  type: "string"
+                  description: "對應到 invariants/layering-rules 中的規則 ID"
+
+                severity:
+                  type: "string"
+                  enum: ["critical", "high", "medium", "low"]
+                  description: "嚴重程度"
+
+                explanation:
+                  type: "string"
+                  description: "用自然語言說明為何違規"
+
+                related_modules:
+                  type: "array"
+                  items:
+                    type: "string"
+                  description: "受此違規影響的模組 ID 列表"
+
+          suggested_changes:
+            type: "array"
+            description: "AI 建議的修正方案（可選）"
+            items:
+              type: "object"
+              required: ["description"]
+              properties:
+                description:
+                  type: "string"
+                  description: "建議如何調整架構以消除違規"
+
+      recommended_changes:
+        type: "array"
+        description: "建議的變更"
+        items:
+          type: "object"
+          properties:
+            change_type:
+              type: "string"
+              enum: ["add", "modify", "remove"]
+
+            target_file:
+              type: "string"
+
+            description:
+              type: "string"
+
+  examples:
+    - status: "success"
+      design:
+        service_name: "Notification Service"
+        service_id: "notification-svc"
+        boundaries:
+          responsibilities:
+            - "管理通知模板"
+            - "發送多通道通知"
+            - "追蹤通知狀態"
+          external_dependencies:
+            - service_id: "user-svc"
+              interface_type: "REST"
+              direction: "inbound"
+            - service_id: "message-queue"
+              interface_type: "Queue"
+              direction: "outbound"
+        architecture_diagram: |
+          [User Service] -> [Notification Service] -> [Message Queue]
+                                      |
+                                      +-> [Email Provider]
+                                      +-> [SMS Provider]
+      validation_result:
+        valid: true
+        issues: []
+
+# ═════════════════════════════════════════════════════════════════════════════
+# 必填欄位 / REQUIRED FIELDS
+# ═════════════════════════════════════════════════════════════════════════════
+
+required_fields:
+  for_input:
+    - "action_type"
+    - "context"
+    - "context.project_name"
+    - "context.description"
+    - "context.scope"
+
+  for_output:
+    - "status"
+    - "design"
+    - "design.service_id"
+    - "design.boundaries"
+    - "validation_result"
+    - "validation_result.valid"
+
+# ═════════════════════════════════════════════════════════════════════════════
+# 可選欄位 / OPTIONAL FIELDS
+# ═════════════════════════════════════════════════════════════════════════════
+
+optional_fields:
+  for_input:
+    - "affected_components"
+    - "success_criteria"
+    - "context.constraints"
+
+  for_output:
+    - "recommended_changes"
+    - "dependency_analysis"
+
+# ═════════════════════════════════════════════════════════════════════════════
+# 資料型別 / DATA TYPES
+# ═════════════════════════════════════════════════════════════════════════════
+
+data_types:
+  service_id:
+    format: "kebab-case"
+    example: "notification-svc"
+    pattern: "^[a-z0-9]([a-z0-9-]*[a-z0-9])?$"
+
+  component_id:
+    format: "kebab-case"
+    example: "user-service"
+    pattern: "^[a-z0-9]([a-z0-9-]*[a-z0-9])?$"
+
+  responsibility:
+    format: "natural language"
+    max_length: 200
+    language: "Traditional Chinese"
+
+  file_path:
+    format: "relative path from repo root"
+    example: "services/agents/notification-agent/"
+
+# ═════════════════════════════════════════════════════════════════════════════
+# 驗證規則 / VALIDATION RULES
+# ═════════════════════════════════════════════════════════════════════════════
+
+validation_rules:
+  - rule: "service_id_unique"
+    description: "服務 ID 在系統中必須唯一"
+    check: "在 config/unified-config-index.yaml 中查詢"
+
+  - rule: "no_circular_dependencies"
+    description: "不允許循環依賴"
+    check: "運行依賴分析工具"
+
+  - rule: "boundary_non_overlapping"
+    description: "服務邊界不應重疊"
+    check: "檢查責任矩陣"
+
+  - rule: "interface_consistency"
+    description: "服務介面必須一致"
+    check: "檢查 API 版本"
+
+# ═════════════════════════════════════════════════════════════════════════════
+# 錯誤碼 / ERROR CODES
+# ═════════════════════════════════════════════════════════════════════════════
+
+error_codes:
+  ARCH_001:
+    message: "服務 ID 已存在"
+    solution: "使用不同的服務 ID"
+
+  ARCH_002:
+    message: "檢測到循環依賴"
+    solution: "重新設計服務邊界以打破循環"
+
+  ARCH_003:
+    message: "邊界衝突"
+    solution: "檢查現有服務邊界定義"
+
+  ARCH_004:
+    message: "缺少必填欄位"
+    solution: "根據 schema 提供所有必填欄位"

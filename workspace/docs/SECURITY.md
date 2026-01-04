@@ -128,10 +128,10 @@ We follow responsible disclosure principles:
 
 ### 🔗 Related Documentation
 
-- [GHAS Complete Implementation Guide](docs/GHAS_COMPLETE_GUIDE.md)
-- [CodeQL Setup Guide](docs/CODEQL_SETUP.md)
-- [Secret Scanning Guide](docs/SECRET_SCANNING.md)
-- [Vulnerability Management Process](docs/VULNERABILITY_MANAGEMENT.md)
+- [GHAS Complete Implementation Guide](./GHAS_COMPLETE_GUIDE.md)
+- [CodeQL Setup Guide](./CODEQL_SETUP.md)
+- [Secret Scanning Guide](./SECRET_SCANNING.md)
+- [Vulnerability Management Process](./VULNERABILITY_MANAGEMENT.md)
 
 ### 📞 Contact
 

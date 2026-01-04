@@ -1,16 +1,13 @@
 #!/bin/bash
-# 🌍 Root 使用者殼層環境配置
-# MachineNativeOps Root Layer Environment Configuration
-# Version: 1.0.0
-# Last Modified: 2025-12-20T22:00:00Z
+# Root Environment Configuration
+# 根層環境配置 - 只負責啟動時環境變數
 
-# =============================================================================
-# MachineNativeOps Root Environment Configuration
-# =============================================================================
-# This script sets up the environment for the root user running MachineNativeOps
-# It includes all necessary environment variables, PATH configurations, and
-# utility functions for system administration and operations.
-# =============================================================================
+# Controlplane 路徑
+export CONTROLPLANE_PATH="./controlplane"
+export CONTROLPLANE_CONFIG="${CONTROLPLANE_PATH}/config"
+export CONTROLPLANE_SPECS="${CONTROLPLANE_PATH}/specifications"
+export CONTROLPLANE_REGISTRIES="${CONTROLPLANE_PATH}/registries"
+export CONTROLPLANE_VALIDATION="${CONTROLPLANE_PATH}/validation"
 
 # === 基本系統資訊 ===
 export MACHINENATIVEOPS_VERSION="1.0.0"
@@ -22,26 +19,25 @@ export CHATOPS_HOME="${MACHINENATIVEOPS_SCRIPT_DIR}/chatops"
 export CHATOPS_SCRIPTS="${CHATOPS_HOME}/scripts"
 export CHATOPS_SERVICES="${CHATOPS_HOME}/services"
 
-# === 目錄結構定義 ===
-export MACHINENATIVEOPS_CONFIG="/etc/machinenativenops"
-export MACHINENATIVEOPS_LOGS="/var/log/machinenativenops"
-export MACHINENATIVEOPS_DATA="/var/lib/machinenativenops"
-export MACHINENATIVEOPS_RUN="/var/run/machinenativenops"
-export MACHINENATIVEOPS_TMP="/tmp/machinenativenops"
-export MACHINENATIVEOPS_BACKUP="/var/backups/machinenativenops"
-export MACHINENATIVEOPS_CACHE="/var/cache/machinenativenops"
+# FHS 路徑
+export FHS_BIN="./bin"
+export FHS_SBIN="./sbin"
+export FHS_ETC="./etc"
+export FHS_LIB="./lib"
+export FHS_VAR="./var"
+export FHS_USR="./usr"
+export FHS_HOME="./home"
+export FHS_TMP="./tmp"
+export FHS_OPT="./opt"
+export FHS_SRV="./srv"
+export FHS_INITD="./init.d"
 
-# === 安全性配置目錄 ===
-export MACHINENATIVEOPS_TRUST="${MACHINENATIVEOPS_CONFIG}/trust"
-export MACHINENATIVEOPS_CERTS="${MACHINENATIVEOPS_CONFIG}/certs"
-export MACHINENATIVEOPS_KEYS="${MACHINENATIVEOPS_CONFIG}/keys"
-export MACHINENATIVEOPS_SECRETS="${MACHINENATIVEOPS_CONFIG}/secrets"
+# 啟動模式
+export BOOT_MODE="${BOOT_MODE:-production}"
 
-# === 模組與執行環境 ===
-export MACHINENATIVEOPS_MODULES="${MACHINENATIVEOPS_HOME}/modules"
-export MACHINENATIVEOPS_WORKFLOWS="${MACHINENATIVEOPS_CONFIG}/workflows"
-export MACHINENATIVEOPS_POLICIES="${MACHINENATIVEOPS_CONFIG}/policies"
-export MACHINENATIVEOPS_BASELINES="${MACHINENATIVEOPS_CONFIG}/baselines"
+# 版本信息
+export MACHINENATIVEOPS_VERSION="v1.0.0"
+export CONTROLPLANE_VERSION="v1.0.0"
 
 # === Controlplane 架構環境變數 ===
 export MACHINENATIVEOPS_CONTROLPLANE="${MACHINENATIVEOPS_SCRIPT_DIR}/controlplane"

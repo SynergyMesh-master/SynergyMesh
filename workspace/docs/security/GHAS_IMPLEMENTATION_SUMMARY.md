@@ -523,7 +523,7 @@ gh api --method POST /orgs/{org}/teams \
 
 ## 🎯 下一步
 
-1. **閱讀完整指南**: [docs/GHAS_COMPLETE_GUIDE.md](docs/GHAS_COMPLETE_GUIDE.md)
+1. **閱讀完整指南**: [docs/GHAS_COMPLETE_GUIDE.md](../GHAS_COMPLETE_GUIDE.md)
 2. **設定本地環境**: 安裝 pre-push hooks
 3. **部署模式**: 運行 pattern deployment
 4. **配置監控**: 設定 Prometheus 和 Elasticsearch

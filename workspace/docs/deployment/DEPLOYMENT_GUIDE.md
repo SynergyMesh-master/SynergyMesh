@@ -19,7 +19,7 @@
 7. [验证与测试](#验证与测试)
 8. [故障排查](#故障排查)
 
-> **🤖 AI 模型部署**: 关于 AI 模型（LLM）的详细部署要求和配置，请参阅 [AI 模型部署指南](docs/AI_MODEL_DEPLOYMENT.md)
+> **🤖 AI 模型部署**: 关于 AI 模型（LLM）的详细部署要求和配置，请参阅 [AI 模型部署指南](../AI_MODEL_DEPLOYMENT.md)
 
 ---
 
@@ -542,8 +542,8 @@ NODE_ENV=development npm run dev:stack
 - **快速开始**: [QUICK_START.md](QUICK_START.md)
 - **部署清单**: [DEPLOYMENT_CHECKLIST.md](DEPLOYMENT_CHECKLIST.md)
 - **验证报告**: [DEPLOYMENT_VALIDATION_REPORT.md](DEPLOYMENT_VALIDATION_REPORT.md)
-- **架构文档**: [docs/architecture/](docs/architecture/)
-- **API 文档**: [docs/AUTO_ASSIGNMENT_API.md](docs/AUTO_ASSIGNMENT_API.md)
+- **架构文档**: [docs/architecture/](../architecture/)
+- **API 文档**: [docs/AUTO_ASSIGNMENT_API.md](../AUTO_ASSIGNMENT_API.md)
 
 ---
 

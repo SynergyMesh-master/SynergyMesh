@@ -1,4522 +1,0 @@
-diff --git a/teams/default-team/profiles/role.security_scanner.md b/teams/default-team/profiles/role.security_scanner.md
---- a/teams/default-team/profiles/role.security_scanner.md
-+++ b/teams/default-team/profiles/role.security_scanner.md
-@@ -75,1 +75,1 @@
--## Integration Points
-+## Integration Points
-
-diff --git a/root/teams/default-team/profiles/role.workflow_optimizer.md b/root/teams/default-team/profiles/role.workflow_optimizer.md
---- a/root/teams/default-team/profiles/role.workflow_optimizer.md
-+++ b/root/teams/default-team/profiles/role.workflow_optimizer.md
-@@ -18,1 +18,1 @@
--### Analysis Areas
-+### Analysis Areas
-
-@@ -25,1 +25,1 @@
--## Triggers
-+## Triggers
-
-@@ -26,1 +26,1 @@
--- SCHEDULED_EVENT (weekly analysis)
-+
-- SCHEDULED_EVENT (weekly analysis)
-@@ -71,1 +71,1 @@
--- Metrics Collector
-+
-- Metrics Collector
-diff --git a/teams/default-team/profiles/role.cd_deployer.md b/teams/default-team/profiles/role.cd_deployer.md
---- a/teams/default-team/profiles/role.cd_deployer.md
-+++ b/teams/default-team/profiles/role.cd_deployer.md
-@@ -4,1 +4,1 @@
--- **Agent ID**: cd-deployer
-+
-- **Agent ID**: cd-deployer
-@@ -12,1 +12,1 @@
--- Multi-environment deployment
-+
-- Multi-environment deployment
-@@ -86,1 +86,1 @@
--- contents: read
-+
-- contents: read
-diff --git a/root/teams/default-team/profiles/role.security_scanner.md b/root/teams/default-team/profiles/role.security_scanner.md
---- a/root/teams/default-team/profiles/role.security_scanner.md
-+++ b/root/teams/default-team/profiles/role.security_scanner.md
-@@ -19,1 +19,1 @@
--- Code security analysis (Semgrep, CodeQL)
-+
-- Code security analysis (Semgrep, CodeQL)
-@@ -33,1 +33,1 @@
--### Input Requirements
-+### Input Requirements
-
-@@ -82,1 +82,1 @@
--## Permissions
-+## Permissions
-
-diff --git a/teams/default-team/profiles/role.it_architect.md b/teams/default-team/profiles/role.it_architect.md
---- a/teams/default-team/profiles/role.it_architect.md
-+++ b/teams/default-team/profiles/role.it_architect.md
-@@ -7,1 +7,1 @@
--- æ¥­åéæ±åæ
-+
-- æ¥­åéæ±åæ
-@@ -31,1 +31,1 @@
--## é©ç¨å ´æ¯
-+## é©ç¨å ´æ¯
-
-diff --git a/teams/README.md b/teams/README.md
---- a/teams/README.md
-+++ b/teams/README.md
-@@ -62,1 +62,1 @@
--- `RUN_CREATED` â `on_run_created.yaml`
-+
-- `RUN_CREATED` â `on_run_created.yaml`
-diff --git a/MULTI_AGENT_V1_SPECIFICATION_PACKAGE.md b/MULTI_AGENT_V1_SPECIFICATION_PACKAGE.md
---- a/MULTI_AGENT_V1_SPECIFICATION_PACKAGE.md
-+++ b/MULTI_AGENT_V1_SPECIFICATION_PACKAGE.md
-@@ -63,1 +63,1 @@
--#### IncidentSignal
-+#### IncidentSignal
-
-diff --git a/CI_ISSUES_FIX_REPORT.md b/CI_ISSUES_FIX_REPORT.md
---- a/CI_ISSUES_FIX_REPORT.md
-+++ b/CI_ISSUES_FIX_REPORT.md
-@@ -119,1 +119,1 @@
--- â Phase1 Gates CI ééç 100%
-+
-- â Phase1 Gates CI ééç 100%
-diff --git a/PLATFORM_CLOSURE_SUCCESS_REPORT.md b/PLATFORM_CLOSURE_SUCCESS_REPORT.md
---- a/PLATFORM_CLOSURE_SUCCESS_REPORT.md
-+++ b/PLATFORM_CLOSURE_SUCCESS_REPORT.md
-@@ -102,1 +102,1 @@
--1. **Validator Schema** (`root.validator.schema.yaml`)
-+
-1. **Validator Schema** (`root.validator.schema.yaml`)
-@@ -125,1 +125,1 @@
--### è­æéå®æ´æ§
-+### è­æéå®æ´æ§
-
-@@ -134,1 +134,1 @@
--### 1. å¯éæ­å·è¡
-+### 1. å¯éæ­å·è¡
-
-@@ -139,1 +139,1 @@
--### 2. èªååæ²»ç
-+### 2. èªååæ²»ç
-
-@@ -144,1 +144,1 @@
--### 3. å¯è§æ¸¬æ§
-+### 3. å¯è§æ¸¬æ§
-
-@@ -145,1 +145,1 @@
--- çµæ§åæ¥èª
-+
-- çµæ§åæ¥èª
-@@ -152,1 +152,1 @@
--1. **é¨ç½²å°çç¢**: ç³»çµ±å·²å°±ç·
-+
-1. **é¨ç½²å°çç¢**: ç³»çµ±å·²å°±ç·
-@@ -156,1 +156,1 @@
--### ä¸­æè¦å
-+### ä¸­æè¦å
-
-diff --git a/MULTI_AGENT_MPC_ARCHITECTURE_DESIGN.md b/MULTI_AGENT_MPC_ARCHITECTURE_DESIGN.md
---- a/MULTI_AGENT_MPC_ARCHITECTURE_DESIGN.md
-+++ b/MULTI_AGENT_MPC_ARCHITECTURE_DESIGN.md
-@@ -56,1 +56,1 @@
--### 4) ç°½å/Attestation å·¥å·éç¾ç
-+### 4) ç°½å/Attestation å·¥å·éç¾ç
-
-@@ -147,1 +147,1 @@
--### Phase 2: æ²»çéç° (4é±) - å®å¨åè¦
-+### Phase 2: æ²»çéç° (4é±) - å®å¨åè¦
-
-@@ -205,1 +205,1 @@
--### äºä»¶é¡åå®ç¾©
-+### äºä»¶é¡åå®ç¾©
-
-@@ -245,1 +245,1 @@
--### ä¾æéé©è­éç°
-+### ä¾æéé©è­éç°
-
-diff --git a/FALSE_SUCCESS_METRICS_FIXED_REPORT.md b/FALSE_SUCCESS_METRICS_FIXED_REPORT.md
---- a/FALSE_SUCCESS_METRICS_FIXED_REPORT.md
-+++ b/FALSE_SUCCESS_METRICS_FIXED_REPORT.md
-@@ -22,1 +22,1 @@
--#### ä»»å1.2: â Bootstrap Runnerçå¯¦å
-+#### ä»»å1.2: â Bootstrap Runnerçå¯¦å
-
-@@ -39,1 +39,1 @@
--### â **ä¿®å¾©å - èåæåææ¨**
-+### â **ä¿®å¾©å - èåæåææ¨**
-
-@@ -74,1 +74,1 @@
--### 2. çå¯¦é²ç¨ç®¡ç
-+### 2. çå¯¦é²ç¨ç®¡ç
-
-@@ -136,1 +136,1 @@
--### â æ§è½åºæºéæ
-+### â æ§è½åºæºéæ
-
-@@ -137,1 +137,1 @@
--- **ååæé**: < 5ç§ (å¯¦éæ¸¬è©¦çµæ)
-+
-- **ååæé**: < 5ç§ (å¯¦éæ¸¬è©¦çµæ)
-@@ -152,1 +152,1 @@
--### å¾ "èåæå" å° "çå¯¦æå"
-+### å¾ "èåæå" å° "çå¯¦æå"
-
-@@ -179,1 +179,1 @@
--### 3. çå¯¦çç£æ§åæ¥èª
-+### 3. çå¯¦çç£æ§åæ¥èª
-
-@@ -180,1 +180,1 @@
--- **çµæ§åæ¥èª**: JSONæ ¼å¼ï¼ä¾¿æ¼è§£æåç£æ§
-+
-- **çµæ§åæ¥èª**: JSONæ ¼å¼ï¼ä¾¿æ¼è§£æåç£æ§
-@@ -188,1 +188,1 @@
--### â éæ®µ1å®æ (ä¿®å¾©èåæå)
-+### â éæ®µ1å®æ (ä¿®å¾©èåæå)
-
-@@ -195,1 +195,1 @@
--- ð logging-service: åºæ¼config-managerç¶é©
-+
-- ð logging-service: åºæ¼config-managerç¶é©
-diff --git a/IMPLEMENTATION_ROADMAP.md b/IMPLEMENTATION_ROADMAP.md
---- a/IMPLEMENTATION_ROADMAP.md
-+++ b/IMPLEMENTATION_ROADMAP.md
-@@ -20,1 +20,1 @@
--#### æè¡ç´°ç¯
-+#### æè¡ç´°ç¯
-
-@@ -161,1 +161,1 @@
--- â æä»¶ä¸å³æåç > 99%
-+
-- â æä»¶ä¸å³æåç > 99%
-@@ -219,1 +219,1 @@
--- â ç°½åé©è­æ­£ç¢º
-+
-- â ç°½åé©è­æ­£ç¢º
-@@ -245,1 +245,1 @@
--- â è¨é±çææ­£ç¢º
-+
-- â è¨é±çææ­£ç¢º
-@@ -276,1 +276,1 @@
--- â é é¢æ¸²ææ­£ç¢º
-+
-- â é é¢æ¸²ææ­£ç¢º
-@@ -302,1 +302,1 @@
--- [ ] å¯¦ç¾ pom.xml è§£æ
-+
-- [ ] å¯¦ç¾ pom.xml è§£æ
-@@ -323,1 +323,1 @@
--- â æ­£ç¢ºè§£æ Cargo.toml
-+
-- â æ­£ç¢ºè§£æ Cargo.toml
-@@ -330,1 +330,1 @@
--- [ ] åµå»ºçµ±ä¸åæ¸ææ¥å£
-+
-- [ ] åµå»ºçµ±ä¸åæ¸ææ¥å£
-@@ -355,1 +355,1 @@
--- â Schema è¨­è¨åç
-+
-- â Schema è¨­è¨åç
-@@ -427,1 +427,1 @@
--- â ç·¨è¼¯å¨åè½å®æ´
-+
-- â ç·¨è¼¯å¨åè½å®æ´
-@@ -456,1 +456,1 @@
--- â é¨ç½²æå
-+
-- â é¨ç½²æå
-diff --git a/root/teams/default-team/profiles/role.cd_deployer.md b/root/teams/default-team/profiles/role.cd_deployer.md
---- a/root/teams/default-team/profiles/role.cd_deployer.md
-+++ b/root/teams/default-team/profiles/role.cd_deployer.md
-@@ -25,1 +25,1 @@
--- PUSH_TO_MAIN
-+
-- PUSH_TO_MAIN
-@@ -44,1 +44,1 @@
--### Output Format
-+### Output Format
-
-@@ -72,1 +72,1 @@
--## Post-Deployment Verification
-+## Post-Deployment Verification
-
-@@ -73,1 +73,1 @@
--- Kubernetes rollout status
-+
-- Kubernetes rollout status
-diff --git a/INTEGRATION_TODO.md b/INTEGRATION_TODO.md
---- a/INTEGRATION_TODO.md
-+++ b/INTEGRATION_TODO.md
-@@ -7,1 +7,1 @@
--#### â å·²å®æ
-+#### â å·²å®æ
-
-@@ -20,1 +20,1 @@
--#### ð å¾è¾¦
-+#### ð å¾è¾¦
-
-@@ -66,1 +66,1 @@
--- [ ] Go çæç³»çµ±
-+
-- [ ] Go çæç³»çµ±
-@@ -86,1 +86,1 @@
--### P0 (ç«å³éå§)
-+### P0 (ç«å³éå§)
-
-@@ -105,1 +105,1 @@
--### å®æåº¦
-+### å®æåº¦
-
-@@ -106,1 +106,1 @@
--- Phase 1: 5% (1/20 ä»»å)
-+
-- Phase 1: 5% (1/20 ä»»å)
-@@ -120,1 +120,1 @@
--1. â åµå»ºæ´åè¨ç«ææª
-+
-1. â åµå»ºæ´åè¨ç«ææª
-@@ -132,1 +132,1 @@
--### æ¬é±æ«
-+### æ¬é±æ«
-
-@@ -143,1 +143,1 @@
--- ä½¿ç¨ FastAPI ä½çºå¾ç«¯æ¡æ¶
-+
-- ä½¿ç¨ FastAPI ä½çºå¾ç«¯æ¡æ¶
-diff --git a/teams/default-team/profiles/role.workflow_optimizer.md b/teams/default-team/profiles/role.workflow_optimizer.md
---- a/teams/default-team/profiles/role.workflow_optimizer.md
-+++ b/teams/default-team/profiles/role.workflow_optimizer.md
-@@ -11,1 +11,1 @@
--### Primary Skills
-+### Primary Skills
-
-@@ -12,1 +12,1 @@
--- Workflow performance analysis
-+
-- Workflow performance analysis
-@@ -18,1 +18,1 @@
--### Analysis Areas
-+### Analysis Areas
-
-@@ -70,1 +70,1 @@
--## Integration Points
-+## Integration Points
-
-diff --git a/teams/default-team/profiles/role.career_counselor.md b/teams/default-team/profiles/role.career_counselor.md
---- a/teams/default-team/profiles/role.career_counselor.md
-+++ b/teams/default-team/profiles/role.career_counselor.md
-@@ -3,1 +3,1 @@
--## è§è²å®ç¾©
-+## è§è²å®ç¾©
-
-@@ -13,1 +13,1 @@
--## å·¥ä½æ¨¡å¼
-+## å·¥ä½æ¨¡å¼
-
-@@ -14,1 +14,1 @@
--1. åæåæ¡çæè½ãèè¶£åç¶é©èæ¯
-+
-1. åæåæ¡çæè½ãèè¶£åç¶é©èæ¯
-@@ -27,1 +27,1 @@
--- è·æ¥­è½æè«®è©¢
-+
-- è·æ¥­è½æè«®è©¢
-diff --git a/ACCEPTANCE_CHECKLIST.md b/ACCEPTANCE_CHECKLIST.md
---- a/ACCEPTANCE_CHECKLIST.md
-+++ b/ACCEPTANCE_CHECKLIST.md
-@@ -12,1 +12,1 @@
--### æª¢æ¥æ¸å®ç®ç
-+### æª¢æ¥æ¸å®ç®ç
-
-@@ -25,1 +25,1 @@
--- [ ] æªæ¸¬è©¦
-+
-- [ ] æªæ¸¬è©¦
-@@ -35,1 +35,1 @@
--#### åºæ¬è¦æ±
-+#### åºæ¬è¦æ±
-
-@@ -59,1 +59,1 @@
--- æ¸¬è©¦æ¥æ: 2024-12-21
-+
-- æ¸¬è©¦æ¥æ: 2024-12-21
-@@ -142,1 +142,1 @@
--- [x] è½é©è­ URN æ ¼å¼
-+
-- [x] è½é©è­ URN æ ¼å¼
-@@ -200,1 +200,1 @@
--- [x] è½æª¢æ¸¬å¾ªç°ä¾è³´
-+
-- [x] è½æª¢æ¸¬å¾ªç°ä¾è³´
-@@ -380,1 +380,1 @@
--5. ð èªåè¨æ¶æ´æ° (0%)
-+
-5. ð èªåè¨æ¶æ´æ° (0%)
-diff --git a/teams/default-team/profiles/role.code_reviewer.md b/teams/default-team/profiles/role.code_reviewer.md
---- a/teams/default-team/profiles/role.code_reviewer.md
-+++ b/teams/default-team/profiles/role.code_reviewer.md
-@@ -4,1 +4,1 @@
--- **Agent ID**: code-reviewer
-+
-- **Agent ID**: code-reviewer
-@@ -19,1 +19,1 @@
--- TypeScript/JavaScript
-+
-- TypeScript/JavaScript
-diff --git a/AUTOMATED_MEMORY_SYSTEM_COMPLETE.md b/AUTOMATED_MEMORY_SYSTEM_COMPLETE.md
---- a/AUTOMATED_MEMORY_SYSTEM_COMPLETE.md
-+++ b/AUTOMATED_MEMORY_SYSTEM_COMPLETE.md
-@@ -30,1 +30,1 @@
--- [x] ð¥ åæ git diff
-+
-- [x] ð¥ åæ git diff
-@@ -132,1 +132,1 @@
--#### â æ­¥é© 5: çææ´æ°æè¦
-+#### â æ­¥é© 5: çææ´æ°æè¦
-
-@@ -188,1 +188,1 @@
--- â èªåå¾è¨»åè¡¨æåæ­£ç¢ºéç½®
-+
-- â èªåå¾è¨»åè¡¨æåæ­£ç¢ºéç½®
-@@ -234,1 +234,1 @@
--- â æ¸¬è©¦ééä½åè½ä¸å¯ç¨
-+
-- â æ¸¬è©¦ééä½åè½ä¸å¯ç¨
-@@ -266,1 +266,1 @@
--### é©è­çæ
-+### é©è­çæ
-
-@@ -287,1 +287,1 @@
--### Git æäº¤
-+### Git æäº¤
-
-@@ -376,1 +376,1 @@
--### 3. å¯é©è­æ§
-+### 3. å¯é©è­æ§
-
-@@ -377,1 +377,1 @@
--- â **å¯¦éæ¸¬è©¦** - ä¸åªæ¯çè«
-+
-- â **å¯¦éæ¸¬è©¦** - ä¸åªæ¯çè«
-@@ -382,1 +382,1 @@
--### 4. AI åå
-+### 4. AI åå
-
-@@ -383,1 +383,1 @@
--- â **çµæ§åæ ¼å¼** - AI å®¹æçè§£
-+
-- â **çµæ§åæ ¼å¼** - AI å®¹æçè§£
-diff --git a/engine/machinenativenops-auto-monitor/README.md b/engine/machinenativenops-auto-monitor/README.md
---- a/engine/machinenativenops-auto-monitor/README.md
-+++ b/engine/machinenativenops-auto-monitor/README.md
-@@ -33,1 +33,1 @@
--- SQLite æéåºåå²å­
-+
-- SQLite æéåºåå²å­
-@@ -148,1 +148,1 @@
--- å½åç©ºé: `machinenativeops`
-+
-- å½åç©ºé: `machinenativeops`
-@@ -775,1 +775,1 @@
--- Community: https://github.com/MachineNativeOps/machine-native-ops-machine-native-ops/discussions
-+- Community: <https://github.com/MachineNativeOps/machine-native-ops-machine-native-ops/discussions>
-diff --git a/teams/default-team/profiles/role.tech_writer.md b/teams/default-team/profiles/role.tech_writer.md
---- a/teams/default-team/profiles/role.tech_writer.md
-+++ b/teams/default-team/profiles/role.tech_writer.md
-@@ -7,1 +7,1 @@
--- æè¡ææªæ°å¯«
-+
-- æè¡ææªæ°å¯«
-@@ -22,1 +22,1 @@
--- How-to æå
-+
-- How-to æå
-@@ -27,1 +27,1 @@
--## é©ç¨å ´æ¯
-+## é©ç¨å ´æ¯
-
-diff --git a/root/teams/default-team/profiles/role.ci_orchestrator.md b/root/teams/default-team/profiles/role.ci_orchestrator.md
---- a/root/teams/default-team/profiles/role.ci_orchestrator.md
-+++ b/root/teams/default-team/profiles/role.ci_orchestrator.md
-@@ -25,1 +25,1 @@
--## Triggers
-+## Triggers
-
-@@ -33,1 +33,1 @@
--### Input Requirements
-+### Input Requirements
-
-@@ -45,1 +45,1 @@
--### Output Format
-+### Output Format
-
-@@ -64,1 +64,1 @@
--## Orchestration Rules
-+## Orchestration Rules
-
-diff --git a/src/core/contract_service/contracts-L1/contracts/src/models/DIRECTORY.md b/src/core/contract_service/contracts-L1/contracts/src/models/DIRECTORY.md
---- a/src/core/contract_service/contracts-L1/contracts/src/models/DIRECTORY.md
-+++ b/src/core/contract_service/contracts-L1/contracts/src/models/DIRECTORY.md
-@@ -6,1 +6,1 @@
--
-+
-@@ -38,1 +38,1 @@
--- [å¾è£åï¼åå±¤æ¬¡çè·è²¬èªªæ]
-+
-- [å¾è£åï¼åå±¤æ¬¡çè·è²¬èªªæ]
-diff --git a/teams/default-team/profiles/role.ci_orchestrator.md b/teams/default-team/profiles/role.ci_orchestrator.md
---- a/teams/default-team/profiles/role.ci_orchestrator.md
-+++ b/teams/default-team/profiles/role.ci_orchestrator.md
-@@ -12,1 +12,1 @@
--- Pipeline coordination
-+
-- Pipeline coordination
-@@ -76,1 +76,1 @@
--## Integration Points
-+## Integration Points
-
-diff --git a/teams/default-team/profiles/role.ml_engineer.md b/teams/default-team/profiles/role.ml_engineer.md
---- a/teams/default-team/profiles/role.ml_engineer.md
-+++ b/teams/default-team/profiles/role.ml_engineer.md
-@@ -6,1 +6,1 @@
--## æ ¸å¿è½å
-+## æ ¸å¿è½å
-
-diff --git a/src/core/contracts/contracts-L1/contracts/web/build.mjs b/src/core/contracts/contracts-L1/contracts/web/build.mjs
---- a/src/core/contracts/contracts-L1/contracts/web/build.mjs
-+++ b/src/core/contracts/contracts-L1/contracts/web/build.mjs
-@@ -1,1 +1,1 @@
--import { build } from 'esbuild';
-+import { build } from 'esbuild';
-@@ -2,1 +2,1 @@
--import { mkdirSync, writeFileSync } from 'fs';
-+import { build } from 'esbuild';
-diff --git a/governance-closed-loop-system.md b/governance-closed-loop-system.md
---- a/governance-closed-loop-system.md
-+++ b/governance-closed-loop-system.md
-@@ -1045,1 +1045,1 @@
--- æä¾æ¨æºåéæ­å·¥å·
-+
-- æä¾æ¨æºåéæ­å·¥å·
-@@ -1301,1 +1301,1 @@
--ç³»çµ±è¨­è¨èæ®äºå¯¦åå¯è¡æ§ï¼æä¾äºè©³ç´°çå¯¦æ½æ­¥é©ãç¢åºç©è¦ç¯ãæè¡é¸ååé¢¨éªæå°æ¹æ¡ï¼å¯ä»¥ç´æ¥ç¨æ¼å¯¦éè½å°ã
-+ç³»çµ±è¨­è¨èæ®äºå¯¦åå¯è¡æ§ï¼æä¾äºè©³ç´°çå¯¦æ½æ­¥é©ãç¢åºç©è¦ç¯ãæè¡é¸ååé¢¨éªæå°æ¹æ¡ï¼å¯ä»¥ç´æ¥ç¨æ¼å¯¦éè½å°ã
-
-diff --git a/PR_666_IMPLEMENTATION_SUMMARY.md b/PR_666_IMPLEMENTATION_SUMMARY.md
---- a/PR_666_IMPLEMENTATION_SUMMARY.md
-+++ b/PR_666_IMPLEMENTATION_SUMMARY.md
-@@ -46,1 +46,1 @@
--#### Auto-Monitor Package Structure â
-+#### Auto-Monitor Package Structure â
-
-@@ -61,1 +61,1 @@
--#### Module Descriptions:
-+#### Module Descriptions
-@@ -64,1 +64,1 @@
--2. **__main__.py** - Command-line interface
-+2. ****main__.py** - Command-line interface
-@@ -67,1 +67,1 @@
--   
-+
-@@ -157,1 +157,1 @@
--### New Files (13 total):
-+### New Files (13 total):
-
-@@ -172,1 +172,1 @@
--### Modified Files:
-+### Modified Files
-@@ -207,1 +207,1 @@
--### Design Patterns
-+### Design Patterns
-
-@@ -208,1 +208,1 @@
--- **Factory Pattern**: AutoMonitorConfig with `.default()` and `.from_file()`
-+
-- **Factory Pattern**: AutoMonitorConfig with `.default()` and `.from_file()`
-diff --git a/bin/README.md b/bin/README.md
---- a/bin/README.md
-+++ b/bin/README.md
-@@ -10,1 +10,1 @@
--## ç¯ä¾å½ä»¤
-+## ç¯ä¾å½ä»¤
-
-@@ -11,1 +11,1 @@
--- Shell è§£éå¨ (sh, bash)
-+
-- Shell è§£éå¨ (sh, bash)
-@@ -15,1 +15,1 @@
--## FHS è¦ç¯
-+## FHS è¦ç¯
-
-diff --git a/CI_FIX_SUMMARY.md b/CI_FIX_SUMMARY.md
---- a/CI_FIX_SUMMARY.md
-+++ b/CI_FIX_SUMMARY.md
-@@ -55,1 +55,1 @@
--### â Build & Test
-+### â Build & Test
-
-diff --git a/PHASE1_COMPREHENSIVE_AUDIT.md b/PHASE1_COMPREHENSIVE_AUDIT.md
---- a/PHASE1_COMPREHENSIVE_AUDIT.md
-+++ b/PHASE1_COMPREHENSIVE_AUDIT.md
-@@ -4,1 +4,1 @@
--- **æªæ¡ç¸½æ¸**: 4,155åæªæ¡
-+
-- **æªæ¡ç¸½æ¸**: 4,155åæªæ¡
-@@ -111,1 +111,1 @@
--#### åµå4: éç½®ç±éè¼ç¼ºå¤± (Medium)
-+#### åµå4: éç½®ç±éè¼ç¼ºå¤± (Medium)
-
-@@ -143,1 +143,1 @@
--#### â å·²è§£æ±ºçééµåé¡ (65%)
-+#### â å·²è§£æ±ºçééµåé¡ (65%)
-
-@@ -274,1 +274,1 @@
--### ð **æå°±**
-+### ð **æå°±**
-
-@@ -285,1 +285,1 @@
--### ð **ä¸ä¸æ­¥**
-+### ð **ä¸ä¸æ­¥**
-
-diff --git a/VERIFICATION_REPORT.md b/VERIFICATION_REPORT.md
---- a/VERIFICATION_REPORT.md
-+++ b/VERIFICATION_REPORT.md
-@@ -113,1 +113,1 @@
--#### 3. src/enterprise/reliability/degradation.py
-+#### 3. src/enterprise/reliability/degradation.py
-
-@@ -114,1 +114,1 @@
--- â æ·»å ç¼ºå¤±ç `import logging`
-+
-- â æ·»å ç¼ºå¤±ç `import logging`
-diff --git a/docs/MACHINENATIVEOPS_NAMESPACE_STANDARDIZATION.md b/docs/MACHINENATIVEOPS_NAMESPACE_STANDARDIZATION.md
---- a/docs/MACHINENATIVEOPS_NAMESPACE_STANDARDIZATION.md
-+++ b/docs/MACHINENATIVEOPS_NAMESPACE_STANDARDIZATION.md
-@@ -17,1 +17,1 @@
--### 3. URN çµ±ä¸
-+### 3. URN çµ±ä¸
-
-@@ -50,1 +50,1 @@
--### MachineNativeOps å±¤éç½®
-+### MachineNativeOps å±¤éç½®
-
-@@ -80,1 +80,1 @@
--### è½æå·¥å·åè½
-+### è½æå·¥å·åè½
-
-@@ -124,1 +124,1 @@
--### CI/CD Gate æª¢æ¥
-+### CI/CD Gate æª¢æ¥
-
-@@ -163,1 +163,1 @@
--- â root.*.yaml æä»¶æ¨æºå
-+
-- â root.*.yaml æä»¶æ¨æºå
-@@ -176,1 +176,1 @@
--### éæ®µ 4: ææªèå·¥å·ï¼å¾éå§ï¼
-+### éæ®µ 4: ææªèå·¥å·ï¼å¾éå§ï¼
-
-@@ -177,1 +177,1 @@
--- â³ ææªæ´æ°
-+
-- â³ ææªæ´æ°
-@@ -203,1 +203,1 @@
--### å·¥å·è³æ¬
-+### å·¥å·è³æ¬
-
-@@ -229,1 +229,1 @@
--**çæ**: â æ´»èºç¶­è­·ä¸­
-+**çæ**: â æ´»èºç¶­è­·ä¸­
-
-diff --git a/teams/default-team/profiles/role.ux_ui_developer.md b/teams/default-team/profiles/role.ux_ui_developer.md
---- a/teams/default-team/profiles/role.ux_ui_developer.md
-+++ b/teams/default-team/profiles/role.ux_ui_developer.md
-@@ -6,1 +6,1 @@
--## æ ¸å¿è½å
-+## æ ¸å¿è½å
-
-@@ -22,1 +22,1 @@
--- è¨­è¨åå
-+
-- è¨­è¨åå
-diff --git a/PROJECT_MEMORY.md b/PROJECT_MEMORY.md
---- a/PROJECT_MEMORY.md
-+++ b/PROJECT_MEMORY.md
-@@ -44,1 +44,1 @@
--1. config-manager (éç½®ç®¡çå¨)
-+
-1. config-manager (éç½®ç®¡çå¨)
-@@ -54,1 +54,1 @@
--- [x] gate-root-specs.yml (è¦ç¯é©è­)
-+
-- [x] gate-root-specs.yml (è¦ç¯é©è­)
-@@ -81,1 +81,1 @@
--- [ ] ç«¯å°ç«¯æ¸¬è©¦
-+
-- [ ] ç«¯å°ç«¯æ¸¬è©¦
-@@ -159,1 +159,1 @@
--### é©è­ç³»çµ±
-+### é©è­ç³»çµ±
-
-@@ -187,1 +187,1 @@
--### 2. é©è­æµç¨
-+### 2. é©è­æµç¨
-
-@@ -204,1 +204,1 @@
--### 3. è¨æ¶æ´æ°æµç¨ (å³å°å¯¦ç¾)
-+### 3. è¨æ¶æ´æ°æµç¨ (å³å°å¯¦ç¾)
-
-@@ -221,1 +221,1 @@
--### Root Layer éç½®
-+### Root Layer éç½®
-
-@@ -266,1 +266,1 @@
--### ç­æ (æ¬é±)
-+### ç­æ (æ¬é±)
-
-diff --git a/outputs/supply-chain-evidence/supply-chain-verification-final-report.md b/outputs/supply-chain-evidence/supply-chain-verification-final-report.md
---- a/outputs/supply-chain-evidence/supply-chain-verification-final-report.md
-+++ b/outputs/supply-chain-evidence/supply-chain-verification-final-report.md
-@@ -15,1 +15,1 @@
--
-+
-diff --git a/sbin/README.md b/sbin/README.md
---- a/sbin/README.md
-+++ b/sbin/README.md
-@@ -15,1 +15,1 @@
--## æ¬é
-+## æ¬é
-
-diff --git a/RISK_ASSESSMENT.md b/RISK_ASSESSMENT.md
---- a/RISK_ASSESSMENT.md
-+++ b/RISK_ASSESSMENT.md
-@@ -93,1 +93,1 @@
--1. **Learning Curve**: Team members will need time to adapt to new processes
-+
-1. **Learning Curve**: Team members will need time to adapt to new processes
-@@ -141,1 +141,1 @@
--- **Total Risks Identified**: 5
-+
-- **Total Risks Identified**: 5
-diff --git a/memory-update-summary.md b/memory-update-summary.md
---- a/memory-update-summary.md
-+++ b/memory-update-summary.md
-@@ -41,1 +41,1 @@
--### 1. ä¿®å¾©ééµåé¡
-+### 1. ä¿®å¾©ééµåé¡
-
-@@ -83,1 +83,1 @@
--### å·²ç¥åé¡
-+### å·²ç¥åé¡
-
-@@ -92,1 +92,1 @@
--### ç«å³å·è¡
-+### ç«å³å·è¡
-
-diff --git a/root/teams/default-team/profiles/role.governance_guardian.md b/root/teams/default-team/profiles/role.governance_guardian.md
---- a/root/teams/default-team/profiles/role.governance_guardian.md
-+++ b/root/teams/default-team/profiles/role.governance_guardian.md
-@@ -3,1 +3,1 @@
--## Identity
-+## Identity
-
-@@ -4,1 +4,1 @@
--- **Agent ID**: governance-guardian
-+
-- **Agent ID**: governance-guardian
-@@ -44,1 +44,1 @@
--### Output Format
-+### Output Format
-
-@@ -69,1 +69,1 @@
--## Quality Gates
-+## Quality Gates
-
-@@ -75,1 +75,1 @@
--## Integration Points
-+## Integration Points
-
-@@ -76,1 +76,1 @@
--- Governance Dimensions (src/governance/dimensions/)
-+
-- Governance Dimensions (src/governance/dimensions/)
-diff --git a/etc/README.md b/etc/README.md
---- a/etc/README.md
-+++ b/etc/README.md
-@@ -16,1 +16,1 @@
--## ç¹æ§
-+## ç¹æ§
-
-diff --git a/.github/pull_request_template.md b/.github/pull_request_template.md
---- a/.github/pull_request_template.md
-+++ b/.github/pull_request_template.md
-@@ -30,1 +30,1 @@
--### ðï¸ ç¬¬äºè­æï¼å½åè¦ç¯éµå¾ª **[è¥è®æ´æ ¹å±¤æªæ¡åå¿å¡«]**
-+### ðï¸ ç¬¬äºè­æï¼å½åè¦ç¯éµå¾ª **[è¥è®æ´æ ¹å±¤æªæ¡åå¿å¡«]**
-
-@@ -60,1 +60,1 @@
--- [ ] â **PR URL å¯é©è­ä¸å¯è¨ªå**
-+
-- [ ] â **PR URL å¯é©è­ä¸å¯è¨ªå**
-@@ -66,1 +66,1 @@
--- [ ] â **æªæ¡çµæ§ææ¼å¨ææ©ä¸é©è­**
-+
-- [ ] â **æªæ¡çµæ§ææ¼å¨ææ©ä¸é©è­**
-@@ -74,1 +74,1 @@
--### ð æ ¹å±¤æ²»çéµå¾ª
-+### ð æ ¹å±¤æ²»çéµå¾ª
-
-@@ -79,1 +79,1 @@
--### ð¤ AI è¡çºåç´éµå¾ª
-+### ð¤ AI è¡çºåç´éµå¾ª
-
-@@ -80,1 +80,1 @@
--- [ ] â éµå¾ª [`.github/AI-BEHAVIOR-CONTRACT.md`](./.github/AI-BEHAVIOR-CONTRACT.md)
-+
-- [ ] â éµå¾ª [`.github/AI-BEHAVIOR-CONTRACT.md`](./.github/AI-BEHAVIOR-CONTRACT.md)
-@@ -97,1 +97,1 @@
--- **ç¨å¼ç¢¼è¦èç**: `[ç¾åæ¯]`
-+
-- **ç¨å¼ç¢¼è¦èç**: `[ç¾åæ¯]`
-@@ -107,1 +107,1 @@
--- [ ] ç¨å¼ç¢¼åè³ªç¬¦åå°æ¡æ¨æº
-+
-- [ ] ç¨å¼ç¢¼åè³ªç¬¦åå°æ¡æ¨æº
-@@ -112,1 +112,1 @@
--### ð æ²»çå¯©æ ¸
-+### ð æ²»çå¯©æ ¸
-
-diff --git a/teams/default-team/profiles/role.fullstack_developer.md b/teams/default-team/profiles/role.fullstack_developer.md
---- a/teams/default-team/profiles/role.fullstack_developer.md
-+++ b/teams/default-team/profiles/role.fullstack_developer.md
-@@ -7,1 +7,1 @@
--- Golang å¾ç«¯éç¼
-+
-- Golang å¾ç«¯éç¼
-@@ -20,1 +20,1 @@
--1. åæç¶²è·¯æç¨ç¨å¼éæ±
-+
-1. åæç¶²è·¯æç¨ç¨å¼éæ±
-@@ -28,1 +28,1 @@
--- Golang å¾ç«¯ä»£ç¢¼
-+
-- Golang å¾ç«¯ä»£ç¢¼
-diff --git a/teams/default-team/profiles/role.it_support.md b/teams/default-team/profiles/role.it_support.md
---- a/teams/default-team/profiles/role.it_support.md
-+++ b/teams/default-team/profiles/role.it_support.md
-@@ -3,1 +3,1 @@
--## è§è²å®ç¾©
-+## è§è²å®ç¾©
-
-diff --git a/teams/default-team/profiles/role.devrel_consultant.md b/teams/default-team/profiles/role.devrel_consultant.md
---- a/teams/default-team/profiles/role.devrel_consultant.md
-+++ b/teams/default-team/profiles/role.devrel_consultant.md
-@@ -13,1 +13,1 @@
--## å·¥ä½æ¨¡å¼
-+## å·¥ä½æ¨¡å¼
-
-@@ -21,1 +21,1 @@
--## è¼¸åºæ ¼å¼
-+## è¼¸åºæ ¼å¼
-
-@@ -32,1 +32,1 @@
--## é©ç¨å ´æ¯
-+## é©ç¨å ´æ¯
-
-@@ -33,1 +33,1 @@
--- æè¡é¸åè©ä¼°
-+
-- æè¡é¸åè©ä¼°
-diff --git a/teams/default-team/profiles/role.governance_guardian.md b/teams/default-team/profiles/role.governance_guardian.md
---- a/teams/default-team/profiles/role.governance_guardian.md
-+++ b/teams/default-team/profiles/role.governance_guardian.md
-@@ -26,1 +26,1 @@
--- CODE_CHANGE_DETECTED
-+
-- CODE_CHANGE_DETECTED
-diff --git a/var/README.md b/var/README.md
---- a/var/README.md
-+++ b/var/README.md
-@@ -6,1 +6,1 @@
--- /var/log - æ¥èªæªæ¡
-+
-- /var/log - æ¥èªæªæ¡
-@@ -13,1 +13,1 @@
--## ç¹æ§
-+## ç¹æ§
-
-diff --git a/src/core/contract_service/contracts-L1/contracts/web/build.mjs b/src/core/contract_service/contracts-L1/contracts/web/build.mjs
---- a/src/core/contract_service/contracts-L1/contracts/web/build.mjs
-+++ b/src/core/contract_service/contracts-L1/contracts/web/build.mjs
-@@ -1,1 +1,1 @@
--import { build } from 'esbuild';
-+import { build } from 'esbuild';
-@@ -2,1 +2,1 @@
--import { mkdirSync, writeFileSync } from 'fs';
-+import { build } from 'esbuild';
-diff --git a/teams/default-team/profiles/role.web_design_consultant.md b/teams/default-team/profiles/role.web_design_consultant.md
---- a/teams/default-team/profiles/role.web_design_consultant.md
-+++ b/teams/default-team/profiles/role.web_design_consultant.md
-@@ -13,1 +13,1 @@
--## å·¥ä½æ¨¡å¼
-+## å·¥ä½æ¨¡å¼
-
-diff --git a/docs/CI_INTEGRATION_DEPLOYMENT_WORKFLOW.md b/docs/CI_INTEGRATION_DEPLOYMENT_WORKFLOW.md
---- a/docs/CI_INTEGRATION_DEPLOYMENT_WORKFLOW.md
-+++ b/docs/CI_INTEGRATION_DEPLOYMENT_WORKFLOW.md
-@@ -197,1 +197,1 @@
--- Uses Node.js cache action
-+
-- Uses Node.js cache action
-@@ -257,1 +257,1 @@
--- Check for environment-specific issues
-+
-- Check for environment-specific issues
-@@ -308,1 +308,1 @@
--- Review entire workflow structure
-+
-- Review entire workflow structure
-diff --git a/AAPS_MARKETPLACE_INTEGRATION_PLAN.md b/AAPS_MARKETPLACE_INTEGRATION_PLAN.md
---- a/AAPS_MARKETPLACE_INTEGRATION_PLAN.md
-+++ b/AAPS_MARKETPLACE_INTEGRATION_PLAN.md
-@@ -10,1 +10,1 @@
--1. **æ¼¸é²å¼æ´å**: ä¸ç ´å£ç¾æåè½ï¼éæ­¥æ·»å æ°è½å
-+
-1. **æ¼¸é²å¼æ´å**: ä¸ç ´å£ç¾æåè½ï¼éæ­¥æ·»å æ°è½å
-@@ -165,1 +165,1 @@
--- Prompt çæ¬æ§å¶
-+
-- Prompt çæ¬æ§å¶
-@@ -430,1 +430,1 @@
--### Phase 1 é¨ç½² (Week 1-2)
-+### Phase 1 é¨ç½² (Week 1-2)
-
-@@ -503,1 +503,1 @@
--### ç«å³éå§ (ä»å¤©)
-+### ç«å³éå§ (ä»å¤©)
-
-diff --git a/lib/README.md b/lib/README.md
---- a/lib/README.md
-+++ b/lib/README.md
-@@ -10,1 +10,1 @@
--## å§å®¹
-+## å§å®¹
-
-@@ -15,1 +15,1 @@
--## æ¶æ§
-+## æ¶æ§
-
-diff --git a/teams/default-team/orchestrator/README.md b/teams/default-team/orchestrator/README.md
---- a/teams/default-team/orchestrator/README.md
-+++ b/teams/default-team/orchestrator/README.md
-@@ -27,1 +27,1 @@
--### Incident Lifecycle State Machine
-+### Incident Lifecycle State Machine
-
-@@ -36,1 +36,1 @@
--### Prerequisites
-+### Prerequisites
-
-@@ -110,1 +110,1 @@
--> - Review and harden the RBAC permissions in `base/deployment.yaml`
-+>
-> - Review and harden the RBAC permissions in `base/deployment.yaml`
-@@ -157,1 +157,1 @@
--1. Build Docker image as `machinenativeops/super-agent:v1.2.0`
-+
-1. Build Docker image as `machinenativeops/super-agent:v1.2.0`
-@@ -172,1 +172,1 @@
--#### POST /message
-+#### POST /message
-
-@@ -363,1 +363,1 @@
--- â **Version Management**: Image tags configured per environment
-+
-- â **Version Management**: Image tags configured per environment
-@@ -408,1 +408,1 @@
--### Health Monitoring
-+### Health Monitoring
-
-@@ -433,1 +433,1 @@
--- **Read**: pods, services, configmaps, secrets, deployments, events
-+
-- **Read**: pods, services, configmaps, secrets, deployments, events
-diff --git a/CONVERSATION_LOG.md b/CONVERSATION_LOG.md
---- a/CONVERSATION_LOG.md
-+++ b/CONVERSATION_LOG.md
-@@ -115,1 +115,1 @@
--1. `root.specs.naming.yaml`
-+
-1. `root.specs.naming.yaml`
-@@ -265,1 +265,1 @@
--1. ä¿®å¾© monitoring-service ä¸ä¸è´åé¡
-+
-1. ä¿®å¾© monitoring-service ä¸ä¸è´åé¡
-@@ -341,1 +341,1 @@
--- `PROJECT_MEMORY.md` (600 è¡)
-+
-- `PROJECT_MEMORY.md` (600 è¡)
-diff --git a/teams/default-team/profiles/role.startup_lawyer.md b/teams/default-team/profiles/role.startup_lawyer.md
---- a/teams/default-team/profiles/role.startup_lawyer.md
-+++ b/teams/default-team/profiles/role.startup_lawyer.md
-@@ -6,1 +6,1 @@
--## æ ¸å¿è½å
-+## æ ¸å¿è½å
-
-diff --git a/PHASE2_DETAILED_ROADMAP.md b/PHASE2_DETAILED_ROADMAP.md
---- a/PHASE2_DETAILED_ROADMAP.md
-+++ b/PHASE2_DETAILED_ROADMAP.md
-@@ -24,1 +24,1 @@
--#### ð `/usr` - ç¨æ¶ç¨å¼åè³æ
-+#### ð `/usr` - ç¨æ¶ç¨å¼åè³æ
-
-@@ -131,1 +131,1 @@
--#### ð MachineNativeOps å¼ææå
-+#### ð MachineNativeOps å¼ææå
-
-@@ -170,1 +170,1 @@
--#### ð API ç¶²éæå
-+#### ð API ç¶²éæå
-
-@@ -299,1 +299,1 @@
--- ð ç³»çµ±ååæé < 30ç§
-+
-- ð ç³»çµ±ååæé < 30ç§
-@@ -322,1 +322,1 @@
--- MachineNativeOps å¼æ v1.0.0
-+
-- MachineNativeOps å¼æ v1.0.0
-@@ -327,1 +327,1 @@
--### 3. ç£æ§åéç¶­å·¥å·
-+### 3. ç£æ§åéç¶­å·¥å·
-
-@@ -334,1 +334,1 @@
--- FHS å¯¦æ½æå
-+
-- FHS å¯¦æ½æå
-diff --git a/AAPS_UNIFIED_GATES_OPTIMIZATION.md b/AAPS_UNIFIED_GATES_OPTIMIZATION.md
---- a/AAPS_UNIFIED_GATES_OPTIMIZATION.md
-+++ b/AAPS_UNIFIED_GATES_OPTIMIZATION.md
-@@ -31,1 +31,1 @@
--### 1. **å©ç¨ç¾æ SuperAgent**
-+### 1. **å©ç¨ç¾æ SuperAgent**
-
-@@ -36,1 +36,1 @@
--### 2. **æ´å Auto-Monitor**
-+### 2. **æ´å Auto-Monitor**
-
-@@ -61,1 +61,1 @@
--#### **1. SuperAgent æ´å±**
-+#### **1. SuperAgent æ´å±**
-
-@@ -119,1 +119,1 @@
--### **1. SuperAgent çå¤æºè½é«ç·¨æ**
-+### **1. SuperAgent çå¤æºè½é«ç·¨æ**
-
-@@ -130,1 +130,1 @@
--- **ä»£ç¢¼åæ**: æ·±åº¦éæåæååé¡è­å¥
-+
-- **ä»£ç¢¼åæ**: æ·±åº¦éæåæååé¡è­å¥
-@@ -142,1 +142,1 @@
--### **é·æå¹å¼**
-+### **é·æå¹å¼**
-
-@@ -150,1 +150,1 @@
--### **è§¸ç¼çµ±ä¸ééé©è­**
-+### **è§¸ç¼çµ±ä¸ééé©è­**
-
-@@ -170,1 +170,1 @@
--### **ä½¿ç¨ AI Auto-Fix**
-+### **ä½¿ç¨ AI Auto-Fix**
-
-@@ -183,1 +183,1 @@
--- [x] åºæ¬çµ±ä¸ééå¯¦ç¾
-+
-- [x] åºæ¬çµ±ä¸ééå¯¦ç¾
-diff --git a/teams/default-team/profiles/role.dependency_updater.md b/teams/default-team/profiles/role.dependency_updater.md
---- a/teams/default-team/profiles/role.dependency_updater.md
-+++ b/teams/default-team/profiles/role.dependency_updater.md
-@@ -3,1 +3,1 @@
--## Identity
-+## Identity
-
-@@ -4,1 +4,1 @@
--- **Agent ID**: dependency-updater
-+
-- **Agent ID**: dependency-updater
-@@ -43,1 +43,1 @@
--### Output Format
-+### Output Format
-
-@@ -55,1 +55,1 @@
--- Security patches: Auto-merge after CI passes
-+
-- Security patches: Auto-merge after CI passes
-@@ -61,1 +61,1 @@
--- Dependabot compatibility
-+
-- Dependabot compatibility
-@@ -66,1 +66,1 @@
--## Permissions
-+## Permissions
-
-diff --git a/teams/default-team/profiles/role.statistician.md b/teams/default-team/profiles/role.statistician.md
---- a/teams/default-team/profiles/role.statistician.md
-+++ b/teams/default-team/profiles/role.statistician.md
-@@ -22,1 +22,1 @@
--- çµ±è¨åæå ±å
-+
-- çµ±è¨åæå ±å
-diff --git a/AAPS_PHASE1_COMPLETION_SUMMARY.md b/AAPS_PHASE1_COMPLETION_SUMMARY.md
---- a/AAPS_PHASE1_COMPLETION_SUMMARY.md
-+++ b/AAPS_PHASE1_COMPLETION_SUMMARY.md
-@@ -20,1 +20,1 @@
--### 2. Real Module Implementation
-+### 2. Real Module Implementation
-
-@@ -65,1 +65,1 @@
--### Real Platform Metrics
-+### Real Platform Metrics
-
-@@ -83,1 +83,1 @@
--### FHS-Compliant Structure
-+### FHS-Compliant Structure
-
-@@ -98,1 +98,1 @@
--- **root.config.yaml**: Global configuration
-+
-- **root.config.yaml**: Global configuration
-@@ -106,1 +106,1 @@
--### Operational Capabilities
-+### Operational Capabilities
-
-@@ -113,1 +113,1 @@
--### Integration Ready
-+### Integration Ready
-
-@@ -114,1 +114,1 @@
--- **API-first Design**: RESTful interfaces
-+
-- **API-first Design**: RESTful interfaces
-@@ -149,1 +149,1 @@
--- **Real workload execution**
-+
-- **Real workload execution**
-@@ -162,1 +162,1 @@
--#machine-native-ops #machine-native-ops #platform-completion #operational-excellence
-+# machine-native-ops #machine-native-ops #platform-completion #operational-excellence
-diff --git a/home/README.md b/home/README.md
---- a/home/README.md
-+++ b/home/README.md
-@@ -16,1 +16,1 @@
--- éå¸¸æè¼å¨ç¨ç«åå
-+
-- éå¸¸æè¼å¨ç¨ç«åå
-diff --git a/docs/AUTO_MONITOR_INTEGRATION.md b/docs/AUTO_MONITOR_INTEGRATION.md
---- a/docs/AUTO_MONITOR_INTEGRATION.md
-+++ b/docs/AUTO_MONITOR_INTEGRATION.md
-@@ -48,1 +48,1 @@
--- **Request**: 200m (0.2 CPU cores)
-+
-- **Request**: 200m (0.2 CPU cores)
-diff --git a/teams/default-team/profiles/role.tech_reviewer.md b/teams/default-team/profiles/role.tech_reviewer.md
---- a/teams/default-team/profiles/role.tech_reviewer.md
-+++ b/teams/default-team/profiles/role.tech_reviewer.md
-@@ -22,1 +22,1 @@
--- ç¢åè©æ¸¬å ±å
-+
-- ç¢åè©æ¸¬å ±å
-@@ -28,1 +28,1 @@
--## é©ç¨å ´æ¯
-+## é©ç¨å ´æ¯
-
-diff --git a/IMPLEMENTATION_GUIDE.md b/IMPLEMENTATION_GUIDE.md
---- a/IMPLEMENTATION_GUIDE.md
-+++ b/IMPLEMENTATION_GUIDE.md
-@@ -48,1 +48,1 @@
--- â Actions è½æ­£ç¢ºåµæ¸¬ç¼ºå¤±è­æ
-+
-- â Actions è½æ­£ç¢ºåµæ¸¬ç¼ºå¤±è­æ
-@@ -57,1 +57,1 @@
--**åææ¢ä»¶**: 
-+**åææ¢ä»¶**:
-@@ -85,1 +85,1 @@
--- â åè©¦åä½µä¸åæª¢æ¥å¤±æç PR â æè©²è¢«é»æ
-+
-- â åè©¦åä½µä¸åæª¢æ¥å¤±æç PR â æè©²è¢«é»æ
-@@ -112,1 +112,1 @@
--### æ¸¬è©¦æ¡ä¾ 2: ç¼ºå¤±è­æ â
-+### æ¸¬è©¦æ¡ä¾ 2: ç¼ºå¤±è­æ â
-
-@@ -232,1 +232,1 @@
--### è¯çµ¡æ¹å¼
-+### è¯çµ¡æ¹å¼
-
-diff --git a/archive/unmanned-engineer-ceo/60-machine-guides/70-architecture-skeletons/architecture-stability/DIRECTORY.md b/archive/unmanned-engineer-ceo/60-machine-guides/70-architecture-skeletons/architecture-stability/DIRECTORY.md
---- a/archive/unmanned-engineer-ceo/60-machine-guides/70-architecture-skeletons/architecture-stability/DIRECTORY.md
-+++ b/archive/unmanned-engineer-ceo/60-machine-guides/70-architecture-skeletons/architecture-stability/DIRECTORY.md
-@@ -21,1 +21,1 @@
--### guardrails.md
-+### guardrails.md
-
-diff --git a/src/services/scheduler-service/DIRECTORY.md b/src/services/scheduler-service/DIRECTORY.md
---- a/src/services/scheduler-service/DIRECTORY.md
-+++ b/src/services/scheduler-service/DIRECTORY.md
-@@ -18,1 +18,1 @@
--### å®ä¸è·è²¬åå (SRP) éµå¾ª
-+### å®ä¸è·è²¬åå (SRP) éµå¾ª
-
-diff --git a/src/governance/dimensions/09-performance/tests/DIRECTORY.md b/src/governance/dimensions/09-performance/tests/DIRECTORY.md
---- a/src/governance/dimensions/09-performance/tests/DIRECTORY.md
-+++ b/src/governance/dimensions/09-performance/tests/DIRECTORY.md
-@@ -3,1 +3,1 @@
--## ç®éè·è²¬
-+## ç®éè·è²¬
-
-@@ -16,1 +16,1 @@
--## è·è²¬åé¢èªªæ
-+## è·è²¬åé¢èªªæ
-
-diff --git a/src/core/contract_service/contracts-L1/contracts/web/components/ui/DIRECTORY.md b/src/core/contract_service/contracts-L1/contracts/web/components/ui/DIRECTORY.md
---- a/src/core/contract_service/contracts-L1/contracts/web/components/ui/DIRECTORY.md
-+++ b/src/core/contract_service/contracts-L1/contracts/web/components/ui/DIRECTORY.md
-@@ -6,1 +6,1 @@
--
-+
-@@ -15,1 +15,1 @@
--### alert-dialog.tsx
-+### alert-dialog.tsx
-
-@@ -20,1 +20,1 @@
--### alert.tsx
-+### alert.tsx
-
-@@ -25,1 +25,1 @@
--### aspect-ratio.tsx
-+### aspect-ratio.tsx
-
-@@ -55,1 +55,1 @@
--### card.tsx
-+### card.tsx
-
-@@ -60,1 +60,1 @@
--### carousel.tsx
-+### carousel.tsx
-
-@@ -75,1 +75,1 @@
--### collapsible.tsx
-+### collapsible.tsx
-
-@@ -90,1 +90,1 @@
--### dialog.tsx
-+### dialog.tsx
-
-@@ -100,1 +100,1 @@
--### dropdown-menu.tsx
-+### dropdown-menu.tsx
-
-@@ -110,1 +110,1 @@
--### hover-card.tsx
-+### hover-card.tsx
-
-@@ -160,1 +160,1 @@
--### resizable.tsx
-+### resizable.tsx
-
-@@ -205,1 +205,1 @@
--### switch.tsx
-+### switch.tsx
-
-@@ -210,1 +210,1 @@
--### table.tsx
-+### table.tsx
-
-diff --git a/src/core/contract_service/contracts-L1/contracts/sbom/DIRECTORY.md b/src/core/contract_service/contracts-L1/contracts/sbom/DIRECTORY.md
---- a/src/core/contract_service/contracts-L1/contracts/sbom/DIRECTORY.md
-+++ b/src/core/contract_service/contracts-L1/contracts/sbom/DIRECTORY.md
-@@ -3,1 +3,1 @@
--## ç®éè·è²¬
-+## ç®éè·è²¬
-
-@@ -10,1 +10,1 @@
--### README.md
-+### README.md
-
-@@ -11,1 +11,1 @@
--- **è·è²¬**ï¼Markdown ææª
-+
-- **è·è²¬**ï¼Markdown ææª
-@@ -15,1 +15,1 @@
--### signing-policy.yml
-+### signing-policy.yml
-
-@@ -23,1 +23,1 @@
--- [å¾è£åï¼åå±¤æ¬¡çè·è²¬èªªæ]
-+
-- [å¾è£åï¼åå±¤æ¬¡çè·è²¬èªªæ]
-@@ -28,1 +28,1 @@
--1. **æ¨¡çµç´å¥è·è²¬å®ä¸å**ï¼[å¾è£å]
-+
-1. **æ¨¡çµç´å¥è·è²¬å®ä¸å**ï¼[å¾è£å]
-diff --git a/src/governance/34-config/environment-matrix/DIRECTORY.md b/src/governance/34-config/environment-matrix/DIRECTORY.md
---- a/src/governance/34-config/environment-matrix/DIRECTORY.md
-+++ b/src/governance/34-config/environment-matrix/DIRECTORY.md
-@@ -6,1 +6,1 @@
--
-+
-@@ -27,1 +27,1 @@
--### å®ä¸è·è²¬åå (SRP) éµå¾ª
-+### å®ä¸è·è²¬åå (SRP) éµå¾ª
-
-@@ -32,1 +32,1 @@
--### æªä¾ç¶­è­·æ³¨æäºé 
-+### æªä¾ç¶­è­·æ³¨æäºé 
-
-@@ -33,1 +33,1 @@
--1. **æ·»å æ°åè½æ**ï¼[å¾è£å]
-+
-1. **æ·»å æ°åè½æ**ï¼[å¾è£å]
-diff --git a/docs/operations/DIRECTORY.md b/docs/operations/DIRECTORY.md
---- a/docs/operations/DIRECTORY.md
-+++ b/docs/operations/DIRECTORY.md
-@@ -17,1 +17,1 @@
--### MONITORING_GUIDE.md
-+### MONITORING_GUIDE.md
-
-@@ -27,1 +27,1 @@
--
-+
-diff --git a/tests/DIRECTORY.md b/tests/DIRECTORY.md
---- a/tests/DIRECTORY.md
-+++ b/tests/DIRECTORY.md
-@@ -42,1 +42,1 @@
--### test_enterprise_orchestrator.py
-+### test_enterprise_orchestrator.py
-
-@@ -43,1 +43,1 @@
--- **è·è²¬**ï¼ä¼æ¥­ç·¨æå¨æ¸¬è©¦
-+
-- **è·è²¬**ï¼ä¼æ¥­ç·¨æå¨æ¸¬è©¦
-@@ -46,1 +46,1 @@
--### test_performance_benchmarks.py
-+### test_performance_benchmarks.py
-
-@@ -51,1 +51,1 @@
--- **è·è²¬**ï¼éæ§æ´åæ¸¬è©¦
-+
-- **è·è²¬**ï¼éæ§æ´åæ¸¬è©¦
-@@ -54,1 +54,1 @@
--### test_tool_executor_validation.py
-+### test_tool_executor_validation.py
-
-diff --git a/docs/policies/security/DIRECTORY.md b/docs/policies/security/DIRECTORY.md
---- a/docs/policies/security/DIRECTORY.md
-+++ b/docs/policies/security/DIRECTORY.md
-@@ -3,1 +3,1 @@
--## ç®éè·è²¬
-+## ç®éè·è²¬
-
-@@ -10,1 +10,1 @@
--### info-security-policy-reference.yaml
-+### info-security-policy-reference.yaml
-
-@@ -19,1 +19,1 @@
--## è¨­è¨åå
-+## è¨­è¨åå
-
-diff --git a/src/governance/dimensions/99-metadata/knl-pack/retrieval/DIRECTORY.md b/src/governance/dimensions/99-metadata/knl-pack/retrieval/DIRECTORY.md
---- a/src/governance/dimensions/99-metadata/knl-pack/retrieval/DIRECTORY.md
-+++ b/src/governance/dimensions/99-metadata/knl-pack/retrieval/DIRECTORY.md
-@@ -3,1 +3,1 @@
--## ç®éè·è²¬
-+## ç®éè·è²¬
-
-@@ -10,1 +10,1 @@
--### rag-config.json
-+### rag-config.json
-
-@@ -16,1 +16,1 @@
--## è·è²¬åé¢èªªæ
-+## è·è²¬åé¢èªªæ
-
-diff --git a/src/governance/dimensions/26-tools/tests/DIRECTORY.md b/src/governance/dimensions/26-tools/tests/DIRECTORY.md
---- a/src/governance/dimensions/26-tools/tests/DIRECTORY.md
-+++ b/src/governance/dimensions/26-tools/tests/DIRECTORY.md
-@@ -11,1 +11,1 @@
--- **è·è²¬**ï¼å¶ä»æä»¶
-+
-- **è·è²¬**ï¼å¶ä»æä»¶
-diff --git a/src/core/new/security/DIRECTORY.md b/src/core/new/security/DIRECTORY.md
---- a/src/core/new/security/DIRECTORY.md
-+++ b/src/core/new/security/DIRECTORY.md
-@@ -11,1 +11,1 @@
--- **è·è²¬**ï¼Python æºä»£ç¢¼
-+
-- **è·è²¬**ï¼Python æºä»£ç¢¼
-@@ -27,1 +27,1 @@
--### æªä¾ç¶­è­·æ³¨æäºé 
-+### æªä¾ç¶­è­·æ³¨æäºé 
-
-diff --git a/src/governance/dimensions/82-stakeholder/DIRECTORY.md b/src/governance/dimensions/82-stakeholder/DIRECTORY.md
---- a/src/governance/dimensions/82-stakeholder/DIRECTORY.md
-+++ b/src/governance/dimensions/82-stakeholder/DIRECTORY.md
-@@ -20,1 +20,1 @@
--### automation_engine.py
-+### automation_engine.py
-
-@@ -40,1 +40,1 @@
--### stakeholder-communication-plan.yaml
-+### stakeholder-communication-plan.yaml
-
-@@ -45,1 +45,1 @@
--### stakeholder-engagement-plan.yaml
-+### stakeholder-engagement-plan.yaml
-
-@@ -78,1 +78,1 @@
--1. **æ·»å æ°åè½æ**ï¼[å¾è£å]
-+
-1. **æ·»å æ°åè½æ**ï¼[å¾è£å]
-diff --git a/src/governance/24-registry/plugins/DIRECTORY.md b/src/governance/24-registry/plugins/DIRECTORY.md
---- a/src/governance/24-registry/plugins/DIRECTORY.md
-+++ b/src/governance/24-registry/plugins/DIRECTORY.md
-@@ -6,1 +6,1 @@
--
-+
-@@ -22,1 +22,1 @@
--### å®ä¸è·è²¬åå (SRP) éµå¾ª
-+### å®ä¸è·è²¬åå (SRP) éµå¾ª
-
-diff --git a/src/governance/dimensions/31-schemas/tests/DIRECTORY.md b/src/governance/dimensions/31-schemas/tests/DIRECTORY.md
---- a/src/governance/dimensions/31-schemas/tests/DIRECTORY.md
-+++ b/src/governance/dimensions/31-schemas/tests/DIRECTORY.md
-@@ -6,1 +6,1 @@
--
-+
-@@ -11,1 +11,1 @@
--- **è·è²¬**ï¼å¶ä»æä»¶
-+
-- **è·è²¬**ï¼å¶ä»æä»¶
-@@ -21,1 +21,1 @@
--## è¨­è¨åå
-+## è¨­è¨åå
-
-diff --git a/src/ai/__tests__/DIRECTORY.md b/src/ai/__tests__/DIRECTORY.md
---- a/src/ai/__tests__/DIRECTORY.md
-+++ b/src/ai/__tests__/DIRECTORY.md
-@@ -6,1 +6,1 @@
--
-+
-@@ -13,1 +13,1 @@
--- **ä¾è³´**ï¼[å¾è£åä¾è³´éä¿]
-+- __ä¾è³´**ï¼[å¾è£åä¾è³´éä¿]
-@@ -15,1 +15,1 @@
--### collaboration.test.ts
-+### collaboration.test.ts
-
-diff --git a/src/core/contracts/contracts-L1/contracts/DIRECTORY.md b/src/core/contracts/contracts-L1/contracts/DIRECTORY.md
---- a/src/core/contracts/contracts-L1/contracts/DIRECTORY.md
-+++ b/src/core/contracts/contracts-L1/contracts/DIRECTORY.md
-@@ -3,1 +3,1 @@
--## ç®éè·è²¬
-+## ç®éè·è²¬
-
-@@ -20,1 +20,1 @@
--### .dockerignore
-+### .dockerignore
-
-@@ -61,1 +61,1 @@
--- **è·è²¬**ï¼Dockerfile
-+
-- **è·è²¬**ï¼Dockerfile
-diff --git a/archive/infrastructure/kubernetes/manifests/DIRECTORY.md b/archive/infrastructure/kubernetes/manifests/DIRECTORY.md
---- a/archive/infrastructure/kubernetes/manifests/DIRECTORY.md
-+++ b/archive/infrastructure/kubernetes/manifests/DIRECTORY.md
-@@ -32,1 +32,1 @@
--### kustomization.yaml
-+### kustomization.yaml
-
-@@ -33,1 +33,1 @@
--- **è·è²¬**ï¼YAML éç½®æä»¶
-+
-- **è·è²¬**ï¼YAML éç½®æä»¶
-@@ -38,1 +38,1 @@
--## è·è²¬åé¢èªªæ
-+## è·è²¬åé¢èªªæ
-
-diff --git a/src/core/instant_generation/DIRECTORY.md b/src/core/instant_generation/DIRECTORY.md
---- a/src/core/instant_generation/DIRECTORY.md
-+++ b/src/core/instant_generation/DIRECTORY.md
-@@ -19,1 +19,1 @@
--## è·è²¬åé¢èªªæ
-+## è·è²¬åé¢èªªæ
-
-diff --git a/archive/unmanned-engineer-ceo/60-machine-guides/70-architecture-skeletons/nucleus-orchestrator/DIRECTORY.md b/archive/unmanned-engineer-ceo/60-machine-guides/70-architecture-skeletons/nucleus-orchestrator/DIRECTORY.md
---- a/archive/unmanned-engineer-ceo/60-machine-guides/70-architecture-skeletons/nucleus-orchestrator/DIRECTORY.md
-+++ b/archive/unmanned-engineer-ceo/60-machine-guides/70-architecture-skeletons/nucleus-orchestrator/DIRECTORY.md
-@@ -21,1 +21,1 @@
--- **è·è²¬**ï¼YAML éç½®æä»¶
-+
-- **è·è²¬**ï¼YAML éç½®æä»¶
-@@ -25,1 +25,1 @@
--### overview.md
-+### overview.md
-
-diff --git a/src/services/agents/auto-repair/DIRECTORY.md b/src/services/agents/auto-repair/DIRECTORY.md
---- a/src/services/agents/auto-repair/DIRECTORY.md
-+++ b/src/services/agents/auto-repair/DIRECTORY.md
-@@ -3,1 +3,1 @@
--## ç®éè·è²¬
-+## ç®éè·è²¬
-
-@@ -16,1 +16,1 @@
--## è·è²¬åé¢èªªæ
-+## è·è²¬åé¢èªªæ
-
-@@ -18,1 +18,1 @@
--- [å¾è£åï¼åå±¤æ¬¡çè·è²¬èªªæ]
-+
-- [å¾è£åï¼åå±¤æ¬¡çè·è²¬èªªæ]
-diff --git a/archive/infrastructure/kubernetes/manifests/07-logging/fluent-bit/DIRECTORY.md b/archive/infrastructure/kubernetes/manifests/07-logging/fluent-bit/DIRECTORY.md
---- a/archive/infrastructure/kubernetes/manifests/07-logging/fluent-bit/DIRECTORY.md
-+++ b/archive/infrastructure/kubernetes/manifests/07-logging/fluent-bit/DIRECTORY.md
-@@ -3,1 +3,1 @@
--## ç®éè·è²¬
-+## ç®éè·è²¬
-
-@@ -15,1 +15,1 @@
--### daemonset.yaml
-+### daemonset.yaml
-
-@@ -26,1 +26,1 @@
--## è·è²¬åé¢èªªæ
-+## è·è²¬åé¢èªªæ
-
-diff --git a/src/governance/dimensions/99-metadata/DIRECTORY.md b/src/governance/dimensions/99-metadata/DIRECTORY.md
---- a/src/governance/dimensions/99-metadata/DIRECTORY.md
-+++ b/src/governance/dimensions/99-metadata/DIRECTORY.md
-@@ -13,1 +13,1 @@
--- **è·è²¬**ï¼Markdown ææª
-+
-- **è·è²¬**ï¼Markdown ææª
-@@ -28,1 +28,1 @@
--- **è·è²¬**ï¼YAML éç½®æä»¶
-+
-- **è·è²¬**ï¼YAML éç½®æä»¶
-@@ -32,1 +32,1 @@
--### policy.rego
-+### policy.rego
-
-@@ -43,1 +43,1 @@
--## è·è²¬åé¢èªªæ
-+## è·è²¬åé¢èªªæ
-
-diff --git a/config/dev/templates/DIRECTORY.md b/config/dev/templates/DIRECTORY.md
---- a/config/dev/templates/DIRECTORY.md
-+++ b/config/dev/templates/DIRECTORY.md
-@@ -3,1 +3,1 @@
--## ç®éè·è²¬
-+## ç®éè·è²¬
-
-@@ -15,1 +15,1 @@
--## è·è²¬åé¢èªªæ
-+## è·è²¬åé¢èªªæ
-
-diff --git a/docs/examples/configuration/python/DIRECTORY.md b/docs/examples/configuration/python/DIRECTORY.md
---- a/docs/examples/configuration/python/DIRECTORY.md
-+++ b/docs/examples/configuration/python/DIRECTORY.md
-@@ -15,1 +15,1 @@
--### security_scanner.py
-+### security_scanner.py
-
-diff --git a/archive/infrastructure/kubernetes/manifests/03-secrets-config/DIRECTORY.md b/archive/infrastructure/kubernetes/manifests/03-secrets-config/DIRECTORY.md
---- a/archive/infrastructure/kubernetes/manifests/03-secrets-config/DIRECTORY.md
-+++ b/archive/infrastructure/kubernetes/manifests/03-secrets-config/DIRECTORY.md
-@@ -3,1 +3,1 @@
--## ç®éè·è²¬
-+## ç®éè·è²¬
-
-@@ -6,1 +6,1 @@
--
-+
-@@ -11,1 +11,1 @@
--- **è·è²¬**ï¼YAML éç½®æä»¶
-+
-- **è·è²¬**ï¼YAML éç½®æä»¶
-diff --git a/src/governance/dimensions/74-adaptation/DIRECTORY.md b/src/governance/dimensions/74-adaptation/DIRECTORY.md
---- a/src/governance/dimensions/74-adaptation/DIRECTORY.md
-+++ b/src/governance/dimensions/74-adaptation/DIRECTORY.md
-@@ -3,1 +3,1 @@
--## ç®éè·è²¬
-+## ç®éè·è²¬
-
-@@ -20,1 +20,1 @@
--### schema.json
-+### schema.json
-
-@@ -37,1 +37,1 @@
--### æªä¾ç¶­è­·æ³¨æäºé 
-+### æªä¾ç¶­è­·æ³¨æäºé 
-
-diff --git a/src/governance/15-economic/DIRECTORY.md b/src/governance/15-economic/DIRECTORY.md
---- a/src/governance/15-economic/DIRECTORY.md
-+++ b/src/governance/15-economic/DIRECTORY.md
-@@ -17,1 +17,1 @@
--- **è·è²¬**ï¼YAML éç½®æä»¶
-+
-- **è·è²¬**ï¼YAML éç½®æä»¶
-@@ -28,1 +28,1 @@
--### å®ä¸è·è²¬åå (SRP) éµå¾ª
-+### å®ä¸è·è²¬åå (SRP) éµå¾ª
-
-@@ -29,1 +29,1 @@
--1. **æ¨¡çµç´å¥è·è²¬å®ä¸å**ï¼[å¾è£å]
-+
-1. **æ¨¡çµç´å¥è·è²¬å®ä¸å**ï¼[å¾è£å]
-diff --git a/src/governance/13-metrics-reporting/DIRECTORY.md b/src/governance/13-metrics-reporting/DIRECTORY.md
---- a/src/governance/13-metrics-reporting/DIRECTORY.md
-+++ b/src/governance/13-metrics-reporting/DIRECTORY.md
-@@ -20,1 +20,1 @@
--### automation_engine.py
-+### automation_engine.py
-
-@@ -21,1 +21,1 @@
--- **è·è²¬**ï¼Python æºä»£ç¢¼
-+
-- **è·è²¬**ï¼Python æºä»£ç¢¼
-@@ -45,1 +45,1 @@
--### metrics-data-source.yaml
-+### metrics-data-source.yaml
-
-@@ -60,1 +60,1 @@
--### report-templates.yaml
-+### report-templates.yaml
-
-@@ -65,1 +65,1 @@
--### reporting-schedule.yaml
-+### reporting-schedule.yaml
-
-@@ -78,1 +78,1 @@
--1. **æ¨¡çµç´å¥è·è²¬å®ä¸å**ï¼[å¾è£å]
-+
-1. **æ¨¡çµç´å¥è·è²¬å®ä¸å**ï¼[å¾è£å]
-@@ -83,1 +83,1 @@
--1. **æ·»å æ°åè½æ**ï¼[å¾è£å]
-+
-1. **æ·»å æ°åè½æ**ï¼[å¾è£å]
-diff --git a/src/supply-chain/DIRECTORY.md b/src/supply-chain/DIRECTORY.md
---- a/src/supply-chain/DIRECTORY.md
-+++ b/src/supply-chain/DIRECTORY.md
-@@ -22,1 +22,1 @@
--### å®ä¸è·è²¬åå (SRP) éµå¾ª
-+### å®ä¸è·è²¬åå (SRP) éµå¾ª
-
-@@ -28,1 +28,1 @@
--1. **æ·»å æ°åè½æ**ï¼[å¾è£å]
-+
-1. **æ·»å æ°åè½æ**ï¼[å¾è£å]
-diff --git a/src/governance/dimensions/27-templates/examples/DIRECTORY.md b/src/governance/dimensions/27-templates/examples/DIRECTORY.md
---- a/src/governance/dimensions/27-templates/examples/DIRECTORY.md
-+++ b/src/governance/dimensions/27-templates/examples/DIRECTORY.md
-@@ -36,1 +36,1 @@
--## è·è²¬åé¢èªªæ
-+## è·è²¬åé¢èªªæ
-
-@@ -43,1 +43,1 @@
--1. **æ¨¡çµç´å¥è·è²¬å®ä¸å**ï¼[å¾è£å]
-+
-1. **æ¨¡çµç´å¥è·è²¬å®ä¸å**ï¼[å¾è£å]
-@@ -48,1 +48,1 @@
--1. **æ·»å æ°åè½æ**ï¼[å¾è£å]
-+
-1. **æ·»å æ°åè½æ**ï¼[å¾è£å]
-diff --git a/src/core/contract_service/contracts-L1/ai-chat-service/src/models/DIRECTORY.md b/src/core/contract_service/contracts-L1/ai-chat-service/src/models/DIRECTORY.md
---- a/src/core/contract_service/contracts-L1/ai-chat-service/src/models/DIRECTORY.md
-+++ b/src/core/contract_service/contracts-L1/ai-chat-service/src/models/DIRECTORY.md
-@@ -3,1 +3,1 @@
--## ç®éè·è²¬
-+## ç®éè·è²¬
-
-@@ -11,1 +11,1 @@
--- **è·è²¬**ï¼TypeScript æºä»£ç¢¼
-+
-- **è·è²¬**ï¼TypeScript æºä»£ç¢¼
-@@ -22,1 +22,1 @@
--### å®ä¸è·è²¬åå (SRP) éµå¾ª
-+### å®ä¸è·è²¬åå (SRP) éµå¾ª
-
-@@ -23,1 +23,1 @@
--1. **æ¨¡çµç´å¥è·è²¬å®ä¸å**ï¼[å¾è£å]
-+
-1. **æ¨¡çµç´å¥è·è²¬å®ä¸å**ï¼[å¾è£å]
-diff --git a/src/governance/dimensions/13-metrics-reporting/DIRECTORY.md b/src/governance/dimensions/13-metrics-reporting/DIRECTORY.md
---- a/src/governance/dimensions/13-metrics-reporting/DIRECTORY.md
-+++ b/src/governance/dimensions/13-metrics-reporting/DIRECTORY.md
-@@ -37,1 +37,1 @@
--### æªä¾ç¶­è­·æ³¨æäºé 
-+### æªä¾ç¶­è­·æ³¨æäºé 
-
-diff --git a/src/governance/dimensions/69-correlation/tests/DIRECTORY.md b/src/governance/dimensions/69-correlation/tests/DIRECTORY.md
---- a/src/governance/dimensions/69-correlation/tests/DIRECTORY.md
-+++ b/src/governance/dimensions/69-correlation/tests/DIRECTORY.md
-@@ -10,1 +10,1 @@
--### correlation_test.rego
-+### correlation_test.rego
-
-diff --git a/archive/infrastructure/kubernetes/overlays/staging/DIRECTORY.md b/archive/infrastructure/kubernetes/overlays/staging/DIRECTORY.md
---- a/archive/infrastructure/kubernetes/overlays/staging/DIRECTORY.md
-+++ b/archive/infrastructure/kubernetes/overlays/staging/DIRECTORY.md
-@@ -3,1 +3,1 @@
--## ç®éè·è²¬
-+## ç®éè·è²¬
-
-@@ -6,1 +6,1 @@
--
-+
-diff --git a/config/deployment/DIRECTORY.md b/config/deployment/DIRECTORY.md
---- a/config/deployment/DIRECTORY.md
-+++ b/config/deployment/DIRECTORY.md
-@@ -13,1 +13,1 @@
--- **è·è²¬**ï¼Dockerfile
-+
-- **è·è²¬**ï¼Dockerfile
-@@ -37,1 +37,1 @@
--### nginx.conf
-+### nginx.conf
-
-@@ -48,1 +48,1 @@
--## è¨­è¨åå
-+## è¨­è¨åå
-
-diff --git a/docs/reports/implementation/DIRECTORY.md b/docs/reports/implementation/DIRECTORY.md
---- a/docs/reports/implementation/DIRECTORY.md
-+++ b/docs/reports/implementation/DIRECTORY.md
-@@ -26,1 +26,1 @@
--## è·è²¬åé¢èªªæ
-+## è·è²¬åé¢èªªæ
-
-@@ -29,1 +29,1 @@
--## è¨­è¨åå
-+## è¨­è¨åå
-
-diff --git a/src/autonomous/core/DIRECTORY.md b/src/autonomous/core/DIRECTORY.md
---- a/src/autonomous/core/DIRECTORY.md
-+++ b/src/autonomous/core/DIRECTORY.md
-@@ -3,1 +3,1 @@
--## ç®éè·è²¬
-+## ç®éè·è²¬
-
-@@ -11,1 +11,1 @@
--- **è·è²¬**ï¼Markdown ææª
-+
-- **è·è²¬**ï¼Markdown ææª
-@@ -16,1 +16,1 @@
--## è·è²¬åé¢èªªæ
-+## è·è²¬åé¢èªªæ
-
-@@ -22,1 +22,1 @@
--### å®ä¸è·è²¬åå (SRP) éµå¾ª
-+### å®ä¸è·è²¬åå (SRP) éµå¾ª
-
-@@ -27,1 +27,1 @@
--### æªä¾ç¶­è­·æ³¨æäºé 
-+### æªä¾ç¶­è­·æ³¨æäºé 
-
-diff --git a/archive/infrastructure/kubernetes/manifests/overlays/prod/DIRECTORY.md b/archive/infrastructure/kubernetes/manifests/overlays/prod/DIRECTORY.md
---- a/archive/infrastructure/kubernetes/manifests/overlays/prod/DIRECTORY.md
-+++ b/archive/infrastructure/kubernetes/manifests/overlays/prod/DIRECTORY.md
-@@ -6,1 +6,1 @@
--
-+
-@@ -11,1 +11,1 @@
--- **è·è²¬**ï¼YAML éç½®æä»¶
-+
-- **è·è²¬**ï¼YAML éç½®æä»¶
-diff --git a/src/automation/architect/config/DIRECTORY.md b/src/automation/architect/config/DIRECTORY.md
---- a/src/automation/architect/config/DIRECTORY.md
-+++ b/src/automation/architect/config/DIRECTORY.md
-@@ -21,1 +21,1 @@
--## è¨­è¨åå
-+## è¨­è¨åå
-
-diff --git a/src/autonomous/infrastructure/infrastructure/kubernetes/phase2/06-monitoring/loki/DIRECTORY.md b/src/autonomous/infrastructure/infrastructure/kubernetes/phase2/06-monitoring/loki/DIRECTORY.md
---- a/src/autonomous/infrastructure/infrastructure/kubernetes/phase2/06-monitoring/loki/DIRECTORY.md
-+++ b/src/autonomous/infrastructure/infrastructure/kubernetes/phase2/06-monitoring/loki/DIRECTORY.md
-@@ -11,1 +11,1 @@
--- **è·è²¬**ï¼YAML éç½®æä»¶
-+
-- **è·è²¬**ï¼YAML éç½®æä»¶
-@@ -32,1 +32,1 @@
--### å®ä¸è·è²¬åå (SRP) éµå¾ª
-+### å®ä¸è·è²¬åå (SRP) éµå¾ª
-
-@@ -38,1 +38,1 @@
--1. **æ·»å æ°åè½æ**ï¼[å¾è£å]
-+
-1. **æ·»å æ°åè½æ**ï¼[å¾è£å]
-diff --git a/ARCHITECTURE.md b/ARCHITECTURE.md
---- a/ARCHITECTURE.md
-+++ b/ARCHITECTURE.md
-@@ -121,1 +121,1 @@
--#### 5. ç°å¢æªæ¡å±¤ (Environment Files)
-+#### 5. ç°å¢æªæ¡å±¤ (Environment Files)
-
-@@ -225,1 +225,1 @@
--#### è¦ç¯æªæ¡
-+#### è¦ç¯æªæ¡
-
-@@ -232,1 +232,1 @@
--#### è¨»åè¡¨æªæ¡
-+#### è¨»åè¡¨æªæ¡
-
-@@ -497,1 +497,1 @@
--#### Level 1: èªæ³é©è­
-+#### Level 1: èªæ³é©è­
-
-@@ -581,1 +581,1 @@
--#### Level 3: èªåæ¶æ§åæ­¥
-+#### Level 3: èªåæ¶æ§åæ­¥
-
-@@ -591,1 +591,1 @@
--#### Level 5: èªåç¥è­èå
-+#### Level 5: èªåç¥è­èå
-
-@@ -592,1 +592,1 @@
--- **è§¸ç¼**: éå¤§è®æ´
-+
-- **è§¸ç¼**: éå¤§è®æ´
-diff --git a/src/governance/dimensions/42-deployment/DIRECTORY.md b/src/governance/dimensions/42-deployment/DIRECTORY.md
---- a/src/governance/dimensions/42-deployment/DIRECTORY.md
-+++ b/src/governance/dimensions/42-deployment/DIRECTORY.md
-@@ -33,1 +33,1 @@
--1. **æ¨¡çµç´å¥è·è²¬å®ä¸å**ï¼[å¾è£å]
-+
-1. **æ¨¡çµç´å¥è·è²¬å®ä¸å**ï¼[å¾è£å]
-diff --git a/src/autonomous/infrastructure/infrastructure/kubernetes/phase2/DIRECTORY.md b/src/autonomous/infrastructure/infrastructure/kubernetes/phase2/DIRECTORY.md
---- a/src/autonomous/infrastructure/infrastructure/kubernetes/phase2/DIRECTORY.md
-+++ b/src/autonomous/infrastructure/infrastructure/kubernetes/phase2/DIRECTORY.md
-@@ -44,1 +44,1 @@
--### å®ä¸è·è²¬åå (SRP) éµå¾ª
-+### å®ä¸è·è²¬åå (SRP) éµå¾ª
-
-@@ -49,1 +49,1 @@
--### æªä¾ç¶­è­·æ³¨æäºé 
-+### æªä¾ç¶­è­·æ³¨æäºé 
-
-diff --git a/src/templates/github/DIRECTORY.md b/src/templates/github/DIRECTORY.md
---- a/src/templates/github/DIRECTORY.md
-+++ b/src/templates/github/DIRECTORY.md
-@@ -40,1 +40,1 @@
--### 07-dependency-update.v1.yml
-+### 07-dependency-update.v1.yml
-
-@@ -63,1 +63,1 @@
--1. **æ·»å æ°åè½æ**ï¼[å¾è£å]
-+
-1. **æ·»å æ°åè½æ**ï¼[å¾è£å]
-diff --git a/src/core/contracts/contracts-L1/contracts/sbom/DIRECTORY.md b/src/core/contracts/contracts-L1/contracts/sbom/DIRECTORY.md
---- a/src/core/contracts/contracts-L1/contracts/sbom/DIRECTORY.md
-+++ b/src/core/contracts/contracts-L1/contracts/sbom/DIRECTORY.md
-@@ -6,1 +6,1 @@
--
-+
-@@ -27,1 +27,1 @@
--### å®ä¸è·è²¬åå (SRP) éµå¾ª
-+### å®ä¸è·è²¬åå (SRP) éµå¾ª
-
-@@ -32,1 +32,1 @@
--### æªä¾ç¶­è­·æ³¨æäºé 
-+### æªä¾ç¶­è­·æ³¨æäºé 
-
-diff --git a/tests/unit/test_models/DIRECTORY.md b/tests/unit/test_models/DIRECTORY.md
---- a/tests/unit/test_models/DIRECTORY.md
-+++ b/tests/unit/test_models/DIRECTORY.md
-@@ -12,1 +12,1 @@
--## è·è²¬åé¢èªªæ
-+## è·è²¬åé¢èªªæ
-
-diff --git a/src/governance/dimensions/17-sociological/DIRECTORY.md b/src/governance/dimensions/17-sociological/DIRECTORY.md
---- a/src/governance/dimensions/17-sociological/DIRECTORY.md
-+++ b/src/governance/dimensions/17-sociological/DIRECTORY.md
-@@ -3,1 +3,1 @@
--## ç®éè·è²¬
-+## ç®éè·è²¬
-
-@@ -16,1 +16,1 @@
--- **è·è²¬**ï¼å¶ä»æä»¶
-+
-- **è·è²¬**ï¼å¶ä»æä»¶
-@@ -32,1 +32,1 @@
--### å®ä¸è·è²¬åå (SRP) éµå¾ª
-+### å®ä¸è·è²¬åå (SRP) éµå¾ª
-
-diff --git a/src/governance/dimensions/16-psychological/DIRECTORY.md b/src/governance/dimensions/16-psychological/DIRECTORY.md
---- a/src/governance/dimensions/16-psychological/DIRECTORY.md
-+++ b/src/governance/dimensions/16-psychological/DIRECTORY.md
-@@ -3,1 +3,1 @@
--## ç®éè·è²¬
-+## ç®éè·è²¬
-
-@@ -11,1 +11,1 @@
--- **è·è²¬**ï¼YAML éç½®æä»¶
-+
-- **è·è²¬**ï¼YAML éç½®æä»¶
-@@ -28,1 +28,1 @@
--- [å¾è£åï¼åå±¤æ¬¡çè·è²¬èªªæ]
-+
-- [å¾è£åï¼åå±¤æ¬¡çè·è²¬èªªæ]
-@@ -33,1 +33,1 @@
--1. **æ¨¡çµç´å¥è·è²¬å®ä¸å**ï¼[å¾è£å]
-+
-1. **æ¨¡çµç´å¥è·è²¬å®ä¸å**ï¼[å¾è£å]
-@@ -37,1 +37,1 @@
--### æªä¾ç¶­è­·æ³¨æäºé 
-+### æªä¾ç¶­è­·æ³¨æäºé 
-
-diff --git a/archive/infrastructure/monitoring/prometheus/servicemonitors/DIRECTORY.md b/archive/infrastructure/monitoring/prometheus/servicemonitors/DIRECTORY.md
---- a/archive/infrastructure/monitoring/prometheus/servicemonitors/DIRECTORY.md
-+++ b/archive/infrastructure/monitoring/prometheus/servicemonitors/DIRECTORY.md
-@@ -3,1 +3,1 @@
--## ç®éè·è²¬
-+## ç®éè·è²¬
-
-@@ -16,1 +16,1 @@
--## è·è²¬åé¢èªªæ
-+## è·è²¬åé¢èªªæ
-
-diff --git a/src/governance/05-compliance/config/DIRECTORY.md b/src/governance/05-compliance/config/DIRECTORY.md
---- a/src/governance/05-compliance/config/DIRECTORY.md
-+++ b/src/governance/05-compliance/config/DIRECTORY.md
-@@ -11,1 +11,1 @@
--- **è·è²¬**ï¼YAML éç½®æä»¶
-+
-- **è·è²¬**ï¼YAML éç½®æä»¶
-@@ -21,1 +21,1 @@
--## è·è²¬åé¢èªªæ
-+## è·è²¬åé¢èªªæ
-
-diff --git a/teams/default-team/profiles/role.data_visualizer.md b/teams/default-team/profiles/role.data_visualizer.md
---- a/teams/default-team/profiles/role.data_visualizer.md
-+++ b/teams/default-team/profiles/role.data_visualizer.md
-@@ -19,1 +19,1 @@
--## å·¥ä½æ¨¡å¼
-+## å·¥ä½æ¨¡å¼
-
-@@ -28,1 +28,1 @@
--- æ¸æåè¡¨
-+
-- æ¸æåè¡¨
-diff --git a/scripts/sync/DIRECTORY.md b/scripts/sync/DIRECTORY.md
---- a/scripts/sync/DIRECTORY.md
-+++ b/scripts/sync/DIRECTORY.md
-@@ -10,1 +10,1 @@
--### watch-and-sync.sh
-+### watch-and-sync.sh
-
-diff --git a/archive/infrastructure/kubernetes/phase2/overlays/dev/DIRECTORY.md b/archive/infrastructure/kubernetes/phase2/overlays/dev/DIRECTORY.md
---- a/archive/infrastructure/kubernetes/phase2/overlays/dev/DIRECTORY.md
-+++ b/archive/infrastructure/kubernetes/phase2/overlays/dev/DIRECTORY.md
-@@ -3,1 +3,1 @@
--## ç®éè·è²¬
-+## ç®éè·è²¬
-
-@@ -11,1 +11,1 @@
--- **è·è²¬**ï¼YAML éç½®æä»¶
-+
-- **è·è²¬**ï¼YAML éç½®æä»¶
-@@ -16,1 +16,1 @@
--## è·è²¬åé¢èªªæ
-+## è·è²¬åé¢èªªæ
-
-diff --git a/src/core/contract_service/DIRECTORY.md b/src/core/contract_service/DIRECTORY.md
---- a/src/core/contract_service/DIRECTORY.md
-+++ b/src/core/contract_service/DIRECTORY.md
-@@ -3,1 +3,1 @@
--## ç®éè·è²¬
-+## ç®éè·è²¬
-
-@@ -12,1 +12,1 @@
--- **è·è²¬**ï¼Markdown ææª
-+
-- **è·è²¬**ï¼Markdown ææª
-@@ -23,1 +23,1 @@
--### å®ä¸è·è²¬åå (SRP) éµå¾ª
-+### å®ä¸è·è²¬åå (SRP) éµå¾ª
-
-diff --git a/src/governance/dimensions/34-config/DIRECTORY.md b/src/governance/dimensions/34-config/DIRECTORY.md
---- a/src/governance/dimensions/34-config/DIRECTORY.md
-+++ b/src/governance/dimensions/34-config/DIRECTORY.md
-@@ -10,1 +10,1 @@
--### dimension.yaml
-+### dimension.yaml
-
-@@ -20,1 +20,1 @@
--### schema.json
-+### schema.json
-
-@@ -26,1 +26,1 @@
--## è·è²¬åé¢èªªæ
-+## è·è²¬åé¢èªªæ
-
-diff --git a/src/client/DIRECTORY.md b/src/client/DIRECTORY.md
---- a/src/client/DIRECTORY.md
-+++ b/src/client/DIRECTORY.md
-@@ -19,1 +19,1 @@
--- [å¾è£åï¼åå±¤æ¬¡çè·è²¬èªªæ]
-+
-- [å¾è£åï¼åå±¤æ¬¡çè·è²¬èªªæ]
-diff --git a/src/web/admin/src/components/layout/DIRECTORY.md b/src/web/admin/src/components/layout/DIRECTORY.md
---- a/src/web/admin/src/components/layout/DIRECTORY.md
-+++ b/src/web/admin/src/components/layout/DIRECTORY.md
-@@ -3,1 +3,1 @@
--## ç®éè·è²¬
-+## ç®éè·è²¬
-
-@@ -6,1 +6,1 @@
--
-+
-@@ -10,1 +10,1 @@
--### Footer.tsx
-+### Footer.tsx
-
-@@ -15,1 +15,1 @@
--### Navbar.tsx
-+### Navbar.tsx
-
-@@ -32,1 +32,1 @@
--### æªä¾ç¶­è­·æ³¨æäºé 
-+### æªä¾ç¶­è­·æ³¨æäºé 
-
-diff --git a/src/core/phase4/monitoring_dashboard/DIRECTORY.md b/src/core/phase4/monitoring_dashboard/DIRECTORY.md
---- a/src/core/phase4/monitoring_dashboard/DIRECTORY.md
-+++ b/src/core/phase4/monitoring_dashboard/DIRECTORY.md
-@@ -3,1 +3,1 @@
--## ç®éè·è²¬
-+## ç®éè·è²¬
-
-@@ -6,1 +6,1 @@
--
-+
-@@ -12,1 +12,1 @@
--## è·è²¬åé¢èªªæ
-+## è·è²¬åé¢èªªæ
-
-diff --git a/src/models/schemas/DIRECTORY.md b/src/models/schemas/DIRECTORY.md
---- a/src/models/schemas/DIRECTORY.md
-+++ b/src/models/schemas/DIRECTORY.md
-@@ -6,1 +6,1 @@
--
-+
-@@ -23,1 +23,1 @@
--### æªä¾ç¶­è­·æ³¨æäºé 
-+### æªä¾ç¶­è­·æ³¨æäºé 
-
-diff --git a/src/web/admin/public/data/DIRECTORY.md b/src/web/admin/public/data/DIRECTORY.md
---- a/src/web/admin/public/data/DIRECTORY.md
-+++ b/src/web/admin/public/data/DIRECTORY.md
-@@ -3,1 +3,1 @@
--## ç®éè·è²¬
-+## ç®éè·è²¬
-
-@@ -20,1 +20,1 @@
--### migration-flow.json
-+### migration-flow.json
-
-@@ -32,1 +32,1 @@
--### å®ä¸è·è²¬åå (SRP) éµå¾ª
-+### å®ä¸è·è²¬åå (SRP) éµå¾ª
-
-@@ -37,1 +37,1 @@
--### æªä¾ç¶­è­·æ³¨æäºé 
-+### æªä¾ç¶­è­·æ³¨æäºé 
-
-diff --git a/config/security/compliance/DIRECTORY.md b/config/security/compliance/DIRECTORY.md
---- a/config/security/compliance/DIRECTORY.md
-+++ b/config/security/compliance/DIRECTORY.md
-@@ -12,1 +12,1 @@
--## è·è²¬åé¢èªªæ
-+## è·è²¬åé¢èªªæ
-
-diff --git a/src/governance/40-self-healing/config/DIRECTORY.md b/src/governance/40-self-healing/config/DIRECTORY.md
---- a/src/governance/40-self-healing/config/DIRECTORY.md
-+++ b/src/governance/40-self-healing/config/DIRECTORY.md
-@@ -11,1 +11,1 @@
--- **è·è²¬**ï¼YAML éç½®æä»¶
-+
-- **è·è²¬**ï¼YAML éç½®æä»¶
-@@ -15,1 +15,1 @@
--### self-healing-framework.yaml
-+### self-healing-framework.yaml
-
-@@ -22,1 +22,1 @@
--- ç°å¢ç¹å®éç½®èéç¨éç½®åé¢
-+
-- ç°å¢ç¹å®éç½®èéç¨éç½®åé¢
-diff --git a/src/governance/dimensions/64-attestation/DIRECTORY.md b/src/governance/dimensions/64-attestation/DIRECTORY.md
---- a/src/governance/dimensions/64-attestation/DIRECTORY.md
-+++ b/src/governance/dimensions/64-attestation/DIRECTORY.md
-@@ -3,1 +3,1 @@
--## ç®éè·è²¬
-+## ç®éè·è²¬
-
-@@ -21,1 +21,1 @@
--- **è·è²¬**ï¼JSON éç½®æä»¶
-+
-- **è·è²¬**ï¼JSON éç½®æä»¶
-@@ -31,1 +31,1 @@
--## è¨­è¨åå
-+## è¨­è¨åå
-
-diff --git a/AAPS_INTEGRATION_SUMMARY.md b/AAPS_INTEGRATION_SUMMARY.md
---- a/AAPS_INTEGRATION_SUMMARY.md
-+++ b/AAPS_INTEGRATION_SUMMARY.md
-@@ -11,1 +11,1 @@
--#### Workflow Optimization
-+#### Workflow Optimization
-
-@@ -23,1 +23,1 @@
--- **File**: `agents/super-agent/gate_handler.py`
-+
-- **File**: `agents/super-agent/gate_handler.py`
-@@ -123,1 +123,1 @@
--#### Load Sequence
-+#### Load Sequence
-
-@@ -220,1 +220,1 @@
--- Single workflow for all gate validations
-+
-- Single workflow for all gate validations
-@@ -225,1 +225,1 @@
--- SuperAgent handles complex validation logic
-+
-- SuperAgent handles complex validation logic
-@@ -230,1 +230,1 @@
--- Auto-Monitor provides real-time metrics
-+
-- Auto-Monitor provides real-time metrics
-@@ -264,1 +264,1 @@
--- Complete gate validation flow
-+
-- Complete gate validation flow
-diff --git a/docs/refactor_playbooks/config/DIRECTORY.md b/docs/refactor_playbooks/config/DIRECTORY.md
---- a/docs/refactor_playbooks/config/DIRECTORY.md
-+++ b/docs/refactor_playbooks/config/DIRECTORY.md
-@@ -11,1 +11,1 @@
--- **è·è²¬**ï¼YAML éç½®æä»¶
-+
-- **è·è²¬**ï¼YAML éç½®æä»¶
-@@ -25,1 +25,1 @@
--### refactor-engine-config.yaml
-+### refactor-engine-config.yaml
-
-@@ -31,1 +31,1 @@
--## è·è²¬åé¢èªªæ
-+## è·è²¬åé¢èªªæ
-
-diff --git a/src/core/DIRECTORY.md b/src/core/DIRECTORY.md
---- a/src/core/DIRECTORY.md
-+++ b/src/core/DIRECTORY.md
-@@ -67,1 +67,1 @@
--### ai_decision_engine.py
-+### ai_decision_engine.py
-
-@@ -76,1 +76,1 @@
--### context_understanding_engine.py
-+### context_understanding_engine.py
-
-diff --git a/src/autonomous/agents/examples/DIRECTORY.md b/src/autonomous/agents/examples/DIRECTORY.md
---- a/src/autonomous/agents/examples/DIRECTORY.md
-+++ b/src/autonomous/agents/examples/DIRECTORY.md
-@@ -22,1 +22,1 @@
--### å®ä¸è·è²¬åå (SRP) éµå¾ª
-+### å®ä¸è·è²¬åå (SRP) éµå¾ª
-
-@@ -23,1 +23,1 @@
--1. **æ¨¡çµç´å¥è·è²¬å®ä¸å**ï¼[å¾è£å]
-+
-1. **æ¨¡çµç´å¥è·è²¬å®ä¸å**ï¼[å¾è£å]
-diff --git a/docs/refactor_playbooks/02_integration/core/DIRECTORY.md b/docs/refactor_playbooks/02_integration/core/DIRECTORY.md
---- a/docs/refactor_playbooks/02_integration/core/DIRECTORY.md
-+++ b/docs/refactor_playbooks/02_integration/core/DIRECTORY.md
-@@ -10,1 +10,1 @@
--### core__architecture_integration.md
-+### core__architecture_integration.md
-
-diff --git a/src/autonomous/infrastructure/infrastructure/kubernetes/hpa/DIRECTORY.md b/src/autonomous/infrastructure/infrastructure/kubernetes/hpa/DIRECTORY.md
---- a/src/autonomous/infrastructure/infrastructure/kubernetes/hpa/DIRECTORY.md
-+++ b/src/autonomous/infrastructure/infrastructure/kubernetes/hpa/DIRECTORY.md
-@@ -6,1 +6,1 @@
--
-+
-@@ -21,1 +21,1 @@
--## è·è²¬åé¢èªªæ
-+## è·è²¬åé¢èªªæ
-
-diff --git a/src/web/client/DIRECTORY.md b/src/web/client/DIRECTORY.md
---- a/src/web/client/DIRECTORY.md
-+++ b/src/web/client/DIRECTORY.md
-@@ -3,1 +3,1 @@
--## ç®éè·è²¬
-+## ç®éè·è²¬
-
-@@ -11,1 +11,1 @@
--### index.html
-+### index.html
-
-@@ -19,1 +19,1 @@
--- [å¾è£åï¼åå±¤æ¬¡çè·è²¬èªªæ]
-+
-- [å¾è£åï¼åå±¤æ¬¡çè·è²¬èªªæ]
-@@ -24,1 +24,1 @@
--1. **æ¨¡çµç´å¥è·è²¬å®ä¸å**ï¼[å¾è£å]
-+
-1. **æ¨¡çµç´å¥è·è²¬å®ä¸å**ï¼[å¾è£å]
-diff --git a/src/ai/agents/dependency-manager/src/DIRECTORY.md b/src/ai/agents/dependency-manager/src/DIRECTORY.md
---- a/src/ai/agents/dependency-manager/src/DIRECTORY.md
-+++ b/src/ai/agents/dependency-manager/src/DIRECTORY.md
-@@ -27,1 +27,1 @@
--## è·è²¬åé¢èªªæ
-+## è·è²¬åé¢èªªæ
-
-@@ -29,1 +29,1 @@
--- [å¾è£åï¼åå±¤æ¬¡çè·è²¬èªªæ]
-+
-- [å¾è£åï¼åå±¤æ¬¡çè·è²¬èªªæ]
-diff --git a/src/autonomous/agents/synergymesh_core/DIRECTORY.md b/src/autonomous/agents/synergymesh_core/DIRECTORY.md
---- a/src/autonomous/agents/synergymesh_core/DIRECTORY.md
-+++ b/src/autonomous/agents/synergymesh_core/DIRECTORY.md
-@@ -6,1 +6,1 @@
--
-+
-@@ -10,1 +10,1 @@
--### autonomous_coordinator.py
-+### autonomous_coordinator.py
-
-@@ -15,1 +15,1 @@
--### ecosystem_orchestrator.py
-+### ecosystem_orchestrator.py
-
-@@ -30,1 +30,1 @@
--### nli_layer.py
-+### nli_layer.py
-
-@@ -48,1 +48,1 @@
--- [å¾è£åï¼åå±¤æ¬¡çè·è²¬èªªæ]
-+
-- [å¾è£åï¼åå±¤æ¬¡çè·è²¬èªªæ]
-@@ -53,1 +53,1 @@
--1. **æ¨¡çµç´å¥è·è²¬å®ä¸å**ï¼[å¾è£å]
-+
-1. **æ¨¡çµç´å¥è·è²¬å®ä¸å**ï¼[å¾è£å]
-diff --git a/src/governance/dimensions/61-lineage/DIRECTORY.md b/src/governance/dimensions/61-lineage/DIRECTORY.md
---- a/src/governance/dimensions/61-lineage/DIRECTORY.md
-+++ b/src/governance/dimensions/61-lineage/DIRECTORY.md
-@@ -32,1 +32,1 @@
--### å®ä¸è·è²¬åå (SRP) éµå¾ª
-+### å®ä¸è·è²¬åå (SRP) éµå¾ª
-
-@@ -37,1 +37,1 @@
--### æªä¾ç¶­è­·æ³¨æäºé 
-+### æªä¾ç¶­è­·æ³¨æäºé 
-
-diff --git a/src/governance/index/events/DIRECTORY.md b/src/governance/index/events/DIRECTORY.md
---- a/src/governance/index/events/DIRECTORY.md
-+++ b/src/governance/index/events/DIRECTORY.md
-@@ -10,1 +10,1 @@
--### bootstrap-contract.json
-+### bootstrap-contract.json
-
-@@ -11,1 +11,1 @@
--- **è·è²¬**ï¼JSON éç½®æä»¶
-+
-- **è·è²¬**ï¼JSON éç½®æä»¶
-@@ -33,1 +33,1 @@
--- [å¾è£åï¼åå±¤æ¬¡çè·è²¬èªªæ]
-+
-- [å¾è£åï¼åå±¤æ¬¡çè·è²¬èªªæ]
-@@ -42,1 +42,1 @@
--### æªä¾ç¶­è­·æ³¨æäºé 
-+### æªä¾ç¶­è­·æ³¨æäºé 
-
-diff --git a/src/core/contracts/contracts-L1/contracts/src/__tests__/self-healing/DIRECTORY.md b/src/core/contracts/contracts-L1/contracts/src/__tests__/self-healing/DIRECTORY.md
---- a/src/core/contracts/contracts-L1/contracts/src/__tests__/self-healing/DIRECTORY.md
-+++ b/src/core/contracts/contracts-L1/contracts/src/__tests__/self-healing/DIRECTORY.md
-@@ -16,1 +16,1 @@
--## è·è²¬åé¢èªªæ
-+## è·è²¬åé¢èªªæ
-
-diff --git a/src/governance/35-scripts/DIRECTORY.md b/src/governance/35-scripts/DIRECTORY.md
---- a/src/governance/35-scripts/DIRECTORY.md
-+++ b/src/governance/35-scripts/DIRECTORY.md
-@@ -10,1 +10,1 @@
--### README.md
-+### README.md
-
-@@ -11,1 +11,1 @@
--- **è·è²¬**ï¼Markdown ææª
-+
-- **è·è²¬**ï¼Markdown ææª
-diff --git a/src/governance/dimensions/58-capacity/tests/DIRECTORY.md b/src/governance/dimensions/58-capacity/tests/DIRECTORY.md
---- a/src/governance/dimensions/58-capacity/tests/DIRECTORY.md
-+++ b/src/governance/dimensions/58-capacity/tests/DIRECTORY.md
-@@ -17,1 +17,1 @@
--- å®åæ¸¬è©¦å°æ³¨æ¼ç¨ç«åè½æ¸¬è©¦
-+
-- å®åæ¸¬è©¦å°æ³¨æ¼ç¨ç«åè½æ¸¬è©¦
-diff --git a/src/core/contracts/contracts-L1/contracts/src/models/DIRECTORY.md b/src/core/contracts/contracts-L1/contracts/src/models/DIRECTORY.md
---- a/src/core/contracts/contracts-L1/contracts/src/models/DIRECTORY.md
-+++ b/src/core/contracts/contracts-L1/contracts/src/models/DIRECTORY.md
-@@ -15,1 +15,1 @@
--### escalation.model.ts
-+### escalation.model.ts
-
-@@ -20,1 +20,1 @@
--### index.ts
-+### index.ts
-
-@@ -38,1 +38,1 @@
--- [å¾è£åï¼åå±¤æ¬¡çè·è²¬èªªæ]
-+
-- [å¾è£åï¼åå±¤æ¬¡çè·è²¬èªªæ]
-@@ -42,1 +42,1 @@
--### å®ä¸è·è²¬åå (SRP) éµå¾ª
-+### å®ä¸è·è²¬åå (SRP) éµå¾ª
-
-@@ -48,1 +48,1 @@
--1. **æ·»å æ°åè½æ**ï¼[å¾è£å]
-+
-1. **æ·»å æ°åè½æ**ï¼[å¾è£å]
-diff --git a/src/ai/agents/vulnerability-detector/tests/integration/DIRECTORY.md b/src/ai/agents/vulnerability-detector/tests/integration/DIRECTORY.md
---- a/src/ai/agents/vulnerability-detector/tests/integration/DIRECTORY.md
-+++ b/src/ai/agents/vulnerability-detector/tests/integration/DIRECTORY.md
-@@ -3,1 +3,1 @@
--## ç®éè·è²¬
-+## ç®éè·è²¬
-
-diff --git a/config/docker/DIRECTORY.md b/config/docker/DIRECTORY.md
---- a/config/docker/DIRECTORY.md
-+++ b/config/docker/DIRECTORY.md
-@@ -3,1 +3,1 @@
--## ç®éè·è²¬
-+## ç®éè·è²¬
-
-@@ -41,1 +41,1 @@
--## è·è²¬åé¢èªªæ
-+## è·è²¬åé¢èªªæ
-
-diff --git a/docs/refactor_playbooks/03_refactor/tools/DIRECTORY.md b/docs/refactor_playbooks/03_refactor/tools/DIRECTORY.md
---- a/docs/refactor_playbooks/03_refactor/tools/DIRECTORY.md
-+++ b/docs/refactor_playbooks/03_refactor/tools/DIRECTORY.md
-@@ -21,1 +21,1 @@
--## è¨­è¨åå
-+## è¨­è¨åå
-
-diff --git a/src/ai/agents/auto-repair/DIRECTORY.md b/src/ai/agents/auto-repair/DIRECTORY.md
---- a/src/ai/agents/auto-repair/DIRECTORY.md
-+++ b/src/ai/agents/auto-repair/DIRECTORY.md
-@@ -3,1 +3,1 @@
--## ç®éè·è²¬
-+## ç®éè·è²¬
-
-@@ -17,1 +17,1 @@
--## è·è²¬åé¢èªªæ
-+## è·è²¬åé¢èªªæ
-
-@@ -19,1 +19,1 @@
--- [å¾è£åï¼åå±¤æ¬¡çè·è²¬èªªæ]
-+
-- [å¾è£åï¼åå±¤æ¬¡çè·è²¬èªªæ]
-@@ -29,1 +29,1 @@
--1. **æ·»å æ°åè½æ**ï¼[å¾è£å]
-+
-1. **æ·»å æ°åè½æ**ï¼[å¾è£å]
-diff --git a/src/governance/40-self-healing/tests/DIRECTORY.md b/src/governance/40-self-healing/tests/DIRECTORY.md
---- a/src/governance/40-self-healing/tests/DIRECTORY.md
-+++ b/src/governance/40-self-healing/tests/DIRECTORY.md
-@@ -6,1 +6,1 @@
--
-+
-@@ -16,1 +16,1 @@
--## è·è²¬åé¢èªªæ
-+## è·è²¬åé¢èªªæ
-
-@@ -21,1 +21,1 @@
--## è¨­è¨åå
-+## è¨­è¨åå
-
-diff --git a/src/governance/dimensions/56-incidents/tests/DIRECTORY.md b/src/governance/dimensions/56-incidents/tests/DIRECTORY.md
---- a/src/governance/dimensions/56-incidents/tests/DIRECTORY.md
-+++ b/src/governance/dimensions/56-incidents/tests/DIRECTORY.md
-@@ -6,1 +6,1 @@
--
-+
-@@ -17,1 +17,1 @@
--- å®åæ¸¬è©¦å°æ³¨æ¼ç¨ç«åè½æ¸¬è©¦
-+
-- å®åæ¸¬è©¦å°æ³¨æ¼ç¨ç«åè½æ¸¬è©¦
-diff --git a/src/services/api-gateway/src/__tests__/DIRECTORY.md b/src/services/api-gateway/src/__tests__/DIRECTORY.md
---- a/src/services/api-gateway/src/__tests__/DIRECTORY.md
-+++ b/src/services/api-gateway/src/__tests__/DIRECTORY.md
-@@ -3,1 +3,1 @@
--## ç®éè·è²¬
-+## ç®éè·è²¬
-
-@@ -6,1 +6,1 @@
--
-+
-@@ -15,1 +15,1 @@
--### health.test.ts
-+### health.test.ts
-
-@@ -21,1 +21,1 @@
--## è·è²¬åé¢èªªæ
-+## è·è²¬åé¢èªªæ
-
-@@ -26,1 +26,1 @@
--## è¨­è¨åå
-+## è¨­è¨åå
-
-diff --git a/src/autonomous/infrastructure/infrastructure/kubernetes/cache/DIRECTORY.md b/src/autonomous/infrastructure/infrastructure/kubernetes/cache/DIRECTORY.md
---- a/src/autonomous/infrastructure/infrastructure/kubernetes/cache/DIRECTORY.md
-+++ b/src/autonomous/infrastructure/infrastructure/kubernetes/cache/DIRECTORY.md
-@@ -11,1 +11,1 @@
--- **è·è²¬**ï¼YAML éç½®æä»¶
-+
-- **è·è²¬**ï¼YAML éç½®æä»¶
-@@ -21,1 +21,1 @@
--## è·è²¬åé¢èªªæ
-+## è·è²¬åé¢èªªæ
-
-diff --git a/config/templates/DIRECTORY.md b/config/templates/DIRECTORY.md
---- a/config/templates/DIRECTORY.md
-+++ b/config/templates/DIRECTORY.md
-@@ -11,1 +11,1 @@
--- **è·è²¬**ï¼YAML éç½®æä»¶
-+
-- **è·è²¬**ï¼YAML éç½®æä»¶
-@@ -16,1 +16,1 @@
--## è·è²¬åé¢èªªæ
-+## è·è²¬åé¢èªªæ
-
-diff --git a/src/core/contract_service/contracts-L1/contracts/src/controllers/DIRECTORY.md b/src/core/contract_service/contracts-L1/contracts/src/controllers/DIRECTORY.md
---- a/src/core/contract_service/contracts-L1/contracts/src/controllers/DIRECTORY.md
-+++ b/src/core/contract_service/contracts-L1/contracts/src/controllers/DIRECTORY.md
-@@ -36,1 +36,1 @@
--## è·è²¬åé¢èªªæ
-+## è·è²¬åé¢èªªæ
-
-@@ -38,1 +38,1 @@
--- [å¾è£åï¼åå±¤æ¬¡çè·è²¬èªªæ]
-+
-- [å¾è£åï¼åå±¤æ¬¡çè·è²¬èªªæ]
-@@ -42,1 +42,1 @@
--### å®ä¸è·è²¬åå (SRP) éµå¾ª
-+### å®ä¸è·è²¬åå (SRP) éµå¾ª
-
-@@ -43,1 +43,1 @@
--1. **æ¨¡çµç´å¥è·è²¬å®ä¸å**ï¼[å¾è£å]
-+
-1. **æ¨¡çµç´å¥è·è²¬å®ä¸å**ï¼[å¾è£å]
-diff --git a/config/agents/DIRECTORY.md b/config/agents/DIRECTORY.md
---- a/config/agents/DIRECTORY.md
-+++ b/config/agents/DIRECTORY.md
-@@ -3,1 +3,1 @@
--## ç®éè·è²¬
-+## ç®éè·è²¬
-
-@@ -12,1 +12,1 @@
--### README.md
-+### README.md
-
-@@ -13,1 +13,1 @@
--- **è·è²¬**ï¼Markdown ææª
-+
-- **è·è²¬**ï¼Markdown ææª
-@@ -18,1 +18,1 @@
--## è·è²¬åé¢èªªæ
-+## è·è²¬åé¢èªªæ
-
-diff --git a/teams/default-team/profiles/role.senior_frontend_dev.md b/teams/default-team/profiles/role.senior_frontend_dev.md
---- a/teams/default-team/profiles/role.senior_frontend_dev.md
-+++ b/teams/default-team/profiles/role.senior_frontend_dev.md
-@@ -13,1 +13,1 @@
--## æè¡æ£§
-+## æè¡æ£§
-
-@@ -21,1 +21,1 @@
--## å·¥ä½æ¨¡å¼
-+## å·¥ä½æ¨¡å¼
-
-diff --git a/src/bridges/DIRECTORY.md b/src/bridges/DIRECTORY.md
---- a/src/bridges/DIRECTORY.md
-+++ b/src/bridges/DIRECTORY.md
-@@ -10,1 +10,1 @@
--### language_bridges.py
-+### language_bridges.py
-
-@@ -11,1 +11,1 @@
--- **è·è²¬**ï¼Python æºä»£ç¢¼
-+
-- **è·è²¬**ï¼Python æºä»£ç¢¼
-@@ -22,1 +22,1 @@
--### å®ä¸è·è²¬åå (SRP) éµå¾ª
-+### å®ä¸è·è²¬åå (SRP) éµå¾ª
-
-@@ -23,1 +23,1 @@
--1. **æ¨¡çµç´å¥è·è²¬å®ä¸å**ï¼[å¾è£å]
-+
-1. **æ¨¡çµç´å¥è·è²¬å®ä¸å**ï¼[å¾è£å]
-diff --git a/src/automation/architect/scenarios/DIRECTORY.md b/src/automation/architect/scenarios/DIRECTORY.md
---- a/src/automation/architect/scenarios/DIRECTORY.md
-+++ b/src/automation/architect/scenarios/DIRECTORY.md
-@@ -21,1 +21,1 @@
--1. **æ¨¡çµç´å¥è·è²¬å®ä¸å**ï¼[å¾è£å]
-+
-1. **æ¨¡çµç´å¥è·è²¬å®ä¸å**ï¼[å¾è£å]
-diff --git a/src/services/agents/code-analyzer/DIRECTORY.md b/src/services/agents/code-analyzer/DIRECTORY.md
---- a/src/services/agents/code-analyzer/DIRECTORY.md
-+++ b/src/services/agents/code-analyzer/DIRECTORY.md
-@@ -3,1 +3,1 @@
--## ç®éè·è²¬
-+## ç®éè·è²¬
-
-@@ -16,1 +16,1 @@
--## è·è²¬åé¢èªªæ
-+## è·è²¬åé¢èªªæ
-
-diff --git a/archive/unmanned-engineer-ceo/20-roadmap/DIRECTORY.md b/archive/unmanned-engineer-ceo/20-roadmap/DIRECTORY.md
---- a/archive/unmanned-engineer-ceo/20-roadmap/DIRECTORY.md
-+++ b/archive/unmanned-engineer-ceo/20-roadmap/DIRECTORY.md
-@@ -16,1 +16,1 @@
--
-+
-@@ -20,1 +20,1 @@
--## è¨­è¨åå
-+## è¨­è¨åå
-
-diff --git a/src/autonomous/deployment/k8s/ingress/DIRECTORY.md b/src/autonomous/deployment/k8s/ingress/DIRECTORY.md
---- a/src/autonomous/deployment/k8s/ingress/DIRECTORY.md
-+++ b/src/autonomous/deployment/k8s/ingress/DIRECTORY.md
-@@ -10,1 +10,1 @@
--### ingress.yaml
-+### ingress.yaml
-
-@@ -22,1 +22,1 @@
--### å®ä¸è·è²¬åå (SRP) éµå¾ª
-+### å®ä¸è·è²¬åå (SRP) éµå¾ª
-
-diff --git a/src/governance/dimensions/14-improvement/DIRECTORY.md b/src/governance/dimensions/14-improvement/DIRECTORY.md
---- a/src/governance/dimensions/14-improvement/DIRECTORY.md
-+++ b/src/governance/dimensions/14-improvement/DIRECTORY.md
-@@ -20,1 +20,1 @@
--### schema.json
-+### schema.json
-
-@@ -38,1 +38,1 @@
--1. **æ·»å æ°åè½æ**ï¼[å¾è£å]
-+
-1. **æ·»å æ°åè½æ**ï¼[å¾è£å]
-diff --git a/archive/unmanned-engineer-ceo/60-machine-guides/70-architecture-skeletons/architecture-stability/docs/DIRECTORY.md b/archive/unmanned-engineer-ceo/60-machine-guides/70-architecture-skeletons/architecture-stability/docs/DIRECTORY.md
---- a/archive/unmanned-engineer-ceo/60-machine-guides/70-architecture-skeletons/architecture-stability/docs/DIRECTORY.md
-+++ b/archive/unmanned-engineer-ceo/60-machine-guides/70-architecture-skeletons/architecture-stability/docs/DIRECTORY.md
-@@ -20,1 +20,1 @@
--### layering-rules.md
-+### layering-rules.md
-
-@@ -31,1 +31,1 @@
--## è¨­è¨åå
-+## è¨­è¨åå
-
-diff --git a/ROOT_ARCHITECTURE.md b/ROOT_ARCHITECTURE.md
---- a/ROOT_ARCHITECTURE.md
-+++ b/ROOT_ARCHITECTURE.md
-@@ -69,1 +69,1 @@
--- éµå¾ª Filesystem Hierarchy Standard 3.0
-+
-- éµå¾ª Filesystem Hierarchy Standard 3.0
-@@ -110,1 +110,1 @@
--#### /bin - åºæ¬å½ä»¤
-+#### /bin - åºæ¬å½ä»¤
-
-@@ -125,1 +125,1 @@
--#### /lib - å±äº«å½å¼åº«
-+#### /lib - å±äº«å½å¼åº«
-
-@@ -126,1 +126,1 @@
--- ç³»çµ±ååæéçå½å¼åº«
-+
-- ç³»çµ±ååæéçå½å¼åº«
-@@ -144,1 +144,1 @@
--- ç¨æ¶åäººæªæ¡
-+
-- ç¨æ¶åäººæªæ¡
-diff --git a/src/shared/config/DIRECTORY.md b/src/shared/config/DIRECTORY.md
---- a/src/shared/config/DIRECTORY.md
-+++ b/src/shared/config/DIRECTORY.md
-@@ -3,1 +3,1 @@
--## ç®éè·è²¬
-+## ç®éè·è²¬
-
-@@ -10,1 +10,1 @@
--### base_config.py
-+### base_config.py
-
-@@ -17,1 +17,1 @@
--- ç°å¢ç¹å®éç½®èéç¨éç½®åé¢
-+
-- ç°å¢ç¹å®éç½®èéç¨éç½®åé¢
-diff --git a/src/autonomous/infrastructure/infrastructure/kubernetes/overlays/dev/DIRECTORY.md b/src/autonomous/infrastructure/infrastructure/kubernetes/overlays/dev/DIRECTORY.md
---- a/src/autonomous/infrastructure/infrastructure/kubernetes/overlays/dev/DIRECTORY.md
-+++ b/src/autonomous/infrastructure/infrastructure/kubernetes/overlays/dev/DIRECTORY.md
-@@ -16,1 +16,1 @@
--## è·è²¬åé¢èªªæ
-+## è·è²¬åé¢èªªæ
-
-@@ -23,1 +23,1 @@
--1. **æ¨¡çµç´å¥è·è²¬å®ä¸å**ï¼[å¾è£å]
-+
-1. **æ¨¡çµç´å¥è·è²¬å®ä¸å**ï¼[å¾è£å]
-diff --git a/src/governance/dimensions/13-metrics-reporting/tests/DIRECTORY.md b/src/governance/dimensions/13-metrics-reporting/tests/DIRECTORY.md
---- a/src/governance/dimensions/13-metrics-reporting/tests/DIRECTORY.md
-+++ b/src/governance/dimensions/13-metrics-reporting/tests/DIRECTORY.md
-@@ -6,1 +6,1 @@
--
-+
-@@ -11,1 +11,1 @@
--- **è·è²¬**ï¼å¶ä»æä»¶
-+
-- **è·è²¬**ï¼å¶ä»æä»¶
-diff --git a/archive/unmanned-engineer-ceo/04-systems-thinking/15-system-dynamics/DIRECTORY.md b/archive/unmanned-engineer-ceo/04-systems-thinking/15-system-dynamics/DIRECTORY.md
---- a/archive/unmanned-engineer-ceo/04-systems-thinking/15-system-dynamics/DIRECTORY.md
-+++ b/archive/unmanned-engineer-ceo/04-systems-thinking/15-system-dynamics/DIRECTORY.md
-@@ -10,1 +10,1 @@
--### feedback-loops.md
-+### feedback-loops.md
-
-@@ -11,1 +11,1 @@
--- **è·è²¬**ï¼Markdown ææª
-+
-- **è·è²¬**ï¼Markdown ææª
-@@ -15,1 +15,1 @@
--### simulation-scenarios.md
-+### simulation-scenarios.md
-
-diff --git a/docs/ui/DIRECTORY.md b/docs/ui/DIRECTORY.md
---- a/docs/ui/DIRECTORY.md
-+++ b/docs/ui/DIRECTORY.md
-@@ -11,1 +11,1 @@
--- **è·è²¬**ï¼Markdown ææª
-+
-- **è·è²¬**ï¼Markdown ææª
-diff --git a/src/services/agents/dependency-manager/src/combination/DIRECTORY.md b/src/services/agents/dependency-manager/src/combination/DIRECTORY.md
---- a/src/services/agents/dependency-manager/src/combination/DIRECTORY.md
-+++ b/src/services/agents/dependency-manager/src/combination/DIRECTORY.md
-@@ -11,1 +11,1 @@
--- **è·è²¬**ï¼Python æºä»£ç¢¼
-+
-- **è·è²¬**ï¼Python æºä»£ç¢¼
-@@ -31,1 +31,1 @@
--## è·è²¬åé¢èªªæ
-+## è·è²¬åé¢èªªæ
-
-@@ -33,1 +33,1 @@
--- [å¾è£åï¼åå±¤æ¬¡çè·è²¬èªªæ]
-+
-- [å¾è£åï¼åå±¤æ¬¡çè·è²¬èªªæ]
-@@ -37,1 +37,1 @@
--### å®ä¸è·è²¬åå (SRP) éµå¾ª
-+### å®ä¸è·è²¬åå (SRP) éµå¾ª
-
-@@ -43,1 +43,1 @@
--1. **æ·»å æ°åè½æ**ï¼[å¾è£å]
-+
-1. **æ·»å æ°åè½æ**ï¼[å¾è£å]
-diff --git a/deploy/kubernetes/helm-charts/DIRECTORY.md b/deploy/kubernetes/helm-charts/DIRECTORY.md
---- a/deploy/kubernetes/helm-charts/DIRECTORY.md
-+++ b/deploy/kubernetes/helm-charts/DIRECTORY.md
-@@ -6,1 +6,1 @@
--
-+
-diff --git a/config/dev/templates/service-template/DIRECTORY.md b/config/dev/templates/service-template/DIRECTORY.md
---- a/config/dev/templates/service-template/DIRECTORY.md
-+++ b/config/dev/templates/service-template/DIRECTORY.md
-@@ -11,1 +11,1 @@
--- **è·è²¬**ï¼Markdown ææª
-+
-- **è·è²¬**ï¼Markdown ææª
-diff --git a/archive/infrastructure/kubernetes/manifests/overlays/staging/DIRECTORY.md b/archive/infrastructure/kubernetes/manifests/overlays/staging/DIRECTORY.md
---- a/archive/infrastructure/kubernetes/manifests/overlays/staging/DIRECTORY.md
-+++ b/archive/infrastructure/kubernetes/manifests/overlays/staging/DIRECTORY.md
-@@ -11,1 +11,1 @@
--- **è·è²¬**ï¼YAML éç½®æä»¶
-+
-- **è·è²¬**ï¼YAML éç½®æä»¶
-diff --git a/src/autonomous/infrastructure/infrastructure/kubernetes/phase2/05-core-services/auto-repair/DIRECTORY.md b/src/autonomous/infrastructure/infrastructure/kubernetes/phase2/05-core-services/auto-repair/DIRECTORY.md
---- a/src/autonomous/infrastructure/infrastructure/kubernetes/phase2/05-core-services/auto-repair/DIRECTORY.md
-+++ b/src/autonomous/infrastructure/infrastructure/kubernetes/phase2/05-core-services/auto-repair/DIRECTORY.md
-@@ -15,1 +15,1 @@
--### hpa.yaml
-+### hpa.yaml
-
-@@ -20,1 +20,1 @@
--### network-policy.yaml
-+### network-policy.yaml
-
-@@ -33,1 +33,1 @@
--- [å¾è£åï¼åå±¤æ¬¡çè·è²¬èªªæ]
-+
-- [å¾è£åï¼åå±¤æ¬¡çè·è²¬èªªæ]
-@@ -38,1 +38,1 @@
--1. **æ¨¡çµç´å¥è·è²¬å®ä¸å**ï¼[å¾è£å]
-+
-1. **æ¨¡çµç´å¥è·è²¬å®ä¸å**ï¼[å¾è£å]
-diff --git a/src/autonomous/infrastructure/infrastructure/kubernetes/DIRECTORY.md b/src/autonomous/infrastructure/infrastructure/kubernetes/DIRECTORY.md
---- a/src/autonomous/infrastructure/infrastructure/kubernetes/DIRECTORY.md
-+++ b/src/autonomous/infrastructure/infrastructure/kubernetes/DIRECTORY.md
-@@ -45,1 +45,1 @@
--### secrets.yaml
-+### secrets.yaml
-
-@@ -50,1 +50,1 @@
--
-+
-@@ -51,1 +51,1 @@
--## è·è²¬åé¢èªªæ
-+## è·è²¬åé¢èªªæ
-
-@@ -62,1 +62,1 @@
--### æªä¾ç¶­è­·æ³¨æäºé 
-+### æªä¾ç¶­è­·æ³¨æäºé 
-
-diff --git a/docs/scratch/DIRECTORY.md b/docs/scratch/DIRECTORY.md
---- a/docs/scratch/DIRECTORY.md
-+++ b/docs/scratch/DIRECTORY.md
-@@ -16,1 +16,1 @@
--## è·è²¬åé¢èªªæ
-+## è·è²¬åé¢èªªæ
-
-@@ -19,1 +19,1 @@
--## è¨­è¨åå
-+## è¨­è¨åå
-
-diff --git a/src/governance/31-schemas/DIRECTORY.md b/src/governance/31-schemas/DIRECTORY.md
---- a/src/governance/31-schemas/DIRECTORY.md
-+++ b/src/governance/31-schemas/DIRECTORY.md
-@@ -20,1 +20,1 @@
--### auto-fix-bot-v2.schema.json
-+### auto-fix-bot-v2.schema.json
-
-@@ -30,1 +30,1 @@
--### code-analysis.schema.json
-+### code-analysis.schema.json
-
-@@ -40,1 +40,1 @@
--### dimension.yaml
-+### dimension.yaml
-
-@@ -41,1 +41,1 @@
--- **è·è²¬**ï¼YAML éç½®æä»¶
-+
-- **è·è²¬**ï¼YAML éç½®æä»¶
-@@ -45,1 +45,1 @@
--### docs-index.schema.json
-+### docs-index.schema.json
-
-@@ -50,1 +50,1 @@
--### environment.schema.json
-+### environment.schema.json
-
-@@ -60,1 +60,1 @@
--### osv-advisory.schema.json
-+### osv-advisory.schema.json
-
-@@ -65,1 +65,1 @@
--### plugin-specification.schema.json
-+### plugin-specification.schema.json
-
-@@ -91,1 +91,1 @@
--## è·è²¬åé¢èªªæ
-+## è·è²¬åé¢èªªæ
-
-@@ -93,1 +93,1 @@
--- [å¾è£åï¼åå±¤æ¬¡çè·è²¬èªªæ]
-+
-- [å¾è£åï¼åå±¤æ¬¡çè·è²¬èªªæ]
-diff --git a/opt/README.md b/opt/README.md
---- a/opt/README.md
-+++ b/opt/README.md
-@@ -10,1 +10,1 @@
--## çµæ§
-+## çµæ§
-
-diff --git a/deploy/docker/compose-files/DIRECTORY.md b/deploy/docker/compose-files/DIRECTORY.md
---- a/deploy/docker/compose-files/DIRECTORY.md
-+++ b/deploy/docker/compose-files/DIRECTORY.md
-@@ -3,1 +3,1 @@
--## ç®éè·è²¬
-+## ç®éè·è²¬
-
-diff --git a/src/autonomous/infrastructure/config/DIRECTORY.md b/src/autonomous/infrastructure/config/DIRECTORY.md
---- a/src/autonomous/infrastructure/config/DIRECTORY.md
-+++ b/src/autonomous/infrastructure/config/DIRECTORY.md
-@@ -32,1 +32,1 @@
--- **è·è²¬**ï¼JSON éç½®æä»¶
-+
-- **è·è²¬**ï¼JSON éç½®æä»¶
-@@ -36,1 +36,1 @@
--### ci-comprehensive-solution.yaml
-+### ci-comprehensive-solution.yaml
-
-@@ -41,1 +41,1 @@
--### ci-error-handler.yaml
-+### ci-error-handler.yaml
-
-@@ -46,1 +46,1 @@
--### cloud-agent-delegation.yml
-+### cloud-agent-delegation.yml
-
-@@ -61,1 +61,1 @@
--### elasticsearch-config.sh
-+### elasticsearch-config.sh
-
-@@ -76,1 +76,1 @@
--### island-control.yml
-+### island-control.yml
-
-@@ -81,1 +81,1 @@
--### monitoring.yaml
-+### monitoring.yaml
-
-@@ -86,1 +86,1 @@
--### peachy-build.toml
-+### peachy-build.toml
-
-@@ -87,1 +87,1 @@
--- **è·è²¬**ï¼TOML éç½®æä»¶
-+
-- **è·è²¬**ï¼TOML éç½®æä»¶
-@@ -91,1 +91,1 @@
--### prometheus-config.yml
-+### prometheus-config.yml
-
-@@ -106,1 +106,1 @@
--### security-network-config.yml
-+### security-network-config.yml
-
-@@ -136,1 +136,1 @@
--### yaml-module-system.yaml
-+### yaml-module-system.yaml
-
-@@ -143,1 +143,1 @@
--- ç°å¢ç¹å®éç½®èéç¨éç½®åé¢
-+
-- ç°å¢ç¹å®éç½®èéç¨éç½®åé¢
-diff --git a/src/services/agents/dependency-manager/src/future/DIRECTORY.md b/src/services/agents/dependency-manager/src/future/DIRECTORY.md
---- a/src/services/agents/dependency-manager/src/future/DIRECTORY.md
-+++ b/src/services/agents/dependency-manager/src/future/DIRECTORY.md
-@@ -3,1 +3,1 @@
--## ç®éè·è²¬
-+## ç®éè·è²¬
-
-@@ -20,1 +20,1 @@
--### privacy_framework.py
-+### privacy_framework.py
-
-diff --git a/tests/integration/test_workflows/DIRECTORY.md b/tests/integration/test_workflows/DIRECTORY.md
---- a/tests/integration/test_workflows/DIRECTORY.md
-+++ b/tests/integration/test_workflows/DIRECTORY.md
-@@ -13,1 +13,1 @@
--- å®åæ¸¬è©¦å°æ³¨æ¼ç¨ç«åè½æ¸¬è©¦
-+
-- å®åæ¸¬è©¦å°æ³¨æ¼ç¨ç«åè½æ¸¬è©¦
-diff --git a/src/governance/21-ecological/DIRECTORY.md b/src/governance/21-ecological/DIRECTORY.md
---- a/src/governance/21-ecological/DIRECTORY.md
-+++ b/src/governance/21-ecological/DIRECTORY.md
-@@ -3,1 +3,1 @@
--## ç®éè·è²¬
-+## ç®éè·è²¬
-
-@@ -10,1 +10,1 @@
--### README.md
-+### README.md
-
-@@ -28,1 +28,1 @@
--1. **æ¨¡çµç´å¥è·è²¬å®ä¸å**ï¼[å¾è£å]
-+
-1. **æ¨¡çµç´å¥è·è²¬å®ä¸å**ï¼[å¾è£å]
-diff --git a/src/ai/agents/code-analyzer/examples/DIRECTORY.md b/src/ai/agents/code-analyzer/examples/DIRECTORY.md
---- a/src/ai/agents/code-analyzer/examples/DIRECTORY.md
-+++ b/src/ai/agents/code-analyzer/examples/DIRECTORY.md
-@@ -12,1 +12,1 @@
--## è·è²¬åé¢èªªæ
-+## è·è²¬åé¢èªªæ
-
-@@ -23,1 +23,1 @@
--### æªä¾ç¶­è­·æ³¨æäºé 
-+### æªä¾ç¶­è­·æ³¨æäºé 
-
-@@ -24,1 +24,1 @@
--1. **æ·»å æ°åè½æ**ï¼[å¾è£å]
-+
-1. **æ·»å æ°åè½æ**ï¼[å¾è£å]
-diff --git a/src/core/instant_generation/monitoring/DIRECTORY.md b/src/core/instant_generation/monitoring/DIRECTORY.md
---- a/src/core/instant_generation/monitoring/DIRECTORY.md
-+++ b/src/core/instant_generation/monitoring/DIRECTORY.md
-@@ -14,1 +14,1 @@
--- [å¾è£åï¼åå±¤æ¬¡çè·è²¬èªªæ]
-+
-- [å¾è£åï¼åå±¤æ¬¡çè·è²¬èªªæ]
-diff --git a/src/governance/dimensions/45-recovery/tests/DIRECTORY.md b/src/governance/dimensions/45-recovery/tests/DIRECTORY.md
---- a/src/governance/dimensions/45-recovery/tests/DIRECTORY.md
-+++ b/src/governance/dimensions/45-recovery/tests/DIRECTORY.md
-@@ -6,1 +6,1 @@
--
-+
-@@ -21,1 +21,1 @@
--## è¨­è¨åå
-+## è¨­è¨åå
-
-diff --git a/src/governance/02-decision/k8s/crd/DIRECTORY.md b/src/governance/02-decision/k8s/crd/DIRECTORY.md
---- a/src/governance/02-decision/k8s/crd/DIRECTORY.md
-+++ b/src/governance/02-decision/k8s/crd/DIRECTORY.md
-@@ -3,1 +3,1 @@
--## ç®éè·è²¬
-+## ç®éè·è²¬
-
-@@ -6,1 +6,1 @@
--
-+
-@@ -16,1 +16,1 @@
--## è·è²¬åé¢èªªæ
-+## è·è²¬åé¢èªªæ
-
-diff --git a/src/web/admin/src/components/ErrorBoundary/DIRECTORY.md b/src/web/admin/src/components/ErrorBoundary/DIRECTORY.md
---- a/src/web/admin/src/components/ErrorBoundary/DIRECTORY.md
-+++ b/src/web/admin/src/components/ErrorBoundary/DIRECTORY.md
-@@ -11,1 +11,1 @@
--- **è·è²¬**ï¼å¶ä»æä»¶
-+
-- **è·è²¬**ï¼å¶ä»æä»¶
-@@ -15,1 +15,1 @@
--### index.ts
-+### index.ts
-
-@@ -21,1 +21,1 @@
--## è·è²¬åé¢èªªæ
-+## è·è²¬åé¢èªªæ
-
-@@ -28,1 +28,1 @@
--1. **æ¨¡çµç´å¥è·è²¬å®ä¸å**ï¼[å¾è£å]
-+
-1. **æ¨¡çµç´å¥è·è²¬å®ä¸å**ï¼[å¾è£å]
-diff --git a/src/core/contracts/contracts-L1/contracts/public/DIRECTORY.md b/src/core/contracts/contracts-L1/contracts/public/DIRECTORY.md
---- a/src/core/contracts/contracts-L1/contracts/public/DIRECTORY.md
-+++ b/src/core/contracts/contracts-L1/contracts/public/DIRECTORY.md
-@@ -10,1 +10,1 @@
--### index.html
-+### index.html
-
-@@ -11,1 +11,1 @@
--- **è·è²¬**ï¼å¶ä»æä»¶
-+
-- **è·è²¬**ï¼å¶ä»æä»¶
-@@ -16,1 +16,1 @@
--## è·è²¬åé¢èªªæ
-+## è·è²¬åé¢èªªæ
-
-@@ -22,1 +22,1 @@
--### å®ä¸è·è²¬åå (SRP) éµå¾ª
-+### å®ä¸è·è²¬åå (SRP) éµå¾ª
-
-diff --git a/src/autonomous/infrastructure/infrastructure/kubernetes/phase2/05-core-services/contracts-l1/DIRECTORY.md b/src/autonomous/infrastructure/infrastructure/kubernetes/phase2/05-core-services/contracts-l1/DIRECTORY.md
---- a/src/autonomous/infrastructure/infrastructure/kubernetes/phase2/05-core-services/contracts-l1/DIRECTORY.md
-+++ b/src/autonomous/infrastructure/infrastructure/kubernetes/phase2/05-core-services/contracts-l1/DIRECTORY.md
-@@ -20,1 +20,1 @@
--### network-policy.yaml
-+### network-policy.yaml
-
-@@ -38,1 +38,1 @@
--- [å¾è£åï¼åå±¤æ¬¡çè·è²¬èªªæ]
-+
-- [å¾è£åï¼åå±¤æ¬¡çè·è²¬èªªæ]
-@@ -42,1 +42,1 @@
--### å®ä¸è·è²¬åå (SRP) éµå¾ª
-+### å®ä¸è·è²¬åå (SRP) éµå¾ª
-
-@@ -43,1 +43,1 @@
--1. **æ¨¡çµç´å¥è·è²¬å®ä¸å**ï¼[å¾è£å]
-+
-1. **æ¨¡çµç´å¥è·è²¬å®ä¸å**ï¼[å¾è£å]
-diff --git a/src/core/phase4/billing_system/DIRECTORY.md b/src/core/phase4/billing_system/DIRECTORY.md
---- a/src/core/phase4/billing_system/DIRECTORY.md
-+++ b/src/core/phase4/billing_system/DIRECTORY.md
-@@ -6,1 +6,1 @@
--
-+
-@@ -12,1 +12,1 @@
--## è·è²¬åé¢èªªæ
-+## è·è²¬åé¢èªªæ
-
-diff --git a/src/supply-chain/sbom/DIRECTORY.md b/src/supply-chain/sbom/DIRECTORY.md
---- a/src/supply-chain/sbom/DIRECTORY.md
-+++ b/src/supply-chain/sbom/DIRECTORY.md
-@@ -10,1 +10,1 @@
--### docs-provenance.json
-+### docs-provenance.json
-
-@@ -11,1 +11,1 @@
--- **è·è²¬**ï¼JSON éç½®æä»¶
-+
-- **è·è²¬**ï¼JSON éç½®æä»¶
-@@ -42,1 +42,1 @@
--### æªä¾ç¶­è­·æ³¨æäºé 
-+### æªä¾ç¶­è­·æ³¨æäºé 
-
-@@ -43,1 +43,1 @@
--1. **æ·»å æ°åè½æ**ï¼[å¾è£å]
-+
-1. **æ·»å æ°åè½æ**ï¼[å¾è£å]
-diff --git a/src/governance/dimensions/75-evolution/tests/DIRECTORY.md b/src/governance/dimensions/75-evolution/tests/DIRECTORY.md
---- a/src/governance/dimensions/75-evolution/tests/DIRECTORY.md
-+++ b/src/governance/dimensions/75-evolution/tests/DIRECTORY.md
-@@ -11,1 +11,1 @@
--- **è·è²¬**ï¼å¶ä»æä»¶
-+
-- **è·è²¬**ï¼å¶ä»æä»¶
-@@ -21,1 +21,1 @@
--## è¨­è¨åå
-+## è¨­è¨åå
-
-diff --git a/tests/fixtures/mock_data/DIRECTORY.md b/tests/fixtures/mock_data/DIRECTORY.md
---- a/tests/fixtures/mock_data/DIRECTORY.md
-+++ b/tests/fixtures/mock_data/DIRECTORY.md
-@@ -3,1 +3,1 @@
--## ç®éè·è²¬
-+## ç®éè·è²¬
-
-@@ -12,1 +12,1 @@
--## è·è²¬åé¢èªªæ
-+## è·è²¬åé¢èªªæ
-
-diff --git a/archive/infrastructure/kubernetes/manifests/04-databases/redis/DIRECTORY.md b/archive/infrastructure/kubernetes/manifests/04-databases/redis/DIRECTORY.md
---- a/archive/infrastructure/kubernetes/manifests/04-databases/redis/DIRECTORY.md
-+++ b/archive/infrastructure/kubernetes/manifests/04-databases/redis/DIRECTORY.md
-@@ -3,1 +3,1 @@
--## ç®éè·è²¬
-+## ç®éè·è²¬
-
-@@ -11,1 +11,1 @@
--- **è·è²¬**ï¼YAML éç½®æä»¶
-+
-- **è·è²¬**ï¼YAML éç½®æä»¶
-@@ -15,1 +15,1 @@
--### service.yaml
-+### service.yaml
-
-diff --git a/src/core/plugins/virtual_experts/DIRECTORY.md b/src/core/plugins/virtual_experts/DIRECTORY.md
---- a/src/core/plugins/virtual_experts/DIRECTORY.md
-+++ b/src/core/plugins/virtual_experts/DIRECTORY.md
-@@ -10,1 +10,1 @@
--### domain_experts.py
-+### domain_experts.py
-
-@@ -32,1 +32,1 @@
--### å®ä¸è·è²¬åå (SRP) éµå¾ª
-+### å®ä¸è·è²¬åå (SRP) éµå¾ª
-
-@@ -33,1 +33,1 @@
--1. **æ¨¡çµç´å¥è·è²¬å®ä¸å**ï¼[å¾è£å]
-+
-1. **æ¨¡çµç´å¥è·è²¬å®ä¸å**ï¼[å¾è£å]
-diff --git a/src/governance/23-policies/security/DIRECTORY.md b/src/governance/23-policies/security/DIRECTORY.md
---- a/src/governance/23-policies/security/DIRECTORY.md
-+++ b/src/governance/23-policies/security/DIRECTORY.md
-@@ -3,1 +3,1 @@
--## ç®éè·è²¬
-+## ç®éè·è²¬
-
-@@ -10,1 +10,1 @@
--### audit-policy.yaml
-+### audit-policy.yaml
-
-@@ -15,1 +15,1 @@
--### hlp-executor-security-policy.yaml
-+### hlp-executor-security-policy.yaml
-
-@@ -20,1 +20,1 @@
--### rbac-role-matrix.yaml
-+### rbac-role-matrix.yaml
-
-@@ -28,1 +28,1 @@
--- [å¾è£åï¼åå±¤æ¬¡çè·è²¬èªªæ]
-+
-- [å¾è£åï¼åå±¤æ¬¡çè·è²¬èªªæ]
-@@ -33,1 +33,1 @@
--1. **æ¨¡çµç´å¥è·è²¬å®ä¸å**ï¼[å¾è£å]
-+
-1. **æ¨¡çµç´å¥è·è²¬å®ä¸å**ï¼[å¾è£å]
-diff --git a/src/governance/70-audit/DIRECTORY.md b/src/governance/70-audit/DIRECTORY.md
---- a/src/governance/70-audit/DIRECTORY.md
-+++ b/src/governance/70-audit/DIRECTORY.md
-@@ -16,1 +16,1 @@
--- **è·è²¬**ï¼YAML éç½®æä»¶
-+
-- **è·è²¬**ï¼YAML éç½®æä»¶
-diff --git a/src/governance/07-audit/DIRECTORY.md b/src/governance/07-audit/DIRECTORY.md
---- a/src/governance/07-audit/DIRECTORY.md
-+++ b/src/governance/07-audit/DIRECTORY.md
-@@ -10,1 +10,1 @@
--### AUTOMATION_ENGINE_README.md
-+### AUTOMATION_ENGINE_README.md
-
-@@ -20,1 +20,1 @@
--### append_only_log_client.py
-+### append_only_log_client.py
-
-@@ -25,1 +25,1 @@
--### audit-framework.yaml
-+### audit-framework.yaml
-
-@@ -30,1 +30,1 @@
--### audit-improvement-tracking.yaml
-+### audit-improvement-tracking.yaml
-
-@@ -45,1 +45,1 @@
--### audit-procedures.yaml
-+### audit-procedures.yaml
-
-diff --git a/src/services/agents/dependency-manager/src/strategy/DIRECTORY.md b/src/services/agents/dependency-manager/src/strategy/DIRECTORY.md
---- a/src/services/agents/dependency-manager/src/strategy/DIRECTORY.md
-+++ b/src/services/agents/dependency-manager/src/strategy/DIRECTORY.md
-@@ -6,1 +6,1 @@
--
-+
-@@ -25,1 +25,1 @@
--### strategy_advisor.py
-+### strategy_advisor.py
-
-@@ -31,1 +31,1 @@
--## è·è²¬åé¢èªªæ
-+## è·è²¬åé¢èªªæ
-
-@@ -33,1 +33,1 @@
--- [å¾è£åï¼åå±¤æ¬¡çè·è²¬èªªæ]
-+
-- [å¾è£åï¼åå±¤æ¬¡çè·è²¬èªªæ]
-diff --git a/src/autonomous/deployment/k8s/services/DIRECTORY.md b/src/autonomous/deployment/k8s/services/DIRECTORY.md
---- a/src/autonomous/deployment/k8s/services/DIRECTORY.md
-+++ b/src/autonomous/deployment/k8s/services/DIRECTORY.md
-@@ -6,1 +6,1 @@
--
-+
-@@ -10,1 +10,1 @@
--### api-gateway-service.yaml
-+### api-gateway-service.yaml
-
-@@ -26,1 +26,1 @@
--## è·è²¬åé¢èªªæ
-+## è·è²¬åé¢èªªæ
-
-@@ -37,1 +37,1 @@
--### æªä¾ç¶­è­·æ³¨æäºé 
-+### æªä¾ç¶­è­·æ³¨æäºé 
-
-diff --git a/src/autonomous/agents/config/DIRECTORY.md b/src/autonomous/agents/config/DIRECTORY.md
---- a/src/autonomous/agents/config/DIRECTORY.md
-+++ b/src/autonomous/agents/config/DIRECTORY.md
-@@ -21,1 +21,1 @@
--## è¨­è¨åå
-+## è¨­è¨åå
-
-diff --git a/docs/architecture/configuration/docker/DIRECTORY.md b/docs/architecture/configuration/docker/DIRECTORY.md
---- a/docs/architecture/configuration/docker/DIRECTORY.md
-+++ b/docs/architecture/configuration/docker/DIRECTORY.md
-@@ -10,1 +10,1 @@
--### Dockerfile.code-checker
-+### Dockerfile.code-checker
-
-diff --git a/src/autonomous/infrastructure/infrastructure/kubernetes/phase2/05-core-services/code-analyzer/DIRECTORY.md b/src/autonomous/infrastructure/infrastructure/kubernetes/phase2/05-core-services/code-analyzer/DIRECTORY.md
---- a/src/autonomous/infrastructure/infrastructure/kubernetes/phase2/05-core-services/code-analyzer/DIRECTORY.md
-+++ b/src/autonomous/infrastructure/infrastructure/kubernetes/phase2/05-core-services/code-analyzer/DIRECTORY.md
-@@ -36,1 +36,1 @@
--## è·è²¬åé¢èªªæ
-+## è·è²¬åé¢èªªæ
-
-@@ -38,1 +38,1 @@
--- [å¾è£åï¼åå±¤æ¬¡çè·è²¬èªªæ]
-+
-- [å¾è£åï¼åå±¤æ¬¡çè·è²¬èªªæ]
-diff --git a/docs/architecture/components/DIRECTORY.md b/docs/architecture/components/DIRECTORY.md
---- a/docs/architecture/components/DIRECTORY.md
-+++ b/docs/architecture/components/DIRECTORY.md
-@@ -10,1 +10,1 @@
--### AUTOMATION_OVERVIEW.md
-+### AUTOMATION_OVERVIEW.md
-
-@@ -15,1 +15,1 @@
--### DECISION_ENGINE.md
-+### DECISION_ENGINE.md
-
-@@ -20,1 +20,1 @@
--### GOVERNANCE_PIPELINE.md
-+### GOVERNANCE_PIPELINE.md
-
-@@ -31,1 +31,1 @@
--## è·è²¬åé¢èªªæ
-+## è·è²¬åé¢èªªæ
-
-@@ -34,1 +34,1 @@
--## è¨­è¨åå
-+## è¨­è¨åå
-
-diff --git a/src/ai/agents/code-analyzer/tests/DIRECTORY.md b/src/ai/agents/code-analyzer/tests/DIRECTORY.md
---- a/src/ai/agents/code-analyzer/tests/DIRECTORY.md
-+++ b/src/ai/agents/code-analyzer/tests/DIRECTORY.md
-@@ -13,1 +13,1 @@
--## è·è²¬åé¢èªªæ
-+## è·è²¬åé¢èªªæ
-
-@@ -14,1 +14,1 @@
--- å®åæ¸¬è©¦å°æ³¨æ¼ç¨ç«åè½æ¸¬è©¦
-+
-- å®åæ¸¬è©¦å°æ³¨æ¼ç¨ç«åè½æ¸¬è©¦
-@@ -18,1 +18,1 @@
--## è¨­è¨åå
-+## è¨­è¨åå
-
-diff --git a/archive/unmanned-engineer-ceo/03-intelligence/13-quantum-computing/labs/DIRECTORY.md b/archive/unmanned-engineer-ceo/03-intelligence/13-quantum-computing/labs/DIRECTORY.md
---- a/archive/unmanned-engineer-ceo/03-intelligence/13-quantum-computing/labs/DIRECTORY.md
-+++ b/archive/unmanned-engineer-ceo/03-intelligence/13-quantum-computing/labs/DIRECTORY.md
-@@ -3,1 +3,1 @@
--## ç®éè·è²¬
-+## ç®éè·è²¬
-
-diff --git a/teams/default-team/profiles/role.journal_reviewer.md b/teams/default-team/profiles/role.journal_reviewer.md
---- a/teams/default-team/profiles/role.journal_reviewer.md
-+++ b/teams/default-team/profiles/role.journal_reviewer.md
-@@ -21,1 +21,1 @@
--- å¯©ç¨¿æè¦æ¸
-+
-- å¯©ç¨¿æè¦æ¸
-diff --git a/root/teams/default-team/profiles/role.code_reviewer.md b/root/teams/default-team/profiles/role.code_reviewer.md
---- a/root/teams/default-team/profiles/role.code_reviewer.md
-+++ b/root/teams/default-team/profiles/role.code_reviewer.md
-@@ -25,1 +25,1 @@
--## Triggers
-+## Triggers
-
-@@ -32,1 +32,1 @@
--### Input Requirements
-+### Input Requirements
-
-@@ -66,1 +66,1 @@
--## Integration Points
-+## Integration Points
-
-@@ -67,1 +67,1 @@
--- GitHub Pull Request API
-+
-- GitHub Pull Request API
-diff --git a/src/governance/30-agents/lifecycle/DIRECTORY.md b/src/governance/30-agents/lifecycle/DIRECTORY.md
---- a/src/governance/30-agents/lifecycle/DIRECTORY.md
-+++ b/src/governance/30-agents/lifecycle/DIRECTORY.md
-@@ -22,1 +22,1 @@
--### å®ä¸è·è²¬åå (SRP) éµå¾ª
-+### å®ä¸è·è²¬åå (SRP) éµå¾ª
-
-diff --git a/src/core/contracts/contracts-L1/contracts/contracts/DIRECTORY.md b/src/core/contracts/contracts-L1/contracts/contracts/DIRECTORY.md
---- a/src/core/contracts/contracts-L1/contracts/contracts/DIRECTORY.md
-+++ b/src/core/contracts/contracts-L1/contracts/contracts/DIRECTORY.md
-@@ -6,1 +6,1 @@
--
-+
-@@ -22,1 +22,1 @@
--### å®ä¸è·è²¬åå (SRP) éµå¾ª
-+### å®ä¸è·è²¬åå (SRP) éµå¾ª
-
-diff --git a/tests/e2e/test_system_integration/DIRECTORY.md b/tests/e2e/test_system_integration/DIRECTORY.md
---- a/tests/e2e/test_system_integration/DIRECTORY.md
-+++ b/tests/e2e/test_system_integration/DIRECTORY.md
-@@ -6,1 +6,1 @@
--
-+
-diff --git a/archive/unmanned-engineer-ceo/02-enterprise-capabilities/09-security-compliance/checklists/DIRECTORY.md b/archive/unmanned-engineer-ceo/02-enterprise-capabilities/09-security-compliance/checklists/DIRECTORY.md
---- a/archive/unmanned-engineer-ceo/02-enterprise-capabilities/09-security-compliance/checklists/DIRECTORY.md
-+++ b/archive/unmanned-engineer-ceo/02-enterprise-capabilities/09-security-compliance/checklists/DIRECTORY.md
-@@ -10,1 +10,1 @@
--### README.md
-+### README.md
-
-@@ -11,1 +11,1 @@
--- **è·è²¬**ï¼Markdown ææª
-+
-- **è·è²¬**ï¼Markdown ææª
-diff --git a/src/autonomous/infrastructure/infrastructure/kubernetes/phase2/04-databases/postgres/DIRECTORY.md b/src/autonomous/infrastructure/infrastructure/kubernetes/phase2/04-databases/postgres/DIRECTORY.md
---- a/src/autonomous/infrastructure/infrastructure/kubernetes/phase2/04-databases/postgres/DIRECTORY.md
-+++ b/src/autonomous/infrastructure/infrastructure/kubernetes/phase2/04-databases/postgres/DIRECTORY.md
-@@ -10,1 +10,1 @@
--### backup-cronjob.yaml
-+### backup-cronjob.yaml
-
-@@ -15,1 +15,1 @@
--### monitoring.yaml
-+### monitoring.yaml
-
-@@ -25,1 +25,1 @@
--### statefulset.yaml
-+### statefulset.yaml
-
-@@ -31,1 +31,1 @@
--## è·è²¬åé¢èªªæ
-+## è·è²¬åé¢èªªæ
-
-@@ -38,1 +38,1 @@
--1. **æ¨¡çµç´å¥è·è²¬å®ä¸å**ï¼[å¾è£å]
-+
-1. **æ¨¡çµç´å¥è·è²¬å®ä¸å**ï¼[å¾è£å]
-diff --git a/src/core/integrations/DIRECTORY.md b/src/core/integrations/DIRECTORY.md
---- a/src/core/integrations/DIRECTORY.md
-+++ b/src/core/integrations/DIRECTORY.md
-@@ -3,1 +3,1 @@
--## ç®éè·è²¬
-+## ç®éè·è²¬
-
-@@ -10,1 +10,1 @@
--### cli_bridge.py
-+### cli_bridge.py
-
-@@ -40,1 +40,1 @@
--### mcp_server_manager.py
-+### mcp_server_manager.py
-
-@@ -45,1 +45,1 @@
--### realtime_connector.py
-+### realtime_connector.py
-
-@@ -50,1 +50,1 @@
--### service_registry.py
-+### service_registry.py
-
-@@ -83,1 +83,1 @@
--- [å¾è£åï¼åå±¤æ¬¡çè·è²¬èªªæ]
-+
-- [å¾è£åï¼åå±¤æ¬¡çè·è²¬èªªæ]
-@@ -92,1 +92,1 @@
--### æªä¾ç¶­è­·æ³¨æäºé 
-+### æªä¾ç¶­è­·æ³¨æäºé 
-
-diff --git a/src/autonomous/infrastructure/infrastructure/monitoring/alerts/DIRECTORY.md b/src/autonomous/infrastructure/infrastructure/monitoring/alerts/DIRECTORY.md
---- a/src/autonomous/infrastructure/infrastructure/monitoring/alerts/DIRECTORY.md
-+++ b/src/autonomous/infrastructure/infrastructure/monitoring/alerts/DIRECTORY.md
-@@ -10,1 +10,1 @@
--### service-alerts.yml
-+### service-alerts.yml
-
-@@ -11,1 +11,1 @@
--- **è·è²¬**ï¼YAML éç½®æä»¶
-+
-- **è·è²¬**ï¼YAML éç½®æä»¶
-@@ -16,1 +16,1 @@
--## è·è²¬åé¢èªªæ
-+## è·è²¬åé¢èªªæ
-
-@@ -23,1 +23,1 @@
--1. **æ¨¡çµç´å¥è·è²¬å®ä¸å**ï¼[å¾è£å]
-+
-1. **æ¨¡çµç´å¥è·è²¬å®ä¸å**ï¼[å¾è£å]
-diff --git a/src/governance/dimensions/07-audit/DIRECTORY.md b/src/governance/dimensions/07-audit/DIRECTORY.md
---- a/src/governance/dimensions/07-audit/DIRECTORY.md
-+++ b/src/governance/dimensions/07-audit/DIRECTORY.md
-@@ -10,1 +10,1 @@
--### dimension.yaml
-+### dimension.yaml
-
-@@ -21,1 +21,1 @@
--- **è·è²¬**ï¼JSON éç½®æä»¶
-+
-- **è·è²¬**ï¼JSON éç½®æä»¶
-@@ -37,1 +37,1 @@
--### æªä¾ç¶­è­·æ³¨æäºé 
-+### æªä¾ç¶­è­·æ³¨æäºé 
-
-diff --git a/governance/policies/observability/DIRECTORY.md b/governance/policies/observability/DIRECTORY.md
---- a/governance/policies/observability/DIRECTORY.md
-+++ b/governance/policies/observability/DIRECTORY.md
-@@ -10,1 +10,1 @@
--### naming-metrics-policy.yaml
-+### naming-metrics-policy.yaml
-
-diff --git a/src/ai/agents/dependency-manager/src/analyzers/DIRECTORY.md b/src/ai/agents/dependency-manager/src/analyzers/DIRECTORY.md
---- a/src/ai/agents/dependency-manager/src/analyzers/DIRECTORY.md
-+++ b/src/ai/agents/dependency-manager/src/analyzers/DIRECTORY.md
-@@ -15,1 +15,1 @@
--### go_analyzer.py
-+### go_analyzer.py
-
-@@ -20,1 +20,1 @@
--### npm_analyzer.py
-+### npm_analyzer.py
-
-@@ -33,1 +33,1 @@
--- [å¾è£åï¼åå±¤æ¬¡çè·è²¬èªªæ]
-+
-- [å¾è£åï¼åå±¤æ¬¡çè·è²¬èªªæ]
-@@ -37,1 +37,1 @@
--### å®ä¸è·è²¬åå (SRP) éµå¾ª
-+### å®ä¸è·è²¬åå (SRP) éµå¾ª
-
-@@ -38,1 +38,1 @@
--1. **æ¨¡çµç´å¥è·è²¬å®ä¸å**ï¼[å¾è£å]
-+
-1. **æ¨¡çµç´å¥è·è²¬å®ä¸å**ï¼[å¾è£å]
-@@ -43,1 +43,1 @@
--1. **æ·»å æ°åè½æ**ï¼[å¾è£å]
-+
-1. **æ·»å æ°åè½æ**ï¼[å¾è£å]
-diff --git a/src/governance/dimensions/02-decision/tests/DIRECTORY.md b/src/governance/dimensions/02-decision/tests/DIRECTORY.md
---- a/src/governance/dimensions/02-decision/tests/DIRECTORY.md
-+++ b/src/governance/dimensions/02-decision/tests/DIRECTORY.md
-@@ -6,1 +6,1 @@
--
-+
-@@ -16,1 +16,1 @@
--## è·è²¬åé¢èªªæ
-+## è·è²¬åé¢èªªæ
-
-@@ -17,1 +17,1 @@
--- å®åæ¸¬è©¦å°æ³¨æ¼ç¨ç«åè½æ¸¬è©¦
-+
-- å®åæ¸¬è©¦å°æ³¨æ¼ç¨ç«åè½æ¸¬è©¦
-diff --git a/docs/architecture/api-evolution/DIRECTORY.md b/docs/architecture/api-evolution/DIRECTORY.md
---- a/docs/architecture/api-evolution/DIRECTORY.md
-+++ b/docs/architecture/api-evolution/DIRECTORY.md
-@@ -10,1 +10,1 @@
--### L1_core_and_automation_tasks.md
-+### L1_core_and_automation_tasks.md
-
-@@ -15,1 +15,1 @@
--### README.md
-+### README.md
-
-@@ -26,1 +26,1 @@
--## è·è²¬åé¢èªªæ
-+## è·è²¬åé¢èªªæ
-
-diff --git a/src/governance/30-agents/DIRECTORY.md b/src/governance/30-agents/DIRECTORY.md
---- a/src/governance/30-agents/DIRECTORY.md
-+++ b/src/governance/30-agents/DIRECTORY.md
-@@ -3,1 +3,1 @@
--## ç®éè·è²¬
-+## ç®éè·è²¬
-
-@@ -15,1 +15,1 @@
--- **è·è²¬**ï¼Markdown ææª
-+
-- **è·è²¬**ï¼Markdown ææª
-@@ -44,1 +44,1 @@
--
-+
-@@ -45,1 +45,1 @@
--## è·è²¬åé¢èªªæ
-+## è·è²¬åé¢èªªæ
-
-@@ -52,1 +52,1 @@
--1. **æ¨¡çµç´å¥è·è²¬å®ä¸å**ï¼[å¾è£å]
-+
-1. **æ¨¡çµç´å¥è·è²¬å®ä¸å**ï¼[å¾è£å]
-@@ -56,1 +56,1 @@
--### æªä¾ç¶­è­·æ³¨æäºé 
-+### æªä¾ç¶­è­·æ³¨æäºé 
-
-diff --git a/src/core/contract_service/contracts-L1/contracts/examples/self-healing/DIRECTORY.md b/src/core/contract_service/contracts-L1/contracts/examples/self-healing/DIRECTORY.md
---- a/src/core/contract_service/contracts-L1/contracts/examples/self-healing/DIRECTORY.md
-+++ b/src/core/contract_service/contracts-L1/contracts/examples/self-healing/DIRECTORY.md
-@@ -20,1 +20,1 @@
--### 03-monitoring-governance.ts
-+### 03-monitoring-governance.ts
-
-@@ -36,1 +36,1 @@
--- **è·è²¬**ï¼Markdown ææª
-+
-- **è·è²¬**ï¼Markdown ææª
-@@ -45,1 +45,1 @@
--### run-all-examples.ts
-+### run-all-examples.ts
-
-@@ -53,1 +53,1 @@
--- [å¾è£åï¼åå±¤æ¬¡çè·è²¬èªªæ]
-+
-- [å¾è£åï¼åå±¤æ¬¡çè·è²¬èªªæ]
-@@ -58,1 +58,1 @@
--1. **æ¨¡çµç´å¥è·è²¬å®ä¸å**ï¼[å¾è£å]
-+
-1. **æ¨¡çµç´å¥è·è²¬å®ä¸å**ï¼[å¾è£å]
-diff --git a/src/autonomous/infrastructure/knowledge-base/DIRECTORY.md b/src/autonomous/infrastructure/knowledge-base/DIRECTORY.md
---- a/src/autonomous/infrastructure/knowledge-base/DIRECTORY.md
-+++ b/src/autonomous/infrastructure/knowledge-base/DIRECTORY.md
-@@ -6,1 +6,1 @@
--
-+
-@@ -18,1 +18,1 @@
--- [å¾è£åï¼åå±¤æ¬¡çè·è²¬èªªæ]
-+
-- [å¾è£åï¼åå±¤æ¬¡çè·è²¬èªªæ]
-@@ -23,1 +23,1 @@
--1. **æ¨¡çµç´å¥è·è²¬å®ä¸å**ï¼[å¾è£å]
-+
-1. **æ¨¡çµç´å¥è·è²¬å®ä¸å**ï¼[å¾è£å]
-diff --git a/src/tests/performance/DIRECTORY.md b/src/tests/performance/DIRECTORY.md
---- a/src/tests/performance/DIRECTORY.md
-+++ b/src/tests/performance/DIRECTORY.md
-@@ -15,1 +15,1 @@
--### load-test.js
-+### load-test.js
-
-@@ -23,1 +23,1 @@
--- [å¾è£åï¼åå±¤æ¬¡çè·è²¬èªªæ]
-+
-- [å¾è£åï¼åå±¤æ¬¡çè·è²¬èªªæ]
-@@ -32,1 +32,1 @@
--### æªä¾ç¶­è­·æ³¨æäºé 
-+### æªä¾ç¶­è­·æ³¨æäºé 
-
-@@ -33,1 +33,1 @@
--1. **æ·»å æ°åè½æ**ï¼[å¾è£å]
-+
-1. **æ·»å æ°åè½æ**ï¼[å¾è£å]
-diff --git a/src/governance/dimensions/49-canary/tests/DIRECTORY.md b/src/governance/dimensions/49-canary/tests/DIRECTORY.md
---- a/src/governance/dimensions/49-canary/tests/DIRECTORY.md
-+++ b/src/governance/dimensions/49-canary/tests/DIRECTORY.md
-@@ -10,1 +10,1 @@
--### canary_test.rego
-+### canary_test.rego
-
-@@ -17,1 +17,1 @@
--- å®åæ¸¬è©¦å°æ³¨æ¼ç¨ç«åè½æ¸¬è©¦
-+
-- å®åæ¸¬è©¦å°æ³¨æ¼ç¨ç«åè½æ¸¬è©¦
-@@ -21,1 +21,1 @@
--## è¨­è¨åå
-+## è¨­è¨åå
-
-diff --git a/src/ai/agents/dependency-manager/docs/DIRECTORY.md b/src/ai/agents/dependency-manager/docs/DIRECTORY.md
---- a/src/ai/agents/dependency-manager/docs/DIRECTORY.md
-+++ b/src/ai/agents/dependency-manager/docs/DIRECTORY.md
-@@ -6,1 +6,1 @@
--
-+
-@@ -12,1 +12,1 @@
--## è·è²¬åé¢èªªæ
-+## è·è²¬åé¢èªªæ
-
-@@ -13,1 +13,1 @@
--- æææªé¡åçµç¹
-+
-- æææªé¡åçµç¹
-@@ -17,1 +17,1 @@
--## è¨­è¨åå
-+## è¨­è¨åå
-
-diff --git a/ROOT_SPECS_IMPLEMENTATION_REPORT.md b/ROOT_SPECS_IMPLEMENTATION_REPORT.md
---- a/ROOT_SPECS_IMPLEMENTATION_REPORT.md
-+++ b/ROOT_SPECS_IMPLEMENTATION_REPORT.md
-@@ -109,1 +109,1 @@
--1. Check `root.registry.urns.yaml` (priority 1)
-+
-1. Check `root.registry.urns.yaml` (priority 1)
-@@ -490,1 +490,1 @@
--### 1. Automated Enforcement
-+### 1. Automated Enforcement
-
-@@ -496,1 +496,1 @@
--- â Registries serve as authoritative sources
-+
-- â Registries serve as authoritative sources
-@@ -511,1 +511,1 @@
--- â All root layer files validated
-+
-- â All root layer files validated
-diff --git a/docs/governance/DIRECTORY.md b/docs/governance/DIRECTORY.md
---- a/docs/governance/DIRECTORY.md
-+++ b/docs/governance/DIRECTORY.md
-@@ -10,1 +10,1 @@
--### 02-org-adoption-lifecycle.md
-+### 02-org-adoption-lifecycle.md
-
-@@ -35,1 +35,1 @@
--### 06-metrics-and-audit.md
-+### 06-metrics-and-audit.md
-
-@@ -50,1 +50,1 @@
--### 09-security-compliance.md
-+### 09-security-compliance.md
-
-@@ -60,1 +60,1 @@
--### GOVERNANCE_FRAMEWORK.md
-+### GOVERNANCE_FRAMEWORK.md
-
-@@ -80,1 +80,1 @@
--### policies.md
-+### policies.md
-
-diff --git a/src/ai/agents/orchestrator/tests/integration/DIRECTORY.md b/src/ai/agents/orchestrator/tests/integration/DIRECTORY.md
---- a/src/ai/agents/orchestrator/tests/integration/DIRECTORY.md
-+++ b/src/ai/agents/orchestrator/tests/integration/DIRECTORY.md
-@@ -14,1 +14,1 @@
--- [å¾è£åï¼åå±¤æ¬¡çè·è²¬èªªæ]
-+
-- [å¾è£åï¼åå±¤æ¬¡çè·è²¬èªªæ]
-diff --git a/src/core/plugins/drone_system/DIRECTORY.md b/src/core/plugins/drone_system/DIRECTORY.md
---- a/src/core/plugins/drone_system/DIRECTORY.md
-+++ b/src/core/plugins/drone_system/DIRECTORY.md
-@@ -3,1 +3,1 @@
--## ç®éè·è²¬
-+## ç®éè·è²¬
-
-@@ -20,1 +20,1 @@
--### config.py
-+### config.py
-
-@@ -53,1 +53,1 @@
--1. **æ¨¡çµç´å¥è·è²¬å®ä¸å**ï¼[å¾è£å]
-+
-1. **æ¨¡çµç´å¥è·è²¬å®ä¸å**ï¼[å¾è£å]
-@@ -58,1 +58,1 @@
--1. **æ·»å æ°åè½æ**ï¼[å¾è£å]
-+
-1. **æ·»å æ°åè½æ**ï¼[å¾è£å]
-diff --git a/docs/policies/observability/DIRECTORY.md b/docs/policies/observability/DIRECTORY.md
---- a/docs/policies/observability/DIRECTORY.md
-+++ b/docs/policies/observability/DIRECTORY.md
-@@ -16,1 +16,1 @@
--## è·è²¬åé¢èªªæ
-+## è·è²¬åé¢èªªæ
-
-diff --git a/src/tests/unit/cloud-agent-delegation/DIRECTORY.md b/src/tests/unit/cloud-agent-delegation/DIRECTORY.md
---- a/src/tests/unit/cloud-agent-delegation/DIRECTORY.md
-+++ b/src/tests/unit/cloud-agent-delegation/DIRECTORY.md
-@@ -20,1 +20,1 @@
--### valid_full.json
-+### valid_full.json
-
-@@ -25,1 +25,1 @@
--### valid_minimal.json
-+### valid_minimal.json
-
-diff --git a/archive/unmanned-engineer-ceo/04-systems-thinking/16-complexity-science/DIRECTORY.md b/archive/unmanned-engineer-ceo/04-systems-thinking/16-complexity-science/DIRECTORY.md
---- a/archive/unmanned-engineer-ceo/04-systems-thinking/16-complexity-science/DIRECTORY.md
-+++ b/archive/unmanned-engineer-ceo/04-systems-thinking/16-complexity-science/DIRECTORY.md
-@@ -6,1 +6,1 @@
--
-+
-@@ -21,1 +21,1 @@
--## è·è²¬åé¢èªªæ
-+## è·è²¬åé¢èªªæ
-
-diff --git a/scripts/ci/DIRECTORY.md b/scripts/ci/DIRECTORY.md
---- a/scripts/ci/DIRECTORY.md
-+++ b/scripts/ci/DIRECTORY.md
-@@ -19,1 +19,1 @@
--## è¨­è¨åå
-+## è¨­è¨åå
-
-diff --git a/src/core/new/runtime/DIRECTORY.md b/src/core/new/runtime/DIRECTORY.md
---- a/src/core/new/runtime/DIRECTORY.md
-+++ b/src/core/new/runtime/DIRECTORY.md
-@@ -3,1 +3,1 @@
--## ç®éè·è²¬
-+## ç®éè·è²¬
-
-@@ -10,1 +10,1 @@
--### engine.py
-+### engine.py
-
-@@ -16,1 +16,1 @@
--## è·è²¬åé¢èªªæ
-+## è·è²¬åé¢èªªæ
-
-@@ -18,1 +18,1 @@
--- [å¾è£åï¼åå±¤æ¬¡çè·è²¬èªªæ]
-+
-- [å¾è£åï¼åå±¤æ¬¡çè·è²¬èªªæ]
-@@ -28,1 +28,1 @@
--1. **æ·»å æ°åè½æ**ï¼[å¾è£å]
-+
-1. **æ·»å æ°åè½æ**ï¼[å¾è£å]
-diff --git a/src/governance/packages/validation/DIRECTORY.md b/src/governance/packages/validation/DIRECTORY.md
---- a/src/governance/packages/validation/DIRECTORY.md
-+++ b/src/governance/packages/validation/DIRECTORY.md
-@@ -16,1 +16,1 @@
--## è·è²¬åé¢èªªæ
-+## è·è²¬åé¢èªªæ
-
-@@ -27,1 +27,1 @@
--### æªä¾ç¶­è­·æ³¨æäºé 
-+### æªä¾ç¶­è­·æ³¨æäºé 
-
-diff --git a/src/governance/dimensions/99-metadata/knl-pack/governance/DIRECTORY.md b/src/governance/dimensions/99-metadata/knl-pack/governance/DIRECTORY.md
---- a/src/governance/dimensions/99-metadata/knl-pack/governance/DIRECTORY.md
-+++ b/src/governance/dimensions/99-metadata/knl-pack/governance/DIRECTORY.md
-@@ -6,1 +6,1 @@
--
-+
-@@ -10,1 +10,1 @@
--### README.md
-+### README.md
-
-@@ -21,1 +21,1 @@
--- **è·è²¬**ï¼JSON éç½®æä»¶
-+
-- **è·è²¬**ï¼JSON éç½®æä»¶
-@@ -38,1 +38,1 @@
--1. **æ¨¡çµç´å¥è·è²¬å®ä¸å**ï¼[å¾è£å]
-+
-1. **æ¨¡çµç´å¥è·è²¬å®ä¸å**ï¼[å¾è£å]
-diff --git a/governance/compliance/DIRECTORY.md b/governance/compliance/DIRECTORY.md
---- a/governance/compliance/DIRECTORY.md
-+++ b/governance/compliance/DIRECTORY.md
-@@ -10,1 +10,1 @@
--### GDPR.md
-+### GDPR.md
-
-@@ -11,1 +11,1 @@
--- **è·è²¬**ï¼Markdown ææª
-+
-- **è·è²¬**ï¼Markdown ææª
-@@ -15,1 +15,1 @@
--### HIPAA.md
-+### HIPAA.md
-
-@@ -26,1 +26,1 @@
--## è·è²¬åé¢èªªæ
-+## è·è²¬åé¢èªªæ
-
-diff --git a/root/teams/default-team/profiles/role.dependency_updater.md b/root/teams/default-team/profiles/role.dependency_updater.md
---- a/root/teams/default-team/profiles/role.dependency_updater.md
-+++ b/root/teams/default-team/profiles/role.dependency_updater.md
-@@ -4,1 +4,1 @@
--- **Agent ID**: dependency-updater
-+
-- **Agent ID**: dependency-updater
-@@ -11,1 +11,1 @@
--### Primary Skills
-+### Primary Skills
-
-@@ -19,1 +19,1 @@
--- npm/yarn/pnpm (Node.js)
-+
-- npm/yarn/pnpm (Node.js)
-@@ -43,1 +43,1 @@
--### Output Format
-+### Output Format
-
-@@ -55,1 +55,1 @@
--- Security patches: Auto-merge after CI passes
-+
-- Security patches: Auto-merge after CI passes
-@@ -60,1 +60,1 @@
--## Integration Points
-+## Integration Points
-
-@@ -67,1 +67,1 @@
--- contents: write
-+
-- contents: write
-diff --git a/src/automation/DIRECTORY.md b/src/automation/DIRECTORY.md
---- a/src/automation/DIRECTORY.md
-+++ b/src/automation/DIRECTORY.md
-@@ -42,1 +42,1 @@
--### self_awareness_report.py
-+### self_awareness_report.py
-
-@@ -104,1 +104,1 @@
--
-+
-diff --git a/src/governance/dimensions/60-contracts/tests/DIRECTORY.md b/src/governance/dimensions/60-contracts/tests/DIRECTORY.md
---- a/src/governance/dimensions/60-contracts/tests/DIRECTORY.md
-+++ b/src/governance/dimensions/60-contracts/tests/DIRECTORY.md
-@@ -3,1 +3,1 @@
--## ç®éè·è²¬
-+## ç®éè·è²¬
-
-@@ -21,1 +21,1 @@
--## è¨­è¨åå
-+## è¨­è¨åå
-
-diff --git a/archive/infrastructure/kubernetes/manifests/06-monitoring/loki/DIRECTORY.md b/archive/infrastructure/kubernetes/manifests/06-monitoring/loki/DIRECTORY.md
---- a/archive/infrastructure/kubernetes/manifests/06-monitoring/loki/DIRECTORY.md
-+++ b/archive/infrastructure/kubernetes/manifests/06-monitoring/loki/DIRECTORY.md
-@@ -6,1 +6,1 @@
--
-+
-@@ -10,1 +10,1 @@
--### configmap.yaml
-+### configmap.yaml
-
-@@ -11,1 +11,1 @@
--- **è·è²¬**ï¼YAML éç½®æä»¶
-+
-- **è·è²¬**ï¼YAML éç½®æä»¶
-diff --git a/archive/infrastructure/kubernetes/DIRECTORY.md b/archive/infrastructure/kubernetes/DIRECTORY.md
---- a/archive/infrastructure/kubernetes/DIRECTORY.md
-+++ b/archive/infrastructure/kubernetes/DIRECTORY.md
-@@ -3,1 +3,1 @@
--## ç®éè·è²¬
-+## ç®éè·è²¬
-
-@@ -28,1 +28,1 @@
--### configmap.yaml
-+### configmap.yaml
-
-@@ -43,1 +43,1 @@
--### namespace.yaml
-+### namespace.yaml
-
-@@ -53,1 +53,1 @@
--
-+
-diff --git a/src/core/plugins/execution_architecture/DIRECTORY.md b/src/core/plugins/execution_architecture/DIRECTORY.md
---- a/src/core/plugins/execution_architecture/DIRECTORY.md
-+++ b/src/core/plugins/execution_architecture/DIRECTORY.md
-@@ -6,1 +6,1 @@
--
-+
-@@ -11,1 +11,1 @@
--- **è·è²¬**ï¼Markdown ææª
-+
-- **è·è²¬**ï¼Markdown ææª
-@@ -16,1 +16,1 @@
--- **è·è²¬**ï¼Python æºä»£ç¢¼
-+
-- **è·è²¬**ï¼Python æºä»£ç¢¼
-diff --git a/src/services/mcp/deploy/DIRECTORY.md b/src/services/mcp/deploy/DIRECTORY.md
---- a/src/services/mcp/deploy/DIRECTORY.md
-+++ b/src/services/mcp/deploy/DIRECTORY.md
-@@ -3,1 +3,1 @@
--## ç®éè·è²¬
-+## ç®éè·è²¬
-
-@@ -10,1 +10,1 @@
--### deployment.yaml
-+### deployment.yaml
-
-@@ -20,1 +20,1 @@
--### pdb.yaml
-+### pdb.yaml
-
-@@ -36,1 +36,1 @@
--## è·è²¬åé¢èªªæ
-+## è·è²¬åé¢èªªæ
-
-@@ -48,1 +48,1 @@
--1. **æ·»å æ°åè½æ**ï¼[å¾è£å]
-+
-1. **æ·»å æ°åè½æ**ï¼[å¾è£å]
-diff --git a/scripts/development/DIRECTORY.md b/scripts/development/DIRECTORY.md
---- a/scripts/development/DIRECTORY.md
-+++ b/scripts/development/DIRECTORY.md
-@@ -10,1 +10,1 @@
--### auto_sync_flow.mermaid.txt
-+### auto_sync_flow.mermaid.txt
-
-@@ -11,1 +11,1 @@
--- **è·è²¬**ï¼ææ¬æä»¶
-+
-- **è·è²¬**ï¼ææ¬æä»¶
-@@ -35,1 +35,1 @@
--### system_interconnection.mermaid.txt
-+### system_interconnection.mermaid.txt
-
-diff --git a/src/web/admin/src/components/ui/DIRECTORY.md b/src/web/admin/src/components/ui/DIRECTORY.md
---- a/src/web/admin/src/components/ui/DIRECTORY.md
-+++ b/src/web/admin/src/components/ui/DIRECTORY.md
-@@ -11,1 +11,1 @@
--- **è·è²¬**ï¼å¶ä»æä»¶
-+
-- **è·è²¬**ï¼å¶ä»æä»¶
-@@ -60,1 +60,1 @@
--### carousel.tsx
-+### carousel.tsx
-
-@@ -95,1 +95,1 @@
--### drawer.tsx
-+### drawer.tsx
-
-@@ -115,1 +115,1 @@
--### input-otp.tsx
-+### input-otp.tsx
-
-@@ -140,1 +140,1 @@
--### pagination.tsx
-+### pagination.tsx
-
-@@ -205,1 +205,1 @@
--### switch.tsx
-+### switch.tsx
-
-@@ -240,1 +240,1 @@
--### toggle.tsx
-+### toggle.tsx
-
-diff --git a/src/automation/architect/tests/unit/DIRECTORY.md b/src/automation/architect/tests/unit/DIRECTORY.md
---- a/src/automation/architect/tests/unit/DIRECTORY.md
-+++ b/src/automation/architect/tests/unit/DIRECTORY.md
-@@ -6,1 +6,1 @@
--
-+
-@@ -11,1 +11,1 @@
--- **è·è²¬**ï¼Python æºä»£ç¢¼
-+
-- **è·è²¬**ï¼Python æºä»£ç¢¼
-diff --git a/src/core/contracts/contracts-L1/contracts/src/services/assignment/DIRECTORY.md b/src/core/contracts/contracts-L1/contracts/src/services/assignment/DIRECTORY.md
---- a/src/core/contracts/contracts-L1/contracts/src/services/assignment/DIRECTORY.md
-+++ b/src/core/contracts/contracts-L1/contracts/src/services/assignment/DIRECTORY.md
-@@ -10,1 +10,1 @@
--### auto-assignment-engine.ts
-+### auto-assignment-engine.ts
-
-@@ -31,1 +31,1 @@
--## è·è²¬åé¢èªªæ
-+## è·è²¬åé¢èªªæ
-
-@@ -42,1 +42,1 @@
--### æªä¾ç¶­è­·æ³¨æäºé 
-+### æªä¾ç¶­è­·æ³¨æäºé 
-
-diff --git a/src/governance/00-vision-strategy/k8s/crd/DIRECTORY.md b/src/governance/00-vision-strategy/k8s/crd/DIRECTORY.md
---- a/src/governance/00-vision-strategy/k8s/crd/DIRECTORY.md
-+++ b/src/governance/00-vision-strategy/k8s/crd/DIRECTORY.md
-@@ -3,1 +3,1 @@
--## ç®éè·è²¬
-+## ç®éè·è²¬
-
-@@ -21,1 +21,1 @@
--## è·è²¬åé¢èªªæ
-+## è·è²¬åé¢èªªæ
-
-diff --git a/src/web/client/src/components/ui/DIRECTORY.md b/src/web/client/src/components/ui/DIRECTORY.md
---- a/src/web/client/src/components/ui/DIRECTORY.md
-+++ b/src/web/client/src/components/ui/DIRECTORY.md
-@@ -20,1 +20,1 @@
--### alert.tsx
-+### alert.tsx
-
-@@ -35,1 +35,1 @@
--### badge.tsx
-+### badge.tsx
-
-@@ -40,1 +40,1 @@
--### breadcrumb.tsx
-+### breadcrumb.tsx
-
-@@ -70,1 +70,1 @@
--### checkbox.tsx
-+### checkbox.tsx
-
-@@ -75,1 +75,1 @@
--### collapsible.tsx
-+### collapsible.tsx
-
-@@ -80,1 +80,1 @@
--### command.tsx
-+### command.tsx
-
-@@ -85,1 +85,1 @@
--### context-menu.tsx
-+### context-menu.tsx
-
-@@ -170,1 +170,1 @@
--### select.tsx
-+### select.tsx
-
-@@ -190,1 +190,1 @@
--### skeleton.tsx
-+### skeleton.tsx
-
-@@ -220,1 +220,1 @@
--### toast.tsx
-+### toast.tsx
-
-@@ -225,1 +225,1 @@
--### toaster.tsx
-+### toaster.tsx
-
-@@ -235,1 +235,1 @@
--### toggle.tsx
-+### toggle.tsx
-
-diff --git a/src/ai/agents/auto-repair/scripts/DIRECTORY.md b/src/ai/agents/auto-repair/scripts/DIRECTORY.md
---- a/src/ai/agents/auto-repair/scripts/DIRECTORY.md
-+++ b/src/ai/agents/auto-repair/scripts/DIRECTORY.md
-@@ -6,1 +6,1 @@
--
-+
-@@ -17,1 +17,1 @@
--## è¨­è¨åå
-+## è¨­è¨åå
-
-diff --git a/config/integrations/matechat/DIRECTORY.md b/config/integrations/matechat/DIRECTORY.md
---- a/config/integrations/matechat/DIRECTORY.md
-+++ b/config/integrations/matechat/DIRECTORY.md
-@@ -11,1 +11,1 @@
--- **è·è²¬**ï¼YAML éç½®æä»¶
-+
-- **è·è²¬**ï¼YAML éç½®æä»¶
-@@ -16,1 +16,1 @@
--## è·è²¬åé¢èªªæ
-+## è·è²¬åé¢èªªæ
-
-diff --git a/src/governance/31-schemas/mndoc/DIRECTORY.md b/src/governance/31-schemas/mndoc/DIRECTORY.md
---- a/src/governance/31-schemas/mndoc/DIRECTORY.md
-+++ b/src/governance/31-schemas/mndoc/DIRECTORY.md
-@@ -11,1 +11,1 @@
--- **è·è²¬**ï¼JSON éç½®æä»¶
-+
-- **è·è²¬**ï¼JSON éç½®æä»¶
-@@ -55,1 +55,1 @@
--### mndoc.schema.json
-+### mndoc.schema.json
-
-diff --git a/archive/unmanned-engineer-ceo/80-skeleton-configs/04-security-observability/tools/DIRECTORY.md b/archive/unmanned-engineer-ceo/80-skeleton-configs/04-security-observability/tools/DIRECTORY.md
---- a/archive/unmanned-engineer-ceo/80-skeleton-configs/04-security-observability/tools/DIRECTORY.md
-+++ b/archive/unmanned-engineer-ceo/80-skeleton-configs/04-security-observability/tools/DIRECTORY.md
-@@ -10,1 +10,1 @@
--### log-validator.ts
-+### log-validator.ts
-
-diff --git a/src/governance/dimensions/64-attestation/tests/DIRECTORY.md b/src/governance/dimensions/64-attestation/tests/DIRECTORY.md
---- a/src/governance/dimensions/64-attestation/tests/DIRECTORY.md
-+++ b/src/governance/dimensions/64-attestation/tests/DIRECTORY.md
-@@ -16,1 +16,1 @@
--## è·è²¬åé¢èªªæ
-+## è·è²¬åé¢èªªæ
-
-@@ -17,1 +17,1 @@
--- å®åæ¸¬è©¦å°æ³¨æ¼ç¨ç«åè½æ¸¬è©¦
-+
-- å®åæ¸¬è©¦å°æ³¨æ¼ç¨ç«åè½æ¸¬è©¦
-@@ -21,1 +21,1 @@
--## è¨­è¨åå
-+## è¨­è¨åå
-
-diff --git a/config/ci-cd/gitlab-ci/DIRECTORY.md b/config/ci-cd/gitlab-ci/DIRECTORY.md
---- a/config/ci-cd/gitlab-ci/DIRECTORY.md
-+++ b/config/ci-cd/gitlab-ci/DIRECTORY.md
-@@ -3,1 +3,1 @@
--## ç®éè·è²¬
-+## ç®éè·è²¬
-
-diff --git a/src/governance/dimensions/12-culture-capability/DIRECTORY.md b/src/governance/dimensions/12-culture-capability/DIRECTORY.md
---- a/src/governance/dimensions/12-culture-capability/DIRECTORY.md
-+++ b/src/governance/dimensions/12-culture-capability/DIRECTORY.md
-@@ -10,1 +10,1 @@
--### dimension.yaml
-+### dimension.yaml
-
-@@ -11,1 +11,1 @@
--- **è·è²¬**ï¼YAML éç½®æä»¶
-+
-- **è·è²¬**ï¼YAML éç½®æä»¶
-@@ -15,1 +15,1 @@
--### policy.rego
-+### policy.rego
-
-@@ -26,1 +26,1 @@
--## è·è²¬åé¢èªªæ
-+## è·è²¬åé¢èªªæ
-
-@@ -28,1 +28,1 @@
--- [å¾è£åï¼åå±¤æ¬¡çè·è²¬èªªæ]
-+
-- [å¾è£åï¼åå±¤æ¬¡çè·è²¬èªªæ]
-@@ -32,1 +32,1 @@
--### å®ä¸è·è²¬åå (SRP) éµå¾ª
-+### å®ä¸è·è²¬åå (SRP) éµå¾ª
-
-@@ -33,1 +33,1 @@
--1. **æ¨¡çµç´å¥è·è²¬å®ä¸å**ï¼[å¾è£å]
-+
-1. **æ¨¡çµç´å¥è·è²¬å®ä¸å**ï¼[å¾è£å]
-diff --git a/src/governance/dimensions/99-metadata/knl-pack/DIRECTORY.md b/src/governance/dimensions/99-metadata/knl-pack/DIRECTORY.md
---- a/src/governance/dimensions/99-metadata/knl-pack/DIRECTORY.md
-+++ b/src/governance/dimensions/99-metadata/knl-pack/DIRECTORY.md
-@@ -14,1 +14,1 @@
--### LIVING_KNOWLEDGE_INTEGRATION.md
-+### LIVING_KNOWLEDGE_INTEGRATION.md
-
-diff --git a/docs/refactor_playbooks/03_refactor/axiom/DIRECTORY.md b/docs/refactor_playbooks/03_refactor/axiom/DIRECTORY.md
---- a/docs/refactor_playbooks/03_refactor/axiom/DIRECTORY.md
-+++ b/docs/refactor_playbooks/03_refactor/axiom/DIRECTORY.md
-@@ -10,1 +10,1 @@
--### axiom_complete_architecture.txt
-+### axiom_complete_architecture.txt
-
-@@ -15,1 +15,1 @@
--### axiom_governance_foundation.txt
-+### axiom_governance_foundation.txt
-
-diff --git a/src/governance/dimensions/30-agents/tests/DIRECTORY.md b/src/governance/dimensions/30-agents/tests/DIRECTORY.md
---- a/src/governance/dimensions/30-agents/tests/DIRECTORY.md
-+++ b/src/governance/dimensions/30-agents/tests/DIRECTORY.md
-@@ -3,1 +3,1 @@
--## ç®éè·è²¬
-+## ç®éè·è²¬
-
-@@ -11,1 +11,1 @@
--- **è·è²¬**ï¼å¶ä»æä»¶
-+
-- **è·è²¬**ï¼å¶ä»æä»¶
-@@ -16,1 +16,1 @@
--## è·è²¬åé¢èªªæ
-+## è·è²¬åé¢èªªæ
-
-@@ -21,1 +21,1 @@
--## è¨­è¨åå
-+## è¨­è¨åå
-
-diff --git a/scripts/ops/runbooks/DIRECTORY.md b/scripts/ops/runbooks/DIRECTORY.md
---- a/scripts/ops/runbooks/DIRECTORY.md
-+++ b/scripts/ops/runbooks/DIRECTORY.md
-@@ -16,1 +16,1 @@
--## è·è²¬åé¢èªªæ
-+## è·è²¬åé¢èªªæ
-
-diff --git a/src/automation/architect/scenarios/automation-iteration/DIRECTORY.md b/src/automation/architect/scenarios/automation-iteration/DIRECTORY.md
---- a/src/automation/architect/scenarios/automation-iteration/DIRECTORY.md
-+++ b/src/automation/architect/scenarios/automation-iteration/DIRECTORY.md
-@@ -28,1 +28,1 @@
--1. **æ·»å æ°åè½æ**ï¼[å¾è£å]
-+
-1. **æ·»å æ°åè½æ**ï¼[å¾è£å]
-diff --git a/archive/infrastructure/kubernetes/rbac/DIRECTORY.md b/archive/infrastructure/kubernetes/rbac/DIRECTORY.md
---- a/archive/infrastructure/kubernetes/rbac/DIRECTORY.md
-+++ b/archive/infrastructure/kubernetes/rbac/DIRECTORY.md
-@@ -3,1 +3,1 @@
--## ç®éè·è²¬
-+## ç®éè·è²¬
-
-@@ -6,1 +6,1 @@
--
-+
-@@ -15,1 +15,1 @@
--### role.yaml
-+### role.yaml
-
-diff --git a/src/governance/11-tools-systems/DIRECTORY.md b/src/governance/11-tools-systems/DIRECTORY.md
---- a/src/governance/11-tools-systems/DIRECTORY.md
-+++ b/src/governance/11-tools-systems/DIRECTORY.md
-@@ -20,1 +20,1 @@
--### audit-management-system.yaml
-+### audit-management-system.yaml
-
-@@ -25,1 +25,1 @@
--### automation_engine.py
-+### automation_engine.py
-
-@@ -40,1 +40,1 @@
--### decision-support-system.yaml
-+### decision-support-system.yaml
-
-@@ -60,1 +60,1 @@
--### system-integration-guide.yaml
-+### system-integration-guide.yaml
-
-@@ -71,1 +71,1 @@
--## è·è²¬åé¢èªªæ
-+## è·è²¬åé¢èªªæ
-
-diff --git a/src/automation/hyperautomation/templates/impl/examples/DIRECTORY.md b/src/automation/hyperautomation/templates/impl/examples/DIRECTORY.md
---- a/src/automation/hyperautomation/templates/impl/examples/DIRECTORY.md
-+++ b/src/automation/hyperautomation/templates/impl/examples/DIRECTORY.md
-@@ -15,1 +15,1 @@
--### ad-deployment.yaml
-+### ad-deployment.yaml
-
-@@ -30,1 +30,1 @@
--### uav-deployment.yaml
-+### uav-deployment.yaml
-
-diff --git a/src/governance/16-psychological/DIRECTORY.md b/src/governance/16-psychological/DIRECTORY.md
---- a/src/governance/16-psychological/DIRECTORY.md
-+++ b/src/governance/16-psychological/DIRECTORY.md
-@@ -3,1 +3,1 @@
--## ç®éè·è²¬
-+## ç®éè·è²¬
-
-@@ -11,1 +11,1 @@
--- **è·è²¬**ï¼Markdown ææª
-+
-- **è·è²¬**ï¼Markdown ææª
-@@ -15,1 +15,1 @@
--### dimension.yaml
-+### dimension.yaml
-
-@@ -16,1 +16,1 @@
--- **è·è²¬**ï¼YAML éç½®æä»¶
-+
-- **è·è²¬**ï¼YAML éç½®æä»¶
-@@ -33,1 +33,1 @@
--1. **æ·»å æ°åè½æ**ï¼[å¾è£å]
-+
-1. **æ·»å æ°åè½æ**ï¼[å¾è£å]
-diff --git a/src/governance/00-vision-strategy/crd/DIRECTORY.md b/src/governance/00-vision-strategy/crd/DIRECTORY.md
---- a/src/governance/00-vision-strategy/crd/DIRECTORY.md
-+++ b/src/governance/00-vision-strategy/crd/DIRECTORY.md
-@@ -10,1 +10,1 @@
--### alignment-framework-crd.yaml
-+### alignment-framework-crd.yaml
-
-@@ -15,1 +15,1 @@
--### change-management-protocol-crd.yaml
-+### change-management-protocol-crd.yaml
-
-@@ -40,1 +40,1 @@
--### strategic-objectives-crd.yaml
-+### strategic-objectives-crd.yaml
-
-@@ -50,1 +50,1 @@
--### visionstatement-crd.yaml
-+### visionstatement-crd.yaml
-
-@@ -56,1 +56,1 @@
--## è·è²¬åé¢èªªæ
-+## è·è²¬åé¢èªªæ
-
-@@ -62,1 +62,1 @@
--### å®ä¸è·è²¬åå (SRP) éµå¾ª
-+### å®ä¸è·è²¬åå (SRP) éµå¾ª
-
-diff --git a/docs/tutorials/namespace/tests/DIRECTORY.md b/docs/tutorials/namespace/tests/DIRECTORY.md
---- a/docs/tutorials/namespace/tests/DIRECTORY.md
-+++ b/docs/tutorials/namespace/tests/DIRECTORY.md
-@@ -20,1 +20,1 @@
--### test_resource_quota.py
-+### test_resource_quota.py
-
-diff --git a/src/governance/dimensions/17-sociological/tests/DIRECTORY.md b/src/governance/dimensions/17-sociological/tests/DIRECTORY.md
---- a/src/governance/dimensions/17-sociological/tests/DIRECTORY.md
-+++ b/src/governance/dimensions/17-sociological/tests/DIRECTORY.md
-@@ -6,1 +6,1 @@
--
-+
-@@ -16,1 +16,1 @@
--## è·è²¬åé¢èªªæ
-+## è·è²¬åé¢èªªæ
-
-@@ -21,1 +21,1 @@
--## è¨­è¨åå
-+## è¨­è¨åå
-
-diff --git a/examples/templates/batch-job/DIRECTORY.md b/examples/templates/batch-job/DIRECTORY.md
---- a/examples/templates/batch-job/DIRECTORY.md
-+++ b/examples/templates/batch-job/DIRECTORY.md
-@@ -6,1 +6,1 @@
--
-+
-@@ -12,1 +12,1 @@
--## è·è²¬åé¢èªªæ
-+## è·è²¬åé¢èªªæ
-
-diff --git a/src/governance/12-culture-capability/DIRECTORY.md b/src/governance/12-culture-capability/DIRECTORY.md
---- a/src/governance/12-culture-capability/DIRECTORY.md
-+++ b/src/governance/12-culture-capability/DIRECTORY.md
-@@ -3,1 +3,1 @@
--## ç®éè·è²¬
-+## ç®éè·è²¬
-
-@@ -6,1 +6,1 @@
--
-+
-@@ -15,1 +15,1 @@
--### README.md
-+### README.md
-
-@@ -26,1 +26,1 @@
--- **è·è²¬**ï¼YAML éç½®æä»¶
-+
-- **è·è²¬**ï¼YAML éç½®æä»¶
-@@ -55,1 +55,1 @@
--### maturity-assessment.yaml
-+### maturity-assessment.yaml
-
-@@ -60,1 +60,1 @@
--### training-program.yaml
-+### training-program.yaml
-
-diff --git a/archive/unmanned-engineer-ceo/01-advanced-engineering/04-code-quality/DIRECTORY.md b/archive/unmanned-engineer-ceo/01-advanced-engineering/04-code-quality/DIRECTORY.md
---- a/archive/unmanned-engineer-ceo/01-advanced-engineering/04-code-quality/DIRECTORY.md
-+++ b/archive/unmanned-engineer-ceo/01-advanced-engineering/04-code-quality/DIRECTORY.md
-@@ -29,1 +29,1 @@
--## è¨­è¨åå
-+## è¨­è¨åå
-
-diff --git a/archive/legacy/v2-multi-islands/orchestrator/DIRECTORY.md b/archive/legacy/v2-multi-islands/orchestrator/DIRECTORY.md
---- a/archive/legacy/v2-multi-islands/orchestrator/DIRECTORY.md
-+++ b/archive/legacy/v2-multi-islands/orchestrator/DIRECTORY.md
-@@ -10,1 +10,1 @@
--### island_orchestrator.py
-+### island_orchestrator.py
-
-@@ -16,1 +16,1 @@
--## è·è²¬åé¢èªªæ
-+## è·è²¬åé¢èªªæ
-
-diff --git a/src/governance/09-performance/k8s/examples/DIRECTORY.md b/src/governance/09-performance/k8s/examples/DIRECTORY.md
---- a/src/governance/09-performance/k8s/examples/DIRECTORY.md
-+++ b/src/governance/09-performance/k8s/examples/DIRECTORY.md
-@@ -3,1 +3,1 @@
--## ç®éè·è²¬
-+## ç®éè·è²¬
-
-@@ -18,1 +18,1 @@
--- [å¾è£åï¼åå±¤æ¬¡çè·è²¬èªªæ]
-+
-- [å¾è£åï¼åå±¤æ¬¡çè·è²¬èªªæ]
-diff --git a/src/governance/dimensions/99-metadata/examples/DIRECTORY.md b/src/governance/dimensions/99-metadata/examples/DIRECTORY.md
---- a/src/governance/dimensions/99-metadata/examples/DIRECTORY.md
-+++ b/src/governance/dimensions/99-metadata/examples/DIRECTORY.md
-@@ -11,1 +11,1 @@
--- **è·è²¬**ï¼YAML éç½®æä»¶
-+
-- **è·è²¬**ï¼YAML éç½®æä»¶
-@@ -25,1 +25,1 @@
--### metadata-entry-example.yaml
-+### metadata-entry-example.yaml
-
-@@ -36,1 +36,1 @@
--## è·è²¬åé¢èªªæ
-+## è·è²¬åé¢èªªæ
-
-diff --git a/src/governance/dimensions/20-intent/DIRECTORY.md b/src/governance/dimensions/20-intent/DIRECTORY.md
---- a/src/governance/dimensions/20-intent/DIRECTORY.md
-+++ b/src/governance/dimensions/20-intent/DIRECTORY.md
-@@ -15,1 +15,1 @@
--### policy.rego
-+### policy.rego
-
-@@ -20,1 +20,1 @@
--### schema.json
-+### schema.json
-
-@@ -26,1 +26,1 @@
--## è·è²¬åé¢èªªæ
-+## è·è²¬åé¢èªªæ
-
-@@ -32,1 +32,1 @@
--### å®ä¸è·è²¬åå (SRP) éµå¾ª
-+### å®ä¸è·è²¬åå (SRP) éµå¾ª
-
-@@ -33,1 +33,1 @@
--1. **æ¨¡çµç´å¥è·è²¬å®ä¸å**ï¼[å¾è£å]
-+
-1. **æ¨¡çµç´å¥è·è²¬å®ä¸å**ï¼[å¾è£å]
-diff --git a/archive/infrastructure/DIRECTORY.md b/archive/infrastructure/DIRECTORY.md
---- a/archive/infrastructure/DIRECTORY.md
-+++ b/archive/infrastructure/DIRECTORY.md
-@@ -22,1 +22,1 @@
--## è¨­è¨åå
-+## è¨­è¨åå
-
-diff --git a/archive/infrastructure/kubernetes/phase2/06-monitoring/jaeger/DIRECTORY.md b/archive/infrastructure/kubernetes/phase2/06-monitoring/jaeger/DIRECTORY.md
---- a/archive/infrastructure/kubernetes/phase2/06-monitoring/jaeger/DIRECTORY.md
-+++ b/archive/infrastructure/kubernetes/phase2/06-monitoring/jaeger/DIRECTORY.md
-@@ -3,1 +3,1 @@
--## ç®éè·è²¬
-+## ç®éè·è²¬
-
-@@ -15,1 +15,1 @@
--### service.yaml
-+### service.yaml
-
-diff --git a/src/models/dto/DIRECTORY.md b/src/models/dto/DIRECTORY.md
---- a/src/models/dto/DIRECTORY.md
-+++ b/src/models/dto/DIRECTORY.md
-@@ -14,1 +14,1 @@
--- [å¾è£åï¼åå±¤æ¬¡çè·è²¬èªªæ]
-+
-- [å¾è£åï¼åå±¤æ¬¡çè·è²¬èªªæ]
-@@ -18,1 +18,1 @@
--### å®ä¸è·è²¬åå (SRP) éµå¾ª
-+### å®ä¸è·è²¬åå (SRP) éµå¾ª
-
-@@ -24,1 +24,1 @@
--1. **æ·»å æ°åè½æ**ï¼[å¾è£å]
-+
-1. **æ·»å æ°åè½æ**ï¼[å¾è£å]
-diff --git a/src/ai/agents/vulnerability-detector/examples/DIRECTORY.md b/src/ai/agents/vulnerability-detector/examples/DIRECTORY.md
---- a/src/ai/agents/vulnerability-detector/examples/DIRECTORY.md
-+++ b/src/ai/agents/vulnerability-detector/examples/DIRECTORY.md
-@@ -18,1 +18,1 @@
--### å®ä¸è·è²¬åå (SRP) éµå¾ª
-+### å®ä¸è·è²¬åå (SRP) éµå¾ª
-
-diff --git a/src/governance/22-aesthetic/DIRECTORY.md b/src/governance/22-aesthetic/DIRECTORY.md
---- a/src/governance/22-aesthetic/DIRECTORY.md
-+++ b/src/governance/22-aesthetic/DIRECTORY.md
-@@ -10,1 +10,1 @@
--### README.md
-+### README.md
-
-@@ -33,1 +33,1 @@
--1. **æ·»å æ°åè½æ**ï¼[å¾è£å]
-+
-1. **æ·»å æ°åè½æ**ï¼[å¾è£å]
-diff --git a/src/governance/dimensions/68-visualization/DIRECTORY.md b/src/governance/dimensions/68-visualization/DIRECTORY.md
---- a/src/governance/dimensions/68-visualization/DIRECTORY.md
-+++ b/src/governance/dimensions/68-visualization/DIRECTORY.md
-@@ -26,1 +26,1 @@
--## è·è²¬åé¢èªªæ
-+## è·è²¬åé¢èªªæ
-
-@@ -32,1 +32,1 @@
--### å®ä¸è·è²¬åå (SRP) éµå¾ª
-+### å®ä¸è·è²¬åå (SRP) éµå¾ª
-
-@@ -33,1 +33,1 @@
--1. **æ¨¡çµç´å¥è·è²¬å®ä¸å**ï¼[å¾è£å]
-+
-1. **æ¨¡çµç´å¥è·è²¬å®ä¸å**ï¼[å¾è£å]
-@@ -37,1 +37,1 @@
--### æªä¾ç¶­è­·æ³¨æäºé 
-+### æªä¾ç¶­è­·æ³¨æäºé 
-
-diff --git a/archive/unmanned-engineer-ceo/10-traits-matrix/cognition-modes/DIRECTORY.md b/archive/unmanned-engineer-ceo/10-traits-matrix/cognition-modes/DIRECTORY.md
---- a/archive/unmanned-engineer-ceo/10-traits-matrix/cognition-modes/DIRECTORY.md
-+++ b/archive/unmanned-engineer-ceo/10-traits-matrix/cognition-modes/DIRECTORY.md
-@@ -6,1 +6,1 @@
--
-+
-@@ -11,1 +11,1 @@
--- **è·è²¬**ï¼Markdown ææª
-+
-- **è·è²¬**ï¼Markdown ææª
-diff --git a/src/governance/dimensions/37-behavior-contracts/DIRECTORY.md b/src/governance/dimensions/37-behavior-contracts/DIRECTORY.md
---- a/src/governance/dimensions/37-behavior-contracts/DIRECTORY.md
-+++ b/src/governance/dimensions/37-behavior-contracts/DIRECTORY.md
-@@ -10,1 +10,1 @@
--### dimension.yaml
-+### dimension.yaml
-
-@@ -11,1 +11,1 @@
--- **è·è²¬**ï¼YAML éç½®æä»¶
-+
-- **è·è²¬**ï¼YAML éç½®æä»¶
-@@ -28,1 +28,1 @@
--- [å¾è£åï¼åå±¤æ¬¡çè·è²¬èªªæ]
-+
-- [å¾è£åï¼åå±¤æ¬¡çè·è²¬èªªæ]
-diff --git a/src/apps/web-backend/tests/DIRECTORY.md b/src/apps/web-backend/tests/DIRECTORY.md
---- a/src/apps/web-backend/tests/DIRECTORY.md
-+++ b/src/apps/web-backend/tests/DIRECTORY.md
-@@ -16,1 +16,1 @@
--## è·è²¬åé¢èªªæ
-+## è·è²¬åé¢èªªæ
-
-diff --git a/src/core/contract_service/contracts-L1/DIRECTORY.md b/src/core/contract_service/contracts-L1/DIRECTORY.md
---- a/src/core/contract_service/contracts-L1/DIRECTORY.md
-+++ b/src/core/contract_service/contracts-L1/DIRECTORY.md
-@@ -19,1 +19,1 @@
--### å®ä¸è·è²¬åå (SRP) éµå¾ª
-+### å®ä¸è·è²¬åå (SRP) éµå¾ª
-
-@@ -20,1 +20,1 @@
--1. **æ¨¡çµç´å¥è·è²¬å®ä¸å**ï¼[å¾è£å]
-+
-1. **æ¨¡çµç´å¥è·è²¬å®ä¸å**ï¼[å¾è£å]
-diff --git a/archive/infrastructure/kubernetes/phase2/02-storage/DIRECTORY.md b/archive/infrastructure/kubernetes/phase2/02-storage/DIRECTORY.md
---- a/archive/infrastructure/kubernetes/phase2/02-storage/DIRECTORY.md
-+++ b/archive/infrastructure/kubernetes/phase2/02-storage/DIRECTORY.md
-@@ -6,1 +6,1 @@
--
-+
-@@ -11,1 +11,1 @@
--- **è·è²¬**ï¼YAML éç½®æä»¶
-+
-- **è·è²¬**ï¼YAML éç½®æä»¶
-@@ -15,1 +15,1 @@
--### storage-classes.yaml
-+### storage-classes.yaml
-
-@@ -24,1 +24,1 @@
--## è¨­è¨åå
-+## è¨­è¨åå
-
-diff --git a/src/services/api-gateway/src/routes/DIRECTORY.md b/src/services/api-gateway/src/routes/DIRECTORY.md
---- a/src/services/api-gateway/src/routes/DIRECTORY.md
-+++ b/src/services/api-gateway/src/routes/DIRECTORY.md
-@@ -6,1 +6,1 @@
--
-+
-@@ -10,1 +10,1 @@
--### auth.ts
-+### auth.ts
-
-@@ -11,1 +11,1 @@
--- **è·è²¬**ï¼TypeScript æºä»£ç¢¼ - Mock user database (replace with real database)
-+
-- **è·è²¬**ï¼TypeScript æºä»£ç¢¼ - Mock user database (replace with real database)
-@@ -26,1 +26,1 @@
--- **è·è²¬**ï¼TypeScript æºä»£ç¢¼
-+
-- **è·è²¬**ï¼TypeScript æºä»£ç¢¼
-@@ -43,1 +43,1 @@
--1. **æ¨¡çµç´å¥è·è²¬å®ä¸å**ï¼[å¾è£å]
-+
-1. **æ¨¡çµç´å¥è·è²¬å®ä¸å**ï¼[å¾è£å]
-diff --git a/src/apps/web-backend/DIRECTORY.md b/src/apps/web-backend/DIRECTORY.md
---- a/src/apps/web-backend/DIRECTORY.md
-+++ b/src/apps/web-backend/DIRECTORY.md
-@@ -3,1 +3,1 @@
--## ç®éè·è²¬
-+## ç®éè·è²¬
-
-@@ -13,1 +13,1 @@
--- **è·è²¬**ï¼å¶ä»æä»¶
-+
-- **è·è²¬**ï¼å¶ä»æä»¶
-@@ -30,1 +30,1 @@
--1. **æ¨¡çµç´å¥è·è²¬å®ä¸å**ï¼[å¾è£å]
-+
-1. **æ¨¡çµç´å¥è·è²¬å®ä¸å**ï¼[å¾è£å]
-diff --git a/src/governance/dimensions/77-experimentation/DIRECTORY.md b/src/governance/dimensions/77-experimentation/DIRECTORY.md
---- a/src/governance/dimensions/77-experimentation/DIRECTORY.md
-+++ b/src/governance/dimensions/77-experimentation/DIRECTORY.md
-@@ -10,1 +10,1 @@
--### dimension.yaml
-+### dimension.yaml
-
-@@ -11,1 +11,1 @@
--- **è·è²¬**ï¼YAML éç½®æä»¶
-+
-- **è·è²¬**ï¼YAML éç½®æä»¶
-@@ -15,1 +15,1 @@
--### policy.rego
-+### policy.rego
-
-@@ -20,1 +20,1 @@
--### schema.json
-+### schema.json
-
-@@ -33,1 +33,1 @@
--1. **æ¨¡çµç´å¥è·è²¬å®ä¸å**ï¼[å¾è£å]
-+
-1. **æ¨¡çµç´å¥è·è²¬å®ä¸å**ï¼[å¾è£å]
-diff --git a/src/ai/agents/devops/pipelines/DIRECTORY.md b/src/ai/agents/devops/pipelines/DIRECTORY.md
---- a/src/ai/agents/devops/pipelines/DIRECTORY.md
-+++ b/src/ai/agents/devops/pipelines/DIRECTORY.md
-@@ -3,1 +3,1 @@
--## ç®éè·è²¬
-+## ç®éè·è²¬
-
-@@ -10,1 +10,1 @@
--### deploy.ts
-+### deploy.ts
-
-@@ -28,1 +28,1 @@
--1. **æ¨¡çµç´å¥è·è²¬å®ä¸å**ï¼[å¾è£å]
-+
-1. **æ¨¡çµç´å¥è·è²¬å®ä¸å**ï¼[å¾è£å]

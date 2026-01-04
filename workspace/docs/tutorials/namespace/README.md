@@ -102,8 +102,8 @@ chmod +x scripts/*.sh
 
 ### 第一階段：基礎概念
 
-1. 閱讀 [命名空間基礎概念介紹](docs/introduction.md)
-2. 了解 [命名空間的核心特性](docs/core_features.md)
+1. 閱讀 [命名空間基礎概念介紹](../../introduction.md)
+2. 了解 [命名空間的核心特性](../../core_features.md)
 
 ### 第二階段：技術實踐
 

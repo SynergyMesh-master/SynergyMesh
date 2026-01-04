@@ -287,48 +287,48 @@ ROI：+1.8%（第一年）→ +42.5%（持續收益）
 
 | 文檔 | 說明 |
 |------|------|
-| [產品概覽](docs/PRODUCT_OVERVIEW.md) | 系統定位、核心價值、MVP 三支柱 |
-| [系統架構](docs/SYSTEM_ARCHITECTURE.md) | 三大子系統、技術選型 |
+| [產品概覽](./PRODUCT_OVERVIEW.md) | 系統定位、核心價值、MVP 三支柱 |
+| [系統架構](./SYSTEM_ARCHITECTURE.md) | 三大子系統、技術選型 |
 
 ### AI Agents 與自動化
 
 | 文檔 | 說明 |
 |------|------|
-| [island-cli](docs/AGENTS/CLI.md) | AI 驅動的命令列工具 |
-| [虛擬專家系統](docs/AGENTS/VIRTUAL_EXPERTS.md) | 7 種 AI Agent 詳解 |
-| [MCP 協議](docs/AGENTS/MCP.md) | Model Context Protocol 整合 |
-| [Agent 生命週期](docs/AGENTS/LIFECYCLE.md) | 誕生、成長、協作、退休 |
+| [island-cli](./agents/CLI.md) | AI 驅動的命令列工具 |
+| [虛擬專家系統](./agents/VIRTUAL_EXPERTS.md) | 7 種 AI Agent 詳解 |
+| [MCP 協議](./agents/MCP.md) | Model Context Protocol 整合 |
+| [Agent 生命週期](./agents/LIFECYCLE.md) | 誕生、成長、協作、退休 |
 
 ### 核心元件
 
 | 文檔 | 說明 |
 |------|------|
-| [活體知識庫](docs/COMPONENTS/LIVING_KNOWLEDGE_BASE.md) | 自我感知設計 |
-| [自動化概覽](docs/COMPONENTS/AUTOMATION_OVERVIEW.md) | 自動化模組 |
-| [決策引擎](docs/COMPONENTS/DECISION_ENGINE.md) | 多 Agent 協調 |
+| [活體知識庫](./LIVING_KNOWLEDGE_BASE.md) | 自我感知設計 |
+| [自動化概覽](./automation/AUTOMATION_OVERVIEW.md) | 自動化模組 |
+| [決策引擎](./DECISION_ENGINE.md) | 多 Agent 協調 |
 
 ### 治理框架
 
 | 文檔 | 說明 |
 |------|------|
-| [治理概覽](docs/GOVERNANCE/overview.md) | 十階段管道、Schema、AI 憲章 |
-| [L2-L4 決策模型](docs/GOVERNANCE/decision_levels.md) | 分層決策詳解 |
-| [L0 治理政策](docs/GOVERNANCE/l0_policy.md) | 為何移除 L0 與未來規劃 |
-| [SLSA 溯源](docs/GOVERNANCE/slsa.md) | 供應鏈安全 |
+| [治理概覽](../src/governance/overview.md) | 十階段管道、Schema、AI 憲章 |
+| [L2-L4 決策模型](../src/governance/decision_levels.md) | 分層決策詳解 |
+| [L0 治理政策](../src/governance/l0_policy.md) | 為何移除 L0 與未來規劃 |
+| [SLSA 溯源](../src/governance/slsa.md) | 供應鏈安全 |
 
 ### 自主系統
 
 | 文檔 | 說明 |
 |------|------|
-| [五骨架框架](docs/AUTONOMY/FRAMEWORK.md) | 自主系統架構 |
-| [無人機配置](docs/AUTONOMY/UAV_CONFIG.md) | 編隊配置 |
+| [五骨架框架](../src/autonomous/FRAMEWORK.md) | 自主系統架構 |
+| [無人機配置](../src/autonomous/UAV_CONFIG.md) | 編隊配置 |
 
 ### 多語言架構
 
 | 文檔 | 說明 |
 |------|------|
-| [多語言策略](docs/ARCHITECTURE/MULTILANG_STRATEGY.md) | 為何選擇 5 種語言 |
-| [統一工具鏈](docs/ARCHITECTURE/UNIFIED_TOOLCHAIN.md) | Bazel 構建系統 |
+| [多語言策略](./architecture/MULTILANG_STRATEGY.md) | 為何選擇 5 種語言 |
+| [統一工具鏈](./architecture/UNIFIED_TOOLCHAIN.md) | Bazel 構建系統 |
 | [跨語言通信](docs/ARCHITECTURE/CROSS_LANG_COMM.md) | API 合約系統 |
 
 ### 部署與維運
@@ -447,9 +447,9 @@ island-cli collaborate "重構支付模組" \
 
 📚 完整文檔：
 
-- [island-cli 詳解](docs/AGENTS/CLI.md)
-- [Agent 系統](docs/AGENTS/VIRTUAL_EXPERTS.md)
-- [MCP 協議](docs/AGENTS/MCP.md)
+- [island-cli 詳解](./agents/CLI.md)
+- [Agent 系統](./agents/VIRTUAL_EXPERTS.md)
+- [MCP 協議](./agents/MCP.md)
 
 ---
 

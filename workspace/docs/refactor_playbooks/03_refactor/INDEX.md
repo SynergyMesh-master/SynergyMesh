@@ -20,7 +20,7 @@
 
 | 檔案 | Cluster ID | 狀態 | 最後更新 | 說明 |
 |------|------------|------|----------|------|
-| [core__architecture_refactor.md](core/core__architecture_refactor.md) | `core/architecture-stability` | 🟡 草稿 | 2025-12-06 | 核心架構穩定性重構 |
+| [core__architecture_refactor.md](../../../src/core/core__architecture_refactor.md) | `core/architecture-stability` | 🟡 草稿 | 2025-12-06 | 核心架構穩定性重構 |
 
 ### Services Domain
 
@@ -33,7 +33,7 @@
 
 | 檔案 | Cluster ID | 狀態 | 最後更新 | 說明 |
 |------|------------|------|----------|------|
-| [automation__autonomous_refactor.md](automation/automation__autonomous_refactor.md) | `automation/autonomous` | 🟡 草稿 | 2025-12-06 | 五骨架自主系統重構 |
+| [automation__autonomous_refactor.md](../../../src/automation/automation__autonomous_refactor.md) | `automation/autonomous` | 🟡 草稿 | 2025-12-06 | 五骨架自主系統重構 |
 | _待補充_ | `automation/architect` | ⚪ 待建立 | - | 架構分析模組重構 |
 | _待補充_ | `automation/hyperautomation` | ⚪ 待建立 | - | 超自動化策略重構 |
 
@@ -113,7 +113,7 @@
 ### 範例
 
 ```markdown
-| [core__architecture_refactor.md](core/core__architecture_refactor.md) | `core/architecture-stability` | ✅ 完成 | 2025-12-10 | 核心架構穩定性重構 |
+| [core__architecture_refactor.md](../../../src/core/core__architecture_refactor.md) | `core/architecture-stability` | ✅ 完成 | 2025-12-10 | 核心架構穩定性重構 |
 ```
 
 ---

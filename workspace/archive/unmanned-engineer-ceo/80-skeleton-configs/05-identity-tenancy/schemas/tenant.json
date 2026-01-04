@@ -1,0 +1,91 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Tenant Schema",
+  "type": "object",
+  "required": [
+    "id",
+    "name",
+    "tier",
+    "isolation_level",
+    "status"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^tnt_[a-zA-Z0-9]{20}$"
+    },
+    "name": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]{3,63}$"
+    },
+    "display_name": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 100
+    },
+    "organization_id": {
+      "type": "string",
+      "pattern": "^org_[a-zA-Z0-9]{20}$"
+    },
+    "tier": {
+      "type": "string",
+      "enum": ["free", "standard", "enterprise"]
+    },
+    "isolation_level": {
+      "type": "string",
+      "enum": ["shared", "dedicated", "isolated"]
+    },
+    "quotas": {
+      "type": "object",
+      "required": [
+        "max_users",
+        "max_projects",
+        "max_agents",
+        "max_knowledge_size_gb",
+        "max_api_calls_per_month"
+      ],
+      "properties": {
+        "max_users": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "max_projects": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "max_agents": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "max_knowledge_size_gb": {
+          "type": "number",
+          "minimum": 0
+        },
+        "max_api_calls_per_month": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "settings": {
+      "type": "object",
+      "properties": {
+        "sso_enabled": {
+          "type": "boolean"
+        },
+        "audit_log_retention_days": {
+          "type": "integer",
+          "minimum": 30,
+          "maximum": 3650
+        },
+        "require_mfa": {
+          "type": "boolean"
+        }
+      }
+    },
+    "status": {
+      "type": "string",
+      "enum": ["active", "trial", "suspended", "deleted"]
+    }
+  }
+}

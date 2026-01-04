@@ -371,7 +371,7 @@ sed -i 's/version-.*-blue/version-1.0.0-blue/' README.md
 
 - [安裝指南](INSTALL.md)
 - [構建指南](BUILD.md)
-- [API 文檔](docs/)
+- [API 文檔](./)
 
 ### 🙏 致謝
 

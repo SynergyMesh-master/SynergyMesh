@@ -1,0 +1,190 @@
+# RBAC Policies Configuration
+version: 1.0.0
+
+roles:
+  # 超級管理員
+  - id: super_admin
+    name: Super Administrator
+    description: 完整系統存取權限
+    permissions:
+      - "*"
+    assignable_by:
+      - super_admin
+
+  # 租戶管理員
+  - id: tenant_admin
+    name: Tenant Administrator
+    description: 租戶內完整權限
+    permissions:
+      - "tenant:*"
+      - "project:*"
+      - "user:*"
+      - "billing:read"
+      - "billing:update"
+    assignable_by:
+      - super_admin
+      - tenant_admin
+
+  # 專案管理員
+  - id: project_admin
+    name: Project Administrator
+    description: 專案內完整權限
+    permissions:
+      - "project:read"
+      - "project:update"
+      - "project:delete"
+      - "deployment:*"
+      - "agent:*"
+      - "knowledge:*"
+    assignable_by:
+      - tenant_admin
+      - project_admin
+
+  # 開發者
+  - id: developer
+    name: Developer
+    description: 開發與部署權限
+    permissions:
+      - "project:read"
+      - "deployment:read"
+      - "deployment:create"
+      - "deployment:update"
+      - "agent:read"
+      - "agent:create"
+      - "agent:update"
+      - "knowledge:read"
+      - "knowledge:write"
+    assignable_by:
+      - tenant_admin
+      - project_admin
+
+  # 檢視者
+  - id: viewer
+    name: Viewer
+    description: 唯讀權限
+    permissions:
+      - "project:read"
+      - "deployment:read"
+      - "agent:read"
+      - "knowledge:read"
+    assignable_by:
+      - tenant_admin
+      - project_admin
+
+# 權限定義
+permissions:
+  # 租戶管理
+  - id: "tenant:create"
+    resource: tenant
+    action: create
+    description: 建立新租戶
+  
+  - id: "tenant:read"
+    resource: tenant
+    action: read
+    description: 檢視租戶資訊
+  
+  - id: "tenant:update"
+    resource: tenant
+    action: update
+    description: 更新租戶設定
+  
+  - id: "tenant:delete"
+    resource: tenant
+    action: delete
+    description: 刪除租戶
+
+  # 專案管理
+  - id: "project:create"
+    resource: project
+    action: create
+    description: 建立新專案
+  
+  - id: "project:read"
+    resource: project
+    action: read
+    description: 檢視專案資訊
+  
+  - id: "project:update"
+    resource: project
+    action: update
+    description: 更新專案設定
+  
+  - id: "project:delete"
+    resource: project
+    action: delete
+    description: 刪除專案
+
+  # 部署管理
+  - id: "deployment:create"
+    resource: deployment
+    action: create
+    description: 建立新部署
+  
+  - id: "deployment:read"
+    resource: deployment
+    action: read
+    description: 檢視部署狀態
+  
+  - id: "deployment:update"
+    resource: deployment
+    action: update
+    description: 更新部署配置
+  
+  - id: "deployment:rollback"
+    resource: deployment
+    action: rollback
+    description: 回滾部署
+  
+  - id: "deployment:delete"
+    resource: deployment
+    action: delete
+    description: 刪除部署
+
+  # Agent 管理
+  - id: "agent:create"
+    resource: agent
+    action: create
+    description: 建立新 Agent
+  
+  - id: "agent:read"
+    resource: agent
+    action: read
+    description: 檢視 Agent 資訊
+  
+  - id: "agent:update"
+    resource: agent
+    action: update
+    description: 更新 Agent 配置
+  
+  - id: "agent:delete"
+    resource: agent
+    action: delete
+    description: 刪除 Agent
+
+  # 知識庫管理
+  - id: "knowledge:read"
+    resource: knowledge
+    action: read
+    description: 查詢知識庫
+  
+  - id: "knowledge:write"
+    resource: knowledge
+    action: write
+    description: 寫入知識庫
+  
+  - id: "knowledge:delete"
+    resource: knowledge
+    action: delete
+    description: 刪除知識條目
+
+  # 帳務管理
+  - id: "billing:read"
+    resource: billing
+    action: read
+    description: 檢視帳務資訊
+  
+  - id: "billing:update"
+    resource: billing
+    action: update
+    description: 更新付款方式
