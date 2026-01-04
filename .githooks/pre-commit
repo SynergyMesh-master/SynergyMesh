@@ -107,4 +107,30 @@ if printf '%s\n' "${staged_files[@]}" | grep -q "^controlplane/"; then
     fi
 fi
 
+# =============================================================================
+# fs.map Auto-Sync Check
+# =============================================================================
+# Check if directory structure changed and fs.map needs regeneration
+
+FSMAP_GENERATOR="$REPO_ROOT/bin/fs-map-generator.py"
+
+if [[ -f "$FSMAP_GENERATOR" ]]; then
+    # Check if any directories were added or removed
+    dir_changes=$(git diff --cached --name-only --diff-filter=AD | grep -E "/$" || true)
+
+    if [[ -n "$dir_changes" ]]; then
+        cp_log_info "Directory structure changed, checking fs.map drift..."
+
+        # Run drift check
+        if python3 "$FSMAP_GENERATOR" --check-drift >/dev/null 2>&1; then
+            cp_log_success "fs.map is in sync"
+        else
+            cp_log_warning "fs.map drift detected!"
+            cp_log_info "Run './bin/fs-map-generator.py --regenerate' to update"
+            cp_log_info "Or commit with --no-verify to skip (not recommended)"
+            # Note: We warn but don't block - drift is informational
+        fi
+    fi
+fi
+
 exit 0

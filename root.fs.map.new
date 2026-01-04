@@ -1,0 +1,176 @@
+# =============================================================================
+# Root Filesystem Mapping - Core Layer (Slim Version)
+# MachineNativeOps Root Layer Filesystem Mapping
+# =============================================================================
+# Version: 2.0.0
+# Last Modified: 2026-01-04
+# Architecture: Hierarchical fs.map with root.fs.index aggregation
+#
+# This file contains ONLY:
+#   1. FHS system directories
+#   2. Top-level module entry points
+#   3. Production installation paths
+#
+# Module-specific mappings are defined in:
+#   - controlplane/fs.map
+#   - workspace/fs.map
+#   - chatops/fs.map
+#   - web/fs.map
+#
+# See root.fs.index for the complete aggregation structure.
+# =============================================================================
+
+# === 格式說明 (Format Specification) ===
+# logical_name:physical_path:filesystem_type:mount_options:permissions:description
+#
+# Directives:
+#   @include <path>     - Include another fs.map file
+#   @index <path>       - Reference to fs.index for aggregation
+#   [group_name]        - Define a directory group
+# =============================================================================
+
+# === 索引參考 (Index Reference) ===
+@index root.fs.index
+
+# =============================================================================
+# SECTION 1: FHS 3.0 Standard Directories (System Level)
+# =============================================================================
+
+# Essential directories
+fs_root:/:rootfs:defaults:-rwxr-xr-x:System root directory
+fs_bin:/bin:ext4:ro,relatime:-rwxr-xr-x:Essential user binaries
+fs_sbin:/sbin:ext4:ro,relatime:-rwxr-xr-x:Essential system binaries
+fs_lib:/lib:ext4:ro,relatime:-r-xr-xr-x:Essential shared libraries
+fs_lib64:/lib64:ext4:ro,relatime:-r-xr-xr-x:Essential 64-bit shared libraries
+fs_etc:/etc:ext4:relatime,rw:-rwxr-xr-x:System configuration files
+fs_var:/var:ext4:relatime,rw:-rwxr-xr-x:Variable data files
+fs_usr:/usr:ext4:relatime,rw:-rwxr-xr-x:User programs and data
+fs_opt:/opt:ext4:relatime,rw:-rwxr-xr-x:Optional application software
+fs_home:/home:ext4:relatime,rw:-rwxr-xr-x:User home directories
+fs_tmp:/tmp:tmpfs:size=2G,rw,nosuid,nodev:-rwxrwxrwx:Temporary files
+fs_boot:/boot:ext4:ro,relatime:-rwxr-xr-x:Boot loader files
+fs_dev:/dev:devtmpfs:size=10M,mode=0755:-rwxr-xr-x:Device files
+fs_proc:/proc:proc:defaults:-r-xr-xr-x:Process information
+fs_sys:/sys:sysfs:defaults:-r-xr-xr-x:System information
+fs_run:/run:tmpfs:size=100M,rw,nosuid,nodev:-rwxr-xr-x:Runtime variable data
+fs_srv:/srv:ext4:relatime,rw:-rwxr-xr-x:Service data
+
+# =============================================================================
+# SECTION 2: Repository Top-Level Entry Points
+# =============================================================================
+
+# FHS directories in repository (symlinks/stubs)
+repo_bin:./bin:ext4:relatime,rw:-rwxr-xr-x:Repository bin directory
+repo_sbin:./sbin:ext4:relatime,rw:-rwxr-xr-x:Repository sbin directory
+repo_etc:./etc:ext4:relatime,rw:-rwxr-xr-x:Repository etc directory
+repo_lib:./lib:ext4:relatime,rw:-r-xr-xr-x:Repository lib directory
+repo_home:./home:ext4:relatime,rw:-rwxr-xr-x:Repository home directory
+repo_usr:./usr:ext4:relatime,rw:-rwxr-xr-x:Repository usr directory
+repo_var:./var:ext4:relatime,rw:-rwxr-xr-x:Repository var directory
+repo_srv:./srv:ext4:relatime,rw:-rwxr-xr-x:Repository srv directory
+
+# Primary module entry points (detailed mappings in respective fs.map files)
+@include controlplane/fs.map
+controlplane_root:./controlplane:ext4:relatime,rw:-rwxr-xr-x:Controlplane governance layer
+
+@include workspace/fs.map
+workspace_root:./workspace:ext4:relatime,rw:-rwxr-xr-x:Workspace project layer
+
+@include chatops/fs.map
+chatops_root:./chatops:ext4:relatime,rw:-rwxr-xr-x:ChatOps automation layer
+
+@include web/fs.map
+web_root:./web:ext4:relatime,rw:-rwxr-xr-x:Web frontend layer
+
+# Other top-level directories
+docs_root:./docs:ext4:relatime,rw:-rwxr-xr-x:Documentation
+tests_root:./tests:ext4:relatime,rw:-rwxr-xr-x:Test suites
+
+# Archive/problematic (excluded from normal operations)
+archive_root:./workspace-archive:ext4:relatime,rw:-rwxr-xr-x:Archived workspace
+problematic_root:./workspace-problematic:ext4:relatime,rw:-rwxr-xr-x:Problematic files quarantine
+
+# =============================================================================
+# SECTION 3: Production Installation Paths
+# =============================================================================
+
+# MachineNativeOps installation root
+mno_root:/opt/machinenativenops:ext4:relatime,rw:-rwxr-xr-x:MachineNativeOps root directory
+mno_bin:/opt/machinenativenops/bin:ext4:relatime,rw:-rwxr-xr-x:MachineNativeOps binaries
+mno_sbin:/opt/machinenativenops/sbin:ext4:relatime,rw:-rwxr-xr-x:MachineNativeOps system binaries
+mno_lib:/opt/machinenativenops/lib:ext4:relatime,rw:-r-xr-xr-x:MachineNativeOps libraries
+mno_etc:/etc/machinenativenops:ext4:relatime,rw:-rwxr-xr-x:MachineNativeOps configuration
+mno_var:/var/lib/machinenativenops:ext4:relatime,rw:-rwxr-xr-x:MachineNativeOps variable data
+mno_log:/var/log/machinenativenops:ext4:relatime,rw:-rwxr-xr-x:MachineNativeOps logs
+mno_run:/var/run/machinenativenops:tmpfs:size=50M,rw:-rwxr-xr-x:MachineNativeOps runtime
+mno_cache:/var/cache/machinenativenops:ext4:relatime,rw:-rwxr-xr-x:MachineNativeOps cache
+mno_tmp:/tmp/machinenativenops:tmpfs:size=1G,rw,nosuid,nodev:-rwxrwxrwx:MachineNativeOps temp
+
+# Trust and security
+mno_trust:/etc/machinenativenops/trust:ext4:relatime,rw:-rwx------:Trust root certificates
+mno_secrets:/etc/machinenativenops/secrets:ext4:relatime,rw:-rwx------:Secrets storage
+mno_policies:/etc/machinenativenops/policies:ext4:relatime,rw:-rwx------:Security policies
+
+# Database
+mno_db:/var/lib/machinenativenops/db:ext4:relatime,rw:-rwx------:Database storage
+mno_db_backup:/var/backups/machinenativenops:ext4:relatime,rw:-rwxr-xr-x:Database backups
+
+# Modules
+mno_modules:/opt/machinenativenops/modules:ext4:relatime,rw:-rwxr-xr-x:Module storage
+
+# =============================================================================
+# SECTION 4: Directory Groups
+# =============================================================================
+
+[critical_directories]
+members=fs_root,fs_etc,fs_bin,fs_sbin,mno_root,mno_etc,mno_trust,mno_secrets
+description=Critical system directories requiring highest protection
+permissions=strict
+
+[governance_directories]
+members=controlplane_root
+description=Governance and configuration directories
+permissions=controlled
+
+[work_directories]
+members=workspace_root,chatops_root,web_root
+description=Development and work directories
+permissions=standard
+
+[temporary_directories]
+members=fs_tmp,mno_tmp,mno_cache
+description=Temporary and cache directories
+permissions=volatile
+
+# =============================================================================
+# SECTION 5: Permission Profiles
+# =============================================================================
+
+[permission_profile:strict]
+owner=root
+group=root
+mode=700
+immutable=true
+
+[permission_profile:controlled]
+owner=root
+group=machinenativenops
+mode=750
+immutable=false
+
+[permission_profile:standard]
+owner=machinenativenops
+group=machinenativenops
+mode=755
+immutable=false
+
+[permission_profile:volatile]
+owner=machinenativenops
+group=machinenativenops
+mode=777
+immutable=false
+cleanup_policy=age:24h
+
+# =============================================================================
+# END OF ROOT.FS.MAP - See module fs.map files for detailed mappings
+# =============================================================================
