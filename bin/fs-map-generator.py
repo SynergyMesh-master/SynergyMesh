@@ -37,6 +37,7 @@ def normalize_physical_path(physical_path: str) -> str:
 
     Example:
         normalize_physical_path("./") -> "."
+        normalize_physical_path("/abs/path") -> "abs/path"
     """
     normalized = physical_path.strip()
 
@@ -124,7 +125,7 @@ def get_mapped_directories(generated_maps: Dict[str, List[FsMapEntry]]) -> Set[s
     """Return normalized, deduplicated directory paths from generated maps.
 
     Example:
-        ["./a", "./a", "./b"] -> {"a", "b"}
+        {"module": [FsMapEntry(physical_path="./a"), FsMapEntry(physical_path="./a")]} -> {"a"}
     """
     return {
         normalize_physical_path(entry.physical_path)
