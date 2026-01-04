@@ -57,6 +57,12 @@ async function resolveSafePath(userInputPath: string): Promise<string> {
   // Always resolve user input relative to the canonical safe root.
   const resolvedCandidate = path.resolve(canonicalSafeRootWithSep, normalizedInput);
 
+  // Validate containment before hitting the filesystem for symlink resolution.
+  const preCanonicalRel = path.relative(canonicalSafeRoot, resolvedCandidate);
+  if (preCanonicalRel.startsWith('..') || path.isAbsolute(preCanonicalRel)) {
+    throw new PathValidationError('Invalid file path');
+  }
+
   // Canonicalize the candidate to resolve any symlinks.
   const canonicalPath = await realpath(resolvedCandidate);
 

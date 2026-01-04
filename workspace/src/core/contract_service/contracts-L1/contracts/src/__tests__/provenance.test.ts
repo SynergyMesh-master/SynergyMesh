@@ -1,14 +1,17 @@
-import { writeFile, unlink, mkdir, rmdir } from 'fs/promises';
+import { writeFile, unlink, mkdir, rmdir, symlink } from 'fs/promises';
 import { join, relative } from 'path';
 import { tmpdir } from 'os';
 
 import { ProvenanceService, BuildAttestation } from '../services/provenance';
+import { PathValidationError } from '../errors';
 
 describe('ProvenanceService', () => {
   let service: ProvenanceService;
   let testFilePath: string;
   const SAFE_ROOT = tmpdir();
   let originalSafeRoot: string | undefined;
+  let outsideLinkPath: string | undefined;
+  let outsideTargetPath: string | undefined;
 
   beforeEach(async () => {
     originalSafeRoot = process.env.SAFE_ROOT_PATH;
@@ -32,6 +35,16 @@ describe('ProvenanceService', () => {
     } catch {
       // ignore cleanup errors
     }
+
+    if (outsideLinkPath) {
+      await unlink(outsideLinkPath).catch(() => {});
+      outsideLinkPath = undefined;
+    }
+
+    if (outsideTargetPath) {
+      await unlink(outsideTargetPath).catch(() => {});
+      outsideTargetPath = undefined;
+    }
   });
 
   describe('generateFileDigest', () => {
@@ -42,6 +55,19 @@ describe('ProvenanceService', () => {
 
     it('should reject path traversal attempts', async () => {
       await expect(service.generateFileDigest('../../../etc/passwd')).rejects.toThrow();
+    });
+
+    it('should reject symlinks escaping the safe root', async () => {
+      outsideTargetPath = join(process.cwd(), `outside-target-${Date.now()}.txt`);
+      outsideLinkPath = join(SAFE_ROOT, `outside-link-${Date.now()}`);
+
+      await writeFile(outsideTargetPath, 'outside content');
+      await symlink(outsideTargetPath, outsideLinkPath);
+
+      const relativeLink = relative(SAFE_ROOT, outsideLinkPath);
+      await expect(service.generateFileDigest(relativeLink)).rejects.toBeInstanceOf(
+        PathValidationError
+      );
     });
   });
 
