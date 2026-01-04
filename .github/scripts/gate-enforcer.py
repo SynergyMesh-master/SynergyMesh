@@ -309,7 +309,7 @@ class GateEnforcer:
                 
                 # 排除允許大寫的模式
                 allowed_patterns = [
-                    r'\.md$',  # All markdown files
+                    r'\.md$',  # Markdown files (can contain uppercase)
                     r'^Chart\.yaml$',  # Helm Chart.yaml
                     r'^Taskfile\.yml$',  # Task Taskfile.yml
                     r'_REPORT\.(json|yaml|yml)$',  # Report files
