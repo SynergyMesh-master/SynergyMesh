@@ -99,8 +99,9 @@ jobs:
             "${high_confidence_patterns[@]}" | sed 's/|$//'))"
           echo "🔍 Scanning for high-confidence secret patterns..."
           if git grep -nE "$high_confidence_regex" -- . \
-             ':!node_modules' ':!.git' ':!*.md' ':!*.yml' \
-             ':!*.yaml' 2>/dev/null; then
+             ':!node_modules' ':!.git' ':!*.md' \
+             ':!.github/workflows/*.yml' ':!.github/workflows/*.yaml' \
+             2>/dev/null; then
             echo "::error::❌ HIGH-CONFIDENCE secrets detected" \
               "(GitHub tokens with specific formats)." \
               "These will always fail the workflow."
@@ -112,8 +113,9 @@ jobs:
             "${low_confidence_patterns[@]}" | sed 's/|$//'))"
           echo "🔍 Scanning for lower-confidence secret patterns..."
           if git grep -nE "$low_confidence_regex" -- . \
-             ':!node_modules' ':!.git' ':!*.md' ':!*.yml' \
-             ':!*.yaml' 2>/dev/null; then
+             ':!node_modules' ':!.git' ':!*.md' \
+             ':!.github/workflows/*.yml' ':!.github/workflows/*.yaml' \
+             2>/dev/null; then
             echo "::warning::⚠️ Potential secrets detected" \
               "(generic patterns). Please review the matches above."
             low_confidence_found=1
