@@ -19,6 +19,12 @@ const slsaRateLimiter = rateLimit({
   standardHeaders: true,
   legacyHeaders: false,
 });
+const provenanceRateLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 50,
+  standardHeaders: true,
+  legacyHeaders: false,
+});
 
 // 健康檢查端點
 router.get('/healthz', (_req: Request, res: Response) => {
@@ -56,13 +62,13 @@ router.get('/status', (_req: Request, res: Response) => {
 });
 
 // 溯源認證端點
-router.post('/api/v1/provenance/attestations', provenanceController.createAttestation);
-router.post('/api/v1/provenance/attest', provenanceController.createAttestation); // Alias for tests
-router.post('/api/v1/provenance/verify', provenanceController.verifyAttestation);
-router.post('/api/v1/provenance/import', provenanceController.importAttestation);
-router.post('/api/v1/provenance/digest', provenanceController.getFileDigest); // POST for tests
-router.get('/api/v1/provenance/digest/:filePath(*)', provenanceController.getFileDigest);
-router.get('/api/v1/provenance/export/:id', provenanceController.exportAttestation);
+router.post('/api/v1/provenance/attestations', provenanceRateLimiter, provenanceController.createAttestation);
+router.post('/api/v1/provenance/attest', provenanceRateLimiter, provenanceController.createAttestation); // Alias for tests
+router.post('/api/v1/provenance/verify', provenanceRateLimiter, provenanceController.verifyAttestation);
+router.post('/api/v1/provenance/import', provenanceRateLimiter, provenanceController.importAttestation);
+router.post('/api/v1/provenance/digest', provenanceRateLimiter, provenanceController.getFileDigest); // POST for tests
+router.get('/api/v1/provenance/digest/:filePath(*)', provenanceRateLimiter, provenanceController.getFileDigest);
+router.get('/api/v1/provenance/export/:id', provenanceRateLimiter, provenanceController.exportAttestation);
 
 // SLSA 認證端點
 router.post('/api/v1/slsa/attestations', slsaRateLimiter, slsaController.createAttestation);
