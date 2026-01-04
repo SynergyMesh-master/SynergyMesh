@@ -170,6 +170,9 @@ class ControlplaneIntegrationTests:
         
         success, _, _ = self.run_command(f"{cli_path} check-name MyFile.yaml --type file")
         self.assert_true(not success, "Invalid name check fails")
+
+        success, _, _ = self.run_command(f"{cli_path} check-name bad.yaml.txt --type file")
+        self.assert_true(not success, "Double extension is rejected")
         
         # 測試 synthesize 命令
         success, _, _ = self.run_command(f"{cli_path} synthesize")

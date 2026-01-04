@@ -1,0 +1,231 @@
+name: 📝 Draft Proposal
+description: Submit a preliminary idea, RFC, or work-in-progress proposal for discussion
+title: '[Draft]: '
+labels: [draft, proposal, triage]
+assignees: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for proposing a new idea! This template is for preliminary proposals, RFCs (Request for Comments), 
+        and work-in-progress ideas that need discussion before becoming formal feature requests.
+        
+  - type: checkboxes
+    id: existing-proposals
+    attributes:
+      label: Is there an existing proposal for this?
+      description: Please search to see if a similar proposal already exists.
+      options:
+        - label: I have searched the existing issues and proposals
+          required: true
+          
+  - type: input
+    id: proposal-title
+    attributes:
+      label: Proposal Title
+      description: A clear, concise title for your proposal
+      placeholder: e.g., "Implement quantum-ready encryption for autonomous agents"
+    validations:
+      required: true
+      
+  - type: textarea
+    id: problem-statement
+    attributes:
+      label: Problem Statement
+      description: What problem does this proposal aim to solve? What is the motivation?
+      placeholder: |
+        Describe the problem or opportunity clearly:
+        - What pain points exist in the current system?
+        - What use cases are not well-supported?
+        - Why is this important to address?
+    validations:
+      required: true
+      
+  - type: textarea
+    id: proposed-solution
+    attributes:
+      label: Proposed Solution
+      description: What is your proposed approach or solution?
+      placeholder: |
+        Describe your proposal in detail:
+        - What changes would be made?
+        - How would it work?
+        - What are the key components?
+    validations:
+      required: true
+      
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives Considered
+      description: What other approaches have you considered?
+      placeholder: |
+        List alternative solutions:
+        1. Alternative approach A
+        2. Alternative approach B
+        3. Why the proposed solution is preferred
+        
+  - type: textarea
+    id: open-questions
+    attributes:
+      label: Open Questions
+      description: What questions or uncertainties remain?
+      placeholder: |
+        List questions that need to be answered:
+        - Question 1?
+        - Question 2?
+        - Areas requiring further investigation
+        
+  - type: textarea
+    id: stakeholders
+    attributes:
+      label: Stakeholders to Consult
+      description: Who should be involved in this discussion?
+      placeholder: |
+        List relevant stakeholders:
+        - Team members
+        - Subject matter experts
+        - Affected user groups
+        
+  - type: dropdown
+    id: category
+    attributes:
+      label: Category
+      description: What area does this proposal affect?
+      options:
+        - Governance & Policy
+        - Architecture & Design
+        - Cloud-Native Platform
+        - AI-Powered Automation
+        - Autonomous Operations
+        - Self-Healing Systems
+        - Seamless Integration
+        - Real-Time Analytics
+        - Enterprise Security
+        - Developer Experience
+        - Documentation
+        - ChatOps Integration
+        - Observability & Monitoring
+        - Other
+    validations:
+      required: true
+      
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      description: How important is this proposal?
+      options:
+        - Critical - Blocking current operations
+        - High - Important for strategic goals
+        - Medium - Valuable improvement
+        - Low - Nice to have
+    validations:
+      required: true
+      
+  - type: dropdown
+    id: scope
+    attributes:
+      label: Scope
+      description: What is the expected scope of this change?
+      options:
+        - Small - Single component or module
+        - Medium - Multiple components, single layer
+        - Large - Cross-layer, multiple subsystems
+        - Extra Large - Platform-wide architectural change
+    validations:
+      required: true
+      
+  - type: textarea
+    id: governance-impact
+    attributes:
+      label: Governance Impact
+      description: How does this affect governance, policies, or compliance?
+      placeholder: |
+        Consider impact on:
+        - Policy framework (55-dimension governance)
+        - Compliance requirements (ISO/IEC 42001, NIST AI RMF, EU AI Act)
+        - SLSA provenance and security
+        - Agent governance (30-agents framework)
+        - FHS compliance
+        
+  - type: textarea
+    id: architecture-impact
+    attributes:
+      label: Architecture Impact
+      description: How does this affect the system architecture?
+      placeholder: |
+        Consider impact on:
+        - Controlplane (immutable governance layer)
+        - Workspace (mutable work layer)
+        - Overlay (runtime state)
+        - Three-layer coordination model
+        - Cross-subsystem dependencies
+        
+  - type: textarea
+    id: timeline
+    attributes:
+      label: Timeline & Milestones
+      description: What is the proposed timeline?
+      placeholder: |
+        Proposed timeline:
+        - Phase 1: Research & Design (timeframe)
+        - Phase 2: Prototype/POC (timeframe)
+        - Phase 3: Implementation (timeframe)
+        - Phase 4: Testing & Validation (timeframe)
+        
+  - type: textarea
+    id: success-criteria
+    attributes:
+      label: Success Criteria
+      description: How will we know if this proposal is successful?
+      placeholder: |
+        Define measurable success criteria:
+        - Metric 1: [specific target]
+        - Metric 2: [specific target]
+        - Acceptance criteria
+        
+  - type: textarea
+    id: dependencies
+    attributes:
+      label: Dependencies
+      description: What does this proposal depend on?
+      placeholder: |
+        List dependencies:
+        - Other proposals or features
+        - External systems or services
+        - Technical prerequisites
+        
+  - type: textarea
+    id: risks
+    attributes:
+      label: Risks & Mitigation
+      description: What are the potential risks and how can they be mitigated?
+      placeholder: |
+        Identify risks:
+        - Risk 1: [description] → Mitigation: [strategy]
+        - Risk 2: [description] → Mitigation: [strategy]
+        
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional Context
+      description: Any other context, diagrams, references, or mockups?
+      placeholder: |
+        Add any additional information:
+        - Related documentation
+        - Diagrams or architecture sketches
+        - Links to research or references
+        - Screenshots or mockups
+        
+  - type: checkboxes
+    id: contribution
+    attributes:
+      label: Are you willing to contribute?
+      description: Would you like to help implement this proposal?
+      options:
+        - label: I would like to lead implementation
+        - label: I can contribute to implementation
+        - label: I can help with design and planning
+        - label: I can help with testing
+        - label: I can help with documentation

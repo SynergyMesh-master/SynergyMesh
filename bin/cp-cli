@@ -12,6 +12,15 @@ import argparse
 from pathlib import Path
 from typing import Dict, Any, List, Optional
 
+REPO_ROOT = Path(__file__).resolve().parent.parent
+LIB_PATH = REPO_ROOT / "lib"
+MODULE_NAME_AS = "file"  # 模組目前沿用檔案命名規則
+NAME_TYPE_MAP = {"module": MODULE_NAME_AS}
+if str(LIB_PATH) not in sys.path:
+    sys.path.insert(0, str(LIB_PATH))
+
+from controlplane import validate_name as cp_validate_name
+
 class ControlplaneCLI:
     """Controlplane 命令行接口"""
     
@@ -123,18 +132,11 @@ class ControlplaneCLI:
         naming_file = self.baseline_path / "config" / "root.naming-policy.yaml"
         return self._load_yaml(naming_file)
     
-    def check_name(self, name: str, type: str = "file") -> bool:
+    def check_name(self, name: str, name_type: str = "file") -> bool:
         """檢查名稱是否符合規範"""
-        rules = self.get_naming_rules()
-        
-        # 簡化的檢查邏輯
-        if type == "file":
-            # 檢查是否為 kebab-case
-            import re
-            pattern = r'^[a-z][a-z0-9-]*(\.[a-z0-9]+)*$'
-            return bool(re.match(pattern, name))
-        
-        return True
+        resolved_type = NAME_TYPE_MAP.get(name_type, name_type)
+        is_valid, _ = cp_validate_name(name, resolved_type)
+        return is_valid
     
     def create_overlay_extension(self, name: str, extends: str, config: Dict[str, Any]):
         """創建 overlay 擴展"""
@@ -221,7 +223,7 @@ def main():
     # check-name 命令
     check_parser = subparsers.add_parser('check-name', help='檢查名稱規範')
     check_parser.add_argument('name', help='要檢查的名稱')
-    check_parser.add_argument('--type', default='file', choices=['file', 'directory', 'module'], help='名稱類型')
+    check_parser.add_argument('--type', dest='name_type', default='file', choices=['file', 'directory', 'module'], help='名稱類型')
     
     # synthesize 命令
     subparsers.add_parser('synthesize', help='合成 active 視圖')
@@ -267,7 +269,7 @@ def main():
             return 0 if success else 1
             
         elif args.command == 'check-name':
-            is_valid = cli.check_name(args.name, args.type)
+            is_valid = cli.check_name(args.name, name_type=args.name_type)
             if is_valid:
                 print(f"✅ 名稱符合規範: {args.name}")
                 return 0
