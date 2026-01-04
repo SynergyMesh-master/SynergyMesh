@@ -295,7 +295,7 @@ class GateEnforcer:
                 # 排除允許大寫的檔案
                 allowed = ['README.md', 'LICENSE', 'Dockerfile', 'Makefile',
                           'CHANGELOG.md', 'CONTRIBUTING.md', 'CODEOWNERS']
-                if basename not in allowed and not basename.endswith('.md'):
+                if basename not in allowed:
                     violations.append(f)
 
         if violations:
