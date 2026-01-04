@@ -14,11 +14,6 @@ import psutil
 import subprocess
 from abc import ABC, abstractmethod
 from typing import Any, Dict, List
-Data Collectors Module
-數據收集模組
-
-Collects metrics, logs, and events from various sources for monitoring.
-"""
 
 import logging
 import psutil

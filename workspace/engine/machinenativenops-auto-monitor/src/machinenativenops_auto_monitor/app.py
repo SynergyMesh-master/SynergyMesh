@@ -22,8 +22,6 @@ from .儲存 import StorageManager
 
 class AutoMonitorApp:
     """
-    Main application class for MachineNativeOps Auto-Monitor.
-    """
     
     def __init__(self, config: AutoMonitorConfig):
         """

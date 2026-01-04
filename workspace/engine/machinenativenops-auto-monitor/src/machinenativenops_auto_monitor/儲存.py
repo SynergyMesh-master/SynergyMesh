@@ -15,12 +15,6 @@ import logging
 from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Any, Dict, List, Optional
-儲存模組 (Storage Module)
-數據儲存後端
-
-Provides storage backends for metrics, logs, events, and alerts.
-支援多種儲存後端：記憶體、文件、資料庫
-"""
 
 import logging
 import json

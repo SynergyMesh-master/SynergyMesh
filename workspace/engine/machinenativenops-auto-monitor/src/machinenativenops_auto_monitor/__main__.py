@@ -10,11 +10,6 @@ Options:
     --dry-run           Run without actually sending alerts or storing data
     --daemon            Run as daemon process
     
-Examples:
-    python -m machinenativenops_auto_monitor --config config.yaml
-    python -m machinenativenops_auto_monitor --daemon --verbose
-#!/usr/bin/env python3
-"""
 Auto-Monitor Main Entry Point
 自動監控主程式入口
 

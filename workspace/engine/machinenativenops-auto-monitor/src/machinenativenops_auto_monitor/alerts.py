@@ -24,11 +24,6 @@ class AlertState(Enum):
     PENDING = "pending"
     FIRING = "firing"
     RESOLVED = "resolved"
-Alert Management Module
-告警管理模組
-
-Manages alerts and notifications for the auto-monitor system.
-"""
 
 import logging
 from dataclasses import dataclass, field

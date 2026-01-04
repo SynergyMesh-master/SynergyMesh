@@ -374,20 +374,6 @@ class SSOManager:
             expires_in=token_response.get("expires_in", 3600),
         )
 
-        # Validate ID token with proper signature verification
-        # Get JWKS endpoint for signature verification
-        jwks_uri = discovery.get("jwks_uri")
-        if not jwks_uri:
-            raise ValueError("JWKS URI not found in OIDC discovery document")
-        
-        # Create JWKS client for fetching signing keys
-        jwks_client = PyJWKClient(jwks_uri)
-        
-        try:
-            # Get the signing key from JWKS
-            signing_key = jwks_client.get_signing_key_from_jwt(tokens.id_token)
-            
-            # Decode and verify the ID token with full signature verification
         # Validate ID token with proper JWT signature verification using JWKS
         try:
             # Get JWKS URI from discovery document
