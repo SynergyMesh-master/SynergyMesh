@@ -293,7 +293,7 @@ All items completed and verified:
 ## 🔗 Related Documentation
 
 - [Island AI Stage 2 Documentation](island-ai/STAGE2_AGENT_COORDINATOR.md)
-- [Replit Deployment Guide](docs/REPLIT_DEPLOYMENT.md)
+- [Replit Deployment Guide](../REPLIT_DEPLOYMENT.md)
 - [Stage 2 Planning](island-ai/STAGE2_PLANNING.md)
 - [Frontend Phase 2 Improvements](apps/web/PHASE2_IMPROVEMENTS.md)
 - [Main README](README.md)

@@ -26,16 +26,16 @@ docker-compose -f docker-compose.workflow.yml up -d
 
 **Start Here | 從這裡開始:**
 
-1. 📖 [Workflow System Overview](docs/WORKFLOW_SYSTEM.md) - Complete guide
+1. 📖 [Workflow System Overview](../WORKFLOW_SYSTEM.md) - Complete guide
 2. 📋 [Implementation Summary](WORKFLOW_SYSTEM_SUMMARY.md) - What was built
-3. 🚀 [Deployment Guide](docs/DEPLOYMENT_GUIDE.md) - How to deploy
+3. 🚀 [Deployment Guide](../DEPLOYMENT_GUIDE.md) - How to deploy
 4. 📦 [Files Created](WORKFLOW_FILES_CREATED.md) - File inventory
 
 **Additional Resources | 其他資源:**
 
-- [Architecture Details](docs/ARCHITECTURE_DETAILED.md)
-- [API Reference](docs/API_REFERENCE.md)
-- [Validation Guide](docs/VALIDATION_GUIDE.md)
+- [Architecture Details](../ARCHITECTURE_DETAILED.md)
+- [API Reference](../API_REFERENCE.md)
+- [Validation Guide](../VALIDATION_GUIDE.md)
 
 ## ✨ Key Features | 核心功能
 
@@ -246,7 +246,7 @@ pip install synergymesh-workflow
 
 ## 📞 Support | 支持
 
-- 📖 Documentation: [docs/](docs/)
+- 📖 Documentation: [docs/](../)
 - 🐛 Issues: [GitHub Issues](https://github.com/synergymesh/issues)
 - 💬 Discussions: [GitHub Discussions](https://github.com/synergymesh/discussions)
 

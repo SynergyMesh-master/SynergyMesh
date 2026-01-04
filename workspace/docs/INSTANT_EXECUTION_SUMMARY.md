@@ -260,14 +260,14 @@ integrations:
 
 ### Primary Documentation
 
-1. **[INSTANT_EXECUTION_INTEGRATION_MAP.md](docs/INSTANT_EXECUTION_INTEGRATION_MAP.md)**
+1. **[INSTANT_EXECUTION_INTEGRATION_MAP.md](./INSTANT_EXECUTION_INTEGRATION_MAP.md)**
    - Complete architecture diagram
    - Component integration details
    - Usage examples
    - API reference
    - Troubleshooting guide
 
-2. **[automation/pipelines/README.md](automation/pipelines/README.md)**
+2. **[automation/pipelines/README.md](../src/automation/pipelines/README.md)**
    - Pipeline overview
    - Quick start guide
    - Integration examples

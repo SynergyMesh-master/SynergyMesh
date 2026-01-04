@@ -638,11 +638,11 @@ docker-compose ps
 
 ### Documentation | 文檔
 
-1. [Workflow System Overview](docs/WORKFLOW_SYSTEM.md) - Start here
-2. [Architecture Details](docs/ARCHITECTURE_DETAILED.md) - Deep dive
-3. [API Reference](docs/API_REFERENCE.md) - For developers
-4. [Deployment Guide](docs/DEPLOYMENT_GUIDE.md) - For operators
-5. [Validation Guide](docs/VALIDATION_GUIDE.md) - For customization
+1. [Workflow System Overview](./WORKFLOW_SYSTEM.md) - Start here
+2. [Architecture Details](./ARCHITECTURE_DETAILED.md) - Deep dive
+3. [API Reference](./API_REFERENCE.md) - For developers
+4. [Deployment Guide](./DEPLOYMENT_GUIDE.md) - For operators
+5. [Validation Guide](./VALIDATION_GUIDE.md) - For customization
 
 ### Code Examples | 代碼示例
 
@@ -700,7 +700,7 @@ docker-compose ps
 
 ### Getting Help | 獲取幫助
 
-- 📖 Documentation: [docs/](docs/)
+- 📖 Documentation: [docs/](./)
 - 🐛 Bug Reports: [GitHub Issues](https://github.com/synergymesh/issues)
 - 💬 Discussions: [GitHub Discussions](https://github.com/synergymesh/discussions)
 <<<<<<< HEAD

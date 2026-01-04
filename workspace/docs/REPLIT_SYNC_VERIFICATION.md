@@ -404,7 +404,7 @@ The 12 missing commits (all except a8923cd) represent **incremental development 
 
 - **Replit Project:** <https://replit.com/@unmanned-island/Unmanned-Island-3>
 - **Checkpoint Commit:** a8923cd35ceb2d714a38b2e060472ca089032827
-- **Deployment Guide:** [docs/REPLIT_DEPLOYMENT.md](docs/REPLIT_DEPLOYMENT.md)
+- **Deployment Guide:** [docs/REPLIT_DEPLOYMENT.md](./REPLIT_DEPLOYMENT.md)
 - **Completion Summary:** [COMPLETION_SUMMARY.md](COMPLETION_SUMMARY.md)
 - **Repository:** <https://github.com/SynergyMesh-admin/Unmanned-Island>
 

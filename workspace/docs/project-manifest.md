@@ -23,8 +23,8 @@ are explicitly out of bounds.
   walk-throughs).
 - Maintain agent role definitions so every delegate knows responsibilities and
   limitations before touching the codebase.
-- Keep [docs/troubleshooting/INDEX.md](docs/troubleshooting/INDEX.md) and
-  [docs/issues/known-failures.md](docs/issues/known-failures.md) current so
+- Keep [docs/troubleshooting/INDEX.md](./troubleshooting/INDEX.md) and
+  [docs/issues/known-failures.md](./issues/known-failures.md) current so
   automation alerts map directly to a remediation playbook.
 
 ## Guardrails (What We Avoid)

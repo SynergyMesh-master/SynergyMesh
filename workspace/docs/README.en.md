@@ -357,19 +357,19 @@ Node.js >= 18.0.0
 
   </div>
 | --------------------------------------------------------- | ------------------------- |
-| [Auto Review & Merge](docs/AUTO_REVIEW_MERGE.md)          | PR automation workflow    |
-| [Smart Assignment](docs/AUTO_ASSIGNMENT_SYSTEM.md)        | Task assignment mechanism |
-| [Advanced Escalation](docs/ADVANCED_ESCALATION_SYSTEM.md) | 5-level escalation ladder |
-| [Dynamic CI Assistant](docs/DYNAMIC_CI_ASSISTANT.md)      | CI interactive service    |
+| [Auto Review & Merge](./AUTO_REVIEW_MERGE.md)          | PR automation workflow    |
+| [Smart Assignment](./AUTO_ASSIGNMENT_SYSTEM.md)        | Task assignment mechanism |
+| [Advanced Escalation](./ADVANCED_ESCALATION_SYSTEM.md) | 5-level escalation ladder |
+| [Dynamic CI Assistant](./DYNAMIC_CI_ASSISTANT.md)      | CI interactive service    |
 
 ### Governance Documentation
 
 | Document                                     | Description                |
 | -------------------------------------------- | -------------------------- |
-| [Schema Definitions](governance/schemas/)    | JSON Schema specifications |
-| [Policy Configuration](governance/policies/) | OPA/Conftest policies      |
-| [Audit Format](governance/audit/)            | Audit event definitions    |
-| [Knowledge Index](docs/knowledge_index.yaml) | Machine-readable index     |
+| [Schema Definitions](../src/governance/schemas/)    | JSON Schema specifications |
+| [Policy Configuration](../src/governance/policies/) | OPA/Conftest policies      |
+| [Audit Format](../src/governance/audit/)            | Audit event definitions    |
+| [Knowledge Index](./knowledge_index.yaml) | Machine-readable index     |
 
 ---
 

@@ -16,8 +16,8 @@
 | 8 | [DEPLOYMENT_CHECKLIST.md](DEPLOYMENT_CHECKLIST.md) | 99 項部署驗證清單 | 未完成即開部署造成回滾 |
 | 9 | [SYSTEM_DIAGNOSTICS.md](SYSTEM_DIAGNOSTICS.md) | 監控、告警、健康檢查程序 | 未啟動自我診斷腳本 |
 | 10 | [QUICK_START.production.md](QUICK_START.production.md) | 生產快速啟動（繁/英） | 沒有依序完成 5 分鐘檢查 |
-| 11 | [core/README.md](core/README.md) | 核心心智矩陣與 AI 流程 | 忽略安全鉤子導致測試失敗 |
-| 12 | [automation/README.md](automation/README.md) | 五骨架自主框架 | 未遵循骨架邊界導致 ROS/K8s 衝突 |
+| 11 | [core/README.md](../src/core/README.md) | 核心心智矩陣與 AI 流程 | 忽略安全鉤子導致測試失敗 |
+| 12 | [automation/README.md](../src/automation/README.md) | 五骨架自主框架 | 未遵循骨架邊界導致 ROS/K8s 衝突 |
 | 13 | [services/README.md](services/README.md) | 代理與 MCP 服務 | 認證/授權流程遺漏 |
 | 14 | [infrastructure/README.md](infrastructure/README.md) | K8s、監控、Scaling 策略 | 忽略 HPA/VPA 配置 |
 | 15 | [FINAL_DELIVERY_REPORT.md](FINAL_DELIVERY_REPORT.md) | 交付統計、後續任務 | 沒有回填交付紀錄，導致稽核缺口 |
@@ -74,7 +74,7 @@
 - **必讀段落**：`supreme_directives`, `delegation_matrix`, `redline_policies`。
 - **治理要求**：重大改動需透過架構評審並更新 `FINAL_DELIVERY_REPORT`。
 
-### 2.4 [governance/policies/](governance/policies)
+### 2.4 [governance/policies/](../src/governance/policies/)
 
 - **使命**：Conftest/OPA Policy Gate，保證 K8s、容器、CI 維持合規。
 - **流程**：每次 PR 由 CI 自動執行 `npm run docs:lint` + `policy test`。
@@ -120,8 +120,8 @@
 
 | 模組 | 檔案 | 重點 | 驗證 |
 | --- | --- | --- | --- |
-| 核心引擎 | [core/README.md](core/README.md) | 感知→推理→執行→證明四層架構 | `npm run test -w core/contract_service/contracts-L1/contracts` |
-| 自動化骨架 | [automation/README.md](automation/README.md) | 五骨架（架構穩定性、API 治理等） | `npm run dev:stack` |
+| 核心引擎 | [core/README.md](../src/core/README.md) | 感知→推理→執行→證明四層架構 | `npm run test -w core/contract_service/contracts-L1/contracts` |
+| 自動化骨架 | [automation/README.md](../src/automation/README.md) | 五骨架（架構穩定性、API 治理等） | `npm run dev:stack` |
 | 服務層 | [services/README.md](services/README.md) | Agents、MCP、API gateway | `npm run lint --workspaces --if-present services/*` |
 | 應用層 | [apps/README.md](apps/README.md) | React 18 + FastAPI 雙棧流程 | `npm run dev -w apps/web` + `pytest apps/web/backend` |
 | 基礎設施 | [infrastructure/README.md](infrastructure/README.md) | K8s manifests、監控、Scaling | `kubectl kustomize infrastructure/kubernetes` |
@@ -133,16 +133,16 @@
 
 ## 5. 知識庫與觀測層
 
-### 5.1 [docs/KNOWLEDGE_HEALTH.md](docs/KNOWLEDGE_HEALTH.md)
+### 5.1 [docs/KNOWLEDGE_HEALTH.md](./KNOWLEDGE_HEALTH.md)
 
 - 敘述活體知識庫健康狀態、突出指標、Open Issues。
 
-### 5.2 [docs/generated-mndoc.yaml](docs/generated-mndoc.yaml) / [docs/knowledge-graph.yaml](docs/knowledge-graph.yaml) / [docs/superroot-entities.yaml](docs/superroot-entities.yaml)
+### 5.2 [docs/generated-mndoc.yaml](./generated-mndoc.yaml) / [docs/knowledge-graph.yaml](./knowledge-graph.yaml) / [docs/superroot-entities.yaml](./superroot-entities.yaml)
 
 - 由 `make all-kg` 自動產出，**禁止手動修改**。
 - 當 README 或配置變更後，務必重新生成並提交。
 
-### 5.3 [automation/self_awareness_report.py](automation/self_awareness_report.py)
+### 5.3 [automation/self_awareness_report.py](../src/automation/self_awareness_report.py)
 <<<<<<< HEAD
 <<<<<<< HEAD
 

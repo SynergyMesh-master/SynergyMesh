@@ -48,7 +48,7 @@ helm install machinenativeops-infra charts/machinenativeops-infrastructure \
   --namespace $AXIOM_NAMESPACE
 ```
 
-詳細安裝步驟請參閱[快速開始指南](docs/intro/getting-started.rst)。
+詳細安裝步驟請參閱[快速開始指南](docs/intro/getting-started.rst) [需要驗證]。
 
 ## 📖 版本管理
 
@@ -58,7 +58,7 @@ AXIOM 平台支援多版本文檔：
 - `stable` - 當前穩定版本
 - `v2r1`, `v2r2` - 特定發布版本
 
-查看[版本管理文檔](docs/versions.rst)了解更多。
+查看[版本管理文檔](docs/versions.rst) [需要驗證]了解更多。
 
 ## 🏗️ 架構概覽
 

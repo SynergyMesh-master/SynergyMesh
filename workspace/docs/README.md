@@ -328,7 +328,7 @@ knowledge_cycle:
 | `pipelines/` | 把 runtime 組合成完整活體流程 |
 | `docs/` | 給人類看的說明與健康報告 |
 
-📚 詳見 [活體知識庫設計說明](docs/LIVING_KNOWLEDGE_BASE.md)
+📚 詳見 [活體知識庫設計說明](./LIVING_KNOWLEDGE_BASE.md)
 
 ### 3️⃣ Autonomous Framework（自主系統框架）
 
@@ -567,7 +567,7 @@ admin-copilot review ./src/controllers
    - 新增「Copilot Requests」權限
    - 設定環境變數 `GH_TOKEN` 或 `GITHUB_TOKEN`
 
-📚 詳見 [Admin Copilot CLI 完整文檔](docs/ADMIN_COPILOT_CLI.md)
+📚 詳見 [Admin Copilot CLI 完整文檔](./ADMIN_COPILOT_CLI.md)
 
 ### Docker 部署
 
@@ -882,29 +882,29 @@ python tools/docs/provenance_injector.py --generate-sbom
 
 | 文檔                                    | 說明               |
 | --------------------------------------- | ------------------ |
-| [系統架構](docs/architecture/)          | 架構設計與層級說明 |
-| [快速入門](docs/QUICK_START.md)         | 快速開始指南       |
-| [API 文檔](docs/AUTO_ASSIGNMENT_API.md) | REST API 參考      |
-| [運維手冊](docs/operations/)            | 運維與部署指南     |
+| [系統架構](./architecture/)          | 架構設計與層級說明 |
+| [快速入門](./QUICK_START.md)         | 快速開始指南       |
+| [API 文檔](./AUTO_ASSIGNMENT_API.md) | REST API 參考      |
+| [運維手冊](./operations/)            | 運維與部署指南     |
 
 ### 功能文檔
 
 | 文檔                                               | 說明          |
 | -------------------------------------------------- | ------------- |
-| [自動審查與合併](docs/AUTO_REVIEW_MERGE.md)        | PR 自動化流程 |
-| [智能派工系統](docs/AUTO_ASSIGNMENT_SYSTEM.md)     | 任務分配機制  |
-| [進階升級系統](docs/ADVANCED_ESCALATION_SYSTEM.md) | 五級升級階梯  |
-| [動態 CI 助手](docs/DYNAMIC_CI_ASSISTANT.md)       | CI 互動客服   |
+| [自動審查與合併](./AUTO_REVIEW_MERGE.md)        | PR 自動化流程 |
+| [智能派工系統](./AUTO_ASSIGNMENT_SYSTEM.md)     | 任務分配機制  |
+| [進階升級系統](./ADVANCED_ESCALATION_SYSTEM.md) | 五級升級階梯  |
+| [動態 CI 助手](./DYNAMIC_CI_ASSISTANT.md)       | CI 互動客服   |
 
 ### 治理文檔
 
 | 文檔                                  | 說明              |
 | ------------------------------------- | ----------------- |
-| [Schema 定義](governance/schemas/)    | JSON Schema 規範  |
-| [策略配置](governance/policies/)      | OPA/Conftest 策略 |
-| [審計格式](governance/audit/)         | 審計事件定義      |
-| [知識索引](docs/knowledge_index.yaml) | 機器可讀索引      |
-| [活體知識庫](docs/LIVING_KNOWLEDGE_BASE.md) | 系統自我感知設計  |
+| [Schema 定義](../src/governance/schemas/)    | JSON Schema 規範  |
+| [策略配置](../src/governance/policies/)      | OPA/Conftest 策略 |
+| [審計格式](../src/governance/audit/)         | 審計事件定義      |
+| [知識索引](./knowledge_index.yaml) | 機器可讀索引      |
+| [活體知識庫](./LIVING_KNOWLEDGE_BASE.md) | 系統自我感知設計  |
 
 ### 應用程式文檔
 

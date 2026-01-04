@@ -478,11 +478,11 @@ autonomous:
 
 ### Internal Documentation
 
-- [Language Stack Policy](docs/architecture/language-stack.md)
-- [Language Governance](docs/architecture/language-governance.md)
+- [Language Stack Policy](./architecture/language-stack.md)
+- [Language Governance](./architecture/language-governance.md)
 - [System Module Map](config/system-module-map.yaml)
-- [Architecture Skeletons](automation/architecture-skeletons/README.md)
-- [Refactor Playbooks](docs/refactor_playbooks/README.md)
+- [Architecture Skeletons](../src/automation/architecture-skeletons/README.md)
+- [Refactor Playbooks](./refactor_playbooks/README.md)
 
 ### External Resources
 

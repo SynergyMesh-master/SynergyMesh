@@ -15,7 +15,7 @@ feed dashboards, while the Markdown stays human-friendly for PR comments.
 
 Each JSON document contains:
 
-- `sections`: parsed copy of [docs/project-manifest.md](docs/project-manifest.md).
+- `sections`: parsed copy of [docs/project-manifest.md](../project-manifest.md).
 - `automation`: exit codes, output tails, and commands that were executed.
 - `automation_summary`: total/success/failure counts so dashboards can color
   cards without parsing Markdown.
@@ -71,7 +71,7 @@ plot success/failure counts or show the last `n` output lines per signal.
 ## Failure Triage
 
 - If automation exits non-zero locally, follow the mapping in
-  [docs/troubleshooting/INDEX.md](docs/troubleshooting/INDEX.md).
+  [docs/troubleshooting/INDEX.md](../troubleshooting/INDEX.md).
 - Nightly workflow failures automatically open an issue linking to the run and
   the troubleshooting index; close the issue only after re-running the failing
   signal and attaching the refreshed JSON.

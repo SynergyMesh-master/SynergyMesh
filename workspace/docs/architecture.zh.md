@@ -257,5 +257,5 @@ Level 3: 防篡改建置
 - [快速開始](../QUICK_START.md)
 - [貢獻指南](../CONTRIBUTING.md)
 - [安全政策](../SECURITY.md)
-- [治理政策](governance/policies.yaml)
-- [模組註冊表](governance/registry.yaml)
+- [治理政策](../src/governance/policies.yaml)
+- [模組註冊表](../src/governance/registry.yaml)
