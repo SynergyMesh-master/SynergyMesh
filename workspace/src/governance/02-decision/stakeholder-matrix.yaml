@@ -1,0 +1,539 @@
+# Stakeholder Management Matrix
+# 利害關係人管理矩陣
+#
+# Version: 1.0.0
+# Status: Active
+# Last Updated: 2025-01-04
+# Dimension: 02-decision
+
+$schema: "https://schema.machinenativeops.io/governance/stakeholder-matrix/v1"
+version: "1.0.0"
+dimension: "02-decision"
+status: "active"
+framework:
+  - "mendelow-matrix"
+  - "savage-typology"
+
+# ============================================================================
+# Analysis Methodologies | 分析方法論
+# ============================================================================
+analysis_methodologies:
+  mendelow_matrix:
+    description: "Mendelow 權力-興趣矩陣分析"
+    dimensions:
+      - axis: "Power (權力)"
+        levels: ["High", "Medium", "Low"]
+        criteria: "影響決策與資源分配的能力"
+      - axis: "Interest (興趣)"
+        levels: ["High", "Medium", "Low"]
+        criteria: "對治理成敗的關注程度"
+    quadrants:
+      - quadrant: "High Power, High Interest"
+        strategy: "Manage Closely (密切管理)"
+        description: "最高優先級，需持續溝通與參與"
+      - quadrant: "High Power, Low Interest"
+        strategy: "Keep Satisfied (保持滿意)"
+        description: "需確保其需求被滿足，但不必過度參與"
+      - quadrant: "Low Power, High Interest"
+        strategy: "Keep Informed (保持告知)"
+        description: "定期更新資訊，利用其支持"
+      - quadrant: "Low Power, Low Interest"
+        strategy: "Monitor (監控)"
+        description: "最低優先級，僅需基礎溝通"
+  
+  savage_typology:
+    description: "Savage 利害關係人類型學"
+    types:
+      - type: "Players"
+        description: "高權力、高興趣"
+        engagement: "密切管理"
+      - type: "Context Setters"
+        description: "高權力、低興趣"
+        engagement: "保持滿意"
+      - type: "Subjects"
+        description: "低權力、高興趣"
+        engagement: "保持告知"
+      - type: "Crowd"
+        description: "低權力、低興趣"
+        engagement: "監控"
+
+# ============================================================================
+# Stakeholder Categories | 利害關係人分類
+# ============================================================================
+stakeholder_categories:
+  executive:
+    name: "Executive (高階主管)"
+    description: "具有最高決策權與資源分配能力"
+    typical_power: "High"
+    typical_interest: "Medium to High"
+  
+  governance:
+    name: "Governance (治理團隊)"
+    description: "負責治理政策制定與執行"
+    typical_power: "High"
+    typical_interest: "High"
+  
+  technical:
+    name: "Technical (技術團隊)"
+    description: "負責技術實施與維護"
+    typical_power: "Medium"
+    typical_interest: "High"
+  
+  operational:
+    name: "Operational (運營團隊)"
+    description: "負責日常運營與監控"
+    typical_power: "Medium"
+    typical_interest: "High"
+  
+  compliance:
+    name: "Compliance (合規/審計)"
+    description: "負責合規審核與風險管理"
+    typical_power: "Medium to High"
+    typical_interest: "High"
+  
+  business:
+    name: "Business (業務單位)"
+    description: "業務需求使用者與受益者"
+    typical_power: "Low to Medium"
+    typical_interest: "High"
+
+# ============================================================================
+# Detailed Stakeholder Definitions | 詳細利害關係人定義
+# ============================================================================
+stakeholders:
+  # Executive Stakeholders
+  - id: "stakeholder-board"
+    name: "董事會/高階主管"
+    name_en: "Board of Directors / C-Suite"
+    category: "executive"
+    power: "High"
+    interest: "High"
+    savage_type: "Players"
+    mendelow_strategy: "Manage Closely"
+    
+    responsibilities:
+      - "決策批准"
+      - "資源授權"
+      - "戰略方向設定"
+    
+    communication_channels:
+      - type: "例會"
+        frequency: "每季"
+        format: "執行摘要報告"
+      - type: "專案報告"
+        frequency: "重大里程碑"
+        format: "詳細報告"
+      - type: "緊急溝通"
+        frequency: "按需"
+        format: "即時通訊"
+    
+    engagement_strategy:
+      - "定期匯報治理進度"
+      - "及時溝通重大風險"
+      - "展示商業價值與ROI"
+      - "提供決策依據與建議"
+    
+    success_criteria:
+      - "持續獲得高層支持"
+      - "資源分配充足"
+      - "決策響應及時"
+  
+  - id: "stakeholder-cio"
+    name: "資訊主管/CIO"
+    name_en: "Chief Information Officer"
+    category: "executive"
+    power: "High"
+    interest: "High"
+    savage_type: "Players"
+    mendelow_strategy: "Manage Closely"
+    
+    responsibilities:
+      - "治理策略協調"
+      - "責任分工"
+      - "跨部門協調"
+    
+    communication_channels:
+      - type: "會議"
+        frequency: "每月"
+        format: "治理委員會會議"
+      - type: "Email"
+        frequency: "每週"
+        format: "進度更新"
+      - type: "工作坊"
+        frequency: "每季"
+        format: "策略規劃"
+    
+    engagement_strategy:
+      - "確保技術與業務對齊"
+      - "協調跨部門資源"
+      - "推動技術決策落地"
+      - "建立信任關係"
+    
+    success_criteria:
+      - "技術與業務目標一致"
+      - "跨部門協作順暢"
+      - "技術決策有效執行"
+  
+  # Governance Stakeholders
+  - id: "stakeholder-cgo"
+    name: "首席治理官/CGO"
+    name_en: "Chief Governance Officer"
+    category: "governance"
+    power: "High"
+    interest: "High"
+    savage_type: "Players"
+    mendelow_strategy: "Manage Closely"
+    
+    responsibilities:
+      - "治理政策制定"
+      - "治理成效監督"
+      - "例外審批"
+      - "持續改進推動"
+    
+    communication_channels:
+      - type: "治理委員會會議"
+        frequency: "每月"
+        format: "會議紀錄"
+      - type: "審查會議"
+        frequency: "每週"
+        format: "議事紀錄"
+      - type: "政策發布"
+        frequency: "按需"
+        format: "政策文件"
+    
+    engagement_strategy:
+      - "主導治理框架設計"
+      - "協調各治理維度"
+      - "監督執行成效"
+      - "推動持續優化"
+    
+    success_criteria:
+      - "治理政策有效執行"
+      - "合規率持續提升"
+      - "例外管理完善"
+  
+  - id: "stakeholder-naming-gatekeeper"
+    name: "命名守門人小組"
+    name_en: "Naming Gatekeepers"
+    category: "governance"
+    power: "High"
+    interest: "High"
+    savage_type: "Players"
+    mendelow_strategy: "Manage Closely"
+    
+    responsibilities:
+      - "專責審查命名規範"
+      - "追蹤違規行為"
+      - "主持例外審查"
+      - "標準解釋與培訓"
+    
+    communication_channels:
+      - type: "Review 會議"
+        frequency: "每週"
+        format: "議事紀錄"
+      - type: "審查回饋"
+        frequency: "即時"
+        format: "評論系統"
+      - type: "培訓會議"
+        frequency: "每月"
+        format: "培訓教材"
+    
+    engagement_strategy:
+      - "建立明確審查標準"
+      - "快速響應審查請求"
+      - "提供建設性回饋"
+      - "持續改進審查流程"
+    
+    success_criteria:
+      - "審查及時率 > 95%"
+      - "審查準確率 > 98%"
+      - "團隊滿意度 > 4/5"
+  
+  # Technical Stakeholders
+  - id: "stakeholder-architect"
+    name: "技術主管/架構師"
+    name_en: "Technical Lead / Architect"
+    category: "technical"
+    power: "Medium to High"
+    interest: "High"
+    savage_type: "Players"
+    mendelow_strategy: "Manage Closely"
+    
+    responsibilities:
+      - "工程落地規劃"
+      - "標準審議"
+      - "技術方案設計"
+      - "最佳實踐推廣"
+    
+    communication_channels:
+      - type: "研討會"
+        frequency: "每月"
+        format: "技術討論"
+      - type: "設計審查"
+        frequency: "專案驅動"
+        format: "設計文檔"
+      - type: "Code Review"
+        frequency: "持續"
+        format: "評論"
+    
+    engagement_strategy:
+      - "早期參與標準制定"
+      - "技術實用性驗證"
+      - "推動技術團隊採用"
+      - "分享最佳實踐"
+    
+    success_criteria:
+      - "技術方案可行"
+      - "標準易於實施"
+      - "技術團隊接受度高"
+  
+  - id: "stakeholder-devops"
+    name: "DevOps/自動化人員"
+    name_en: "DevOps / Automation Team"
+    category: "technical"
+    power: "Medium"
+    interest: "High"
+    savage_type: "Subjects"
+    mendelow_strategy: "Keep Informed"
+    
+    responsibilities:
+      - "工具部署"
+      - "自動檢查流程"
+      - "CI/CD 整合"
+      - "監控系統維護"
+    
+    communication_channels:
+      - type: "例會"
+        frequency: "每週"
+        format: "進度報告"
+      - type: "Issue 追蹤"
+        frequency: "持續"
+        format: "工單系統"
+      - type: "技術同步"
+        frequency: "每月"
+        format: "技術分享"
+    
+    engagement_strategy:
+      - "提供清晰工具需求"
+      - "協助技術問題解決"
+      - "收集团隊回饋"
+      - "推動工具優化"
+    
+    success_criteria:
+      - "工具穩定運行"
+      - "自動化流程完善"
+      - "問題及時解決"
+  
+  # Compliance Stakeholders
+  - id: "stakeholder-compliance"
+    name: "資安與合規單位"
+    name_en: "Security & Compliance Team"
+    category: "compliance"
+    power: "Medium to High"
+    interest: "High"
+    savage_type: "Players"
+    mendelow_strategy: "Manage Closely"
+    
+    responsibilities:
+      - "稽核報告"
+      - "例外機制審核"
+      - "風險評估"
+      - "合規監控"
+    
+    communication_channels:
+      - type: "審查"
+        frequency: "每季"
+        format: "稽核報告"
+      - type: "檢核文件"
+        frequency: "專案驅動"
+        format: "合規檢查清單"
+      - type: "風險通報"
+        frequency: "按需"
+        format: "風險報告"
+    
+    engagement_strategy:
+      - "早期參與標準制定"
+      - "確保合規要求納入"
+      - "協助風險評估"
+      - "支持稽核準備"
+    
+    success_criteria:
+      - "合規率達標"
+      - "風險有效控制"
+      - "稽核順利通過"
+  
+  # Business Stakeholders
+  - id: "stakeholder-business-window"
+    name: "各部門業務窗口"
+    name_en: "Department Business Windows"
+    category: "business"
+    power: "Medium"
+    interest: "High"
+    savage_type: "Subjects"
+    mendelow_strategy: "Keep Informed"
+    
+    responsibilities:
+      - "業務場景需求定義"
+      - "教育訓練協助"
+      - "用戶回饋收集"
+      - "跨部門協調"
+    
+    communication_channels:
+      - type: "內部溝通平台"
+        frequency: "持續"
+        format: "即時通訊"
+      - type: "需求會議"
+        frequency: "每月"
+        format: "需求文檔"
+      - type: "回饋收集"
+        frequency: "每季"
+        format: "調查問卷"
+    
+    engagement_strategy:
+      - "理解業務需求"
+      - "提供培訓支持"
+      - "收集用戶反饋"
+      - "推動部門採用"
+    
+    success_criteria:
+      - "業務需求滿足"
+      - "培訓覆蓋率高"
+      - "用戶滿意度高"
+  
+  - id: "stakeholder-general-user"
+    name: "一般用戶"
+    name_en: "General Users"
+    category: "business"
+    power: "Low"
+    interest: "Medium"
+    savage_type: "Crowd"
+    mendelow_strategy: "Monitor"
+    
+    responsibilities:
+      - "遵守命名規則"
+      - "參與培訓"
+      - "提供反饋"
+    
+    communication_channels:
+      - type: "培訓課程"
+        frequency: "每季"
+        format: "在線課程"
+      - type: "操作手冊"
+        frequency: "持續"
+        format: "文檔"
+      - type: "FAQ"
+        frequency: "持續"
+        format: "知識庫"
+    
+    engagement_strategy:
+      - "提供簡易培訓"
+      - "建立明確指南"
+      - "快速響應問題"
+      - "收集反饋改進"
+    
+    success_criteria:
+      - "規則遵守率高"
+      - "培訓完成率高"
+      - "問題解決及時"
+
+# ============================================================================
+# Communication Strategy Matrix | 溝通策略矩陣
+# ============================================================================
+communication_strategy_matrix:
+  high_power_high_interest:
+    strategy: "Manage Closely (密切管理)"
+    frequency: "Weekly to Monthly"
+    channels: ["Meetings", "Direct Reports", "Executive Briefings"]
+    content: "Detailed progress, risks, decisions needed"
+  
+  high_power_low_interest:
+    strategy: "Keep Satisfied (保持滿意)"
+    frequency: "Monthly to Quarterly"
+    channels: ["Executive Summaries", "Key Metrics", "Major Milestones"]
+    content: "High-level progress, major achievements, no surprises"
+  
+  low_power_high_interest:
+    strategy: "Keep Informed (保持告知)"
+    frequency: "Monthly to Quarterly"
+    channels: ["Newsletters", "Updates", "Training Sessions"]
+    content: "Progress updates, success stories, opportunities to participate"
+  
+  low_power_low_interest:
+    strategy: "Monitor (監控)"
+    frequency: "Quarterly to Annually"
+    channels: ["General Announcements", "Documentation", "Self-service resources"]
+    content: "Major announcements, access to resources"
+
+# ============================================================================
+# Engagement Process | 參與流程
+# ============================================================================
+engagement_process:
+  identification:
+    steps:
+      - "識別所有潛在利害關係人"
+      - "分類至適當類別"
+      - "評估權力與興趣水平"
+      - "映射至 Mendelow 矩陣"
+      - "制定參與策略"
+    
+  planning:
+    steps:
+      - "制定溝通計劃"
+      - "設定溝通頻率與渠道"
+      - "準備溝通內容"
+      - "安排溝通活動"
+  
+  execution:
+    steps:
+      - "執行溝通活動"
+      - "收集反饋"
+      - "記錄互動結果"
+      - "跟進待辦事項"
+  
+  monitoring:
+    steps:
+      - "監控參與成效"
+      - "評估利害關係人滿意度"
+      - "調整參與策略"
+      - "更新利害關係人資訊"
+
+# ============================================================================
+# Success Metrics | 成功指標
+# ============================================================================
+success_metrics:
+  engagement_quality:
+    - metric: "利害關係人滿意度"
+      target: "> 4/5"
+      measurement: "定期調查"
+    - metric: "溝通及時性"
+      target: "> 95%"
+      measurement: "溝通響應時間統計"
+    - metric: "資訊完整性"
+      target: "> 90%"
+      measurement: "資訊覆蓋率檢查"
+  
+  relationship_strength:
+    - metric: "信任度"
+      target: "> 80%"
+      measurement: "信任度評分"
+    - metric: "合作意愿"
+      target: "> 85%"
+      measurement: "合作項目統計"
+    - metric: "支持度"
+      target: "> 90%"
+      measurement: "支持事件統計"
+  
+  effectiveness:
+    - metric: "決策支持率"
+      target: "> 95%"
+      measurement: "決策統計"
+    - metric: "資源分配效率"
+      target: "> 85%"
+      measurement: "資源利用率"
+    - metric: "風險識別率"
+      target: "> 90%"
+      measurement: "風險報告統計"
+
+# ============================================================================
+# End of Stakeholder Management Matrix
+# ============================================================================

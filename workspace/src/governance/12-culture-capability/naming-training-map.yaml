@@ -1,0 +1,845 @@
+# Naming Governance Training Map
+# 命名治理培訓地圖
+#
+# Version: 1.0.0
+# Status: Active
+# Last Updated: 2025-01-04
+# Dimension: 12-culture-capability
+
+$schema: "https://schema.machinenativeops.io/governance/training-map/v1"
+version: "1.0.0"
+dimension: "12-culture-capability"
+status: "active"
+framework: "role-based-learning-map"
+
+# ============================================================================
+# Training Overview | 培訓概覽
+# ============================================================================
+overview:
+  purpose: |
+    依據明確職能與角色分工設計分層培訓地圖，提升標準落地率、
+    各級上手速度及異動適應力，確保命名治理體系有效執行。
+  
+  objectives:
+    - "建立清晰的職能角色培訓路徑"
+    - "提供分層次的學習內容與實作"
+    - "確保培訓內容與實際工作對齊"
+    - "支持持續學習與能力提升"
+  
+  delivery_standards:
+    - "理論結合實作"
+    - "個案教學分析"
+    - "角色扮演演練"
+    - "即時回饋與調整"
+
+# ============================================================================
+# Role Categories | 角色分類
+# ============================================================================
+role_categories:
+  governance_specialist:
+    name: "治理專業角色"
+    description: "負責治理政策制定、審核與執行"
+    roles:
+      - "naming-gatekeeper"
+      - "governance-manager"
+      - "compliance-manager"
+      - "audit-director"
+  
+  technical_implementation:
+    name: "技術實施角色"
+    description: "負責技術實施與工具部署"
+    roles:
+      - "technical-lead"
+      - "architect"
+      - "devops-engineer"
+      - "automation-specialist"
+  
+  operational_execution:
+    name: "運營執行角色"
+    description: "負責日常運營與監控"
+    roles:
+      - "process-owner"
+      - "operations-team"
+      - "monitoring-specialist"
+      - "incident-responder"
+  
+  business_user:
+    name: "業務使用者角色"
+    description: "業務單位與一般使用者"
+    roles:
+      - "business-window"
+      - "general-user"
+      - "department-representative"
+      - "end-user"
+
+# ============================================================================
+# Detailed Role Training Programs | 詳細角色培訓計劃
+# ============================================================================
+training_programs:
+  # Role 1: Naming Gatekeeper | 命名守門人
+  - role_id: "naming-gatekeeper"
+    role_name: "命名守門人"
+    role_name_en: "Naming Gatekeeper"
+    category: "governance_specialist"
+    competency_level: "expert"
+    target_audience: "Governance Team, Audit Team"
+    
+    learning_objectives:
+      - objective: "理解命名治理全貌"
+        description: "掌握命名治理的整體框架、目標與價值"
+        modules: ["治理基礎", "標準架構", "治理流程"]
+      
+      - objective: "熟悉標準、例外與回滾操作"
+        description: "熟練掌握命名標準、例外申請流程、回滾機制"
+        modules: ["標準詳解", "例外管理", "回滾程序"]
+      
+      - objective: "實務案例分析能力"
+        description: "能夠分析複雜命名案例並做出正確決策"
+        modules: ["案例研究", "決策框架", "風險評估"]
+    
+    curriculum:
+      phase_1_foundation:
+        duration: "2 weeks"
+        delivery_mode: ["Online", "Self-paced"]
+        modules:
+          - module_id: "NG-001"
+            title: "命名治理基礎"
+            description: "命名治理概念、原則與價值"
+            topics:
+              - "命名的重要性"
+              - "治理框架介紹"
+              - "MachineNativeOps 命名標準"
+            resources:
+              - "命名治理概覽文檔"
+              - "治理框架架構圖"
+              - "標準制定原則"
+            assessment:
+              type: "quiz"
+              passing_score: 80
+              duration: 30
+          
+          - module_id: "NG-002"
+            title: "命名標準詳解"
+            description: "深入理解各類資源命名標準"
+            topics:
+              - "資源類型分類"
+              - "命名規則詳解"
+              - "版本控制規範"
+            resources:
+              - "命名標準完整文檔"
+              - "資源分類指南"
+              - "SemVer 版本規範"
+            assessment:
+              type: "exam"
+              passing_score: 85
+              duration: 60
+      
+      phase_2_advanced:
+        duration: "3 weeks"
+        delivery_mode: ["Instructor-led", "Workshops"]
+        modules:
+          - module_id: "NG-003"
+            title: "例外管理流程"
+            description: "掌握例外申請、審核與管理"
+            topics:
+              - "例外申請條件"
+              - "審核流程與標準"
+              - "到期複查機制"
+            resources:
+              - "例外管理政策"
+              - "審核檢查清單"
+              - "案例庫"
+            assessment:
+              type: "practical"
+              passing_score: 90
+              duration: 90
+          
+          - module_id: "NG-004"
+            title: "回滾與變更管理"
+            description: "熟悉回滾流程與變更管理"
+            topics:
+              - "回滾觸發條件"
+              - "回滾執行程序"
+              - "變更影響評估"
+            resources:
+              - "回滾手冊"
+              - "變更管理流程"
+              - "風險評估工具"
+            assessment:
+              type: "simulation"
+              passing_score: 85
+              duration: 60
+      
+      phase_3_practice:
+        duration: "4 weeks"
+        delivery_mode: ["On-the-job", "Mentoring"]
+        modules:
+          - module_id: "NG-005"
+            title: "實務審查演練"
+            description: "實際參與命名審查工作"
+            activities:
+              - "審查真實命名案例"
+              - "撰寫審查報告"
+              - "主持審查會議"
+            mentoring:
+              - "資深守門人指導"
+              - "定期回饋會議"
+              - "案例討論"
+            assessment:
+              type: "portfolio"
+              passing_score: 90
+              duration: 4 weeks
+    
+    practical_exercises:
+      - exercise: "案例審查"
+        description: "審查真實命名案例並提供意見"
+        complexity: "High"
+        duration: "2 hours"
+        resources:
+          - "案例資料包"
+          - "審查模板"
+          - "評分標準"
+      
+      - exercise: "審計報告填寫"
+        description: "根據審計證據填寫完整報告"
+        complexity: "High"
+        duration: "3 hours"
+        resources:
+          - "審計證據清單"
+          - "報告模板"
+          - "填寫指南"
+      
+      - exercise: "高危例外情境演練"
+        description: "模擬高危例外情境進行決策"
+        complexity: "Critical"
+        duration: "4 hours"
+        resources:
+          - "情境腳本"
+          - "決策框架"
+          - "風險評估工具"
+    
+    assessment_methods:
+      formative:
+        - type: "Quiz"
+          description: "每模組小測驗"
+          frequency: "每模組結束時"
+          weight: 20
+        
+        - type: "Peer Review"
+          description: "同儕互評"
+          frequency: "每週"
+          weight: 15
+        
+        - type: "Mentor Feedback"
+          description: "導師回饋"
+          frequency: "持續"
+          weight: 25
+      
+      summative:
+        - type: "Final Exam"
+          description: "期末綜合考試"
+          frequency: "培訓結束時"
+          weight: 40
+        
+        - type: "Capstone Project"
+          description: "期末專案"
+          frequency: "培訓結束時"
+          weight: 60
+    
+    certification:
+      requirements:
+        - "完成所有必修模組"
+        - "通過期末考試 (>85%)"
+        - "完成期末專案 (>90%)"
+        - "通過實務演練"
+      validity: "2 years"
+      renewal: "需完成 20 小時持續學習"
+  
+  # Role 2: Technical Lead/Architect | 技術負責人/架構師
+  - role_id: "technical-lead"
+    role_name: "技術負責人/架構師"
+    role_name_en: "Technical Lead / Architect"
+    category: "technical_implementation"
+    competency_level: "practitioner"
+    target_audience: "Architecture Team, Development Team"
+    
+    learning_objectives:
+      - objective: "掌握命名標準技術實作"
+        description: "理解並能夠在技術實作中應用命名標準"
+        modules: ["標準技術規範", "實作模式", "最佳實踐"]
+      
+      - objective: "自動化工具使用"
+        description: "熟練使用命名驗證與生成工具"
+        modules: ["工具介紹", "CI/CD 整合", "自定義配置"]
+      
+      - objective: "CI 工具導入"
+        description: "能夠在 CI 管線中集成命名檢查"
+        modules: ["CI 管線架構", "集成步驟", "故障排查"]
+    
+    curriculum:
+      phase_1_foundation:
+        duration: "1 week"
+        delivery_mode: ["Online", "Self-paced"]
+        modules:
+          - module_id: "TL-001"
+            title: "命名標準技術規範"
+            description: "從技術角度理解命名標準"
+            topics:
+              - "命名約定技術細節"
+              - "資源類型技術映射"
+              - "驗證規則實作"
+            resources:
+              - "技術規範文檔"
+              - "驗證規則庫"
+              - "API 文檔"
+            assessment:
+              type: "quiz"
+              passing_score: 80
+              duration: 30
+      
+      phase_2_implementation:
+        duration: "2 weeks"
+        delivery_mode: ["Workshops", "Hands-on"]
+        modules:
+          - module_id: "TL-002"
+            title: "命名生成工具實用"
+            description: "學習使用命名生成與驗證工具"
+            topics:
+              - "命令行工具使用"
+              - "API 集成"
+              - "批量處理"
+            resources:
+              - "工具使用手冊"
+              - "API 示例"
+              - "腳本模板"
+            assessment:
+              type: "practical"
+              passing_score: 85
+              duration: 60
+          
+          - module_id: "TL-003"
+            title: "CI 管線集成"
+            description: "將命名檢查集成到 CI/CD"
+            topics:
+              - "GitHub Actions 配置"
+              - "GitLab CI 配置"
+              - "Jenkins Pipeline 配置"
+            resources:
+              - "CI 配置模板"
+              - "集成指南"
+              - "故障排查手冊"
+            assessment:
+              type: "project"
+              passing_score: 90
+              duration: 120
+    
+    practical_exercises:
+      - exercise: "撰寫模板"
+        description: "為新專案創建命名模板"
+        complexity: "Medium"
+        duration: "2 hours"
+        resources:
+          - "模板規範"
+          - "示例模板"
+          - "驗證工具"
+      
+      - exercise: "CI 工具導入"
+        description: "在實際專案中集成命名檢查"
+        complexity: "High"
+        duration: "4 hours"
+        resources:
+          - "CI 配置文件"
+          - "集成文檔"
+          - "測試環境"
+      
+      - exercise: "變更測試"
+        description: "測試並驗證命名變更"
+        complexity: "Medium"
+        duration: "2 hours"
+        resources:
+          - "變更申請表單"
+          - "測試環境"
+          - "驗證腳本"
+    
+    assessment_methods:
+      formative:
+        - type: "Code Review"
+          description: "代碼審查"
+          frequency: "每週"
+          weight: 30
+        
+        - type: "Tool Usage Assessment"
+          description: "工具使用評估"
+          frequency: "每兩週"
+          weight: 20
+      
+      summative:
+        - type: "Implementation Project"
+          description: "實施專案"
+          frequency: "培訓結束時"
+          weight: 50
+  
+  # Role 3: Operations Team | 維運人員
+  - role_id: "operations-team"
+    role_name: "維運人員"
+    role_name_en: "Operations Team"
+    category: "operational_execution"
+    competency_level: "practitioner"
+    target_audience: "DevOps, SRE, Operations"
+    
+    learning_objectives:
+      - objective: "版本管理實施覆蓋"
+        description: "管理版本命名與部署流程"
+        modules: ["版本控制", "部署流程", "回滾程序"]
+      
+      - objective: "回滾演練"
+        description: "熟練執行回滾操作"
+        modules: ["回滾觸發", "執行步驟", "驗證程序"]
+      
+      - objective: "配置核對"
+        description: "驗證配置命名合規性"
+        modules: ["配置標準", "核對工具", "問題處理"]
+      
+      - objective: "指標監測"
+        description: "監控命名合規指標"
+        modules: ["指標定義", "監控工具", "警報處理"]
+    
+    curriculum:
+      phase_1_foundation:
+        duration: "1 week"
+        delivery_mode: ["Online", "Self-paced"]
+        modules:
+          - module_id: "OP-001"
+            title: "版本命名管理"
+            description: "理解版本命名規範與管理"
+            topics:
+              - "SemVer 版本規範"
+              - "版本標籤管理"
+              - "部署流程"
+            resources:
+              - "版本規範文檔"
+              - "部署手冊"
+              - "標籤管理工具"
+            assessment:
+              type: "quiz"
+              passing_score: 80
+              duration: 30
+      
+      phase_2_operations:
+        duration: "2 weeks"
+        delivery_mode: ["Workshops", "Drills"]
+        modules:
+          - module_id: "OP-002"
+            title: "回滾演練"
+            description: "實際執行回滾操作"
+            topics:
+              - "回滾條件判斷"
+              - "執行步驟演練"
+              - "驗證程序"
+            resources:
+              - "回滾手冊"
+              - "演練腳本"
+              - "驗證清單"
+            assessment:
+              type: "drill"
+              passing_score: 90
+              duration: 90
+          
+          - module_id: "OP-003"
+            title: "指標監控與警報"
+            description: "監控命名合規指標並處理警報"
+            topics:
+              - "指標定義與意義"
+              - "監控工具使用"
+              - "警報處理流程"
+            resources:
+              - "指標文檔"
+              - "監控工具手冊"
+              - "警報處理SOP"
+            assessment:
+              type: "practical"
+              passing_score: 85
+              duration: 60
+    
+    practical_exercises:
+      - exercise: "發布演練"
+        description: "執行完整的版本發布流程"
+        complexity: "High"
+        duration: "3 hours"
+        resources:
+          - "發布流程文檔"
+          - "演練環境"
+          - "驗證清單"
+      
+      - exercise: "指標操作"
+        description: "操作監控系統並處理警報"
+        complexity: "Medium"
+        duration: "2 hours"
+        resources:
+          - "監控系統"
+          - "警報模擬"
+          - "處理指南"
+    
+    assessment_methods:
+      formative:
+        - type: "Drill Performance"
+          description: "演練表現評估"
+          frequency: "每月"
+          weight: 40
+        
+        - type: "System Check"
+          description: "系統檢查"
+          frequency: "每週"
+          weight: 20
+      
+      summative:
+        - type: "Operational Assessment"
+          description: "運營能力評估"
+          frequency: "每季"
+          weight: 40
+  
+  # Role 4: Business Window | 部門窗口
+  - role_id: "business-window"
+    role_name: "部門窗口"
+    role_name_en: "Department Business Window"
+    category: "business_user"
+    competency_level: "awareness"
+    target_audience: "Department Representatives, Business Teams"
+    
+    learning_objectives:
+      - objective: "治理溝通能力"
+        description: "理解治理概念並能夠溝通給團隊"
+        modules: ["治理基礎", "溝通技巧", "培訓協助"]
+      
+      - objective: "需求界定能力"
+        description: "能夠定義業務場景的命名需求"
+        modules: ["需求分析", "場景識別", "標準對照"]
+      
+      - objective: "政策落地宣導"
+        description: "推動命名政策在部門內落地"
+        modules: ["政策解讀", "推行策略", "成效追蹤"]
+    
+    curriculum:
+      phase_1_foundation:
+        duration: "3 days"
+        delivery_mode: ["Online", "Workshop"]
+        modules:
+          - module_id: "BW-001"
+            title: "命名原則解說"
+            description: "理解命名原則與價值"
+            topics:
+              - "命名為何重要"
+              - "基本命名原則"
+              - "常見錯誤避免"
+            resources:
+              - "命名原則手冊"
+              - "常見問題集"
+              - "案例集"
+            assessment:
+              type: "quiz"
+              passing_score: 75
+              duration: 20
+      
+      phase_2_application:
+        duration: "2 weeks"
+        delivery_mode: ["On-the-job", "Coaching"]
+        modules:
+          - module_id: "BW-002"
+            title: "政策落地宣導"
+            description: "在部門內推動命名政策"
+            activities:
+              - "團隊培訓協助"
+              - "問題收集與回饋"
+              - "成效追蹤"
+            coaching:
+              - "定期溝通"
+              - "問題協助"
+              - "最佳實踐分享"
+            assessment:
+              type: "survey"
+              passing_score: 80
+              duration: 2 weeks
+    
+    practical_exercises:
+      - exercise: "案例回饋"
+        description: "收集並回饋團隊案例"
+        complexity: "Low"
+        duration: "持續"
+        resources:
+          - "回饋表單"
+          - "案例模板"
+      
+      - exercise: "小組討論"
+        description: "主持部門內命名討論"
+        complexity: "Medium"
+        duration: "1 hour"
+        resources:
+          - "討論議程"
+          - "案例材料"
+          - "指南"
+    
+    assessment_methods:
+      formative:
+        - type: "Team Feedback"
+          description: "團隊反饋"
+          frequency: "每月"
+          weight: 30
+        
+        - type: "Adoption Rate"
+          description: "採用率追蹤"
+          frequency: "每季"
+          weight: 40
+      
+      summative:
+        - type: "Department Assessment"
+          description: "部門評估"
+          frequency: "每年"
+          weight: 30
+  
+  # Role 5: General User | 一般用戶
+  - role_id: "general-user"
+    role_name: "一般用戶"
+    role_name_en: "General User"
+    category: "business_user"
+    competency_level: "awareness"
+    target_audience: "All Employees"
+    
+    learning_objectives:
+      - objective: "命名規則認知"
+        description: "了解基本命名規則"
+        modules: ["基礎規則", "常見範例", "錯誤案例"]
+      
+      - objective: "自助檢查能力"
+        description: "能夠自查命名是否合規"
+        modules: ["檢查工具", "自驗步驟", "問題修正"]
+    
+    curriculum:
+      phase_1_basics:
+        duration: "2 hours"
+        delivery_mode: ["Online", "Self-paced"]
+        modules:
+          - module_id: "GU-001"
+            title: "基礎命名訓練"
+            description: "學習基本命名規則"
+            topics:
+              - "命名為何重要"
+              - "基本規則介紹"
+              - "常見範例"
+            resources:
+              - "快速指南"
+              - "海報/卡片"
+              - "在線課程"
+            assessment:
+              type: "quiz"
+              passing_score: 70
+              duration: 15
+      
+      phase_2_practice:
+        duration: "持續"
+        delivery_mode: ["Self-service", "On-demand"]
+        modules:
+          - module_id: "GU-002"
+            title: "錯誤案例解析"
+            description: "學習常見錯誤並避免"
+            topics:
+              - "常見錯誤類型"
+              - "如何避免"
+              - "修正方法"
+            resources:
+              - "錯誤案例庫"
+              - "修正指南"
+              - "FAQ"
+            assessment:
+              type: "self-check"
+              passing_score: N/A
+              duration: N/A
+    
+    practical_exercises:
+      - exercise: "實作填表"
+        description: "實際應用命名規則"
+        complexity: "Low"
+        duration: "30 minutes"
+        resources:
+          - "練習題集"
+          - "答案對照"
+      
+      - exercise: "規範演練"
+        description: "通過演練加深理解"
+        complexity: "Low"
+        duration: "1 hour"
+        resources:
+          - "演練腳本"
+          - "評分標準"
+    
+    assessment_methods:
+      formative:
+        - type: "Quiz"
+          description: "小測驗"
+          frequency: "培訓結束時"
+          weight: 50
+        
+        - type: "Practical Exercise"
+          description: "實作練習"
+          frequency: "培訓結束時"
+          weight: 50
+      
+      summative:
+        - type: "Compliance Check"
+          description: "合規性檢查"
+          frequency: "每季"
+          weight: 100
+
+# ============================================================================
+# Teaching Strategies | 教學策略
+# ============================================================================
+teaching_strategies:
+  lecture_based:
+    name: "講述式教學"
+    description: "傳統講課方式傳達知識"
+   适用_roles: ["general-user", "business-window"]
+    duration: "1-2 hours"
+    effectiveness: "基礎知識傳遞"
+  
+  practical_hands_on:
+    name: "實作教學"
+    description: "動手實際操作學習"
+    适用_roles: ["technical-lead", "operations-team"]
+    duration: "2-4 hours"
+    effectiveness: "技能培養"
+  
+  project_based:
+    name: "專案導向"
+    description: "通過實際專案學習"
+    适用_roles: ["naming-gatekeeper", "technical-lead"]
+    duration: "4-12 weeks"
+    effectiveness: "綜合能力提升"
+  
+  role_playing:
+    name: "角色扮演"
+    description: "模擬真實場景演練"
+    适用_roles: ["naming-gatekeeper", "operations-team"]
+    duration: "1-4 hours"
+    effectiveness: "決策與反應能力"
+  
+  case_study:
+    name: "案例教學"
+    description: "分析真實案例學習"
+    适用_roles: ["naming-gatekeeper", "technical-lead", "business-window"]
+    duration: "2-3 hours"
+    effectiveness: "分析與問題解決"
+  
+  peer_learning:
+    name: "同儕學習"
+    description: "團隊成員互相學習"
+    适用_roles: ["all-roles"]
+    duration: "持續"
+    effectiveness: "知識共享與協作"
+
+# ============================================================================
+# Assessment Framework | 評估框架
+# ============================================================================
+assessment_framework:
+  formative_assessment:
+    purpose: "過程回饋與調整"
+    timing: "持續進行"
+    methods:
+      - "Quiz"
+      - "Peer Review"
+      - "Mentor Feedback"
+      - "Progress Check"
+      - "Self-Assessment"
+    feedback_cycle: "即時至每週"
+  
+  summative_assessment:
+    purpose: "成果鑑定與認證"
+    timing: "階段結束時"
+    methods:
+      - "Final Exam"
+      - "Capstone Project"
+      - "Practical Assessment"
+      - "Portfolio Review"
+      - "Certification"
+    feedback_cycle: "評估結束後 1-2 週"
+
+# ============================================================================
+# Training Resources | 培訓資源
+# ============================================================================
+training_resources:
+  digital_materials:
+    - type: "Online Courses"
+      format: "Video, Interactive Quizzes"
+      accessibility: "24/7"
+      duration: "Variable"
+    
+    - type: "Interactive Simulations"
+      format: "Web-based Simulations"
+      accessibility: "24/7"
+      duration: "1-4 hours"
+    
+    - type: "Video Tutorials"
+      format: "Recorded Videos"
+      accessibility: "24/7"
+      duration: "10-60 minutes"
+  
+  basic_materials:
+    - type: "Standard Documents"
+      format: "PDF, Word"
+      accessibility: "On-demand"
+    
+    - type: "Guideline Summaries"
+      format: "PDF, Infographics"
+      accessibility: "On-demand"
+    
+    - type: "Example Forms"
+      format: "Word, Excel"
+      accessibility: "On-demand"
+  
+  specialized_training:
+    - type: "Case Simulation Drills"
+      format: "In-person or Online"
+      frequency: "每季"
+      duration: "1-2 days"
+    
+    - type: "Topic Sharing Sessions"
+      format: "In-person or Online"
+      frequency: "每月"
+      duration: "1-2 hours"
+    
+    - type: "Failure/Optimization Experience Sharing"
+      format: "In-person or Online"
+      frequency: "每季"
+      duration: "2-3 hours"
+
+# ============================================================================
+# Success Metrics | 成功指標
+# ============================================================================
+success_metrics:
+  training_effectiveness:
+    - metric: "培訓完成率"
+      target: "> 95%"
+      measurement: "學員記錄"
+    
+    - metric: "知識掌握度"
+      target: "> 85%"
+      measurement: "考試成績"
+    
+    - metric: "技能應用率"
+      target: "> 80%"
+      measurement: "實際工作表現"
+  
+  adoption_rate:
+    - metric: "角色培訓覆蓋率"
+      target: "100%"
+      measurement: "培訓記錄"
+    
+    - metric: "培訓滿意度"
+      target: "> 4.5/5"
+      measurement: "滿意度調查"
+    
+    - metric: "知識遷移成效"
+      target: "> 75%"
+      measurement: "工作表現評估"
+
+# ============================================================================
+# End of Naming Governance Training Map
+# ============================================================================
