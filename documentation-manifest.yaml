@@ -1,0 +1,454 @@
+# Documentation Manifest - 文檔即代碼配置
+# 將所有文檔轉換為機器可執行的配置
+#
+# 設計原則：
+# 1. 文檔 = 可執行配置（不是描述性文字）
+# 2. 每個條目都有明確的 action（驗證、生成、查詢）
+# 3. 無用文檔 = 刪除，有用文檔 = 轉為 YAML 配置
+# 4. AI 可直接讀取並執行
+
+apiVersion: documentation.machinenativeops.io/v1
+kind: DocumentationManifest
+metadata:
+  name: machine-native-ops-documentation
+  version: "1.0.0"
+  created: "2026-01-05"
+  description: |
+    統一的文檔管理配置
+    - 替代所有 DIRECTORY.md 和重複的 SUMMARY 文件
+    - 提供可執行的文檔索引和導航
+    - AI 可直接查詢和操作
+
+spec:
+  # ============================================
+  # 一、知識索引（替代 DIRECTORY.md）
+  # ============================================
+  knowledge_index:
+    description: "替代 94 個空殼 DIRECTORY.md，提供可查詢的模組索引"
+
+    # 治理模組索引
+    governance_modules:
+      - id: "00-vision-strategy"
+        name: "願景與戰略"
+        purpose: "定義命名治理的長期目標和階段性計劃"
+        entry_point: "workspace/src/governance/00-vision-strategy/naming-adoption-phases.yaml"
+        key_files:
+          - path: "naming-adoption-phases.yaml"
+            function: "get_current_phase"
+          - path: "naming-governance-summary.yaml"
+            function: "get_strategic_overview"
+        queries:
+          - "what_is_current_adoption_phase"
+          - "what_are_strategic_goals"
+
+      - id: "01-architecture"
+        name: "治理架構"
+        purpose: "組織結構、角色權限、升級矩陣"
+        entry_point: "workspace/src/governance/01-architecture/naming-governance-structure.yaml"
+        key_files:
+          - path: "naming-governance-structure.yaml"
+            function: "get_org_structure"
+          - path: "naming-escalation-matrix.yaml"
+            function: "resolve_escalation"
+        queries:
+          - "who_owns_naming_for_domain"
+          - "how_to_escalate_issue"
+
+      - id: "02-decision"
+        name: "決策管理"
+        purpose: "例外流程、激勵機制、利益相關者"
+        entry_point: "workspace/src/governance/02-decision/naming-exception-process.yaml"
+        key_files:
+          - path: "naming-exception-process.yaml"
+            function: "process_exception"
+          - path: "naming-incentives.yaml"
+            function: "calculate_incentives"
+          - path: "stakeholder-matrix.yaml"
+            function: "get_stakeholders"
+        queries:
+          - "how_to_request_exception"
+          - "who_are_stakeholders"
+
+      - id: "03-change"
+        name: "變更管理"
+        purpose: "RFC 工作流、遷移計劃、協作流程"
+        entry_point: "workspace/src/governance/03-change/naming-rfc-workflow.yaml"
+        key_files:
+          - path: "naming-rfc-workflow.yaml"
+            function: "create_rfc"
+          - path: "naming-change-request.yaml"
+            function: "submit_change"
+          - path: "naming-migration-plan.yaml"
+            function: "get_migration_status"
+        queries:
+          - "how_to_propose_naming_change"
+          - "what_is_migration_status"
+
+      - id: "04-risk"
+        name: "風險管理"
+        purpose: "風險評估、影響分析"
+        entry_point: "workspace/src/governance/04-risk/dimension.yaml"
+        queries:
+          - "what_are_naming_risks"
+
+      - id: "05-compliance"
+        name: "合規管理"
+        purpose: "法規遵從、標準對齊"
+        entry_point: "workspace/src/governance/05-compliance/dimension.yaml"
+        queries:
+          - "what_compliance_requirements"
+
+      - id: "06-security"
+        name: "安全治理"
+        purpose: "安全政策、訪問控制"
+        entry_point: "workspace/src/governance/06-security/dimension.yaml"
+        queries:
+          - "what_security_policies"
+
+      - id: "07-audit"
+        name: "審計合規"
+        purpose: "審計檢查清單、合規報告"
+        entry_point: "workspace/src/governance/07-audit/naming-audit-checklist.yaml"
+        key_files:
+          - path: "naming-audit-checklist.yaml"
+            function: "run_audit"
+        queries:
+          - "how_to_run_audit"
+          - "what_is_compliance_status"
+
+      - id: "10-policy"
+        name: "治理政策"
+        purpose: "命名規則、驗證自動化、告警規則"
+        entry_point: "workspace/src/governance/10-policy/naming-governance-policy.yaml"
+        key_files:
+          - path: "naming-governance-policy.yaml"
+            function: "get_policy_rules"
+          - path: "naming-validation-automations.yaml"
+            function: "validate_naming"
+          - path: "naming-alert-rules.yaml"
+            function: "check_alerts"
+        queries:
+          - "what_are_naming_rules"
+          - "how_to_validate_name"
+
+      - id: "12-culture-capability"
+        name: "文化與能力"
+        purpose: "培訓地圖、角色能力要求"
+        entry_point: "workspace/src/governance/12-culture-capability/naming-training-map.yaml"
+        queries:
+          - "what_training_needed"
+
+      - id: "13-metrics-reporting"
+        name: "指標與報告"
+        purpose: "KPI 定義、報告模板"
+        entry_point: "workspace/src/governance/13-metrics-reporting/naming-metrics-kpi.yaml"
+        key_files:
+          - path: "naming-metrics-kpi.yaml"
+            function: "calculate_kpi"
+        queries:
+          - "what_are_governance_kpis"
+
+      - id: "14-improvement"
+        name: "持續改進"
+        purpose: "PDCA 循環、改進日誌"
+        entry_point: "workspace/src/governance/14-improvement/naming-pdca-cycle.yaml"
+        queries:
+          - "what_improvements_planned"
+
+      - id: "27-templates"
+        name: "模板庫"
+        purpose: "命名模板、範例庫"
+        entry_point: "workspace/src/governance/27-templates/naming-templates.yaml"
+        key_files:
+          - path: "naming-templates.yaml"
+            function: "get_template"
+          - path: "naming-examples-library.yaml"
+            function: "get_examples"
+        queries:
+          - "get_naming_template_for"
+          - "show_naming_examples"
+
+      - id: "31-schemas"
+        name: "Schema 定義"
+        purpose: "JSON Schema、驗證規則"
+        entry_point: "workspace/src/governance/31-schemas/"
+        queries:
+          - "get_schema_for"
+
+      - id: "35-scripts"
+        name: "自動化腳本"
+        purpose: "命名生成器、驗證器、CLI"
+        entry_point: "workspace/src/governance/35-scripts/"
+        executable:
+          - path: "naming-generator.sh"
+            function: "generate_name"
+          - path: "naming-validator.sh"
+            function: "validate_name"
+          - path: "naming-cli-tool.sh"
+            function: "batch_operations"
+        queries:
+          - "how_to_generate_name"
+          - "how_to_validate_name"
+
+  # ============================================
+  # 二、項目狀態（替代重複的 COMPLETION/SUMMARY）
+  # ============================================
+  project_status:
+    description: "統一的項目狀態追蹤，替代 25+ COMPLETION 和 35+ SUMMARY 文件"
+
+    # 當前狀態摘要
+    current_status:
+      overall: "production"
+      last_updated: "2026-01-05"
+
+    # 階段完成狀態（替代 PHASE*_COMPLETION.md）
+    phases:
+      - id: "phase-1"
+        name: "基礎架構"
+        status: "completed"
+        completion_date: "2024-12-01"
+        key_deliverables:
+          - "governance-manifest.yaml 建立"
+          - "核心 schema 定義"
+          - "基本驗證流程"
+
+      - id: "phase-2"
+        name: "目錄重構"
+        status: "completed"
+        completion_date: "2024-12-15"
+        key_deliverables:
+          - "FHS 標準對齊"
+          - "controlplane/workspace 分離"
+          - "模組編號系統"
+
+      - id: "phase-3"
+        name: "自動化整合"
+        status: "completed"
+        completion_date: "2025-01-01"
+        key_deliverables:
+          - "CI/CD 整合"
+          - "Pre-commit hooks"
+          - "自動驗證流程"
+
+      - id: "phase-4"
+        name: "AI 介面"
+        status: "completed"
+        completion_date: "2025-01-05"
+        key_deliverables:
+          - "AI 可讀 manifest"
+          - "Schema-driven API"
+          - "機器執行工作流"
+
+      - id: "phase-5"
+        name: "文檔重構"
+        status: "in_progress"
+        target_date: "2025-01-15"
+        key_deliverables:
+          - "documentation-manifest.yaml"
+          - "清理冗餘文檔"
+          - "知識索引建立"
+
+    # 功能模組狀態（替代各種 *_SUMMARY.md）
+    modules_status:
+      governance:
+        status: "stable"
+        coverage: "95%"
+
+      architecture:
+        status: "stable"
+        coverage: "90%"
+
+      ci_cd:
+        status: "stable"
+        coverage: "85%"
+
+      documentation:
+        status: "refactoring"
+        coverage: "30%"
+        note: "正在從 MD 遷移到 YAML"
+
+  # ============================================
+  # 三、架構決策記錄（ADR）
+  # ============================================
+  architecture_decisions:
+    description: "關鍵架構決策，替代分散的架構文檔"
+
+    decisions:
+      - id: "ADR-001"
+        title: "採用 YAML 即代碼策略"
+        status: "accepted"
+        date: "2025-01-05"
+        context: "文檔難以維護，與代碼脫節"
+        decision: "將所有配置和文檔轉為 YAML manifest"
+        consequences:
+          - "AI 可直接讀取執行"
+          - "版本控制友好"
+          - "減少文檔維護負擔"
+
+      - id: "ADR-002"
+        title: "FHS 標準目錄結構"
+        status: "accepted"
+        date: "2024-12-01"
+        context: "目錄結構混亂，難以導航"
+        decision: "採用 Linux FHS 3.0 標準"
+        consequences:
+          - "清晰的層級分離"
+          - "標準化的路徑查找"
+
+      - id: "ADR-003"
+        title: "Schema-Driven API"
+        status: "accepted"
+        date: "2024-12-15"
+        context: "API 缺乏規範，難以自動化"
+        decision: "所有 API 由 JSON Schema 定義"
+        consequences:
+          - "自動驗證"
+          - "自動生成文檔"
+          - "類型安全"
+
+      - id: "ADR-004"
+        title: "刪除空殼 DIRECTORY.md"
+        status: "proposed"
+        date: "2026-01-05"
+        context: "94 個 DIRECTORY.md 全是未填充模板"
+        decision: "刪除所有 DIRECTORY.md，用此 manifest 替代"
+        consequences:
+          - "減少 94 個無用文件"
+          - "統一的索引查詢"
+
+  # ============================================
+  # 四、文檔清理計劃
+  # ============================================
+  cleanup_plan:
+    description: "明確定義要刪除、合併、保留的文檔"
+
+    # 要刪除的文檔（無實際價值）
+    delete:
+      # 空殼 DIRECTORY.md
+      - pattern: "**/DIRECTORY.md"
+        reason: "94 個文件全是 [待補充] 模板，無實際內容"
+        count: 94
+
+      # 重複的 COMPLETION 報告
+      - pattern: "workspace/docs/**/COMPLETION*.md"
+        reason: "已整合到 project_status.phases"
+        exceptions:
+          - "FINAL_COMPLETION_SUMMARY.md"  # 保留最終版本
+
+      # 重複的 SUMMARY 文件
+      - pattern: "workspace/docs/**/*_SUMMARY.md"
+        reason: "已整合到 project_status.modules_status"
+        exceptions:
+          - "ARCHITECTURE_IMPLEMENTATION_SUMMARY.md"
+          - "WORKFLOW_SYSTEM_SUMMARY.md"
+
+      # 臨時和草稿文件
+      - pattern: "workspace/docs/_scratch/**"
+        reason: "臨時文件"
+      - pattern: "workspace/docs/**/scratch/**"
+        reason: "草稿文件"
+
+    # 要合併的文檔
+    merge:
+      - sources:
+          - "workspace/docs/WORKFLOW_SYSTEM_SUMMARY.md"
+          - "workspace/docs/workflows/WORKFLOW_SYSTEM_SUMMARY.md"
+        target: "workspace/docs/workflows/WORKFLOW_SYSTEM_SUMMARY.md"
+        reason: "消除重複"
+
+      - sources:
+          - "workspace/docs/WORKFLOW_INTEGRATION_SUMMARY.md"
+          - "workspace/docs/workflows/WORKFLOW_INTEGRATION_SUMMARY.md"
+        target: "workspace/docs/workflows/WORKFLOW_INTEGRATION_SUMMARY.md"
+        reason: "消除重複"
+
+    # 要保留的核心文檔
+    keep:
+      # 根層文檔
+      - path: "README.md"
+        reason: "專案入口"
+
+      - path: "README-MACHINE.md"
+        reason: "機器可讀架構說明"
+
+      # 架構文檔
+      - path: "workspace/docs/architecture/"
+        reason: "核心架構設計"
+
+      # 政策文檔
+      - path: "workspace/docs/policies/"
+        reason: "治理政策"
+
+      # 範例和教程
+      - path: "workspace/docs/examples/"
+        reason: "配置範例"
+
+      - path: "workspace/docs/tutorials/"
+        reason: "教程指南"
+
+  # ============================================
+  # 五、查詢接口（AI 操作入口）
+  # ============================================
+  query_interface:
+    description: "AI 可直接調用的查詢接口"
+
+    # 模組查詢
+    find_module:
+      description: "根據關鍵字查找相關模組"
+      input: "keyword: string"
+      output: "modules: ModuleInfo[]"
+      example:
+        input: "exception"
+        output:
+          - id: "02-decision"
+            name: "決策管理"
+            entry_point: "workspace/src/governance/02-decision/naming-exception-process.yaml"
+
+    # 狀態查詢
+    get_status:
+      description: "獲取項目或模組狀態"
+      input: "target: string"
+      output: "status: StatusInfo"
+      example:
+        input: "phase-5"
+        output:
+          status: "in_progress"
+          target_date: "2025-01-15"
+
+    # 文檔查詢
+    find_document:
+      description: "查找相關文檔"
+      input: "topic: string"
+      output: "documents: DocumentInfo[]"
+
+    # 架構決策查詢
+    get_decision:
+      description: "獲取架構決策"
+      input: "topic: string"
+      output: "decisions: ADR[]"
+
+  # ============================================
+  # 六、自動化規則
+  # ============================================
+  automation:
+    # 文檔驗證
+    validation:
+      # 禁止創建 DIRECTORY.md
+      rules:
+        - name: "no_directory_md"
+          pattern: "**/DIRECTORY.md"
+          action: "block"
+          message: "使用 documentation-manifest.yaml 替代 DIRECTORY.md"
+
+        - name: "no_duplicate_summary"
+          pattern: "**/*_SUMMARY.md"
+          action: "warn"
+          message: "考慮將狀態整合到 documentation-manifest.yaml"
+
+    # 索引同步
+    sync:
+      trigger: "on_file_change"
+      actions:
+        - scan_governance_modules
+        - update_knowledge_index
+        - validate_references
