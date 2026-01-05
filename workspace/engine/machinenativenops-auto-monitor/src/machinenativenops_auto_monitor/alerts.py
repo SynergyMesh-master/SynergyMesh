@@ -2,13 +2,12 @@
 MachineNativeOps Auto-Monitor - Alert Management
 警報管理模組
 
-Manages alert rules, evaluation, and notification delivery.
-Handles alert rules, alert generation, and alert routing for MachineNativeOps monitoring.
+Manages alert rules, evaluation, generation, and notification routing for MachineNativeOps monitoring.
 """
 
 import logging
 from dataclasses import dataclass, field
-from typing import Dict, List, Optional, Any, Callable
+from typing import Dict, List, Optional, Any
 from datetime import datetime
 from enum import Enum
 
@@ -46,11 +45,11 @@ class Alert:
     state: AlertState
     message: str
     id: str = ""
+    source: str = ""
     labels: Dict[str, str] = field(default_factory=dict)
     annotations: Dict[str, str] = field(default_factory=dict)
     started_at: datetime = field(default_factory=datetime.now)
     resolved_at: Optional[datetime] = None
-    source: str = ""
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def __post_init__(self):
