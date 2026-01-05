@@ -12,19 +12,9 @@ import logging
 import platform
 import psutil
 import subprocess
-from abc import ABC, abstractmethod
-from typing import Any, Dict, List
-Data Collectors Module
-數據收集模組
-
-Collects metrics, logs, and events from various sources for monitoring.
-"""
-
-import logging
-import psutil
 import requests
 from abc import ABC, abstractmethod
-from typing import Dict, List, Any, Optional
+from typing import Any, Dict, List, Optional
 from dataclasses import dataclass
 from datetime import datetime
 
@@ -703,25 +693,7 @@ class KubernetesCollector:
         """Collect metrics from all nodes."""
         # Placeholder for Kubernetes integration
         return []
-Metrics collectors for system, quantum, and Kubernetes monitoring
-"""
 
-import os
-import psutil
-import time
-import logging
-import requests
-from typing import Dict, Any, Optional, List
-from datetime import datetime
-from dataclasses import dataclass
-
-try:
-    from kubernetes import client, config
-    KUBERNETES_AVAILABLE = True
-except ImportError:
-    KUBERNETES_AVAILABLE = False
-
-from .config import QuantumConfig, ServicesConfig
 
 @dataclass
 class SystemMetrics:

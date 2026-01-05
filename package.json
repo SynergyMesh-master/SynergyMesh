@@ -1,12 +1,41 @@
 {
   "name": "machine-native-ops-root",
+  "version": "1.0.0",
+  "description": "MachineNativeOps - Enterprise-grade orchestration platform (root workspace)",
   "private": true,
-  "description": "Root helper package.json for CI/Cloudflare builds",
+  "workspaces": [
+    "workspace/src/mcp-servers",
+    "workspace/src/core/contract_service/contracts-L1/contracts",
+    "workspace/src/core/advisory-database",
+    "workspace/src/apps/web",
+    "workspace/src/ai/src/ai",
+    "workspace/archive/unmanned-engineer-ceo/80-skeleton-configs"
+  ],
   "scripts": {
-    "build": "npm ci --prefix workspace/src/frontend/ui && npm run build --prefix workspace/src/frontend/ui && rm -rf dist && cp -a workspace/src/frontend/ui/dist ./dist && cp -a cloudflare/pages/_headers dist/_headers && cp -a cloudflare/pages/_redirects dist/_redirects"
+    "lint": "npm run lint --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present",
+    "build": "npm run build --workspaces --if-present",
+    "dev:stack": "npm run dev:stack --workspaces --if-present",
+    "docs:lint": "npm run docs:lint --workspaces --if-present",
+    "clean": "npm run clean --workspaces --if-present && rm -rf node_modules",
+    "cf:dev": "npm run cf:dev --workspaces --if-present",
+    "cf:deploy": "npm run cf:deploy --workspaces --if-present"
   },
-  "engines": {
-    "node": ">=20",
-    "npm": ">=9"
-  }
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MachineNativeOps/machine-native-ops.git"
+  },
+  "keywords": [
+    "machine-native",
+    "ops",
+    "automation",
+    "governance",
+    "cloud-native"
+  ],
+  "author": "MachineNativeOps",
+  "license": "BSL-1.0",
+  "bugs": {
+    "url": "https://github.com/MachineNativeOps/machine-native-ops/issues"
+  },
+  "homepage": "https://github.com/MachineNativeOps/machine-native-ops#readme"
 }

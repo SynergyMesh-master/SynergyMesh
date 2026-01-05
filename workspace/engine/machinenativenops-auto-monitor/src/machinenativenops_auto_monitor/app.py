@@ -22,9 +22,11 @@ from .儲存 import StorageManager
 
 class AutoMonitorApp:
     """
-    Main application class for MachineNativeOps Auto-Monitor.
+    Main application class for the MachineNativeOps auto-monitor system.
+
+    Orchestrates metrics collection, alert handling, and storage based on
+    the provided configuration.
     """
-    
     def __init__(self, config: AutoMonitorConfig):
         """
         Initialize auto-monitor application.
@@ -171,21 +173,7 @@ from typing import Any, Dict
 from .alerts import AlertManager, AlertSeverity
 from .collectors import SystemCollector, ServiceCollector, MetricCollector
 from .config import MonitorConfig
-Auto-Monitor Application Core
-自動監控應用核心
 
-Main application logic for the MachineNativeOps auto-monitoring system.
-"""
-
-import logging
-import asyncio
-from typing import Dict, Optional
-from datetime import datetime
-
-from .config import MonitorConfig
-from .collectors import MetricsCollector, LogCollector, EventCollector
-from .alerts import AlertManager, create_default_rules
-from .儲存 import StorageBackend, InMemoryStorage
 
 logger = logging.getLogger(__name__)
 
@@ -507,29 +495,7 @@ class AutoMonitorApp:
             'logs_collected': self.storage.get_logs_count(),
             'events_collected': self.storage.get_events_count(),
         }
-Main application for MachineNativeOps Auto Monitor
-Core monitoring logic without auto-installation
-"""
 
-import os
-import sys
-import time
-import threading
-import logging
-import signal
-from typing import Dict, Any, Optional, List
-from datetime import datetime
-from pathlib import Path
-
-import psutil
-from prometheus_client import start_http_server, Gauge, Counter, Histogram
-from fastapi import FastAPI, HTTPException
-from fastapi.responses import JSONResponse
-
-from .config import Config
-from .collectors import SystemCollector, QuantumCollector, KubernetesCollector
-from .storage import DatabaseManager
-from .alerts import AlertManager
 
 class MachineNativeOpsAutoMonitor:
     """Main monitoring application class"""
