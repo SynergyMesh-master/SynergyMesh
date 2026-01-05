@@ -4,17 +4,18 @@
   "description": "MachineNativeOps - Enterprise-grade orchestration platform (root workspace)",
   "private": true,
   "workspaces": [
-    "workspace"
+    "workspace/src/mcp-servers/*",
+    "workspace/src/core/contract_service/contracts-L1/contracts"
   ],
   "scripts": {
-    "lint": "npm run lint --workspace=workspace",
-    "test": "npm run test --workspace=workspace",
-    "build": "npm run build --workspace=workspace",
-    "dev:stack": "npm run dev:stack --workspace=workspace",
-    "docs:lint": "npm run docs:lint --workspace=workspace",
-    "clean": "npm run clean --workspace=workspace && rm -rf node_modules",
-    "cf:dev": "npm run cf:dev --workspace=workspace",
-    "cf:deploy": "npm run cf:deploy --workspace=workspace"
+    "lint": "npm run lint --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present",
+    "build": "npm run build --workspaces --if-present",
+    "dev:stack": "npm run dev:stack --workspaces --if-present",
+    "docs:lint": "npm run docs:lint --workspaces --if-present",
+    "clean": "npm run clean --workspaces --if-present && rm -rf node_modules",
+    "cf:dev": "npm run cf:dev --workspaces --if-present",
+    "cf:deploy": "npm run cf:deploy --workspaces --if-present"
   },
   "repository": {
     "type": "git",
