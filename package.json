@@ -9,6 +9,7 @@
     "workspace/src/core/advisory-database",
     "workspace/src/apps/web",
     "workspace/src/ai/src/ai",
+    "workspace/archive/unmanned-engineer-ceo/80-skeleton-configs"
     "workspace/archive/unmanned-engineer-ceo/80-skeleton-configs",
   ],
   "scripts": {

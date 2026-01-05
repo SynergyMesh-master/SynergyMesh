@@ -1,26 +1,20 @@
 """
 MachineNativeOps Auto-Monitor - Metrics Collectors
-
-Collects metrics from various sources (system, services, custom).
-Metric Collectors
 指標收集器
 
-Collects various metrics from the system and services.
+Collects metrics from various sources (system, services, custom).
 """
 
 import logging
 import os
 import platform
 import psutil
-import subprocess
 import requests
-import subprocess
 import time
 from abc import ABC, abstractmethod
 from typing import Any, Dict, List, Optional
 from dataclasses import dataclass
 from datetime import datetime
-from typing import Any, Dict, List, Optional
 
 
 @dataclass
