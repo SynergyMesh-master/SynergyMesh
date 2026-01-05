@@ -250,14 +250,14 @@ class AlertManager:
     Manages alert rules and active alerts.
     """
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config: Dict[str, Any]):
         """
         Initialize alert manager.
         
         Args:
             config: Alert manager configuration
         """
-        self.config = config or {}
+        self.config = config
         self.logger = logging.getLogger(__name__)
         self.rules: Dict[str, AlertRule] = {}
         self.active_alerts: Dict[str, Alert] = {}
