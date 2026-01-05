@@ -29,7 +29,6 @@ class AlertState(Enum):
     RESOLVED = "resolved"
 
 
-logger = logging.getLogger(__name__)
 class AlertStatus(Enum):
     """Alert status."""
     FIRING = "firing"
@@ -40,6 +39,7 @@ class AlertStatus(Enum):
 @dataclass
 class Alert:
     """Represents an alert instance."""
+    id: str
     name: str
     severity: AlertSeverity
     state: AlertState
@@ -51,10 +51,6 @@ class Alert:
     started_at: datetime = field(default_factory=datetime.now)
     resolved_at: Optional[datetime] = None
     metadata: Dict[str, Any] = field(default_factory=dict)
-    
-    def __post_init__(self):
-        if not self.id:
-            self.id = f"{self.name}_{datetime.now().timestamp()}"
     
     def resolve(self):
         """Mark alert as resolved"""
@@ -114,7 +110,9 @@ class AlertManager:
         
         if value >= threshold:
             severity = self._determine_severity(metric_name, value, threshold)
+            alert_id = f"{metric_name}_high_{datetime.now().timestamp()}"
             alert = Alert(
+                id=alert_id,
                 name=f"{metric_name}_high",
                 severity=severity,
                 state=AlertState.FIRING,
@@ -253,14 +251,16 @@ class AlertManager:
     Manages alert rules and active alerts.
     """
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config: Dict[str, Any]):
         """
         Initialize alert manager.
         
         Args:
             config: Alert manager configuration
         """
-        self.config = config or {}
+        if config is None:
+            config = {}
+        self.config = config
         self.logger = logging.getLogger(__name__)
         self.rules: Dict[str, AlertRule] = {}
         self.active_alerts: Dict[str, Alert] = {}

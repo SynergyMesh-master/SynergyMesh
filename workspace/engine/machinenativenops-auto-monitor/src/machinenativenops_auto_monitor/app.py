@@ -290,9 +290,12 @@ class AutoMonitorApp:
         for service_name, service_data in services.items():
             if not service_data.get("healthy", True):
                 from .alerts import Alert
+                alert_id = f"service_{service_name}_down_{datetime.now().timestamp()}"
                 alert = Alert(
+                    id=alert_id,
                     name=f"service_{service_name}_down",
                     severity=AlertSeverity.ERROR,
+                    state=AlertState.FIRING,
                     message=f"Service {service_name} is unhealthy",
                     source="auto-monitor",
                     metadata={
