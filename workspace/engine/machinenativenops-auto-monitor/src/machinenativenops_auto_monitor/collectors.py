@@ -13,7 +13,6 @@ import platform
 import psutil
 import subprocess
 import requests
-import subprocess
 from abc import ABC, abstractmethod
 from typing import Any, Dict, List, Optional
 from dataclasses import dataclass
