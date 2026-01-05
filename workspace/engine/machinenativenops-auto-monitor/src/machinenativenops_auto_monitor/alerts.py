@@ -261,7 +261,9 @@ class AlertManager:
         Args:
             config: Alert manager configuration
         """
-        self.config = config or {}
+        if config is None:
+            config = {}
+        self.config = config
         self.logger = logging.getLogger(__name__)
         self.rules: Dict[str, AlertRule] = {}
         self.active_alerts: Dict[str, Alert] = {}
