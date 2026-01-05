@@ -1,14 +1,194 @@
 ---
-# PLACEHOLDER: System Configuration
-# 此文件是自動生成的佔位符，需要根據實際需求填充
+# 關鍵績效指標定義 | Key Performance Indicator Definitions
+version: "2.0"
+lastUpdated: "2025-01-05"
+status: "active"
+governanceDimension: "13-metrics-reporting"
 
-version: "1.0"
-lastUpdated: "2025-12-09"
-status: "draft"
+kpi_system:
+  name: "MachineNativeOps KPI System"
+  purpose: "追蹤和衡量治理效能 | Track and measure governance effectiveness"
+  framework: "Balanced Scorecard + OKR"
+  review_cycle: "Monthly"
+  target_audience: ["Governance Board", "Technical Leadership", "Operations Teams"]
 
-system:
-  name: "System Name"
-  description: "System description goes here"
-  components: []
+kpi_dimensions:
+  adoption:
+    name: "採用指標 | Adoption Metrics"
+    description: "衡量標準和政策的採用程度"
+    weight: 0.30
+    
+  quality:
+    name: "品質指標 | Quality Metrics"
+    description: "衡量交付品質和一致性"
+    weight: 0.25
+    
+  efficiency:
+    name: "效率指標 | Efficiency Metrics"
+    description: "衡量流程和操作效率"
+    weight: 0.25
+    
+  governance:
+    name: "治理指標 | Governance Metrics"
+    description: "衡量治理活動有效性"
+    weight: 0.20
 
-# TODO: Add system specifications
+# 命名治理 KPIs 參考 | Naming Governance KPIs Reference
+naming_governance_kpis:
+  reference_file: "naming-metrics-kpi.yaml"
+  integration_method: "Automated import from dimension-specific KPI files"
+  priority: "High"
+  
+  key_metrics:
+    adoption_rate:
+      id: "NM-001"
+      name: "命名標準採用率"
+      weight: 0.25
+      category: "adoption"
+      
+    compliance_rate:
+      id: "NM-003"
+      name: "新資源合規率"
+      weight: 0.20
+      category: "adoption"
+      
+    error_rate:
+      id: "NM-004"
+      name: "命名錯誤率"
+      weight: 0.15
+      category: "quality"
+      
+    consistency_score:
+      id: "NM-005"
+      name: "命名一致性格"
+      weight: 0.10
+      category: "quality"
+      
+    conflict_events:
+      id: "NM-006"
+      name: "命名衝突事件數"
+      weight: 0.10
+      category: "quality"
+      
+    review_cycle:
+      id: "NM-007"
+      name: "命名審查週期時間"
+      weight: 0.08
+      category: "efficiency"
+      
+    automation_coverage:
+      id: "NM-008"
+      name: "自動化驗證覆蓋率"
+      weight: 0.07
+      category: "efficiency"
+      
+    exception_requests:
+      id: "NM-009"
+      name: "治理例外申請數"
+      weight: 0.05
+      category: "governance"
+      
+    training_completion:
+      id: "NM-010"
+      name: "培訓完成率"
+      weight: 0.05
+      category: "governance"
+      
+    audit_remediation:
+      id: "NM-011"
+      name: "審計發現整改率"
+      weight: 0.05
+      category: "governance"
+
+data_integration:
+  sources:
+    automated:
+      - "CI/CD pipeline logs"
+      - "Git repository analysis"
+      - "Resource inventory systems"
+      - "Audit logging systems"
+      - "Monitoring and alerting systems"
+      
+    manual:
+      - "Team surveys and assessments"
+      - "Stakeholder feedback"
+      - "Manual reviews and inspections"
+      - "Compliance assessments"
+      
+  collection_frequency:
+    real_time: ["NM-004", "NM-005", "NM-006"]
+    daily: ["NM-001", "NM-003", "NM-008"]
+    weekly: ["NM-007", "NM-009", "NM-014"]
+    monthly: ["NM-002", "NM-010", "NM-011"]
+    quarterly: ["Overall governance score"]
+
+reporting_framework:
+  dashboards:
+    platform: "Grafana"
+    update_frequency: "5 minutes"
+    access_levels:
+      executive: ["Overall KPI summary", "Trend analysis"]
+      management: ["Detailed KPI breakdown", "Drill-down capabilities"]
+      operational: ["Real-time metrics", "Alert configurations"]
+      
+  reports:
+    daily_digest:
+      format: "Email"
+      recipients: ["Operations teams"]
+      content: ["Critical alerts", "Daily KPI snapshots"]
+      
+    weekly_summary:
+      format: "PDF report + Dashboard link"
+      recipients: ["Technical leads", "Process owners"]
+      content: ["Weekly KPI performance", "Variance analysis", "Action items"]
+      
+    monthly_scorecard:
+      format: "Executive presentation"
+      recipients: ["Governance Board", "Executive leadership"]
+      content: ["Full KPI analysis", "Trend patterns", "Strategic insights"]
+      
+    quarterly_review:
+      format: "Comprehensive report"
+      recipients: ["All stakeholders"]
+      content: ["Qx performance summary", "Benchmark comparisons", "Strategic recommendations"]
+
+threshold_management:
+  warning_threshold: "10% below target"
+  critical_threshold: "20% below target"
+  trending_analysis:
+    window: "3 months"
+    methodology: "Linear regression"
+    prediction: "Next month performance"
+    
+  escalation_rules:
+    level_1:
+      trigger: "Warning threshold breached"
+      action: "Notify process owner"
+      timeline: "24 hours"
+      
+    level_2:
+      trigger: "Critical threshold breached"
+      action: "Escalate to management"
+      timeline: "12 hours"
+      
+    level_3:
+      trigger: "Sustained underperformance (> 2 weeks)"
+      action: "Governance board review"
+      timeline: "Immediate"
+
+improvement_tracking:
+  pdca_integration:
+    enabled: true
+    cycle_frequency: "Monthly"
+    
+  action_items:
+    creation: "Automatically generated on threshold breach"
+    assignment: "Based on KPI ownership matrix"
+    tracking: "Real-time progress monitoring"
+    closure: "Requires KPI improvement verification"
+    
+  lessons_learned:
+    capture: "After improvement actions complete"
+    analysis: "Quarterly review meetings"
+    sharing: "Knowledge base updates"
+    application: "Future planning cycles

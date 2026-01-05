@@ -1,7 +1,7 @@
 ---
 # 審計政策 | Audit Policy
-version: "1.0"
-lastUpdated: "2025-12-10"
+version: "2.0"
+lastUpdated: "2025-01-05"
 status: "active"
 
 audit_policy:
@@ -19,3 +19,92 @@ audit_types:
   internal: "Quarterly"
   external: "Annual"
   compliance: "As required"
+
+# 命名治理審計政策擴展 | Naming Governance Audit Policy Extension
+naming_governance_audit:
+  enabled: true
+  priority: "High"
+  framework: "Risk-based audit approach"
+  
+  audit_scope:
+    policy_compliance:
+      - "命名治理政策執行情況"
+      - "命名標準採用率驗證"
+      - "例外流程合規性檢查"
+      
+    implementation_effectiveness:
+      - "命名驗證工具運行狀況"
+      - "CI/CD 管道集成驗證"
+      - "RFC 流程執行效果"
+      
+    quality_assurance:
+      - "命名錯誤率監控"
+      - "命名一致性評估"
+      - "衝突檢測和解决機制"
+      
+    training_awareness:
+      - "培訓計劃完整性"
+      - "團隊成員理解程度"
+      - "新員工培訓及時性"
+      
+    security_compliance:
+      - "敏感資源命名處理"
+      - "訪問控制實施驗證"
+      - "合規標準對應關係"
+      
+  audit_frequency:
+    comprehensive: "Annual"
+    focused: "Quarterly"
+    monitoring: "Monthly"
+    
+  risk_based_approach:
+    high_risk_areas:
+      - "關鍵系統資源命名"
+      - "生產環境配置"
+      - "安全相關資源"
+      - "合規要求高的領域"
+      
+    sampling_strategy:
+      methodology: "Stratified random sampling"
+      sample_size: "Based on confidence level 95%, margin of error 5%"
+      high_risk_multiplier: 2.0
+      
+  reporting:
+    stakeholders:
+      - "Governance Board"
+      - "Technical Leadership"
+      - "Compliance Officers"
+      - "Naming Gatekeepers"
+      
+    report_types:
+      executive_summary: "For leadership team"
+      detailed_findings: "For operational teams"
+      recommendations: "For improvement planning"
+      
+    timeliness:
+      critical_findings: "Within 24 hours"
+      high_priority: "Within 48 hours"
+      regular_reports: "Within 2 weeks after audit completion"
+      
+  quality_assurance:
+    reviewer_requirements:
+      - "Independence from naming governance implementation"
+      - "Relevant technical expertise"
+      - "Understanding of audit methodologies"
+      - "Knowledge of governance frameworks"
+      
+    peer_review:
+      enabled: true
+      frequency: "For all high and critical findings"
+      reviewers: "Senior audit team members"
+      
+  continuous_improvement:
+    feedback_mechanism:
+      - "Post-audit surveys"
+      - "Stakeholder interviews"
+      - "Effectiveness metrics tracking"
+      
+    lessons_learned:
+      capture: "After each audit cycle"
+      sharing: "Quarterly governance board meetings"
+      implementation: "Integrated into next audit plan"

@@ -13,6 +13,32 @@ status: "active"
 policy_type: "naming-governance"
 
 # ============================================================================
+# Schema References | Schema-Driven Architecture
+# ============================================================================
+schema_references:
+  # Validation operations use these schemas
+  validation:
+    input_schema: "schemas/validation-request.schema.yaml"
+    output_schema: "schemas/validation-response.schema.yaml"
+    description: "All naming validation requests must conform to validation-request schema"
+  
+  # Generation operations use these schemas
+  generation:
+    input_schema: "schemas/generation-request.schema.yaml"
+    output_schema: "schemas/generation-response.schema.yaml"
+    description: "All naming generation requests must conform to generation-request schema"
+  
+  # Change management operations use these schemas
+  change_management:
+    input_schema: "schemas/change-request.schema.yaml"
+    description: "All governance change requests must conform to change-request schema"
+  
+  # Exception requests use these schemas
+  exception:
+    input_schema: "schemas/exception-request.schema.yaml"
+    description: "All exception requests must conform to exception-request schema"
+
+# ============================================================================
 # Policy Overview | 政策概覽
 # ============================================================================
 overview:

@@ -1,18 +1,35 @@
 ---
 # 角色與職責定義 | Roles and Responsibilities Definition
-version: "1.0"
-lastUpdated: "2025-12-10"
+version: "2.0"
+lastUpdated: "2025-01-05"
 status: "active"
 
 # 角色架構 | Role Architecture
 role_architecture:
   description: "Complete role structure for SynergyMesh governance framework"
-  total_roles: 25
+  total_roles: 30
   categories:
     - "strategic_roles"
     - "tactical_roles"
     - "operational_roles"
     - "support_roles"
+
+# 命名治理角色擴展 | Naming Governance Roles Extension
+naming_governance_roles:
+  integrated: true
+  structure_file: "naming-governance-structure.yaml"
+  additional_roles: 5
+  
+  strategic:
+    - naming_governance_board_chairman
+    - naming_governance_executive_sponsor
+    
+  tactical:
+    - naming_governance_manager
+    - naming_policy_manager
+    
+  operational:
+    - naming_gatekeeper
 
 # 戰略角色 | Strategic Roles
 strategic_roles:
@@ -454,3 +471,174 @@ role_development:
       - "Domain-specific certifications"
       - "Advanced technical skills"
       - "Industry best practices"
+
+# 命名治理專門角色 | Naming Governance Specialized Roles
+naming_governance_specialized_roles:
+
+  naming_governance_board_chairman:
+    name: "命名治理委員會主席"
+    english_name: "Naming Governance Board Chairman"
+    category: "strategic_roles"
+    level: "executive"
+    reports_to: "Governance Board Chairman"
+    responsibilities:
+      - "主持命名治理委員會會議 | Chair naming governance board meetings"
+      - "制定命名治理戰略方向 | Define naming governance strategic direction"
+      - "批准命名政策重大變更 | Approve major naming policy changes"
+      - "協調執行層資源支持 | Coordinate executive resource support"
+      - "處理高層級命名衝突 | Resolve high-level naming conflicts"
+    authority:
+      - "命名政策最終批准權 | Final naming policy approval authority"
+      - "戰略路線圖決策權 | Strategic roadmap decision authority"
+      - "預算分配權 | Budget allocation authority"
+    required_skills:
+      - "戰略思維 | Strategic thinking"
+      - "變革管理 | Change management"
+      - "跨領域協調 | Cross-domain coordination"
+      - "治理專業知識 | Governance expertise"
+    kpis:
+      - "治理成熟度提升 | Governance maturity improvement"
+      - "政策執行率 | Policy execution rate"
+      - "利益相關者滿意度 | Stakeholder satisfaction"
+
+  naming_governance_executive_sponsor:
+    name: "命名治理執行贊助人"
+    english_name: "Naming Governance Executive Sponsor"
+    category: "strategic_roles"
+    level: "executive"
+    reports_to: "CEO"
+    responsibilities:
+      - "提供執行層支持 | Provide executive support"
+      - "消除組織障礙 | Remove organizational obstacles"
+      - "確保資源可用性 | Ensure resource availability"
+      - "倡導命名治理文化 | Champion naming governance culture"
+      - "推廣最佳實踐 | Promote best practices"
+    authority:
+      - "資源優先級設置權 | Resource priority setting authority"
+      - "跨部門協調權 | Cross-department coordination authority"
+    required_skills:
+      - "影響力 | Influence"
+      - "資源管理 | Resource management"
+      - "變革推動 | Change champion"
+    kpis:
+      - "項目成功率 | Project success rate"
+      - "資源利用率 | Resource utilization"
+      - "文化採用率 | Culture adoption rate"
+
+  naming_governance_manager:
+    name: "命名治理經理"
+    english_name: "Naming Governance Manager"
+    category: "tactical_roles"
+    level: "management"
+    reports_to: "Naming Governance Board Chairman"
+    responsibilities:
+      - "執行命名治理策略 | Execute naming governance strategy"
+      - "管理命名治理辦公室運營 | Manage naming governance office operations"
+      - "協調跨部門命名活動 | Coordinate cross-department naming activities"
+      - "監控 KPI 指標 | Monitor KPI metrics"
+      - "報告治理績效 | Report governance performance"
+      - "管理命名治理團隊 | Manage naming governance team"
+    authority:
+      - "運營決策權 | Operational decision authority"
+      - "團隊管理權 | Team management authority"
+      - "預算執行權 | Budget execution authority"
+    required_skills:
+      - "項目管理 | Project management"
+      - "團隊領導 | Team leadership"
+      - "流程改進 | Process improvement"
+      - "數據分析 | Data analysis"
+    kpis:
+      - "採用率提升 | Adoption rate improvement"
+      - "流程效率 | Process efficiency"
+      - "團隊績效 | Team performance"
+
+  naming_policy_manager:
+    name: "命名政策經理"
+    english_name: "Naming Policy Manager"
+    category: "tactical_roles"
+    level: "management"
+    reports_to: "Naming Governance Manager"
+    responsibilities:
+      - "制定和維護命名政策 | Develop and maintain naming policies"
+      - "評估政策改進需求 | Assess policy improvement needs"
+      - "政策溝通和推廣 | Policy communication and promotion"
+      - "收集政策反饋 | Collect policy feedback"
+      - "維護命名模式庫 | Maintain naming pattern library"
+    authority:
+      - "政策制定權 | Policy development authority"
+      - "政策解釋權 | Policy interpretation authority"
+    required_skills:
+      - "政策分析 | Policy analysis"
+      - "技術寫作 | Technical writing"
+      - "利益相關者溝通 | Stakeholder communication"
+    kpis:
+      - "政策採用率 | Policy adoption rate"
+      - "政策清晰度評分 | Policy clarity score"
+      - "反饋響應時間 | Feedback response time"
+
+  naming_gatekeeper:
+    name: "命名門戶"
+    english_name: "Naming Gatekeeper"
+    category: "operational_roles"
+    level: "operational"
+    reports_to: "Naming Governance Manager"
+    distribution: "每個主要技術團隊 1 名 | One per major technical team"
+    responsibilities:
+      validation:
+        - "驗證命名請求是否符合標準 | Validate naming requests against standards"
+        - "審查 RFC 命名變更請求 | Review RFC naming change requests"
+        - "提供命名審批或拒絕意見 | Provide naming approval or rejection"
+      enforcement:
+        - "監控團隊命名合規情況 | Monitor team naming compliance"
+        - "識別和報告命名違規 | Identify and report naming violations"
+        - "推動採取糾正措施 | Drive corrective actions"
+      support:
+        - "提供命名標準指導 | Provide naming standards guidance"
+        - "協助解決命名衝突 | Assist in resolving naming conflicts"
+        - "收集命名改進反饋 | Collect naming improvement feedback"
+    authority:
+      approve:
+        - "團隊內部命名請求 | Internal team naming requests"
+        - "標準命名變更 | Standard naming changes"
+      reject:
+        - "不符合標準的命名請求 | Non-compliant naming requests"
+      escalate:
+        - "複雜命名衝突 | Complex naming conflicts"
+        - "政策解釋請求 | Policy interpretation requests"
+        - "例外申請 | Exception requests"
+    required_skills:
+      - "命名標準知識 | Naming standards knowledge"
+      - "溝通技能 | Communication skills"
+      - "衝突解决 | Conflict resolution"
+      - "技術理解 | Technical understanding"
+    kpis:
+      - "審查響應時間 | Review response time"
+      - "團隊採用率 | Team adoption rate"
+      - "違規檢測率 | Violation detection rate"
+
+# 命名治理角色矩陣 | Naming Governance Role Matrix
+naming_role_matrix:
+  decision_making:
+    strategic_naming_decisions: 
+      - naming_governance_board_chairman
+      - naming_governance_executive_sponsor
+    tactical_naming_decisions:
+      - naming_governance_manager
+      - naming_policy_manager
+    operational_naming_decisions:
+      - naming_gatekeeper
+
+  reporting:
+    to_board:
+      - naming_governance_manager
+    to_management:
+      - naming_policy_manager
+    to_operations:
+      - naming_gatekeeper
+
+  collaboration:
+    cross_functional:
+      - naming_governance_manager
+      - naming_policy_manager
+    within_team:
+      - naming_gatekeeper

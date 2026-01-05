@@ -1,0 +1,235 @@
+---
+# 命名治理指標 KPI 定義 | Naming Governance Metrics KPI Definitions
+version: "2.0"
+lastUpdated: "2025-01-05"
+status: "active"
+governanceDimension: "13-metrics-reporting"
+
+kpi_framework:
+  name: "Naming Governance KPI Framework"
+  purpose: "測量和追蹤命名治理效能 | Measure and track naming governance effectiveness"
+  methodology: "SMART 目標原則 | SMART goal principles"
+  reviewCycle: "Monthly"
+  targetAudience: ["Governance Board", "Technical Leads", "Compliance Officers"]
+
+kpi_categories:
+  adoption_metrics:
+    name: "採用指標 | Adoption Metrics"
+    description: "衡量命名標準的採用程度"
+    
+    kpis:
+      - id: "NM-001"
+        name: "命名標準採用率 | Naming Standard Adoption Rate"
+        description: "符合標準命名規則的資源百分比"
+        formula: "(符合標準的資源數 / 總資源數) × 100%"
+        target: "95%"
+        threshold: "90%"
+        dataSource: "Automated validation system"
+        frequency: "Weekly"
+        owner: "Naming Gatekeeper"
+        weight: 0.25
+        calculation_method: |
+          SELECT
+            COUNT(CASE WHEN naming_valid = true THEN 1 END) * 100.0 / COUNT(*) as adoption_rate
+          FROM resource_inventory
+          
+      - id: "NM-002"
+        name: "團隊採用覆蓋率 | Team Adoption Coverage"
+        description: "已實施命名標準的團隊百分比"
+        formula: "(實施命名標準的團隊數 / 總團隊數) × 100%"
+        target: "100%"
+        threshold: "90%"
+        dataSource: "Team registry + Compliance records"
+        frequency: "Monthly"
+        owner: "Change Manager"
+        weight: 0.15
+        
+      - id: "NM-003"
+        name: "新資源合規率 | New Resource Compliance Rate"
+        description: "新創建資源的命名合規率"
+        formula: "(符合標準的新資源數 / 新創建資源總數) × 100%"
+        target: "98%"
+        threshold: "95%"
+        dataSource: "CI/CD pipeline validation"
+        frequency: "Weekly"
+        owner: "DevOps Lead"
+        weight: 0.20
+
+  quality_metrics:
+    name: "品質指標 | Quality Metrics"
+    description: "衡量命名質量和一致性"
+    
+    kpis:
+      - id: "NM-004"
+        name: "命名錯誤率 | Naming Error Rate"
+        description: "命名違規事件的頻率"
+        formula: "(命名違規事件數 / 總命名事件數) × 1000"
+        target: "< 5 per 1000"
+        threshold: "< 10 per 1000"
+        dataSource: "Audit logs + Incident reports"
+        frequency: "Weekly"
+        owner: "Quality Assurance Lead"
+        weight: 0.15
+        trend_direction: "decreasing"
+        
+      - id: "NM-005"
+        name: "命名一致性格 | Naming Consistency Score"
+        description: "命名模式的內部一致性評分"
+        formula: "基於模式匹配演算法計算一致性指數 (0-100)"
+        target: "> 90"
+        threshold: "> 80"
+        dataSource: "Pattern analysis engine"
+        frequency: "Monthly"
+        owner: "Architecture Lead"
+        weight: 0.10
+        
+      - id: "NM-006"
+        name: "命名衝突事件數 | Naming Conflict Events"
+        description: "命名衝突或重複命名的事件數量"
+        formula: "每月命名衝突事件總數"
+        target: "0"
+        threshold: "< 5"
+        dataSource: "Conflict detection system"
+        frequency: "Monthly"
+        owner: "Naming Gatekeeper"
+        weight: 0.10
+        trend_direction: "decreasing"
+
+  efficiency_metrics:
+    name: "效率指標 | Efficiency Metrics"
+    description: "衡量命名流程效率"
+    
+    kpis:
+      - id: "NM-007"
+        name: "命名審查週期時間 | Naming Review Cycle Time"
+        description: "從請求到批准命名變更的平均時間"
+        formula: "Σ(批准時間 - 請求時間) / 總請求數"
+        target: "< 2 business days"
+        threshold: "< 3 business days"
+        dataSource: "RFC workflow timestamps"
+        frequency: "Monthly"
+        owner: "Change Manager"
+        weight: 0.08
+        
+      - id: "NM-008"
+        name: "自動化驗證覆蓋率 | Automated Validation Coverage"
+        description: "由自動化工具驗證的命名百分比"
+        formula: "(自動化驗證的命名數 / 總命名數) × 100%"
+        target: "90%"
+        threshold: "80%"
+        dataSource: "CI/CD pipeline + Git hooks"
+        frequency: "Weekly"
+        owner: "DevOps Lead"
+        weight: 0.07
+
+  governance_metrics:
+    name: "治理指標 | Governance Metrics"
+    description: "衡量治理活動效能"
+    
+    kpis:
+      - id: "NM-009"
+        name: "治理例外申請數 | Governance Exception Requests"
+        description: "命名標準例外申請的數量"
+        formula: "每月例外申請總數"
+        target: "< 5"
+        threshold: "< 10"
+        dataSource: "Exception request system"
+        frequency: "Monthly"
+        owner: "Compliance Officer"
+        weight: 0.05
+        trend_direction: "decreasing"
+        
+      - id: "NM-010"
+        name: "培訓完成率 | Training Completion Rate"
+        description: "完成命名培訓的人員百分比"
+        formula: "(完成培訓的人員數 / 目標受訓人員數) × 100%"
+        target: "95%"
+        threshold: "85%"
+        dataSource: "LMS system + HR records"
+        frequency: "Quarterly"
+        owner: "Training Coordinator"
+        weight: 0.05
+        
+      - id: "NM-011"
+        name: "審計發現整改率 | Audit Finding Remediation Rate"
+        description: "審計發現的問題在規定時間內解決的百分比"
+        formula: "(按期整改的審計發現數 / 總審計發現數) × 100%"
+        target: "95%"
+        threshold: "85%"
+        dataSource: "Audit tracking system"
+        frequency: "Quarterly"
+        owner: "Audit Manager"
+        weight: 0.05
+
+kpi_targets:
+  q1_2025:
+    overall_target: "達成 80% 的 KPI 目標 | Achieve 80% of KPI targets"
+    priority_focus: ["NM-001", "NM-003", "NM-004"]
+    
+  q2_2025:
+    overall_target: "達成 85% 的 KPI 目標 | Achieve 85% of KPI targets"
+    priority_focus: ["NM-002", "NM-005", "NM-007"]
+    
+  q3_2025:
+    overall_target: "達成 90% 的 KPI 目標 | Achieve 90% of KPI targets"
+    priority_focus: ["NM-006", "NM-008", "NM-009"]
+    
+  q4_2025:
+    overall_target: "達成 95% 的 KPI 目標 | Achieve 95% of KPI targets"
+    priority_focus: ["NM-010", "NM-011"]
+
+reporting:
+  dashboard:
+    platform: "Grafana"
+    refresh_interval: "5 minutes"
+    alert_thresholds:
+      warning: "低於閾值 10% | 10% below threshold"
+      critical: "低於閾值 20% | 20% below threshold"
+      
+  reports:
+    - name: "Weekly Naming Governance Report"
+      format: "PDF + Email"
+      recipients: ["Governance Board", "Technical Leads"]
+      include_metrics: ["NM-001", "NM-003", "NM-004"]
+      
+    - name: "Monthly KPI Scorecard"
+      format: "Interactive Dashboard"
+      recipients: ["All Stakeholders"]
+      include_metrics: ["All KPIs"]
+      
+    - name: "Quarterly Executive Summary"
+      format: "Executive Presentation"
+      recipients: ["Executive Board"]
+      include_metrics: ["Top 5 KPIs", "Trend Analysis"]
+
+data_sources:
+  automated:
+    - "CI/CD pipeline validation logs"
+    - "Git pre-commit hook results"
+    - "Naming validation API responses"
+    - "Resource inventory database"
+    
+  manual:
+    - "Team adoption surveys"
+    - "User feedback forms"
+    - "Exception request reviews"
+    - "Audit findings"
+
+improvement_actions:
+  below_threshold:
+    action: "立即啟動改進計劃 | Immediately initiate improvement plan"
+    timeline: "2 weeks"
+    responsibilities:
+      - "識別根本原因 | Identify root cause"
+      - "制定行動計劃 | Develop action plan"
+      - "分配資源 | Allocate resources"
+      - "追蹤進度 | Track progress"
+      
+  consistently_below_threshold:
+    action: "啟動治理審查流程 | Initiate governance review process"
+    timeline: "4 weeks"
+    responsibilities:
+      - "評估政策有效性 | Evaluate policy effectiveness"
+      - "考慮政策調整 | Consider policy adjustments"
+      - "加強培訓 | Enhance training"
+      - "更新工具 | Update tools"

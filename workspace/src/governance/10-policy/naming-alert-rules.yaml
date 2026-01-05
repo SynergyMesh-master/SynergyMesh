@@ -1,0 +1,437 @@
+---
+# 命名警報規則 | Naming Alert Rules
+version: "2.0"
+lastUpdated: "2025-01-05"
+status: "active"
+governanceDimension: "10-policy"
+
+alert_framework:
+  name: "Naming Governance Alert System"
+  platform: "Prometheus Alertmanager"
+  purpose: "及時檢測和通知命名治理問題"
+  principle: "快速響應、適當上報、持續改進"
+  integration: "Grafana, Slack, PagerDuty, Email"
+
+# 警報分類 | Alert Classification
+alert_categories:
+  critical:
+    name: "嚴重警報 | Critical Alerts"
+    description: "需要立即關注和行動的問題"
+    response_time: "Within 1 hour"
+    escalation: "自動上報至執行層"
+    
+    rules:
+      - id: "NA-001"
+        name: "採用率驟降"
+        condition: "adoption_rate < 75%"
+        duration: "5m"
+        description: "命名標準採用率低於 75%"
+        impact: "治理失效風險"
+        action: "立即召開治理委員會會議"
+        notification_channels:
+          - "naming-governance-board"
+          - "executive-sponsor"
+          - "pagerduty-critical"
+        runbook: "https://docs.example.com/runbooks/adoption-drop"
+        
+      - id: "NA-002"
+        name: "合規率嚴重下降"
+        condition: "compliance_rate < 85%"
+        duration: "10m"
+        description: "命名合規率低於 85%"
+        impact: "高違規風險"
+        action: "啟動緊急改進計劃"
+        notification_channels:
+          - "naming-governance-board"
+          - "all-team-leads"
+          - "compliance-team"
+        runbook: "https://docs.example.com/runbooks/compliance-drop"
+        
+      - id: "NA-003"
+        name: "安全命名違規"
+        condition: "security_naming_violation_count > 0"
+        description: "檢測到安全相關的命名違規"
+        impact: "安全風險"
+        action: "立即調查和修復"
+        notification_channels:
+          - "security-team"
+          - "naming-governance-board"
+          - "pagerduty-security"
+        runbook: "https://docs.example.com/runbooks/security-violation"
+        
+      - id: "NA-004"
+        name: "生產環境配置漂移"
+        condition: "prod_config_drift_detected"
+        description: "生產環境命名配置與標準不符"
+        impact: "生產穩定性風險"
+        action: "立即回滾或修復"
+        notification_channels:
+          - "on-call"
+          - "platform-team"
+          - "naming-governance-manager"
+        runbook: "https://docs.example.com/runbooks/prod-drift"
+
+  high:
+    name: "高優先級警報 | High Priority Alerts"
+    description: "需要快速響應的問題"
+    response_time: "Within 4 hours"
+    escalation: "上報至管理層"
+    
+    rules:
+      - id: "NA-005"
+        name: "採用率下降"
+        condition: "adoption_rate < 85%"
+        duration: "15m"
+        description: "命名標準採用率低於 85%"
+        impact: "治理效能下降"
+        action: "分析原因並制定改進計劃"
+        notification_channels:
+          - "naming-governance-manager"
+          - "team-leads"
+        runbook: "https://docs.example.com/runbooks/adoption-warning"
+        
+      - id: "NA-006"
+        name: "合規率下降"
+        condition: "compliance_rate < 90%"
+        duration: "30m"
+        description: "命名合規率低於 90%"
+        impact: "違規增加風險"
+        action: "通知相關團隊改進"
+        notification_channels:
+          - "naming-governance-manager"
+          - "affected-team-leads"
+        runbook: "https://docs.example.com/runbooks/compliance-warning"
+        
+      - id: "NA-007"
+        name: "違規事件激增"
+        condition: "violation_count_24h > 20"
+        description: "24小時內違規事件超過20個"
+        impact: "流程或工具問題"
+        action: "調查根本原因"
+        notification_channels:
+          - "naming-governance-manager"
+          - "compliance-team"
+        runbook: "https://docs.example.com/runbooks/violation-spike"
+        
+      - id: "NA-008"
+        name: "命名衝突增加"
+        condition: "naming_conflicts_24h > 5"
+        description: "24小時內命名衝突超過5個"
+        impact: "協作效率下降"
+        action: "啟動衝突解決流程"
+        notification_channels:
+          - "naming-governance-manager"
+          - "naming-gatekeepers"
+        runbook: "https://docs.example.com/runbooks/conflict-increase"
+
+  medium:
+    name: "中等優先級警報 | Medium Priority Alerts"
+    description: "需要關注和計劃處理的問題"
+    response_time: "Within 24 hours"
+    escalation: "相關負責人處理"
+    
+    rules:
+      - id: "NA-009"
+        name: "RFC 審查積壓"
+        condition: "pending_rfc_count > 15"
+        description: "待審查的 RFC 超過15個"
+        impact: "決策延遲"
+        action: "分配額外審查資源"
+        notification_channels:
+          - "naming-governance-manager"
+          - "naming-gatekeepers"
+        runbook: "https://docs.example.com/runbooks/rfc-backlog"
+        
+      - id: "NA-010"
+        name: "例外申請增加"
+        condition: "exception_requests_month > 8"
+        description: "本月例外申請超過8個"
+        impact: "政策可能需要調整"
+        action: "審查政策適用性"
+        notification_channels:
+          - "naming-governance-board"
+          - "compliance-team"
+        runbook: "https://docs.example.com/runbooks/exception-increase"
+        
+      - id: "NA-011"
+        name: "自動化覆蓋率下降"
+        condition: "automation_coverage < 85%"
+        description: "自動化驗證覆蓋率低於85%"
+        impact: "人工審查負擔增加"
+        action: "擴展自動化覆蓋範圍"
+        notification_channels:
+          - "automation-team"
+          - "naming-governance-manager"
+        runbook: "https://docs.example.com/runbooks/automation-coverage"
+        
+      - id: "NA-012"
+        name: "命名一致性格下降"
+        condition: "consistency_score < 85"
+        description: "命名一致性評分低於85"
+        impact: "混亂和錯誤增加"
+        action: "識別不一致來源"
+        notification_channels:
+          - "naming-governance-manager"
+          - "architecture-team"
+        runbook: "https://docs.example.com/runbooks/consistency-drop"
+
+  low:
+    name: "低優先級警報 | Low Priority Alerts"
+    description: "信息性警報，用於長期改進"
+    response_time: "Within 1 week"
+    escalation: "持續改進計劃"
+    
+    rules:
+      - id: "NA-013"
+        name: "培訓完成率下降"
+        condition: "training_completion_rate < 85%"
+        description: "培訓完成率低於85%"
+        impact: "知識傳播不足"
+        action: "加強培訓推廣"
+        notification_channels:
+          - "training-coordinator"
+          - "naming-governance-manager"
+        runbook: "https://docs.example.com/runbooks/training-rate"
+        
+      - id: "NA-014"
+        name: "文檔過期"
+        condition: "doc_stale_days > 90"
+        description: "部分文檔超過90天未更新"
+        impact: "信息不準確"
+        action: "安排文檔更新"
+        notification_channels:
+          - "documentation-team"
+        runbook: "https://docs.example.com/runbooks/stale-docs"
+        
+      - id: "NA-015"
+        name: "工具使用率低"
+        condition: "tool_usage_rate < 70%"
+        description: "命名驗證工具使用率低於70%"
+        impact: "自動化效益未完全實現"
+        action: "推廣工具使用"
+        notification_channels:
+          - "naming-governance-manager"
+          - "team-leads"
+        runbook: "https://docs.example.com/runbooks/tool-usage"
+
+# 警報路由 | Alert Routing
+routing:
+  by_severity:
+    critical:
+      primary: "pagerduty-critical"
+      secondary: ["slack-critical", "email-executive"]
+      
+    high:
+      primary: "slack-high"
+      secondary: ["email-manager"]
+      
+    medium:
+      primary: "slack-medium"
+      secondary: ["email-team"]
+      
+    low:
+      primary: "slack-low"
+      secondary: []
+      
+  by_team:
+    naming_governance:
+      alerts: ["NA-001", "NA-002", "NA-005", "NA-006"]
+      channels: ["naming-governance-board", "naming-governance-manager"]
+      
+    security:
+      alerts: ["NA-003"]
+      channels: ["security-team", "pagerduty-security"]
+      
+    platform:
+      alerts: ["NA-004"]
+      channels: ["platform-team", "on-call"]
+      
+    compliance:
+      alerts: ["NA-007", "NA-010"]
+      channels: ["compliance-team", "naming-governance-board"]
+      
+    automation:
+      alerts: ["NA-011"]
+      channels: ["automation-team", "naming-governance-manager"]
+      
+    training:
+      alerts: ["NA-013"]
+      channels: ["training-coordinator", "naming-governance-manager"]
+
+# 警報抑制 | Alert Suppression
+suppression_rules:
+  maintenance_windows:
+    enabled: true
+    schedule:
+      - "Saturday 2:00 AM - 4:00 AM UTC"
+      - "Monthly maintenance window"
+    suppress:
+      - "Non-critical alerts"
+      - "Scheduled scan alerts"
+      
+  duplicate_suppression:
+    enabled: true
+    window: "10 minutes"
+    rules:
+      - "Group similar alerts"
+      - "Send summary instead of individual alerts"
+      
+  dependency_suppression:
+    enabled: true
+    rules:
+      - "Suppress downstream alerts if upstream is alerting"
+      - "Root cause alerting"
+
+# 警報分組 | Alert Grouping
+grouping:
+  strategies:
+    by_resource:
+      enabled: true
+      description: "按資源類型分組警報"
+      
+    by_team:
+      enabled: true
+      description: "按團隊分組警報"
+      
+    by_time:
+      enabled: true
+      window: "5 minutes"
+      description: "按時間窗口分組警報"
+      
+    by_severity:
+      enabled: true
+      description: "按嚴重性分組警報"
+
+# 警報格式 | Alert Formatting
+formats:
+  slack:
+    template: |
+      :rotating_light: *{{ .Status }}* {{ .CommonLabels.alertname }}
+      *Severity:* {{ .CommonLabels.severity }}
+      *Description:* {{ .CommonAnnotations.description }}
+      *Impact:* {{ .CommonAnnotations.impact }}
+      *Action:* {{ .CommonAnnotations.action }}
+      *Runbook:* {{ .CommonAnnotations.runbook }}
+      *Source:* {{ .CommonLabels.source }}
+      *Time:* {{ .StartsAt.Format "2006-01-02 15:04:05" }}
+      
+    color_coding:
+      critical: "danger"
+      high: "warning"
+      medium: "#FFA500"
+      low: "good"
+      
+  email:
+    subject: "[{{ .Status | upper }}] {{ .CommonLabels.alertname }} - Naming Governance Alert"
+    template: |
+      Alert: {{ .CommonLabels.alertname }}
+      Status: {{ .Status | upper }}
+      Severity: {{ .CommonLabels.severity }}
+      
+      Description:
+      {{ .CommonAnnotations.description }}
+      
+      Impact:
+      {{ .CommonAnnotations.impact }}
+      
+      Recommended Action:
+      {{ .CommonAnnotations.action }}
+      
+      Runbook:
+      {{ .CommonAnnotations.runbook }}
+      
+      Timestamp: {{ .StartsAt.Format "2006-01-02 15:04:05" }}
+      
+  pagerduty:
+    severity_mapping:
+      critical: "critical"
+      high: "error"
+      medium: "warning"
+      low: "info"
+
+# 警報歷史和分析 | Alert History and Analytics
+history:
+  retention: "2 years"
+  fields:
+    - "Alert name"
+    - "Severity"
+    - "Timestamp"
+    - "Resolved timestamp"
+    - "Resolution time"
+    - "Affected resources"
+    - "Assigned to"
+    - "Actions taken"
+    
+analytics:
+  metrics:
+    - "Alert frequency by type"
+    - "Mean time to acknowledge (MTTA)"
+    - "Mean time to resolve (MTTR)"
+    - "False positive rate"
+    - "Alert fatigue indicators"
+    
+  reports:
+    weekly:
+      - "Alert summary"
+      - "Top alert types"
+      - "Team alert distribution"
+      
+    monthly:
+      - "Alert trends"
+      - "Effectiveness analysis"
+      - "Improvement recommendations"
+
+# 警報優化 | Alert Optimization
+optimization:
+  tuning:
+    frequency: "Quarterly"
+    process:
+      - "Analyze alert patterns"
+      - "Identify false positives"
+      - "Adjust thresholds"
+      - "Review alert fatigue"
+      
+  machine_learning:
+    enabled: true
+    capabilities:
+      - "Anomaly detection"
+      - "Predictive alerting"
+      - "Alert correlation"
+      - "Root cause analysis"
+
+# 測試和驗證 | Testing and Validation
+testing:
+  alert_rules:
+    - "Syntax validation"
+    - "Condition testing"
+    - "Notification verification"
+    
+ 演练:
+    frequency: "Semi-annual"
+    scenarios:
+      - "Critical alert response"
+      - "Escalation procedure"
+      - "Multi-team coordination"
+
+# 文檔和培訓 | Documentation and Training
+documentation:
+  runbooks:
+    location: "https://docs.example.com/runbooks"
+    maintenance: "Updated with each alert rule change"
+    
+  on_call_procedures:
+    location: "https://docs.example.com/on-call"
+    required_reading: ["All naming gatekeepers"]
+    
+training:
+  new_team_members:
+    - "Alert system overview"
+    - "Response procedures"
+    - "Runbook usage"
+    
+  refresher_training:
+    frequency: "Annual"
+    topics:
+      - "Alert rule updates"
+      - "Response best practices"
+      - "Case studies"

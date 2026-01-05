@@ -1,0 +1,288 @@
+---
+# 命名治理審計檢查清單 | Naming Governance Audit Checklist
+version: "2.0"
+lastUpdated: "2025-01-05"
+status: "active"
+governanceDimension: "07-audit"
+
+audit_framework:
+  name: "Naming Governance Audit Framework"
+  purpose: "確保命名治理政策的有效實施和持續改進"
+  methodology: "基於風險的審計方法 | Risk-based audit approach"
+  complianceStandards: ["ISO 27001", "ISO 27701", "SOC 2", "NIST 800-53"]
+
+audit_schedule:
+  annual:
+    name: "年度全面審計 | Annual Comprehensive Audit"
+    scope: "所有命名治理領域 | All naming governance areas"
+    duration: "2-3 weeks"
+    deliverables:
+      - "年度審計報告 | Annual Audit Report"
+      - "合規性評估 | Compliance Assessment"
+      - "改進建議 | Improvement Recommendations"
+    next_audit: "2025-12-01"
+    
+  quarterly:
+    name: "季度重點審計 | Quarterly Focused Audit"
+    scope: "特定命名領域或風險點 | Specific naming areas or risk points"
+    duration: "1 week"
+    focus_areas:
+      - Q1: "命名標準採用率 | Naming Standard Adoption"
+      - Q2: "命名錯誤率和衝突 | Error Rate and Conflicts"
+      - Q3: "治理例外流程 | Exception Process"
+      - Q4: "培訓效果評估 | Training Effectiveness"
+    next_audit: "2025-03-01"
+    
+  monthly:
+    name: "月度監控審計 | Monthly Monitoring Audit"
+    scope: "關鍵指標和自動化驗證 | Key metrics and automated validation"
+    duration: "2-3 days"
+    focus: "KPI 追蹤和趨勢分析 | KPI tracking and trend analysis"
+
+audit_checklist:
+  policy_compliance:
+    category: "政策合規性 | Policy Compliance"
+    items:
+      - id: "AC-001"
+        description: "驗證命名治理政策是否被正確記錄和溝通"
+        check_method: "文件審查 + 利益相關者訪談"
+        evidence_required: ["政策文件", "溝通記錄", "簽署確認"]
+        risk_level: "High"
+        frequency: "Annual"
+        
+      - id: "AC-002"
+        description: "確認命名標準是否已納入所有相關流程"
+        check_method: "流程映射 + 實際操作測試"
+        evidence_required: ["流程圖", "執行記錄", "工作樣本"]
+        risk_level: "High"
+        frequency: "Quarterly"
+        
+      - id: "AC-003"
+        description: "檢查例外政策是否被適當應用和監控"
+        check_method: "例外記錄審查 + 授權驗證"
+        evidence_required: ["例外請求", "批准記錄", "監控報告"]
+        risk_level: "Medium"
+        frequency: "Quarterly"
+
+  implementation_effectiveness:
+    category: "實施有效性 | Implementation Effectiveness"
+    items:
+      - id: "AC-004"
+        description: "評估命名標準在資源中的實際採用率"
+        check_method: "抽樣檢查 + 自動化驗證"
+        evidence_required: ["抽樣清單", "驗證結果", "差異報告"]
+        risk_level: "High"
+        frequency: "Quarterly"
+        
+      - id: "AC-005"
+        description: "驗證命名驗證工具的運行狀況和準確性"
+        check_method: "工具測試 + 日志分析"
+        evidence_required: ["測試報告", "系統日志", "準確性指標"]
+        risk_level: "High"
+        frequency: "Monthly"
+        
+      - id: "AC-006"
+        description: "檢查 CI/CD 管道中的命名驗證集成"
+        check_method: "配置審查 + 構建日志分析"
+        evidence_required: ["CI/CD 配置", "構建日志", "失敗報告"]
+        risk_level: "Medium"
+        frequency: "Quarterly"
+
+  process_controls:
+    category: "流程控制 | Process Controls"
+    items:
+      - id: "AC-007"
+        description: "驗證 RFC 命名變更流程的執行情况"
+        check_method: "流程審查 + 記錄分析"
+        evidence_required: ["RFC 記錄", "審批歷史", "實施跟踪"]
+        risk_level: "High"
+        frequency: "Quarterly"
+        
+      - id: "AC-008"
+        description: "檢查命名審查和批准的授權是否正確"
+        check_method: "授權矩陣審查 + 實際執行驗證"
+        evidence_required: ["授權矩陣", "審批記錄", "訪問日志"]
+        risk_level: "High"
+        frequency: "Quarterly"
+        
+      - id: "AC-009"
+        description: "評估命名衝突檢測和解决流程"
+        check_method: "衝突記錄分析 + 解决效果評估"
+        evidence_required: ["衝突報告", "解决記錄", "預防措施"]
+        risk_level: "Medium"
+        frequency: "Quarterly"
+
+  training_and_awareness:
+    category: "培訓與意識 | Training and Awareness"
+    items:
+      - id: "AC-010"
+        description: "驗證培訓計劃的完整性和實施情況"
+        check_method: "培訓記錄審查 + 參與者反饋"
+        evidence_required: ["培訓材料", "出席記錄", "反饋表"]
+        risk_level: "Medium"
+        frequency: "Annual"
+        
+      - id: "AC-011"
+        description: "評估團隊成員對命名標準的理解程度"
+        check_method: "測試 + 實際操作觀察"
+        evidence_required: ["測試結果", "觀察記錄", "能力評估"]
+        risk_level: "Medium"
+        frequency: "Annual"
+        
+      - id: "AC-012"
+        description: "檢查新員工命名培訓的及時性"
+        check_method: "入職記錄 + 培訓時間戳對比"
+        evidence_required: ["入職日期", "培訓完成日期", "培訓內容"]
+        risk_level: "Low"
+        frequency: "Quarterly"
+
+  monitoring_and_reporting:
+    category: "監控與報告 | Monitoring and Reporting"
+    items:
+      - id: "AC-013"
+        description: "驗證 KPI 監控的準確性和及時性"
+        check_method: "數據源驗證 + 報告對比"
+        evidence_required: ["數據源文件", "監控報告", "驗證記錄"]
+        risk_level: "High"
+        frequency: "Quarterly"
+        
+      - id: "AC-014"
+        description: "檢查命名違規報告和跟進機制"
+        check_method: "違規記錄分析 + 跟進記錄審查"
+        evidence_required: ["違規報告", "跟進行動", "整改證明"]
+        risk_level: "High"
+        frequency: "Monthly"
+        
+      - id: "AC-015"
+        description: "評估報告向利益相關者的分發和溝通效果"
+        check_method: "分發記錄 + 受訪者反饋"
+        evidence_required: ["分發清單", "閱讀確認", "反饋意見"]
+        risk_level: "Low"
+        frequency: "Annual"
+
+  security_and_compliance:
+    category: "安全與合規 | Security and Compliance"
+    items:
+      - id: "AC-016"
+        description: "驗證命名標準是否符合安全合規要求"
+        check_method: "合規映射 + 控制測試"
+        evidence_required: ["合規矩陣", "測試報告", "合規證書"]
+        risk_level: "High"
+        frequency: "Annual"
+        
+      - id: "AC-017"
+        description: "檢查敏感資源的命名處理是否適當"
+        check_method: "敏感資源清單 + 命名規則對比"
+        evidence_required: ["資源清單", "命名規則", "風險評估"]
+        risk_level: "High"
+        frequency: "Quarterly"
+        
+      - id: "AC-018"
+        description: "評估命名相關的訪問控制實施"
+        check_method: "訪問日志分析 + 權限審查"
+        evidence_required: ["訪問日志", "權限配置", "審計軌跡"]
+        risk_level: "High"
+        frequency: "Quarterly"
+
+audit_findings_classification:
+  critical:
+    definition: "嚴重違反命名治理政策，可能導致重大風險或合規問題"
+    response_time: "24 hours"
+    escalation: "立即上報至治理委員會和執行層"
+    examples:
+      - "關鍵系統資源未遵循命名標準"
+      - "命名違規導致安全漏洞"
+      - "無授權修改命名政策"
+      
+  high:
+    definition: "重大違規或系統性問題，影響多個領域或團隊"
+    response_time: "48 hours"
+    escalation: "上報至治理委員會"
+    examples:
+      - "採用率持續低於閾值"
+      - "命名驗證工具失效"
+      - "RFC 流程未被遵循"
+      
+  medium:
+    definition: "單一領域的違規或流程改進機會"
+    response_time: "1 week"
+    escalation: "相關負責人跟進"
+    examples:
+      - "特定團隊採用率低於目標"
+      - "培訓覆蓋不足"
+      - "報告延遲"
+      
+  low:
+    definition: "輕微偏差或最佳實踐建議"
+    response_time: "1 month"
+    escalation: "持續改進計劃"
+    examples:
+      - "文檔更新延遲"
+      - "命名模式不一致"
+      - "工具使用不充分"
+
+audit_report_template:
+  executive_summary:
+    - "審計範圍和目標"
+    - "主要發現和結論"
+    - "整體合規評分"
+    - "關鍵風險和建議"
+    
+  detailed_findings:
+    - "按類別和嚴重性分類的發現"
+    - "每個發現的詳細描述"
+    - "根本原因分析"
+    - "影響評估"
+    
+  recommendations:
+    - "具體的改進行動"
+    - "負責人和時間表"
+    - "預期結果和成功指標"
+    
+  appendices:
+    - "審計方法論"
+    - "檢查清單完成情況"
+    - "證據清單"
+    - "訪談記錄"
+
+improvement_tracking:
+  framework: "PDCA Cycle (Plan-Do-Check-Act)"
+  
+  plan:
+    actions: "制定改進計劃"
+    timeline: "審計完成後 2 週內"
+    owner: "Audit Manager"
+    
+  do:
+    actions: "實施改進措施"
+    timeline: "按計劃執行"
+    owner: "相關流程負責人"
+    
+  check:
+    actions: "驗證改進效果"
+    timeline: "實施後 1 個月"
+    owner: "Quality Assurance"
+    
+  act:
+    actions: "標準化成功措施或調整計劃"
+    timeline: "驗證後 2 週內"
+    owner: "Governance Board"
+
+continuous_monitoring:
+  automated_alerts:
+    - name: "命名採用率下降警報"
+      threshold: "低於目標 10%"
+      notification: ["Naming Gatekeeper", "Change Manager"]
+      
+    - name: "命名錯誤率上升警報"
+      threshold: "超過閾值 50%"
+      notification: ["Technical Lead", "Quality Assurance"]
+      
+    - name: "例外申請激增警報"
+      threshold: "月度申請超過 10 個"
+      notification: ["Compliance Officer", "Governance Board"]
+      
+  dashboard:
+    metrics: ["所有 KPIs"]
+    refresh: "Real-time"
+    access: ["Governance Board", "Auditors", "Technical Leads"]

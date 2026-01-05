@@ -1,0 +1,69 @@
+---
+# 命名示例庫 | Naming Examples Library
+version: "2.0"
+lastUpdated: "2025-01-05"
+status: "active"
+governanceDimension: "27-templates"
+
+examples:
+  infrastructure:
+    aws_s3_bucket:
+      pattern: "{env}-{team}-{service}-s3-{id}"
+      examples:
+        - "dev-platform-logging-s3-001"
+        - "prod-commerce-payment-s3-001"
+        - "stg-analytics-data-s3-001"
+        
+    azure_storage:
+      pattern: "{env}{team}{service}st{id}"
+      examples:
+        - "devplatformloggst001"
+        - "prodcommercepaymentst001"
+        
+    gcp_bucket:
+      pattern: "{env}-{team}-{service}-gcs-{id}"
+      examples:
+        - "dev-ml-models-gcs-001"
+        
+  services:
+    microservice:
+      pattern: "{service}-{env}"
+      examples:
+        - "user-service-prod"
+        - "order-service-staging"
+        - "payment-service-dev"
+        
+    database:
+      pattern: "{env}-{team}-{service}-db-{id}"
+      examples:
+        - "prod-commerce-order-db-001"
+        - "dev-platform-user-db-001"
+        
+  kubernetes:
+    deployment:
+      pattern: "{env}-{team}-{service}-deploy"
+      examples:
+        - "prod-commerce-payment-deploy"
+        
+    service:
+      pattern: "{env}-{team}-{service}-svc"
+      examples:
+        - "prod-platform-api-svc"
+
+best_practices:
+  - "使用連字符分隔不同部分"
+  - "環境前綴清楚標識"
+  - "團隊名稱使用短縮寫"
+  - "服務名稱簡潔明確"
+  - "資源類型使用標準縮寫"
+
+anti_patterns:
+  bad_examples:
+    - "my-service-123" (缺少環境和團隊)
+    - "ProductionDatabase" (使用大寫和無分隔符)
+    - "svc-001" (缺乏語義)
+    
+  reasons:
+    - "不符合標準模式"
+    - "缺乏上下文信息"
+    - "難以管理和搜索"

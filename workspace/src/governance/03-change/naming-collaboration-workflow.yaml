@@ -1,0 +1,120 @@
+---
+# 命名治理跨部門協作流程 | Naming Governance Cross-Department Collaboration Workflow
+version: "2.0"
+lastUpdated: "2025-01-05"
+status: "active"
+governanceDimension: "03-change"
+
+collaboration_framework:
+  name: "Naming Governance Cross-Department Collaboration"
+  purpose: "定義跨部門命名治理協作的流程和責任"
+  principle: "共同擁有、協同工作、透明溝通"
+  integration: "與現有跨部門工作流集成"
+
+collaboration_mechanisms:
+  working_groups:
+    naming_governance_council:
+      name: "命名治理委員會"
+      members: ["各部門代表", "命名治理辦公室"]
+      meeting_frequency: "Monthly"
+      responsibilities:
+        - "協調跨部門命名策略"
+        - "解决跨部門命名衝突"
+        - "制定命名標準"
+        
+    technical_architecture_board:
+      name: "技術架構委員會"
+      collaboration_point: "命名標準審查"
+      frequency: "As needed"
+      
+    security_compliance_committee:
+      name: "安全合規委員會"
+      collaboration_point: "安全命名審查"
+      frequency: "Quarterly"
+
+  handoff_procedures:
+    development_to_operations:
+      name: "開發到運營交接"
+      checkpoints:
+        - "命名標準驗證"
+        - "文檔完整性檢查"
+        - "運營就緒評估"
+      documentation: "命名交接檢查清單"
+      
+    team_transfers:
+      name: "團隊轉移"
+      process:
+        - "命名合規性審查"
+        - "知識傳遞"
+        - "責任轉移"
+        
+    project_handoff:
+      name: "項目交接"
+      deliverables:
+        - "命名規則文檔"
+        - "命名清單"
+        - "例外記錄"
+
+communication_channels:
+  regular_meetings:
+    daily_standup:
+      participants: "Naming Gatekeepers"
+      duration: "15 minutes"
+      agenda: ["每日命名問題", "進度更新"]
+      
+    weekly_sync:
+      participants: "Department Coordinators"
+      duration: "1 hour"
+      agenda: ["週報告", "問題討論"]
+      
+    monthly_review:
+      participants: "Naming Governance Council"
+      duration: "2 hours"
+      agenda: ["月度績效", "戰略規劃"]
+      
+  collaboration_tools:
+    slack:
+      channels:
+        - "#naming-governance"
+        - "#naming-issues"
+        - "#naming-reviews"
+        
+    jira:
+      boards:
+        - "Naming Collaboration Board"
+        - "Cross-Team Issues"
+        
+    confluence:
+      spaces:
+        - "Naming Governance Knowledge Base"
+        - "Cross-Department Guidelines"
+
+conflict_resolution:
+  escalation_matrix:
+    level_1:
+      scope: "團隊級別"
+      resolver: "Naming Gatekeeper"
+      timeline: "2 days"
+      
+    level_2:
+      scope: "部門級別"
+      resolver: "Department Coordinator"
+      timeline: "5 days"
+      
+    level_3:
+      scope: "企業級別"
+      resolver: "Naming Governance Board"
+      timeline: "10 days"
+      
+  collaborative_decision_making:
+    consensus:
+      description: "全體一致同意"
+      use_cases: ["重大標準變更", "政策決策"]
+      
+    majority_vote:
+      description: "多數同意（>66%）"
+      use_cases: ["日常操作決策"]
+      
+    delegated:
+      description: "授權給負責人"
+      use_cases: ["緊急決策", "操作級別"]

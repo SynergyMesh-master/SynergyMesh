@@ -1,0 +1,456 @@
+---
+# 命名治理激勵計劃 | Naming Governance Incentives Program
+version: "2.0"
+lastUpdated: "2025-01-05"
+status: "active"
+governanceDimension: "02-decision"
+
+incentives_framework:
+  name: "Naming Governance Incentives Program"
+  purpose: "通過獎勵機制促進命名標準採用和持續改進"
+  principle: "正向激勵 + 文化建設 | Positive reinforcement + Culture building"
+  budget_allocation: "Governance training and recognition budget"
+
+# 激勵類別 | Incentive Categories
+incentive_categories:
+  adoption_incentives:
+    name: "採用激勵 | Adoption Incentives"
+    description: "獎勵早期採用者和高合規率團隊"
+    focus: "加速命名標準採用"
+    
+    incentives:
+      early_adopter_award:
+        name: "早期採用者獎 | Early Adopter Award"
+        eligibility:
+          - "在正式發布前 3 個月內採用命名標準"
+          - "完成培訓並通過認證"
+          - "合規率達到 95% 以上"
+        reward:
+          - "公開表彰和證書"
+          - "團隊獎金 $500"
+          - "優先獲得新工具和資源"
+        frequency: "Quarterly"
+        limit: "Up to 5 teams per quarter"
+        
+      rapid_implementation_bonus:
+        name: "快速實施獎金 | Rapid Implementation Bonus"
+        eligibility:
+          - "在 1 個月內完成 80% 以上資源遷移"
+          - "無重大命名違規"
+          - "提供遷移案例研究"
+        reward:
+          - "團隊獎金 $300"
+          - "技術支持優先券"
+          - "最佳實踐分享機會"
+        frequency: "Monthly"
+        
+      compliance_champion:
+        name: "合規冠軍 | Compliance Champion"
+        eligibility:
+          - "連續 3 個月合規率 100%"
+          - "0 命名違規事件"
+          - "主動報告潛在問題"
+        reward:
+          - "個人獎金 $200"
+          - "額外假期 1 天"
+          - "職業發展培訓機會"
+        frequency: "Quarterly"
+
+  quality_incentives:
+    name: "品質激勵 | Quality Incentives"
+    description: "獎勵高質量命名和持續改進"
+    focus: "提升命名質量"
+    
+    incentives:
+      naming_excellence_award:
+        name: "命名卓越獎 | Naming Excellence Award"
+        eligibility:
+          - "命名一致性格 > 95"
+          - "0 命名衝突"
+          - "積極貢獻命名模式庫"
+        reward:
+          - "年度表彰和獎盃"
+          - "團隊獎金 $1000"
+          - "技術大會演講機會"
+        frequency: "Annual"
+        
+      innovation_award:
+        name: "創新獎 | Innovation Award"
+        eligibility:
+          - "開發新的命名工具或腳本"
+          - "提出創新的命名模式"
+          - "顯著提升命名效率"
+        reward:
+          - "專利申請支持"
+          - "個人獎金 $500"
+          - "創新項目優先權"
+        frequency: "Semi-annual"
+        
+      bug_bounty:
+        name: "命名漏洞賞金 | Naming Bug Bounty"
+        eligibility:
+          - "發現並報告命名驗證工具漏洞"
+          - "提供修復方案"
+          - "負責披露流程"
+        reward:
+          - "根據嚴重性 $50-$500"
+          - "安全研究員徽章"
+          - "內部安全社區邀請"
+        frequency: "Ongoing"
+
+  collaboration_incentives:
+    name: "協作激勵 | Collaboration Incentives"
+    description: "獎勵跨團隊協作和知識共享"
+    focus: "促進協作文化"
+    
+    incentives:
+      knowledge_sharing_award:
+        name: "知識共享獎 | Knowledge Sharing Award"
+        eligibility:
+          - "創建命名培訓材料"
+          - "進行命名培訓演講"
+          - "撰寫命名最佳實踐文檔"
+        reward:
+          - "知識分享者徽章"
+          - "培訓補貼 $200"
+          - "內部培訓師認證"
+        frequency: "Quarterly"
+        
+      cross_team_collaboration:
+        name: "跨團隊協作獎 | Cross-Team Collaboration Award"
+        eligibility:
+          - "協助多個團隊採用標準"
+          - "解决跨團隊命名衝突"
+          - "建立協作最佳實踐"
+        reward:
+          - "協作領袖徽章"
+          - "團隊午餐補貼 $300"
+          - "領導力培訓機會"
+        frequency: "Semi-annual"
+        
+      mentor_recognition:
+        name: "導師認可 | Mentor Recognition"
+        eligibility:
+          - "指導 5+ 名新人完成命名培訓"
+          - "導師評分 > 4.5/5"
+          - "指導對象合規率 > 90%"
+        reward:
+          - "優秀導師證書"
+          - "導師獎金 $250"
+          - "職業晉升加分"
+        frequency: "Annual"
+
+  contribution_incentives:
+    name: "貢獻激勵 | Contribution Incentives"
+    description: "獎勵對命名治理體系的貢獻"
+    focus: "持續改進"
+    
+    incentives:
+      pattern_contributor:
+        name: "模式貢獻者 | Pattern Contributor"
+        eligibility:
+          - "貢獻命名模式到模式庫"
+          - "模式被採用並驗證"
+          - "提供使用案例"
+        reward:
+          - "貢獻者徽章"
+          - "GitHub 貢獻統計"
+          - "命名治理委員會邀請"
+        frequency: "Ongoing"
+        
+      tool_developer:
+        name: "工具開發者 | Tool Developer"
+        eligibility:
+          - "開發命名相關工具"
+          - "工具被採用並廣泛使用"
+          - "持續維護和改進"
+        reward:
+          - "開源項目認可"
+          - "開發者補貼 $400"
+          - "技術大會參會補貼"
+        frequency: "Ongoing"
+        
+      documentation_hero:
+        name: "文檔英雄 | Documentation Hero"
+        eligibility:
+          - "改進命名文檔"
+          - "創建教程和指南"
+          - "文檔質量評分 > 4.5/5"
+        reward:
+          - "文檔專家徽章"
+          - "寫作工具訂閱補貼"
+          - "技術寫作培訓"
+        frequency: "Quarterly"
+
+# 認可制度 | Recognition System
+recognition_program:
+  tiers:
+    bronze:
+      name: "銅級認可 | Bronze Recognition"
+      criteria:
+        - "完成命名培訓"
+        - "個人合規率 > 95%"
+        - "參與命名相關活動"
+      benefits:
+        - "銅級徽章"
+        - "內部通報"
+        - "優先培訓機會"
+        
+    silver:
+      name: "銀級認可 | Silver Recognition"
+      criteria:
+        - "連續 6 個月合規率 100%"
+        - "指導至少 2 名新人"
+        - "貢獻至少 1 個命名模式"
+      benefits:
+        - "銀級徽章"
+        - "團隊會議表彰"
+        - "職業發展補貼 $200"
+        
+    gold:
+      name: "金級認可 | Gold Recognition"
+      criteria:
+        - "連續 12 個月合規率 100%"
+        - "指導至少 5 名新人"
+        - "貢獻至少 3 個命名模式"
+        - "開發至少 1 個命名工具"
+      benefits:
+        - "金級徽章"
+        - "年度大會表彰"
+        - "職業發展補貼 $500"
+        - "命名治理委員會觀察員資格"
+        
+    platinum:
+      name: "白金級認可 | Platinum Recognition"
+      criteria:
+        - "年度命名卓越獎得主"
+        - "重大創新貢獻"
+        - "跨團隊領導力"
+      benefits:
+        - "白金級徽章"
+        - "高管會議表彰"
+        - "特別獎金 $1000"
+        - "命名治理委員會成員資格"
+
+  badges:
+    early_adopter:
+      name: "早期採用者"
+      icon: "🚀"
+      description: "率先採用命名標準"
+      
+    compliance_champion:
+      name: "合規冠軍"
+      icon: "🏆"
+      description: "持續保持 100% 合規"
+      
+    innovation_star:
+      name: "創新星"
+      icon: "⭐"
+      description: "命名創新貢獻"
+      
+    knowledge_sharer:
+      name: "知識分享者"
+      icon: "📚"
+      description: "積極分享命名知識"
+      
+    mentor:
+      name: "導師"
+      icon: "🎓"
+      description: "優秀的命名培訓導師"
+      
+    pattern_master:
+      name: "模式大師"
+      icon: "🎨"
+      description: "命名模式專家"
+      
+    tool_builder:
+      name: "工具構建者"
+      icon: "🔧"
+      description: "命名工具開發者"
+      
+    documentation_hero:
+      name: "文檔英雄"
+      icon: "📝"
+      description: "命名文檔貢獻者"
+
+# 團隊激勵 | Team Incentives
+team_recognition:
+  naming_league:
+    name: "命名聯賽 | Naming League"
+    description: "團隊間命名合規競賽"
+    format:
+      - "每月評分"
+      - "季度排名"
+      - "年度總決賽"
+    scoring:
+      adoption_rate: 40%
+      compliance_rate: 30%
+      quality_score: 20%
+      innovation: 10%
+    rewards:
+      first_place:
+        - "冠軍獎盃"
+        - "團隊建設預算 $2000"
+        - "優先資源分配"
+      second_place:
+        - "亞軍獎盃"
+        - "團隊建設預算 $1000"
+      third_place:
+        - "季軍獎盃"
+        - "團隊建設預算 $500"
+        
+  team_challenges:
+    quarterly_challenge:
+      name: "季度挑戰賽"
+      themes:
+        - "第一季度：快速採用挑戰"
+        - "第二季度：質量提升挑戰"
+        - "第三季度：創新競賽"
+        - "第四季度：持續改進挑戰"
+      participation: "所有團隊"
+      rewards: "根據挑戰設定"
+
+# 個人激勵 | Individual Incentives
+individual_benefits:
+  career_advancement:
+    promotion_consideration:
+      - "命名治理參與作為晉升評估因素"
+      - "金級及以上認可優先考慮"
+      - "命名治理委員會成員資格"
+      
+  professional_development:
+    training_opportunities:
+      - "高級治理培訓"
+      - "技術大會參會"
+      - "專業認證補貼"
+      
+  work_life_balance:
+    rewards:
+      - "額外假期"
+      - "靈活工作安排"
+      - "家庭活動補貼"
+
+# 激勵管理 | Incentives Management
+administration:
+  nomination_process:
+    self_nomination:
+      enabled: true
+      categories: ["Quality", "Innovation", "Contribution"]
+      
+    peer_nomination:
+      enabled: true
+      categories: ["Adoption", "Collaboration", "Mentorship"]
+      minimum_endorsers: 2
+      
+    manager_nomination:
+      enabled: true
+      categories: ["All categories"]
+      required: true for tier upgrades
+      
+  evaluation_criteria:
+    objective_metrics:
+      - "合規率數據"
+      - "KPI 達成情況"
+      - "貢獻統計"
+      
+    qualitative_assessment:
+      - "利益相關者反饋"
+      - "影響評估"
+      - "文化契合度"
+      
+  approval_process:
+    team_level:
+      approver: "Team Lead"
+      authority: "銅級認可、團隊激勵"
+      
+    department_level:
+      approver: "Department Head"
+      authority: "銀級認可、部門激勵"
+      
+    governance_level:
+      approver: "Naming Governance Board"
+      authority: "金級及以上認可、高級激勵"
+
+# 預算管理 | Budget Management
+budget_allocation:
+  annual_budget: "$50,000"
+  
+  distribution:
+    adoption_incentives: 30%
+    quality_incentives: 25%
+    collaboration_incentives: 20%
+    contribution_incentives: 15%
+    operational_costs: 10%
+    
+  tracking:
+    - "每個激勵類別的支出"
+    - "投資回報率 (ROI)"
+    - "參與率統計"
+
+# 效果評估 | Impact Assessment
+measurement:
+  kpi_tracking:
+    adoption_rate:
+      metric: "命名標準採用率"
+      target: "> 95%"
+      measurement: "Monthly"
+      
+    compliance_rate:
+      metric: "命名合規率"
+      target: "> 98%"
+      measurement: "Monthly"
+      
+    participation_rate:
+      metric: "激勵計劃參與率"
+      target: "> 70%"
+      measurement: "Quarterly"
+      
+    satisfaction_score:
+      metric: "員工對激勵計劃滿意度"
+      target: "> 4.0/5"
+      measurement: "Semi-annual"
+      
+  roi_analysis:
+    calculation:
+      - "命名相關錯誤減少"
+      - "審查時間縮短"
+      - "培訓效率提升"
+      - "團隊協作改善"
+      
+    baseline: "激勵計劃實施前數據"
+    review_frequency: "Annual"
+
+# 反饋和改進 | Feedback and Improvement
+feedback_system:
+  collection:
+    surveys:
+      - "季度滿意度調查"
+      - "激勵類別偏好調查"
+      - "改進建議收集"
+      
+    focus_groups:
+      - "年度利益相關者會議"
+      - "團隊代表討論"
+      - "管理者意見徵詢"
+      
+  review_process:
+    quarterly_review:
+      - "評估激勵效果"
+      - "調整激勵類別"
+      - "優化評估標準"
+      
+    annual_review:
+      - "全面評估計劃效果"
+      - "預算重新分配"
+      - "戰略調整"
+
+  continuous_improvement:
+    best_practices:
+      - "定期收集成功案例"
+      - "分享激勵故事"
+      - "建立知識庫"
+      
+    program_evolution:
+      - "根據反饋調整計劃"
+      - "引入新的激勵類別"
+      - "淘汰無效激勵"

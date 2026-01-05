@@ -1,0 +1,506 @@
+---
+# 命名治理例外流程 | Naming Governance Exception Process
+version: "2.0"
+lastUpdated: "2025-01-05"
+status: "active"
+governanceDimension: "02-decision"
+
+# ============================================================================
+# Schema References | Schema-Driven Architecture
+# ============================================================================
+schema_references:
+  # This process enforces the exception-request schema
+  exception_request_schema:
+    schema_path: "schemas/exception-request.schema.yaml"
+    description: "All exception requests must conform to the exception-request schema"
+    required_fields:
+      - "exception_id"
+      - "type"
+      - "applicant"
+      - "item"
+      - "reason"
+      - "risk_evaluation"
+    validation:
+      - "Exception ID must match pattern: ^EXC-\\d{4}-\\d{3}$"
+      - "Type must be: temporary, standard, or permanent"
+      - "Reason must be at least 20 characters"
+      - "Risk evaluation is required for all exceptions"
+      - "Duration fields required for temporary exceptions"
+
+exception_framework:
+  name: "Naming Governance Exception Management Framework"
+  purpose: "管理和追蹤命名標準例外申請，確保合規性和風險控制"
+  principle: "最小化例外，最大化合規 | Minimize exceptions, maximize compliance"
+  compliance: "ISO 27001, ISO 27701, SOC 2"
+
+# 例外類型 | Exception Types
+exception_types:
+  temporary_exception:
+    name: "臨時例外 | Temporary Exception"
+    description: "短期例外，有明確的開始和結束日期"
+    max_duration: "30 days"
+    approval_level: "Level 1 - Team Level"
+    authority: "Naming Gatekeeper"
+    
+    eligibility_criteria:
+      - "有臨時性業務需求"
+      - "不影響安全性或合規性"
+      - "有明確的結束計劃"
+      - "不設立先例"
+      
+    required_information:
+      - "業務理由和需求"
+      - "預期持續時間"
+      - "影響評估"
+      - "緩解措施"
+      - "結束計劃"
+      
+    monitoring_requirements:
+      - "每周狀態更新"
+      - "風險監控"
+      - "合規性檢查"
+      
+    extension_policy:
+      allowed: true
+      max_extensions: 1
+      extension_duration: "30 days"
+      requires_justification: true
+      approval: "Naming Governance Manager"
+
+  standard_exception:
+    name: "標準例外 | Standard Exception"
+    description: "中期例外，可能需要政策調整"
+    max_duration: "6 months"
+    approval_level: "Level 2 - Department Level"
+    authority: "Naming Governance Manager"
+    
+    eligibility_criteria:
+      - "無法立即符合標準的技術限制"
+      - "業務關鍵系統遷移需要時間"
+      - "第三方系統集成限制"
+      - "不影響企業範圍標準"
+      
+    required_information:
+      - "RFC 文檔"
+      - "詳細業務案例"
+      - "影響評估（技術、安全、合規）"
+      - "風險分析"
+      - "監控計劃"
+      - "合規性保證"
+      
+    monitoring_requirements:
+      - "每兩周狀態更新"
+      - "月度風險評估"
+      - "持續合規性監控"
+      - "季度審查"
+      
+    extension_policy:
+      allowed: true
+      max_extensions: 2
+      extension_duration: "6 months"
+      requires_full_review: true
+      approval: "Naming Governance Board"
+
+  permanent_exception:
+    name: "永久例外 | Permanent Exception"
+    description: "長期例外，需要政策變更或標準調整"
+    approval_level: "Level 3 - Governance Board Level"
+    authority: "Naming Governance Board"
+    
+    eligibility_criteria:
+      - "標準不適用於特定場景"
+      - "需要新的命名類別或模式"
+      - "行業標準或監管要求"
+      - "不影響治理目標"
+      
+    required_information:
+      - "完整 RFC 流程"
+      - "戰略業務理由"
+      - "影響評估（全面）"
+      - "風險分析（詳細）"
+      - "合規審查"
+      - "利益相關者審查"
+      - "替代方案評估"
+      - "成本效益分析"
+      
+    monitoring_requirements:
+      - "季度狀態報告"
+      - "持續風險評估"
+      - "定期合規性審計"
+      - "年度政策審查"
+      
+    review_policy:
+      frequency: "Annual"
+      trigger: "政策變更或監管要求"
+      approval: "Naming Governance Board"
+
+# 例外申請流程 | Exception Request Process
+request_workflow:
+  phase_1_submission:
+    name: "提交階段 | Submission Phase"
+    duration: "2 business days"
+    
+    steps:
+      - id: "EX-001"
+        name: "準備申請資料"
+        responsible: "Requestor"
+        actions:
+          - "完成例外申請表單"
+          - "收集所有必需信息"
+          - "準備支持文檔"
+          - "獲取技術主管支持"
+          
+      - id: "EX-002"
+        name: "提交申請"
+        responsible: "Requestor"
+        actions:
+          - "通過系統提交申請"
+          - "通知相關利益相關者"
+          - "獲取申請 ID"
+          
+    deliverables:
+      - "完整的例外申請表單"
+      - "支持文檔和證據"
+      - "技術主管簽署"
+      
+    success_criteria:
+      - "所有必填字段完成"
+      - "支持文檔完整"
+      - "符合例外類型標準"
+
+  phase_2_review:
+    name: "審查階段 | Review Phase"
+    duration: "5-10 business days (depends on exception type)"
+    
+    steps:
+      - id: "EX-003"
+        name: "初步審查"
+        responsible: "Naming Gatekeeper"
+        actions:
+          - "驗證申請完整性"
+          - "檢查例外類型適用性"
+          - "評估影響和風險"
+          - "提出問題或要求補充"
+          
+      - id: "EX-004"
+        name: "技術審查"
+        responsible: "Technical Reviewer"
+        actions:
+          - "評估技術可行性"
+          - "分析架構影響"
+          - "考慮技術債務"
+          - "提供技術意見"
+          
+      - id: "EX-005"
+        name: "安全合規審查"
+        responsible: "Security Reviewer"
+        actions:
+          - "檢查安全影響"
+          - "驗證合規性"
+          - "評估風險級別"
+          - "提供緩解建議"
+          
+      - id: "EX-006"
+        name: "綜合評估"
+        responsible: "Approving Authority"
+        actions:
+          - "綜合所有審查意見"
+          - "評估業務需求"
+          - "做出批准或拒絕決定"
+          - "提供決定理由"
+          
+    deliverables:
+      - "審查報告"
+      - "風險評估"
+      - "批准或拒絕通知"
+      
+    success_criteria:
+      - "所有審查完成"
+      - "風險已評估並接受"
+      - "決定有明確理由"
+
+  phase_3_approval:
+    name: "批准階段 | Approval Phase"
+    duration: "2-5 business days"
+    
+    steps:
+      - id: "EX-007"
+        name: "批准決策"
+        responsible: "Approving Authority"
+        actions:
+          - "正式批准或拒絕申請"
+          - "記錄決定和理由"
+          - "設置條件（如適用）"
+          
+      - id: "EX-008"
+        name: "通知利益相關者"
+        responsible: "Naming Governance Office"
+        actions:
+          - "通知申請者決定"
+          - "更新系統記錄"
+          - "通知相關團隊"
+          
+      - id: "EX-009"
+        name: "文檔記錄"
+        responsible: "Compliance Team"
+        actions:
+          - "存檔所有申請資料"
+          - "更新治理記錄"
+          - "更新例外追蹤系統"
+          
+    deliverables:
+      - "批准通知"
+      - "條件和限制（如適用）"
+      - "文檔記錄"
+      
+    success_criteria:
+      - "決定已正式記錄"
+      - "所有相關方已通知"
+      - "文檔完整存檔"
+
+  phase_4_implementation:
+    name: "實施階段 | Implementation Phase"
+    duration: "Variable (based on exception duration)"
+    
+    steps:
+      - id: "EX-010"
+        name: "設置監控"
+        responsible: "Naming Gatekeeper"
+        actions:
+          - "配置監控和警報"
+          - "設置跟踪指標"
+          - "建立報告機制"
+          
+      - id: "EX-011"
+        name: "實施例外"
+        responsible: "Requestor"
+        actions:
+          - "按照批准條件實施"
+          - "遵循緩解措施"
+          - "記錄實施細節"
+          
+      - id: "EX-012"
+        name: "持續監控"
+        responsible: "Naming Gatekeeper"
+        actions:
+          - "監控例外狀態"
+          - "跟踪合規性"
+          - "報告狀態更新"
+          
+    deliverables:
+      - "監控報告"
+      - "實施記錄"
+      - "狀態更新"
+      
+    success_criteria:
+      - "監控系統運行正常"
+      - "例外按條件實施"
+      - "狀態定期報告"
+
+  phase_5_closure:
+    name: "結束階段 | Closure Phase"
+    duration: "5 business days"
+    
+    steps:
+      - id: "EX-013"
+        name: "結束評估"
+        responsible: "Naming Gatekeeper"
+        actions:
+          - "評估例外效果"
+          - "驗證符合條件"
+          - "識別經驗教訓"
+          
+      - id: "EX-014"
+        name: "轉換或續期"
+        responsible: "Requestor"
+        actions:
+          - "轉換為標準命名（如適用）"
+          - "或申請續期（如需要）"
+          - "或申請永久例外（如適用）"
+          
+      - id: "EX-015"
+        name: "最終文檔"
+        responsible: "Compliance Team"
+        actions:
+          - "完成例外記錄"
+          - "歸檔所有文檔"
+          - "更新知識庫"
+          
+    deliverables:
+      - "結束報告"
+      - "經驗教訓文檔"
+      - "歸檔記錄"
+      
+    success_criteria:
+      - "例外已妥善結束"
+      - "經驗已記錄"
+      - "記錄已歸檔"
+
+# 申請表單模板 | Application Form Template
+application_form_template:
+  request_information:
+    requestor:
+      - "姓名 | Name"
+      - "角色 | Role"
+      - "部門 | Department"
+      - "聯繫方式 | Contact Information"
+      
+    resource_details:
+      - "資源類型 | Resource Type"
+      - "當前命名 | Current Naming"
+      - "擬議命名 | Proposed Naming"
+      - "資源位置 | Resource Location"
+      
+  exception_details:
+    type:
+      - "例外類型 | Exception Type"
+      - "預期持續時間 | Expected Duration"
+      - "開始日期 | Start Date"
+      - "結束日期 | End Date"
+      
+    justification:
+      - "業務理由 | Business Justification"
+      - "技術限制 | Technical Limitations"
+      - "為何無法符合標準 | Why Standards Cannot Be Met"
+      
+  impact_assessment:
+    scope:
+      - "影響範圍 | Impact Scope"
+      - "受影響的團隊 | Affected Teams"
+      - "受影響的系統 | Affected Systems"
+      
+    risks:
+      - "識別的風險 | Identified Risks"
+      - "風險級別 | Risk Level"
+      - "緩解措施 | Mitigation Measures"
+      
+    compliance:
+      - "合規影響 | Compliance Impact"
+      - "監管考量 | Regulatory Considerations"
+      - "安全影響 | Security Impact"
+      
+  monitoring_plan:
+    metrics:
+      - "關鍵指標 | Key Metrics"
+      - "監控方法 | Monitoring Methods"
+      - "報告頻率 | Reporting Frequency"
+      
+    contingencies:
+      - "應急計劃 | Contingency Plans"
+      - "失敗模式 | Failure Modes"
+      - "回滾計劃 | Rollback Plans"
+
+# 批準標準 | Approval Criteria
+approval_criteria:
+  temporary_exception:
+    must_have:
+      - "明確的臨時需求"
+      - "不影響安全或合規"
+      - "有結束計劃"
+      - "不設立先例"
+      
+    should_have:
+      - "有技術限制證明"
+      - "有業務價值"
+      - "低成本監控"
+      
+  standard_exception:
+    must_have:
+      - "完整的 RFC 流程"
+      - "詳細影響評估"
+      - "風險可接受"
+      - "有監控計劃"
+      
+    should_have:
+      - "有遷移路線圖"
+      - "有利益相關者支持"
+      - "成本效益合理"
+      
+  permanent_exception:
+    must_have:
+      - "戰略業務理由"
+      - "無適用標準"
+      - "符合治理目標"
+      - "利益相關者共識"
+      
+    should_have:
+      - "行業標準支持"
+      - "監管要求證明"
+      - "長期價值明確"
+
+# 拒絕理由 | Rejection Reasons
+rejection_reasons:
+  insufficient_justification:
+    description: "業務理由不充分"
+    guidance: "提供更詳細的業務案例和價值證明"
+    
+  unacceptable_risk:
+    description: "風險不可接受"
+    guidance: "提供額外的緩解措施或調整申請"
+    
+  policy_violation:
+    description: "違反核心政策"
+    guidance: "此類例外無法批准，考慮政策變更流程"
+    
+  lack_of_monitoring:
+    description: "缺乏有效的監控計劃"
+    guidance: "提供詳細的監控和報告計劃"
+    
+  precedent_concerns:
+    description: "設立不良先例"
+    guidance: "調整申請範圍或考慮政策更新"
+    
+  alternative_available:
+    description: "存在可接受的替代方案"
+    guidance: "使用標準命名模式或調整資源設計"
+
+# 統計和報告 | Metrics and Reporting
+exception_metrics:
+  key_indicators:
+    - "例外申請數量 | Number of exception requests"
+    - "批准率 | Approval rate"
+    - "按類型分布 | Distribution by type"
+    - "平均處理時間 | Average processing time"
+    - "逾期例外數量 | Number of overdue exceptions"
+    - "例外原因分析 | Analysis of exception reasons"
+    
+  reporting:
+    weekly:
+      - "新申請 | New requests"
+      - "狀態更新 | Status updates"
+      - "即將到期 | Upcoming expirations"
+      
+    monthly:
+      - "例外趨勢 | Exception trends"
+      - "批准率分析 | Approval rate analysis"
+      - "風險評估 | Risk assessment"
+      
+    quarterly:
+      - "例外策略審查 | Exception strategy review"
+      - "政策調整建議 | Policy adjustment recommendations"
+      - "最佳實踐識別 | Best practice identification"
+
+# 連續改進 | Continuous Improvement
+improvement_process:
+  analysis:
+    frequency: "Quarterly"
+    focus:
+      - "例外模式分析"
+      - "政策缺口識別"
+      - "流程改進機會"
+      
+  actions:
+    policy_updates:
+      - "基於例外更新標準"
+      - "添加新的命名模式"
+      - "調整驗證規則"
+      
+    process_improvements:
+      - "簡化申請流程"
+      - "改進審查效率"
+      - "增強監控能力"
+      
+    automation:
+      - "自動化常見例外處理"
+      - "智能例外建議"
+      - "預測性例外識別"

@@ -1,0 +1,255 @@
+---
+apiVersion: governance.machinenativeops.io/v1
+kind: GovernanceManifest
+metadata:
+  name: machine-native-ops-governance
+  version: "2.0.0"
+  created: "2025-01-05"
+  owner: "MachineNativeOps"
+spec:
+  # 系統概述 - 給 AI 的系統圖譜
+  description: |
+    Machine-Native Organizational Naming Governance Framework
+    - Purpose: Provide machine-readable, executable governance for naming standards
+    - Target: AI agents and automation tools
+    - Approach: Schema-driven, self-describing, fully automatable
+  
+  # 核心模組映射 - AI 導航地圖
+  modules:
+    # 戰略層
+    - id: "vision-strategy"
+      name: "Vision and Strategy"
+      status: "stable"
+      location: "workspace/src/governance/00-vision-strategy"
+      schemas:
+        - "workspace/src/governance/00-vision-strategy/naming-adoption-phases.yaml"
+        - "workspace/src/governance/00-vision-strategy/naming-governance-summary.yaml"
+      functions:
+        - "generate_adoption_roadmap"
+        - "get_strategic_objectives"
+    
+    # 架構層
+    - id: "architecture"
+      name: "Governance Architecture"
+      status: "stable"
+      location: "workspace/src/governance/01-architecture"
+      schemas:
+        - "workspace/src/governance/01-architecture/naming-governance-structure.yaml"
+        - "workspace/src/governance/01-architecture/naming-escalation-matrix.yaml"
+      functions:
+        - "get_organizational_structure"
+        - "resolve_escalation"
+        - "get_role_permissions"
+    
+    # 決策層
+    - id: "decision"
+      name: "Decision Management"
+      status: "stable"
+      location: "workspace/src/governance/02-decision"
+      schemas:
+        - "workspace/src/governance/02-decision/stakeholder-matrix.yaml"
+        - "workspace/src/governance/02-decision/naming-exception-process.yaml"
+        - "workspace/src/governance/02-decision/naming-incentives.yaml"
+      functions:
+        - "get_stakeholder_map"
+        - "process_exception_request"
+        - "calculate_incentives"
+    
+    # 變更管理
+    - id: "change"
+      name: "Change Management"
+      status: "stable"
+      location: "workspace/src/governance/03-change"
+      schemas:
+        - "workspace/src/governance/03-change/naming-rfc-workflow.yaml"
+        - "workspace/src/governance/03-change/naming-change-request.yaml"
+        - "workspace/src/governance/03-change/naming-collaboration-workflow.yaml"
+        - "workspace/src/governance/03-change/naming-migration-plan.yaml"
+      functions:
+        - "create_change_request"
+        - "validate_rfc"
+        - "execute_migration_phase"
+    
+    # 政策層
+    - id: "policy"
+      name: "Governance Policies"
+      status: "stable"
+      location: "workspace/src/governance/10-policy"
+      schemas:
+        - "workspace/src/governance/10-policy/naming-governance-policy.yaml"
+        - "workspace/src/governance/10-policy/naming-validation-automations.yaml"
+        - "workspace/src/governance/10-policy/naming-alert-rules.yaml"
+        - "workspace/src/governance/10-policy/naming-observability-dashboard.yaml"
+        - "workspace/src/governance/10-policy/naming-security-policy.yaml"
+      functions:
+        - "validate_naming"
+        - "check_compliance"
+        - "generate_alerts"
+        - "check_security_requirements"
+    
+    # 文化與能力
+    - id: "culture"
+      name: "Culture and Capability"
+      status: "stable"
+      location: "workspace/src/governance/12-culture-capability"
+      schemas:
+        - "workspace/src/governance/12-culture-capability/naming-training-map.yaml"
+      functions:
+        - "get_training_plan"
+        - "assign_roles"
+    
+    # 指標與報告
+    - id: "metrics"
+      name: "Metrics and Reporting"
+      status: "stable"
+      location: "workspace/src/governance/13-metrics-reporting"
+      schemas:
+        - "workspace/src/governance/13-metrics-reporting/naming-metrics-kpi.yaml"
+      functions:
+        - "calculate_kpi"
+        - "generate_reports"
+    
+    # 審計
+    - id: "audit"
+      name: "Audit and Compliance"
+      status: "stable"
+      location: "workspace/src/governance/07-audit"
+      schemas:
+        - "workspace/src/governance/07-audit/naming-audit-checklist.yaml"
+      functions:
+        - "run_audit"
+        - "generate_compliance_report"
+    
+    # 持續改進
+    - id: "improvement"
+      name: "Continuous Improvement"
+      status: "stable"
+      location: "workspace/src/governance/14-improvement"
+      schemas:
+        - "workspace/src/governance/14-improvement/naming-pdca-cycle.yaml"
+        - "workspace/src/governance/14-improvement/naming-improvement-log.yaml"
+      functions:
+        - "execute_pdca_cycle"
+        - "log_improvement"
+    
+    # 模板
+    - id: "templates"
+      name: "Templates and Examples"
+      status: "stable"
+      location: "workspace/src/governance/27-templates"
+      schemas:
+        - "workspace/src/governance/27-templates/naming-templates.yaml"
+        - "workspace/src/governance/27-templates/naming-examples-library.yaml"
+      functions:
+        - "generate_template"
+        - "get_examples"
+    
+    # 工具
+    - id: "tools"
+      name: "Automation Tools"
+      status: "stable"
+      location: "workspace/src/governance/35-scripts"
+      executable:
+        - "workspace/src/governance/35-scripts/naming-generator.sh"
+        - "workspace/src/governance/35-scripts/naming-validator.sh"
+        - "workspace/src/governance/35-scripts/naming-cli-tool.sh"
+      schemas:
+        - "workspace/src/governance/35-scripts/naming-patterns.yaml"
+      functions:
+        - "generate_name"
+        - "validate_name"
+        - "check_compliance"
+        - "batch_validate"
+  
+  # AI 操作接口
+  ai_interface:
+    # 驗證接口
+    validate:
+      endpoint: "validate"
+      input_schema: "schemas/validation-request.schema.yaml"
+      output_schema: "schemas/validation-response.schema.yaml"
+      tools: ["workspace/src/governance/35-scripts/naming-validator.sh"]
+    
+    # 生成接口
+    generate:
+      endpoint: "generate"
+      input_schema: "schemas/generation-request.schema.yaml"
+      output_schema: "schemas/generation-response.schema.yaml"
+      tools: ["workspace/src/governance/35-scripts/naming-generator.sh"]
+    
+    # 變更管理接口
+    change:
+      endpoint: "change"
+      input_schema: "schemas/change-request.schema.yaml"
+      output_schema: "schemas/change-response.schema.yaml"
+      workflow: "workspace/src/governance/03-change/naming-rfc-workflow.yaml"
+    
+    # 例外處理接口
+    exception:
+      endpoint: "exception"
+      input_schema: "schemas/exception-request.schema.yaml"
+      output_schema: "schemas/exception-response.schema.yaml"
+      workflow: "workspace/src/governance/02-decision/naming-exception-process.yaml"
+    
+    # 報告接口
+    report:
+      endpoint: "report"
+      input_schema: "schemas/report-request.schema.yaml"
+      output_schema: "schemas/report-response.schema.yaml"
+      sources: ["workspace/src/governance/13-metrics-reporting"]
+  
+  # 機器可執行的工作流
+  workflows:
+    pre_commit_validation:
+      trigger: "git_pre_commit"
+      steps:
+        - load_manifest: "governance-manifest.yaml"
+        - validate_file: "workspace/src/governance/35-scripts/naming-validator.sh"
+        - check_alerts: "workspace/src/governance/10-policy/naming-alert-rules.yaml"
+      on_failure: "block_commit"
+    
+    ci_pipeline_check:
+      trigger: "ci_pipeline"
+      steps:
+        - load_manifest: "governance-manifest.yaml"
+        - batch_validate: "workspace/src/governance/35-scripts/naming-cli-tool.sh"
+        - generate_report: "workspace/src/governance/13-metrics-reporting"
+        - check_compliance: "workspace/src/governance/07-audit"
+      on_failure: "fail_build"
+    
+    naming_request:
+      trigger: "api_request"
+      steps:
+        - load_manifest: "governance-manifest.yaml"
+        - generate_name: "workspace/src/governance/35-scripts/naming-generator.sh"
+        - validate_name: "workspace/src/governance/35-scripts/naming-validator.sh"
+        - record_request: "workspace/src/governance/14-improvement/naming-improvement-log.yaml"
+      on_failure: "return_error"
+  
+  # 自動化配置
+  automation:
+    ci_integration:
+      github_actions: "templates/ci/github-actions-naming-check.yml"
+      gitlab_ci: "templates/ci/gitlab-ci-naming-check.yml"
+      jenkins: "templates/ci/jenkins-naming-check.groovy"
+    
+    monitoring:
+      prometheus_rules: "templates/monitoring/prometheus-rules.yaml"
+      grafana_dashboards: "templates/monitoring/grafana-dashboard.json"
+    
+    notifications:
+      slack: "templates/notifications/slack-webhook.yaml"
+      email: "templates/notifications/email-template.yaml"
+  
+  # 版本和兼容性
+  compatibility:
+    min_ai_version: "1.0.0"
+    supported_apis:
+      - "governance.machinenativeops.io/v1"
+    data_formats:
+      - "yaml"
+      - "json"
+    execution_environments:
+      - "bash"
+      - "python"
+      - "node"

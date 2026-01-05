@@ -13,6 +13,26 @@ status: "active"
 workflow_type: "request-for-comments"
 
 # ============================================================================
+# Schema References | Schema-Driven Architecture
+# ============================================================================
+schema_references:
+  # This workflow enforces the change-request schema
+  change_request_schema:
+    schema_path: "schemas/change-request.schema.yaml"
+    description: "All change requests must conform to the change-request schema"
+    required_fields:
+      - "change_id"
+      - "type"
+      - "requester"
+      - "title"
+      - "risk_level"
+    validation:
+      - "Change ID must match pattern: ^CHG-\\d{4}-\\d{3}$"
+      - "Type must be: standard, normal, or emergency"
+      - "Risk level must be: critical, high, medium, or low"
+      - "Implementation plan is required for emergency changes"
+
+# ============================================================================
 # RFC Workflow Overview | RFC 工作流程概覽
 # ============================================================================
 overview:

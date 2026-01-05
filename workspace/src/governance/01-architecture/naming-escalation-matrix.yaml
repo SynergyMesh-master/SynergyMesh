@@ -1,0 +1,371 @@
+---
+# 命名治理上報矩陣 | Naming Governance Escalation Matrix
+version: "2.0"
+lastUpdated: "2025-01-05"
+status: "active"
+governanceDimension: "01-architecture"
+
+escalation_framework:
+  name: "Naming Governance Escalation Framework"
+  purpose: "定義命名相關問題和決策的上報路徑和時間表"
+  principle: "及時、透明、可追蹤 | Timely, transparent, traceable"
+  integration: "Aligns with existing governance escalation policies"
+
+# 上報級別 | Escalation Levels
+escalation_levels:
+  level_1_team:
+    name: "一級：團隊級別 | Level 1: Team Level"
+    scope: "單一團隊內部的命名問題"
+    resolution_time_target: "2 business days"
+    authority:
+      - "Naming Gatekeeper"
+      - "Technical Lead"
+    
+    applicable_issues:
+      - "標準命名請求審批"
+      - "團隊內命名衝突"
+      - "命名標準解釋"
+      - "小型命名變更"
+    
+    escalation_triggers:
+      - "超過 2 個工作日未解決"
+      - "影響團隊外資源"
+      - "需要政策解釋"
+    
+    next_level: "level_2_department"
+
+  level_2_department:
+    name: "二級：部門級別 | Level 2: Department Level"
+    scope: "跨團隊或部門級別的命名問題"
+    resolution_time_target: "5 business days"
+    authority:
+      - "Department Naming Coordinator"
+      - "Naming Policy Manager"
+      - "Naming Governance Manager"
+    
+    applicable_issues:
+      - "跨團隊命名衝突"
+      - "命名標準例外申請"
+      - "命名政策解釋請求"
+      - "中大型命名變更"
+      - "重複命名問題"
+    
+    escalation_triggers:
+      - "超過 5 個工作日未解決"
+      - "影響多個部門"
+      - "涉及安全或合規"
+      - "需要架構審查"
+    
+    next_level: "level_3_governance"
+
+  level_3_governance:
+    name: "三級：治理委員會級別 | Level 3: Governance Board Level"
+    scope: "影響企業範圍的命名問題"
+    resolution_time_target: "10 business days"
+    authority:
+      - "Naming Governance Board"
+      - "Naming Governance Board Chairman"
+      - "Chief Governance Officer"
+    
+    applicable_issues:
+      - "企業範圍命名策略"
+      - "重大命名政策變更"
+      - "高層級命名衝突"
+      - "安全合規相關命名"
+      - "長期例外申請"
+      - "命名治理架構變更"
+    
+    escalation_triggers:
+      - "超過 10 個工作日未解決"
+      - "影響關鍵業務"
+      - "需要執行層決策"
+      - "涉及外部合規要求"
+    
+    next_level: "level_4_executive"
+
+  level_4_executive:
+    name: "四級：執行層級別 | Level 4: Executive Level"
+    scope: "戰略性和重大風險命名問題"
+    resolution_time_target: "As needed"
+    authority:
+      - "CEO"
+      - "CTO"
+      - "Executive Sponsor"
+    
+    applicable_issues:
+      - "戰略性命名方向變更"
+      - "重大風險命名決策"
+      - "跨企業命名標準協調"
+      - "預算和資源分配"
+      - "命名治理法律合規"
+    
+    escalation_triggers:
+      - "治理委員會無法解決"
+      - "影響公司戰略"
+      - "法律或合規風險"
+
+# 決策類別和上報路徑 | Decision Categories and Escalation Paths
+decision_categories:
+  naming_standard_changes:
+    category: "命名標準變更 | Naming Standard Changes"
+    
+    minor_changes:
+      description: "不影響現有資源的小型調整"
+      authority: "Naming Policy Manager"
+      approval_level: "level_1_team"
+      timeframe: "2 business days"
+      examples:
+        - "添加新的命名模式"
+        - "更新命名文檔"
+        - "澄清命名規則"
+    
+    standard_changes:
+      description: "影響有限範圍的標準修改"
+      authority: "Naming Governance Manager"
+      approval_level: "level_2_department"
+      timeframe: "5 business days"
+      requires:
+        - "RFC 文檔"
+        - "影響評估"
+        - "利益相關者審查"
+      examples:
+        - "修改現有命名模式"
+        - "添加新的命名類別"
+        - "調整命名驗證規則"
+    
+    major_changes:
+      description: "影響企業範圍的重大變更"
+      authority: "Naming Governance Board"
+      approval_level: "level_3_governance"
+      timeframe: "10 business days"
+      requires:
+        - "完整 RFC 流程"
+        - "風險評估"
+        - "成本效益分析"
+        - "試點計劃"
+        - "溝通計劃"
+      examples:
+        - "重構命名體系"
+        - "引入新命名框架"
+        - "命名標準重大修改"
+
+  naming_exceptions:
+    category: "命名例外申請 | Naming Exception Requests"
+    
+    temporary_exceptions:
+      description: "短期例外，有明確結束日期"
+      authority: "Naming Gatekeeper"
+      approval_level: "level_1_team"
+      max_duration: "30 days"
+      requires:
+        - "業務理由"
+        - "緩解措施"
+        - "結束計劃"
+    
+    standard_exceptions:
+      description: "中期例外，需要政策調整"
+      authority: "Naming Governance Manager"
+      approval_level: "level_2_department"
+      max_duration: "6 months"
+      requires:
+        - "RFC 流程"
+        - "業務案例"
+        - "影響評估"
+        - "監控計劃"
+    
+    permanent_exceptions:
+      description: "長期例外，需要政策變更"
+      authority: "Naming Governance Board"
+      approval_level: "level_3_governance"
+      requires:
+        - "完整 RFC"
+        - "戰略理由"
+        - "風險分析"
+        - "合規審查"
+
+  naming_conflicts:
+    category: "命名衝突 | Naming Conflicts"
+    
+    simple_conflicts:
+      description: "單一資源的命名重複"
+      authority: "Naming Gatekeeper"
+      approval_level: "level_1_team"
+      resolution: "協商解決或優先級分配"
+      timeframe: "2 business days"
+    
+    team_conflicts:
+      description: "跨團隊命名衝突"
+      authority: "Department Naming Coordinator"
+      approval_level: "level_2_department"
+      resolution: "命名規則澄清或模式調整"
+      timeframe: "5 business days"
+    
+    enterprise_conflicts:
+      description: "影響多個部門的複雜衝突"
+      authority: "Naming Governance Board"
+      approval_level: "level_3_governance"
+      resolution: "政策調整或架構變更"
+      timeframe: "10 business days"
+
+# 上報時間表 | Escalation Timeline
+escalation_timeline:
+  immediate_escalation:
+    triggers:
+      - "安全漏洞相關命名"
+      - "合規違規風險"
+      - "生產環境關鍵問題"
+      - "數據丟失風險"
+    action: "直接上報至相關最高級別"
+    notification: "即時通知所有相關方"
+
+  time_based_escalation:
+    level_1_to_2:
+      timeframe: "2 business days"
+      notification: "自動上報通知"
+      approver: "Naming Governance Manager"
+      
+    level_2_to_3:
+      timeframe: "5 business days"
+      notification: "治理委員會通知"
+      approver: "Naming Governance Board Chairman"
+      
+    level_3_to_4:
+      timeframe: "10 business days"
+      notification: "執行層通知"
+      approver: "Executive Sponsor"
+
+  manual_escalation:
+    triggers:
+      - "複雜性超出當前級別"
+      - "需要更高級別的專業知識"
+      - "影響範圍擴大"
+    process: "手動上報請求和審批"
+
+# 通訊協議 | Communication Protocol
+communication:
+  escalation_notification:
+    method: "Multi-channel notification"
+    channels:
+      - "Email"
+      - "Slack/Teams"
+      - "系統通知"
+      - "緊急情況電話"
+    
+    content:
+      - "問題描述和嚴重性"
+      - "影響範圍"
+      - "當前狀態"
+      - "所需行動"
+      - "預期響應時間"
+      
+    recipients:
+      primary: "當前級別負責人"
+      cc: "上一級別負責人"
+      escalation: "下一級別負責人"
+
+  status_updates:
+    frequency:
+      level_1: "Daily"
+      level_2: "Every 2 days"
+      level_3: "Weekly"
+      level_4: "As requested"
+      
+    format:
+      - "當前狀態"
+      - "採取的行動"
+      - "下一步計劃"
+      - "需要的支持"
+      - "預計完成時間"
+
+# 決策權限矩陣 | Decision Authority Matrix
+authority_matrix:
+  naming_approvals:
+    standard_naming:
+      team_level:
+        authority: "Naming Gatekeeper"
+        conditions: "符合現有標準"
+        escalation: "Department Naming Coordinator"
+        
+    naming_exceptions:
+      team_level:
+        authority: "Naming Gatekeeper"
+        limit: "30 days, non-critical"
+        escalation: "Naming Governance Manager"
+        
+      department_level:
+        authority: "Naming Governance Manager"
+        limit: "6 months"
+        escalation: "Naming Governance Board"
+        
+      board_level:
+        authority: "Naming Governance Board"
+        limit: "Permanent exceptions"
+        escalation: "Executive Sponsor"
+        
+    policy_changes:
+      minor:
+        authority: "Naming Policy Manager"
+        escalation: "Naming Governance Manager"
+        
+    standard:
+      authority: "Naming Governance Manager"
+      escalation: "Naming Governance Board"
+      
+    major:
+      authority: "Naming Governance Board"
+      escalation: "Executive Sponsor"
+
+# 記錄和審計 | Recording and Auditing
+documentation:
+  escalation_records:
+    required_fields:
+      - "上報日期和時間"
+      - "上報級別"
+      - "問題描述"
+      - "影響評估"
+      - "涉及的資源和團隊"
+      - "採取的行動"
+      - "決策結果"
+      - "審批人員"
+      - "解決日期"
+      
+    retention: "7 years"
+    access: "Authorized governance personnel only"
+    
+  audit_trail:
+    enabled: true
+    tracking:
+      - "所有上報活動"
+      - "決策和審批"
+      - "時間戳"
+      - "人員記錄"
+      
+    compliance:
+      - "ISO 27001"
+      - "ISO 27701"
+      - "SOC 2"
+
+# 緊急上報程序 | Emergency Escalation
+emergency_procedures:
+  critical_incidents:
+    definition: "立即威脅業務連續性或安全的命名問題"
+    response_time: "Within 1 hour"
+    escalation_path:
+      1: "Naming Gatekeeper (notify)"
+      2: "Naming Governance Manager (within 30 min)"
+      3: "Naming Governance Board Chairman (within 1 hour)"
+      4: "Executive Sponsor (within 2 hours)"
+      
+    communication:
+      - "War room activation"
+      - "Stakeholder notification"
+      - "Status updates every 30 minutes"
+      
+  post_incident:
+    review: "Root cause analysis required"
+    timeline: "Within 5 business days"
+    deliverables:
+      - "Incident report"
+      - "Root cause analysis"
+      - "Preventive measures"
+      - "Process improvements"
