@@ -209,8 +209,6 @@ class AlertManager:
             self.active_alerts.remove(alert)
         
         logger.info(f"Cleared {len(resolved)} resolved alerts")
-            'resolved_at': self.resolved_at.isoformat() if self.resolved_at else None
-        }
 
 
 @dataclass
