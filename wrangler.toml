@@ -13,6 +13,12 @@ compatibility_date = "2025-12-01"
 compatibility_flags = ["nodejs_compat"]
 
 # ============================================================================
+# Triggers (Cron)
+# ============================================================================
+[triggers]
+crons = ["0 * * * *", "0 0 * * *"]
+
+# ============================================================================
 # Account Configuration
 # ============================================================================
 # Set these via environment variables or wrangler secrets:
@@ -132,6 +138,10 @@ database_id = "" # Set via wrangler d1 create
 [[env.development.r2_buckets]]
 binding = "ASSETS"
 bucket_name = "machinenativeops-assets-dev"
+
+[[env.development.durable_objects.bindings]]
+name = "RATE_LIMITER"
+class_name = "RateLimiter"
 
 # ============================================================================
 # Durable Objects Migrations
