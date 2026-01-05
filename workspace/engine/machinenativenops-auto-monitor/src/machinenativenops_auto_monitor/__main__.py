@@ -85,6 +85,7 @@ def main():
         if args.daemon:
             logger.info("Running in daemon mode...")
             # TODO: Implement daemon mode
+            return
         app.run()
     except KeyboardInterrupt:
         logger.info("Shutting down...")

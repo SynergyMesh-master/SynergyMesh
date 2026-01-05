@@ -17,7 +17,6 @@ from abc import ABC, abstractmethod
 from typing import Any, Dict, List, Optional
 from dataclasses import dataclass
 from datetime import datetime
-from typing import Any, Dict, List, Optional
 
 
 @dataclass
