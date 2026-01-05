@@ -6,7 +6,7 @@ Manages alert rules, evaluation, and notification delivery.
 
 import logging
 from dataclasses import dataclass, field
-from typing import Dict, List, Optional, Any, Callable
+from typing import Dict, List, Optional, Any
 from datetime import datetime
 from enum import Enum
 
