@@ -2,8 +2,7 @@
 MachineNativeOps Auto-Monitor - Alert Management
 警報管理模組
 
-Manages alert rules, evaluation, and notification delivery.
-Handles alert rules, alert generation, and alert routing for MachineNativeOps monitoring.
+Manages alert rules, evaluation, generation, and notification routing for MachineNativeOps monitoring.
 """
 
 import logging

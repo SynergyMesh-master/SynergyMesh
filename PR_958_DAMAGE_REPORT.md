@@ -47,6 +47,30 @@ All damaged files show evidence of **incomplete merge conflict resolution** with
 
 ## Files Partially Fixed (Commits: 3f022d1, 8e26e54, fedfaad)
 
+The following files in the auto-monitor module have been **partially fixed** in this PR. Some duplicate code and imports have been removed, but additional review is recommended:
+
+### 1. `workspace/engine/machinenativenops-auto-monitor/src/machinenativenops_auto_monitor/__main__.py`
+- **Previous Error**: `SyntaxError: unterminated triple-quoted string literal (line 419)`
+- **Fix Applied**: Removed duplicate Examples section and shebang line
+- **Status**: ⚠️ Partially Fixed - May require additional testing
+- **Impact**: Non-critical (experimental module in workspace/engine/)
+
+### 2. `workspace/engine/machinenativenops-auto-monitor/src/machinenativenops_auto_monitor/alerts.py`
+- **Previous Error**: `SyntaxError: invalid syntax (line 35)` - Multiple duplicate Alert/AlertSeverity class definitions
+- **Fix Applied**: Removed duplicate imports (lines 28-44) and consolidated class definitions
+- **Status**: ⚠️ Partially Fixed - Duplicate code removed, orphaned fragments may remain
+- **Impact**: Non-critical (experimental module)
+
+### 3. `workspace/engine/machinenativenops-auto-monitor/src/machinenativenops_auto_monitor/app.py`
+- **Previous Error**: `IndentationError: unexpected indent (line 28)` - Incomplete class docstring
+- **Fix Applied**: Completed the AutoMonitorApp class docstring
+- **Status**: ⚠️ Partially Fixed - Docstring completed, may have other issues
+- **Impact**: Non-critical (experimental module)
+
+### 4. `workspace/engine/machinenativenops-auto-monitor/src/machinenativenops_auto_monitor/collectors.py`
+- **Previous Error**: `SyntaxError: unterminated triple-quoted string literal (line 1072)` - Duplicate imports
+- **Fix Applied**: Consolidated duplicate import statements (lines 11-24)
+- **Status**: ⚠️ Partially Fixed - Duplicate imports removed, validation recommended
 The following files in the auto-monitor module have been addressed in this PR:
 
 ### 7. `workspace/engine/machinenativenops-auto-monitor/src/machinenativenops_auto_monitor/__main__.py`
