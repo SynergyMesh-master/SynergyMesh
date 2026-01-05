@@ -25,49 +25,12 @@ class AlertState(Enum):
     FIRING = "firing"
     RESOLVED = "resolved"
 
-import logging
-from dataclasses import dataclass, field
-from datetime import datetime
-from enum import Enum
-from typing import Any, Dict, List, Optional
-
-"""
-警報管理模組
-
-Handles alert rules, alert generation, and alert routing for MachineNativeOps monitoring.
-"""
-
-import logging
-from typing import Dict, List, Optional, Callable
-from dataclasses import dataclass, field
-from datetime import datetime
-from enum import Enum
 
 logger = logging.getLogger(__name__)
 
 
-class AlertSeverity(Enum):
-    """Alert severity levels"""
-    CRITICAL = "critical"
-    ERROR = "error"
-    WARNING = "warning"
-    INFO = "info"
-    """Alert severity levels."""
-    INFO = "info"
-    WARNING = "warning"
-    ERROR = "error"
-    CRITICAL = "critical"
-
-
-class AlertStatus(Enum):
-    """Alert status."""
-    FIRING = "firing"
-    RESOLVED = "resolved"
-    SILENCED = "silenced"
-
-
 @dataclass
-class Alert:ㄚ
+class Alert:
     """Represents an alert instance."""
     id: str
     name: str
@@ -78,6 +41,13 @@ class Alert:ㄚ
     annotations: Dict[str, str] = field(default_factory=dict)
     started_at: datetime = field(default_factory=datetime.now)
     resolved_at: Optional[datetime] = None
+    source: str = ""
+    metadata: Dict[str, Any] = field(default_factory=dict)
+    
+    def resolve(self):
+        """Mark alert as resolved"""
+        self.state = AlertState.RESOLVED
+        self.resolved_at = datetime.now()
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert alert to dictionary."""
@@ -90,33 +60,9 @@ class Alert:ㄚ
             'labels': self.labels,
             'annotations': self.annotations,
             'started_at': self.started_at.isoformat(),
-            'resolved_at': self.resolved_at.isoformat() if self.resolved_at else None
-    """Represents a monitoring alert"""
-    name: str
-    severity: AlertSeverity
-    message: str
-    timestamp: datetime = field(default_factory=datetime.utcnow)
-    source: str = ""
-    metadata: Dict[str, Any] = field(default_factory=dict)
-    resolved: bool = False
-    resolved_at: Optional[datetime] = None
-    
-    def resolve(self):
-        """Mark alert as resolved"""
-        self.resolved = True
-        self.resolved_at = datetime.utcnow()
-    
-    def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
-        return {
-            "name": self.name,
-            "severity": self.severity.value,
-            "message": self.message,
-            "timestamp": self.timestamp.isoformat(),
-            "source": self.source,
-            "metadata": self.metadata,
-            "resolved": self.resolved,
-            "resolved_at": self.resolved_at.isoformat() if self.resolved_at else None
+            'resolved_at': self.resolved_at.isoformat() if self.resolved_at else None,
+            'source': self.source,
+            'metadata': self.metadata
         }
 
 
