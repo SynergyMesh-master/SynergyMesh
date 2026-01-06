@@ -198,6 +198,8 @@ class MAPEKLoop:
                     results.append(result)
                     break
                 except Exception as e:
+                    # Log executor failure and record in results
+                    self.logger.warning(f"Executor failed for plan {plan.id}: {e}", exc_info=True)
                     results.append(ExecutionResult(
                         plan_id=plan.id,
                         success=False,
