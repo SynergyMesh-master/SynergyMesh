@@ -97,8 +97,15 @@ def load_manifest(path: Path = MANIFEST_PATH) -> UnifiedPipelineManifest:
     for section in ("inputUnification", "coreScheduling", "mcpIntegration", "outputs"):
         if section not in spec:
             raise ValueError(f"Missing required spec section: {section}")
-    pipelines = [_safe_construct(PipelineEntry, p, "pipelines[*]") for p in spec.get("pipelines", [])]
-    adapters = [_safe_construct(ToolAdapter, t, "mcpIntegration.toolAdapters[*]") for t in spec["mcpIntegration"].get("toolAdapters", [])]
+    pipelines_data = spec["pipelines"]
+    if not isinstance(pipelines_data, list):
+        raise ValueError("spec.pipelines must be a list")
+    pipelines = [_safe_construct(PipelineEntry, p, "pipelines[*]") for p in pipelines_data]
+
+    adapters_data = spec["mcpIntegration"]["toolAdapters"]
+    if not isinstance(adapters_data, list):
+        raise ValueError("spec.mcpIntegration.toolAdapters must be a list")
+    adapters = [_safe_construct(ToolAdapter, t, "mcpIntegration.toolAdapters[*]") for t in adapters_data]
     return UnifiedPipelineManifest(
         apiVersion=data["apiVersion"],
         kind=data["kind"],
