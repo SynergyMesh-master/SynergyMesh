@@ -43,7 +43,9 @@ but found another document
 but found another document
   in "workspace/mcp/validation/WORLD_CLASS_VALIDATION_PIPELINE.yaml", line 459, column 1
 
-
+> 註記 / Note:  
+> 上述 YAML 語法錯誤已確認為真實問題，原因為單一串流中包含多個未正確分隔的文件。  
+> 這些錯誤**不在本次 PR 的修復範圍內**，已登記為後續工作項目（將在後續 PR 中修正對應 YAML 檔案的文件分隔或拆分為多個檔案）。
 ### ⚠️ 警告
 - Duplicate import from module: ./tools/types.js
 - Duplicate import from module: ./types.js
