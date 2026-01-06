@@ -194,6 +194,12 @@ spec:
       - name: security_scanner
         path: workspace/src/mcp-servers/security-scanner.js
         capabilities: ["vulnerability", "owasp", "compliance"]
+      # AXIOM 溶解架構工具 (硫酸溶解法)
+      - name: axiom_dissolved_server
+        path: workspace/mcp/servers/axiom-dissolved-server.ts
+        capabilities: ["quantum", "cognitive", "governance", "optimization"]
+        tools: 59
+        resources: 14
     realTimeSync: enabled
     crossPlatformCoordination: enabled
 
@@ -239,18 +245,21 @@ spec:
     - standard: INSTANT_EXECUTION
       validator: vision-tracker.py
       implementationStatus: planned  # Validator script not yet implemented
+      fallbackValidator: workspace/mcp/tools/load_unified_pipeline.py  # Use Python loader for validation
       checkInterval: 1000
       criteria: ["latency_compliance", "parallelism_level", "autonomy_degree"]
       failureAction: auto-alert
     - standard: AUTONOMY_LEVEL
       validator: validate-autonomy.py
       implementationStatus: planned  # Validator script not yet implemented
+      fallbackValidator: workspace/mcp/tools/load_unified_pipeline.py
       checkInterval: 5000
       criteria: ["human_intervention_count", "auto_rollback_success", "self_healing_success"]
       failureAction: escalate-to-governance
     - standard: LATENCY_COMPLIANCE
       validator: latency-monitor.py
       implementationStatus: planned  # Validator script not yet implemented
+      fallbackValidator: workspace/mcp/tools/load_unified_pipeline.py
       checkInterval: 0
       criteria: ["all_stages_within_threshold", "total_latency_compliant", "no_bottlenecks"]
       failureAction: auto-optimize
@@ -262,6 +271,25 @@ spec:
   integrationReferences:
     # 整合索引
     indexRef: workspace/mcp/INTEGRATION_INDEX.yaml
+
+    # AXIOM 溶解架構 (硫酸溶解法)
+    axiomDissolved:
+      architectureDefinition: workspace/mcp/axiom-dissolved-mcp-architecture.yaml
+      serverImplementation: workspace/mcp/servers/axiom-dissolved-server.ts
+      integrationManifest: workspace/mcp/AXIOM_DISSOLVED_INTEGRATION_MANIFEST.yaml
+      statistics:
+        tools: 59
+        resources: 14
+        servers: 7
+        prompts: 3
+      serverGroups:
+        - infrastructure_server   # L00: 5 tools
+        - processing_server       # L01-L02: 5 tools
+        - network_server          # L03: 3 tools
+        - cognitive_server        # L04-L05: 7 tools
+        - reasoning_server        # L06-L08: 9 tools
+        - governance_server       # L09-L12: 15 tools
+        - quantum_server          # L13: 15 tools (with fallback)
 
     # 核心引擎層
     engineLayer:

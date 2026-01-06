@@ -105,6 +105,48 @@ graph TB
 | JSON Schema | `workspace/mcp/schemas/unified-pipeline.schema.json` | Strict validation schema |
 | TypeScript Types | `workspace/mcp/types/unifiedPipeline.ts` | Type-safe interfaces |
 | Python Loader | `workspace/mcp/tools/load_unified_pipeline.py` | Typed dataclass loader |
+| **AXIOM Dissolved** | `workspace/mcp/axiom-dissolved-mcp-architecture.yaml` | 59 MCP tools from dissolved AXIOM |
+| AXIOM Server | `workspace/mcp/servers/axiom-dissolved-server.ts` | MCP server implementation |
+| Integration Manifest | `workspace/mcp/AXIOM_DISSOLVED_INTEGRATION_MANIFEST.yaml` | Seamless MCP embedding |
+
+## AXIOM Dissolved Architecture (硫酸溶解法)
+
+Complete dissolution of AXIOM v8.4 (59 modules, 14 layers) into MCP-native format.
+
+### Dissolved Components
+
+| Component | Count | Description |
+|-----------|-------|-------------|
+| MCP Tools | 59 | All AXIOM modules as MCP tools |
+| MCP Resources | 14 | One resource per layer |
+| MCP Servers | 7 | Grouped by functionality |
+| MCP Prompts | 3 | Common operation templates |
+
+### Server Groups
+
+| Server | Layers | Tools | Capabilities |
+|--------|--------|-------|--------------|
+| infrastructure_server | L00 | 5 | bootstrap, compute, scheduling |
+| processing_server | L01-L02 | 5 | language, input, multimodal |
+| network_server | L03 | 3 | routing, load balancing |
+| cognitive_server | L04-L05 | 7 | cognitive, ethics, bias |
+| reasoning_server | L06-L08 | 9 | integration, reasoning, emotion |
+| governance_server | L09-L12 | 15 | output, governance, optimization |
+| quantum_server | L13 | 15 | quantum algorithms (with fallback) |
+
+### Usage Example
+
+```typescript
+// Using dissolved AXIOM tools via MCP
+const result = await client.callTool({
+  name: "vqe_solver",
+  arguments: {
+    hamiltonian: moleculeHamiltonian,
+    ansatz: "UCCSD",
+    fallback_classical: true
+  }
+});
+```
 
 ## INSTANT Execution Standards
 
@@ -233,6 +275,16 @@ if is_instant_mode(manifest):
 | LATENCY_COMPLIANCE | latency-monitor.py | real-time | auto-optimize |
 
 ## Version History
+
+### v3.1.0 (2026-01-06)
+- **AXIOM 硫酸溶解法**: Complete dissolution of AXIOM v8.4 into MCP
+- Added 59 MCP tools from dissolved AXIOM modules
+- Added 14 MCP resources (one per layer)
+- Created 7 MCP server groups
+- Added 3 MCP prompt templates
+- Quantum tools with classical fallback mechanism
+- Updated governance validation with fallback validators
+- Cross-referenced dissolved architecture in pipeline config
 
 ### v3.0.0 (2026-01-06)
 - Upgraded to INSTANT Execution Architecture
