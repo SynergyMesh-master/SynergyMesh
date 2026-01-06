@@ -163,6 +163,7 @@ class MAPEKLoop:
                 if result:
                     anomalies.extend(result if isinstance(result, list) else [result])
             except Exception:
+                # Silently ignore analyzer failures to allow other analyzers to run
                 pass
         return anomalies
 
@@ -177,6 +178,7 @@ class MAPEKLoop:
                         plans.append(plan)
                         break  # One plan per anomaly
                 except Exception:
+                    # Silently ignore planner failures and try next planner
                     pass
         return plans
 
