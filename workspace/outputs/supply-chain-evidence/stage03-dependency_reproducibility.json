@@ -1,6 +1,6 @@
 {
-  "verification_hash": "a168134bead58d4a08a92487e131bd09cb28495b301f24dd299c3218a663dc17c8e4490b9b8e5c765d6b55ae59023cb6b53391941bbfe9aa3d38e926736eb2b6",
-  "reproducible_hash": "f401165cc6010b9811344519eb211ebb569ce10eec51a4002f8cda1dd6f69879b8e0758651d04806fd895700326d25fe43e636baf36d8c88b94b6dcdba9b1935",
+  "verification_hash": "3bbe94586fc633b441ca3f7602848e468bdc510debe0fb1c1c94b6dc545013f583143f9b700a5923ccfd8b3d1f24e647219751b61e6d5c806f89691708671db9",
+  "reproducible_hash": "4c9212af9d597426f8d7523e7e7fe308b5c188ecfce1ffdcc0941a5a954d4de8b8b977090e51f37a4fbcd21758c8977c564f352b6fdffa4e6e3c7676f9c1db8e",
   "data": {
     "lock_files": [
       {
@@ -27,11 +27,11 @@
         "source_file": "package.json",
         "exists": true,
         "source_exists": true,
-        "size": 494427,
-        "last_modified": 1766420972.9487433,
+        "size": 494579,
+        "last_modified": 1767661434.5357916,
         "status": "present",
         "integrity": "valid",
-        "content_hash": "8c9d943618e572a9233e89a2398e19e9a50935cecb8ee48d68976003a4de851c"
+        "content_hash": "ffc75cb31c9bfa95675b879a8020c6c1b5e1eea1c2db3e5d01cac88927308a0d"
       },
       {
         "file": "yarn.lock",
@@ -100,35 +100,13 @@
         "file": "Makefile",
         "exists": true,
         "type": "file"
-      },
-      {
-        "file": ".github/workflows",
-        "exists": true,
-        "type": "directory"
       }
     ],
-    "build_artifacts": [
-      {
-        "directory": "bin",
-        "artifacts_count": 2,
-        "artifacts": [
-          {
-            "file": "bin/README.md",
-            "size": 436,
-            "hash": "7e08341172ce742aa9370c4d74126468d14989ba0a250df0893005e7ebc56046"
-          },
-          {
-            "file": "bin/mno-admin",
-            "size": 2095,
-            "hash": "03fa377e4595e9bb8d9719dbd64f726a7d69383fb07ad02b17ed1b35775c489a"
-          }
-        ]
-      }
-    ]
+    "build_artifacts": []
   },
   "artifacts": [],
   "stage": 3,
   "stage_name": "\u4f9d\u8cf4\u9396\u5b9a\u8207\u53ef\u91cd\u73fe\u5efa\u7f6e",
   "evidence_type": "dependency_reproducibility",
-  "timestamp": "2025-12-22T16:51:40.231522+00:00"
+  "timestamp": "2026-01-06T01:16:22.832291+00:00"
 }

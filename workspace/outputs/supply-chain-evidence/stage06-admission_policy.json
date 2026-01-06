@@ -1,124 +1,44 @@
 {
-  "verification_hash": "ca7aa010ec9ea0eaae0ef4063cb90a71602372fd73b13ab76fb2e640942c49b36a0eb6d5ae9f651baf3e32f23ce1776d3dc118cdb2b64e147f0d01d36bfaaff5",
-  "reproducible_hash": "966aff7797924d8b82a8b0d0e2f18afd8dfbb4350efa2a1a81a332faa6a401ca87b04c08d550456957d4b8d6766e7ed664f1838836cbb5040bad14496e82efbc",
+  "verification_hash": "7cc76de382c5bba0118757b04b0ddac173db0bc49e37cd4834b159c1c03817b57fae07139f616673f5db9519c8c3bb8ed820cf75d09d7bd3b3a2828ef0a8190a",
+  "reproducible_hash": "f67fe6789ef6ae0e6169ced99d486d17dc264159374fcc78a29d620df3f7f14486c243cd46b01e150cebb5f039d856b1133afbb950765e434b4d2503898835f4",
   "data": {
     "opa_policies": [
       {
-        "file": "src/governance/00-vision-strategy/gac-templates/policy-template.rego",
-        "package": "{{",
+        "file": "src/governance/policies/global-policy.rego",
+        "package": "governance.global",
         "rules": [
-          "unknown"
+          "warn",
+          "deny"
         ],
         "syntactically_valid": true,
-        "size": 258
+        "size": 9478
       },
       {
-        "file": "src/governance/00-vision-strategy/policy/ai-policy-enhanced.rego",
-        "package": "governance.ai.generated",
+        "file": "src/governance/policies/agent-policy.rego",
+        "package": "governance.agent",
         "rules": [
-          "unknown"
+          "deny"
         ],
         "syntactically_valid": true,
-        "size": 786
+        "size": 8516
       },
       {
-        "file": "src/governance/00-vision-strategy/policy/policy-alignment.rego",
-        "package": "governance.alignment",
+        "file": "src/governance/policies/security-policy.rego",
+        "package": "governance.security",
         "rules": [
-          "deny",
-          "warn"
+          "deny"
         ],
         "syntactically_valid": true,
-        "size": 2806
+        "size": 4269
       },
       {
-        "file": "src/governance/00-vision-strategy/policy/policy-change.rego",
-        "package": "governance.change",
+        "file": "src/governance/policies/compliance-policy.rego",
+        "package": "governance.compliance",
         "rules": [
-          "deny",
-          "warn"
+          "deny"
         ],
         "syntactically_valid": true,
-        "size": 2760
-      },
-      {
-        "file": "src/governance/00-vision-strategy/policy/policy-communication.rego",
-        "package": "governance.communication",
-        "rules": [
-          "deny",
-          "warn"
-        ],
-        "syntactically_valid": true,
-        "size": 2791
-      },
-      {
-        "file": "src/governance/00-vision-strategy/policy/policy-governance.rego",
-        "package": "governance.governance",
-        "rules": [
-          "deny",
-          "warn"
-        ],
-        "syntactically_valid": true,
-        "size": 2788
-      },
-      {
-        "file": "src/governance/00-vision-strategy/policy/policy-impact-analyzer.rego",
-        "package": "governance.ai.impact",
-        "rules": [
-          "unknown"
-        ],
-        "syntactically_valid": true,
-        "size": 2322
-      },
-      {
-        "file": "src/governance/00-vision-strategy/policy/policy-metrics.rego",
-        "package": "governance.metrics",
-        "rules": [
-          "deny",
-          "warn"
-        ],
-        "syntactically_valid": true,
-        "size": 2790
-      },
-      {
-        "file": "src/governance/00-vision-strategy/policy/policy-okr.rego",
-        "package": "governance.okr",
-        "rules": [
-          "deny",
-          "warn"
-        ],
-        "syntactically_valid": true,
-        "size": 2803
-      },
-      {
-        "file": "src/governance/00-vision-strategy/policy/policy-risk.rego",
-        "package": "governance.risk",
-        "rules": [
-          "deny",
-          "warn"
-        ],
-        "syntactically_valid": true,
-        "size": 2687
-      },
-      {
-        "file": "src/governance/00-vision-strategy/policy/policy-roadmap.rego",
-        "package": "governance.roadmap",
-        "rules": [
-          "deny",
-          "warn"
-        ],
-        "syntactically_valid": true,
-        "size": 2861
-      },
-      {
-        "file": "src/governance/00-vision-strategy/policy/policy-vision.rego",
-        "package": "governance.vision",
-        "rules": [
-          "deny",
-          "warn"
-        ],
-        "syntactically_valid": true,
-        "size": 5582
+        "size": 5521
       },
       {
         "file": "src/governance/23-policies/cli-safe-mode.rego",
@@ -133,31 +53,31 @@
         "file": "src/governance/23-policies/manifest-policies.rego",
         "package": "kubernetes",
         "rules": [
-          "deny",
-          "warn"
+          "warn",
+          "deny"
         ],
         "syntactically_valid": true,
         "size": 4991
       },
       {
-        "file": "src/governance/23-policies/autonomous/uav_ad.rego",
-        "package": "uav_ad.policy",
-        "rules": [
-          "deny",
-          "warn"
-        ],
-        "syntactically_valid": true,
-        "size": 3809
-      },
-      {
         "file": "src/governance/23-policies/conftest/naming_policy.rego",
         "package": "main",
         "rules": [
-          "deny",
-          "warn"
+          "warn",
+          "deny"
         ],
         "syntactically_valid": true,
         "size": 5639
+      },
+      {
+        "file": "src/governance/23-policies/autonomous/uav_ad.rego",
+        "package": "uav_ad.policy",
+        "rules": [
+          "warn",
+          "deny"
+        ],
+        "syntactically_valid": true,
+        "size": 3809
       },
       {
         "file": "src/governance/23-policies/conftest/matechat-integration/integration-policy.rego",
@@ -169,1012 +89,121 @@
         "size": 1933
       },
       {
-        "file": "src/governance/dimensions/00-vision-strategy/policy.rego",
-        "package": "governance.vision_strategy",
-        "rules": [
-          "deny"
-        ],
-        "syntactically_valid": true,
-        "size": 4535
-      },
-      {
-        "file": "src/governance/dimensions/00-vision-strategy/tests/vision_strategy_test.rego",
-        "package": "governance.vision_strategy_test",
+        "file": "src/governance/00-vision-strategy/gac-templates/policy-template.rego",
+        "package": "{{",
         "rules": [
           "unknown"
         ],
         "syntactically_valid": true,
-        "size": 2786
+        "size": 258
       },
       {
-        "file": "src/governance/dimensions/01-architecture/policy.rego",
-        "package": "governance.architecture",
+        "file": "src/governance/00-vision-strategy/policy/policy-governance.rego",
+        "package": "governance.governance",
         "rules": [
+          "warn",
           "deny"
         ],
         "syntactically_valid": true,
-        "size": 4517
+        "size": 2788
       },
       {
-        "file": "src/governance/dimensions/01-architecture/tests/architecture_test.rego",
-        "package": "governance.architecture_test",
+        "file": "src/governance/00-vision-strategy/policy/policy-communication.rego",
+        "package": "governance.communication",
+        "rules": [
+          "warn",
+          "deny"
+        ],
+        "syntactically_valid": true,
+        "size": 2791
+      },
+      {
+        "file": "src/governance/00-vision-strategy/policy/policy-roadmap.rego",
+        "package": "governance.roadmap",
+        "rules": [
+          "warn",
+          "deny"
+        ],
+        "syntactically_valid": true,
+        "size": 2861
+      },
+      {
+        "file": "src/governance/00-vision-strategy/policy/policy-vision.rego",
+        "package": "governance.vision",
+        "rules": [
+          "warn",
+          "deny"
+        ],
+        "syntactically_valid": true,
+        "size": 5582
+      },
+      {
+        "file": "src/governance/00-vision-strategy/policy/policy-metrics.rego",
+        "package": "governance.metrics",
+        "rules": [
+          "warn",
+          "deny"
+        ],
+        "syntactically_valid": true,
+        "size": 2790
+      },
+      {
+        "file": "src/governance/00-vision-strategy/policy/policy-impact-analyzer.rego",
+        "package": "governance.ai.impact",
         "rules": [
           "unknown"
         ],
         "syntactically_valid": true,
-        "size": 2723
+        "size": 2322
       },
       {
-        "file": "src/governance/dimensions/02-decision/policy.rego",
-        "package": "governance.decision",
+        "file": "src/governance/00-vision-strategy/policy/policy-alignment.rego",
+        "package": "governance.alignment",
         "rules": [
+          "warn",
           "deny"
         ],
         "syntactically_valid": true,
-        "size": 4486
+        "size": 2806
       },
       {
-        "file": "src/governance/dimensions/02-decision/tests/decision_test.rego",
-        "package": "governance.decision_test",
+        "file": "src/governance/00-vision-strategy/policy/ai-policy-enhanced.rego",
+        "package": "governance.ai.generated",
         "rules": [
           "unknown"
         ],
         "syntactically_valid": true,
-        "size": 2639
+        "size": 786
       },
       {
-        "file": "src/governance/dimensions/03-change/policy.rego",
+        "file": "src/governance/00-vision-strategy/policy/policy-okr.rego",
+        "package": "governance.okr",
+        "rules": [
+          "warn",
+          "deny"
+        ],
+        "syntactically_valid": true,
+        "size": 2803
+      },
+      {
+        "file": "src/governance/00-vision-strategy/policy/policy-change.rego",
         "package": "governance.change",
         "rules": [
+          "warn",
           "deny"
         ],
         "syntactically_valid": true,
-        "size": 4469
+        "size": 2760
       },
       {
-        "file": "src/governance/dimensions/03-change/tests/change_test.rego",
-        "package": "governance.change_test",
-        "rules": [
-          "unknown"
-        ],
-        "syntactically_valid": true,
-        "size": 2597
-      },
-      {
-        "file": "src/governance/dimensions/04-risk/policy.rego",
+        "file": "src/governance/00-vision-strategy/policy/policy-risk.rego",
         "package": "governance.risk",
         "rules": [
+          "warn",
           "deny"
         ],
         "syntactically_valid": true,
-        "size": 4460
-      },
-      {
-        "file": "src/governance/dimensions/04-risk/tests/risk_test.rego",
-        "package": "governance.risk_test",
-        "rules": [
-          "unknown"
-        ],
-        "syntactically_valid": true,
-        "size": 2555
-      },
-      {
-        "file": "src/governance/dimensions/05-compliance/policy.rego",
-        "package": "governance.compliance",
-        "rules": [
-          "deny"
-        ],
-        "syntactically_valid": true,
-        "size": 4508
-      },
-      {
-        "file": "src/governance/dimensions/05-compliance/tests/compliance_test.rego",
-        "package": "governance.compliance_test",
-        "rules": [
-          "unknown"
-        ],
-        "syntactically_valid": true,
-        "size": 2681
-      },
-      {
-        "file": "src/governance/dimensions/06-security/policy.rego",
-        "package": "governance.security",
-        "rules": [
-          "deny"
-        ],
-        "syntactically_valid": true,
-        "size": 4484
-      },
-      {
-        "file": "src/governance/dimensions/06-security/tests/security_test.rego",
-        "package": "governance.security_test",
-        "rules": [
-          "unknown"
-        ],
-        "syntactically_valid": true,
-        "size": 2639
-      },
-      {
-        "file": "src/governance/dimensions/07-audit/policy.rego",
-        "package": "governance.audit",
-        "rules": [
-          "deny"
-        ],
-        "syntactically_valid": true,
-        "size": 4457
-      },
-      {
-        "file": "src/governance/dimensions/07-audit/tests/audit_test.rego",
-        "package": "governance.audit_test",
-        "rules": [
-          "unknown"
-        ],
-        "syntactically_valid": true,
-        "size": 2576
-      },
-      {
-        "file": "src/governance/dimensions/08-process/policy.rego",
-        "package": "governance.process",
-        "rules": [
-          "deny"
-        ],
-        "syntactically_valid": true,
-        "size": 4484
-      },
-      {
-        "file": "src/governance/dimensions/08-process/tests/process_test.rego",
-        "package": "governance.process_test",
-        "rules": [
-          "unknown"
-        ],
-        "syntactically_valid": true,
-        "size": 2618
-      },
-      {
-        "file": "src/governance/dimensions/09-performance/policy.rego",
-        "package": "governance.performance",
-        "rules": [
-          "deny"
-        ],
-        "syntactically_valid": true,
-        "size": 4501
-      },
-      {
-        "file": "src/governance/dimensions/09-performance/tests/performance_test.rego",
-        "package": "governance.performance_test",
-        "rules": [
-          "unknown"
-        ],
-        "syntactically_valid": true,
-        "size": 2702
-      },
-      {
-        "file": "src/governance/dimensions/10-policy/policy.rego",
-        "package": "governance.policy",
-        "rules": [
-          "deny"
-        ],
-        "syntactically_valid": true,
-        "size": 4465
-      },
-      {
-        "file": "src/governance/dimensions/10-policy/tests/policy_test.rego",
-        "package": "governance.policy_test",
-        "rules": [
-          "unknown"
-        ],
-        "syntactically_valid": true,
-        "size": 2597
-      },
-      {
-        "file": "src/governance/dimensions/11-tools-systems/policy.rego",
-        "package": "governance.tools_systems",
-        "rules": [
-          "deny"
-        ],
-        "syntactically_valid": true,
-        "size": 4520
-      },
-      {
-        "file": "src/governance/dimensions/11-tools-systems/tests/tools_systems_test.rego",
-        "package": "governance.tools_systems_test",
-        "rules": [
-          "unknown"
-        ],
-        "syntactically_valid": true,
-        "size": 2744
-      },
-      {
-        "file": "src/governance/dimensions/12-culture-capability/policy.rego",
-        "package": "governance.culture_capability",
-        "rules": [
-          "deny"
-        ],
-        "syntactically_valid": true,
-        "size": 4559
-      },
-      {
-        "file": "src/governance/dimensions/12-culture-capability/tests/culture_capability_test.rego",
-        "package": "governance.culture_capability_test",
-        "rules": [
-          "unknown"
-        ],
-        "syntactically_valid": true,
-        "size": 2849
-      },
-      {
-        "file": "src/governance/dimensions/13-metrics-reporting/policy.rego",
-        "package": "governance.metrics_reporting",
-        "rules": [
-          "deny"
-        ],
-        "syntactically_valid": true,
-        "size": 4551
-      },
-      {
-        "file": "src/governance/dimensions/13-metrics-reporting/tests/metrics_reporting_test.rego",
-        "package": "governance.metrics_reporting_test",
-        "rules": [
-          "unknown"
-        ],
-        "syntactically_valid": true,
-        "size": 2828
-      },
-      {
-        "file": "src/governance/dimensions/14-improvement/policy.rego",
-        "package": "governance.improvement",
-        "rules": [
-          "deny"
-        ],
-        "syntactically_valid": true,
-        "size": 4512
-      },
-      {
-        "file": "src/governance/dimensions/14-improvement/tests/improvement_test.rego",
-        "package": "governance.improvement_test",
-        "rules": [
-          "unknown"
-        ],
-        "syntactically_valid": true,
-        "size": 2702
-      },
-      {
-        "file": "src/governance/dimensions/15-economic/policy.rego",
-        "package": "governance.economic",
-        "rules": [
-          "deny"
-        ],
-        "syntactically_valid": true,
-        "size": 4475
-      },
-      {
-        "file": "src/governance/dimensions/15-economic/tests/economic_test.rego",
-        "package": "governance.economic_test",
-        "rules": [
-          "unknown"
-        ],
-        "syntactically_valid": true,
-        "size": 2639
-      },
-      {
-        "file": "src/governance/dimensions/16-psychological/policy.rego",
-        "package": "governance.psychological",
-        "rules": [
-          "deny"
-        ],
-        "syntactically_valid": true,
-        "size": 4519
-      },
-      {
-        "file": "src/governance/dimensions/16-psychological/tests/psychological_test.rego",
-        "package": "governance.psychological_test",
-        "rules": [
-          "unknown"
-        ],
-        "syntactically_valid": true,
-        "size": 2744
-      },
-      {
-        "file": "src/governance/dimensions/17-sociological/policy.rego",
-        "package": "governance.sociological",
-        "rules": [
-          "deny"
-        ],
-        "syntactically_valid": true,
-        "size": 4526
-      },
-      {
-        "file": "src/governance/dimensions/17-sociological/tests/sociological_test.rego",
-        "package": "governance.sociological_test",
-        "rules": [
-          "unknown"
-        ],
-        "syntactically_valid": true,
-        "size": 2723
-      },
-      {
-        "file": "src/governance/dimensions/18-complex-system/policy.rego",
-        "package": "governance.complex_system",
-        "rules": [
-          "deny"
-        ],
-        "syntactically_valid": true,
-        "size": 4526
-      },
-      {
-        "file": "src/governance/dimensions/18-complex-system/tests/complex_system_test.rego",
-        "package": "governance.complex_system_test",
-        "rules": [
-          "unknown"
-        ],
-        "syntactically_valid": true,
-        "size": 2765
-      },
-      {
-        "file": "src/governance/dimensions/19-evolutionary/policy.rego",
-        "package": "governance.evolutionary",
-        "rules": [
-          "deny"
-        ],
-        "syntactically_valid": true,
-        "size": 4518
-      },
-      {
-        "file": "src/governance/dimensions/19-evolutionary/tests/evolutionary_test.rego",
-        "package": "governance.evolutionary_test",
-        "rules": [
-          "unknown"
-        ],
-        "syntactically_valid": true,
-        "size": 2723
-      },
-      {
-        "file": "src/governance/dimensions/20-intent/policy.rego",
-        "package": "governance.intent",
-        "rules": [
-          "deny"
-        ],
-        "syntactically_valid": true,
-        "size": 4477
-      },
-      {
-        "file": "src/governance/dimensions/20-intent/tests/intent_test.rego",
-        "package": "governance.intent_test",
-        "rules": [
-          "unknown"
-        ],
-        "syntactically_valid": true,
-        "size": 2597
-      },
-      {
-        "file": "src/governance/dimensions/21-ecological/policy.rego",
-        "package": "governance.ecological",
-        "rules": [
-          "deny"
-        ],
-        "syntactically_valid": true,
-        "size": 4508
-      },
-      {
-        "file": "src/governance/dimensions/21-ecological/tests/ecological_test.rego",
-        "package": "governance.ecological_test",
-        "rules": [
-          "unknown"
-        ],
-        "syntactically_valid": true,
-        "size": 2681
-      },
-      {
-        "file": "src/governance/dimensions/22-aesthetic/policy.rego",
-        "package": "governance.aesthetic",
-        "rules": [
-          "deny"
-        ],
-        "syntactically_valid": true,
-        "size": 4488
-      },
-      {
-        "file": "src/governance/dimensions/22-aesthetic/tests/aesthetic_test.rego",
-        "package": "governance.aesthetic_test",
-        "rules": [
-          "unknown"
-        ],
-        "syntactically_valid": true,
-        "size": 2660
-      },
-      {
-        "file": "src/governance/dimensions/23-policies/policy.rego",
-        "package": "governance.policies",
-        "rules": [
-          "deny"
-        ],
-        "syntactically_valid": true,
-        "size": 4484
-      },
-      {
-        "file": "src/governance/dimensions/23-policies/tests/policies_test.rego",
-        "package": "governance.policies_test",
-        "rules": [
-          "unknown"
-        ],
-        "syntactically_valid": true,
-        "size": 2638
-      },
-      {
-        "file": "src/governance/dimensions/24-registry/policy.rego",
-        "package": "governance.registry",
-        "rules": [
-          "deny"
-        ],
-        "syntactically_valid": true,
-        "size": 4490
-      },
-      {
-        "file": "src/governance/dimensions/24-registry/tests/registry_test.rego",
-        "package": "governance.registry_test",
-        "rules": [
-          "unknown"
-        ],
-        "syntactically_valid": true,
-        "size": 2639
-      },
-      {
-        "file": "src/governance/dimensions/25-principles/policy.rego",
-        "package": "governance.principles",
-        "rules": [
-          "deny"
-        ],
-        "syntactically_valid": true,
-        "size": 4503
-      },
-      {
-        "file": "src/governance/dimensions/25-principles/tests/principles_test.rego",
-        "package": "governance.principles_test",
-        "rules": [
-          "unknown"
-        ],
-        "syntactically_valid": true,
-        "size": 2681
-      },
-      {
-        "file": "src/governance/dimensions/26-tools/policy.rego",
-        "package": "governance.tools",
-        "rules": [
-          "deny"
-        ],
-        "syntactically_valid": true,
-        "size": 4464
-      },
-      {
-        "file": "src/governance/dimensions/26-tools/tests/tools_test.rego",
-        "package": "governance.tools_test",
-        "rules": [
-          "unknown"
-        ],
-        "syntactically_valid": true,
-        "size": 2576
-      },
-      {
-        "file": "src/governance/dimensions/27-templates/policy.rego",
-        "package": "governance.templates",
-        "rules": [
-          "deny"
-        ],
-        "syntactically_valid": true,
-        "size": 4500
-      },
-      {
-        "file": "src/governance/dimensions/27-templates/tests/templates_test.rego",
-        "package": "governance.templates_test",
-        "rules": [
-          "unknown"
-        ],
-        "syntactically_valid": true,
-        "size": 2660
-      },
-      {
-        "file": "src/governance/dimensions/28-tests/policy.rego",
-        "package": "governance.tests",
-        "rules": [
-          "deny"
-        ],
-        "syntactically_valid": true,
-        "size": 4462
-      },
-      {
-        "file": "src/governance/dimensions/28-tests/tests/tests_test.rego",
-        "package": "governance.tests_test",
-        "rules": [
-          "unknown"
-        ],
-        "syntactically_valid": true,
-        "size": 2576
-      },
-      {
-        "file": "src/governance/dimensions/29-docs/policy.rego",
-        "package": "governance.docs",
-        "rules": [
-          "deny"
-        ],
-        "syntactically_valid": true,
-        "size": 4477
-      },
-      {
-        "file": "src/governance/dimensions/29-docs/tests/docs_test.rego",
-        "package": "governance.docs_test",
-        "rules": [
-          "unknown"
-        ],
-        "syntactically_valid": true,
-        "size": 2564
-      },
-      {
-        "file": "src/governance/dimensions/30-agents/policy.rego",
-        "package": "governance.agents",
-        "rules": [
-          "deny"
-        ],
-        "syntactically_valid": true,
-        "size": 4468
-      },
-      {
-        "file": "src/governance/dimensions/30-agents/tests/agents_test.rego",
-        "package": "governance.agents_test",
-        "rules": [
-          "unknown"
-        ],
-        "syntactically_valid": true,
-        "size": 2597
-      },
-      {
-        "file": "src/governance/dimensions/31-schemas/policy.rego",
-        "package": "governance.schemas",
-        "rules": [
-          "deny"
-        ],
-        "syntactically_valid": true,
-        "size": 4478
-      },
-      {
-        "file": "src/governance/dimensions/31-schemas/tests/schemas_test.rego",
-        "package": "governance.schemas_test",
-        "rules": [
-          "unknown"
-        ],
-        "syntactically_valid": true,
-        "size": 2618
-      },
-      {
-        "file": "src/governance/dimensions/32-rules/policy.rego",
-        "package": "governance.rules",
-        "rules": [
-          "deny"
-        ],
-        "syntactically_valid": true,
-        "size": 4457
-      },
-      {
-        "file": "src/governance/dimensions/32-rules/tests/rules_test.rego",
-        "package": "governance.rules_test",
-        "rules": [
-          "unknown"
-        ],
-        "syntactically_valid": true,
-        "size": 2576
-      },
-      {
-        "file": "src/governance/dimensions/33-common/policy.rego",
-        "package": "governance.common",
-        "rules": [
-          "deny"
-        ],
-        "syntactically_valid": true,
-        "size": 4475
-      },
-      {
-        "file": "src/governance/dimensions/33-common/tests/common_test.rego",
-        "package": "governance.common_test",
-        "rules": [
-          "unknown"
-        ],
-        "syntactically_valid": true,
-        "size": 2597
-      },
-      {
-        "file": "src/governance/dimensions/34-config/policy.rego",
-        "package": "governance.config",
-        "rules": [
-          "deny"
-        ],
-        "syntactically_valid": true,
-        "size": 4475
-      },
-      {
-        "file": "src/governance/dimensions/34-config/tests/config_test.rego",
-        "package": "governance.config_test",
-        "rules": [
-          "unknown"
-        ],
-        "syntactically_valid": true,
-        "size": 2597
-      },
-      {
-        "file": "src/governance/dimensions/35-scripts/policy.rego",
-        "package": "governance.scripts",
-        "rules": [
-          "deny"
-        ],
-        "syntactically_valid": true,
-        "size": 4474
-      },
-      {
-        "file": "src/governance/dimensions/35-scripts/tests/scripts_test.rego",
-        "package": "governance.scripts_test",
-        "rules": [
-          "unknown"
-        ],
-        "syntactically_valid": true,
-        "size": 2618
-      },
-      {
-        "file": "src/governance/dimensions/36-modules/policy.rego",
-        "package": "governance.modules",
-        "rules": [
-          "deny"
-        ],
-        "syntactically_valid": true,
-        "size": 4484
-      },
-      {
-        "file": "src/governance/dimensions/36-modules/tests/modules_test.rego",
-        "package": "governance.modules_test",
-        "rules": [
-          "unknown"
-        ],
-        "syntactically_valid": true,
-        "size": 2618
-      },
-      {
-        "file": "src/governance/dimensions/37-behavior-contracts/policy.rego",
-        "package": "governance.behavior_contracts",
-        "rules": [
-          "deny"
-        ],
-        "syntactically_valid": true,
-        "size": 4558
-      },
-      {
-        "file": "src/governance/dimensions/37-behavior-contracts/tests/behavior_contracts_test.rego",
-        "package": "governance.behavior_contracts_test",
-        "rules": [
-          "unknown"
-        ],
-        "syntactically_valid": true,
-        "size": 2849
-      },
-      {
-        "file": "src/governance/dimensions/38-sbom/policy.rego",
-        "package": "governance.sbom",
-        "rules": [
-          "deny"
-        ],
-        "syntactically_valid": true,
-        "size": 4459
-      },
-      {
-        "file": "src/governance/dimensions/38-sbom/tests/sbom_test.rego",
-        "package": "governance.sbom_test",
-        "rules": [
-          "unknown"
-        ],
-        "syntactically_valid": true,
-        "size": 2555
-      },
-      {
-        "file": "src/governance/dimensions/39-automation/policy.rego",
-        "package": "governance.automation",
-        "rules": [
-          "deny"
-        ],
-        "syntactically_valid": true,
-        "size": 4502
-      },
-      {
-        "file": "src/governance/dimensions/39-automation/tests/automation_test.rego",
-        "package": "governance.automation_test",
-        "rules": [
-          "unknown"
-        ],
-        "syntactically_valid": true,
-        "size": 2681
-      },
-      {
-        "file": "src/governance/dimensions/40-self-healing/policy.rego",
-        "package": "governance.self_healing",
-        "rules": [
-          "deny"
-        ],
-        "syntactically_valid": true,
-        "size": 4521
-      },
-      {
-        "file": "src/governance/dimensions/40-self-healing/tests/self_healing_test.rego",
-        "package": "governance.self_healing_test",
-        "rules": [
-          "unknown"
-        ],
-        "syntactically_valid": true,
-        "size": 2723
-      },
-      {
-        "file": "src/governance/dimensions/41-orchestration/policy.rego",
-        "package": "governance.orchestration",
-        "rules": [
-          "deny"
-        ],
-        "syntactically_valid": true,
-        "size": 4531
-      },
-      {
-        "file": "src/governance/dimensions/41-orchestration/tests/orchestration_test.rego",
-        "package": "governance.orchestration_test",
-        "rules": [
-          "unknown"
-        ],
-        "syntactically_valid": true,
-        "size": 2744
-      },
-      {
-        "file": "src/governance/dimensions/42-deployment/policy.rego",
-        "package": "governance.deployment",
-        "rules": [
-          "deny"
-        ],
-        "syntactically_valid": true,
-        "size": 4504
-      },
-      {
-        "file": "src/governance/dimensions/42-deployment/tests/deployment_test.rego",
-        "package": "governance.deployment_test",
-        "rules": [
-          "unknown"
-        ],
-        "syntactically_valid": true,
-        "size": 2681
-      },
-      {
-        "file": "src/governance/dimensions/43-scaling/policy.rego",
-        "package": "governance.scaling",
-        "rules": [
-          "deny"
-        ],
-        "syntactically_valid": true,
-        "size": 4485
-      },
-      {
-        "file": "src/governance/dimensions/43-scaling/tests/scaling_test.rego",
-        "package": "governance.scaling_test",
-        "rules": [
-          "unknown"
-        ],
-        "syntactically_valid": true,
-        "size": 2618
-      },
-      {
-        "file": "src/governance/dimensions/44-resilience/policy.rego",
-        "package": "governance.resilience",
-        "rules": [
-          "deny"
-        ],
-        "syntactically_valid": true,
-        "size": 4506
-      },
-      {
-        "file": "src/governance/dimensions/44-resilience/tests/resilience_test.rego",
-        "package": "governance.resilience_test",
-        "rules": [
-          "unknown"
-        ],
-        "syntactically_valid": true,
-        "size": 2681
-      },
-      {
-        "file": "src/governance/dimensions/45-recovery/policy.rego",
-        "package": "governance.recovery",
-        "rules": [
-          "deny"
-        ],
-        "syntactically_valid": true,
-        "size": 4474
-      },
-      {
-        "file": "src/governance/dimensions/45-recovery/tests/recovery_test.rego",
-        "package": "governance.recovery_test",
-        "rules": [
-          "unknown"
-        ],
-        "syntactically_valid": true,
-        "size": 2639
-      },
-      {
-        "file": "src/governance/dimensions/46-migration/policy.rego",
-        "package": "governance.migration",
-        "rules": [
-          "deny"
-        ],
-        "syntactically_valid": true,
-        "size": 4493
-      },
-      {
-        "file": "src/governance/dimensions/46-migration/tests/migration_test.rego",
-        "package": "governance.migration_test",
-        "rules": [
-          "unknown"
-        ],
-        "syntactically_valid": true,
-        "size": 2660
-      },
-      {
-        "file": "src/governance/dimensions/47-versioning/policy.rego",
-        "package": "governance.versioning",
-        "rules": [
-          "deny"
-        ],
-        "syntactically_valid": true,
-        "size": 4508
-      },
-      {
-        "file": "src/governance/dimensions/47-versioning/tests/versioning_test.rego",
-        "package": "governance.versioning_test",
-        "rules": [
-          "unknown"
-        ],
-        "syntactically_valid": true,
-        "size": 2681
-      },
-      {
-        "file": "src/governance/dimensions/48-rollback/policy.rego",
-        "package": "governance.rollback",
-        "rules": [
-          "deny"
-        ],
-        "syntactically_valid": true,
-        "size": 4482
-      },
-      {
-        "file": "src/governance/dimensions/48-rollback/tests/rollback_test.rego",
-        "package": "governance.rollback_test",
-        "rules": [
-          "unknown"
-        ],
-        "syntactically_valid": true,
-        "size": 2639
-      },
-      {
-        "file": "src/governance/dimensions/49-canary/policy.rego",
-        "package": "governance.canary",
-        "rules": [
-          "deny"
-        ],
-        "syntactically_valid": true,
-        "size": 4474
-      },
-      {
-        "file": "src/governance/dimensions/49-canary/tests/canary_test.rego",
-        "package": "governance.canary_test",
-        "rules": [
-          "unknown"
-        ],
-        "syntactically_valid": true,
-        "size": 2597
-      },
-      {
-        "file": "src/governance/dimensions/50-monitoring/policy.rego",
-        "package": "governance.monitoring",
-        "rules": [
-          "deny"
-        ],
-        "syntactically_valid": true,
-        "size": 4504
-      },
-      {
-        "file": "src/governance/dimensions/50-monitoring/tests/monitoring_test.rego",
-        "package": "governance.monitoring_test",
-        "rules": [
-          "unknown"
-        ],
-        "syntactically_valid": true,
-        "size": 2681
-      },
-      {
-        "file": "src/governance/dimensions/51-logging/policy.rego",
-        "package": "governance.logging",
-        "rules": [
-          "deny"
-        ],
-        "syntactically_valid": true,
-        "size": 4484
-      },
-      {
-        "file": "src/governance/dimensions/51-logging/tests/logging_test.rego",
-        "package": "governance.logging_test",
-        "rules": [
-          "unknown"
-        ],
-        "syntactically_valid": true,
-        "size": 2618
-      },
-      {
-        "file": "src/governance/dimensions/52-tracing/policy.rego",
-        "package": "governance.tracing",
-        "rules": [
-          "deny"
-        ],
-        "syntactically_valid": true,
-        "size": 4479
-      },
-      {
-        "file": "src/governance/dimensions/52-tracing/tests/tracing_test.rego",
-        "package": "governance.tracing_test",
-        "rules": [
-          "unknown"
-        ],
-        "syntactically_valid": true,
-        "size": 2618
-      },
-      {
-        "file": "src/governance/dimensions/53-alerting/policy.rego",
-        "package": "governance.alerting",
-        "rules": [
-          "deny"
-        ],
-        "syntactically_valid": true,
-        "size": 4487
-      },
-      {
-        "file": "src/governance/dimensions/53-alerting/tests/alerting_test.rego",
-        "package": "governance.alerting_test",
-        "rules": [
-          "unknown"
-        ],
-        "syntactically_valid": true,
-        "size": 2639
-      },
-      {
-        "file": "src/governance/dimensions/54-dashboards/policy.rego",
-        "package": "governance.dashboards",
-        "rules": [
-          "deny"
-        ],
-        "syntactically_valid": true,
-        "size": 4505
-      },
-      {
-        "file": "src/governance/dimensions/54-dashboards/tests/dashboards_test.rego",
-        "package": "governance.dashboards_test",
-        "rules": [
-          "unknown"
-        ],
-        "syntactically_valid": true,
-        "size": 2681
-      },
-      {
-        "file": "src/governance/dimensions/55-slo-sli/policy.rego",
-        "package": "governance.slo_sli",
-        "rules": [
-          "deny"
-        ],
-        "syntactically_valid": true,
-        "size": 4468
-      },
-      {
-        "file": "src/governance/dimensions/55-slo-sli/tests/slo_sli_test.rego",
-        "package": "governance.slo_sli_test",
-        "rules": [
-          "unknown"
-        ],
-        "syntactically_valid": true,
-        "size": 2618
+        "size": 2687
       },
       {
         "file": "src/governance/dimensions/56-incidents/policy.rego",
@@ -1186,143 +215,71 @@
         "size": 4502
       },
       {
-        "file": "src/governance/dimensions/56-incidents/tests/incidents_test.rego",
-        "package": "governance.incidents_test",
-        "rules": [
-          "unknown"
-        ],
-        "syntactically_valid": true,
-        "size": 2660
-      },
-      {
-        "file": "src/governance/dimensions/57-postmortems/policy.rego",
-        "package": "governance.postmortems",
+        "file": "src/governance/dimensions/03-change/policy.rego",
+        "package": "governance.change",
         "rules": [
           "deny"
         ],
         "syntactically_valid": true,
-        "size": 4509
+        "size": 4469
       },
       {
-        "file": "src/governance/dimensions/57-postmortems/tests/postmortems_test.rego",
-        "package": "governance.postmortems_test",
-        "rules": [
-          "unknown"
-        ],
-        "syntactically_valid": true,
-        "size": 2702
-      },
-      {
-        "file": "src/governance/dimensions/58-capacity/policy.rego",
-        "package": "governance.capacity",
+        "file": "src/governance/dimensions/21-ecological/policy.rego",
+        "package": "governance.ecological",
         "rules": [
           "deny"
         ],
         "syntactically_valid": true,
-        "size": 4492
+        "size": 4508
       },
       {
-        "file": "src/governance/dimensions/58-capacity/tests/capacity_test.rego",
-        "package": "governance.capacity_test",
-        "rules": [
-          "unknown"
-        ],
-        "syntactically_valid": true,
-        "size": 2639
-      },
-      {
-        "file": "src/governance/dimensions/59-forecasting/policy.rego",
-        "package": "governance.forecasting",
+        "file": "src/governance/dimensions/05-compliance/policy.rego",
+        "package": "governance.compliance",
         "rules": [
           "deny"
         ],
         "syntactically_valid": true,
-        "size": 4509
+        "size": 4508
       },
       {
-        "file": "src/governance/dimensions/59-forecasting/tests/forecasting_test.rego",
-        "package": "governance.forecasting_test",
-        "rules": [
-          "unknown"
-        ],
-        "syntactically_valid": true,
-        "size": 2702
-      },
-      {
-        "file": "src/governance/dimensions/60-contracts/policy.rego",
-        "package": "governance.contracts",
+        "file": "src/governance/dimensions/10-policy/policy.rego",
+        "package": "governance.policy",
         "rules": [
           "deny"
         ],
         "syntactically_valid": true,
-        "size": 4500
+        "size": 4465
       },
       {
-        "file": "src/governance/dimensions/60-contracts/tests/contracts_test.rego",
-        "package": "governance.contracts_test",
-        "rules": [
-          "unknown"
-        ],
-        "syntactically_valid": true,
-        "size": 2660
-      },
-      {
-        "file": "src/governance/dimensions/61-lineage/policy.rego",
-        "package": "governance.lineage",
+        "file": "src/governance/dimensions/23-policies/policy.rego",
+        "package": "governance.policies",
         "rules": [
           "deny"
         ],
         "syntactically_valid": true,
-        "size": 4476
+        "size": 4484
       },
       {
-        "file": "src/governance/dimensions/61-lineage/tests/lineage_test.rego",
-        "package": "governance.lineage_test",
-        "rules": [
-          "unknown"
-        ],
-        "syntactically_valid": true,
-        "size": 2618
-      },
-      {
-        "file": "src/governance/dimensions/62-provenance/policy.rego",
-        "package": "governance.provenance",
+        "file": "src/governance/dimensions/49-canary/policy.rego",
+        "package": "governance.canary",
         "rules": [
           "deny"
         ],
         "syntactically_valid": true,
-        "size": 4499
+        "size": 4474
       },
       {
-        "file": "src/governance/dimensions/62-provenance/tests/provenance_test.rego",
-        "package": "governance.provenance_test",
-        "rules": [
-          "unknown"
-        ],
-        "syntactically_valid": true,
-        "size": 2681
-      },
-      {
-        "file": "src/governance/dimensions/63-evidence/policy.rego",
-        "package": "governance.evidence",
+        "file": "src/governance/dimensions/31-schemas/policy.rego",
+        "package": "governance.schemas",
         "rules": [
           "deny"
         ],
         "syntactically_valid": true,
-        "size": 4486
+        "size": 4478
       },
       {
-        "file": "src/governance/dimensions/63-evidence/tests/evidence_test.rego",
-        "package": "governance.evidence_test",
-        "rules": [
-          "unknown"
-        ],
-        "syntactically_valid": true,
-        "size": 2639
-      },
-      {
-        "file": "src/governance/dimensions/64-attestation/policy.rego",
-        "package": "governance.attestation",
+        "file": "src/governance/dimensions/14-improvement/policy.rego",
+        "package": "governance.improvement",
         "rules": [
           "deny"
         ],
@@ -1330,49 +287,59 @@
         "size": 4512
       },
       {
-        "file": "src/governance/dimensions/64-attestation/tests/attestation_test.rego",
-        "package": "governance.attestation_test",
-        "rules": [
-          "unknown"
-        ],
-        "syntactically_valid": true,
-        "size": 2702
-      },
-      {
-        "file": "src/governance/dimensions/65-certification/policy.rego",
-        "package": "governance.certification",
+        "file": "src/governance/dimensions/52-tracing/policy.rego",
+        "package": "governance.tracing",
         "rules": [
           "deny"
         ],
         "syntactically_valid": true,
-        "size": 4531
+        "size": 4479
       },
       {
-        "file": "src/governance/dimensions/65-certification/tests/certification_test.rego",
-        "package": "governance.certification_test",
-        "rules": [
-          "unknown"
-        ],
-        "syntactically_valid": true,
-        "size": 2744
-      },
-      {
-        "file": "src/governance/dimensions/66-reporting/policy.rego",
-        "package": "governance.reporting",
+        "file": "src/governance/dimensions/09-performance/policy.rego",
+        "package": "governance.performance",
         "rules": [
           "deny"
         ],
         "syntactically_valid": true,
-        "size": 4502
+        "size": 4501
       },
       {
-        "file": "src/governance/dimensions/66-reporting/tests/reporting_test.rego",
-        "package": "governance.reporting_test",
+        "file": "src/governance/dimensions/08-process/policy.rego",
+        "package": "governance.process",
         "rules": [
-          "unknown"
+          "deny"
         ],
         "syntactically_valid": true,
-        "size": 2660
+        "size": 4484
+      },
+      {
+        "file": "src/governance/dimensions/99-metadata/policy.rego",
+        "package": "machinenativeops.governance.metadata",
+        "rules": [
+          "warn",
+          "deny"
+        ],
+        "syntactically_valid": true,
+        "size": 11187
+      },
+      {
+        "file": "src/governance/dimensions/15-economic/policy.rego",
+        "package": "governance.economic",
+        "rules": [
+          "deny"
+        ],
+        "syntactically_valid": true,
+        "size": 4475
+      },
+      {
+        "file": "src/governance/dimensions/37-behavior-contracts/policy.rego",
+        "package": "governance.behavior_contracts",
+        "rules": [
+          "deny"
+        ],
+        "syntactically_valid": true,
+        "size": 4558
       },
       {
         "file": "src/governance/dimensions/67-analytics/policy.rego",
@@ -1384,125 +351,8 @@
         "size": 4498
       },
       {
-        "file": "src/governance/dimensions/67-analytics/tests/analytics_test.rego",
-        "package": "governance.analytics_test",
-        "rules": [
-          "unknown"
-        ],
-        "syntactically_valid": true,
-        "size": 2660
-      },
-      {
-        "file": "src/governance/dimensions/68-visualization/policy.rego",
-        "package": "governance.visualization",
-        "rules": [
-          "deny"
-        ],
-        "syntactically_valid": true,
-        "size": 4526
-      },
-      {
-        "file": "src/governance/dimensions/68-visualization/tests/visualization_test.rego",
-        "package": "governance.visualization_test",
-        "rules": [
-          "unknown"
-        ],
-        "syntactically_valid": true,
-        "size": 2744
-      },
-      {
-        "file": "src/governance/dimensions/69-correlation/policy.rego",
-        "package": "governance.correlation",
-        "rules": [
-          "deny"
-        ],
-        "syntactically_valid": true,
-        "size": 4511
-      },
-      {
-        "file": "src/governance/dimensions/69-correlation/tests/correlation_test.rego",
-        "package": "governance.correlation_test",
-        "rules": [
-          "unknown"
-        ],
-        "syntactically_valid": true,
-        "size": 2702
-      },
-      {
-        "file": "src/governance/dimensions/70-audit-trail/policy.rego",
-        "package": "governance.audit_trail",
-        "rules": [
-          "deny"
-        ],
-        "syntactically_valid": true,
-        "size": 4511
-      },
-      {
-        "file": "src/governance/dimensions/70-audit-trail/tests/audit_trail_test.rego",
-        "package": "governance.audit_trail_test",
-        "rules": [
-          "unknown"
-        ],
-        "syntactically_valid": true,
-        "size": 2702
-      },
-      {
-        "file": "src/governance/dimensions/71-feedback-loops/policy.rego",
-        "package": "governance.feedback_loops",
-        "rules": [
-          "deny"
-        ],
-        "syntactically_valid": true,
-        "size": 4530
-      },
-      {
-        "file": "src/governance/dimensions/71-feedback-loops/tests/feedback_loops_test.rego",
-        "package": "governance.feedback_loops_test",
-        "rules": [
-          "unknown"
-        ],
-        "syntactically_valid": true,
-        "size": 2765
-      },
-      {
-        "file": "src/governance/dimensions/72-optimization/policy.rego",
-        "package": "governance.optimization",
-        "rules": [
-          "deny"
-        ],
-        "syntactically_valid": true,
-        "size": 4518
-      },
-      {
-        "file": "src/governance/dimensions/72-optimization/tests/optimization_test.rego",
-        "package": "governance.optimization_test",
-        "rules": [
-          "unknown"
-        ],
-        "syntactically_valid": true,
-        "size": 2723
-      },
-      {
-        "file": "src/governance/dimensions/73-learning/policy.rego",
-        "package": "governance.learning",
-        "rules": [
-          "deny"
-        ],
-        "syntactically_valid": true,
-        "size": 4481
-      },
-      {
-        "file": "src/governance/dimensions/73-learning/tests/learning_test.rego",
-        "package": "governance.learning_test",
-        "rules": [
-          "unknown"
-        ],
-        "syntactically_valid": true,
-        "size": 2639
-      },
-      {
-        "file": "src/governance/dimensions/74-adaptation/policy.rego",
-        "package": "governance.adaptation",
+        "file": "src/governance/dimensions/44-resilience/policy.rego",
+        "package": "governance.resilience",
         "rules": [
           "deny"
         ],
@@ -1510,140 +360,94 @@
         "size": 4506
       },
       {
-        "file": "src/governance/dimensions/74-adaptation/tests/adaptation_test.rego",
-        "package": "governance.adaptation_test",
-        "rules": [
-          "unknown"
-        ],
-        "syntactically_valid": true,
-        "size": 2681
-      },
-      {
-        "file": "src/governance/dimensions/75-evolution/policy.rego",
-        "package": "governance.evolution",
+        "file": "src/governance/dimensions/04-risk/policy.rego",
+        "package": "governance.risk",
         "rules": [
           "deny"
         ],
         "syntactically_valid": true,
-        "size": 4500
+        "size": 4460
       },
       {
-        "file": "src/governance/dimensions/75-evolution/tests/evolution_test.rego",
-        "package": "governance.evolution_test",
-        "rules": [
-          "unknown"
-        ],
-        "syntactically_valid": true,
-        "size": 2660
-      },
-      {
-        "file": "src/governance/dimensions/76-innovation/policy.rego",
-        "package": "governance.innovation",
+        "file": "src/governance/dimensions/46-migration/policy.rego",
+        "package": "governance.migration",
         "rules": [
           "deny"
         ],
         "syntactically_valid": true,
-        "size": 4511
+        "size": 4493
       },
       {
-        "file": "src/governance/dimensions/76-innovation/tests/innovation_test.rego",
-        "package": "governance.innovation_test",
-        "rules": [
-          "unknown"
-        ],
-        "syntactically_valid": true,
-        "size": 2681
-      },
-      {
-        "file": "src/governance/dimensions/77-experimentation/policy.rego",
-        "package": "governance.experimentation",
+        "file": "src/governance/dimensions/36-modules/policy.rego",
+        "package": "governance.modules",
         "rules": [
           "deny"
         ],
         "syntactically_valid": true,
-        "size": 4550
+        "size": 4484
       },
       {
-        "file": "src/governance/dimensions/77-experimentation/tests/experimentation_test.rego",
-        "package": "governance.experimentation_test",
-        "rules": [
-          "unknown"
-        ],
-        "syntactically_valid": true,
-        "size": 2786
-      },
-      {
-        "file": "src/governance/dimensions/78-simulation/policy.rego",
-        "package": "governance.simulation",
+        "file": "src/governance/dimensions/28-tests/policy.rego",
+        "package": "governance.tests",
         "rules": [
           "deny"
         ],
         "syntactically_valid": true,
-        "size": 4506
+        "size": 4462
       },
       {
-        "file": "src/governance/dimensions/78-simulation/tests/simulation_test.rego",
-        "package": "governance.simulation_test",
-        "rules": [
-          "unknown"
-        ],
-        "syntactically_valid": true,
-        "size": 2681
-      },
-      {
-        "file": "src/governance/dimensions/79-prediction/policy.rego",
-        "package": "governance.prediction",
+        "file": "src/governance/dimensions/43-scaling/policy.rego",
+        "package": "governance.scaling",
         "rules": [
           "deny"
         ],
         "syntactically_valid": true,
-        "size": 4499
+        "size": 4485
       },
       {
-        "file": "src/governance/dimensions/79-prediction/tests/prediction_test.rego",
-        "package": "governance.prediction_test",
-        "rules": [
-          "unknown"
-        ],
-        "syntactically_valid": true,
-        "size": 2681
-      },
-      {
-        "file": "src/governance/dimensions/80-synthesis/policy.rego",
-        "package": "governance.synthesis",
+        "file": "src/governance/dimensions/12-culture-capability/policy.rego",
+        "package": "governance.culture_capability",
         "rules": [
           "deny"
         ],
         "syntactically_valid": true,
-        "size": 4501
+        "size": 4559
       },
       {
-        "file": "src/governance/dimensions/80-synthesis/tests/synthesis_test.rego",
-        "package": "governance.synthesis_test",
+        "file": "src/governance/dimensions/00-vision-strategy/policy.rego",
+        "package": "governance.vision_strategy",
         "rules": [
-          "unknown"
+          "deny"
         ],
         "syntactically_valid": true,
-        "size": 2660
+        "size": 4535
       },
       {
-        "file": "src/governance/dimensions/99-metadata/policy.rego",
-        "package": "machinenativeops.governance.metadata",
+        "file": "src/governance/dimensions/57-postmortems/policy.rego",
+        "package": "governance.postmortems",
         "rules": [
-          "deny",
-          "warn"
+          "deny"
         ],
         "syntactically_valid": true,
-        "size": 11187
+        "size": 4509
       },
       {
-        "file": "src/governance/dimensions/99-metadata/tests/metadata_test.rego",
-        "package": "machinenativeops.governance.metadata",
+        "file": "src/governance/dimensions/58-capacity/policy.rego",
+        "package": "governance.capacity",
         "rules": [
-          "unknown"
+          "deny"
         ],
         "syntactically_valid": true,
-        "size": 9259
+        "size": 4492
+      },
+      {
+        "file": "src/governance/dimensions/13-metrics-reporting/policy.rego",
+        "package": "governance.metrics_reporting",
+        "rules": [
+          "deny"
+        ],
+        "syntactically_valid": true,
+        "size": 4551
       },
       {
         "file": "src/governance/dimensions/99-naming-convention/policy.rego",
@@ -1655,6 +459,744 @@
         "size": 9845
       },
       {
+        "file": "src/governance/dimensions/73-learning/policy.rego",
+        "package": "governance.learning",
+        "rules": [
+          "deny"
+        ],
+        "syntactically_valid": true,
+        "size": 4481
+      },
+      {
+        "file": "src/governance/dimensions/78-simulation/policy.rego",
+        "package": "governance.simulation",
+        "rules": [
+          "deny"
+        ],
+        "syntactically_valid": true,
+        "size": 4506
+      },
+      {
+        "file": "src/governance/dimensions/07-audit/policy.rego",
+        "package": "governance.audit",
+        "rules": [
+          "deny"
+        ],
+        "syntactically_valid": true,
+        "size": 4457
+      },
+      {
+        "file": "src/governance/dimensions/60-contracts/policy.rego",
+        "package": "governance.contracts",
+        "rules": [
+          "deny"
+        ],
+        "syntactically_valid": true,
+        "size": 4500
+      },
+      {
+        "file": "src/governance/dimensions/59-forecasting/policy.rego",
+        "package": "governance.forecasting",
+        "rules": [
+          "deny"
+        ],
+        "syntactically_valid": true,
+        "size": 4509
+      },
+      {
+        "file": "src/governance/dimensions/65-certification/policy.rego",
+        "package": "governance.certification",
+        "rules": [
+          "deny"
+        ],
+        "syntactically_valid": true,
+        "size": 4531
+      },
+      {
+        "file": "src/governance/dimensions/27-templates/policy.rego",
+        "package": "governance.templates",
+        "rules": [
+          "deny"
+        ],
+        "syntactically_valid": true,
+        "size": 4500
+      },
+      {
+        "file": "src/governance/dimensions/26-tools/policy.rego",
+        "package": "governance.tools",
+        "rules": [
+          "deny"
+        ],
+        "syntactically_valid": true,
+        "size": 4464
+      },
+      {
+        "file": "src/governance/dimensions/33-common/policy.rego",
+        "package": "governance.common",
+        "rules": [
+          "deny"
+        ],
+        "syntactically_valid": true,
+        "size": 4475
+      },
+      {
+        "file": "src/governance/dimensions/55-slo-sli/policy.rego",
+        "package": "governance.slo_sli",
+        "rules": [
+          "deny"
+        ],
+        "syntactically_valid": true,
+        "size": 4468
+      },
+      {
+        "file": "src/governance/dimensions/20-intent/policy.rego",
+        "package": "governance.intent",
+        "rules": [
+          "deny"
+        ],
+        "syntactically_valid": true,
+        "size": 4477
+      },
+      {
+        "file": "src/governance/dimensions/24-registry/policy.rego",
+        "package": "governance.registry",
+        "rules": [
+          "deny"
+        ],
+        "syntactically_valid": true,
+        "size": 4490
+      },
+      {
+        "file": "src/governance/dimensions/61-lineage/policy.rego",
+        "package": "governance.lineage",
+        "rules": [
+          "deny"
+        ],
+        "syntactically_valid": true,
+        "size": 4476
+      },
+      {
+        "file": "src/governance/dimensions/79-prediction/policy.rego",
+        "package": "governance.prediction",
+        "rules": [
+          "deny"
+        ],
+        "syntactically_valid": true,
+        "size": 4499
+      },
+      {
+        "file": "src/governance/dimensions/17-sociological/policy.rego",
+        "package": "governance.sociological",
+        "rules": [
+          "deny"
+        ],
+        "syntactically_valid": true,
+        "size": 4526
+      },
+      {
+        "file": "src/governance/dimensions/77-experimentation/policy.rego",
+        "package": "governance.experimentation",
+        "rules": [
+          "deny"
+        ],
+        "syntactically_valid": true,
+        "size": 4550
+      },
+      {
+        "file": "src/governance/dimensions/22-aesthetic/policy.rego",
+        "package": "governance.aesthetic",
+        "rules": [
+          "deny"
+        ],
+        "syntactically_valid": true,
+        "size": 4488
+      },
+      {
+        "file": "src/governance/dimensions/41-orchestration/policy.rego",
+        "package": "governance.orchestration",
+        "rules": [
+          "deny"
+        ],
+        "syntactically_valid": true,
+        "size": 4531
+      },
+      {
+        "file": "src/governance/dimensions/06-security/policy.rego",
+        "package": "governance.security",
+        "rules": [
+          "deny"
+        ],
+        "syntactically_valid": true,
+        "size": 4484
+      },
+      {
+        "file": "src/governance/dimensions/29-docs/policy.rego",
+        "package": "governance.docs",
+        "rules": [
+          "deny"
+        ],
+        "syntactically_valid": true,
+        "size": 4477
+      },
+      {
+        "file": "src/governance/dimensions/45-recovery/policy.rego",
+        "package": "governance.recovery",
+        "rules": [
+          "deny"
+        ],
+        "syntactically_valid": true,
+        "size": 4474
+      },
+      {
+        "file": "src/governance/dimensions/75-evolution/policy.rego",
+        "package": "governance.evolution",
+        "rules": [
+          "deny"
+        ],
+        "syntactically_valid": true,
+        "size": 4500
+      },
+      {
+        "file": "src/governance/dimensions/38-sbom/policy.rego",
+        "package": "governance.sbom",
+        "rules": [
+          "deny"
+        ],
+        "syntactically_valid": true,
+        "size": 4459
+      },
+      {
+        "file": "src/governance/dimensions/54-dashboards/policy.rego",
+        "package": "governance.dashboards",
+        "rules": [
+          "deny"
+        ],
+        "syntactically_valid": true,
+        "size": 4505
+      },
+      {
+        "file": "src/governance/dimensions/76-innovation/policy.rego",
+        "package": "governance.innovation",
+        "rules": [
+          "deny"
+        ],
+        "syntactically_valid": true,
+        "size": 4511
+      },
+      {
+        "file": "src/governance/dimensions/02-decision/policy.rego",
+        "package": "governance.decision",
+        "rules": [
+          "deny"
+        ],
+        "syntactically_valid": true,
+        "size": 4486
+      },
+      {
+        "file": "src/governance/dimensions/48-rollback/policy.rego",
+        "package": "governance.rollback",
+        "rules": [
+          "deny"
+        ],
+        "syntactically_valid": true,
+        "size": 4482
+      },
+      {
+        "file": "src/governance/dimensions/32-rules/policy.rego",
+        "package": "governance.rules",
+        "rules": [
+          "deny"
+        ],
+        "syntactically_valid": true,
+        "size": 4457
+      },
+      {
+        "file": "src/governance/dimensions/70-audit-trail/policy.rego",
+        "package": "governance.audit_trail",
+        "rules": [
+          "deny"
+        ],
+        "syntactically_valid": true,
+        "size": 4511
+      },
+      {
+        "file": "src/governance/dimensions/63-evidence/policy.rego",
+        "package": "governance.evidence",
+        "rules": [
+          "deny"
+        ],
+        "syntactically_valid": true,
+        "size": 4486
+      },
+      {
+        "file": "src/governance/dimensions/53-alerting/policy.rego",
+        "package": "governance.alerting",
+        "rules": [
+          "deny"
+        ],
+        "syntactically_valid": true,
+        "size": 4487
+      },
+      {
+        "file": "src/governance/dimensions/40-self-healing/policy.rego",
+        "package": "governance.self_healing",
+        "rules": [
+          "deny"
+        ],
+        "syntactically_valid": true,
+        "size": 4521
+      },
+      {
+        "file": "src/governance/dimensions/71-feedback-loops/policy.rego",
+        "package": "governance.feedback_loops",
+        "rules": [
+          "deny"
+        ],
+        "syntactically_valid": true,
+        "size": 4530
+      },
+      {
+        "file": "src/governance/dimensions/51-logging/policy.rego",
+        "package": "governance.logging",
+        "rules": [
+          "deny"
+        ],
+        "syntactically_valid": true,
+        "size": 4484
+      },
+      {
+        "file": "src/governance/dimensions/30-agents/policy.rego",
+        "package": "governance.agents",
+        "rules": [
+          "deny"
+        ],
+        "syntactically_valid": true,
+        "size": 4468
+      },
+      {
+        "file": "src/governance/dimensions/50-monitoring/policy.rego",
+        "package": "governance.monitoring",
+        "rules": [
+          "deny"
+        ],
+        "syntactically_valid": true,
+        "size": 4504
+      },
+      {
+        "file": "src/governance/dimensions/35-scripts/policy.rego",
+        "package": "governance.scripts",
+        "rules": [
+          "deny"
+        ],
+        "syntactically_valid": true,
+        "size": 4474
+      },
+      {
+        "file": "src/governance/dimensions/62-provenance/policy.rego",
+        "package": "governance.provenance",
+        "rules": [
+          "deny"
+        ],
+        "syntactically_valid": true,
+        "size": 4499
+      },
+      {
+        "file": "src/governance/dimensions/34-config/policy.rego",
+        "package": "governance.config",
+        "rules": [
+          "deny"
+        ],
+        "syntactically_valid": true,
+        "size": 4475
+      },
+      {
+        "file": "src/governance/dimensions/66-reporting/policy.rego",
+        "package": "governance.reporting",
+        "rules": [
+          "deny"
+        ],
+        "syntactically_valid": true,
+        "size": 4502
+      },
+      {
+        "file": "src/governance/dimensions/01-architecture/policy.rego",
+        "package": "governance.architecture",
+        "rules": [
+          "deny"
+        ],
+        "syntactically_valid": true,
+        "size": 4517
+      },
+      {
+        "file": "src/governance/dimensions/69-correlation/policy.rego",
+        "package": "governance.correlation",
+        "rules": [
+          "deny"
+        ],
+        "syntactically_valid": true,
+        "size": 4511
+      },
+      {
+        "file": "src/governance/dimensions/72-optimization/policy.rego",
+        "package": "governance.optimization",
+        "rules": [
+          "deny"
+        ],
+        "syntactically_valid": true,
+        "size": 4518
+      },
+      {
+        "file": "src/governance/dimensions/80-synthesis/policy.rego",
+        "package": "governance.synthesis",
+        "rules": [
+          "deny"
+        ],
+        "syntactically_valid": true,
+        "size": 4501
+      },
+      {
+        "file": "src/governance/dimensions/25-principles/policy.rego",
+        "package": "governance.principles",
+        "rules": [
+          "deny"
+        ],
+        "syntactically_valid": true,
+        "size": 4503
+      },
+      {
+        "file": "src/governance/dimensions/11-tools-systems/policy.rego",
+        "package": "governance.tools_systems",
+        "rules": [
+          "deny"
+        ],
+        "syntactically_valid": true,
+        "size": 4520
+      },
+      {
+        "file": "src/governance/dimensions/68-visualization/policy.rego",
+        "package": "governance.visualization",
+        "rules": [
+          "deny"
+        ],
+        "syntactically_valid": true,
+        "size": 4526
+      },
+      {
+        "file": "src/governance/dimensions/47-versioning/policy.rego",
+        "package": "governance.versioning",
+        "rules": [
+          "deny"
+        ],
+        "syntactically_valid": true,
+        "size": 4508
+      },
+      {
+        "file": "src/governance/dimensions/74-adaptation/policy.rego",
+        "package": "governance.adaptation",
+        "rules": [
+          "deny"
+        ],
+        "syntactically_valid": true,
+        "size": 4506
+      },
+      {
+        "file": "src/governance/dimensions/16-psychological/policy.rego",
+        "package": "governance.psychological",
+        "rules": [
+          "deny"
+        ],
+        "syntactically_valid": true,
+        "size": 4519
+      },
+      {
+        "file": "src/governance/dimensions/18-complex-system/policy.rego",
+        "package": "governance.complex_system",
+        "rules": [
+          "deny"
+        ],
+        "syntactically_valid": true,
+        "size": 4526
+      },
+      {
+        "file": "src/governance/dimensions/64-attestation/policy.rego",
+        "package": "governance.attestation",
+        "rules": [
+          "deny"
+        ],
+        "syntactically_valid": true,
+        "size": 4512
+      },
+      {
+        "file": "src/governance/dimensions/39-automation/policy.rego",
+        "package": "governance.automation",
+        "rules": [
+          "deny"
+        ],
+        "syntactically_valid": true,
+        "size": 4502
+      },
+      {
+        "file": "src/governance/dimensions/42-deployment/policy.rego",
+        "package": "governance.deployment",
+        "rules": [
+          "deny"
+        ],
+        "syntactically_valid": true,
+        "size": 4504
+      },
+      {
+        "file": "src/governance/dimensions/19-evolutionary/policy.rego",
+        "package": "governance.evolutionary",
+        "rules": [
+          "deny"
+        ],
+        "syntactically_valid": true,
+        "size": 4518
+      },
+      {
+        "file": "src/governance/dimensions/56-incidents/tests/incidents_test.rego",
+        "package": "governance.incidents_test",
+        "rules": [
+          "unknown"
+        ],
+        "syntactically_valid": true,
+        "size": 2660
+      },
+      {
+        "file": "src/governance/dimensions/03-change/tests/change_test.rego",
+        "package": "governance.change_test",
+        "rules": [
+          "unknown"
+        ],
+        "syntactically_valid": true,
+        "size": 2597
+      },
+      {
+        "file": "src/governance/dimensions/21-ecological/tests/ecological_test.rego",
+        "package": "governance.ecological_test",
+        "rules": [
+          "unknown"
+        ],
+        "syntactically_valid": true,
+        "size": 2681
+      },
+      {
+        "file": "src/governance/dimensions/05-compliance/tests/compliance_test.rego",
+        "package": "governance.compliance_test",
+        "rules": [
+          "unknown"
+        ],
+        "syntactically_valid": true,
+        "size": 2681
+      },
+      {
+        "file": "src/governance/dimensions/10-policy/tests/policy_test.rego",
+        "package": "governance.policy_test",
+        "rules": [
+          "unknown"
+        ],
+        "syntactically_valid": true,
+        "size": 2597
+      },
+      {
+        "file": "src/governance/dimensions/23-policies/tests/policies_test.rego",
+        "package": "governance.policies_test",
+        "rules": [
+          "unknown"
+        ],
+        "syntactically_valid": true,
+        "size": 2638
+      },
+      {
+        "file": "src/governance/dimensions/49-canary/tests/canary_test.rego",
+        "package": "governance.canary_test",
+        "rules": [
+          "unknown"
+        ],
+        "syntactically_valid": true,
+        "size": 2597
+      },
+      {
+        "file": "src/governance/dimensions/31-schemas/tests/schemas_test.rego",
+        "package": "governance.schemas_test",
+        "rules": [
+          "unknown"
+        ],
+        "syntactically_valid": true,
+        "size": 2618
+      },
+      {
+        "file": "src/governance/dimensions/14-improvement/tests/improvement_test.rego",
+        "package": "governance.improvement_test",
+        "rules": [
+          "unknown"
+        ],
+        "syntactically_valid": true,
+        "size": 2702
+      },
+      {
+        "file": "src/governance/dimensions/52-tracing/tests/tracing_test.rego",
+        "package": "governance.tracing_test",
+        "rules": [
+          "unknown"
+        ],
+        "syntactically_valid": true,
+        "size": 2618
+      },
+      {
+        "file": "src/governance/dimensions/09-performance/tests/performance_test.rego",
+        "package": "governance.performance_test",
+        "rules": [
+          "unknown"
+        ],
+        "syntactically_valid": true,
+        "size": 2702
+      },
+      {
+        "file": "src/governance/dimensions/08-process/tests/process_test.rego",
+        "package": "governance.process_test",
+        "rules": [
+          "unknown"
+        ],
+        "syntactically_valid": true,
+        "size": 2618
+      },
+      {
+        "file": "src/governance/dimensions/99-metadata/tests/metadata_test.rego",
+        "package": "machinenativeops.governance.metadata",
+        "rules": [
+          "unknown"
+        ],
+        "syntactically_valid": true,
+        "size": 9259
+      },
+      {
+        "file": "src/governance/dimensions/15-economic/tests/economic_test.rego",
+        "package": "governance.economic_test",
+        "rules": [
+          "unknown"
+        ],
+        "syntactically_valid": true,
+        "size": 2639
+      },
+      {
+        "file": "src/governance/dimensions/37-behavior-contracts/tests/behavior_contracts_test.rego",
+        "package": "governance.behavior_contracts_test",
+        "rules": [
+          "unknown"
+        ],
+        "syntactically_valid": true,
+        "size": 2849
+      },
+      {
+        "file": "src/governance/dimensions/67-analytics/tests/analytics_test.rego",
+        "package": "governance.analytics_test",
+        "rules": [
+          "unknown"
+        ],
+        "syntactically_valid": true,
+        "size": 2660
+      },
+      {
+        "file": "src/governance/dimensions/44-resilience/tests/resilience_test.rego",
+        "package": "governance.resilience_test",
+        "rules": [
+          "unknown"
+        ],
+        "syntactically_valid": true,
+        "size": 2681
+      },
+      {
+        "file": "src/governance/dimensions/04-risk/tests/risk_test.rego",
+        "package": "governance.risk_test",
+        "rules": [
+          "unknown"
+        ],
+        "syntactically_valid": true,
+        "size": 2555
+      },
+      {
+        "file": "src/governance/dimensions/46-migration/tests/migration_test.rego",
+        "package": "governance.migration_test",
+        "rules": [
+          "unknown"
+        ],
+        "syntactically_valid": true,
+        "size": 2660
+      },
+      {
+        "file": "src/governance/dimensions/36-modules/tests/modules_test.rego",
+        "package": "governance.modules_test",
+        "rules": [
+          "unknown"
+        ],
+        "syntactically_valid": true,
+        "size": 2618
+      },
+      {
+        "file": "src/governance/dimensions/28-tests/tests/tests_test.rego",
+        "package": "governance.tests_test",
+        "rules": [
+          "unknown"
+        ],
+        "syntactically_valid": true,
+        "size": 2576
+      },
+      {
+        "file": "src/governance/dimensions/43-scaling/tests/scaling_test.rego",
+        "package": "governance.scaling_test",
+        "rules": [
+          "unknown"
+        ],
+        "syntactically_valid": true,
+        "size": 2618
+      },
+      {
+        "file": "src/governance/dimensions/12-culture-capability/tests/culture_capability_test.rego",
+        "package": "governance.culture_capability_test",
+        "rules": [
+          "unknown"
+        ],
+        "syntactically_valid": true,
+        "size": 2849
+      },
+      {
+        "file": "src/governance/dimensions/00-vision-strategy/tests/vision_strategy_test.rego",
+        "package": "governance.vision_strategy_test",
+        "rules": [
+          "unknown"
+        ],
+        "syntactically_valid": true,
+        "size": 2786
+      },
+      {
+        "file": "src/governance/dimensions/57-postmortems/tests/postmortems_test.rego",
+        "package": "governance.postmortems_test",
+        "rules": [
+          "unknown"
+        ],
+        "syntactically_valid": true,
+        "size": 2702
+      },
+      {
+        "file": "src/governance/dimensions/58-capacity/tests/capacity_test.rego",
+        "package": "governance.capacity_test",
+        "rules": [
+          "unknown"
+        ],
+        "syntactically_valid": true,
+        "size": 2639
+      },
+      {
+        "file": "src/governance/dimensions/13-metrics-reporting/tests/metrics_reporting_test.rego",
+        "package": "governance.metrics_reporting_test",
+        "rules": [
+          "unknown"
+        ],
+        "syntactically_valid": true,
+        "size": 2828
+      },
+      {
         "file": "src/governance/dimensions/99-naming-convention/tests/naming-convention-test.rego",
         "package": "governance.naming_convention_test",
         "rules": [
@@ -1664,48 +1206,506 @@
         "size": 6087
       },
       {
-        "file": "src/governance/policies/agent-policy.rego",
-        "package": "governance.agent",
+        "file": "src/governance/dimensions/73-learning/tests/learning_test.rego",
+        "package": "governance.learning_test",
         "rules": [
-          "deny"
+          "unknown"
         ],
         "syntactically_valid": true,
-        "size": 8516
+        "size": 2639
       },
       {
-        "file": "src/governance/policies/compliance-policy.rego",
-        "package": "governance.compliance",
+        "file": "src/governance/dimensions/78-simulation/tests/simulation_test.rego",
+        "package": "governance.simulation_test",
         "rules": [
-          "deny"
+          "unknown"
         ],
         "syntactically_valid": true,
-        "size": 5521
+        "size": 2681
       },
       {
-        "file": "src/governance/policies/global-policy.rego",
-        "package": "governance.global",
+        "file": "src/governance/dimensions/07-audit/tests/audit_test.rego",
+        "package": "governance.audit_test",
         "rules": [
-          "deny",
-          "warn"
+          "unknown"
         ],
         "syntactically_valid": true,
-        "size": 9478
+        "size": 2576
       },
       {
-        "file": "src/governance/policies/security-policy.rego",
-        "package": "governance.security",
+        "file": "src/governance/dimensions/60-contracts/tests/contracts_test.rego",
+        "package": "governance.contracts_test",
         "rules": [
-          "deny"
+          "unknown"
         ],
         "syntactically_valid": true,
-        "size": 4269
+        "size": 2660
+      },
+      {
+        "file": "src/governance/dimensions/59-forecasting/tests/forecasting_test.rego",
+        "package": "governance.forecasting_test",
+        "rules": [
+          "unknown"
+        ],
+        "syntactically_valid": true,
+        "size": 2702
+      },
+      {
+        "file": "src/governance/dimensions/65-certification/tests/certification_test.rego",
+        "package": "governance.certification_test",
+        "rules": [
+          "unknown"
+        ],
+        "syntactically_valid": true,
+        "size": 2744
+      },
+      {
+        "file": "src/governance/dimensions/27-templates/tests/templates_test.rego",
+        "package": "governance.templates_test",
+        "rules": [
+          "unknown"
+        ],
+        "syntactically_valid": true,
+        "size": 2660
+      },
+      {
+        "file": "src/governance/dimensions/26-tools/tests/tools_test.rego",
+        "package": "governance.tools_test",
+        "rules": [
+          "unknown"
+        ],
+        "syntactically_valid": true,
+        "size": 2576
+      },
+      {
+        "file": "src/governance/dimensions/33-common/tests/common_test.rego",
+        "package": "governance.common_test",
+        "rules": [
+          "unknown"
+        ],
+        "syntactically_valid": true,
+        "size": 2597
+      },
+      {
+        "file": "src/governance/dimensions/55-slo-sli/tests/slo_sli_test.rego",
+        "package": "governance.slo_sli_test",
+        "rules": [
+          "unknown"
+        ],
+        "syntactically_valid": true,
+        "size": 2618
+      },
+      {
+        "file": "src/governance/dimensions/20-intent/tests/intent_test.rego",
+        "package": "governance.intent_test",
+        "rules": [
+          "unknown"
+        ],
+        "syntactically_valid": true,
+        "size": 2597
+      },
+      {
+        "file": "src/governance/dimensions/24-registry/tests/registry_test.rego",
+        "package": "governance.registry_test",
+        "rules": [
+          "unknown"
+        ],
+        "syntactically_valid": true,
+        "size": 2639
+      },
+      {
+        "file": "src/governance/dimensions/61-lineage/tests/lineage_test.rego",
+        "package": "governance.lineage_test",
+        "rules": [
+          "unknown"
+        ],
+        "syntactically_valid": true,
+        "size": 2618
+      },
+      {
+        "file": "src/governance/dimensions/79-prediction/tests/prediction_test.rego",
+        "package": "governance.prediction_test",
+        "rules": [
+          "unknown"
+        ],
+        "syntactically_valid": true,
+        "size": 2681
+      },
+      {
+        "file": "src/governance/dimensions/17-sociological/tests/sociological_test.rego",
+        "package": "governance.sociological_test",
+        "rules": [
+          "unknown"
+        ],
+        "syntactically_valid": true,
+        "size": 2723
+      },
+      {
+        "file": "src/governance/dimensions/77-experimentation/tests/experimentation_test.rego",
+        "package": "governance.experimentation_test",
+        "rules": [
+          "unknown"
+        ],
+        "syntactically_valid": true,
+        "size": 2786
+      },
+      {
+        "file": "src/governance/dimensions/22-aesthetic/tests/aesthetic_test.rego",
+        "package": "governance.aesthetic_test",
+        "rules": [
+          "unknown"
+        ],
+        "syntactically_valid": true,
+        "size": 2660
+      },
+      {
+        "file": "src/governance/dimensions/41-orchestration/tests/orchestration_test.rego",
+        "package": "governance.orchestration_test",
+        "rules": [
+          "unknown"
+        ],
+        "syntactically_valid": true,
+        "size": 2744
+      },
+      {
+        "file": "src/governance/dimensions/06-security/tests/security_test.rego",
+        "package": "governance.security_test",
+        "rules": [
+          "unknown"
+        ],
+        "syntactically_valid": true,
+        "size": 2639
+      },
+      {
+        "file": "src/governance/dimensions/29-docs/tests/docs_test.rego",
+        "package": "governance.docs_test",
+        "rules": [
+          "unknown"
+        ],
+        "syntactically_valid": true,
+        "size": 2564
+      },
+      {
+        "file": "src/governance/dimensions/45-recovery/tests/recovery_test.rego",
+        "package": "governance.recovery_test",
+        "rules": [
+          "unknown"
+        ],
+        "syntactically_valid": true,
+        "size": 2639
+      },
+      {
+        "file": "src/governance/dimensions/75-evolution/tests/evolution_test.rego",
+        "package": "governance.evolution_test",
+        "rules": [
+          "unknown"
+        ],
+        "syntactically_valid": true,
+        "size": 2660
+      },
+      {
+        "file": "src/governance/dimensions/38-sbom/tests/sbom_test.rego",
+        "package": "governance.sbom_test",
+        "rules": [
+          "unknown"
+        ],
+        "syntactically_valid": true,
+        "size": 2555
+      },
+      {
+        "file": "src/governance/dimensions/54-dashboards/tests/dashboards_test.rego",
+        "package": "governance.dashboards_test",
+        "rules": [
+          "unknown"
+        ],
+        "syntactically_valid": true,
+        "size": 2681
+      },
+      {
+        "file": "src/governance/dimensions/76-innovation/tests/innovation_test.rego",
+        "package": "governance.innovation_test",
+        "rules": [
+          "unknown"
+        ],
+        "syntactically_valid": true,
+        "size": 2681
+      },
+      {
+        "file": "src/governance/dimensions/02-decision/tests/decision_test.rego",
+        "package": "governance.decision_test",
+        "rules": [
+          "unknown"
+        ],
+        "syntactically_valid": true,
+        "size": 2639
+      },
+      {
+        "file": "src/governance/dimensions/48-rollback/tests/rollback_test.rego",
+        "package": "governance.rollback_test",
+        "rules": [
+          "unknown"
+        ],
+        "syntactically_valid": true,
+        "size": 2639
+      },
+      {
+        "file": "src/governance/dimensions/32-rules/tests/rules_test.rego",
+        "package": "governance.rules_test",
+        "rules": [
+          "unknown"
+        ],
+        "syntactically_valid": true,
+        "size": 2576
+      },
+      {
+        "file": "src/governance/dimensions/70-audit-trail/tests/audit_trail_test.rego",
+        "package": "governance.audit_trail_test",
+        "rules": [
+          "unknown"
+        ],
+        "syntactically_valid": true,
+        "size": 2702
+      },
+      {
+        "file": "src/governance/dimensions/63-evidence/tests/evidence_test.rego",
+        "package": "governance.evidence_test",
+        "rules": [
+          "unknown"
+        ],
+        "syntactically_valid": true,
+        "size": 2639
+      },
+      {
+        "file": "src/governance/dimensions/53-alerting/tests/alerting_test.rego",
+        "package": "governance.alerting_test",
+        "rules": [
+          "unknown"
+        ],
+        "syntactically_valid": true,
+        "size": 2639
+      },
+      {
+        "file": "src/governance/dimensions/40-self-healing/tests/self_healing_test.rego",
+        "package": "governance.self_healing_test",
+        "rules": [
+          "unknown"
+        ],
+        "syntactically_valid": true,
+        "size": 2723
+      },
+      {
+        "file": "src/governance/dimensions/71-feedback-loops/tests/feedback_loops_test.rego",
+        "package": "governance.feedback_loops_test",
+        "rules": [
+          "unknown"
+        ],
+        "syntactically_valid": true,
+        "size": 2765
+      },
+      {
+        "file": "src/governance/dimensions/51-logging/tests/logging_test.rego",
+        "package": "governance.logging_test",
+        "rules": [
+          "unknown"
+        ],
+        "syntactically_valid": true,
+        "size": 2618
+      },
+      {
+        "file": "src/governance/dimensions/30-agents/tests/agents_test.rego",
+        "package": "governance.agents_test",
+        "rules": [
+          "unknown"
+        ],
+        "syntactically_valid": true,
+        "size": 2597
+      },
+      {
+        "file": "src/governance/dimensions/50-monitoring/tests/monitoring_test.rego",
+        "package": "governance.monitoring_test",
+        "rules": [
+          "unknown"
+        ],
+        "syntactically_valid": true,
+        "size": 2681
+      },
+      {
+        "file": "src/governance/dimensions/35-scripts/tests/scripts_test.rego",
+        "package": "governance.scripts_test",
+        "rules": [
+          "unknown"
+        ],
+        "syntactically_valid": true,
+        "size": 2618
+      },
+      {
+        "file": "src/governance/dimensions/62-provenance/tests/provenance_test.rego",
+        "package": "governance.provenance_test",
+        "rules": [
+          "unknown"
+        ],
+        "syntactically_valid": true,
+        "size": 2681
+      },
+      {
+        "file": "src/governance/dimensions/34-config/tests/config_test.rego",
+        "package": "governance.config_test",
+        "rules": [
+          "unknown"
+        ],
+        "syntactically_valid": true,
+        "size": 2597
+      },
+      {
+        "file": "src/governance/dimensions/66-reporting/tests/reporting_test.rego",
+        "package": "governance.reporting_test",
+        "rules": [
+          "unknown"
+        ],
+        "syntactically_valid": true,
+        "size": 2660
+      },
+      {
+        "file": "src/governance/dimensions/01-architecture/tests/architecture_test.rego",
+        "package": "governance.architecture_test",
+        "rules": [
+          "unknown"
+        ],
+        "syntactically_valid": true,
+        "size": 2723
+      },
+      {
+        "file": "src/governance/dimensions/69-correlation/tests/correlation_test.rego",
+        "package": "governance.correlation_test",
+        "rules": [
+          "unknown"
+        ],
+        "syntactically_valid": true,
+        "size": 2702
+      },
+      {
+        "file": "src/governance/dimensions/72-optimization/tests/optimization_test.rego",
+        "package": "governance.optimization_test",
+        "rules": [
+          "unknown"
+        ],
+        "syntactically_valid": true,
+        "size": 2723
+      },
+      {
+        "file": "src/governance/dimensions/80-synthesis/tests/synthesis_test.rego",
+        "package": "governance.synthesis_test",
+        "rules": [
+          "unknown"
+        ],
+        "syntactically_valid": true,
+        "size": 2660
+      },
+      {
+        "file": "src/governance/dimensions/25-principles/tests/principles_test.rego",
+        "package": "governance.principles_test",
+        "rules": [
+          "unknown"
+        ],
+        "syntactically_valid": true,
+        "size": 2681
+      },
+      {
+        "file": "src/governance/dimensions/11-tools-systems/tests/tools_systems_test.rego",
+        "package": "governance.tools_systems_test",
+        "rules": [
+          "unknown"
+        ],
+        "syntactically_valid": true,
+        "size": 2744
+      },
+      {
+        "file": "src/governance/dimensions/68-visualization/tests/visualization_test.rego",
+        "package": "governance.visualization_test",
+        "rules": [
+          "unknown"
+        ],
+        "syntactically_valid": true,
+        "size": 2744
+      },
+      {
+        "file": "src/governance/dimensions/47-versioning/tests/versioning_test.rego",
+        "package": "governance.versioning_test",
+        "rules": [
+          "unknown"
+        ],
+        "syntactically_valid": true,
+        "size": 2681
+      },
+      {
+        "file": "src/governance/dimensions/74-adaptation/tests/adaptation_test.rego",
+        "package": "governance.adaptation_test",
+        "rules": [
+          "unknown"
+        ],
+        "syntactically_valid": true,
+        "size": 2681
+      },
+      {
+        "file": "src/governance/dimensions/16-psychological/tests/psychological_test.rego",
+        "package": "governance.psychological_test",
+        "rules": [
+          "unknown"
+        ],
+        "syntactically_valid": true,
+        "size": 2744
+      },
+      {
+        "file": "src/governance/dimensions/18-complex-system/tests/complex_system_test.rego",
+        "package": "governance.complex_system_test",
+        "rules": [
+          "unknown"
+        ],
+        "syntactically_valid": true,
+        "size": 2765
+      },
+      {
+        "file": "src/governance/dimensions/64-attestation/tests/attestation_test.rego",
+        "package": "governance.attestation_test",
+        "rules": [
+          "unknown"
+        ],
+        "syntactically_valid": true,
+        "size": 2702
+      },
+      {
+        "file": "src/governance/dimensions/39-automation/tests/automation_test.rego",
+        "package": "governance.automation_test",
+        "rules": [
+          "unknown"
+        ],
+        "syntactically_valid": true,
+        "size": 2681
+      },
+      {
+        "file": "src/governance/dimensions/42-deployment/tests/deployment_test.rego",
+        "package": "governance.deployment_test",
+        "rules": [
+          "unknown"
+        ],
+        "syntactically_valid": true,
+        "size": 2681
+      },
+      {
+        "file": "src/governance/dimensions/19-evolutionary/tests/evolutionary_test.rego",
+        "package": "governance.evolutionary_test",
+        "rules": [
+          "unknown"
+        ],
+        "syntactically_valid": true,
+        "size": 2723
       },
       {
         "file": "src/templates/conftest/naming.rego",
         "package": "main",
         "rules": [
-          "deny",
-          "warn"
+          "warn",
+          "deny"
         ],
         "syntactically_valid": true,
         "size": 10174
@@ -1713,12 +1713,9 @@
     ],
     "kyverno_policies": [
       {
-        "file": "generated/default-kyverno-policy.yaml",
-        "name": "default-security-policies",
-        "rules_count": 5,
-        "validation_mode": "Enforce",
-        "syntactically_valid": true,
-        "generated": true
+        "file": "src/governance/10-policy/naming-governance-policy.yaml",
+        "error": "while parsing a block collection\n  in \"workspace/src/governance/10-policy/naming-governance-policy.yaml\", line 297, column 5\nexpected <block end>, but found '<scalar>'\n  in \"workspace/src/governance/10-policy/naming-governance-policy.yaml\", line 299, column 12",
+        "syntactically_valid": false
       }
     ],
     "admission_decisions": [
@@ -1730,7 +1727,7 @@
           "decision": "allow",
           "reason": "All policies satisfied"
         },
-        "timestamp": "2025-12-22T16:51:46.790157+00:00",
+        "timestamp": "2026-01-06T01:16:31.923277+00:00",
         "applied_policies": [
           "security-context",
           "resource-limits",
@@ -1746,7 +1743,7 @@
           "decision": "deny",
           "reason": "Missing resource limits and using latest tag"
         },
-        "timestamp": "2025-12-22T16:51:46.790172+00:00",
+        "timestamp": "2026-01-06T01:16:31.923292+00:00",
         "applied_policies": [
           "security-context",
           "resource-limits",
@@ -1764,5 +1761,5 @@
   "stage": 6,
   "stage_name": "Admission Policy \u9580\u7981",
   "evidence_type": "admission_policy",
-  "timestamp": "2025-12-22T16:51:46.790863+00:00"
+  "timestamp": "2026-01-06T01:16:31.924081+00:00"
 }

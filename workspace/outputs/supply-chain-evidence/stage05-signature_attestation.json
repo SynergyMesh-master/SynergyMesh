@@ -1,6 +1,6 @@
 {
-  "verification_hash": "3b135cb28e7914250c43b37482c4e4251a9cf8a363d048483f74670eca1af083dca31788d55cba9a40101a291c9a59e6c060ee99c32351644f927a6f4e455f02",
-  "reproducible_hash": "69e4be7102f3fe7363e25da84c563ae94e5238fff9e66a8f522d5b71de69978d68202bf60665cd6ca21d7ecc81036eba93829919ebbb1391a7f48ec781435aa7",
+  "verification_hash": "1f6fa72bcbfeec8bddab7d4c4973206190318467f7287fc87cff23336a8dd4b102601ec7076faa8eb3fe2bd81adc2cb4893abd341f96898450fd0b3705f90c13",
+  "reproducible_hash": "ce0eab340eb8459b4921309de2800263a9b61eec903c43bd424cc199d71d23263a48574a3b40bad6d07255826451e4bb6db2503a121d7f232efc82c47d4b99de",
   "data": {
     "signatures": [
       {
@@ -15,7 +15,7 @@
         ],
         "verified": true,
         "trust_level": "TRUSTED",
-        "timestamp": "2025-12-22T16:51:46.440749+00:00"
+        "timestamp": "2026-01-06T01:16:31.456758+00:00"
       },
       {
         "image": "axiom-inference-engine:v2.1.0",
@@ -29,7 +29,7 @@
         ],
         "verified": true,
         "trust_level": "TRUSTED",
-        "timestamp": "2025-12-22T16:51:46.440754+00:00"
+        "timestamp": "2026-01-06T01:16:31.456767+00:00"
       },
       {
         "image": "axiom-quantum-coordinator:v1.5.0",
@@ -43,7 +43,7 @@
         ],
         "verified": true,
         "trust_level": "TRUSTED",
-        "timestamp": "2025-12-22T16:51:46.440757+00:00"
+        "timestamp": "2026-01-06T01:16:31.456771+00:00"
       }
     ],
     "provenance": {
@@ -60,13 +60,13 @@
       "predicate": {
         "buildType": "https://github.com/actions",
         "builder": {
-          "id": "https://github.com/MachineNativeOps/machine-native-ops-aaps/actions/runs/123456789"
+          "id": "https://github.com/MachineNativeOps/machine-native-ops/actions/runs/20734286200"
         },
         "invocation": {
           "configSource": {
-            "uri": "git+https://github.com/MachineNativeOps/machine-native-ops-aaps@refs/heads/main",
+            "uri": "git+https://github.com/MachineNativeOps/machine-native-ops@refs/heads/copilot/refactor-three-phase-framework",
             "digest": {
-              "sha256": "41cf6794ba4200b839c53531555f0f3998df4cbb01a4d5cb0b94e3ca5e23947d"
+              "sha256": "6a9a2a80dde10fcd15a271c4ebb7352144c7a03e"
             },
             "entryPoint": ".github/workflows/supply-chain.yml"
           },
@@ -75,14 +75,14 @@
             "sign_artifacts": true
           },
           "environment": {
-            "github_actor": "ci-bot",
-            "github_event_name": "push",
-            "github_ref": "refs/heads/main"
+            "github_actor": "copilot-swe-agent[bot]",
+            "github_event_name": "dynamic",
+            "github_ref": "refs/heads/copilot/refactor-three-phase-framework"
           }
         },
         "metadata": {
-          "buildStartedOn": "2025-12-22T16:51:46.440785+00:00",
-          "buildFinishedOn": "2025-12-22T16:51:46.440786+00:00",
+          "buildStartedOn": "2026-01-06T01:16:31.456794+00:00",
+          "buildFinishedOn": "2026-01-06T01:16:31.456809+00:00",
           "completeness": {
             "parameters": true,
             "environment": true,
@@ -94,7 +94,7 @@
           {
             "uri": "git+https://github.com/MachineNativeOps/machine-native-ops-aaps",
             "digest": {
-              "sha256": "41cf6794ba4200b839c53531555f0f3998df4cbb01a4d5cb0b94e3ca5e23947d"
+              "sha256": "6a9a2a80dde10fcd15a271c4ebb7352144c7a03e"
             }
           }
         ]
@@ -117,7 +117,7 @@
             {
               "name": "lint",
               "materials": {
-                "source": "22c89abec31f0136"
+                "source": "4a387bdc80afa4fa"
               },
               "products": {
                 "lint-report.json": "generated_hash"
@@ -160,7 +160,7 @@
             {
               "name": "security_scan",
               "materials": {
-                "source": "a168134bead58d4a"
+                "source": "3bbe94586fc633b4"
               },
               "products": {
                 "sbom.json": "sbom_hash",
@@ -189,10 +189,10 @@
       }
     ],
     "transparency_log": {
-      "uuid": "b3d997b3eeddf3b5dadee77485745d80b162e843ad97e769c0f82e6e661c67ca",
+      "uuid": "33d866b24accd3e4b99a485f31410dc2f85f4c48511e84d37c73b21595a150a8",
       "log_index": 5,
-      "body": "eyJ0eXBlIjogImhhc2hlZHJla29yZCIsICJhcGlWZXJzaW9uIjogIjAuMC4xIiwgInNwZWMiOiB7Imhhc2giOiB7ImFsZ29yaXRobSI6ICJzaGEyNTYiLCAidmFsdWUiOiAiZjk3ZDJhZDY3MmZiYzJjOGU5ZjIxYjIxYTk4OTRlYTg1NThjM2U1YTkzMDk4YjE3ZTIyNDg4NWE5ODI4OGQ2MDBjNTk0ZDlmOGQzOGI3OWU3ODAyYmZiZWNjNmEwZTdhYmE3YmY2MmRmZTQ1NmI3ZmJlMjliOGZkZWE2ZmU4ODAifSwgInNpZ25hdHVyZSI6IHsiZm9ybWF0IjogIng1MDkiLCAicHVibGljX2tleSI6ICItLS0tLUJFR0lOIFBVQkxJQyBLRVktLS0tLVxuLi4uXG4tLS0tLUVORCBQVUJMSUMgS0VZLS0tLS0iLCAiY29udGVudCI6ICJjMmxuYm1GMGRYSmxYMlJoZEdFPSJ9fX0=",
-      "integrated_time": 1766422306,
+      "body": "eyJ0eXBlIjogImhhc2hlZHJla29yZCIsICJhcGlWZXJzaW9uIjogIjAuMC4xIiwgInNwZWMiOiB7Imhhc2giOiB7ImFsZ29yaXRobSI6ICJzaGEyNTYiLCAidmFsdWUiOiAiMDNjNmJkOTc3MzlmNzgyNzhlN2I5MTg0YjMyN2EzN2ZmNDhiNGZjMmFlMzU2NDE1ZTJkOWU2ZmRiNmFhMGE2NGQzNzQzYTYzNGI5OGE2NmFlMTUyOTU1MjE2NzE4MTNiMzJlZjJmY2FkMThlNmMzY2FhMTg3YjNhMTEwODAzODQifSwgInNpZ25hdHVyZSI6IHsiZm9ybWF0IjogIng1MDkiLCAicHVibGljX2tleSI6ICItLS0tLUJFR0lOIFBVQkxJQyBLRVktLS0tLVxuLi4uXG4tLS0tLUVORCBQVUJMSUMgS0VZLS0tLS0iLCAiY29udGVudCI6ICJjMmxuYm1GMGRYSmxYMlJoZEdFPSJ9fX0=",
+      "integrated_time": 1767662191,
       "log_id": "bc2bc471cd7501bed467fb18237906c1b2bcaaa4d51fe1db5d05b1215c908e11",
       "verification": {
         "signed_entry_timestamp": "dGltZXN0YW1wX3NpZ25hdHVyZQ==",
@@ -211,5 +211,5 @@
   "stage": 5,
   "stage_name": "\u7c3d\u7ae0 + Attestation",
   "evidence_type": "signature_attestation",
-  "timestamp": "2025-12-22T16:51:46.441125+00:00"
+  "timestamp": "2026-01-06T01:16:31.457097+00:00"
 }

@@ -155,6 +155,20 @@ function buildChartData(metrics) {
 // Main component
 // ============================================================================
 
+/**
+ * Safely fetches data from an API endpoint
+ * Returns { data: response, error: null } on success
+ * Returns { data: null, error: errorMessage } on failure
+ */
+async function safeFetch(url) {
+  try {
+    const response = await axios.get(url);
+    return { data: response.data, error: null };
+  } catch (err) {
+    return { data: null, error: err.response?.data?.detail || err.message };
+  }
+}
+
 function Dashboard() {
   const [workflows, setWorkflows] = useState([]);
   const [metrics, setMetrics] = useState([]);
@@ -163,18 +177,26 @@ function Dashboard() {
 
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        const [workflowResponse, metricsResponse] = await Promise.all([
-          axios.get('/api/workflows'),
-          axios.get('/api/performance'),
-        ]);
-        setWorkflows(workflowResponse.data);
-        setMetrics(metricsResponse.data);
-      } catch (err) {
-        setError(`Failed to fetch data: ${err.response?.data?.detail || err.message}`);
-      } finally {
-        setLoading(false);
+      const [workflowResult, metricsResult] = await Promise.all([
+        safeFetch('/api/workflows'),
+        safeFetch('/api/performance'),
+      ]);
+
+      // Collect any errors
+      const errors = [];
+      if (workflowResult.error) errors.push(`Workflows: ${workflowResult.error}`);
+      if (metricsResult.error) errors.push(`Metrics: ${metricsResult.error}`);
+
+      // Set data even if partially available
+      if (workflowResult.data) setWorkflows(workflowResult.data);
+      if (metricsResult.data) setMetrics(metricsResult.data);
+
+      // Report combined errors if any
+      if (errors.length > 0) {
+        setError(`Failed to fetch data: ${errors.join('; ')}`);
       }
+
+      setLoading(false);
     };
 
     fetchData();
