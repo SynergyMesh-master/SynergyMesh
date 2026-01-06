@@ -7,7 +7,7 @@
     "analyzer_version": "3.0.0",
     "quantum_enabled": true
   },
-  "timestamp": "2026-01-06T22:49:55.882583Z",
+  "timestamp": "2026-01-06T23:12:01.353060Z",
   "analysis_scope": "entire",
   "quantum_metrics": {
     "enabled": true,
@@ -19,29 +19,29 @@
     "results": {
       "VQE": {
         "algo": "VQE",
-        "energy": -1.2893322822507485,
-        "fidelity": 0.9844965586720686
+        "energy": -0.7453573265003,
+        "fidelity": 0.9689327615888055
       },
       "QAOA": {
         "algo": "QAOA",
-        "opt": 0.7441505032693427,
-        "fidelity": 0.97427496159455
+        "opt": 0.849125025190055,
+        "fidelity": 0.9523389582574022
       },
       "QML": {
         "algo": "QML",
-        "acc": 0.8521319062854622,
-        "fidelity": 0.981910961351293
+        "acc": 0.9292807084481,
+        "fidelity": 0.9464811046880021
       }
     },
-    "average_fidelity": 0.9802274938726372
+    "average_fidelity": 0.9559176081780699
   },
   "workspace_validation": {
     "yaml_files": [
       {
-        "file": "workspace/mcp/INTEGRATION_INDEX.yaml",
+        "file": "workspace/mcp/axiom-dissolved-mcp-architecture.yaml",
         "valid": false,
         "errors": [
-          "YAML syntax error: expected a single document in the stream\n  in \"workspace/mcp/INTEGRATION_INDEX.yaml\", line 14, column 1\nbut found another document\n  in \"workspace/mcp/INTEGRATION_INDEX.yaml\", line 514, column 1"
+          "YAML syntax error: expected a single document in the stream\n  in \"workspace/mcp/axiom-dissolved-mcp-architecture.yaml\", line 21, column 1\nbut found another document\n  in \"workspace/mcp/axiom-dissolved-mcp-architecture.yaml\", line 2979, column 1"
         ],
         "warnings": []
       },
@@ -54,18 +54,10 @@
         "warnings": []
       },
       {
-        "file": "workspace/mcp/axiom-dissolved-mcp-architecture.yaml",
+        "file": "workspace/mcp/INTEGRATION_INDEX.yaml",
         "valid": false,
         "errors": [
-          "YAML syntax error: expected a single document in the stream\n  in \"workspace/mcp/axiom-dissolved-mcp-architecture.yaml\", line 21, column 1\nbut found another document\n  in \"workspace/mcp/axiom-dissolved-mcp-architecture.yaml\", line 2979, column 1"
-        ],
-        "warnings": []
-      },
-      {
-        "file": "workspace/mcp/validation/WORLD_CLASS_VALIDATION_PIPELINE.yaml",
-        "valid": false,
-        "errors": [
-          "YAML syntax error: expected a single document in the stream\n  in \"workspace/mcp/validation/WORLD_CLASS_VALIDATION_PIPELINE.yaml\", line 14, column 1\nbut found another document\n  in \"workspace/mcp/validation/WORLD_CLASS_VALIDATION_PIPELINE.yaml\", line 459, column 1"
+          "YAML syntax error: expected a single document in the stream\n  in \"workspace/mcp/INTEGRATION_INDEX.yaml\", line 14, column 1\nbut found another document\n  in \"workspace/mcp/INTEGRATION_INDEX.yaml\", line 514, column 1"
         ],
         "warnings": []
       },
@@ -75,28 +67,77 @@
         "errors": [],
         "warnings": [],
         "content_type": "dict"
+      },
+      {
+        "file": "workspace/mcp/validation/WORLD_CLASS_VALIDATION_PIPELINE.yaml",
+        "valid": false,
+        "errors": [
+          "YAML syntax error: expected a single document in the stream\n  in \"workspace/mcp/validation/WORLD_CLASS_VALIDATION_PIPELINE.yaml\", line 14, column 1\nbut found another document\n  in \"workspace/mcp/validation/WORLD_CLASS_VALIDATION_PIPELINE.yaml\", line 459, column 1"
+        ],
+        "warnings": []
       }
     ],
     "typescript_files": [
       {
+        "file": "workspace/mcp/types/unifiedPipeline.ts",
+        "valid": true,
+        "errors": [],
+        "warnings": [],
+        "line_count": 284,
+        "has_exports": true,
+        "has_imports": false
+      },
+      {
         "file": "workspace/mcp/servers/axiom-dissolved-server.ts",
         "valid": true,
         "errors": [],
-        "warnings": [
-          "Duplicate import from module: ./tools/types.js"
-        ],
+        "warnings": [],
         "line_count": 1950,
         "has_exports": false,
         "has_imports": true
       },
       {
-        "file": "workspace/mcp/servers/tools/l01-language.ts",
+        "file": "workspace/mcp/servers/tools/l10-governance.ts",
         "valid": true,
         "errors": [],
-        "warnings": [
-          "Duplicate import from module: ./types.js"
-        ],
-        "line_count": 49,
+        "warnings": [],
+        "line_count": 94,
+        "has_exports": true,
+        "has_imports": true
+      },
+      {
+        "file": "workspace/mcp/servers/tools/l06-integration.ts",
+        "valid": true,
+        "errors": [],
+        "warnings": [],
+        "line_count": 63,
+        "has_exports": true,
+        "has_imports": true
+      },
+      {
+        "file": "workspace/mcp/servers/tools/l08-emotion.ts",
+        "valid": true,
+        "errors": [],
+        "warnings": [],
+        "line_count": 66,
+        "has_exports": true,
+        "has_imports": true
+      },
+      {
+        "file": "workspace/mcp/servers/tools/l07-reasoning.ts",
+        "valid": true,
+        "errors": [],
+        "warnings": [],
+        "line_count": 65,
+        "has_exports": true,
+        "has_imports": true
+      },
+      {
+        "file": "workspace/mcp/servers/tools/l04-cognitive.ts",
+        "valid": true,
+        "errors": [],
+        "warnings": [],
+        "line_count": 78,
         "has_exports": true,
         "has_imports": true
       },
@@ -104,10 +145,80 @@
         "file": "workspace/mcp/servers/tools/index.ts",
         "valid": true,
         "errors": [],
-        "warnings": [
-          "Duplicate import from module: ./types.js"
-        ],
+        "warnings": [],
         "line_count": 65,
+        "has_exports": true,
+        "has_imports": true
+      },
+      {
+        "file": "workspace/mcp/servers/tools/l11-performance.ts",
+        "valid": true,
+        "errors": [],
+        "warnings": [],
+        "line_count": 81,
+        "has_exports": true,
+        "has_imports": true
+      },
+      {
+        "file": "workspace/mcp/servers/tools/l02-input.ts",
+        "valid": true,
+        "errors": [],
+        "warnings": [],
+        "line_count": 64,
+        "has_exports": true,
+        "has_imports": true
+      },
+      {
+        "file": "workspace/mcp/servers/tools/l12-metacognitive.ts",
+        "valid": true,
+        "errors": [],
+        "warnings": [],
+        "line_count": 61,
+        "has_exports": true,
+        "has_imports": true
+      },
+      {
+        "file": "workspace/mcp/servers/tools/l00-infrastructure.ts",
+        "valid": true,
+        "errors": [],
+        "warnings": [],
+        "line_count": 99,
+        "has_exports": true,
+        "has_imports": true
+      },
+      {
+        "file": "workspace/mcp/servers/tools/l01-language.ts",
+        "valid": true,
+        "errors": [],
+        "warnings": [],
+        "line_count": 49,
+        "has_exports": true,
+        "has_imports": true
+      },
+      {
+        "file": "workspace/mcp/servers/tools/l03-network.ts",
+        "valid": true,
+        "errors": [],
+        "warnings": [],
+        "line_count": 65,
+        "has_exports": true,
+        "has_imports": true
+      },
+      {
+        "file": "workspace/mcp/servers/tools/l09-output.ts",
+        "valid": true,
+        "errors": [],
+        "warnings": [],
+        "line_count": 62,
+        "has_exports": true,
+        "has_imports": true
+      },
+      {
+        "file": "workspace/mcp/servers/tools/l05-ethics.ts",
+        "valid": true,
+        "errors": [],
+        "warnings": [],
+        "line_count": 59,
         "has_exports": true,
         "has_imports": true
       },
@@ -121,179 +232,36 @@
         "has_imports": false
       },
       {
-        "file": "workspace/mcp/servers/tools/l10-governance.ts",
-        "valid": true,
-        "errors": [],
-        "warnings": [
-          "Duplicate import from module: ./types.js"
-        ],
-        "line_count": 94,
-        "has_exports": true,
-        "has_imports": true
-      },
-      {
-        "file": "workspace/mcp/servers/tools/l07-reasoning.ts",
-        "valid": true,
-        "errors": [],
-        "warnings": [
-          "Duplicate import from module: ./types.js"
-        ],
-        "line_count": 65,
-        "has_exports": true,
-        "has_imports": true
-      },
-      {
-        "file": "workspace/mcp/servers/tools/l00-infrastructure.ts",
-        "valid": true,
-        "errors": [],
-        "warnings": [
-          "Duplicate import from module: ./types.js"
-        ],
-        "line_count": 99,
-        "has_exports": true,
-        "has_imports": true
-      },
-      {
-        "file": "workspace/mcp/servers/tools/l09-output.ts",
-        "valid": true,
-        "errors": [],
-        "warnings": [
-          "Duplicate import from module: ./types.js"
-        ],
-        "line_count": 62,
-        "has_exports": true,
-        "has_imports": true
-      },
-      {
-        "file": "workspace/mcp/servers/tools/l05-ethics.ts",
-        "valid": true,
-        "errors": [],
-        "warnings": [
-          "Duplicate import from module: ./types.js"
-        ],
-        "line_count": 59,
-        "has_exports": true,
-        "has_imports": true
-      },
-      {
-        "file": "workspace/mcp/servers/tools/l12-metacognitive.ts",
-        "valid": true,
-        "errors": [],
-        "warnings": [
-          "Duplicate import from module: ./types.js"
-        ],
-        "line_count": 61,
-        "has_exports": true,
-        "has_imports": true
-      },
-      {
-        "file": "workspace/mcp/servers/tools/l08-emotion.ts",
-        "valid": true,
-        "errors": [],
-        "warnings": [
-          "Duplicate import from module: ./types.js"
-        ],
-        "line_count": 66,
-        "has_exports": true,
-        "has_imports": true
-      },
-      {
         "file": "workspace/mcp/servers/tools/l13-quantum.ts",
         "valid": true,
         "errors": [],
-        "warnings": [
-          "Duplicate import from module: ./types.js"
-        ],
-        "line_count": 284,
-        "has_exports": true,
-        "has_imports": true
-      },
-      {
-        "file": "workspace/mcp/servers/tools/l03-network.ts",
-        "valid": true,
-        "errors": [],
-        "warnings": [
-          "Duplicate import from module: ./types.js"
-        ],
-        "line_count": 65,
-        "has_exports": true,
-        "has_imports": true
-      },
-      {
-        "file": "workspace/mcp/servers/tools/l11-performance.ts",
-        "valid": true,
-        "errors": [],
-        "warnings": [
-          "Duplicate import from module: ./types.js"
-        ],
-        "line_count": 81,
-        "has_exports": true,
-        "has_imports": true
-      },
-      {
-        "file": "workspace/mcp/servers/tools/l06-integration.ts",
-        "valid": true,
-        "errors": [],
-        "warnings": [
-          "Duplicate import from module: ./types.js"
-        ],
-        "line_count": 63,
-        "has_exports": true,
-        "has_imports": true
-      },
-      {
-        "file": "workspace/mcp/servers/tools/l04-cognitive.ts",
-        "valid": true,
-        "errors": [],
-        "warnings": [
-          "Duplicate import from module: ./types.js"
-        ],
-        "line_count": 78,
-        "has_exports": true,
-        "has_imports": true
-      },
-      {
-        "file": "workspace/mcp/servers/tools/l02-input.ts",
-        "valid": true,
-        "errors": [],
-        "warnings": [
-          "Duplicate import from module: ./types.js"
-        ],
-        "line_count": 64,
-        "has_exports": true,
-        "has_imports": true
-      },
-      {
-        "file": "workspace/mcp/types/unifiedPipeline.ts",
-        "valid": true,
-        "errors": [],
         "warnings": [],
         "line_count": 284,
         "has_exports": true,
-        "has_imports": false
+        "has_imports": true
       }
     ],
     "python_files": [
-      {
-        "file": "workspace/mcp/tools/load_unified_pipeline.py",
-        "valid": true,
-        "errors": [],
-        "warnings": [],
-        "line_count": 692
-      },
-      {
-        "file": "workspace/mcp/tools/github_project_analyzer_quantum.py",
-        "valid": true,
-        "errors": [],
-        "warnings": [],
-        "line_count": 676
-      },
       {
         "file": "workspace/mcp/tools/github_project_analyzer.py",
         "valid": true,
         "errors": [],
         "warnings": [],
         "line_count": 957
+      },
+      {
+        "file": "workspace/mcp/tools/github_project_analyzer_quantum.py",
+        "valid": true,
+        "errors": [],
+        "warnings": [],
+        "line_count": 775
+      },
+      {
+        "file": "workspace/mcp/tools/load_unified_pipeline.py",
+        "valid": true,
+        "errors": [],
+        "warnings": [],
+        "line_count": 692
       }
     ],
     "json_files": [
@@ -315,14 +283,19 @@
     ],
     "markdown_files": [
       {
+        "file": "workspace/mcp/workspace_mcp_validation_report.md",
+        "valid": true,
+        "line_count": 139
+      },
+      {
         "file": "workspace/mcp/README.md",
         "valid": true,
         "line_count": 372
       },
       {
-        "file": "workspace/mcp/workspace_mcp_validation_report.md",
+        "file": "workspace/mcp/quantum_verification_v2_report.md",
         "valid": true,
-        "line_count": 213
+        "line_count": 113
       },
       {
         "file": "workspace/mcp/quantum_verification_report.md",
@@ -335,40 +308,18 @@
         "line_count": 117
       },
       {
-        "file": "workspace/mcp/quantum_verification_v2_report.md",
-        "valid": true,
-        "line_count": 113
-      },
-      {
         "file": "workspace/mcp/servers/tools/README.md",
         "valid": true,
         "line_count": 56
       }
     ],
     "errors": [
-      "YAML syntax error: expected a single document in the stream\n  in \"workspace/mcp/INTEGRATION_INDEX.yaml\", line 14, column 1\nbut found another document\n  in \"workspace/mcp/INTEGRATION_INDEX.yaml\", line 514, column 1",
-      "YAML syntax error: expected a single document in the stream\n  in \"workspace/mcp/AXIOM_DISSOLVED_INTEGRATION_MANIFEST.yaml\", line 18, column 1\nbut found another document\n  in \"workspace/mcp/AXIOM_DISSOLVED_INTEGRATION_MANIFEST.yaml\", line 506, column 1",
       "YAML syntax error: expected a single document in the stream\n  in \"workspace/mcp/axiom-dissolved-mcp-architecture.yaml\", line 21, column 1\nbut found another document\n  in \"workspace/mcp/axiom-dissolved-mcp-architecture.yaml\", line 2979, column 1",
+      "YAML syntax error: expected a single document in the stream\n  in \"workspace/mcp/AXIOM_DISSOLVED_INTEGRATION_MANIFEST.yaml\", line 18, column 1\nbut found another document\n  in \"workspace/mcp/AXIOM_DISSOLVED_INTEGRATION_MANIFEST.yaml\", line 506, column 1",
+      "YAML syntax error: expected a single document in the stream\n  in \"workspace/mcp/INTEGRATION_INDEX.yaml\", line 14, column 1\nbut found another document\n  in \"workspace/mcp/INTEGRATION_INDEX.yaml\", line 514, column 1",
       "YAML syntax error: expected a single document in the stream\n  in \"workspace/mcp/validation/WORLD_CLASS_VALIDATION_PIPELINE.yaml\", line 14, column 1\nbut found another document\n  in \"workspace/mcp/validation/WORLD_CLASS_VALIDATION_PIPELINE.yaml\", line 459, column 1"
     ],
-    "warnings": [
-      "Duplicate import from module: ./tools/types.js",
-      "Duplicate import from module: ./types.js",
-      "Duplicate import from module: ./types.js",
-      "Duplicate import from module: ./types.js",
-      "Duplicate import from module: ./types.js",
-      "Duplicate import from module: ./types.js",
-      "Duplicate import from module: ./types.js",
-      "Duplicate import from module: ./types.js",
-      "Duplicate import from module: ./types.js",
-      "Duplicate import from module: ./types.js",
-      "Duplicate import from module: ./types.js",
-      "Duplicate import from module: ./types.js",
-      "Duplicate import from module: ./types.js",
-      "Duplicate import from module: ./types.js",
-      "Duplicate import from module: ./types.js",
-      "Duplicate import from module: ./types.js"
-    ],
+    "warnings": [],
     "summary": {
       "total_files": 34,
       "yaml_files": 5,
@@ -381,7 +332,7 @@
       "typescript_valid": 18,
       "python_valid": 3,
       "total_errors": 4,
-      "total_warnings": 16
+      "total_warnings": 0
     }
   },
   "sections": {
@@ -524,14 +475,9 @@
     "todo_list": {
       "high_priority": [
         {
-          "task": "Fix TypeScript syntax issues in axiom-dissolved-server.ts",
-          "priority": "critical",
-          "estimated_effort": "1-2 hours"
-        },
-        {
-          "task": "Remove duplicate imports and declarations",
+          "task": "Fix YAML multi-document syntax in config files",
           "priority": "high",
-          "estimated_effort": "30 minutes"
+          "estimated_effort": "2-3 hours"
         },
         {
           "task": "Add comprehensive TypeScript linting",
@@ -555,7 +501,7 @@
     "diagnostics": {
       "known_issues": [
         {
-          "issue": "Duplicate type declarations in axiom-dissolved-server.ts",
+          "issue": "YAML files with multiple documents in single stream",
           "severity": "medium",
           "fix_priority": "high"
         },

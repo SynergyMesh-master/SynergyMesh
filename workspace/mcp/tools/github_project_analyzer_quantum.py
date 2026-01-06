@@ -519,8 +519,7 @@ class GitHubProjectAnalyzer:
         """分析待辦事項"""
         return {
             "high_priority": [
-                {"task": "Fix TypeScript syntax issues in axiom-dissolved-server.ts", "priority": "critical", "estimated_effort": "1-2 hours"},
-                {"task": "Remove duplicate imports and declarations", "priority": "high", "estimated_effort": "30 minutes"},
+                {"task": "Fix YAML multi-document syntax in config files", "priority": "high", "estimated_effort": "2-3 hours"},
                 {"task": "Add comprehensive TypeScript linting", "priority": "high", "estimated_effort": "1 hour"}
             ],
             "medium_priority": [
@@ -533,7 +532,7 @@ class GitHubProjectAnalyzer:
         """分析問題診斷"""
         return {
             "known_issues": [
-                {"issue": "Duplicate type declarations in axiom-dissolved-server.ts", "severity": "medium", "fix_priority": "high"},
+                {"issue": "YAML files with multiple documents in single stream", "severity": "medium", "fix_priority": "high"},
                 {"issue": "Mixed snake_case and camelCase in tool definitions", "severity": "low", "fix_priority": "medium"}
             ],
             "technical_debt": [
