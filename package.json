@@ -7,8 +7,6 @@
     "workspace/src/mcp-servers",
     "workspace/src/core/contract_service/contracts-L1/contracts",
     "workspace/src/core/advisory-database",
-    "workspace/src/apps/web",
-    "workspace/src/ai/src/ai",
     "workspace/archive/unmanned-engineer-ceo/80-skeleton-configs"
   ],
   "scripts": {
@@ -19,7 +17,8 @@
     "docs:lint": "npm run docs:lint --workspaces --if-present",
     "clean": "npm run clean --workspaces --if-present && rm -rf node_modules",
     "cf:dev": "npm run cf:dev --workspaces --if-present",
-    "cf:deploy": "npm run cf:deploy --workspaces --if-present"
+    "cf:deploy": "npm run cf:deploy --workspaces --if-present",
+    "validate:workspace": "node scripts/validate-workspace.js"
   },
   "repository": {
     "type": "git",

@@ -7,8 +7,6 @@
     "src/mcp-servers",
     "src/core/contract_service/contracts-L1/contracts",
     "src/core/advisory-database",
-    "src/apps/web",
-    "src/ai/src/ai",
     "archive/unmanned-engineer-ceo/80-skeleton-configs"
   ],
   "scripts": {
