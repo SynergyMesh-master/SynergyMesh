@@ -1,4 +1,4 @@
-# MachineNativeOps 統一管線與 MCP 集成架構（基於 world_class_validation）
+# MachineNativeOps Unified Pipeline & MCP Integration (world_class_validation baseline)
 
 > **說明**：此子專案為 MachineNativeOps MCP 集成與統一管線配置草案，對應 world_class_validation 基線，提供可執行的 YAML manifest、JSON Schema、TypeScript 型別與 Python 載入器。
 

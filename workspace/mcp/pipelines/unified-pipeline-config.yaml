@@ -21,7 +21,7 @@ spec:
   pipelines:
     - name: quantum_validation
       type: validation
-      entrypoint: tools/validation/validate_pr1023_layers.py
+      entrypoint: tools/validation/validate_pr1063_layers.py
       worldClassValidationRef: workspace/config/validation/world-class-validation.yaml
     - name: refactor_execution
       type: refactor
