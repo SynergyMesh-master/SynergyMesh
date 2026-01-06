@@ -13,7 +13,7 @@ import os
 import sys
 import threading
 from datetime import datetime
-from typing import Dict, List, Any, Optional
+from typing import Dict, List, Any
 from dataclasses import dataclass
 import time
 import random
