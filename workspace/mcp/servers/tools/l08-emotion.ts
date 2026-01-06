@@ -10,8 +10,8 @@ export const L08_TOOLS: ToolDefinition[] = [
   {
     name: "emotion_content",
     description: "BERT-based emotion classification with Plutchik model",
-    source_module: "AXM-L08-EMOT-001",
-    input_schema: {
+    sourceModule: "AXM-L08-EMOT-001",
+    inputSchema: {
       type: "object",
       properties: {
         text: { type: "string" },
@@ -20,14 +20,14 @@ export const L08_TOOLS: ToolDefinition[] = [
       },
       required: ["text"],
     },
-    quantum_enabled: true,
+    quantumEnabled: true,
     priority: 27,
   },
   {
     name: "tone_adjuster",
     description: "Neural tone transformation with style transfer",
-    source_module: "AXM-L08-TONE-002",
-    input_schema: {
+    sourceModule: "AXM-L08-TONE-002",
+    inputSchema: {
       type: "object",
       properties: {
         text: { type: "string" },
@@ -40,14 +40,14 @@ export const L08_TOOLS: ToolDefinition[] = [
       },
       required: ["text", "target_tone"],
     },
-    quantum_enabled: false,
+    quantumEnabled: false,
     priority: 28,
   },
   {
     name: "empathy_engine",
     description: "Computational empathy with Theory of Mind",
-    source_module: "AXM-L08-EMPA-003",
-    input_schema: {
+    sourceModule: "AXM-L08-EMPA-003",
+    inputSchema: {
       type: "object",
       properties: {
         context: { type: "object" },
@@ -59,7 +59,7 @@ export const L08_TOOLS: ToolDefinition[] = [
       },
       required: ["context"],
     },
-    quantum_enabled: false,
+    quantumEnabled: false,
     priority: 29,
   },
 ];

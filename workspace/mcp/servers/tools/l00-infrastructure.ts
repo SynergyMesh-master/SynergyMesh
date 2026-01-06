@@ -10,8 +10,8 @@ export const L00_TOOLS: ToolDefinition[] = [
   {
     name: "bootstrap_core",
     description: "Platform initialization and quantum backend discovery",
-    source_module: "AXM-L00-BOOT-001",
-    input_schema: {
+    sourceModule: "AXM-L00-BOOT-001",
+    inputSchema: {
       type: "object",
       properties: {
         backend_type: {
@@ -24,14 +24,14 @@ export const L00_TOOLS: ToolDefinition[] = [
       },
       required: ["backend_type"],
     },
-    quantum_enabled: true,
+    quantumEnabled: true,
     priority: 1,
   },
   {
     name: "kernel_compute",
     description: "High-performance quantum-classical compute orchestration",
-    source_module: "AXM-L00-KERN-002",
-    input_schema: {
+    sourceModule: "AXM-L00-KERN-002",
+    inputSchema: {
       type: "object",
       properties: {
         circuit: { type: "object", description: "Quantum circuit to execute" },
@@ -40,14 +40,14 @@ export const L00_TOOLS: ToolDefinition[] = [
       },
       required: ["circuit"],
     },
-    quantum_enabled: true,
+    quantumEnabled: true,
     priority: 2,
   },
   {
     name: "emergency_override",
     description: "Multi-level emergency shutdown and recovery system",
-    source_module: "AXM-L00-EMER-003",
-    input_schema: {
+    sourceModule: "AXM-L00-EMER-003",
+    inputSchema: {
       type: "object",
       properties: {
         action: { type: "string", enum: ["initiate_shutdown", "trigger_recovery", "check_status"] },
@@ -57,14 +57,14 @@ export const L00_TOOLS: ToolDefinition[] = [
       },
       required: ["action"],
     },
-    quantum_enabled: false,
+    quantumEnabled: false,
     priority: 3,
   },
   {
     name: "resource_scheduler",
     description: "Quantum-aware resource scheduling with deadline priorities",
-    source_module: "AXM-L00-SCHD-004",
-    input_schema: {
+    sourceModule: "AXM-L00-SCHD-004",
+    inputSchema: {
       type: "object",
       properties: {
         jobs: { type: "array", items: { type: "object" } },
@@ -76,14 +76,14 @@ export const L00_TOOLS: ToolDefinition[] = [
       },
       required: ["jobs"],
     },
-    quantum_enabled: true,
+    quantumEnabled: true,
     priority: 4,
   },
   {
     name: "memory_allocator",
     description: "Quantum coherence-aware memory management",
-    source_module: "AXM-L00-MEML-005",
-    input_schema: {
+    sourceModule: "AXM-L00-MEML-005",
+    inputSchema: {
       type: "object",
       properties: {
         action: { type: "string", enum: ["allocate", "deallocate", "query", "optimize"] },
@@ -92,7 +92,7 @@ export const L00_TOOLS: ToolDefinition[] = [
       },
       required: ["action"],
     },
-    quantum_enabled: true,
+    quantumEnabled: true,
     priority: 5,
   },
 ];

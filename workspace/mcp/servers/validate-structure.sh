@@ -87,6 +87,7 @@ fi
 echo ""
 echo "✓ Checking for inline tool definitions:"
 INLINE_COUNT=$(grep -c 'sourceModule: "AXM-L' axiom-dissolved-server.ts || true)
+INLINE_COUNT=$(grep -c '"sourceModule": "AXM-L' axiom-dissolved-server.ts || true)
 if [ $INLINE_COUNT -eq 0 ]; then
   echo "  ✓ No inline tool definitions found (refactored successfully)"
 else

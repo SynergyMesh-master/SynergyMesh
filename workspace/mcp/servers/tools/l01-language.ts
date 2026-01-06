@@ -10,8 +10,8 @@ export const L01_TOOLS: ToolDefinition[] = [
   {
     name: "language_core",
     description: "Quantum-enhanced NLP with BERT and transformer models",
-    source_module: "AXM-L01-LANG-001",
-    input_schema: {
+    sourceModule: "AXM-L01-LANG-001",
+    inputSchema: {
       type: "object",
       properties: {
         text: { type: "string" },
@@ -22,14 +22,14 @@ export const L01_TOOLS: ToolDefinition[] = [
       },
       required: ["text", "operation"],
     },
-    quantum_enabled: true,
+    quantumEnabled: true,
     priority: 6,
   },
   {
     name: "language_advanced",
     description: "Advanced semantic analysis with quantum coherence",
-    source_module: "AXM-L01-LADV-002",
-    input_schema: {
+    sourceModule: "AXM-L01-LADV-002",
+    inputSchema: {
       type: "object",
       properties: {
         text: { type: "string" },
@@ -42,7 +42,7 @@ export const L01_TOOLS: ToolDefinition[] = [
       },
       required: ["text", "analysis_type"],
     },
-    quantum_enabled: true,
+    quantumEnabled: true,
     priority: 7,
   },
 ];

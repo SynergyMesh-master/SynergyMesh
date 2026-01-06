@@ -10,8 +10,8 @@ export const L05_TOOLS: ToolDefinition[] = [
   {
     name: "ethics_governance",
     description: "Policy evaluation framework with audit logging",
-    source_module: "AXM-L05-ETHG-001",
-    input_schema: {
+    sourceModule: "AXM-L05-ETHG-001",
+    inputSchema: {
       type: "object",
       properties: {
         action: { type: "object" },
@@ -20,14 +20,14 @@ export const L05_TOOLS: ToolDefinition[] = [
       },
       required: ["action"],
     },
-    quantum_enabled: false,
+    quantumEnabled: false,
     priority: 18,
   },
   {
     name: "bias_detector",
     description: "Multi-algorithm bias detection system",
-    source_module: "AXM-L05-BIAS-002",
-    input_schema: {
+    sourceModule: "AXM-L05-BIAS-002",
+    inputSchema: {
       type: "object",
       properties: {
         model_or_data: { type: "object" },
@@ -36,14 +36,14 @@ export const L05_TOOLS: ToolDefinition[] = [
       },
       required: ["model_or_data", "protected_attributes"],
     },
-    quantum_enabled: false,
+    quantumEnabled: false,
     priority: 19,
   },
   {
     name: "fairness_optimizer",
     description: "Adversarial debiasing with dual network architecture",
-    source_module: "AXM-L05-FAIR-003",
-    input_schema: {
+    sourceModule: "AXM-L05-FAIR-003",
+    inputSchema: {
       type: "object",
       properties: {
         model: { type: "object" },
@@ -52,7 +52,7 @@ export const L05_TOOLS: ToolDefinition[] = [
       },
       required: ["model", "fairness_constraints"],
     },
-    quantum_enabled: false,
+    quantumEnabled: false,
     priority: 20,
   },
 ];

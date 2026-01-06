@@ -10,8 +10,8 @@ export const L11_TOOLS: ToolDefinition[] = [
   {
     name: "system_optimization",
     description: "Genetic algorithms with simulated annealing",
-    source_module: "AXM-L11-SOPT-001",
-    input_schema: {
+    sourceModule: "AXM-L11-SOPT-001",
+    inputSchema: {
       type: "object",
       properties: {
         objective_function: { type: "object" },
@@ -24,14 +24,14 @@ export const L11_TOOLS: ToolDefinition[] = [
       },
       required: ["objective_function"],
     },
-    quantum_enabled: true,
+    quantumEnabled: true,
     priority: 38,
   },
   {
     name: "performance_tuner",
     description: "JVM and kernel parameter optimization",
-    source_module: "AXM-L11-PERF-002",
-    input_schema: {
+    sourceModule: "AXM-L11-PERF-002",
+    inputSchema: {
       type: "object",
       properties: {
         target_system: { type: "string" },
@@ -41,14 +41,14 @@ export const L11_TOOLS: ToolDefinition[] = [
       },
       required: ["target_system", "tuning_domain"],
     },
-    quantum_enabled: false,
+    quantumEnabled: false,
     priority: 39,
   },
   {
     name: "resource_optimizer",
     description: "Bin packing with genetic algorithms",
-    source_module: "AXM-L11-RSRC-003",
-    input_schema: {
+    sourceModule: "AXM-L11-RSRC-003",
+    inputSchema: {
       type: "object",
       properties: {
         resources: { type: "array", items: { type: "object" } },
@@ -57,14 +57,14 @@ export const L11_TOOLS: ToolDefinition[] = [
       },
       required: ["resources", "nodes"],
     },
-    quantum_enabled: true,
+    quantumEnabled: true,
     priority: 40,
   },
   {
     name: "energy_optimizer",
     description: "DVFS control with power monitoring",
-    source_module: "AXM-L11-ENRG-004",
-    input_schema: {
+    sourceModule: "AXM-L11-ENRG-004",
+    inputSchema: {
       type: "object",
       properties: {
         target_nodes: { type: "array", items: { type: "string" } },
@@ -74,7 +74,7 @@ export const L11_TOOLS: ToolDefinition[] = [
       },
       required: ["target_nodes"],
     },
-    quantum_enabled: false,
+    quantumEnabled: false,
     priority: 41,
   },
 ];

@@ -10,8 +10,8 @@ export const L02_TOOLS: ToolDefinition[] = [
   {
     name: "input_quantum",
     description: "Quantum state preparation and multimodal input processing",
-    source_module: "AXM-L02-INPQ-001",
-    input_schema: {
+    sourceModule: "AXM-L02-INPQ-001",
+    inputSchema: {
       type: "object",
       properties: {
         data: { type: "object" },
@@ -21,14 +21,14 @@ export const L02_TOOLS: ToolDefinition[] = [
       },
       required: ["data"],
     },
-    quantum_enabled: true,
+    quantumEnabled: true,
     priority: 8,
   },
   {
     name: "data_validator",
     description: "Comprehensive validation with quality scoring",
-    source_module: "AXM-L02-VALD-002",
-    input_schema: {
+    sourceModule: "AXM-L02-VALD-002",
+    inputSchema: {
       type: "object",
       properties: {
         data: { type: "object" },
@@ -38,14 +38,14 @@ export const L02_TOOLS: ToolDefinition[] = [
       },
       required: ["data"],
     },
-    quantum_enabled: false,
+    quantumEnabled: false,
     priority: 9,
   },
   {
     name: "multimodal_processor",
     description: "Cross-modal fusion with attention mechanisms",
-    source_module: "AXM-L02-MULT-003",
-    input_schema: {
+    sourceModule: "AXM-L02-MULT-003",
+    inputSchema: {
       type: "object",
       properties: {
         inputs: { type: "object" },
@@ -57,7 +57,7 @@ export const L02_TOOLS: ToolDefinition[] = [
       },
       required: ["inputs"],
     },
-    quantum_enabled: true,
+    quantumEnabled: true,
     priority: 10,
   },
 ];

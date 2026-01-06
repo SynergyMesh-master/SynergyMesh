@@ -10,8 +10,8 @@ export const L07_TOOLS: ToolDefinition[] = [
   {
     name: "logical_reasoning",
     description: "First-order logic with neural-symbolic reasoning",
-    source_module: "AXM-L07-LOGI-001",
-    input_schema: {
+    sourceModule: "AXM-L07-LOGI-001",
+    inputSchema: {
       type: "object",
       properties: {
         premises: { type: "array", items: { type: "string" } },
@@ -21,14 +21,14 @@ export const L07_TOOLS: ToolDefinition[] = [
       },
       required: ["premises", "query"],
     },
-    quantum_enabled: true,
+    quantumEnabled: true,
     priority: 24,
   },
   {
     name: "inference_engine",
     description: "Hybrid inference with theorem proving",
-    source_module: "AXM-L07-INFR-002",
-    input_schema: {
+    sourceModule: "AXM-L07-INFR-002",
+    inputSchema: {
       type: "object",
       properties: {
         knowledge_base: { type: "object" },
@@ -41,14 +41,14 @@ export const L07_TOOLS: ToolDefinition[] = [
       },
       required: ["knowledge_base", "query"],
     },
-    quantum_enabled: true,
+    quantumEnabled: true,
     priority: 25,
   },
   {
     name: "knowledge_graph",
     description: "Graph neural network with Neo4j backend",
-    source_module: "AXM-L07-KNOW-003",
-    input_schema: {
+    sourceModule: "AXM-L07-KNOW-003",
+    inputSchema: {
       type: "object",
       properties: {
         operation: { type: "string", enum: ["query", "insert", "update", "delete", "traverse", "embed"] },
@@ -58,7 +58,7 @@ export const L07_TOOLS: ToolDefinition[] = [
       },
       required: ["operation"],
     },
-    quantum_enabled: true,
+    quantumEnabled: true,
     priority: 26,
   },
 ];

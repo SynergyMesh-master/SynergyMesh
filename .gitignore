@@ -149,3 +149,8 @@ vite.config.ts.timestamp-*
 __pycache__/
 *.pyc
 comment_body.md
+workspace/mcp/servers/tools/*.js
+
+# MCP TypeScript compiled output - ignore all .js files except the validation script
+workspace/mcp/servers/**/*.js
+!workspace/mcp/servers/validate-tools-refactor.js

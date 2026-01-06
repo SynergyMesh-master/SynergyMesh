@@ -10,8 +10,8 @@ export const L13_TOOLS: ToolDefinition[] = [
   {
     name: "vqe_solver",
     description: "General-purpose VQE implementation",
-    source_module: "AXM-L13-VQE-001",
-    input_schema: {
+    sourceModule: "AXM-L13-VQE-001",
+    inputSchema: {
       type: "object",
       properties: {
         hamiltonian: { type: "object" },
@@ -23,15 +23,15 @@ export const L13_TOOLS: ToolDefinition[] = [
       },
       required: ["hamiltonian"],
     },
-    quantum_enabled: true,
-    fallback_enabled: true,
+    quantumEnabled: true,
+    fallbackEnabled: true,
     priority: 45,
   },
   {
     name: "qaoa_optimizer",
     description: "General QAOA framework",
-    source_module: "AXM-L13-QAOA-002",
-    input_schema: {
+    sourceModule: "AXM-L13-QAOA-002",
+    inputSchema: {
       type: "object",
       properties: {
         problem: { type: "object" },
@@ -41,15 +41,15 @@ export const L13_TOOLS: ToolDefinition[] = [
       },
       required: ["problem"],
     },
-    quantum_enabled: true,
-    fallback_enabled: true,
+    quantumEnabled: true,
+    fallbackEnabled: true,
     priority: 46,
   },
   {
     name: "qml_engine",
     description: "Quantum machine learning platform",
-    source_module: "AXM-L13-QML-003",
-    input_schema: {
+    sourceModule: "AXM-L13-QML-003",
+    inputSchema: {
       type: "object",
       properties: {
         task: { type: "string", enum: ["classification", "regression", "clustering", "generation"] },
@@ -59,15 +59,15 @@ export const L13_TOOLS: ToolDefinition[] = [
       },
       required: ["task", "training_data"],
     },
-    quantum_enabled: true,
-    fallback_enabled: true,
+    quantumEnabled: true,
+    fallbackEnabled: true,
     priority: 47,
   },
   {
     name: "financial_portfolio",
     description: "Portfolio optimization with Markowitz model",
-    source_module: "AXM-L13-FIN-004",
-    input_schema: {
+    sourceModule: "AXM-L13-FIN-004",
+    inputSchema: {
       type: "object",
       properties: {
         assets: { type: "array", items: { type: "object" } },
@@ -76,15 +76,15 @@ export const L13_TOOLS: ToolDefinition[] = [
       },
       required: ["assets"],
     },
-    quantum_enabled: true,
-    fallback_enabled: true,
+    quantumEnabled: true,
+    fallbackEnabled: true,
     priority: 48,
   },
   {
     name: "financial_risk",
     description: "Quantum Monte Carlo for VaR",
-    source_module: "AXM-L13-RISK-005",
-    input_schema: {
+    sourceModule: "AXM-L13-RISK-005",
+    inputSchema: {
       type: "object",
       properties: {
         portfolio: { type: "object" },
@@ -95,15 +95,15 @@ export const L13_TOOLS: ToolDefinition[] = [
       },
       required: ["portfolio"],
     },
-    quantum_enabled: true,
-    fallback_enabled: true,
+    quantumEnabled: true,
+    fallbackEnabled: true,
     priority: 49,
   },
   {
     name: "security_cryptography",
     description: "QKD and post-quantum cryptography",
-    source_module: "AXM-L13-CRYP-006",
-    input_schema: {
+    sourceModule: "AXM-L13-CRYP-006",
+    inputSchema: {
       type: "object",
       properties: {
         operation: { type: "string", enum: ["generate_key", "encrypt", "decrypt", "verify", "qkd_exchange"] },
@@ -116,15 +116,16 @@ export const L13_TOOLS: ToolDefinition[] = [
       },
       required: ["operation"],
     },
-    quantum_enabled: true,
+    quantumEnabled: true,
+    // Note: No fallbackEnabled - QKD requires quantum hardware for security guarantees
     // Note: No fallback_enabled - QKD requires quantum hardware for security guarantees
     priority: 50,
   },
   {
     name: "security_random",
     description: "Quantum random number generation",
-    source_module: "AXM-L13-QRNG-007",
-    input_schema: {
+    sourceModule: "AXM-L13-QRNG-007",
+    inputSchema: {
       type: "object",
       properties: {
         bytes_requested: { type: "integer", default: 32 },
@@ -132,15 +133,16 @@ export const L13_TOOLS: ToolDefinition[] = [
         entropy_source: { type: "string", enum: ["quantum", "hybrid", "classical"] },
       },
     },
-    quantum_enabled: true,
+    quantumEnabled: true,
+    // Note: No fallbackEnabled - true randomness requires quantum entropy source
     // Note: No fallback_enabled - true randomness requires quantum entropy source
     priority: 51,
   },
   {
     name: "chemistry_drug",
     description: "Drug discovery with molecular simulation",
-    source_module: "AXM-L13-DRUG-008",
-    input_schema: {
+    sourceModule: "AXM-L13-DRUG-008",
+    inputSchema: {
       type: "object",
       properties: {
         molecule: { type: "object" },
@@ -150,15 +152,15 @@ export const L13_TOOLS: ToolDefinition[] = [
       },
       required: ["molecule"],
     },
-    quantum_enabled: true,
-    fallback_enabled: true,
+    quantumEnabled: true,
+    fallbackEnabled: true,
     priority: 52,
   },
   {
     name: "chemistry_catalyst",
     description: "Catalyst design with quantum simulation",
-    source_module: "AXM-L13-CATL-009",
-    input_schema: {
+    sourceModule: "AXM-L13-CATL-009",
+    inputSchema: {
       type: "object",
       properties: {
         reaction: { type: "object" },
@@ -167,15 +169,15 @@ export const L13_TOOLS: ToolDefinition[] = [
       },
       required: ["reaction"],
     },
-    quantum_enabled: true,
-    fallback_enabled: true,
+    quantumEnabled: true,
+    fallbackEnabled: true,
     priority: 53,
   },
   {
     name: "manufacturing_supply_chain",
     description: "Supply chain optimization with QAOA",
-    source_module: "AXM-L13-MFSC-010",
-    input_schema: {
+    sourceModule: "AXM-L13-MFSC-010",
+    inputSchema: {
       type: "object",
       properties: {
         network: { type: "object" },
@@ -185,15 +187,15 @@ export const L13_TOOLS: ToolDefinition[] = [
       },
       required: ["network"],
     },
-    quantum_enabled: true,
-    fallback_enabled: true,
+    quantumEnabled: true,
+    fallbackEnabled: true,
     priority: 54,
   },
   {
     name: "manufacturing_scheduler",
     description: "Job shop scheduling with quantum annealing",
-    source_module: "AXM-L13-MFSD-011",
-    input_schema: {
+    sourceModule: "AXM-L13-MFSD-011",
+    inputSchema: {
       type: "object",
       properties: {
         jobs: { type: "array", items: { type: "object" } },
@@ -202,15 +204,15 @@ export const L13_TOOLS: ToolDefinition[] = [
       },
       required: ["jobs", "machines"],
     },
-    quantum_enabled: true,
-    fallback_enabled: true,
+    quantumEnabled: true,
+    fallbackEnabled: true,
     priority: 55,
   },
   {
     name: "logistics_routing",
     description: "Vehicle routing problem solver",
-    source_module: "AXM-L13-ROUT-012",
-    input_schema: {
+    sourceModule: "AXM-L13-ROUT-012",
+    inputSchema: {
       type: "object",
       properties: {
         depot: { type: "object" },
@@ -220,15 +222,15 @@ export const L13_TOOLS: ToolDefinition[] = [
       },
       required: ["depot", "deliveries", "vehicles"],
     },
-    quantum_enabled: true,
-    fallback_enabled: true,
+    quantumEnabled: true,
+    fallbackEnabled: true,
     priority: 56,
   },
   {
     name: "energy_grid",
     description: "Smart grid optimization",
-    source_module: "AXM-L13-GRID-013",
-    input_schema: {
+    sourceModule: "AXM-L13-GRID-013",
+    inputSchema: {
       type: "object",
       properties: {
         grid_topology: { type: "object" },
@@ -239,15 +241,15 @@ export const L13_TOOLS: ToolDefinition[] = [
       },
       required: ["grid_topology"],
     },
-    quantum_enabled: true,
-    fallback_enabled: true,
+    quantumEnabled: true,
+    fallbackEnabled: true,
     priority: 57,
   },
   {
     name: "weather_climate",
     description: "Quantum-enhanced weather prediction",
-    source_module: "AXM-L13-CLIM-014",
-    input_schema: {
+    sourceModule: "AXM-L13-CLIM-014",
+    inputSchema: {
       type: "object",
       properties: {
         initial_conditions: { type: "object" },
@@ -257,15 +259,15 @@ export const L13_TOOLS: ToolDefinition[] = [
       },
       required: ["initial_conditions"],
     },
-    quantum_enabled: true,
-    fallback_enabled: true,
+    quantumEnabled: true,
+    fallbackEnabled: true,
     priority: 58,
   },
   {
     name: "aerospace_optimization",
     description: "Trajectory and orbital mechanics optimization",
-    source_module: "AXM-L13-AERO-015",
-    input_schema: {
+    sourceModule: "AXM-L13-AERO-015",
+    inputSchema: {
       type: "object",
       properties: {
         mission: { type: "object" },
@@ -274,8 +276,8 @@ export const L13_TOOLS: ToolDefinition[] = [
       },
       required: ["mission"],
     },
-    quantum_enabled: true,
-    fallback_enabled: true,
+    quantumEnabled: true,
+    fallbackEnabled: true,
     priority: 59,
   },
 ];

@@ -63,7 +63,7 @@ console.log('  All priorities 1-59 present and unique');
 
 // Test 4: Required fields
 console.log('\n✓ Required fields:');
-const requiredFields = ['name', 'description', 'source_module', 'input_schema', 'quantum_enabled', 'priority'];
+const requiredFields = ['name', 'description', 'sourceModule', 'inputSchema', 'quantumEnabled', 'priority'];
 let allValid = true;
 for (const tool of DISSOLVED_TOOLS) {
   for (const field of requiredFields) {
@@ -88,12 +88,12 @@ console.log(`  All ${toolNames.size} tool names are unique`);
 
 // Test 6: Quantum-enabled tools count
 console.log('\n✓ Quantum-enabled tools:');
-const quantumTools = DISSOLVED_TOOLS.filter(t => t.quantum_enabled);
+const quantumTools = DISSOLVED_TOOLS.filter(t => t.quantumEnabled);
 console.log(`  ${quantumTools.length} tools have quantum capability`);
 
 // Test 7: Fallback-enabled tools count
 console.log('\n✓ Fallback-enabled tools:');
-const fallbackTools = DISSOLVED_TOOLS.filter(t => t.fallback_enabled);
+const fallbackTools = DISSOLVED_TOOLS.filter(t => t.fallbackEnabled);
 console.log(`  ${fallbackTools.length} tools have fallback capability (L13 quantum specialized)`);
 
 console.log('\n✅ All validations passed!');

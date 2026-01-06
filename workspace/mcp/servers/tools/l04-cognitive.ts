@@ -10,8 +10,8 @@ export const L04_TOOLS: ToolDefinition[] = [
   {
     name: "cognitive_analysis",
     description: "Deep cognitive processing with transformer architectures",
-    source_module: "AXM-L04-COGN-001",
-    input_schema: {
+    sourceModule: "AXM-L04-COGN-001",
+    inputSchema: {
       type: "object",
       properties: {
         input: { type: "object" },
@@ -21,14 +21,14 @@ export const L04_TOOLS: ToolDefinition[] = [
       },
       required: ["input"],
     },
-    quantum_enabled: true,
+    quantumEnabled: true,
     priority: 14,
   },
   {
     name: "pattern_recognition",
     description: "Multi-architecture pattern detection with ensemble methods",
-    source_module: "AXM-L04-PATT-002",
-    input_schema: {
+    sourceModule: "AXM-L04-PATT-002",
+    inputSchema: {
       type: "object",
       properties: {
         data: { type: "object" },
@@ -38,14 +38,14 @@ export const L04_TOOLS: ToolDefinition[] = [
       },
       required: ["data"],
     },
-    quantum_enabled: true,
+    quantumEnabled: true,
     priority: 15,
   },
   {
     name: "semantic_processor",
     description: "Deep semantic understanding with BERT and GPT integration",
-    source_module: "AXM-L04-SEMA-003",
-    input_schema: {
+    sourceModule: "AXM-L04-SEMA-003",
+    inputSchema: {
       type: "object",
       properties: {
         content: { type: "string" },
@@ -55,14 +55,14 @@ export const L04_TOOLS: ToolDefinition[] = [
       },
       required: ["content"],
     },
-    quantum_enabled: true,
+    quantumEnabled: true,
     priority: 16,
   },
   {
     name: "metacognitive_monitor",
     description: "Self-awareness engine with performance tracking",
-    source_module: "AXM-L04-META-004",
-    input_schema: {
+    sourceModule: "AXM-L04-META-004",
+    inputSchema: {
       type: "object",
       properties: {
         target_system: { type: "string" },
@@ -71,7 +71,7 @@ export const L04_TOOLS: ToolDefinition[] = [
       },
       required: ["target_system"],
     },
-    quantum_enabled: true,
+    quantumEnabled: true,
     priority: 17,
   },
 ];
