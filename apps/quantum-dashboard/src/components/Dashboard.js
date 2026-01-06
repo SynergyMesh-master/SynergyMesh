@@ -14,34 +14,123 @@ import {
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
-function Dashboard() {
-  const [workflows, setWorkflows] = useState([]);
-  const [metrics, setMetrics] = useState([]);
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(true);
+// ============================================================================
+// Sub-components
+// ============================================================================
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        // Fetch workflow statuses
-        const workflowResponse = await axios.get('/api/workflows');
-        setWorkflows(workflowResponse.data);
+/**
+ * WorkflowCard - Displays a single workflow status
+ */
+function WorkflowCard({ workflow }) {
+  const statusColorClass = workflow.status === 'completed' ? 'text-green-600' : 'text-yellow-600';
 
-        // Fetch performance metrics
-        const metricsResponse = await axios.get('/api/performance');
-        setMetrics(metricsResponse.data);
-        setLoading(false);
-      } catch (err) {
-        setError(`Failed to fetch data: ${err.response?.data?.detail || err.message}`);
-        setLoading(false);
-      }
-    };
+  return (
+    <div className="p-4 bg-gray-50 rounded-md shadow-sm border border-gray-200">
+      <h4 className="text-lg font-medium text-gray-800">
+        {workflow.name} (ID: {workflow.workflow_id})
+      </h4>
+      <p className="text-gray-600">
+        Status: <span className={`font-semibold ${statusColorClass}`}>{workflow.status}</span>
+      </p>
+    </div>
+  );
+}
 
-    fetchData();
-  }, []);
+/**
+ * WorkflowSection - Displays all workflows
+ */
+function WorkflowSection({ workflows }) {
+  return (
+    <div className="mb-8">
+      <h3 className="text-xl font-semibold text-gray-700 mb-2">Workflow Status</h3>
+      {workflows.length === 0 ? (
+        <p className="text-gray-500">No workflows found.</p>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {workflows.map((workflow) => (
+            <WorkflowCard key={workflow.workflow_id} workflow={workflow} />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
 
-  // Prepare chart data for runtime visualization
-  const chartData = {
+/**
+ * MetricCard - Displays a single metric
+ */
+function MetricCard({ metric }) {
+  return (
+    <div className="p-4 bg-gray-50 rounded-md shadow-sm border border-gray-200">
+      <h4 className="text-lg font-medium text-gray-800">
+        Workflow {metric.workflow_id} - Task {metric.task_id}
+      </h4>
+      <p className="text-gray-600">Runtime: {metric.runtime.toFixed(2)}s</p>
+      {metric.circuit_depth && (
+        <p className="text-gray-600">Circuit Depth: {metric.circuit_depth}</p>
+      )}
+      {metric.shots && <p className="text-gray-600">Shots: {metric.shots}</p>}
+      <p className="text-gray-500 text-sm">Timestamp: {metric.timestamp}</p>
+    </div>
+  );
+}
+
+/**
+ * MetricsSection - Displays performance metrics with chart
+ */
+function MetricsSection({ metrics, chartData, chartOptions }) {
+  return (
+    <div className="mb-8">
+      <h3 className="text-xl font-semibold text-gray-700 mb-2">Performance Metrics</h3>
+      {metrics.length === 0 ? (
+        <p className="text-gray-500">No metrics available.</p>
+      ) : (
+        <div className="space-y-4">
+          <div className="p-4 bg-gray-50 rounded-md shadow-sm border border-gray-200">
+            <Line data={chartData} options={chartOptions} />
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {metrics.map((metric) => (
+              <MetricCard key={`${metric.workflow_id}-${metric.task_id}`} metric={metric} />
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ============================================================================
+// Chart configuration
+// ============================================================================
+
+const CHART_OPTIONS = {
+  responsive: true,
+  plugins: {
+    legend: {
+      position: 'top',
+    },
+    title: {
+      display: true,
+      text: 'Workflow Performance Metrics',
+    },
+  },
+  scales: {
+    y: {
+      beginAtZero: true,
+      title: {
+        display: true,
+        text: 'Value',
+      },
+    },
+  },
+};
+
+/**
+ * Builds chart data from metrics
+ */
+function buildChartData(metrics) {
+  return {
     labels: metrics.map((m) => `Task ${m.task_id}`),
     datasets: [
       {
@@ -60,28 +149,38 @@ function Dashboard() {
       },
     ],
   };
+}
 
-  const chartOptions = {
-    responsive: true,
-    plugins: {
-      legend: {
-        position: 'top',
-      },
-      title: {
-        display: true,
-        text: 'Workflow Performance Metrics',
-      },
-    },
-    scales: {
-      y: {
-        beginAtZero: true,
-        title: {
-          display: true,
-          text: 'Value',
-        },
-      },
-    },
-  };
+// ============================================================================
+// Main component
+// ============================================================================
+
+function Dashboard() {
+  const [workflows, setWorkflows] = useState([]);
+  const [metrics, setMetrics] = useState([]);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [workflowResponse, metricsResponse] = await Promise.all([
+          axios.get('/api/workflows'),
+          axios.get('/api/performance'),
+        ]);
+        setWorkflows(workflowResponse.data);
+        setMetrics(metricsResponse.data);
+      } catch (err) {
+        setError(`Failed to fetch data: ${err.response?.data?.detail || err.message}`);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const chartData = buildChartData(metrics);
 
   return (
     <div className="p-6 bg-white rounded-lg shadow-md max-w-4xl mx-auto">
@@ -90,68 +189,8 @@ function Dashboard() {
       {loading && <div className="text-gray-600">Loading...</div>}
       {error && <div className="text-red-600 mb-4">{error}</div>}
 
-      {/* Workflow Status Section */}
-      <div className="mb-8">
-        <h3 className="text-xl font-semibold text-gray-700 mb-2">Workflow Status</h3>
-        {workflows.length === 0 ? (
-          <p className="text-gray-500">No workflows found.</p>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {workflows.map((workflow) => (
-              <div
-                key={workflow.workflow_id}
-                className="p-4 bg-gray-50 rounded-md shadow-sm border border-gray-200"
-              >
-                <h4 className="text-lg font-medium text-gray-800">
-                  {workflow.name} (ID: {workflow.workflow_id})
-                </h4>
-                <p className="text-gray-600">
-                  Status:{' '}
-                  <span
-                    className={`font-semibold ${
-                      workflow.status === 'completed' ? 'text-green-600' : 'text-yellow-600'
-                    }`}
-                  >
-                    {workflow.status}
-                  </span>
-                </p>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
-
-      {/* Performance Metrics Section */}
-      <div className="mb-8">
-        <h3 className="text-xl font-semibold text-gray-700 mb-2">Performance Metrics</h3>
-        {metrics.length === 0 ? (
-          <p className="text-gray-500">No metrics available.</p>
-        ) : (
-          <div className="space-y-4">
-            <div className="p-4 bg-gray-50 rounded-md shadow-sm border border-gray-200">
-              <Line data={chartData} options={chartOptions} />
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {metrics.map((metric) => (
-                <div
-                  key={`${metric.workflow_id}-${metric.task_id}`}
-                  className="p-4 bg-gray-50 rounded-md shadow-sm border border-gray-200"
-                >
-                  <h4 className="text-lg font-medium text-gray-800">
-                    Workflow {metric.workflow_id} - Task {metric.task_id}
-                  </h4>
-                  <p className="text-gray-600">Runtime: {metric.runtime.toFixed(2)}s</p>
-                  {metric.circuit_depth && (
-                    <p className="text-gray-600">Circuit Depth: {metric.circuit_depth}</p>
-                  )}
-                  {metric.shots && <p className="text-gray-600">Shots: {metric.shots}</p>}
-                  <p className="text-gray-500 text-sm">Timestamp: {metric.timestamp}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-      </div>
+      <WorkflowSection workflows={workflows} />
+      <MetricsSection metrics={metrics} chartData={chartData} chartOptions={CHART_OPTIONS} />
     </div>
   );
 }
