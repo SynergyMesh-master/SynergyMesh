@@ -8,6 +8,7 @@
     "quantum_enabled": true
   },
   "timestamp": "2026-01-06T23:06:08.132219Z",
+  "timestamp": "2026-01-06T23:12:01.353060Z",
   "analysis_scope": "entire",
   "quantum_metrics": {
     "enabled": true,
@@ -34,6 +35,21 @@
       }
     },
     "average_fidelity": 0.9845814174713853
+        "energy": -0.7453573265003,
+        "fidelity": 0.9689327615888055
+      },
+      "QAOA": {
+        "algo": "QAOA",
+        "opt": 0.849125025190055,
+        "fidelity": 0.9523389582574022
+      },
+      "QML": {
+        "algo": "QML",
+        "acc": 0.9292807084481,
+        "fidelity": 0.9464811046880021
+      }
+    },
+    "average_fidelity": 0.9559176081780699
   },
   "workspace_validation": {
     "yaml_files": [
@@ -255,6 +271,7 @@
         "errors": [],
         "warnings": [],
         "line_count": 776
+        "line_count": 775
       },
       {
         "file": "workspace/mcp/tools/load_unified_pipeline.py",
@@ -286,6 +303,7 @@
         "file": "workspace/mcp/workspace_mcp_validation_report.md",
         "valid": true,
         "line_count": 124
+        "line_count": 139
       },
       {
         "file": "workspace/mcp/README.md",
@@ -475,14 +493,9 @@
     "todo_list": {
       "high_priority": [
         {
-          "task": "Fix TypeScript syntax issues in axiom-dissolved-server.ts",
-          "priority": "critical",
-          "estimated_effort": "1-2 hours"
-        },
-        {
-          "task": "Remove duplicate imports and declarations",
+          "task": "Fix YAML multi-document syntax in config files",
           "priority": "high",
-          "estimated_effort": "30 minutes"
+          "estimated_effort": "2-3 hours"
         },
         {
           "task": "Add comprehensive TypeScript linting",
@@ -506,7 +519,7 @@
     "diagnostics": {
       "known_issues": [
         {
-          "issue": "Duplicate type declarations in axiom-dissolved-server.ts",
+          "issue": "YAML files with multiple documents in single stream",
           "severity": "medium",
           "fix_priority": "high"
         },
