@@ -1,4 +1,4 @@
-# PR #1063 Summary — docs: add PR1023 architecture research and layer validation script
+# PR #1063 Summary — docs: add PR #1023 architecture research and layer validation script
 
 - **Purpose:** Capture the architecture research for PR #1023, update the documentation index, and add a validation script to verify L4–L8 artifacts introduced in that PR.
 - **Key changes:**
