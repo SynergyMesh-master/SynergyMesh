@@ -25,4 +25,5 @@ export interface PromptDefinition {
   name: string;
   description: string;
   arguments: Array<{ name: string; description: string; required: boolean }>;
+  template: (args?: Record<string, unknown>) => string;
 }
