@@ -1384,7 +1384,7 @@ server.setRequestHandler(ReadResourceRequestSchema, async (request) => {
   const uriParts = uri.split("/");
   const layerId = uriParts.length > 0 ? uriParts[uriParts.length - 1] : null;
   
-  if (!layerId) {
+  if (!layerId || layerId.trim() === '') {
     throw new Error(`Invalid URI format: Unable to extract layer ID from ${uri}`);
   }
   
