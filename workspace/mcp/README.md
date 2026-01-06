@@ -232,6 +232,64 @@ if is_instant_mode(manifest):
 | AUTONOMY_LEVEL | validate-autonomy.py | 5s | escalate-to-governance |
 | LATENCY_COMPLIANCE | latency-monitor.py | real-time | auto-optimize |
 
+## 實測指標 / Test Metrics
+
+### Latency Benchmarks
+
+| Metric | Target | P50 | P95 | P99 |
+|--------|--------|-----|-----|-----|
+| Instant Operations | ≤100ms | - | - | - |
+| Fast Operations | ≤500ms | - | - | - |
+| Standard Operations | ≤5s | - | - | - |
+| Full Stack Deployment | ≤3min | - | - | - |
+
+> **Note**: Actual metrics populated by CI observability pipeline. See `docs/ci/MCP_WORKFLOW_OBSERVABILITY.md`.
+
+### Test Coverage
+
+| Component | Unit Tests | Integration | Status |
+|-----------|------------|-------------|--------|
+| Pipeline Loader | 24 tests | ✅ | Passing |
+| Governance Validators | 3 scripts | ✅ | Implemented |
+| MCP Servers | - | - | Pending |
+
+## 運行手冊 / Operation Manual
+
+### Running Governance Validators
+
+```bash
+# Validate INSTANT execution standards
+python workspace/src/governance/scripts/vision-tracker.py \
+  --config workspace/mcp/pipelines/unified-pipeline-config.yaml --verbose
+
+# Validate autonomy levels
+python workspace/src/governance/scripts/validate-autonomy.py \
+  --config workspace/mcp/pipelines/unified-pipeline-config.yaml --verbose
+
+# Monitor latency compliance
+python workspace/src/governance/scripts/latency-monitor.py \
+  --config workspace/mcp/pipelines/unified-pipeline-config.yaml --verbose
+```
+
+### Running Pipeline Loader Tests
+
+```bash
+cd workspace && python -m pytest tests/test_unified_pipeline_loader.py -v
+```
+
+### MCP Server Operations
+
+```bash
+# Start MCP servers
+cd workspace/src/mcp-servers && npm start
+
+# Run linting (strict mode)
+npm run lint
+
+# Run tests
+npm test
+```
+
 ## Version History
 
 ### v3.0.0 (2026-01-06)

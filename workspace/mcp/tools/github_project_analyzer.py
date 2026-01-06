@@ -580,7 +580,50 @@ class GitHubProjectAnalyzer:
                 "governance_validators": self._local_scan_results.get("governance_scripts", []) if self._local_scan_results else [],
                 "integration_status": "production",
             },
+            "community_health": self._get_community_metrics(),
+            "dependency_management": {
+                "npm_packages": self._count_npm_packages(),
+                "python_requirements": self._count_python_requirements(),
+                "vulnerability_scanning": "recommended",
+                "auto_updates": "dependabot recommended",
+            },
         }
+
+    def _get_community_metrics(self) -> Dict[str, Any]:
+        """Get community and contributor metrics."""
+        stats = self._get_repo_stats()
+        
+        return {
+            "contributors": stats.get("network_count", "N/A"),
+            "watchers": stats.get("subscribers_count", "N/A"),
+            "stars": stats.get("stargazers_count", "N/A"),
+            "forks": stats.get("forks_count", "N/A"),
+            "open_issues": stats.get("open_issues_count", "N/A"),
+            "activity_status": "active" if stats.get("pushed_at") else "unknown",
+            "note": "Use GitHub Insights for detailed contributor analytics",
+        }
+
+    def _count_npm_packages(self) -> int:
+        """Count npm package.json files in local scan."""
+        if not self._local_scan_results or not self.config.local_path:
+            return 0
+        
+        local_path = Path(self.config.local_path)
+        try:
+            return len(list(local_path.rglob("package.json")))
+        except Exception:
+            return 0
+
+    def _count_python_requirements(self) -> int:
+        """Count Python requirements files in local scan."""
+        if not self._local_scan_results or not self.config.local_path:
+            return 0
+        
+        local_path = Path(self.config.local_path)
+        try:
+            return len(list(local_path.rglob("requirements*.txt")))
+        except Exception:
+            return 0
 
     def generate_markdown_report(self, analysis: Dict[str, Any]) -> str:
         """生成Markdown報告"""
