@@ -68,8 +68,7 @@ spec:
   pipelines:
     - name: quantum_validation
       type: validation
-      entrypoint: tools/validation/validate_pr1063_layers.py
-      # Shim entrypoint: validate_pr1064_layers.py delegates to validate_pr1023_layers.py
+      # Validation entrypoint (PR1064 shim that delegates to base validation logic)
       entrypoint: tools/validation/validate_pr1064_layers.py
       worldClassValidationRef: workspace/config/validation/world-class-validation.yaml
       latency: 10000
@@ -233,20 +232,25 @@ spec:
 
   # ========================================
   # 治理驗證 - Governance Validation
+  # NOTE: Some validator scripts referenced here are future integration points.
+  # Use `implementationStatus` to distinguish between implemented and planned paths.
   # ========================================
   governanceValidation:
     - standard: INSTANT_EXECUTION
       validator: vision-tracker.py
+      implementationStatus: planned  # Validator script not yet implemented
       checkInterval: 1000
       criteria: ["latency_compliance", "parallelism_level", "autonomy_degree"]
       failureAction: auto-alert
     - standard: AUTONOMY_LEVEL
       validator: validate-autonomy.py
+      implementationStatus: planned  # Validator script not yet implemented
       checkInterval: 5000
       criteria: ["human_intervention_count", "auto_rollback_success", "self_healing_success"]
       failureAction: escalate-to-governance
     - standard: LATENCY_COMPLIANCE
       validator: latency-monitor.py
+      implementationStatus: planned  # Validator script not yet implemented
       checkInterval: 0
       criteria: ["all_stages_within_threshold", "total_latency_compliant", "no_bottlenecks"]
       failureAction: auto-optimize

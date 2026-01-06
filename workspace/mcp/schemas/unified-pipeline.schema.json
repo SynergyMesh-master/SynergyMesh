@@ -26,7 +26,11 @@
           "properties": {
             "tier": { "type": "string", "enum": ["production", "staging", "development"] },
             "evolution": { "type": "string" },
-            "humanIntervention": { "type": "string", "pattern": "^[0-9]+$" }
+            "humanIntervention": {
+              "type": "string",
+              "pattern": "^[0-9]+$",
+              "description": "Human intervention count as string for labels (e.g., '0'). Note: In instantPipelines, humanIntervention is an integer const 0."
+            }
           },
           "additionalProperties": true
         },
@@ -75,7 +79,12 @@
           "type": "object",
           "required": ["maxParallelAgents", "taskDecomposition", "resourceArbitration", "loadBalancing", "syncBarrier"],
           "properties": {
-            "maxParallelAgents": { "type": "integer", "minimum": 1, "maximum": 1024 },
+            "maxParallelAgents": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 1024,
+              "description": "Maximum parallel agents. Schema allows up to 1024 for Standard/Hybrid modes. INSTANT-Autonomous mode enforces runtime max of 256 via validation."
+            },
             "minParallelAgents": { "type": "integer", "minimum": 1 },
             "taskDecomposition": { "type": "string" },
             "resourceArbitration": { "type": "string" },
@@ -152,7 +161,11 @@
               "name": { "type": "string" },
               "description": { "type": "string" },
               "totalLatencyTarget": { "type": "integer", "minimum": 0 },
-              "humanIntervention": { "type": "integer", "const": 0 },
+              "humanIntervention": {
+                "type": "integer",
+                "const": 0,
+                "description": "Must be 0 for INSTANT pipelines (zero human intervention). Note: In metadata.labels, humanIntervention is a string for flexibility."
+              },
               "successRateTarget": { "type": "number", "minimum": 0, "maximum": 100 },
               "stages": {
                 "type": "array",
@@ -246,6 +259,11 @@
             "properties": {
               "standard": { "type": "string" },
               "validator": { "type": "string" },
+              "implementationStatus": {
+                "type": "string",
+                "enum": ["implemented", "planned"],
+                "description": "Indicates if the validator is implemented or planned for future development"
+              },
               "checkInterval": { "type": "integer", "minimum": 0 },
               "criteria": {
                 "type": "array",

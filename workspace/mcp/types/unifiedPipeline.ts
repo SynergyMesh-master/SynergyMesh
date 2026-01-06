@@ -97,7 +97,7 @@ export interface InstantPipeline {
   name: string;
   description?: string;
   totalLatencyTarget: number;
-  humanIntervention: 0;  // Must always be 0 for INSTANT mode
+  humanIntervention: 0;
   successRateTarget: number;
   stages: InstantPipelineStage[];
 }
@@ -148,12 +148,20 @@ export interface AutoHealing {
 // ========================================
 // Governance Validation
 // ========================================
+/**
+ * Governance validation rule configuration.
+ *
+ * The implementationStatus field indicates whether the validator script is
+ * currently implemented or planned for future development.
+ */
 export interface GovernanceValidationRule {
   standard: string;
   validator: string;
   checkInterval: number;
   criteria: string[];
   failureAction: string;
+  /** Indicates if the validator is implemented or planned */
+  implementationStatus?: "implemented" | "planned";
 }
 
 // ========================================
@@ -234,6 +242,17 @@ export function isV3Pipeline(pipeline: UnifiedPipeline): boolean {
 // ========================================
 // INSTANT Execution Constants
 // ========================================
+/**
+ * Runtime constants for INSTANT execution mode validation.
+ *
+ * Note on schema vs runtime constraints:
+ * - The JSON schema allows maxParallelAgents up to 1024 to support future
+ *   scaling and non-INSTANT pipeline modes (Standard, Hybrid).
+ * - For INSTANT-Autonomous mode, the runtime maximum is 256 agents.
+ * - The schema's higher maximum provides flexibility for infrastructure
+ *   that may scale beyond current INSTANT requirements while maintaining
+ *   backward compatibility.
+ */
 export const INSTANT_EXECUTION_STANDARDS = {
   MAX_LATENCY_INSTANT: 100,      // ms
   MAX_LATENCY_FAST: 500,         // ms
@@ -241,7 +260,7 @@ export const INSTANT_EXECUTION_STANDARDS = {
   MAX_STAGE_LATENCY: 30000,      // ms
   MAX_TOTAL_LATENCY: 180000,     // ms (3 minutes)
   MIN_PARALLEL_AGENTS: 64,
-  MAX_PARALLEL_AGENTS: 256,
+  MAX_PARALLEL_AGENTS: 256,      // Runtime max for INSTANT mode (schema allows 1024)
   HUMAN_INTERVENTION: 0,
   SUCCESS_RATE_FEATURE: 95,      // %
   SUCCESS_RATE_FIX: 90,          // %
