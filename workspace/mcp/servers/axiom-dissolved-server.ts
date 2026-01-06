@@ -27,10 +27,10 @@ import {
 interface ToolDefinition {
   name: string;
   description: string;
-  source_module: string;
-  input_schema: object;
-  quantum_enabled: boolean;
-  fallback_enabled?: boolean;
+  sourceModule: string;
+  inputSchema: object;
+  quantumEnabled: boolean;
+  fallbackEnabled?: boolean;
   priority: number;
 }
 
@@ -38,7 +38,7 @@ interface ResourceDefinition {
   uri: string;
   name: string;
   description: string;
-  mime_type: string;
+  mimeType: string;
   metadata: object;
 }
 
@@ -58,8 +58,8 @@ const DISSOLVED_TOOLS: ToolDefinition[] = [
   {
     name: "bootstrap_core",
     description: "Platform initialization and quantum backend discovery",
-    source_module: "AXM-L00-BOOT-001",
-    input_schema: {
+    sourceModule: "AXM-L00-BOOT-001",
+    inputSchema: {
       type: "object",
       properties: {
         backend_type: {
@@ -72,14 +72,14 @@ const DISSOLVED_TOOLS: ToolDefinition[] = [
       },
       required: ["backend_type"],
     },
-    quantum_enabled: true,
+    quantumEnabled: true,
     priority: 1,
   },
   {
     name: "kernel_compute",
     description: "High-performance quantum-classical compute orchestration",
-    source_module: "AXM-L00-KERN-002",
-    input_schema: {
+    sourceModule: "AXM-L00-KERN-002",
+    inputSchema: {
       type: "object",
       properties: {
         circuit: { type: "object", description: "Quantum circuit to execute" },
@@ -88,14 +88,14 @@ const DISSOLVED_TOOLS: ToolDefinition[] = [
       },
       required: ["circuit"],
     },
-    quantum_enabled: true,
+    quantumEnabled: true,
     priority: 2,
   },
   {
     name: "emergency_override",
     description: "Multi-level emergency shutdown and recovery system",
-    source_module: "AXM-L00-EMER-003",
-    input_schema: {
+    sourceModule: "AXM-L00-EMER-003",
+    inputSchema: {
       type: "object",
       properties: {
         action: { type: "string", enum: ["initiate_shutdown", "trigger_recovery", "check_status"] },
@@ -105,14 +105,14 @@ const DISSOLVED_TOOLS: ToolDefinition[] = [
       },
       required: ["action"],
     },
-    quantum_enabled: false,
+    quantumEnabled: false,
     priority: 3,
   },
   {
     name: "resource_scheduler",
     description: "Quantum-aware resource scheduling with deadline priorities",
-    source_module: "AXM-L00-SCHD-004",
-    input_schema: {
+    sourceModule: "AXM-L00-SCHD-004",
+    inputSchema: {
       type: "object",
       properties: {
         jobs: { type: "array", items: { type: "object" } },
@@ -124,14 +124,14 @@ const DISSOLVED_TOOLS: ToolDefinition[] = [
       },
       required: ["jobs"],
     },
-    quantum_enabled: true,
+    quantumEnabled: true,
     priority: 4,
   },
   {
     name: "memory_allocator",
     description: "Quantum coherence-aware memory management",
-    source_module: "AXM-L00-MEML-005",
-    input_schema: {
+    sourceModule: "AXM-L00-MEML-005",
+    inputSchema: {
       type: "object",
       properties: {
         action: { type: "string", enum: ["allocate", "deallocate", "query", "optimize"] },
@@ -140,7 +140,7 @@ const DISSOLVED_TOOLS: ToolDefinition[] = [
       },
       required: ["action"],
     },
-    quantum_enabled: true,
+    quantumEnabled: true,
     priority: 5,
   },
 
@@ -148,8 +148,8 @@ const DISSOLVED_TOOLS: ToolDefinition[] = [
   {
     name: "language_core",
     description: "Quantum-enhanced NLP with BERT and transformer models",
-    source_module: "AXM-L01-LANG-001",
-    input_schema: {
+    sourceModule: "AXM-L01-LANG-001",
+    inputSchema: {
       type: "object",
       properties: {
         text: { type: "string" },
@@ -160,14 +160,14 @@ const DISSOLVED_TOOLS: ToolDefinition[] = [
       },
       required: ["text", "operation"],
     },
-    quantum_enabled: true,
+    quantumEnabled: true,
     priority: 6,
   },
   {
     name: "language_advanced",
     description: "Advanced semantic analysis with quantum coherence",
-    source_module: "AXM-L01-LADV-002",
-    input_schema: {
+    sourceModule: "AXM-L01-LADV-002",
+    inputSchema: {
       type: "object",
       properties: {
         text: { type: "string" },
@@ -180,7 +180,7 @@ const DISSOLVED_TOOLS: ToolDefinition[] = [
       },
       required: ["text", "analysis_type"],
     },
-    quantum_enabled: true,
+    quantumEnabled: true,
     priority: 7,
   },
 
@@ -188,8 +188,8 @@ const DISSOLVED_TOOLS: ToolDefinition[] = [
   {
     name: "input_quantum",
     description: "Quantum state preparation and multimodal input processing",
-    source_module: "AXM-L02-INPQ-001",
-    input_schema: {
+    sourceModule: "AXM-L02-INPQ-001",
+    inputSchema: {
       type: "object",
       properties: {
         data: { type: "object" },
@@ -199,14 +199,14 @@ const DISSOLVED_TOOLS: ToolDefinition[] = [
       },
       required: ["data"],
     },
-    quantum_enabled: true,
+    quantumEnabled: true,
     priority: 8,
   },
   {
     name: "data_validator",
     description: "Comprehensive validation with quality scoring",
-    source_module: "AXM-L02-VALD-002",
-    input_schema: {
+    sourceModule: "AXM-L02-VALD-002",
+    inputSchema: {
       type: "object",
       properties: {
         data: { type: "object" },
@@ -216,14 +216,14 @@ const DISSOLVED_TOOLS: ToolDefinition[] = [
       },
       required: ["data"],
     },
-    quantum_enabled: false,
+    quantumEnabled: false,
     priority: 9,
   },
   {
     name: "multimodal_processor",
     description: "Cross-modal fusion with attention mechanisms",
-    source_module: "AXM-L02-MULT-003",
-    input_schema: {
+    sourceModule: "AXM-L02-MULT-003",
+    inputSchema: {
       type: "object",
       properties: {
         inputs: { type: "object" },
@@ -235,7 +235,7 @@ const DISSOLVED_TOOLS: ToolDefinition[] = [
       },
       required: ["inputs"],
     },
-    quantum_enabled: true,
+    quantumEnabled: true,
     priority: 10,
   },
 
@@ -243,8 +243,8 @@ const DISSOLVED_TOOLS: ToolDefinition[] = [
   {
     name: "protocol_routing",
     description: "ML-based intelligent routing with quantum optimization",
-    source_module: "AXM-L03-PROT-001",
-    input_schema: {
+    sourceModule: "AXM-L03-PROT-001",
+    inputSchema: {
       type: "object",
       properties: {
         source: { type: "string" },
@@ -257,14 +257,14 @@ const DISSOLVED_TOOLS: ToolDefinition[] = [
       },
       required: ["source", "destination"],
     },
-    quantum_enabled: true,
+    quantumEnabled: true,
     priority: 11,
   },
   {
     name: "load_balancer",
     description: "Adaptive load balancing with circuit breaker patterns",
-    source_module: "AXM-L03-LOAD-002",
-    input_schema: {
+    sourceModule: "AXM-L03-LOAD-002",
+    inputSchema: {
       type: "object",
       properties: {
         service: { type: "string" },
@@ -274,14 +274,14 @@ const DISSOLVED_TOOLS: ToolDefinition[] = [
       },
       required: ["service", "request"],
     },
-    quantum_enabled: true,
+    quantumEnabled: true,
     priority: 12,
   },
   {
     name: "adaptive_router",
     description: "Reinforcement learning-based routing optimization",
-    source_module: "AXM-L03-ADPT-003",
-    input_schema: {
+    sourceModule: "AXM-L03-ADPT-003",
+    inputSchema: {
       type: "object",
       properties: {
         network_state: { type: "object" },
@@ -291,7 +291,7 @@ const DISSOLVED_TOOLS: ToolDefinition[] = [
       },
       required: ["network_state"],
     },
-    quantum_enabled: true,
+    quantumEnabled: true,
     priority: 13,
   },
 
@@ -299,8 +299,8 @@ const DISSOLVED_TOOLS: ToolDefinition[] = [
   {
     name: "cognitive_analysis",
     description: "Deep cognitive processing with transformer architectures",
-    source_module: "AXM-L04-COGN-001",
-    input_schema: {
+    sourceModule: "AXM-L04-COGN-001",
+    inputSchema: {
       type: "object",
       properties: {
         input: { type: "object" },
@@ -310,14 +310,14 @@ const DISSOLVED_TOOLS: ToolDefinition[] = [
       },
       required: ["input"],
     },
-    quantum_enabled: true,
+    quantumEnabled: true,
     priority: 14,
   },
   {
     name: "pattern_recognition",
     description: "Multi-architecture pattern detection with ensemble methods",
-    source_module: "AXM-L04-PATT-002",
-    input_schema: {
+    sourceModule: "AXM-L04-PATT-002",
+    inputSchema: {
       type: "object",
       properties: {
         data: { type: "object" },
@@ -327,14 +327,14 @@ const DISSOLVED_TOOLS: ToolDefinition[] = [
       },
       required: ["data"],
     },
-    quantum_enabled: true,
+    quantumEnabled: true,
     priority: 15,
   },
   {
     name: "semantic_processor",
     description: "Deep semantic understanding with BERT and GPT integration",
-    source_module: "AXM-L04-SEMA-003",
-    input_schema: {
+    sourceModule: "AXM-L04-SEMA-003",
+    inputSchema: {
       type: "object",
       properties: {
         content: { type: "string" },
@@ -344,14 +344,14 @@ const DISSOLVED_TOOLS: ToolDefinition[] = [
       },
       required: ["content"],
     },
-    quantum_enabled: true,
+    quantumEnabled: true,
     priority: 16,
   },
   {
     name: "metacognitive_monitor",
     description: "Self-awareness engine with performance tracking",
-    source_module: "AXM-L04-META-004",
-    input_schema: {
+    sourceModule: "AXM-L04-META-004",
+    inputSchema: {
       type: "object",
       properties: {
         target_system: { type: "string" },
@@ -360,7 +360,7 @@ const DISSOLVED_TOOLS: ToolDefinition[] = [
       },
       required: ["target_system"],
     },
-    quantum_enabled: true,
+    quantumEnabled: true,
     priority: 17,
   },
 
@@ -368,8 +368,8 @@ const DISSOLVED_TOOLS: ToolDefinition[] = [
   {
     name: "ethics_governance",
     description: "Policy evaluation framework with audit logging",
-    source_module: "AXM-L05-ETHG-001",
-    input_schema: {
+    sourceModule: "AXM-L05-ETHG-001",
+    inputSchema: {
       type: "object",
       properties: {
         action: { type: "object" },
@@ -378,14 +378,14 @@ const DISSOLVED_TOOLS: ToolDefinition[] = [
       },
       required: ["action"],
     },
-    quantum_enabled: false,
+    quantumEnabled: false,
     priority: 18,
   },
   {
     name: "bias_detector",
     description: "Multi-algorithm bias detection system",
-    source_module: "AXM-L05-BIAS-002",
-    input_schema: {
+    sourceModule: "AXM-L05-BIAS-002",
+    inputSchema: {
       type: "object",
       properties: {
         model_or_data: { type: "object" },
@@ -394,14 +394,14 @@ const DISSOLVED_TOOLS: ToolDefinition[] = [
       },
       required: ["model_or_data", "protected_attributes"],
     },
-    quantum_enabled: false,
+    quantumEnabled: false,
     priority: 19,
   },
   {
     name: "fairness_optimizer",
     description: "Adversarial debiasing with dual network architecture",
-    source_module: "AXM-L05-FAIR-003",
-    input_schema: {
+    sourceModule: "AXM-L05-FAIR-003",
+    inputSchema: {
       type: "object",
       properties: {
         model: { type: "object" },
@@ -410,7 +410,7 @@ const DISSOLVED_TOOLS: ToolDefinition[] = [
       },
       required: ["model", "fairness_constraints"],
     },
-    quantum_enabled: false,
+    quantumEnabled: false,
     priority: 20,
   },
 
@@ -418,8 +418,8 @@ const DISSOLVED_TOOLS: ToolDefinition[] = [
   {
     name: "collaboration_integration",
     description: "Multi-agent orchestration with circuit breaker patterns",
-    source_module: "AXM-L06-COLL-001",
-    input_schema: {
+    sourceModule: "AXM-L06-COLL-001",
+    inputSchema: {
       type: "object",
       properties: {
         agents: { type: "array", items: { type: "object" } },
@@ -431,14 +431,14 @@ const DISSOLVED_TOOLS: ToolDefinition[] = [
       },
       required: ["agents", "task"],
     },
-    quantum_enabled: true,
+    quantumEnabled: true,
     priority: 21,
   },
   {
     name: "api_orchestrator",
     description: "API gateway with rate limiting and authentication",
-    source_module: "AXM-L06-APIS-002",
-    input_schema: {
+    sourceModule: "AXM-L06-APIS-002",
+    inputSchema: {
       type: "object",
       properties: {
         endpoint: { type: "string" },
@@ -448,14 +448,14 @@ const DISSOLVED_TOOLS: ToolDefinition[] = [
       },
       required: ["endpoint", "method"],
     },
-    quantum_enabled: false,
+    quantumEnabled: false,
     priority: 22,
   },
   {
     name: "workflow_engine",
     description: "Temporal-based workflow orchestration",
-    source_module: "AXM-L06-WORK-003",
-    input_schema: {
+    sourceModule: "AXM-L06-WORK-003",
+    inputSchema: {
       type: "object",
       properties: {
         workflow_definition: { type: "object" },
@@ -464,7 +464,7 @@ const DISSOLVED_TOOLS: ToolDefinition[] = [
       },
       required: ["workflow_definition"],
     },
-    quantum_enabled: true,
+    quantumEnabled: true,
     priority: 23,
   },
 
@@ -472,8 +472,8 @@ const DISSOLVED_TOOLS: ToolDefinition[] = [
   {
     name: "logical_reasoning",
     description: "First-order logic with neural-symbolic reasoning",
-    source_module: "AXM-L07-LOGI-001",
-    input_schema: {
+    sourceModule: "AXM-L07-LOGI-001",
+    inputSchema: {
       type: "object",
       properties: {
         premises: { type: "array", items: { type: "string" } },
@@ -483,14 +483,14 @@ const DISSOLVED_TOOLS: ToolDefinition[] = [
       },
       required: ["premises", "query"],
     },
-    quantum_enabled: true,
+    quantumEnabled: true,
     priority: 24,
   },
   {
     name: "inference_engine",
     description: "Hybrid inference with theorem proving",
-    source_module: "AXM-L07-INFR-002",
-    input_schema: {
+    sourceModule: "AXM-L07-INFR-002",
+    inputSchema: {
       type: "object",
       properties: {
         knowledge_base: { type: "object" },
@@ -503,14 +503,14 @@ const DISSOLVED_TOOLS: ToolDefinition[] = [
       },
       required: ["knowledge_base", "query"],
     },
-    quantum_enabled: true,
+    quantumEnabled: true,
     priority: 25,
   },
   {
     name: "knowledge_graph",
     description: "Graph neural network with Neo4j backend",
-    source_module: "AXM-L07-KNOW-003",
-    input_schema: {
+    sourceModule: "AXM-L07-KNOW-003",
+    inputSchema: {
       type: "object",
       properties: {
         operation: { type: "string", enum: ["query", "insert", "update", "delete", "traverse", "embed"] },
@@ -520,7 +520,7 @@ const DISSOLVED_TOOLS: ToolDefinition[] = [
       },
       required: ["operation"],
     },
-    quantum_enabled: true,
+    quantumEnabled: true,
     priority: 26,
   },
 
@@ -528,8 +528,8 @@ const DISSOLVED_TOOLS: ToolDefinition[] = [
   {
     name: "emotion_content",
     description: "BERT-based emotion classification with Plutchik model",
-    source_module: "AXM-L08-EMOT-001",
-    input_schema: {
+    sourceModule: "AXM-L08-EMOT-001",
+    inputSchema: {
       type: "object",
       properties: {
         text: { type: "string" },
@@ -538,14 +538,14 @@ const DISSOLVED_TOOLS: ToolDefinition[] = [
       },
       required: ["text"],
     },
-    quantum_enabled: true,
+    quantumEnabled: true,
     priority: 27,
   },
   {
     name: "tone_adjuster",
     description: "Neural tone transformation with style transfer",
-    source_module: "AXM-L08-TONE-002",
-    input_schema: {
+    sourceModule: "AXM-L08-TONE-002",
+    inputSchema: {
       type: "object",
       properties: {
         text: { type: "string" },
@@ -558,14 +558,14 @@ const DISSOLVED_TOOLS: ToolDefinition[] = [
       },
       required: ["text", "target_tone"],
     },
-    quantum_enabled: false,
+    quantumEnabled: false,
     priority: 28,
   },
   {
     name: "empathy_engine",
     description: "Computational empathy with Theory of Mind",
-    source_module: "AXM-L08-EMPA-003",
-    input_schema: {
+    sourceModule: "AXM-L08-EMPA-003",
+    inputSchema: {
       type: "object",
       properties: {
         context: { type: "object" },
@@ -577,7 +577,7 @@ const DISSOLVED_TOOLS: ToolDefinition[] = [
       },
       required: ["context"],
     },
-    quantum_enabled: false,
+    quantumEnabled: false,
     priority: 29,
   },
 
@@ -585,8 +585,8 @@ const DISSOLVED_TOOLS: ToolDefinition[] = [
   {
     name: "output_quality",
     description: "Quantum-enhanced output scoring and optimization",
-    source_module: "AXM-L09-OUTQ-001",
-    input_schema: {
+    sourceModule: "AXM-L09-OUTQ-001",
+    inputSchema: {
       type: "object",
       properties: {
         output: { type: "object" },
@@ -596,14 +596,14 @@ const DISSOLVED_TOOLS: ToolDefinition[] = [
       },
       required: ["output"],
     },
-    quantum_enabled: true,
+    quantumEnabled: true,
     priority: 30,
   },
   {
     name: "format_optimizer",
     description: "Multi-format optimization with compression",
-    source_module: "AXM-L09-FORM-002",
-    input_schema: {
+    sourceModule: "AXM-L09-FORM-002",
+    inputSchema: {
       type: "object",
       properties: {
         content: { type: "object" },
@@ -613,14 +613,14 @@ const DISSOLVED_TOOLS: ToolDefinition[] = [
       },
       required: ["content", "target_format"],
     },
-    quantum_enabled: true,
+    quantumEnabled: true,
     priority: 31,
   },
   {
     name: "grammar_checker",
     description: "Multi-language grammar validation",
-    source_module: "AXM-L09-GRAM-003",
-    input_schema: {
+    sourceModule: "AXM-L09-GRAM-003",
+    inputSchema: {
       type: "object",
       properties: {
         text: { type: "string" },
@@ -630,7 +630,7 @@ const DISSOLVED_TOOLS: ToolDefinition[] = [
       },
       required: ["text"],
     },
-    quantum_enabled: true,
+    quantumEnabled: true,
     priority: 32,
   },
 
@@ -638,8 +638,8 @@ const DISSOLVED_TOOLS: ToolDefinition[] = [
   {
     name: "system_governance",
     description: "System-wide policy enforcement with OPA",
-    source_module: "AXM-L10-GOVN-001",
-    input_schema: {
+    sourceModule: "AXM-L10-GOVN-001",
+    inputSchema: {
       type: "object",
       properties: {
         resource: { type: "object" },
@@ -649,14 +649,14 @@ const DISSOLVED_TOOLS: ToolDefinition[] = [
       },
       required: ["resource", "action"],
     },
-    quantum_enabled: false,
+    quantumEnabled: false,
     priority: 33,
   },
   {
     name: "architecture_plan",
     description: "Execute and validate architectural blueprints",
-    source_module: "AXM-L10-ARCH-002",
-    input_schema: {
+    sourceModule: "AXM-L10-ARCH-002",
+    inputSchema: {
       type: "object",
       properties: {
         blueprint: { type: "object" },
@@ -666,14 +666,14 @@ const DISSOLVED_TOOLS: ToolDefinition[] = [
       },
       required: ["blueprint"],
     },
-    quantum_enabled: false,
+    quantumEnabled: false,
     priority: 34,
   },
   {
     name: "audit_logger",
     description: "Immutable audit logging with cryptographic signatures",
-    source_module: "AXM-L10-AUDT-003",
-    input_schema: {
+    sourceModule: "AXM-L10-AUDT-003",
+    inputSchema: {
       type: "object",
       properties: {
         event: { type: "object" },
@@ -682,14 +682,14 @@ const DISSOLVED_TOOLS: ToolDefinition[] = [
       },
       required: ["event"],
     },
-    quantum_enabled: false,
+    quantumEnabled: false,
     priority: 35,
   },
   {
     name: "policy_engine",
     description: "Rego-based policy evaluation",
-    source_module: "AXM-L10-POLY-004",
-    input_schema: {
+    sourceModule: "AXM-L10-POLY-004",
+    inputSchema: {
       type: "object",
       properties: {
         policy: { type: "string" },
@@ -699,14 +699,14 @@ const DISSOLVED_TOOLS: ToolDefinition[] = [
       },
       required: ["input_data"],
     },
-    quantum_enabled: false,
+    quantumEnabled: false,
     priority: 36,
   },
   {
     name: "compliance_monitor",
     description: "Real-time compliance violation detection",
-    source_module: "AXM-L10-COMP-005",
-    input_schema: {
+    sourceModule: "AXM-L10-COMP-005",
+    inputSchema: {
       type: "object",
       properties: {
         target: { type: "string" },
@@ -715,7 +715,7 @@ const DISSOLVED_TOOLS: ToolDefinition[] = [
       },
       required: ["target"],
     },
-    quantum_enabled: false,
+    quantumEnabled: false,
     priority: 37,
   },
 
@@ -723,8 +723,8 @@ const DISSOLVED_TOOLS: ToolDefinition[] = [
   {
     name: "system_optimization",
     description: "Genetic algorithms with simulated annealing",
-    source_module: "AXM-L11-SOPT-001",
-    input_schema: {
+    sourceModule: "AXM-L11-SOPT-001",
+    inputSchema: {
       type: "object",
       properties: {
         objective_function: { type: "object" },
@@ -737,14 +737,14 @@ const DISSOLVED_TOOLS: ToolDefinition[] = [
       },
       required: ["objective_function"],
     },
-    quantum_enabled: true,
+    quantumEnabled: true,
     priority: 38,
   },
   {
     name: "performance_tuner",
     description: "JVM and kernel parameter optimization",
-    source_module: "AXM-L11-PERF-002",
-    input_schema: {
+    sourceModule: "AXM-L11-PERF-002",
+    inputSchema: {
       type: "object",
       properties: {
         target_system: { type: "string" },
@@ -754,14 +754,14 @@ const DISSOLVED_TOOLS: ToolDefinition[] = [
       },
       required: ["target_system", "tuning_domain"],
     },
-    quantum_enabled: false,
+    quantumEnabled: false,
     priority: 39,
   },
   {
     name: "resource_optimizer",
     description: "Bin packing with genetic algorithms",
-    source_module: "AXM-L11-RSRC-003",
-    input_schema: {
+    sourceModule: "AXM-L11-RSRC-003",
+    inputSchema: {
       type: "object",
       properties: {
         resources: { type: "array", items: { type: "object" } },
@@ -770,14 +770,14 @@ const DISSOLVED_TOOLS: ToolDefinition[] = [
       },
       required: ["resources", "nodes"],
     },
-    quantum_enabled: true,
+    quantumEnabled: true,
     priority: 40,
   },
   {
     name: "energy_optimizer",
     description: "DVFS control with power monitoring",
-    source_module: "AXM-L11-ENRG-004",
-    input_schema: {
+    sourceModule: "AXM-L11-ENRG-004",
+    inputSchema: {
       type: "object",
       properties: {
         target_nodes: { type: "array", items: { type: "string" } },
@@ -787,7 +787,7 @@ const DISSOLVED_TOOLS: ToolDefinition[] = [
       },
       required: ["target_nodes"],
     },
-    quantum_enabled: false,
+    quantumEnabled: false,
     priority: 41,
   },
 
@@ -795,8 +795,8 @@ const DISSOLVED_TOOLS: ToolDefinition[] = [
   {
     name: "meta_strategist",
     description: "Multi-objective optimization with Pareto analysis",
-    source_module: "AXM-L12-STRT-001",
-    input_schema: {
+    sourceModule: "AXM-L12-STRT-001",
+    inputSchema: {
       type: "object",
       properties: {
         objectives: { type: "array", items: { type: "object" } },
@@ -806,14 +806,14 @@ const DISSOLVED_TOOLS: ToolDefinition[] = [
       },
       required: ["objectives", "decision_variables"],
     },
-    quantum_enabled: true,
+    quantumEnabled: true,
     priority: 42,
   },
   {
     name: "self_optimizer",
     description: "Deep Q-Network reinforcement learning",
-    source_module: "AXM-L12-SOPT-002",
-    input_schema: {
+    sourceModule: "AXM-L12-SOPT-002",
+    inputSchema: {
       type: "object",
       properties: {
         environment: { type: "object" },
@@ -823,14 +823,14 @@ const DISSOLVED_TOOLS: ToolDefinition[] = [
       },
       required: ["environment"],
     },
-    quantum_enabled: true,
+    quantumEnabled: true,
     priority: 43,
   },
   {
     name: "emergence_detector",
     description: "Complexity metrics and phase transition detection",
-    source_module: "AXM-L12-EMER-003",
-    input_schema: {
+    sourceModule: "AXM-L12-EMER-003",
+    inputSchema: {
       type: "object",
       properties: {
         system_state: { type: "object" },
@@ -839,7 +839,7 @@ const DISSOLVED_TOOLS: ToolDefinition[] = [
       },
       required: ["system_state"],
     },
-    quantum_enabled: true,
+    quantumEnabled: true,
     priority: 44,
   },
 
@@ -847,8 +847,8 @@ const DISSOLVED_TOOLS: ToolDefinition[] = [
   {
     name: "vqe_solver",
     description: "General-purpose VQE implementation",
-    source_module: "AXM-L13-VQE-001",
-    input_schema: {
+    sourceModule: "AXM-L13-VQE-001",
+    inputSchema: {
       type: "object",
       properties: {
         hamiltonian: { type: "object" },
@@ -860,15 +860,15 @@ const DISSOLVED_TOOLS: ToolDefinition[] = [
       },
       required: ["hamiltonian"],
     },
-    quantum_enabled: true,
-    fallback_enabled: true,
+    quantumEnabled: true,
+    fallbackEnabled: true,
     priority: 45,
   },
   {
     name: "qaoa_optimizer",
     description: "General QAOA framework",
-    source_module: "AXM-L13-QAOA-002",
-    input_schema: {
+    sourceModule: "AXM-L13-QAOA-002",
+    inputSchema: {
       type: "object",
       properties: {
         problem: { type: "object" },
@@ -878,15 +878,15 @@ const DISSOLVED_TOOLS: ToolDefinition[] = [
       },
       required: ["problem"],
     },
-    quantum_enabled: true,
-    fallback_enabled: true,
+    quantumEnabled: true,
+    fallbackEnabled: true,
     priority: 46,
   },
   {
     name: "qml_engine",
     description: "Quantum machine learning platform",
-    source_module: "AXM-L13-QML-003",
-    input_schema: {
+    sourceModule: "AXM-L13-QML-003",
+    inputSchema: {
       type: "object",
       properties: {
         task: { type: "string", enum: ["classification", "regression", "clustering", "generation"] },
@@ -896,15 +896,15 @@ const DISSOLVED_TOOLS: ToolDefinition[] = [
       },
       required: ["task", "training_data"],
     },
-    quantum_enabled: true,
-    fallback_enabled: true,
+    quantumEnabled: true,
+    fallbackEnabled: true,
     priority: 47,
   },
   {
     name: "financial_portfolio",
     description: "Portfolio optimization with Markowitz model",
-    source_module: "AXM-L13-FIN-004",
-    input_schema: {
+    sourceModule: "AXM-L13-FIN-004",
+    inputSchema: {
       type: "object",
       properties: {
         assets: { type: "array", items: { type: "object" } },
@@ -913,15 +913,15 @@ const DISSOLVED_TOOLS: ToolDefinition[] = [
       },
       required: ["assets"],
     },
-    quantum_enabled: true,
-    fallback_enabled: true,
+    quantumEnabled: true,
+    fallbackEnabled: true,
     priority: 48,
   },
   {
     name: "financial_risk",
     description: "Quantum Monte Carlo for VaR",
-    source_module: "AXM-L13-RISK-005",
-    input_schema: {
+    sourceModule: "AXM-L13-RISK-005",
+    inputSchema: {
       type: "object",
       properties: {
         portfolio: { type: "object" },
@@ -932,15 +932,15 @@ const DISSOLVED_TOOLS: ToolDefinition[] = [
       },
       required: ["portfolio"],
     },
-    quantum_enabled: true,
-    fallback_enabled: true,
+    quantumEnabled: true,
+    fallbackEnabled: true,
     priority: 49,
   },
   {
     name: "security_cryptography",
     description: "QKD and post-quantum cryptography",
-    source_module: "AXM-L13-CRYP-006",
-    input_schema: {
+    sourceModule: "AXM-L13-CRYP-006",
+    inputSchema: {
       type: "object",
       properties: {
         operation: { type: "string", enum: ["generate_key", "encrypt", "decrypt", "verify", "qkd_exchange"] },
@@ -953,14 +953,14 @@ const DISSOLVED_TOOLS: ToolDefinition[] = [
       },
       required: ["operation"],
     },
-    quantum_enabled: true,
+    quantumEnabled: true,
     priority: 50,
   },
   {
     name: "security_random",
     description: "Quantum random number generation",
-    source_module: "AXM-L13-QRNG-007",
-    input_schema: {
+    sourceModule: "AXM-L13-QRNG-007",
+    inputSchema: {
       type: "object",
       properties: {
         bytes_requested: { type: "integer", default: 32 },
@@ -968,14 +968,14 @@ const DISSOLVED_TOOLS: ToolDefinition[] = [
         entropy_source: { type: "string", enum: ["quantum", "hybrid", "classical"] },
       },
     },
-    quantum_enabled: true,
+    quantumEnabled: true,
     priority: 51,
   },
   {
     name: "chemistry_drug",
     description: "Drug discovery with molecular simulation",
-    source_module: "AXM-L13-DRUG-008",
-    input_schema: {
+    sourceModule: "AXM-L13-DRUG-008",
+    inputSchema: {
       type: "object",
       properties: {
         molecule: { type: "object" },
@@ -985,15 +985,15 @@ const DISSOLVED_TOOLS: ToolDefinition[] = [
       },
       required: ["molecule"],
     },
-    quantum_enabled: true,
-    fallback_enabled: true,
+    quantumEnabled: true,
+    fallbackEnabled: true,
     priority: 52,
   },
   {
     name: "chemistry_catalyst",
     description: "Catalyst design with quantum simulation",
-    source_module: "AXM-L13-CATL-009",
-    input_schema: {
+    sourceModule: "AXM-L13-CATL-009",
+    inputSchema: {
       type: "object",
       properties: {
         reaction: { type: "object" },
@@ -1002,15 +1002,15 @@ const DISSOLVED_TOOLS: ToolDefinition[] = [
       },
       required: ["reaction"],
     },
-    quantum_enabled: true,
-    fallback_enabled: true,
+    quantumEnabled: true,
+    fallbackEnabled: true,
     priority: 53,
   },
   {
     name: "manufacturing_supply_chain",
     description: "Supply chain optimization with QAOA",
-    source_module: "AXM-L13-MFSC-010",
-    input_schema: {
+    sourceModule: "AXM-L13-MFSC-010",
+    inputSchema: {
       type: "object",
       properties: {
         network: { type: "object" },
@@ -1020,15 +1020,15 @@ const DISSOLVED_TOOLS: ToolDefinition[] = [
       },
       required: ["network"],
     },
-    quantum_enabled: true,
-    fallback_enabled: true,
+    quantumEnabled: true,
+    fallbackEnabled: true,
     priority: 54,
   },
   {
     name: "manufacturing_scheduler",
     description: "Job shop scheduling with quantum annealing",
-    source_module: "AXM-L13-MFSD-011",
-    input_schema: {
+    sourceModule: "AXM-L13-MFSD-011",
+    inputSchema: {
       type: "object",
       properties: {
         jobs: { type: "array", items: { type: "object" } },
@@ -1037,15 +1037,15 @@ const DISSOLVED_TOOLS: ToolDefinition[] = [
       },
       required: ["jobs", "machines"],
     },
-    quantum_enabled: true,
-    fallback_enabled: true,
+    quantumEnabled: true,
+    fallbackEnabled: true,
     priority: 55,
   },
   {
     name: "logistics_routing",
     description: "Vehicle routing problem solver",
-    source_module: "AXM-L13-ROUT-012",
-    input_schema: {
+    sourceModule: "AXM-L13-ROUT-012",
+    inputSchema: {
       type: "object",
       properties: {
         depot: { type: "object" },
@@ -1055,15 +1055,15 @@ const DISSOLVED_TOOLS: ToolDefinition[] = [
       },
       required: ["depot", "deliveries", "vehicles"],
     },
-    quantum_enabled: true,
-    fallback_enabled: true,
+    quantumEnabled: true,
+    fallbackEnabled: true,
     priority: 56,
   },
   {
     name: "energy_grid",
     description: "Smart grid optimization",
-    source_module: "AXM-L13-GRID-013",
-    input_schema: {
+    sourceModule: "AXM-L13-GRID-013",
+    inputSchema: {
       type: "object",
       properties: {
         grid_topology: { type: "object" },
@@ -1074,15 +1074,15 @@ const DISSOLVED_TOOLS: ToolDefinition[] = [
       },
       required: ["grid_topology"],
     },
-    quantum_enabled: true,
-    fallback_enabled: true,
+    quantumEnabled: true,
+    fallbackEnabled: true,
     priority: 57,
   },
   {
     name: "weather_climate",
     description: "Quantum-enhanced weather prediction",
-    source_module: "AXM-L13-CLIM-014",
-    input_schema: {
+    sourceModule: "AXM-L13-CLIM-014",
+    inputSchema: {
       type: "object",
       properties: {
         initial_conditions: { type: "object" },
@@ -1092,15 +1092,15 @@ const DISSOLVED_TOOLS: ToolDefinition[] = [
       },
       required: ["initial_conditions"],
     },
-    quantum_enabled: true,
-    fallback_enabled: true,
+    quantumEnabled: true,
+    fallbackEnabled: true,
     priority: 58,
   },
   {
     name: "aerospace_optimization",
     description: "Trajectory and orbital mechanics optimization",
-    source_module: "AXM-L13-AERO-015",
-    input_schema: {
+    sourceModule: "AXM-L13-AERO-015",
+    inputSchema: {
       type: "object",
       properties: {
         mission: { type: "object" },
@@ -1109,8 +1109,8 @@ const DISSOLVED_TOOLS: ToolDefinition[] = [
       },
       required: ["mission"],
     },
-    quantum_enabled: true,
-    fallback_enabled: true,
+    quantumEnabled: true,
+    fallbackEnabled: true,
     priority: 59,
   },
 ];
@@ -1124,99 +1124,99 @@ const DISSOLVED_RESOURCES: ResourceDefinition[] = [
     uri: "axiom://layers/l00-infrastructure",
     name: "Infrastructure & Bootstrap Layer",
     description: "Immutable foundation with quantum-hardened bootstrap",
-    mime_type: "application/json",
-    metadata: { layer: "L00", module_count: 5, quantum_enabled: true },
+    mimeType: "application/json",
+    metadata: { layer: "L00", module_count: 5, quantumEnabled: true },
   },
   {
     uri: "axiom://layers/l01-language",
     name: "Language Processing Layer",
     description: "Quantum-enhanced NLP with transformer models",
-    mime_type: "application/json",
-    metadata: { layer: "L01", module_count: 2, quantum_enabled: true },
+    mimeType: "application/json",
+    metadata: { layer: "L01", module_count: 2, quantumEnabled: true },
   },
   {
     uri: "axiom://layers/l02-input",
     name: "Input Processing Layer",
     description: "Quantum state preparation and multimodal processing",
-    mime_type: "application/json",
-    metadata: { layer: "L02", module_count: 3, quantum_enabled: true },
+    mimeType: "application/json",
+    metadata: { layer: "L02", module_count: 3, quantumEnabled: true },
   },
   {
     uri: "axiom://layers/l03-network",
     name: "Network & Routing Layer",
     description: "ML-based intelligent routing with circuit breakers",
-    mime_type: "application/json",
-    metadata: { layer: "L03", module_count: 3, quantum_enabled: true },
+    mimeType: "application/json",
+    metadata: { layer: "L03", module_count: 3, quantumEnabled: true },
   },
   {
     uri: "axiom://layers/l04-cognitive",
     name: "Cognitive Processing Layer",
     description: "Deep cognitive processing with transformer architectures",
-    mime_type: "application/json",
-    metadata: { layer: "L04", module_count: 4, quantum_enabled: true },
+    mimeType: "application/json",
+    metadata: { layer: "L04", module_count: 4, quantumEnabled: true },
   },
   {
     uri: "axiom://layers/l05-ethics",
     name: "Ethics & Governance Layer",
     description: "Policy evaluation and bias detection",
-    mime_type: "application/json",
-    metadata: { layer: "L05", module_count: 3, quantum_enabled: false },
+    mimeType: "application/json",
+    metadata: { layer: "L05", module_count: 3, quantumEnabled: false },
   },
   {
     uri: "axiom://layers/l06-integration",
     name: "Integration & Orchestration Layer",
     description: "Multi-agent orchestration and workflow engine",
-    mime_type: "application/json",
-    metadata: { layer: "L06", module_count: 3, quantum_enabled: true },
+    mimeType: "application/json",
+    metadata: { layer: "L06", module_count: 3, quantumEnabled: true },
   },
   {
     uri: "axiom://layers/l07-reasoning",
     name: "Reasoning & Knowledge Layer",
     description: "Neural-symbolic reasoning with knowledge graphs",
-    mime_type: "application/json",
-    metadata: { layer: "L07", module_count: 3, quantum_enabled: true },
+    mimeType: "application/json",
+    metadata: { layer: "L07", module_count: 3, quantumEnabled: true },
   },
   {
     uri: "axiom://layers/l08-emotion",
     name: "Emotional Intelligence Layer",
     description: "Emotion classification and empathy modeling",
-    mime_type: "application/json",
-    metadata: { layer: "L08", module_count: 3, quantum_enabled: true },
+    mimeType: "application/json",
+    metadata: { layer: "L08", module_count: 3, quantumEnabled: true },
   },
   {
     uri: "axiom://layers/l09-output",
     name: "Output Optimization Layer",
     description: "Quality scoring and format optimization",
-    mime_type: "application/json",
-    metadata: { layer: "L09", module_count: 3, quantum_enabled: true },
+    mimeType: "application/json",
+    metadata: { layer: "L09", module_count: 3, quantumEnabled: true },
   },
   {
     uri: "axiom://layers/l10-governance",
     name: "System Governance Layer",
     description: "Policy enforcement and compliance monitoring",
-    mime_type: "application/json",
-    metadata: { layer: "L10", module_count: 5, quantum_enabled: false },
+    mimeType: "application/json",
+    metadata: { layer: "L10", module_count: 5, quantumEnabled: false },
   },
   {
     uri: "axiom://layers/l11-optimization",
     name: "Performance Optimization Layer",
     description: "System-wide optimization with genetic algorithms",
-    mime_type: "application/json",
-    metadata: { layer: "L11", module_count: 4, quantum_enabled: true },
+    mimeType: "application/json",
+    metadata: { layer: "L11", module_count: 4, quantumEnabled: true },
   },
   {
     uri: "axiom://layers/l12-metacognition",
     name: "Metacognitive & Strategic Layer",
     description: "Multi-objective optimization and emergence detection",
-    mime_type: "application/json",
-    metadata: { layer: "L12", module_count: 3, quantum_enabled: true },
+    mimeType: "application/json",
+    metadata: { layer: "L12", module_count: 3, quantumEnabled: true },
   },
   {
     uri: "axiom://layers/l13-quantum",
     name: "Quantum Specialized Layer",
     description: "Domain-specific quantum computing applications",
-    mime_type: "application/json",
-    metadata: { layer: "L13", module_count: 15, quantum_enabled: true, fallback_enabled: true },
+    mimeType: "application/json",
+    metadata: { layer: "L13", module_count: 15, quantumEnabled: true, fallbackEnabled: true },
   },
 ];
 
@@ -1265,14 +1265,14 @@ async function executeDissolvedTool(
   }
 
   // Simulate tool execution based on quantum capability
-  if (tool.quantum_enabled && tool.fallback_enabled) {
+  if (tool.quantumEnabled && tool.fallbackEnabled) {
     // Try quantum execution, fallback to classical if needed
     try {
       return {
         success: true,
         result: {
           tool: toolName,
-          source_module: tool.source_module,
+          sourceModule: tool.sourceModule,
           args,
           execution_timestamp: new Date().toISOString(),
           quantum_executed: true,
@@ -1284,7 +1284,7 @@ async function executeDissolvedTool(
         success: true,
         result: {
           tool: toolName,
-          source_module: tool.source_module,
+          sourceModule: tool.sourceModule,
           args,
           execution_timestamp: new Date().toISOString(),
           quantum_executed: false,
@@ -1299,12 +1299,12 @@ async function executeDissolvedTool(
     success: true,
     result: {
       tool: toolName,
-      source_module: tool.source_module,
+      sourceModule: tool.sourceModule,
       args,
       execution_timestamp: new Date().toISOString(),
-      quantum_enabled: tool.quantum_enabled,
+      quantumEnabled: tool.quantumEnabled,
     },
-    execution_method: tool.quantum_enabled ? "quantum" : "classical",
+    execution_method: tool.quantumEnabled ? "quantum" : "classical",
   };
 }
 
@@ -1332,7 +1332,7 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
     tools: DISSOLVED_TOOLS.map((tool) => ({
       name: tool.name,
       description: tool.description,
-      inputSchema: tool.input_schema,
+      inputSchema: tool.inputSchema,
     })),
   };
 });
@@ -1360,7 +1360,7 @@ server.setRequestHandler(ListResourcesRequestSchema, async () => {
       uri: resource.uri,
       name: resource.name,
       description: resource.description,
-      mimeType: resource.mime_type,
+      mimeType: resource.mimeType,
     })),
   };
 });
@@ -1376,7 +1376,7 @@ server.setRequestHandler(ReadResourceRequestSchema, async (request) => {
 
   const layerId = uri.split("/").pop();
   const tools = DISSOLVED_TOOLS.filter((t) => {
-    const layerMatch = t.source_module.match(/L(\d{2})/);
+    const layerMatch = t.sourceModule.match(/L(\d{2})/);
     const resourceLayerMatch = layerId?.match(/l(\d{2})/);
     return layerMatch && resourceLayerMatch && layerMatch[1] === resourceLayerMatch[1];
   });
@@ -1385,14 +1385,14 @@ server.setRequestHandler(ReadResourceRequestSchema, async (request) => {
     contents: [
       {
         uri: resource.uri,
-        mimeType: resource.mime_type,
+        mimeType: resource.mimeType,
         text: JSON.stringify(
           {
             ...resource,
             tools: tools.map((t) => ({
               name: t.name,
               description: t.description,
-              quantum_enabled: t.quantum_enabled,
+              quantumEnabled: t.quantumEnabled,
             })),
           },
           null,
