@@ -179,7 +179,7 @@ class MAPEKLoop:
                         plans.append(plan)
                         break  # One plan per anomaly
                 except Exception as e:
-                    self.logger.error(f"Planner failed for anomaly {anomaly}: {e}", exc_info=True)
+                    self.logger.error(f"Planner failed for anomaly {anomaly.id}: {e}", exc_info=True)
         return plans
 
     async def _execute(self, plans: List[RemediationPlan]) -> List[ExecutionResult]:

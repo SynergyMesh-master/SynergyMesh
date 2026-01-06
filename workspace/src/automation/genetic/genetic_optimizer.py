@@ -239,10 +239,6 @@ class GeneticOptimizer:
         """Check if optimization has converged."""
         if len(recent_fitness) < 2:
             return False
-        
-        # Avoid division by zero
-        if len(recent_fitness) == 0:
-            return False
             
         mean = sum(recent_fitness) / len(recent_fitness)
         variance = sum((f - mean)**2 for f in recent_fitness) / len(recent_fitness)
