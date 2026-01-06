@@ -245,27 +245,18 @@ spec:
     - standard: INSTANT_EXECUTION
       validator: vision-tracker.py
       implementationStatus: planned  # Validator script not yet implemented
-      fallbackValidator: workspace/mcp/tools/load_unified_pipeline.py  # Use Python loader for validation
-      implementationStatus: implemented
-      validatorPath: workspace/src/governance/scripts/vision-tracker.py
       checkInterval: 1000
       criteria: ["latency_compliance", "parallelism_level", "autonomy_degree"]
       failureAction: auto-alert
     - standard: AUTONOMY_LEVEL
       validator: validate-autonomy.py
       implementationStatus: planned  # Validator script not yet implemented
-      fallbackValidator: workspace/mcp/tools/load_unified_pipeline.py
-      implementationStatus: implemented
-      validatorPath: workspace/src/governance/scripts/validate-autonomy.py
       checkInterval: 5000
       criteria: ["human_intervention_count", "auto_rollback_success", "self_healing_success"]
       failureAction: escalate-to-governance
     - standard: LATENCY_COMPLIANCE
       validator: latency-monitor.py
       implementationStatus: planned  # Validator script not yet implemented
-      fallbackValidator: workspace/mcp/tools/load_unified_pipeline.py
-      implementationStatus: implemented
-      validatorPath: workspace/src/governance/scripts/latency-monitor.py
       checkInterval: 0
       criteria: ["all_stages_within_threshold", "total_latency_compliant", "no_bottlenecks"]
       failureAction: auto-optimize
