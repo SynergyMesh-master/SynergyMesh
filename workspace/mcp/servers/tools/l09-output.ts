@@ -10,8 +10,8 @@ export const L09_TOOLS: ToolDefinition[] = [
   {
     name: "output_quality",
     description: "Quantum-enhanced output scoring and optimization",
-    source_module: "AXM-L09-OUTQ-001",
-    input_schema: {
+    sourceModule: "AXM-L09-OUTQ-001",
+    inputSchema: {
       type: "object",
       properties: {
         output: { type: "object" },
@@ -21,14 +21,14 @@ export const L09_TOOLS: ToolDefinition[] = [
       },
       required: ["output"],
     },
-    quantum_enabled: true,
+    quantumEnabled: true,
     priority: 30,
   },
   {
     name: "format_optimizer",
     description: "Multi-format optimization with compression",
-    source_module: "AXM-L09-FORM-002",
-    input_schema: {
+    sourceModule: "AXM-L09-FORM-002",
+    inputSchema: {
       type: "object",
       properties: {
         content: { type: "object" },
@@ -38,14 +38,14 @@ export const L09_TOOLS: ToolDefinition[] = [
       },
       required: ["content", "target_format"],
     },
-    quantum_enabled: true,
+    quantumEnabled: true,
     priority: 31,
   },
   {
     name: "grammar_checker",
     description: "Multi-language grammar validation",
-    source_module: "AXM-L09-GRAM-003",
-    input_schema: {
+    sourceModule: "AXM-L09-GRAM-003",
+    inputSchema: {
       type: "object",
       properties: {
         text: { type: "string" },
@@ -55,7 +55,7 @@ export const L09_TOOLS: ToolDefinition[] = [
       },
       required: ["text"],
     },
-    quantum_enabled: true,
+    quantumEnabled: true,
     priority: 32,
   },
 ];

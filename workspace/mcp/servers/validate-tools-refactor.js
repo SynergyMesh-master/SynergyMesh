@@ -63,7 +63,7 @@ console.log('  All priorities 1-59 present and unique');
 
 // Test 4: Required fields
 console.log('\n✓ Required fields:');
-const requiredFields = ['name', 'description', 'source_module', 'input_schema', 'quantum_enabled', 'priority'];
+const requiredFields = ['name', 'description', 'sourceModule', 'inputSchema', 'quantumEnabled', 'priority'];
 let allValid = true;
 for (const tool of DISSOLVED_TOOLS) {
   for (const field of requiredFields) {

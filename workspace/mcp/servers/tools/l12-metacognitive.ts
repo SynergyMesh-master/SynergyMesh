@@ -10,8 +10,8 @@ export const L12_TOOLS: ToolDefinition[] = [
   {
     name: "meta_strategist",
     description: "Multi-objective optimization with Pareto analysis",
-    source_module: "AXM-L12-STRT-001",
-    input_schema: {
+    sourceModule: "AXM-L12-STRT-001",
+    inputSchema: {
       type: "object",
       properties: {
         objectives: { type: "array", items: { type: "object" } },
@@ -21,14 +21,14 @@ export const L12_TOOLS: ToolDefinition[] = [
       },
       required: ["objectives", "decision_variables"],
     },
-    quantum_enabled: true,
+    quantumEnabled: true,
     priority: 42,
   },
   {
     name: "self_optimizer",
     description: "Deep Q-Network reinforcement learning",
-    source_module: "AXM-L12-SOPT-002",
-    input_schema: {
+    sourceModule: "AXM-L12-SOPT-002",
+    inputSchema: {
       type: "object",
       properties: {
         environment: { type: "object" },
@@ -38,14 +38,14 @@ export const L12_TOOLS: ToolDefinition[] = [
       },
       required: ["environment"],
     },
-    quantum_enabled: true,
+    quantumEnabled: true,
     priority: 43,
   },
   {
     name: "emergence_detector",
     description: "Complexity metrics and phase transition detection",
-    source_module: "AXM-L12-EMER-003",
-    input_schema: {
+    sourceModule: "AXM-L12-EMER-003",
+    inputSchema: {
       type: "object",
       properties: {
         system_state: { type: "object" },
@@ -54,7 +54,7 @@ export const L12_TOOLS: ToolDefinition[] = [
       },
       required: ["system_state"],
     },
-    quantum_enabled: true,
+    quantumEnabled: true,
     priority: 44,
   },
 ];

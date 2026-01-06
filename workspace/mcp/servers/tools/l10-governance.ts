@@ -10,8 +10,8 @@ export const L10_TOOLS: ToolDefinition[] = [
   {
     name: "system_governance",
     description: "System-wide policy enforcement with OPA",
-    source_module: "AXM-L10-GOVN-001",
-    input_schema: {
+    sourceModule: "AXM-L10-GOVN-001",
+    inputSchema: {
       type: "object",
       properties: {
         resource: { type: "object" },
@@ -21,14 +21,14 @@ export const L10_TOOLS: ToolDefinition[] = [
       },
       required: ["resource", "action"],
     },
-    quantum_enabled: false,
+    quantumEnabled: false,
     priority: 33,
   },
   {
     name: "architecture_plan",
     description: "Execute and validate architectural blueprints",
-    source_module: "AXM-L10-ARCH-002",
-    input_schema: {
+    sourceModule: "AXM-L10-ARCH-002",
+    inputSchema: {
       type: "object",
       properties: {
         blueprint: { type: "object" },
@@ -38,14 +38,14 @@ export const L10_TOOLS: ToolDefinition[] = [
       },
       required: ["blueprint"],
     },
-    quantum_enabled: false,
+    quantumEnabled: false,
     priority: 34,
   },
   {
     name: "audit_logger",
     description: "Immutable audit logging with cryptographic signatures",
-    source_module: "AXM-L10-AUDT-003",
-    input_schema: {
+    sourceModule: "AXM-L10-AUDT-003",
+    inputSchema: {
       type: "object",
       properties: {
         event: { type: "object" },
@@ -54,14 +54,14 @@ export const L10_TOOLS: ToolDefinition[] = [
       },
       required: ["event"],
     },
-    quantum_enabled: false,
+    quantumEnabled: false,
     priority: 35,
   },
   {
     name: "policy_engine",
     description: "Rego-based policy evaluation",
-    source_module: "AXM-L10-POLY-004",
-    input_schema: {
+    sourceModule: "AXM-L10-POLY-004",
+    inputSchema: {
       type: "object",
       properties: {
         policy: { type: "string" },
@@ -71,14 +71,14 @@ export const L10_TOOLS: ToolDefinition[] = [
       },
       required: ["input_data"],
     },
-    quantum_enabled: false,
+    quantumEnabled: false,
     priority: 36,
   },
   {
     name: "compliance_monitor",
     description: "Real-time compliance violation detection",
-    source_module: "AXM-L10-COMP-005",
-    input_schema: {
+    sourceModule: "AXM-L10-COMP-005",
+    inputSchema: {
       type: "object",
       properties: {
         target: { type: "string" },
@@ -87,7 +87,7 @@ export const L10_TOOLS: ToolDefinition[] = [
       },
       required: ["target"],
     },
-    quantum_enabled: false,
+    quantumEnabled: false,
     priority: 37,
   },
 ];

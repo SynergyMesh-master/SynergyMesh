@@ -10,8 +10,8 @@ export const L06_TOOLS: ToolDefinition[] = [
   {
     name: "collaboration_integration",
     description: "Multi-agent orchestration with circuit breaker patterns",
-    source_module: "AXM-L06-COLL-001",
-    input_schema: {
+    sourceModule: "AXM-L06-COLL-001",
+    inputSchema: {
       type: "object",
       properties: {
         agents: { type: "array", items: { type: "object" } },
@@ -23,14 +23,14 @@ export const L06_TOOLS: ToolDefinition[] = [
       },
       required: ["agents", "task"],
     },
-    quantum_enabled: true,
+    quantumEnabled: true,
     priority: 21,
   },
   {
     name: "api_orchestrator",
     description: "API gateway with rate limiting and authentication",
-    source_module: "AXM-L06-APIS-002",
-    input_schema: {
+    sourceModule: "AXM-L06-APIS-002",
+    inputSchema: {
       type: "object",
       properties: {
         endpoint: { type: "string" },
@@ -40,14 +40,14 @@ export const L06_TOOLS: ToolDefinition[] = [
       },
       required: ["endpoint", "method"],
     },
-    quantum_enabled: false,
+    quantumEnabled: false,
     priority: 22,
   },
   {
     name: "workflow_engine",
     description: "Temporal-based workflow orchestration",
-    source_module: "AXM-L06-WORK-003",
-    input_schema: {
+    sourceModule: "AXM-L06-WORK-003",
+    inputSchema: {
       type: "object",
       properties: {
         workflow_definition: { type: "object" },
@@ -56,7 +56,7 @@ export const L06_TOOLS: ToolDefinition[] = [
       },
       required: ["workflow_definition"],
     },
-    quantum_enabled: true,
+    quantumEnabled: true,
     priority: 23,
   },
 ];

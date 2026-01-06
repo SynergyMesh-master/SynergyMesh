@@ -143,7 +143,7 @@ const result = await client.callTool({
   arguments: {
     hamiltonian: moleculeHamiltonian,
     ansatz: "UCCSD",
-    fallback_classical: true
+    fallbackClassical: true
   }
 });
 ```

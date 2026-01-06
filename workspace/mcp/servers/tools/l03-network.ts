@@ -10,8 +10,8 @@ export const L03_TOOLS: ToolDefinition[] = [
   {
     name: "protocol_routing",
     description: "ML-based intelligent routing with quantum optimization",
-    source_module: "AXM-L03-PROT-001",
-    input_schema: {
+    sourceModule: "AXM-L03-PROT-001",
+    inputSchema: {
       type: "object",
       properties: {
         source: { type: "string" },
@@ -24,14 +24,14 @@ export const L03_TOOLS: ToolDefinition[] = [
       },
       required: ["source", "destination"],
     },
-    quantum_enabled: true,
+    quantumEnabled: true,
     priority: 11,
   },
   {
     name: "load_balancer",
     description: "Adaptive load balancing with circuit breaker patterns",
-    source_module: "AXM-L03-LOAD-002",
-    input_schema: {
+    sourceModule: "AXM-L03-LOAD-002",
+    inputSchema: {
       type: "object",
       properties: {
         service: { type: "string" },
@@ -41,14 +41,14 @@ export const L03_TOOLS: ToolDefinition[] = [
       },
       required: ["service", "request"],
     },
-    quantum_enabled: true,
+    quantumEnabled: true,
     priority: 12,
   },
   {
     name: "adaptive_router",
     description: "Reinforcement learning-based routing optimization",
-    source_module: "AXM-L03-ADPT-003",
-    input_schema: {
+    sourceModule: "AXM-L03-ADPT-003",
+    inputSchema: {
       type: "object",
       properties: {
         network_state: { type: "object" },
@@ -58,7 +58,7 @@ export const L03_TOOLS: ToolDefinition[] = [
       },
       required: ["network_state"],
     },
-    quantum_enabled: true,
+    quantumEnabled: true,
     priority: 13,
   },
 ];
