@@ -1,0 +1,36 @@
+policy_id: AXIOM-GOV-COMPLIANCE-005
+title: 統一合規框架
+status: implemented
+mode: INSTANT
+principles:
+  - "事件驅動: trigger → event → action"
+  - "完全自治: 0 次人工介入"
+  - "高度並行: 64-256 代理"
+  - "延遲閾值: <=100ms / <=500ms / <=5s"
+  - "二元狀態: 已實現 / 未實現"
+requirements:
+  - "符合 SLSA Level 3 供應鏈要求"
+  - "NIST PQC 檢查已啟用"
+  - "量子增強驗證結果需產出不可變證據鏈"
+controls:
+  - id: compliance-gates
+    requirement: "PR 驗證與重構驗證必須經過量子增強 8 維度檢查與證據鏈簽署。"
+  - id: autonomy-guard
+    requirement: "所有合規判斷由 AI 決策，人工介入計數保持 0。"
+triggers:
+  - event: pull_request
+    action: run_compliance_validation
+    expected_latency: "<=100ms"
+  - event: refactor_pipeline_started
+    action: enforce_governance_controls
+    expected_latency: "<=500ms"
+validation:
+  latency_targets:
+    critical: "<=100ms"
+    standard: "<=500ms"
+    bulk: "<=5s"
+  autonomy: "human_intervention = 0"
+  binary_state: 已實現
+  evidence:
+    - workspace/docs/refactor_playbooks/EXECUTION_STATUS.md
+    - workspace/docs/QUANTUM_VALIDATION_INTEGRATION_REPORT.md

@@ -1,0 +1,27 @@
+{
+  "document": {
+    "name": "layer-standardization-governance.yaml",
+    "path": "/home/runner/work/machine-native-ops/machine-native-ops/workspace/config/governance/layer-standardization-governance.yaml",
+    "size": "1.0KB",
+    "last_modified": "2026-01-06T06:42:58.215196Z"
+  },
+  "quantum_features": {
+    "coherence": 0.7997247973862196,
+    "entanglement": 0.9864348859946851,
+    "fidelity": 0.9571899376105403,
+    "noise_level": 0.14721511280140803,
+    "coherence_time": 0.7859367158720468
+  },
+  "extraction_info": {
+    "backend": "ibm_kyiv",
+    "circuit_depth": 8,
+    "shots": 1024,
+    "error_mitigated": true,
+    "timestamp": "2026-01-06T06:44:00.143386Z"
+  },
+  "cryptographic_evidence": {
+    "sha256": "69b945bf59aa92d42e4a2841b481cea23d4f6a02622685813ab49ed6065ab6c0",
+    "sha512": "df30a8b8419d1c0dbdcbdeff30d167ce6b12ab13e8fe6656b95500ea77a926aad86e06406b4a2a6611276190c9c50cca009f67c67b3625c8a8a70d835de932e5",
+    "quantum_signature": "qsig:2:ibm_kyiv:0x356049825f6b62ec"
+  }
+}

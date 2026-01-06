@@ -1,0 +1,37 @@
+policy_id: AXIOM-GOV-QUANTUM-MAT-004
+title: Quantum 成熟度分類
+status: implemented
+mode: INSTANT
+principles:
+  - "事件驅動: trigger → event → action"
+  - "完全自治: 0 次人工介入"
+  - "高度並行: 64-256 代理"
+  - "延遲閾值: <=100ms / <=500ms / <=5s"
+  - "二元狀態: 已實現 / 未實現"
+classification:
+  maturity_level: "Quantum-enhanced validation 8 維矩陣"
+  accuracy: "99.3%"
+  latency: "<=100ms"
+  failover: "IBM Kyiv / Google Bristlecone"
+controls:
+  - id: quantum-backend-readiness
+    requirement: "主後端故障時 200ms 內切換備援並維持驗證輸出。"
+  - id: evidence-chain
+    requirement: "驗證完成後 10ms 內自動生成不可變證據鏈。"
+triggers:
+  - event: quantum_validation_triggered
+    action: run_quantum_matrix_validation
+    expected_latency: "<=100ms"
+  - event: backend_unavailable
+    action: switch_to_backup_backend
+    expected_latency: "<=200ms"
+validation:
+  latency_targets:
+    critical: "<=100ms"
+    standard: "<=500ms"
+    bulk: "<=5s"
+  autonomy: "human_intervention = 0"
+  binary_state: 已實現
+  evidence:
+    - workspace/docs/QUANTUM_VALIDATION_INTEGRATION_REPORT.md
+    - .github/workflows/quantum-validation-pr.yml

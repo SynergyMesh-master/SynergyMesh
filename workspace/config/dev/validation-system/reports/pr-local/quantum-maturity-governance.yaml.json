@@ -1,0 +1,27 @@
+{
+  "document": {
+    "name": "quantum-maturity-governance.yaml",
+    "path": "/home/runner/work/machine-native-ops/machine-native-ops/workspace/config/governance/quantum-maturity-governance.yaml",
+    "size": "1.2KB",
+    "last_modified": "2026-01-06T06:42:58.216197Z"
+  },
+  "quantum_features": {
+    "coherence": 0.7898361041857062,
+    "entanglement": 0.9040132935280921,
+    "fidelity": 0.9782387316815435,
+    "noise_level": 0.12960025840443923,
+    "coherence_time": 0.7790643555527896
+  },
+  "extraction_info": {
+    "backend": "ibm_kyiv",
+    "circuit_depth": 8,
+    "shots": 1024,
+    "error_mitigated": true,
+    "timestamp": "2026-01-06T06:44:00.321110Z"
+  },
+  "cryptographic_evidence": {
+    "sha256": "5504b5c5e9d3cef9e8421214cd664866fe36d4802955ba792a0440ba41323425",
+    "sha512": "69578aa681dcc7aff0a3c3b99fe2fd5b64f444bf70b3b3f3ab5dc1792d9d437daac531315f2fa4a25429751f398753ada913dd9d9fe65c63d99a2bbbe9d19677",
+    "quantum_signature": "qsig:2:ibm_kyiv:0xf55307a1cd32a468"
+  }
+}

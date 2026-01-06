@@ -1,0 +1,27 @@
+{
+  "document": {
+    "name": "unified-compliance-governance.yaml",
+    "path": "/home/runner/work/machine-native-ops/machine-native-ops/workspace/config/governance/unified-compliance-governance.yaml",
+    "size": "1.2KB",
+    "last_modified": "2026-01-06T06:32:08.361620Z"
+  },
+  "quantum_features": {
+    "coherence": 0.7906182390958206,
+    "entanglement": 0.9113569268633158,
+    "fidelity": 0.9521974143848873,
+    "noise_level": 0.06471459846340781,
+    "coherence_time": 0.7786238801063775
+  },
+  "extraction_info": {
+    "backend": "ibm_kyiv",
+    "circuit_depth": 8,
+    "shots": 1024,
+    "error_mitigated": true,
+    "timestamp": "2026-01-06T06:32:50.879836Z"
+  },
+  "cryptographic_evidence": {
+    "sha256": "0c62634c64794de9e0fd39a4f9209ede0edbb9ff27c682bdabbb4b687a6344a2",
+    "sha512": "29ce0627b5e0a5d7dd22f8a2c5181093b45bbbfa4d8b33df21878ddf0681c2672e3d62c6addab32833eae99c8bee31feb1fd28246674fe8e348f77a0d2d7b215",
+    "quantum_signature": "qsig:2:ibm_kyiv:0x96b0b66db7a35a69"
+  }
+}

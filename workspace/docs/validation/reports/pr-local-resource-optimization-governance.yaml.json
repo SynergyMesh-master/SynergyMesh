@@ -1,0 +1,27 @@
+{
+  "document": {
+    "name": "resource-optimization-governance.yaml",
+    "path": "/home/runner/work/machine-native-ops/machine-native-ops/workspace/config/governance/resource-optimization-governance.yaml",
+    "size": "1.0KB",
+    "last_modified": "2026-01-06T06:32:08.360620Z"
+  },
+  "quantum_features": {
+    "coherence": 0.7997423740853203,
+    "entanglement": 0.988655807224359,
+    "fidelity": 0.9873700452823828,
+    "noise_level": 0.12459737684582338,
+    "coherence_time": 0.7788472599302757
+  },
+  "extraction_info": {
+    "backend": "ibm_kyiv",
+    "circuit_depth": 8,
+    "shots": 1024,
+    "error_mitigated": true,
+    "timestamp": "2026-01-06T06:32:50.707346Z"
+  },
+  "cryptographic_evidence": {
+    "sha256": "95d5bc66b18f4d2d39d4017af6d120e0e8726a6564a0b92002fd26d0adb72c70",
+    "sha512": "3ae276d13a76fdb227bb1bc304d7a6b6b434e5b8527bc761a51342ebdab7e2adcc7264c5034d0e6eac36ba6247d19f39a5d2e021873b3c9e09d9f612d5f18709",
+    "quantum_signature": "qsig:2:ibm_kyiv:0xbb7ea5e992ab4294"
+  }
+}

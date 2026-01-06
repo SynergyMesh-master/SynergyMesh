@@ -1,0 +1,62 @@
+{
+  "validation_report": {
+    "document": "/demo/example-spec.json",
+    "timestamp": "2026-01-06T06:38:57.832873Z",
+    "overall_status": "PASS",
+    "confidence": 0.9378,
+    "verification_matrix": [
+      {
+        "dimension": "structural_compliance",
+        "status": "WARNING",
+        "quantum_entropy": 0.792
+      },
+      {
+        "dimension": "content_accuracy",
+        "status": "PASS",
+        "quantum_entropy": 0.9997
+      },
+      {
+        "dimension": "file_paths",
+        "status": "PASS",
+        "quantum_entropy": 0.9999
+      },
+      {
+        "dimension": "naming_conventions",
+        "status": "PASS",
+        "quantum_entropy": 0.9978
+      },
+      {
+        "dimension": "consistency",
+        "status": "PASS",
+        "quantum_entropy": 0.965
+      },
+      {
+        "dimension": "logical_coherence",
+        "status": "WARNING",
+        "quantum_entropy": 0.792
+      },
+      {
+        "dimension": "contextual_continuity",
+        "status": "PASS",
+        "quantum_entropy": 0.9997
+      },
+      {
+        "dimension": "final_correctness",
+        "status": "WARNING",
+        "quantum_entropy": 0.792
+      }
+    ],
+    "dynamic_parameters": {
+      "classic_weight": 0.43,
+      "quantum_weight": 0.57,
+      "circuit_depth": 12,
+      "fusion_algorithm": "weighted_average",
+      "preset": "standard_v3"
+    },
+    "recommendations": [
+      "Warning: structural_compliance requires attention (score: 0.8728)",
+      "Warning: logical_coherence requires attention (score: 0.8728)",
+      "Warning: final_correctness requires attention (score: 0.8771)"
+    ]
+  }
+}

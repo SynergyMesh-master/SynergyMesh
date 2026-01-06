@@ -1,0 +1,32 @@
+policy_id: AXIOM-GOV-LAYER-STD-001
+title: Layer 標準化治理
+status: implemented
+mode: INSTANT
+principles:
+  - "事件驅動: trigger → event → action"
+  - "完全自治: 0 次人工介入"
+  - "高度並行: 64-256 代理"
+  - "延遲閾值: <=100ms / <=500ms / <=5s"
+  - "二元狀態: 已實現 / 未實現"
+controls:
+  - id: layer-boundaries
+    requirement: "保持 13 層架構對齊，禁止跨層依賴逆轉。"
+  - id: registry-alignment
+    requirement: "所有模組必須先在 system-manifest.yaml 與 system-module-map.yaml 登記後才允許部署。"
+triggers:
+  - event: config_change_detected
+    action: validate_layer_registry
+    expected_latency: "<=500ms"
+  - event: governance_violation
+    action: auto_remediate
+    expected_latency: "<=5s"
+validation:
+  latency_targets:
+    critical: "<=100ms"
+    standard: "<=500ms"
+    bulk: "<=5s"
+  autonomy: "human_intervention = 0"
+  binary_state: 已實現
+  evidence:
+    - workspace/docs/refactor_playbooks/EXECUTION_STATUS.md
+    - .github/workflows/quantum-validation-pr.yml

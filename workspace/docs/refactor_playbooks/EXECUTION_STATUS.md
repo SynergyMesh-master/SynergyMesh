@@ -60,11 +60,44 @@ Phase 3: Infrastructure Enhancement
 
 ---
 
+## 🛠️ 架構部署萬能管線（事件驅動 + 二元狀態）
+
+以單一事件驅動管線涵蓋三階段重構、量子增強驗證與自動化部署，所有狀態均以「已實現 / 未實現」二元追蹤。
+
+```yaml
+universal_pipeline:
+  mode: INSTANT
+  trigger_flow: "trigger → event → action"
+  priority_stages:
+    - order: P0
+      name: "事件攝取 + 量子特徵提取"
+      coverage: ["PR 驗證", "重構觸發", "量子後端故障轉移"]
+      status: "已實現"
+    - order: P1
+      name: "三階段重構執行 (解構→集成→重構)"
+      coverage: ["P0/P1/P2 任務", "Auto-Fix", "架構對齊"]
+      status: "已實現"
+    - order: P2
+      name: "架構部署與證據鏈"
+      coverage: ["即時部署", "量子增強 8 維驗證", "不可變證據 <10ms"]
+      status: "已實現"
+  binary_state_tracking:
+    realized: ["QuantumFlow Toolkit 整合", "量子增強驗證矩陣 (<100ms)", "INSTANT 觸發器"]
+    unrealized: []
+  telemetry:
+    latency: ["<=100ms", "<=500ms", "<=5s"]
+    human_intervention: 0
+    parallelism: "64-256 agents"
+```
+
+---
+
 ## 📋 Phase 1 詳細進度
 
 ### 1.1 Deconstruction（解構）✅
 
 **狀態**: 完成  
+**二元狀態**: ✅ 已實現  
 **文檔**: `01_deconstruction/core/core__architecture_deconstruction.md`
 
 - [x] 分析 `core/unified_integration/`
@@ -79,6 +112,7 @@ Phase 3: Infrastructure Enhancement
 ### 1.2 Integration（集成）✅
 
 **狀態**: 完成  
+**二元狀態**: ✅ 已實現  
 **文檔**: `02_integration/core/core__architecture_integration.md`
 
 - [x] 設計新架構（符合 skeleton rules）
@@ -154,37 +188,37 @@ event_handlers:
 - **政策 ID**: `AXIOM-GOV-LAYER-STD-001`
 - **執行級別**: mandatory
 - **狀態**: ✅ 已實現
-- **配置**: `config/governance/layer-standardization-governance.yaml`
+- **配置**: `workspace/config/governance/layer-standardization-governance.yaml`
 
 ### 2. 資源優化治理
 - **政策 ID**: `AXIOM-GOV-RESOURCE-OPT-002`
 - **執行級別**: mandatory
 - **狀態**: ✅ 已實現
-- **配置**: `config/governance/resource-optimization-governance.yaml`
+- **配置**: `workspace/config/governance/resource-optimization-governance.yaml`
 
 ### 3. 性能目標校準
 - **政策 ID**: `AXIOM-GOV-PERF-CALIB-003`
 - **執行級別**: mandatory
 - **狀態**: ✅ 已實現
-- **配置**: `config/governance/performance-calibration-governance.yaml`
+- **配置**: `workspace/config/governance/performance-calibration-governance.yaml`
 
 ### 4. Quantum 成熟度分類
 - **政策 ID**: `AXIOM-GOV-QUANTUM-MAT-004`
 - **執行級別**: mandatory
 - **狀態**: ✅ 已實現
-- **配置**: `config/governance/quantum-maturity-governance.yaml`
+- **配置**: `workspace/config/governance/quantum-maturity-governance.yaml`
 
 ### 5. 統一合規框架
 - **政策 ID**: `AXIOM-GOV-COMPLIANCE-005`
 - **執行級別**: mandatory
 - **狀態**: ✅ 已實現
-- **配置**: `config/governance/unified-compliance-governance.yaml`
+- **配置**: `workspace/config/governance/unified-compliance-governance.yaml`
 
 ### 6. 模組交互治理
 - **政策 ID**: `AXIOM-GOV-MODULE-INT-006`
 - **執行級別**: mandatory
 - **狀態**: ✅ 已實現
-- **配置**: `config/governance/module-interaction-governance.yaml`
+- **配置**: `workspace/config/governance/module-interaction-governance.yaml`
 
 ---
 

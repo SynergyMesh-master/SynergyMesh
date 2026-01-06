@@ -1,0 +1,32 @@
+policy_id: AXIOM-GOV-MODULE-INT-006
+title: 模組交互治理
+status: implemented
+mode: INSTANT
+principles:
+  - "事件驅動: trigger → event → action"
+  - "完全自治: 0 次人工介入"
+  - "高度並行: 64-256 代理"
+  - "延遲閾值: <=100ms / <=500ms / <=5s"
+  - "二元狀態: 已實現 / 未實現"
+controls:
+  - id: interface-registry
+    requirement: "所有模組交互介面須在 system-module-map.yaml 登記並遵循明確邊界。"
+  - id: contract-validation
+    requirement: "事件觸發時自動檢查契約相容性並在 500ms 內回饋。"
+triggers:
+  - event: module_integration_requested
+    action: validate_contract_and_boundaries
+    expected_latency: "<=500ms"
+  - event: interaction_failure_detected
+    action: auto_heal_or_rollback
+    expected_latency: "<=5s"
+validation:
+  latency_targets:
+    critical: "<=100ms"
+    standard: "<=500ms"
+    bulk: "<=5s"
+  autonomy: "human_intervention = 0"
+  binary_state: 已實現
+  evidence:
+    - system-module-map.yaml
+    - workspace/docs/refactor_playbooks/EXECUTION_STATUS.md

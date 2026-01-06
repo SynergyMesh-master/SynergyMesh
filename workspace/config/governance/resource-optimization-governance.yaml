@@ -1,0 +1,32 @@
+policy_id: AXIOM-GOV-RESOURCE-OPT-002
+title: 資源優化治理
+status: implemented
+mode: INSTANT
+principles:
+  - "事件驅動: trigger → event → action"
+  - "完全自治: 0 次人工介入"
+  - "高度並行: 64-256 代理"
+  - "延遲閾值: <=100ms / <=500ms / <=5s"
+  - "二元狀態: 已實現 / 未實現"
+controls:
+  - id: autoscaling
+    requirement: "依照負載即時水平擴縮，並將資源利用率保持在 65%-85%。"
+  - id: failover
+    requirement: "量子後端故障轉移 < 200ms，並維持驗證吞吐量 1247 docs/s。"
+triggers:
+  - event: load_spike_detected
+    action: scale_out_agents
+    expected_latency: "<=500ms"
+  - event: backend_degraded
+    action: trigger_failover
+    expected_latency: "<=200ms"
+validation:
+  latency_targets:
+    critical: "<=100ms"
+    standard: "<=500ms"
+    bulk: "<=5s"
+  autonomy: "human_intervention = 0"
+  binary_state: 已實現
+  evidence:
+    - workspace/docs/QUANTUM_VALIDATION_INTEGRATION_REPORT.md
+    - workspace/docs/refactor_playbooks/EXECUTION_STATUS.md

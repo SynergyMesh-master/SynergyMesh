@@ -1,0 +1,27 @@
+{
+  "document": {
+    "name": "performance-calibration-governance.yaml",
+    "path": "/home/runner/work/machine-native-ops/machine-native-ops/workspace/config/governance/performance-calibration-governance.yaml",
+    "size": "1.1KB",
+    "last_modified": "2026-01-06T06:32:08.360620Z"
+  },
+  "quantum_features": {
+    "coherence": 0.7957264326181823,
+    "entanglement": 0.961755065275527,
+    "fidelity": 0.9628699250763885,
+    "noise_level": 0.09536919554136089,
+    "coherence_time": 0.7781961615231325
+  },
+  "extraction_info": {
+    "backend": "ibm_kyiv",
+    "circuit_depth": 8,
+    "shots": 1024,
+    "error_mitigated": true,
+    "timestamp": "2026-01-06T06:32:50.764943Z"
+  },
+  "cryptographic_evidence": {
+    "sha256": "8c121c02902c41a367bc1a496fca27792c466d4830f1081d174bd5487f419287",
+    "sha512": "07447be31de05675081ef271844e232948e6a8f21449e7335e35c142cde826ac558b7a37f02a8830c05d2491d26289256d2c5079eb9c5c170e5319d9aad7e8fa",
+    "quantum_signature": "qsig:2:ibm_kyiv:0x92f143d938118573"
+  }
+}

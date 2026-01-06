@@ -1,0 +1,27 @@
+{
+  "document": {
+    "name": "module-interaction-governance.yaml",
+    "path": "/home/runner/work/machine-native-ops/machine-native-ops/workspace/config/governance/module-interaction-governance.yaml",
+    "size": "1.0KB",
+    "last_modified": "2026-01-06T06:42:58.216197Z"
+  },
+  "quantum_features": {
+    "coherence": 0.7914676234200119,
+    "entanglement": 0.9682346099422914,
+    "fidelity": 0.9813661652538195,
+    "noise_level": 0.058435839158110216,
+    "coherence_time": 0.7783004922217807
+  },
+  "extraction_info": {
+    "backend": "ibm_kyiv",
+    "circuit_depth": 8,
+    "shots": 1024,
+    "error_mitigated": true,
+    "timestamp": "2026-01-06T06:44:00.442058Z"
+  },
+  "cryptographic_evidence": {
+    "sha256": "0b5c7082fba93ae746ab0021e85369bc95aa3d819fe9bfbf9dd2d14684c5355f",
+    "sha512": "bfee6e32ba6b28fd82d4f3cc82f146e2f714328c1bdf4194191e86289cc7d1698201431f55506e54fd8508439a38b119fb01b97b2c68aaf283b57f47dd313a27",
+    "quantum_signature": "qsig:2:ibm_kyiv:0x17f69ab7e2a8c1bb"
+  }
+}

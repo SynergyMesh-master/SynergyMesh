@@ -1,0 +1,27 @@
+{
+  "document": {
+    "name": "EXECUTION_STATUS.md",
+    "path": "/home/runner/work/machine-native-ops/machine-native-ops/workspace/docs/refactor_playbooks/EXECUTION_STATUS.md",
+    "size": "8.2KB",
+    "last_modified": "2026-01-06T06:42:58.268197Z"
+  },
+  "quantum_features": {
+    "coherence": 0.7868437334531113,
+    "entanglement": 0.893283693832935,
+    "fidelity": 0.9925549139346311,
+    "noise_level": 0.08363318322918008,
+    "coherence_time": 0.7931023685512965
+  },
+  "extraction_info": {
+    "backend": "ibm_kyiv",
+    "circuit_depth": 8,
+    "shots": 1024,
+    "error_mitigated": true,
+    "timestamp": "2026-01-06T06:44:00.083806Z"
+  },
+  "cryptographic_evidence": {
+    "sha256": "2304ee693f233637e082c192e0b23cfa3fab1eb936f8dcc3e038ac463562e1d8",
+    "sha512": "21cc8a1ce82489b3cd35f34e1921ca6dee6e1966628b54e1f27d210c1e5167e5d7579b1eb47a048c92302c188bb4b5942f221ba2f52b1515ddf86e8743d9bfc3",
+    "quantum_signature": "qsig:2:ibm_kyiv:0xb05be11d9aff3a31"
+  }
+}

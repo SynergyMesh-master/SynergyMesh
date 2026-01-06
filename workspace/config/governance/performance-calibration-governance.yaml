@@ -1,0 +1,37 @@
+policy_id: AXIOM-GOV-PERF-CALIB-003
+title: 性能目標校準
+status: implemented
+mode: INSTANT
+principles:
+  - "事件驅動: trigger → event → action"
+  - "完全自治: 0 次人工介入"
+  - "高度並行: 64-256 代理"
+  - "延遲閾值: <=100ms / <=500ms / <=5s"
+  - "二元狀態: 已實現 / 未實現"
+targets:
+  latency:
+    api: "<=100ms"
+    stage: "<=30s-60s"
+    total: "<3m"
+  success_rate: ">=99.3%"
+  throughput: ">=1247 docs/s"
+  quantum_dimensions: "8 (6 量子增強)"
+controls:
+  - id: calibrate-latency
+    requirement: "對事件、階段與全域延遲進行即時校準並回饋到 pipelines。"
+  - id: auto-tuning
+    requirement: "當性能低於目標時，自動調整並行度與執行模式，不允許人工介入。"
+triggers:
+  - event: performance_drift_detected
+    action: auto_calibrate_targets
+    expected_latency: "<=500ms"
+validation:
+  latency_targets:
+    critical: "<=100ms"
+    standard: "<=500ms"
+    bulk: "<=5s"
+  autonomy: "human_intervention = 0"
+  binary_state: 已實現
+  evidence:
+    - workspace/docs/refactor_playbooks/EXECUTION_STATUS.md
+    - INSTANT-EXECUTION-REFACTOR-PLAN.md
