@@ -52,6 +52,11 @@ axiomDissolved:
       tools: 59
       resources: 14
       prompts: 3
+    architecture:
+      structure: "Modular - Layer-based tool definitions"
+      toolsPath: workspace/mcp/servers/tools/
+      modules: 16  # 14 layer modules + index + types + README
+      fileSize: "395 lines (reduced from 1488, 74% reduction)"
 
   # 整合清單
   integrationManifest:
