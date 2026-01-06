@@ -9,11 +9,10 @@ Responsibilities:
 - Circuit breaker and retry patterns
 """
 
-from typing import Dict, List, Optional, Any, Callable
+from typing import Dict, List, Optional, Any
 from dataclasses import dataclass, field
 from enum import Enum
 from datetime import datetime, timezone
-import asyncio
 import random
 
 
