@@ -48,7 +48,7 @@ class Check:
         }
 
 
-def build_checks() -> Iterable[Check]:
+def build_checks(evidence_min: int) -> Iterable[Check]:
     return [
         Check(
             name="L4 monitor modules",
@@ -83,8 +83,8 @@ def build_checks() -> Iterable[Check]:
         Check(
             name="L7 evidence chains",
             patterns=["workspace/docs/validation/evidence-chains/EV-*.json"],
-            min_count=23,
-            description="23 項證據鏈 (EV-*)",
+            min_count=evidence_min,
+            description=f"{evidence_min} 項以上證據鏈 (EV-*)",
         ),
         Check(
             name="L8 security configs",
@@ -102,9 +102,15 @@ def main() -> int:
         action="store_true",
         help="Print JSON output (machine-readable).",
     )
+    parser.add_argument(
+        "--evidence-min",
+        type=int,
+        default=23,
+        help="Minimum expected EV-* evidence chain files (default: 23).",
+    )
     args = parser.parse_args()
 
-    results = [check.run() for check in build_checks()]
+    results = [check.run() for check in build_checks(args.evidence_min)]
     all_passed = all(r["passed"] for r in results)
 
     if args.json_output:
