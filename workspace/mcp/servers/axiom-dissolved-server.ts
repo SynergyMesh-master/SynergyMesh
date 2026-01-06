@@ -1204,9 +1204,7 @@ const DISSOLVED_RESOURCES: ResourceDefinition[] = [
   },
 ];
 
-// ═══════════════════════════════════════════════════════════════════════════════
 // MCP PROMPTS REGISTRY
-// ═══════════════════════════════════════════════════════════════════════════════
 
 const DISSOLVED_PROMPTS: ExtendedPromptDefinition[] = [
   {
@@ -1265,9 +1263,7 @@ This evaluation will use:
   },
 ];
 
-// ═══════════════════════════════════════════════════════════════════════════════
 // VALIDATION HELPERS
-// ═══════════════════════════════════════════════════════════════════════════════
 
 /**
  * Validates arguments against a JSON Schema
@@ -1384,9 +1380,7 @@ function validateProperty(
   }
 }
 
-// ═══════════════════════════════════════════════════════════════════════════════
 // TOOL EXECUTION HANDLERS
-// ═══════════════════════════════════════════════════════════════════════════════
 
 // Metrics for tracking quantum fallback frequency
 const quantumFallbackMetrics = {
@@ -1496,6 +1490,7 @@ async function executeDissolvedTool(
     };
   }
 
+  // Simulate tool execution based on quantum capability
   // For quantum-enabled tools with fallback support
   if (tool.quantumEnabled && tool.fallbackEnabled) {
     try {
@@ -1504,6 +1499,7 @@ async function executeDissolvedTool(
       return {
         success: true,
         result: buildToolResult(toolName, tool.sourceModule, args, true, quantumResult),
+        execution_method: "quantum",
         executionMethod: "quantum",
       };
     } catch (error) {
@@ -1518,6 +1514,7 @@ async function executeDissolvedTool(
           execution_method: "quantum",
           execution_timestamp: new Date().toISOString(),
           quantum_executed: true,
+          execution_method: "quantum",
           executionTimestamp: new Date().toISOString(),
           quantumExecuted: true,
           executionMethod: "quantum",
@@ -1538,6 +1535,7 @@ async function executeDissolvedTool(
       return {
         success: true,
         result: buildToolResult(toolName, tool.sourceModule, args, false, {
+          fallback_used: true,
           fallbackUsed: true,
           fallbackReason: error instanceof Error ? error.message : "Quantum execution failed",
           fallback_reason: error instanceof Error ? error.message : "Quantum execution failed",
@@ -1556,6 +1554,7 @@ async function executeDissolvedTool(
       return {
         success: true,
         result: buildToolResult(toolName, tool.sourceModule, args, true, quantumResult),
+        execution_method: "quantum",
         executionMethod: "quantum",
       };
     } catch (error) {
@@ -1580,6 +1579,8 @@ async function executeDissolvedTool(
   const classicalResult = await executeClassicalTool(toolName, args, tool);
   return {
     success: true,
+    result: buildToolResult(toolName, tool.sourceModule, args, false, classicalResult),
+    execution_method: "classical",
     result: {
       tool: toolName,
       sourceModule: tool.sourceModule,
@@ -1778,9 +1779,7 @@ function extractErrorMessage(
     : defaultMessage;
 }
 
-// ═══════════════════════════════════════════════════════════════════════════════
 // MCP SERVER IMPLEMENTATION
-// ═══════════════════════════════════════════════════════════════════════════════
 
 const server = new Server(
   {
@@ -1903,7 +1902,7 @@ server.setRequestHandler(ReadResourceRequestSchema, async (request) => {
             tools: tools.map((t) => ({
               name: t.name,
               description: t.description,
-              quantum_enabled: t.quantum_enabled,
+              quantum_enabled: t.quantumEnabled,
             })),
           },
           null,
@@ -1949,9 +1948,7 @@ server.setRequestHandler(GetPromptRequestSchema, async (request) => {
   };
 });
 
-// ═══════════════════════════════════════════════════════════════════════════════
 // SERVER STARTUP
-// ═══════════════════════════════════════════════════════════════════════════════
 
 async function main() {
   try {
