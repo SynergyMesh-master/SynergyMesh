@@ -9,7 +9,7 @@ Responsibilities:
 - Embedding model management
 """
 
-from typing import Dict, List, Optional, Any, Union
+from typing import Dict, List, Optional
 from dataclasses import dataclass
 from enum import Enum
 import numpy as np
