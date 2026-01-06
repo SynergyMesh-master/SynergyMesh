@@ -9,7 +9,7 @@ Responsibilities:
 - Signature and verification
 """
 
-from typing import Dict, Tuple, Optional, Any
+from typing import Dict, Optional
 from dataclasses import dataclass
 from enum import Enum
 import hashlib

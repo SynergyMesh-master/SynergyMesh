@@ -167,6 +167,9 @@ class MAPEKLoop:
             except Exception as e:
                 # Log analyzer failure but continue with other analyzers
                 self.logger.warning(f"Analyzer failed: {e}", exc_info=True)
+            except Exception:
+                # Silently ignore analyzer failures to allow other analyzers to run
+                pass
         return anomalies
 
     async def _plan(self, anomalies: List[Anomaly]) -> List[RemediationPlan]:
@@ -183,6 +186,9 @@ class MAPEKLoop:
                     # Log planner failure but try next planner for this anomaly
                     anomaly_id = getattr(anomaly, 'id', 'unknown')
                     self.logger.warning(f"Planner failed for anomaly {anomaly_id}: {e}", exc_info=True)
+                except Exception:
+                    # Silently ignore planner failures and try next planner
+                    pass
         return plans
 
     async def _execute(self, plans: List[RemediationPlan]) -> List[ExecutionResult]:
