@@ -1920,7 +1920,7 @@ server.setRequestHandler(ReadResourceRequestSchema, async (request) => {
             tools: tools.map((t) => ({
               name: t.name,
               description: t.description,
-              quantumEnabled: t.quantumEnabled,
+              quantum_enabled: t.quantum_enabled,
             })),
           },
           null,
