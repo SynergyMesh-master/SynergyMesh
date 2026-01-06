@@ -1521,7 +1521,6 @@ async function executeDissolvedTool(
         executionMethod: "quantum",
           source_module: tool.sourceModule,
           error: error instanceof Error ? error.message : String(error),
-          timestamp: new Date().toISOString(),
         }
       );
 
