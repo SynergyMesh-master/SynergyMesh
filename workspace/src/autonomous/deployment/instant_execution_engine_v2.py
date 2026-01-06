@@ -16,7 +16,7 @@ import json
 import uuid
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
-from datetime import datetime
+from datetime import datetime, timezone
 from enum import Enum
 from typing import Any, Callable, Dict, List, Optional
 from concurrent.futures import ThreadPoolExecutor, ProcessPoolExecutor
@@ -152,7 +152,7 @@ class AnalyzerAgent(InstantAgent):
             "complexity": "medium",
             "estimated_stages": 4,
             "recommendations": ["parallel_execution", "cache_enabled"],
-            "timestamp": datetime.utcnow().isoformat()
+            "timestamp": datetime.now(timezone.utc).isoformat()
         }
 
 
@@ -171,7 +171,7 @@ class GeneratorAgent(InstantAgent):
             "languages": ["python", "typescript", "yaml"],
             "files_generated": 25,
             "lines_of_code": 1500,
-            "timestamp": datetime.utcnow().isoformat()
+            "timestamp": datetime.now(timezone.utc).isoformat()
         }
 
 
@@ -191,7 +191,7 @@ class ValidatorAgent(InstantAgent):
             "coverage": 95.5,
             "issues_found": 0,
             "quality_score": 98.0,
-            "timestamp": datetime.utcnow().isoformat()
+            "timestamp": datetime.now(timezone.utc).isoformat()
         }
 
 
@@ -211,7 +211,7 @@ class DeployerAgent(InstantAgent):
             "replicas": 3,
             "health_check": "passed",
             "rollback_available": True,
-            "timestamp": datetime.utcnow().isoformat()
+            "timestamp": datetime.now(timezone.utc).isoformat()
         }
 
 
@@ -314,7 +314,7 @@ class InstantPipeline:
         Returns:
             PipelineResult with full execution details
         """
-        started_at = datetime.utcnow()
+        started_at = datetime.now(timezone.utc)
         start_time = time.perf_counter()
         stage_results: List[StageResult] = []
         current_data = input_data
@@ -333,7 +333,7 @@ class InstantPipeline:
                         total_latency_ms=(time.perf_counter() - start_time) * 1000,
                         stages=stage_results,
                         started_at=started_at,
-                        completed_at=datetime.utcnow(),
+                        completed_at=datetime.now(timezone.utc),
                         error=stage_result.error
                     )
 
@@ -347,7 +347,7 @@ class InstantPipeline:
                 total_latency_ms=total_latency_ms,
                 stages=stage_results,
                 started_at=started_at,
-                completed_at=datetime.utcnow()
+                completed_at=datetime.now(timezone.utc)
             )
 
         except Exception as e:
@@ -358,7 +358,7 @@ class InstantPipeline:
                 total_latency_ms=(time.perf_counter() - start_time) * 1000,
                 stages=stage_results,
                 started_at=started_at,
-                completed_at=datetime.utcnow(),
+                completed_at=datetime.now(timezone.utc),
                 error=str(e)
             )
 
@@ -606,7 +606,7 @@ class InstantExecutionEngine:
                 "human_intervention": 0,
                 "auto_healing": True
             },
-            "timestamp": datetime.utcnow().isoformat()
+            "timestamp": datetime.now(timezone.utc).isoformat()
         }
 
 
