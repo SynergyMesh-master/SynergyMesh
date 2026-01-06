@@ -1255,6 +1255,62 @@ const DISSOLVED_PROMPTS: PromptDefinition[] = [
 // TOOL EXECUTION HANDLERS
 // ═══════════════════════════════════════════════════════════════════════════════
 
+// Constants for quantum execution simulation
+const DEFAULT_BACKEND_AVAILABILITY = 0.70;
+const VQE_QUANTUM_GROUND_STATE = -1.137;
+const VQE_CLASSICAL_GROUND_STATE = -1.135;
+const VQE_QUANTUM_PRECISION = 0.01;
+const VQE_CLASSICAL_PRECISION = 0.02;
+const MIN_QUANTUM_FIDELITY = 0.95;
+const MAX_QUANTUM_FIDELITY = 0.99;
+const MIN_CLASSICAL_QUALITY = 0.85;
+const MAX_CLASSICAL_QUALITY = 0.95;
+
+/**
+ * Tool category for execution routing
+ */
+enum ToolCategory {
+  VQE = "vqe",
+  QAOA = "qaoa",
+  PORTFOLIO = "portfolio",
+  FINANCIAL = "financial",
+  OPTIMIZATION = "optimization",
+  GENERIC = "generic",
+}
+
+/**
+ * Get tool category from tool name
+ */
+function getToolCategory(toolName: string): ToolCategory {
+  const name = toolName.toLowerCase();
+  if (name.includes("vqe")) return ToolCategory.VQE;
+  if (name.includes("qaoa")) return ToolCategory.QAOA;
+  if (name.includes("portfolio")) return ToolCategory.PORTFOLIO;
+  if (name.includes("financial")) return ToolCategory.FINANCIAL;
+  if (name.includes("optimization")) return ToolCategory.OPTIMIZATION;
+  return ToolCategory.GENERIC;
+}
+
+/**
+ * Helper to build result object for tool execution
+ */
+function buildToolResult(
+  toolName: string,
+  sourceModule: string,
+  args: Record<string, unknown>,
+  quantumExecuted: boolean,
+  additionalData: Record<string, unknown>
+): Record<string, unknown> {
+  return {
+    tool: toolName,
+    source_module: sourceModule,
+    args,
+    execution_timestamp: new Date().toISOString(),
+    quantum_executed: quantumExecuted,
+    ...additionalData,
+  };
+}
+
 /**
  * Execute a dissolved AXIOM tool with proper quantum execution and fallback
  */
@@ -1274,14 +1330,7 @@ async function executeDissolvedTool(
       const quantumResult = await executeQuantumTool(toolName, args, tool);
       return {
         success: true,
-        result: {
-          tool: toolName,
-          source_module: tool.source_module,
-          args,
-          execution_timestamp: new Date().toISOString(),
-          quantum_executed: true,
-          ...quantumResult,
-        },
+        result: buildToolResult(toolName, tool.source_module, args, true, quantumResult),
         execution_method: "quantum",
       };
     } catch (error) {
@@ -1289,16 +1338,11 @@ async function executeDissolvedTool(
       const classicalResult = await executeClassicalFallback(toolName, args, tool);
       return {
         success: true,
-        result: {
-          tool: toolName,
-          source_module: tool.source_module,
-          args,
-          execution_timestamp: new Date().toISOString(),
-          quantum_executed: false,
+        result: buildToolResult(toolName, tool.source_module, args, false, {
           fallback_used: true,
           fallback_reason: error instanceof Error ? error.message : "Quantum execution failed",
           ...classicalResult,
-        },
+        }),
         execution_method: "classical_fallback",
       };
     }
@@ -1311,14 +1355,7 @@ async function executeDissolvedTool(
       const quantumResult = await executeQuantumTool(toolName, args, tool);
       return {
         success: true,
-        result: {
-          tool: toolName,
-          source_module: tool.source_module,
-          args,
-          execution_timestamp: new Date().toISOString(),
-          quantum_executed: true,
-          ...quantumResult,
-        },
+        result: buildToolResult(toolName, tool.source_module, args, true, quantumResult),
         execution_method: "quantum",
       };
     } catch (error) {
@@ -1337,13 +1374,7 @@ async function executeDissolvedTool(
   const classicalResult = await executeClassicalTool(toolName, args, tool);
   return {
     success: true,
-    result: {
-      tool: toolName,
-      source_module: tool.source_module,
-      args,
-      execution_timestamp: new Date().toISOString(),
-      ...classicalResult,
-    },
+    result: buildToolResult(toolName, tool.source_module, args, false, classicalResult),
     execution_method: "classical",
   };
 }
@@ -1358,6 +1389,8 @@ async function executeQuantumTool(
   tool: ToolDefinition
 ): Promise<Record<string, unknown>> {
   // Check for quantum backend availability
+  // Note: Both backend_type and backend are accepted for compatibility
+  // with different MCP tool schemas in the AXIOM architecture
   const backendType = (args.backend_type as string) || 
                       (args.backend as string) || 
                       "local_simulator";
@@ -1377,7 +1410,7 @@ async function executeQuantumTool(
     quantum_result: simulationResult,
     backend_used: backendType,
     circuit_depth: Math.floor(Math.random() * 100) + 10,
-    fidelity: 0.95 + Math.random() * 0.04, // 0.95-0.99
+    fidelity: MIN_QUANTUM_FIDELITY + Math.random() * (MAX_QUANTUM_FIDELITY - MIN_QUANTUM_FIDELITY),
   };
 }
 
@@ -1395,7 +1428,7 @@ async function executeClassicalFallback(
   
   return {
     classical_result: classicalResult,
-    approximation_quality: 0.85 + Math.random() * 0.1, // 0.85-0.95
+    approximation_quality: MIN_CLASSICAL_QUALITY + Math.random() * (MAX_CLASSICAL_QUALITY - MIN_CLASSICAL_QUALITY),
     performance_note: "Classical fallback used - results are approximate",
   };
 }
@@ -1426,7 +1459,7 @@ function checkQuantumBackendAvailability(backendType: string): boolean {
     ibm_brisbane: 0.75,    // Specific backend may be in maintenance
   };
   
-  const availability = availabilityMap[backendType] ?? 0.70;
+  const availability = availabilityMap[backendType] ?? DEFAULT_BACKEND_AVAILABILITY;
   return Math.random() < availability;
 }
 
@@ -1440,32 +1473,39 @@ async function simulateQuantumExecution(
   // Simulate computation time
   await new Promise((resolve) => setTimeout(resolve, 10 + Math.random() * 50));
   
-  // Return tool-specific simulated results
+  // Return tool-specific simulated results based on tool category
   // Real implementation would execute actual quantum circuits
-  if (toolName.includes("vqe")) {
-    return {
-      ground_state_energy: -1.137 + Math.random() * 0.01,
-      optimal_parameters: Array(8).fill(0).map(() => Math.random() * Math.PI * 2),
-      convergence_iterations: Math.floor(Math.random() * 100) + 50,
-    };
-  } else if (toolName.includes("qaoa")) {
-    return {
-      optimal_solution: { nodes: [0, 1, 0, 1, 0], cost: 42 },
-      approximation_ratio: 0.92 + Math.random() * 0.07,
-    };
-  } else if (toolName.includes("portfolio") || toolName.includes("financial")) {
-    return {
-      allocation: { stock_a: 0.4, stock_b: 0.35, stock_c: 0.25 },
-      expected_return: 0.08 + Math.random() * 0.02,
-      sharpe_ratio: 1.5 + Math.random() * 0.5,
-    };
-  }
+  const category = getToolCategory(toolName);
   
-  // Generic quantum result
-  return {
-    status: "completed",
-    confidence: 0.90 + Math.random() * 0.09,
-  };
+  switch (category) {
+    case ToolCategory.VQE:
+      return {
+        ground_state_energy: VQE_QUANTUM_GROUND_STATE + Math.random() * VQE_QUANTUM_PRECISION,
+        optimal_parameters: Array(8).fill(0).map(() => Math.random() * Math.PI * 2),
+        convergence_iterations: Math.floor(Math.random() * 100) + 50,
+      };
+      
+    case ToolCategory.QAOA:
+      return {
+        optimal_solution: { nodes: [0, 1, 0, 1, 0], cost: 42 },
+        approximation_ratio: 0.92 + Math.random() * 0.07,
+      };
+      
+    case ToolCategory.PORTFOLIO:
+    case ToolCategory.FINANCIAL:
+      return {
+        allocation: { stock_a: 0.4, stock_b: 0.35, stock_c: 0.25 },
+        expected_return: 0.08 + Math.random() * 0.02,
+        sharpe_ratio: 1.5 + Math.random() * 0.5,
+      };
+      
+    case ToolCategory.GENERIC:
+    default:
+      return {
+        status: "completed",
+        confidence: 0.90 + Math.random() * 0.09,
+      };
+  }
 }
 
 /**
@@ -1478,23 +1518,30 @@ async function simulateClassicalExecution(
   // Simulate computation time (usually faster than quantum for small problems)
   await new Promise((resolve) => setTimeout(resolve, 5 + Math.random() * 20));
   
-  // Return tool-specific classical results
-  if (toolName.includes("vqe")) {
-    return {
-      ground_state_energy: -1.135 + Math.random() * 0.02, // Less precise
-      method: "classical_eigensolver",
-    };
-  } else if (toolName.includes("qaoa") || toolName.includes("optimization")) {
-    return {
-      solution: { nodes: [0, 1, 0, 1, 0], cost: 45 }, // Less optimal
-      method: "simulated_annealing",
-    };
-  }
+  // Return tool-specific classical results based on tool category
+  const category = getToolCategory(toolName);
   
-  return {
-    status: "completed",
-    method: "classical_algorithm",
-  };
+  switch (category) {
+    case ToolCategory.VQE:
+      return {
+        ground_state_energy: VQE_CLASSICAL_GROUND_STATE + Math.random() * VQE_CLASSICAL_PRECISION,
+        method: "classical_eigensolver",
+      };
+      
+    case ToolCategory.QAOA:
+    case ToolCategory.OPTIMIZATION:
+      return {
+        solution: { nodes: [0, 1, 0, 1, 0], cost: 45 }, // Less optimal than quantum
+        method: "simulated_annealing",
+      };
+      
+    case ToolCategory.GENERIC:
+    default:
+      return {
+        status: "completed",
+        method: "classical_algorithm",
+      };
+  }
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
