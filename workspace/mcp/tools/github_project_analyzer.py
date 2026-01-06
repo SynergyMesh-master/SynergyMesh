@@ -266,7 +266,7 @@ class GitHubProjectAnalyzer:
                 },
                 "mcp-servers": {"dependencies": ["core"], "dependents": ["automation", "agents"]},
                 "governance": {"dependencies": ["config"], "dependents": ["ci-cd", "validation"]},
-                "core": {"dependencies": ["shared"], "dependents": ["mcp-servers", "services"]},
+                "shared": {"dependencies": [], "dependents": ["core", "mcp-servers", "services"]},
             },
             "scalability_considerations": [
                 "Parallel agent execution (64-256 agents)" if self._local_scan_results else "Horizontal scaling supported through Kubernetes",
@@ -579,9 +579,10 @@ class GitHubProjectAnalyzer:
                 "test_levels": ["unit", "integration", "e2e", "performance"],
                 "coverage": {
                     "unit": "75%", "integration": "60%",
-                    "e2e": "45%", "performance": "30%"
-                "test_levels": ["unit", "integration", "validation"],
-                "coverage": {
+                    "e2e": "45%", "performance": "30%",
+                },
+                "governance_test_levels": ["unit", "integration", "validation"],
+                "governance_coverage": {
                     "governance_validators": f"{local_stats.get('governance_scripts', 0)} scripts",
                 },
                 "automation_level": "high",
