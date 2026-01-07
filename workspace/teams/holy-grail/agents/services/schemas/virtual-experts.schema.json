@@ -1,0 +1,87 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://machinenativeops.io/schemas/virtual-experts.schema.json",
+  "title": "SynergyMesh Virtual Experts",
+  "description": "Schema for config/agents/team/virtual-experts.yaml - defines expert roles, permissions, capabilities",
+  "type": "object",
+  "required": ["version", "experts"],
+  "properties": {
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "naming_convention": {
+      "type": "object",
+      "properties": {
+        "format": { "type": "string" },
+        "examples": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "experts": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "role"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z]+\\.[a-z_]+$",
+            "description": "Expert ID in domain.role format"
+          },
+          "role": { "type": "string" },
+          "description": { "type": "string" },
+          "governed_by": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^P-[A-Z]+-\\d{3}$"
+            },
+            "description": "References to ai-constitution principle IDs"
+          },
+          "allowed_tools": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "References to dependencies.yaml tool IDs"
+          },
+          "environments": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "References to environment.yaml env IDs"
+          },
+          "primary_reads": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Config files this expert can read"
+          },
+          "capabilities": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": ["block_output", "request_clarification", "escalate", "approve", "reject", "modify", "audit"]
+            }
+          },
+          "can_override": {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        }
+      }
+    },
+    "hierarchy": {
+      "type": "object",
+      "properties": {
+        "override_rules": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "expert": { "type": "string" },
+              "can_override": { "type": "array", "items": { "type": "string" } }
+            }
+          }
+        }
+      }
+    }
+  }
+}

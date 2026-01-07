@@ -1,0 +1,768 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: quantum-orchestration-baseline
+  namespace: intelligent-hyperautomation-baseline
+  labels:
+    baseline.level: L-A
+    baseline.version: v1.0.0
+    baseline.type: quantum-orchestration
+    baseline.dependency: namespace-governance,security-rbac,resource-management,network-security,compliance-attestation
+  annotations:
+    baseline.io/description: "量子計算編排基線 / Quantum-Enabled Orchestration Foundation"
+    baseline.io/purpose: "建立混合量子-經典計算編排能力 / Establish hybrid quantum-classical compute orchestration"
+    baseline.io/capability-scope: "quantum-circuit-execution,hybrid-workflow-orchestration,quantum-resource-management"
+    baseline.io/conflict-priority: "750"
+    baseline.io/state-machine: "DECLARED->REGISTERED->COORDINATED->ACTIVE"
+    baseline.io/quantum-backend: "QPU-intelligent-hyperautomation-v1-native"
+data:
+  quantum-circuit-definitions.yaml: |
+    version: v1.0.0
+    quantum_circuits:
+      qaoa_optimization:
+        circuit_id: "qaoa-max-cut-v1"
+        description: "QAOA 最大割問題求解 / QAOA Max-Cut Problem Solver"
+        qubits_required: 16
+        circuit_depth: 8
+        gate_sequence:
+          - type: "hadamard"
+            target_qubits:
+              - 0
+              - 1
+              - 2
+              - 3
+              - 4
+              - 5
+              - 6
+              - 7
+              - 8
+              - 9
+              - 10
+              - 11
+              - 12
+              - 13
+              - 14
+              - 15
+          - type: "problem_unitary"
+            parameters:
+              edges:
+                - [0, 1]
+                - [1, 2]
+                - [2, 3]
+                - [3, 0]
+                - [4, 5]
+                - [5, 6]
+                - [6, 7]
+                - [7, 4]
+                - [0, 4]
+                - [1, 5]
+                - [2, 6]
+                - [3, 7]
+              gamma: 0.5
+          - type: "mixer_unitary"
+            parameters:
+              beta: 0.3
+          - type: "measurement"
+            target_qubits:
+              - 0
+              - 1
+              - 2
+              - 3
+              - 4
+              - 5
+              - 6
+              - 7
+              - 8
+              - 9
+              - 10
+              - 11
+              - 12
+              - 13
+              - 14
+              - 15
+        classical_optimizer:
+          algorithm: "COBYLA"
+          max_iterations: 100
+          tolerance: 0.001
+        execution_params:
+          shots: 8192
+          optimization_level: 3
+          resilience_level: 1
+        estimated_execution_time_seconds: 45
+        estimated_cost_credits: 120
+      vqe_ground_state:
+        circuit_id: "vqe-h2-molecule-v1"
+        description: "VQE 氫分子基態能量計算 / VQE Hydrogen Molecule Ground State"
+        qubits_required: 4
+        circuit_depth: 12
+        ansatz: "UCCSD"
+        hamiltonian:
+          type: "molecular"
+          molecule: "H2"
+          basis: "sto-3g"
+          bond_distance: 0.735
+          freeze_core: true
+        gate_sequence:
+          - type: "ry"
+            target_qubit: 0
+            parameter: "theta_0"
+          - type: "ry"
+            target_qubit: 1
+            parameter: "theta_1"
+          - type: "ry"
+            target_qubit: 2
+            parameter: "theta_2"
+          - type: "ry"
+            target_qubit: 3
+            parameter: "theta_3"
+          - type: "cnot"
+            control_qubit: 0
+            target_qubit: 1
+          - type: "cnot"
+            control_qubit: 1
+            target_qubit: 2
+          - type: "cnot"
+            control_qubit: 2
+            target_qubit: 3
+          - type: "rz"
+            target_qubit: 0
+            parameter: "phi_0"
+          - type: "rz"
+            target_qubit: 1
+            parameter: "phi_1"
+          - type: "rz"
+            target_qubit: 2
+            parameter: "phi_2"
+          - type: "rz"
+            target_qubit: 3
+            parameter: "phi_3"
+          - type: "cnot"
+            control_qubit: 3
+            target_qubit: 2
+          - type: "cnot"
+            control_qubit: 2
+            target_qubit: 1
+          - type: "cnot"
+            control_qubit: 1
+            target_qubit: 0
+        classical_optimizer:
+          algorithm: "SLSQP"
+          max_iterations: 300
+          tolerance: 0.0001
+        execution_params:
+          shots: 10000
+          optimization_level: 3
+          measurement_mitigation: true
+        estimated_execution_time_seconds: 180
+        estimated_cost_credits: 450
+      qnn_classification:
+        circuit_id: "qnn-binary-classifier-v1"
+        description: "QNN 二元分類器 / QNN Binary Classifier"
+        qubits_required: 8
+        circuit_depth: 16
+        input_features: 4
+        encoding_method: "amplitude_encoding"
+        variational_layers: 4
+        gate_sequence:
+          - type: "feature_map"
+            method: "ZZFeatureMap"
+            repetitions: 2
+            entanglement: "linear"
+          - type: "variational_form"
+            method: "RealAmplitudes"
+            repetitions: 4
+            entanglement: "full"
+          - type: "measurement"
+            basis: "computational"
+            target_qubits:
+              - 0
+              - 1
+              - 2
+              - 3
+              - 4
+              - 5
+              - 6
+              - 7
+        training_config:
+          optimizer: "ADAM"
+          learning_rate: 0.01
+          batch_size: 32
+          epochs: 100
+          loss_function: "cross_entropy"
+        execution_params:
+          shots_per_circuit: 4096
+          parameter_shift_rule: true
+        estimated_training_time_hours: 12
+        estimated_cost_credits: 2500
+      qsvm_kernel:
+        circuit_id: "qsvm-rbf-kernel-v1"
+        description: "QSVM 核函數計算 / QSVM Kernel Computation"
+        qubits_required: 6
+        feature_dimension: 6
+        kernel_type: "fidelity"
+        feature_map:
+          type: "PauliFeatureMap"
+          feature_dimension: 6
+          reps: 2
+          paulis:
+            - "Z"
+            - "ZZ"
+          entanglement: "full"
+        training_params:
+          C: 1.0
+          kernel_evaluations_required: 1024
+        execution_params:
+          shots: 8192
+          optimization_level: 2
+        estimated_execution_time_seconds: 90
+        estimated_cost_credits: 300
+  quantum-resource-pool.yaml: |
+    version: v1.0.0
+    quantum_processing_units:
+      qpu_primary:
+        provider: "ibm_quantum"
+        backend_name: "ibm_brisbane"
+        qubits: 127
+        quantum_volume: 32768
+        basis_gates:
+          - "id"
+          - "rz"
+          - "sx"
+          - "x"
+          - "cx"
+          - "reset"
+        coupling_map: "heavy_hex"
+        t1_median_microseconds: 185
+        t2_median_microseconds: 120
+        readout_error_rate: 0.015
+        gate_error_rates:
+          single_qubit: 0.0003
+          two_qubit: 0.007
+        max_shots: 20000
+        max_experiments: 300
+        availability:
+          uptime_percent: 99.5
+          maintenance_window: "Sunday 02:00-06:00 UTC"
+        cost_per_shot: 0.001
+        priority_access: true
+      qpu_secondary:
+        provider: "aws_braket"
+        backend_name: "Rigetti-Aspen-M-3"
+        qubits: 80
+        quantum_volume: 16384
+        basis_gates:
+          - "rx"
+          - "ry"
+          - "rz"
+          - "cz"
+          - "xy"
+        coupling_map: "octagonal"
+        t1_median_microseconds: 150
+        t2_median_microseconds: 95
+        readout_error_rate: 0.02
+        gate_error_rates:
+          single_qubit: 0.0005
+          two_qubit: 0.01
+        max_shots: 10000
+        max_experiments: 100
+        availability:
+          uptime_percent: 98.5
+          maintenance_window: "Saturday 00:00-04:00 UTC"
+        cost_per_shot: 0.0015
+        priority_access: false
+      qpu_simulator:
+        provider: "local_statevector"
+        backend_name: "aer_simulator"
+        qubits: 32
+        simulation_method: "statevector"
+        noise_model: "realistic"
+        max_shots: 1000000
+        cost_per_shot: 0.0
+        always_available: true
+    scheduling_policy:
+      algorithm: "priority_queue"
+      factors:
+        circuit_complexity_weight: 0.3
+        estimated_runtime_weight: 0.3
+        user_priority_weight: 0.2
+        cost_efficiency_weight: 0.2
+      timeout_seconds: 3600
+      retry_policy:
+        max_attempts: 3
+        backoff_multiplier: 2
+        initial_delay_seconds: 60
+  hybrid-workflow-orchestration.yaml: |
+    version: v1.0.0
+    orchestration_engine:
+      type: "argo-workflows"
+      quantum_integration: "native"
+      classical_compute:
+        kubernetes_native: true
+        gpu_acceleration: true
+        tensor_optimization: true
+    workflow_templates:
+      quantum_classical_optimization:
+        workflow_id: "hybrid-qaoa-optimization-v1"
+        description: "混合量子-經典優化工作流 / Hybrid Quantum-Classical Optimization Workflow"
+        steps:
+          - name: "classical-preprocessing"
+            type: "container"
+            image: "gcr.io/company/classical-optimizer:v1.0.0"
+            inputs:
+              - name: "problem-definition"
+                type: "json"
+              - name: "initial-parameters"
+                type: "array"
+            outputs:
+              - name: "preprocessed-problem"
+                type: "json"
+              - name: "parameter-bounds"
+                type: "array"
+            resources:
+              cpu: "4000m"
+              memory: "8Gi"
+            timeout_seconds: 300
+          - name: "quantum-circuit-execution"
+            type: "quantum-job"
+            depends_on:
+              - "classical-preprocessing"
+            circuit_ref: "qaoa-max-cut-v1"
+            inputs:
+              - name: "problem-unitary-params"
+                from: "{{steps.classical-preprocessing.outputs.preprocessed-problem}}"
+              - name: "variational-params"
+                from: "{{steps.classical-preprocessing.outputs.initial-parameters}}"
+            qpu_requirements:
+              min_qubits: 16
+              max_gate_error: 0.01
+              min_quantum_volume: 16384
+            execution_config:
+              shots: 8192
+              optimization_level: 3
+              resilience_level: 1
+            outputs:
+              - name: "measurement-results"
+                type: "histogram"
+              - name: "expectation-value"
+                type: "float"
+            timeout_seconds: 600
+          - name: "classical-optimization-step"
+            type: "container"
+            depends_on:
+              - "quantum-circuit-execution"
+            image: "gcr.io/company/classical-optimizer:v1.0.0"
+            inputs:
+              - name: "measurement-results"
+                from: "{{steps.quantum-circuit-execution.outputs.measurement-results}}"
+              - name: "current-parameters"
+                from: "{{steps.quantum-circuit-execution.inputs.variational-params}}"
+            outputs:
+              - name: "updated-parameters"
+                type: "array"
+              - name: "convergence-metric"
+                type: "float"
+            resources:
+              cpu: "2000m"
+              memory: "4Gi"
+            timeout_seconds: 180
+          - name: "convergence-check"
+            type: "script"
+            depends_on:
+              - "classical-optimization-step"
+            script: |
+              convergence = {{steps.classical-optimization-step.outputs.convergence-metric}}
+              threshold = 0.001
+              max_iterations = 100
+              current_iteration = {{workflow.iteration}}
+              if convergence < threshold or current_iteration >= max_iterations:
+                return "converged"
+              else:
+                return "continue"
+            outputs:
+              - name: "decision"
+                type: "string"
+          - name: "loop-back"
+            type: "conditional"
+            depends_on:
+              - "convergence-check"
+            when: "{{steps.convergence-check.outputs.decision}} == 'continue'"
+            target: "quantum-circuit-execution"
+            update_inputs:
+              variational-params: "{{steps.classical-optimization-step.outputs.updated-parameters}}"
+          - name: "result-postprocessing"
+            type: "container"
+            depends_on:
+              - "convergence-check"
+            when: "{{steps.convergence-check.outputs.decision}} == 'converged'"
+            image: "gcr.io/company/result-processor:v1.0.0"
+            inputs:
+              - name: "final-measurement-results"
+                from: "{{steps.quantum-circuit-execution.outputs.measurement-results}}"
+              - name: "final-parameters"
+                from: "{{steps.classical-optimization-step.outputs.updated-parameters}}"
+            outputs:
+              - name: "optimal-solution"
+                type: "json"
+              - name: "solution-quality"
+                type: "float"
+            resources:
+              cpu: "1000m"
+              memory: "2Gi"
+        metrics:
+          - name: "total-quantum-time"
+            aggregation: "sum"
+            source: "quantum-circuit-execution.duration"
+          - name: "total-iterations"
+            aggregation: "count"
+            source: "quantum-circuit-execution"
+          - name: "convergence-quality"
+            aggregation: "last"
+            source: "result-postprocessing.outputs.solution-quality"
+      quantum_ml_training:
+        workflow_id: "qnn-training-pipeline-v1"
+        description: "量子機器學習訓練流水線 / Quantum Machine Learning Training Pipeline"
+        steps:
+          - name: "data-preparation"
+            type: "container"
+            image: "gcr.io/company/data-processor:v1.0.0"
+            inputs:
+              - name: "training-dataset"
+                type: "csv"
+              - name: "validation-split"
+                value: 0.2
+            outputs:
+              - name: "processed-train-data"
+                type: "numpy-array"
+              - name: "processed-val-data"
+                type: "numpy-array"
+              - name: "feature-scaler"
+                type: "pickle"
+            resources:
+              cpu: "8000m"
+              memory: "16Gi"
+          - name: "quantum-feature-encoding"
+            type: "quantum-job"
+            depends_on:
+              - "data-preparation"
+            circuit_ref: "qnn-binary-classifier-v1"
+            operation: "encode-features"
+            inputs:
+              - name: "features"
+                from: "{{steps.data-preparation.outputs.processed-train-data}}"
+              - name: "encoding-method"
+                value: "amplitude_encoding"
+            outputs:
+              - name: "quantum-states"
+                type: "statevector-array"
+          - name: "qnn-forward-pass"
+            type: "quantum-job"
+            depends_on:
+              - "quantum-feature-encoding"
+            circuit_ref: "qnn-binary-classifier-v1"
+            operation: "forward-pass"
+            parallel_execution: true
+            batch_size: 32
+            inputs:
+              - name: "input-states"
+                from: "{{steps.quantum-feature-encoding.outputs.quantum-states}}"
+              - name: "circuit-parameters"
+                from: "{{workflow.parameters.current-weights}}"
+            outputs:
+              - name: "predictions"
+                type: "array"
+              - name: "intermediate-states"
+                type: "statevector-array"
+          - name: "gradient-computation"
+            type: "container"
+            depends_on:
+              - "qnn-forward-pass"
+            image: "gcr.io/company/quantum-gradient:v1.0.0"
+            method: "parameter-shift-rule"
+            inputs:
+              - name: "predictions"
+                from: "{{steps.qnn-forward-pass.outputs.predictions}}"
+              - name: "true-labels"
+                from: "{{steps.data-preparation.outputs.processed-train-data}}"
+              - name: "circuit-parameters"
+                from: "{{workflow.parameters.current-weights}}"
+            outputs:
+              - name: "gradients"
+                type: "array"
+              - name: "loss-value"
+                type: "float"
+            resources:
+              cpu: "4000m"
+              memory: "8Gi"
+              gpu: "1"
+          - name: "parameter-update"
+            type: "script"
+            depends_on:
+              - "gradient-computation"
+            script: |
+              import numpy as np
+              current_weights = np.array({{workflow.parameters.current-weights}})
+              gradients = np.array({{steps.gradient-computation.outputs.gradients}})
+              learning_rate = 0.01
+              updated_weights = current_weights - learning_rate * gradients
+              return updated_weights.tolist()
+            outputs:
+              - name: "new-weights"
+                type: "array"
+          - name: "epoch-complete"
+            type: "conditional"
+            depends_on:
+              - "parameter-update"
+            condition: "{{workflow.epoch}} < {{workflow.parameters.max-epochs}}"
+            actions:
+              if_true:
+                - update_parameter:
+                    name: "current-weights"
+                    value: "{{steps.parameter-update.outputs.new-weights}}"
+                - update_parameter:
+                    name: "epoch"
+                    value: "{{workflow.epoch + 1}}"
+                - loop_to: "quantum-feature-encoding"
+              if_false:
+                - proceed_to: "model-validation"
+          - name: "model-validation"
+            type: "quantum-job"
+            depends_on:
+              - "epoch-complete"
+            circuit_ref: "qnn-binary-classifier-v1"
+            operation: "inference"
+            inputs:
+              - name: "validation-data"
+                from: "{{steps.data-preparation.outputs.processed-val-data}}"
+              - name: "trained-parameters"
+                from: "{{steps.parameter-update.outputs.new-weights}}"
+            outputs:
+              - name: "validation-predictions"
+                type: "array"
+              - name: "accuracy"
+                type: "float"
+              - name: "f1-score"
+                type: "float"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: quantum-execution-scripts
+  namespace: intelligent-hyperautomation-baseline
+  labels:
+    baseline.component: quantum-executor
+data:
+  qaoa-executor.py: |
+    import numpy as np
+    from qiskit import QuantumCircuit, transpile
+    from qiskit.algorithms.optimizers import COBYLA
+    from qiskit_ibm_runtime import QiskitRuntimeService, Sampler, Options
+    import json
+    import sys
+    def create_qaoa_circuit(num_qubits, edges, gamma, beta):
+        qc = QuantumCircuit(num_qubits, num_qubits)
+        for qubit in range(num_qubits):
+            qc.h(qubit)
+        for edge in edges:
+            qc.rzz(2 * gamma, edge[0], edge[1])
+        for qubit in range(num_qubits):
+            qc.rx(2 * beta, qubit)
+        qc.measure(range(num_qubits), range(num_qubits))
+        return qc
+    def compute_expectation(counts, edges):
+        expectation = 0
+        total_counts = sum(counts.values())
+        for bitstring, count in counts.items():
+            cost = 0
+            for edge in edges:
+                if bitstring[edge[0]] != bitstring[edge[1]]:
+                    cost += 1
+            expectation += cost * (count / total_counts)
+        return expectation
+    def objective_function(params, num_qubits, edges, sampler):
+        gamma, beta = params
+        circuit = create_qaoa_circuit(num_qubits, edges, gamma, beta)
+        job = sampler.run(circuit, shots=8192)
+        result = job.result()
+        counts = result.quasi_dists[0].binary_probabilities()
+        expectation = compute_expectation(counts, edges)
+        return -expectation
+    def main():
+        config = json.loads(sys.argv[1])
+        service = QiskitRuntimeService(channel="ibm_quantum", token=config["api_token"])
+        backend = service.backend(config["backend_name"])
+        num_qubits = config["num_qubits"]
+        edges = config["edges"]
+        options = Options()
+        options.optimization_level = 3
+        options.resilience_level = 1
+        sampler = Sampler(backend=backend, options=options)
+        initial_params = [0.5, 0.3]
+        optimizer = COBYLA(maxiter=100, tol=0.001)
+        result = optimizer.minimize(
+            fun=lambda params: objective_function(params, num_qubits, edges, sampler),
+            x0=initial_params
+        )
+        output = {
+            "optimal_params": result.x.tolist(),
+            "optimal_value": -result.fun,
+            "iterations": result.nfev,
+            "success": result.success
+        }
+        print(json.dumps(output))
+    if __name__ == "__main__":
+        main()
+  vqe-executor.py: |
+    import numpy as np
+    from qiskit import QuantumCircuit, transpile
+    from qiskit.quantum_info import SparsePauliOp
+    from qiskit.algorithms.optimizers import SLSQP
+    from qiskit_ibm_runtime import QiskitRuntimeService, Estimator, Options
+    from qiskit.circuit.library import TwoLocal
+    import json
+    import sys
+    def create_h2_hamiltonian():
+        hamiltonian = SparsePauliOp.from_list([
+            ("IIII", -0.8105479805373266),
+            ("IIIZ", 0.17218393261915552),
+            ("IIZI", -0.2257534922240251),
+            ("IZII", 0.17218393261915552),
+            ("ZIII", -0.2257534922240251),
+            ("IIZZ", 0.12091263261776641),
+            ("IZIZ", 0.16892753870087912),
+            ("IZZI", 0.045232799946057854),
+            ("ZIIZ", 0.16892753870087912),
+            ("ZIZI", 0.045232799946057854),
+            ("ZZII", 0.17464343068300453)
+        ])
+        return hamiltonian
+    def create_vqe_ansatz(num_qubits, reps):
+        ansatz = TwoLocal(
+            num_qubits=num_qubits,
+            rotation_blocks=["ry", "rz"],
+            entanglement_blocks="cz",
+            entanglement="full",
+            reps=reps
+        )
+        return ansatz
+    def objective_function(params, ansatz, hamiltonian, estimator):
+        job = estimator.run(ansatz, hamiltonian, parameter_values=params)
+        result = job.result()
+        energy = result.values[0]
+        return np.real(energy)
+    def main():
+        config = json.loads(sys.argv[1])
+        service = QiskitRuntimeService(channel="ibm_quantum", token=config["api_token"])
+        backend = service.backend(config["backend_name"])
+        num_qubits = 4
+        reps = 3
+        ansatz = create_vqe_ansatz(num_qubits, reps)
+        hamiltonian = create_h2_hamiltonian()
+        options = Options()
+        options.optimization_level = 3
+        options.resilience_level = 1
+        estimator = Estimator(backend=backend, options=options)
+        initial_params = np.random.uniform(0, 2*np.pi, ansatz.num_parameters)
+        optimizer = SLSQP(maxiter=300, tol=0.0001)
+        result = optimizer.minimize(
+            fun=lambda params: objective_function(params, ansatz, hamiltonian, estimator),
+            x0=initial_params
+        )
+        output = {
+            "ground_state_energy": result.fun,
+            "optimal_params": result.x.tolist(),
+            "iterations": result.nfev,
+            "success": result.success,
+            "exact_energy": -1.8572750302023786
+        }
+        print(json.dumps(output))
+    if __name__ == "__main__":
+        main()
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: quantum-orchestration-service
+  namespace: intelligent-hyperautomation-baseline
+  labels:
+    baseline.component: quantum-orchestration
+    app.kubernetes.io/name: quantum-orchestrator
+    app.kubernetes.io/version: v1.0.0
+spec:
+  type: ClusterIP
+  selector:
+    app.kubernetes.io/name: quantum-orchestrator
+  ports:
+    - name: http-api
+      port: 8000
+      targetPort: 8000
+      protocol: TCP
+    - name: grpc-api
+      port: 9000
+      targetPort: 9000
+      protocol: TCP
+    - name: quantum-metrics
+      port: 9100
+      targetPort: 9100
+      protocol: TCP
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: quantum-orchestrator-sa
+  namespace: intelligent-hyperautomation-baseline
+  labels:
+    baseline.component: quantum-orchestration
+automountServiceAccountToken: true
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: quantum-job-executor
+  namespace: intelligent-hyperautomation-baseline
+  labels:
+    baseline.component: quantum-orchestration
+rules:
+  - apiGroups:
+      - "batch"
+    resources:
+      - "jobs"
+    verbs:
+      - "create"
+      - "get"
+      - "list"
+      - "watch"
+      - "delete"
+  - apiGroups:
+      - ""
+    resources:
+      - "pods"
+      - "pods/log"
+    verbs:
+      - "get"
+      - "list"
+      - "watch"
+  - apiGroups:
+      - ""
+    resources:
+      - "configmaps"
+      - "secrets"
+    verbs:
+      - "get"
+      - "list"
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: quantum-job-executor
+  namespace: intelligent-hyperautomation-baseline
+  labels:
+    baseline.component: quantum-orchestration
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: quantum-job-executor
+subjects:
+  - kind: ServiceAccount
+    name: quantum-orchestrator-sa
+    namespace: intelligent-hyperautomation-baseline

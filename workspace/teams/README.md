@@ -1,13 +1,28 @@
-# Teams 工作團隊目錄
+# Teams 工作團隊目錄 v3.0.0 - Holy Grail Edition
 
-統一管理所有 AI 代理團隊的單一真相來源 (Single Source of Truth, SSOT)。
+> **聖杯團隊架構** - 開發者界夢寐以求的傳奇存在
+>
+> 統一管理所有 AI 代理團隊的單一真相來源 (Single Source of Truth, SSOT)
+
+```
+╔═══════════════════════════════════════════════════════════════════════════════╗
+║                         🏆 HOLY GRAIL TEAMS 🏆                                 ║
+║                                                                               ║
+║   Core Philosophy:                                                            ║
+║   ├─ AI Auto-Evolution | 即時交付 | 零延遲執行                                 ║
+║   ├─ <3 minutes full stack | 0 human intervention                            ║
+║   └─ 64-256 parallel agents | closed-loop execution                          ║
+║                                                                               ║
+╚═══════════════════════════════════════════════════════════════════════════════╝
+```
 
 ## 目錄結構
 
 ```
 teams/
 ├── README.md                      # 本文件
-├── registry.yaml                  # 代理註冊表（所有代理的統一索引）
+├── registry.yaml                  # 代理註冊表 v3.0 (Holy Grail Edition)
+│
 ├── default-team/                  # 預設團隊
 │   ├── team.yaml                  # 團隊配置
 │   ├── playbooks/                 # 工作流程劇本
@@ -15,13 +30,38 @@ teams/
 │   │   ├── on_run_created.yaml    # 任務建立流程
 │   │   └── on_chat_message.yaml   # 聊天訊息流程
 │   └── profiles/                  # 角色人設檔案
-│       ├── role.career_counselor.md
-│       ├── role.statistician.md
-│       ├── role.tech_writer.md
-│       └── ...
-└── holy-grail/                    # MCP 聖杯團隊（INSTANT + Quantum Flow）
-    ├── team.yaml                  # 對齊 unified pipeline 的團隊配置
-    └── playbooks/instant_grail.yaml # 三階段（解構→整合→重構）即時劇本
+│
+└── holy-grail/                    # 🏆 聖杯團隊 (INSTANT + Quantum Flow)
+    ├── team.yaml                  # 聖杯團隊配置 v2.0.0
+    ├── README.md                  # 聖杯團隊完整文檔
+    │
+    ├── playbooks/                 # 聖杯劇本
+    │   ├── grail_boot.yaml        # 聖杯啟動流程
+    │   ├── instant_grail.yaml     # INSTANT 即時交付
+    │   ├── grail_quest.yaml       # 聖杯任務 (<3分鐘)
+    │   └── quantum_flow_refactor.yaml # 量子流重構 (解構→整合→重構)
+    │
+    ├── dissolved-assets/          # AXIOM 溶解資產 (59 MCP 工具)
+    │   ├── pipelines/             # 統一管線配置
+    │   ├── servers/               # MCP 伺服器實現
+    │   ├── tools/                 # 59 個溶解 MCP 工具
+    │   └── schemas/               # JSON 架構
+    │
+    ├── agents/                    # 代理實現
+    │   ├── autonomous/            # 自主代理 (SynergyMesh)
+    │   ├── ai-experts/            # AI 專家代理 (TypeScript)
+    │   ├── services/              # 服務代理
+    │   └── pipeline/              # 管線代理
+    │
+    ├── integration-layer/         # 整合層 (refactor_playbooks)
+    │   ├── 01_deconstruction/     # 解構劇本
+    │   ├── 02_integration/        # 整合劇本
+    │   └── 03_refactor/           # 重構劇本
+    │
+    ├── automation/                # 自動化工具
+    ├── legacy-archive/            # 溶解的遺產
+    ├── quantum-flow/              # 量子流工具包
+    └── evolution-engine/          # 自我演化引擎
 ```
 
 ## 核心概念

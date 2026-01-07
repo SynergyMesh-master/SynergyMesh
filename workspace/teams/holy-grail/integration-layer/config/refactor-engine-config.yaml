@@ -1,0 +1,449 @@
+# ═══════════════════════════════════════════════════════════════════════════════
+#                    Refactor Engine - 主配置檔
+#                    智能重構引擎核心配置
+# ═══════════════════════════════════════════════════════════════════════════════
+#
+# Version: 1.0.0
+# Updated: 2025-12-08
+# Purpose: 定義重構引擎的三階段處理邏輯與高階推理規則
+#
+# ═══════════════════════════════════════════════════════════════════════════════
+
+version: "1.0.0"
+name: "RefactorEngine"
+description: "智能重構引擎 - 舊資產解構、分析、集成與嵌入決策系統"
+
+# ============================================================================
+# 系統身份
+# ============================================================================
+system:
+  id: "refactor-engine-v1"
+  root_path: "docs/refactor_playbooks"
+
+# ============================================================================
+# 三階段處理流程定義
+# ============================================================================
+phases:
+  # ─────────────────────────────────────────────────────────────────────────
+  # Phase 0: 暫存區處理 (Legacy Scratch Processing)
+  # ─────────────────────────────────────────────────────────────────────────
+  phase_0_staging:
+    name: "暫存區處理"
+    description: "將舊資產放入暫存區，進行高階推理分析"
+    config_file: "config/legacy-scratch-processor.yaml"
+
+    workflow:
+      step_1_intake:
+        name: "資產接收"
+        description: "接收舊資產到 _legacy_scratch/"
+        actions:
+          - "驗證檔案完整性"
+          - "提取基本 metadata"
+          - "分配唯一 asset_id"
+
+      step_2_scan:
+        name: "詞彙映射掃描"
+        description: "掃描舊資產中的詞彙、結構、引用"
+        actions:
+          - "提取關鍵詞彙 (keywords)"
+          - "識別架構模式 (patterns)"
+          - "映射引用關係 (references)"
+          - "偵測功能屬性 (capabilities)"
+
+      step_3_reasoning:
+        name: "高階推理決策"
+        description: "使用 AI 推理決定分佈位置"
+        actions:
+          - "分析語意相似度"
+          - "計算目標匹配分數"
+          - "決定整合方式 (整體 vs 嵌入)"
+          - "產生位置建議"
+
+      step_4_output:
+        name: "決策輸出"
+        description: "輸出結構化決策報告"
+        outputs:
+          - "placement_decision.yaml"
+          - "integration_plan.md"
+          - "risk_assessment.md"
+
+  # ─────────────────────────────────────────────────────────────────────────
+  # Phase 1: 解構 (Deconstruction)
+  # ─────────────────────────────────────────────────────────────────────────
+  phase_1_deconstruction:
+    name: "解構分析"
+    description: "深度分析舊資產的架構、功能、依賴"
+    output_dir: "01_deconstruction"
+
+    analysis_dimensions:
+      - dimension: "architecture"
+        description: "架構模式分析"
+        extracts: ["layers", "components", "boundaries", "patterns"]
+
+      - dimension: "functionality"
+        description: "功能清單"
+        extracts: ["features", "capabilities", "apis", "interfaces"]
+
+      - dimension: "dependencies"
+        description: "依賴關係"
+        extracts: ["internal_deps", "external_deps", "circular_deps"]
+
+      - dimension: "quality"
+        description: "品質狀態"
+        extracts: ["complexity", "coverage", "violations", "debt"]
+
+      - dimension: "knowledge"
+        description: "知識萃取"
+        extracts: ["design_decisions", "lessons_learned", "best_practices"]
+
+  # ─────────────────────────────────────────────────────────────────────────
+  # Phase 2: 集成 (Integration)
+  # ─────────────────────────────────────────────────────────────────────────
+  phase_2_integration:
+    name: "集成設計"
+    description: "設計新架構、定義邊界、規劃遷移"
+    output_dir: "02_integration"
+    config_file: "config/integration-processor.yaml"
+
+    design_aspects:
+      - aspect: "boundaries"
+        description: "模組邊界定義"
+        outputs: ["module_boundaries.yaml", "api_contracts.md"]
+
+      - aspect: "mapping"
+        description: "新舊映射表"
+        outputs: ["component_mapping.yaml", "path_migration.yaml"]
+
+      - aspect: "optimization"
+        description: "目錄結構最佳化"
+        outputs: ["directory_blueprint.md", "structure_graph.mermaid"]
+
+      - aspect: "strategy"
+        description: "遷移策略"
+        outputs: ["migration_plan.md", "rollback_plan.md"]
+
+  # ─────────────────────────────────────────────────────────────────────────
+  # Phase 3: 重構執行 (Refactor Execution)
+  # ─────────────────────────────────────────────────────────────────────────
+  phase_3_refactor:
+    name: "重構執行"
+    description: "執行重構計畫，分 P1/P2/P3 優先級"
+    output_dir: "03_refactor"
+
+    priority_levels:
+      P1:
+        name: "緊急處理"
+        timeframe: "24-48 小時"
+        criteria:
+          - "阻塞 CI/CD 的問題"
+          - "安全漏洞 (Semgrep HIGH)"
+          - "核心功能缺失"
+          - "目錄結構建立"
+
+      P2:
+        name: "重要重構"
+        timeframe: "1 週內"
+        criteria:
+          - "語言遷移"
+          - "架構邊界修復"
+          - "API 契約更新"
+          - "測試補充"
+
+      P3:
+        name: "持續優化"
+        timeframe: "長期"
+        criteria:
+          - "技術債清理"
+          - "效能優化"
+          - "文檔完善"
+          - "監控強化"
+
+# ============================================================================
+# 高階推理引擎配置
+# ============================================================================
+reasoning_engine:
+  name: "HighLevelReasoningEngine"
+  description: "負責分析舊資產並決策分佈位置的 AI 引擎"
+
+  # 推理模式
+  modes:
+    semantic_analysis:
+      description: "語意分析 - 理解舊資產的功能意圖"
+      weight: 0.3
+
+    structural_matching:
+      description: "結構匹配 - 比對現有專案結構"
+      weight: 0.25
+
+    dependency_analysis:
+      description: "依賴分析 - 分析引用關係"
+      weight: 0.25
+
+    pattern_recognition:
+      description: "模式識別 - 識別架構模式"
+      weight: 0.2
+
+  # 決策輸出類型
+  decision_types:
+    full_integration:
+      description: "整體整合 - 完整導入到目標目錄"
+      conditions:
+        - "舊資產為完整模組"
+        - "無重大衝突"
+        - "目標位置明確"
+      actions:
+        - "創建目標目錄"
+        - "複製並適配所有檔案"
+        - "更新引用路徑"
+        - "添加到索引"
+
+    embedded_integration:
+      description: "嵌入式整合 - 部分嵌入到現有結構"
+      conditions:
+        - "舊資產為功能片段"
+        - "需要與現有程式碼合併"
+        - "存在重疊功能"
+      actions:
+        - "識別嵌入點"
+        - "合併程式碼"
+        - "解決衝突"
+        - "更新測試"
+
+    reference_only:
+      description: "僅引用 - 保持分離但建立連結"
+      conditions:
+        - "舊資產為外部依賴"
+        - "不適合直接整合"
+        - "需要保持獨立演進"
+      actions:
+        - "建立介面層"
+        - "創建 adapter"
+        - "記錄引用關係"
+
+    archive:
+      description: "歸檔 - 僅保留知識，不整合程式碼"
+      conditions:
+        - "舊資產已過時"
+        - "功能已被取代"
+        - "僅有歷史參考價值"
+      actions:
+        - "萃取設計決策"
+        - "記錄 lessons learned"
+        - "移到 archive 目錄"
+
+# ============================================================================
+# 目標目錄映射規則
+# ============================================================================
+directory_mapping:
+  # 根據舊資產類型決定目標位置
+  type_rules:
+    - type: "core_module"
+      patterns: ["*engine*", "*processor*", "*manager*", "*handler*"]
+      target: "core/modules/"
+      priority: "high"
+
+    - type: "ai_component"
+      patterns: ["*ai*", "*ml*", "*model*", "*inference*"]
+      target: "core/ai_engines/"
+      priority: "high"
+
+    - type: "configuration"
+      patterns: ["*.yaml", "*.yml", "*config*", "*settings*"]
+      target: "config/"
+      priority: "medium"
+
+    - type: "kubernetes"
+      patterns: ["*deployment*", "*service*", "*ingress*", "*rbac*"]
+      target: "infrastructure/kubernetes/"
+      priority: "medium"
+
+    - type: "governance"
+      patterns: ["*policy*", "*rule*", "*compliance*", "*audit*"]
+      target: "governance/"
+      priority: "medium"
+
+    - type: "documentation"
+      patterns: ["*.md", "*readme*", "*guide*", "*spec*"]
+      target: "docs/"
+      priority: "low"
+
+    - type: "automation"
+      patterns: ["*auto*", "*bot*", "*workflow*", "*pipeline*"]
+      target: "automation/"
+      priority: "medium"
+
+    - type: "service"
+      patterns: ["*service*", "*api*", "*gateway*", "*endpoint*"]
+      target: "services/"
+      priority: "high"
+
+    - type: "tool"
+      patterns: ["*tool*", "*script*", "*util*", "*helper*"]
+      target: "tools/"
+      priority: "low"
+
+  # 詞彙映射規則 (舊名稱 → 新名稱)
+  vocabulary_mapping:
+    # 命名空間映射
+    namespaces:
+      "machinenativeops": "machinenativeops"
+      "unmanned-island": "machinenativeops"
+      "src/ai": "src/ai"
+
+    # 術語映射
+    terminology:
+      "executor": "engine"
+      "plugin": "module"
+      "handler": "processor"
+      "manager": "coordinator"
+
+    # 路徑映射
+    paths:
+      "src/": "core/"
+      "lib/": "shared/"
+      "bin/": "tools/"
+
+# ============================================================================
+# 分析報告格式
+# ============================================================================
+report_format:
+  template_file: "templates/ANALYSIS_REPORT_TEMPLATE.md"
+
+  sections:
+    - id: "overview"
+      name: "目錄現況總覽"
+      required: true
+
+    - id: "problems"
+      name: "識別的問題"
+      required: true
+      subsections:
+        - "問題描述"
+        - "影響範圍"
+        - "分類"
+        - "阻抗/衝突"
+
+    - id: "target_structure"
+      name: "重構設計：目標結構"
+      required: true
+      includes: "結構圖譜 (Mermaid/ASCII)"
+
+    - id: "execution_plan"
+      name: "執行計畫：正確順序"
+      required: true
+      phases:
+        - "P1: 建立/更新目錄結構"
+        - "P2: 檔案遷移/整合"
+        - "P3: 清理/驗證"
+
+    - id: "validation"
+      name: "驗收條件"
+      required: true
+
+# ============================================================================
+# 執行引擎配置
+# ============================================================================
+execution:
+  # 執行模式
+  modes:
+    dry_run:
+      description: "模擬執行，不實際修改檔案"
+      default: true
+
+    interactive:
+      description: "互動模式，每步驟需確認"
+      default: false
+
+    automatic:
+      description: "自動執行，僅在關鍵點暫停"
+      default: false
+
+  # 安全檢查
+  safety:
+    backup_before_change: true
+    require_confirmation_for:
+      - "delete"
+      - "overwrite"
+      - "merge"
+    rollback_on_failure: true
+
+  # 日誌配置
+  logging:
+    level: "INFO"
+    output_dir: "_logs/"
+    include_timestamps: true
+
+# ============================================================================
+# 驗證規則
+# ============================================================================
+validation:
+  pre_execution:
+    - "檢查目標目錄存在"
+    - "驗證無命名衝突"
+    - "確認依賴完整"
+
+  post_execution:
+    - "驗證所有檔案已遷移"
+    - "檢查引用路徑正確"
+    - "執行測試套件"
+    - "更新索引檔案"
+
+# ============================================================================
+# 整合檢查點
+# ============================================================================
+checkpoints:
+  phase_0_complete:
+    name: "暫存區處理完成"
+    criteria:
+      - "所有資產已分類"
+      - "決策報告已生成"
+      - "風險已評估"
+
+  phase_1_complete:
+    name: "解構分析完成"
+    criteria:
+      - "解構報告已生成"
+      - "依賴圖譜已繪製"
+      - "知識已萃取"
+
+  phase_2_complete:
+    name: "集成設計完成"
+    criteria:
+      - "目標結構已定義"
+      - "映射表已建立"
+      - "遷移計畫已產生"
+
+  phase_3_complete:
+    name: "重構執行完成"
+    criteria:
+      - "所有 P1 任務完成"
+      - "所有 P2 任務完成"
+      - "驗收條件滿足"
+
+# ============================================================================
+# 外部整合
+# ============================================================================
+integrations:
+  # 與主系統配置整合
+  machinenativeops_config: "../../machinenativeops.yaml"
+
+  # 與模組映射整合
+  module_map: "../../config/system-module-map.yaml"
+
+  # 與語言治理整合
+  language_governance: "../../governance/language-governance-report.md"
+
+  # 與 CI/CD 整合
+  ci_workflows: "../../.github/workflows/"
+
+# ============================================================================
+# 版本歷史
+# ============================================================================
+changelog:
+  - version: "1.0.0"
+    date: "2025-12-08"
+    changes:
+      - "初始版本"
+      - "建立三階段處理流程"
+      - "定義高階推理引擎"
+      - "建立目錄映射規則"

@@ -1,0 +1,35 @@
+version: 0.1.0
+source: unmanned-engineer-ceo
+last_sync: 2025-12-04
+entries:
+  - id: foundation.distributed-systems
+    path: unmanned-engineer-ceo/00-foundation/01-distributed-systems
+    tags: [consensus, replication, labs]
+    owners: [architecture-guild]
+  - id: advanced.testing
+    path: unmanned-engineer-ceo/01-advanced-engineering/05-testing-engineering
+    tags: [testing, chaos, templates]
+  - id: enterprise.security
+    path: unmanned-engineer-ceo/02-enterprise-capabilities/09-security-compliance
+    tags: [security, compliance, slsa]
+  - id: intelligence.knowledge-graphs
+    path: unmanned-engineer-ceo/03-intelligence/14-knowledge-graphs
+    tags: [ontology, graph, fusion]
+  - id: systems.org
+    path: unmanned-engineer-ceo/04-systems-thinking/17-org-process-design
+    tags: [org, process, incentives]
+  - id: traits.matrix
+    path: unmanned-engineer-ceo/10-traits-matrix
+    tags: [traits, cognition]
+  - id: roadmap.program
+    path: unmanned-engineer-ceo/20-roadmap
+    tags: [roadmap, stages]
+  - id: assessment.framework
+    path: unmanned-engineer-ceo/30-assessment
+    tags: [assessment, matrix]
+  - id: simulations.portfolio
+    path: unmanned-engineer-ceo/40-simulations
+    tags: [simulation, lab]
+  - id: org.implementation
+    path: unmanned-engineer-ceo/50-org-implementation
+    tags: [org, culture]

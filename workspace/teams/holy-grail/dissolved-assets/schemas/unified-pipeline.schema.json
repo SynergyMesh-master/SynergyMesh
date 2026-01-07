@@ -1,0 +1,375 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "UnifiedPipeline",
+  "description": "MachineNativeOps Unified Pipeline Schema v3.0.0 - INSTANT Execution Architecture",
+  "type": "object",
+  "required": ["apiVersion", "kind", "metadata", "spec"],
+  "properties": {
+    "apiVersion": {
+      "type": "string",
+      "enum": ["pipeline.machinenativeops/v2", "pipeline.machinenativeops/v3"],
+      "description": "API version for pipeline configuration"
+    },
+    "kind": {
+      "type": "string",
+      "const": "UnifiedPipeline"
+    },
+    "metadata": {
+      "type": "object",
+      "required": ["name", "version", "mode"],
+      "properties": {
+        "name": { "type": "string" },
+        "version": { "type": "string" },
+        "mode": { "type": "string", "enum": ["INSTANT-Autonomous", "Standard", "Hybrid"] },
+        "labels": {
+          "type": "object",
+          "properties": {
+            "tier": { "type": "string", "enum": ["production", "staging", "development"] },
+            "evolution": { "type": "string" },
+            "humanIntervention": {
+              "type": "string",
+              "pattern": "^[0-9]+$",
+              "description": "Human intervention count as string for labels (e.g., '0'). Note: In instantPipelines, humanIntervention is an integer const 0."
+            }
+          },
+          "additionalProperties": true
+        },
+        "annotations": {
+          "type": "object",
+          "properties": {
+            "philosophy": { "type": "string" },
+            "competitiveness": { "type": "string" },
+            "standard": { "type": "string" }
+          },
+          "additionalProperties": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "spec": {
+      "type": "object",
+      "required": ["inputUnification", "coreScheduling", "pipelines", "mcpIntegration", "outputs"],
+      "properties": {
+        "inputUnification": {
+          "type": "object",
+          "required": ["protocols", "normalization", "validation", "timeout"],
+          "properties": {
+            "protocols": {
+              "type": "array",
+              "items": { "type": "string" },
+              "minItems": 1
+            },
+            "normalization": { "type": "string" },
+            "validation": { "type": "string" },
+            "timeout": { "type": "number", "minimum": 0 },
+            "eventDriven": {
+              "type": "object",
+              "properties": {
+                "mode": { "type": "string" },
+                "closedLoop": { "type": "boolean" },
+                "maxConcurrentEvents": { "type": "integer", "minimum": 1 },
+                "eventQueueSize": { "type": "integer", "minimum": 1 }
+              },
+              "additionalProperties": false
+            }
+          },
+          "additionalProperties": false
+        },
+        "coreScheduling": {
+          "type": "object",
+          "required": ["maxParallelAgents", "taskDecomposition", "resourceArbitration", "loadBalancing", "syncBarrier"],
+          "properties": {
+            "maxParallelAgents": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 1024,
+              "description": "Maximum parallel agents. Schema allows up to 1024 for Standard/Hybrid modes. INSTANT-Autonomous mode enforces runtime max of 256 via validation."
+            },
+            "minParallelAgents": { "type": "integer", "minimum": 1 },
+            "taskDecomposition": { "type": "string" },
+            "resourceArbitration": { "type": "string" },
+            "loadBalancing": { "type": "string" },
+            "syncBarrier": { "type": "string" },
+            "autoScaling": {
+              "type": "object",
+              "properties": {
+                "enabled": { "type": "boolean" },
+                "scaleFactor": { "type": "number", "minimum": 1 },
+                "cooldownSeconds": { "type": "integer", "minimum": 0 },
+                "metrics": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": ["name", "target"],
+                    "properties": {
+                      "name": { "type": "string" },
+                      "target": { "type": "number" },
+                      "scaleUpThreshold": { "type": "number" },
+                      "scaleDownThreshold": { "type": "number" }
+                    },
+                    "additionalProperties": false
+                  }
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "additionalProperties": false
+        },
+        "latencyThresholds": {
+          "type": "object",
+          "properties": {
+            "instant": { "type": "integer", "minimum": 0, "description": "Milliseconds for instant operations (<=100ms)" },
+            "fast": { "type": "integer", "minimum": 0, "description": "Milliseconds for fast operations (<=500ms)" },
+            "standard": { "type": "integer", "minimum": 0, "description": "Milliseconds for standard operations (<=5s)" },
+            "maxStage": { "type": "integer", "minimum": 0, "description": "Maximum per-stage latency" },
+            "maxTotal": { "type": "integer", "minimum": 0, "description": "Maximum total pipeline latency" }
+          },
+          "additionalProperties": false
+        },
+        "pipelines": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["name", "type"],
+            "properties": {
+              "name": { "type": "string" },
+              "type": { "type": "string", "enum": ["validation", "refactor", "security", "deployment", "observability"] },
+              "entrypoint": { "type": "string" },
+              "worldClassValidationRef": { "type": "string" },
+              "policies": { "type": "string" },
+              "manifests": { "type": "string" },
+              "dashboards": { "type": "string" },
+              "latency": { "type": "integer", "minimum": 0 },
+              "parallelism": { "type": "integer", "minimum": 1 },
+              "priority": { "type": "string", "enum": ["critical", "high", "medium", "low"] },
+              "capabilities": {
+                "type": "array",
+                "items": { "type": "string" }
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "instantPipelines": {
+          "type": "array",
+          "description": "INSTANT execution pipelines for autonomous delivery",
+          "items": {
+            "type": "object",
+            "required": ["name", "totalLatencyTarget", "humanIntervention", "successRateTarget", "stages"],
+            "properties": {
+              "name": { "type": "string" },
+              "description": { "type": "string" },
+              "totalLatencyTarget": { "type": "integer", "minimum": 0 },
+              "humanIntervention": {
+                "type": "integer",
+                "const": 0,
+                "description": "Must be 0 for INSTANT pipelines (zero human intervention). Note: In metadata.labels, humanIntervention is a string for flexibility."
+              },
+              "successRateTarget": { "type": "number", "minimum": 0, "maximum": 100 },
+              "stages": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": ["name", "agent", "latency", "parallelism"],
+                  "properties": {
+                    "name": { "type": "string" },
+                    "agent": { "type": "string" },
+                    "latency": { "type": "integer", "minimum": 0 },
+                    "parallelism": { "type": "integer", "minimum": 1 }
+                  },
+                  "additionalProperties": false
+                }
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "mcpIntegration": {
+          "type": "object",
+          "required": ["serverRef", "toolAdapters", "realTimeSync"],
+          "properties": {
+            "serverRef": { "type": "string" },
+            "toolAdapters": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": ["name", "path"],
+                "properties": {
+                  "name": { "type": "string" },
+                  "path": { "type": "string" },
+                  "capabilities": {
+                    "type": "array",
+                    "items": { "type": "string" }
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "realTimeSync": { "type": "string", "enum": ["enabled", "disabled"] },
+            "crossPlatformCoordination": { "type": "string", "enum": ["enabled", "disabled"] }
+          },
+          "additionalProperties": false
+        },
+        "outputs": {
+          "type": "object",
+          "required": ["auditLog", "evidenceChain", "statusReport", "autoRemediation", "notifications"],
+          "properties": {
+            "auditLog": { "type": "string" },
+            "evidenceChain": { "type": "string" },
+            "statusReport": { "type": "string" },
+            "autoRemediation": { "type": "string" },
+            "notifications": { "type": "string" }
+          },
+          "additionalProperties": false
+        },
+        "autoHealing": {
+          "type": "object",
+          "properties": {
+            "enabled": { "type": "boolean" },
+            "strategies": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": ["name", "conditions", "actions"],
+                "properties": {
+                  "name": { "type": "string" },
+                  "conditions": {
+                    "type": "object",
+                    "additionalProperties": true
+                  },
+                  "actions": {
+                    "type": "array",
+                    "items": { "type": "string" }
+                  },
+                  "maxRetries": { "type": "integer", "minimum": 0 },
+                  "backoffMultiplier": { "type": "number", "minimum": 1 }
+                },
+                "additionalProperties": false
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        "governanceValidation": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["standard", "validator", "checkInterval", "criteria", "failureAction"],
+            "properties": {
+              "standard": { "type": "string" },
+              "validator": { "type": "string" },
+              "implementationStatus": {
+                "type": "string",
+                "enum": ["implemented", "planned"],
+                "description": "Indicates if the validator is implemented or planned for future development"
+              },
+              "checkInterval": { "type": "integer", "minimum": 0 },
+              "criteria": {
+                "type": "array",
+                "items": { "type": "string" }
+              },
+              "failureAction": { "type": "string" }
+            },
+            "additionalProperties": false
+          }
+        },
+        "integrationReferences": {
+          "type": "object",
+          "description": "Cross-module integration references - 硫酸解構法 systematic deconstruction",
+          "properties": {
+            "indexRef": { "type": "string" },
+            "engineLayer": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "object",
+                "properties": {
+                  "path": { "type": "string" },
+                  "provides": { "type": "array", "items": { "type": "string" } }
+                }
+              }
+            },
+            "mcpServers": {
+              "type": "object",
+              "properties": {
+                "basePath": { "type": "string" },
+                "servers": { "type": "array", "items": { "type": "string" } },
+                "deployment": { "type": "string" }
+              },
+              "additionalProperties": false
+            },
+            "instantEngine": {
+              "type": "object",
+              "properties": {
+                "engineV2": {
+                  "type": "object",
+                  "properties": {
+                    "path": { "type": "string" },
+                    "provides": { "type": "array", "items": { "type": "string" } }
+                  }
+                },
+                "configuration": {
+                  "type": "object",
+                  "properties": {
+                    "parallelAgents": { "type": "string" },
+                    "eventTriggers": { "type": "string" }
+                  }
+                },
+                "manifest": { "type": "string" }
+              },
+              "additionalProperties": false
+            },
+            "behaviorContracts": {
+              "type": "object",
+              "additionalProperties": { "type": "string" }
+            },
+            "governance": {
+              "type": "object",
+              "additionalProperties": { "type": "string" }
+            },
+            "cicd": {
+              "type": "object",
+              "additionalProperties": { "type": "string" }
+            }
+          },
+          "additionalProperties": true
+        },
+        "agentPool": {
+          "type": "object",
+          "description": "Agent pool configuration for parallel execution",
+          "properties": {
+            "types": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": ["type", "capabilities", "maxLatency", "defaultParallelism"],
+                "properties": {
+                  "type": { "type": "string", "enum": ["analyzer", "generator", "validator", "deployer", "sentinel", "diagnostic", "fixer", "optimizer", "architect", "tester"] },
+                  "capabilities": { "type": "array", "items": { "type": "string" } },
+                  "maxLatency": { "type": "integer", "minimum": 0 },
+                  "defaultParallelism": { "type": "integer", "minimum": 1 }
+                },
+                "additionalProperties": false
+              }
+            },
+            "poolConfig": {
+              "type": "object",
+              "properties": {
+                "minWorkers": { "type": "integer", "minimum": 1 },
+                "maxWorkers": { "type": "integer", "minimum": 1 },
+                "autoScaling": { "type": "boolean" },
+                "healthCheckInterval": { "type": "integer", "minimum": 0 },
+                "failureThreshold": { "type": "integer", "minimum": 1 },
+                "autoRestart": { "type": "boolean" }
+              },
+              "additionalProperties": false
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

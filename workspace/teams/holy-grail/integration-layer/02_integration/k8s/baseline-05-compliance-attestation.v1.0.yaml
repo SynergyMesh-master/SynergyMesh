@@ -1,0 +1,495 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: compliance-framework-baseline
+  namespace: intelligent-hyperautomation-baseline
+  labels:
+    baseline.level: L-A
+    baseline.version: v1.0.0
+    baseline.type: compliance-attestation
+    baseline.dependency: namespace-governance,security-rbac,resource-management,network-security
+  annotations:
+    baseline.io/description: "合規與證明基線 / Compliance and Attestation Foundation"
+    baseline.io/purpose: "建立自動化合規驗證與不可變證明鏈 / Establish automated compliance validation and immutable attestation chain"
+    baseline.io/capability-scope: "policy-validation,drift-detection,attestation-generation,audit-trail"
+    baseline.io/conflict-priority: "800"
+    baseline.io/state-machine: "REGISTERED->COORDINATED->ACTIVE"
+data:
+  compliance-standards.yaml: |
+    version: v1.0.0
+    supported_frameworks:
+      soc2_type2:
+        enabled: true
+        controls:
+          cc6_1:
+            name: "邏輯與實體存取控制 / Logical and Physical Access Controls"
+            requirements:
+              - "Multi-factor authentication for all privileged access"
+              - "Access review performed quarterly"
+              - "Automated deprovisioning within 24 hours"
+            validation_frequency: "daily"
+            evidence_collection:
+              - "iam-audit-logs"
+              - "access-review-reports"
+          cc7_2:
+            name: "系統監控 / System Monitoring"
+            requirements:
+              - "Continuous monitoring of security events"
+              - "Automated alerting for anomalies"
+              - "Incident response plan documented"
+            validation_frequency: "real-time"
+            evidence_collection:
+              - "security-event-logs"
+              - "alert-history"
+              - "incident-reports"
+        audit_requirements:
+          retention_years: 7
+          annual_assessment: true
+          penetration_testing: "quarterly"
+      gdpr:
+        enabled: true
+        principles:
+          data_minimization:
+            description: "僅收集必要資料 / Collect only necessary data"
+            controls:
+              - "PII identification and classification"
+              - "Data retention policies enforced"
+              - "Automated data purging"
+          purpose_limitation:
+            description: "資料使用限於宣告目的 / Data used only for stated purposes"
+            controls:
+              - "Consent management system"
+              - "Purpose tags on all data stores"
+          data_subject_rights:
+            description: "資料主體權利 / Data subject rights"
+            controls:
+              - "Right to access automated process"
+              - "Right to erasure implemented"
+              - "Data portability enabled"
+        breach_notification:
+          authority_notification_hours: 72
+          data_subject_notification_required: true
+          documentation_required: true
+      hipaa:
+        enabled: false
+        reason: "Healthcare data not processed"
+      pci_dss:
+        enabled: true
+        version: "4.0"
+        requirements:
+          requirement_1:
+            name: "安裝與維護網路安全控制 / Install and Maintain Network Security Controls"
+            sub_requirements:
+              - "1.2.1: Network segmentation implemented"
+              - "1.3.1: Ingress/egress traffic restrictions"
+          requirement_3:
+            name: "保護儲存的帳戶資料 / Protect Stored Account Data"
+            sub_requirements:
+              - "3.5.1: Encryption of cardholder data at rest"
+              - "3.6.1: Cryptographic key management"
+        quarterly_scan: true
+        annual_assessment: true
+  policy-as-code-engine.yaml: |
+    version: v1.0.0
+    policy_engines:
+      opa_gatekeeper:
+        enabled: true
+        version: "v3.14.0"
+        enforcement_action: "deny"
+        audit_interval_seconds: 60
+        constraint_templates:
+          - name: "k8srequiredlabels"
+            description: "強制必要標籤 / Enforce required labels"
+            parameters:
+              labels:
+                - "app.kubernetes.io/name"
+                - "baseline.level"
+                - "owner"
+          - name: "k8scontainerlimits"
+            description: "強制容器資源限制 / Enforce container resource limits"
+            parameters:
+              cpu: "required"
+              memory: "required"
+          - name: "k8sallowedrepos"
+            description: "限制容器映像倉庫 / Restrict container image repositories"
+            parameters:
+              repos:
+                - "gcr.io/company-registry/*"
+                - "docker.io/library/*"
+          - name: "k8sblocknodeport"
+            description: "禁止 NodePort 服務 / Block NodePort services"
+            parameters:
+              allowed_namespaces:
+                - "istio-system"
+      kyverno:
+        enabled: true
+        version: "v1.11.0"
+        validation_failure_action: "Enforce"
+        policies:
+          - name: "require-pod-security-standards"
+            spec:
+              background: true
+              rules:
+                - name: "restricted-pod-security"
+                  match:
+                    any:
+                      - resources:
+                          kinds:
+                            - "Pod"
+                  validate:
+                    message: "Pod must comply with restricted security standards"
+                    podSecurity:
+                      level: "restricted"
+                      version: "latest"
+          - name: "add-default-network-policy"
+            spec:
+              background: false
+              rules:
+                - name: "generate-default-deny"
+                  match:
+                    any:
+                      - resources:
+                          kinds:
+                            - "Namespace"
+                  generate:
+                    kind: "NetworkPolicy"
+                    name: "default-deny"
+                    namespace: "{{request.object.metadata.name}}"
+                    data:
+                      spec:
+                        podSelector: {}
+                        policyTypes:
+                          - "Ingress"
+                          - "Egress"
+      conftest:
+        enabled: true
+        version: "v0.47.0"
+        namespaces:
+          - "kubernetes"
+          - "main"
+        policies:
+          - name: "deployment-best-practices"
+            tests:
+              - "replica_count >= 2"
+              - "has_liveness_probe == true"
+              - "has_readiness_probe == true"
+              - "resource_requests_defined == true"
+  attestation-generation.yaml: |
+    version: v1.0.0
+    attestation_providers:
+      cosign:
+        enabled: true
+        key_provider: "kms"
+        kms_key_id: "projects/PROJECT_ID/locations/LOCATION/keyRings/RING/cryptoKeys/KEY"
+        signature_algorithm: "ECDSA_P256_SHA256"
+        timestamp_authority: "https://freetsa.org/tsr"
+        transparency_log: "rekor.sigstore.dev"
+      in_toto:
+        enabled: true
+        layout_version: "1.0"
+        steps:
+          - name: "build"
+            expected_materials:
+              - "MATCH Dockerfile IN ."
+              - "MATCH src/* IN ."
+            expected_products:
+              - "CREATE image.tar"
+          - name: "test"
+            expected_materials:
+              - "MATCH image.tar"
+            expected_products:
+              - "CREATE test-results.xml"
+          - name: "deploy"
+            expected_materials:
+              - "MATCH image.tar"
+              - "MATCH deployment.yaml"
+            expected_products:
+              - "CREATE deployment-receipt.json"
+        functionaries:
+          - name: "build-bot"
+            pubkey: "build-bot-public-key.pem"
+          - name: "test-bot"
+            pubkey: "test-bot-public-key.pem"
+      slsa_provenance:
+        enabled: true
+        builder_id: "https://github.com/slsa-framework/slsa-github-generator/.github/workflows/generator_container_slsa3.yml@refs/tags/v1.9.0"
+        build_type: "https://slsa-framework.github.io/github-actions-buildtypes/workflow/v1"
+        invocation:
+          config_source:
+            uri: "git+https://github.com/org/repo@refs/heads/main"
+            digest:
+              sha256: "example-commit-sha"
+          parameters:
+            workflow: ".github/workflows/build.yml"
+        materials:
+          - uri: "git+https://github.com/org/repo@refs/heads/main"
+            digest:
+              sha1: "example-git-commit-sha"
+  drift-detection-engine.yaml: |
+    version: v1.0.0
+    drift_detection:
+      scan_interval_minutes: 15
+      detection_methods:
+        configuration_drift:
+          enabled: true
+          baseline_source: "gitops-repository"
+          comparison_method: "hash-based"
+          ignore_annotations:
+            - "kubectl.kubernetes.io/last-applied-configuration"
+          alert_on_drift: true
+        state_drift:
+          enabled: true
+          expected_state_source: "desired-state-store"
+          actual_state_source: "kubernetes-api"
+          reconciliation_threshold_minutes: 5
+          auto_remediation: true
+        policy_drift:
+          enabled: true
+          policy_repository: "opa-policy-bundle"
+          validation_mode: "continuous"
+          enforcement_action: "warn-and-log"
+      remediation_strategies:
+        auto_remediation:
+          enabled: true
+          allowed_actions:
+            - "update-resource"
+            - "recreate-resource"
+          forbidden_actions:
+            - "delete-resource"
+          dry_run_mode: false
+          rollback_on_failure: true
+        manual_approval:
+          enabled: false
+          approval_required_for:
+            - "production-namespace"
+            - "critical-services"
+          approval_timeout_minutes: 60
+        notification:
+          channels:
+            - type: "slack"
+              webhook: "https://hooks.slack.com/services/WORKSPACE/CHANNEL/TOKEN"
+            - type: "pagerduty"
+              integration_key: "PAGERDUTY_INTEGRATION_KEY"
+          severity_mapping:
+            critical: "immediate"
+            high: "within-1-hour"
+            medium: "within-4-hours"
+            low: "daily-summary"
+  evidence-collection.yaml: |
+    version: v1.0.0
+    evidence_types:
+      audit_logs:
+        sources:
+          - "kubernetes-audit-log"
+          - "application-audit-log"
+          - "security-audit-log"
+        retention_days: 2555
+        format: "json"
+        encryption: "aes-256-gcm"
+        integrity_check: "sha256-hash"
+        storage_location: "s3://compliance-evidence-bucket/audit-logs/"
+      configuration_snapshots:
+        frequency: "hourly"
+        include_resources:
+          - "deployments"
+          - "services"
+          - "configmaps"
+          - "secrets-metadata"
+          - "networkpolicies"
+        format: "yaml"
+        compression: "gzip"
+        versioning: true
+        storage_location: "s3://compliance-evidence-bucket/config-snapshots/"
+      security_scans:
+        vulnerability_scans:
+          frequency: "daily"
+          scanner: "trivy"
+          severity_threshold: "MEDIUM"
+          fail_on_critical: true
+        compliance_scans:
+          frequency: "daily"
+          scanner: "kube-bench"
+          benchmark: "cis-1.7"
+        sbom_generation:
+          frequency: "on-build"
+          format: "spdx"
+          include_dependencies: true
+        storage_location: "s3://compliance-evidence-bucket/security-scans/"
+      access_reviews:
+        frequency: "quarterly"
+        scope:
+          - "cluster-admin-role-bindings"
+          - "namespace-admin-role-bindings"
+          - "service-account-permissions"
+        workflow:
+          - "generate-review-report"
+          - "send-to-approvers"
+          - "collect-approvals"
+          - "apply-changes"
+        storage_location: "s3://compliance-evidence-bucket/access-reviews/"
+      incident_records:
+        auto_capture: true
+        include_context:
+          - "related-logs"
+          - "affected-resources"
+          - "timeline"
+          - "remediation-actions"
+        post_incident_review: true
+        lessons_learned_required: true
+        storage_location: "s3://compliance-evidence-bucket/incidents/"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: merkle-tree-attestation-config
+  namespace: intelligent-hyperautomation-baseline
+  labels:
+    baseline.component: merkle-attestation
+data:
+  merkle-tree-structure.yaml: |
+    version: v1.0.0
+    merkle_tree_attestation:
+      configuration_tree:
+        description: "配置檔案 Merkle 樹 / Configuration files Merkle tree"
+        root_hash_storage: "etcd://compliance/merkle-roots/configuration"
+        leaf_nodes:
+          - "namespace-definitions"
+          - "resource-quotas"
+          - "network-policies"
+          - "rbac-policies"
+          - "pod-security-policies"
+        update_trigger: "on-change"
+        verification_interval_minutes: 15
+      deployment_tree:
+        description: "部署狀態 Merkle 樹 / Deployment state Merkle tree"
+        root_hash_storage: "etcd://compliance/merkle-roots/deployment"
+        leaf_nodes:
+          - "deployment-specs"
+          - "replica-counts"
+          - "container-images"
+          - "environment-variables"
+        update_trigger: "on-deployment"
+        verification_interval_minutes: 5
+      audit_tree:
+        description: "稽核日誌 Merkle 樹 / Audit log Merkle tree"
+        root_hash_storage: "etcd://compliance/merkle-roots/audit"
+        leaf_nodes:
+          - "api-server-audit-logs"
+          - "admission-controller-logs"
+          - "policy-enforcement-logs"
+        update_trigger: "hourly"
+        verification_interval_minutes: 60
+      hash_algorithm: "sha3-256"
+      proof_generation:
+        enabled: true
+        proof_format: "json"
+        include_witnesses: true
+      integrity_verification:
+        continuous_mode: true
+        alert_on_mismatch: true
+        auto_remediation: false
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: compliance-attestation-job
+  namespace: intelligent-hyperautomation-baseline
+  labels:
+    baseline.component: compliance-automation
+spec:
+  schedule: "0 */6 * * *"
+  concurrencyPolicy: "Forbid"
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            app: compliance-attestation
+        spec:
+          restartPolicy: "OnFailure"
+          serviceAccountName: compliance-attestation-sa
+          containers:
+            - name: attestation-generator
+              image: "gcr.io/company/compliance-attestation:v1.0.0"
+              imagePullPolicy: "IfNotPresent"
+              env:
+                - name: ATTESTATION_MODE
+                  value: "full-scan"
+                - name: EVIDENCE_BUCKET
+                  value: "s3://compliance-evidence-bucket"
+                - name: MERKLE_ROOT_STORE
+                  value: "etcd://compliance/merkle-roots"
+              volumeMounts:
+                - name: evidence-volume
+                  mountPath: "/evidence"
+                - name: signing-keys
+                  mountPath: "/keys"
+                  readOnly: true
+              resources:
+                requests:
+                  cpu: "500m"
+                  memory: "1Gi"
+                limits:
+                  cpu: "2000m"
+                  memory: "4Gi"
+          volumes:
+            - name: evidence-volume
+              emptyDir: {}
+            - name: signing-keys
+              secret:
+                secretName: attestation-signing-keys
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: compliance-attestation-sa
+  namespace: intelligent-hyperautomation-baseline
+  labels:
+    baseline.component: compliance-automation
+automountServiceAccountToken: true
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: compliance-attestation-reader
+  labels:
+    baseline.component: compliance-automation
+rules:
+  - apiGroups:
+      - ""
+      - "apps"
+      - "batch"
+      - "networking.k8s.io"
+      - "rbac.authorization.k8s.io"
+      - "policy"
+    resources:
+      - "*"
+    verbs:
+      - "get"
+      - "list"
+  - apiGroups:
+      - "templates.gatekeeper.sh"
+      - "constraints.gatekeeper.sh"
+    resources:
+      - "*"
+    verbs:
+      - "get"
+      - "list"
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: compliance-attestation-reader
+  labels:
+    baseline.component: compliance-automation
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: compliance-attestation-reader
+subjects:
+  - kind: ServiceAccount
+    name: compliance-attestation-sa
+    namespace: intelligent-hyperautomation-baseline

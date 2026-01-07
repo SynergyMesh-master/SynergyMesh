@@ -1,8 +1,165 @@
-version: v2
-description: "代理註冊表 - 統一管理所有 AI 代理的單一真相來源 (SSOT)"
-updated_at: "2025-12-22"
+version: v3
+description: "代理註冊表 - 統一管理所有 AI 代理的單一真相來源 (SSOT) | Holy Grail Edition"
+updated_at: "2026-01-07"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+#                         HOLY GRAIL TEAMS REGISTRY v3.0
+#                         聖杯團隊註冊表 - 傳奇版本
+# ═══════════════════════════════════════════════════════════════════════════════
 
 agents:
+  # ============================================
+  # 聖杯編排層 (Holy Grail Orchestration Layer)
+  # ============================================
+  - id: "grail.orchestrator"
+    name: "Holy Grail Orchestrator"
+    type: "orchestrator"
+    language: "python"
+    source: "teams/holy-grail/orchestrator"
+    entry_point: "main.py"
+    team: "holy-grail"
+    tier: "legendary"
+    capabilities:
+      - orchestration
+      - consensus
+      - state_management
+      - event_handling
+      - quantum_flow_coordination
+      - instant_execution
+    status: "active"
+
+  - id: "grail.quantum-flow"
+    name: "Quantum Flow Master"
+    type: "orchestrator"
+    language: "python"
+    source: "teams/holy-grail/quantum-flow"
+    team: "holy-grail"
+    tier: "legendary"
+    capabilities:
+      - phase_orchestration
+      - latency_monitoring
+      - parallel_coordination
+      - auto_scaling
+      - three_phase_refactoring
+    status: "active"
+
+  # ============================================
+  # AXIOM 溶解層 (AXIOM Dissolved Layer)
+  # ============================================
+  - id: "axiom.infrastructure"
+    name: "Infrastructure Master (L00)"
+    type: "mcp_server"
+    language: "typescript"
+    source: "teams/holy-grail/dissolved-assets/servers/tools"
+    team: "holy-grail"
+    tier: "legendary"
+    mcp_tools:
+      - bootstrap_core
+      - kernel_compute
+      - emergency_override
+      - resource_scheduler
+      - memory_allocator
+    capabilities:
+      - infrastructure_management
+      - resource_allocation
+      - emergency_handling
+    status: "active"
+
+  - id: "axiom.cognitive"
+    name: "Cognitive Master (L04-L05)"
+    type: "mcp_server"
+    language: "typescript"
+    source: "teams/holy-grail/dissolved-assets/servers/tools"
+    team: "holy-grail"
+    tier: "legendary"
+    mcp_tools:
+      - cognitive_analysis
+      - pattern_recognition
+      - semantic_processor
+      - metacognitive_monitor
+      - ethics_governance
+      - bias_detector
+      - fairness_optimizer
+    capabilities:
+      - pattern_analysis
+      - ethical_reasoning
+      - bias_mitigation
+    status: "active"
+
+  - id: "axiom.reasoning"
+    name: "Reasoning Master (L06-L08)"
+    type: "mcp_server"
+    language: "typescript"
+    source: "teams/holy-grail/dissolved-assets/servers/tools"
+    team: "holy-grail"
+    tier: "legendary"
+    mcp_tools:
+      - collaboration_integration
+      - api_orchestrator
+      - workflow_engine
+      - logical_reasoning
+      - inference_engine
+      - knowledge_graph
+      - emotion_content
+      - tone_adjuster
+      - empathy_engine
+    capabilities:
+      - logical_reasoning
+      - knowledge_management
+      - emotional_intelligence
+    status: "active"
+
+  - id: "axiom.governance"
+    name: "Governance Master (L09-L12)"
+    type: "mcp_server"
+    language: "typescript"
+    source: "teams/holy-grail/dissolved-assets/servers/tools"
+    team: "holy-grail"
+    tier: "legendary"
+    mcp_tools:
+      - output_quality
+      - system_governance
+      - architecture_plan
+      - audit_logger
+      - policy_engine
+      - compliance_monitor
+      - system_optimization
+      - performance_tuner
+      - resource_optimizer
+      - meta_strategist
+      - self_optimizer
+      - emergence_detector
+    capabilities:
+      - governance
+      - optimization
+      - self_improvement
+    status: "active"
+
+  - id: "axiom.quantum"
+    name: "Quantum Master (L13)"
+    type: "mcp_server"
+    language: "typescript"
+    source: "teams/holy-grail/dissolved-assets/servers/tools"
+    team: "holy-grail"
+    tier: "legendary"
+    fallback_enabled: true
+    mcp_tools:
+      - vqe_solver
+      - qaoa_optimizer
+      - qml_engine
+      - financial_portfolio
+      - financial_risk
+      - security_cryptography
+      - security_random
+      - chemistry_drug
+      - logistics_routing
+      - aerospace_optimization
+    capabilities:
+      - quantum_computing
+      - optimization_algorithms
+      - scientific_computing
+    status: "active"
+
   # ============================================
   # 中央編排層 (Central Orchestration Layer)
   # ============================================
@@ -24,7 +181,7 @@ agents:
     name: "Holy Grail MCP Orchestrator"
     type: "orchestrator"
     language: "python"
-    source: "teams/default-team/orchestrator"
+    source: "teams/holy-grail/orchestrator"
     profile: "teams/default-team/profiles/role.it_architect.md"
     capabilities:
       - instant_pipeline_binding
@@ -511,21 +668,65 @@ providers:
         modalities: ["text", "image"]
 
 # ============================================
-# 元數據 (Metadata)
+# Holy Grail Playbook 映射
+# ============================================
+holy_grail_playbooks:
+  grail_boot:
+    path: "teams/holy-grail/playbooks/grail_boot.yaml"
+    description: "Initialize the legendary Holy Grail team"
+    agents: [grail.orchestrator, grail.quantum-flow]
+
+  instant_grail:
+    path: "teams/holy-grail/playbooks/instant_grail.yaml"
+    description: "INSTANT delivery pipeline"
+    agents: [grail.orchestrator, instant.*, axiom.*]
+
+  quantum_flow_refactor:
+    path: "teams/holy-grail/playbooks/quantum_flow_refactor.yaml"
+    description: "Three-phase refactoring (解構→整合→重構)"
+    agents: [grail.quantum-flow, axiom.cognitive, axiom.reasoning, axiom.governance]
+
+  grail_quest:
+    path: "teams/holy-grail/playbooks/grail_quest.yaml"
+    description: "End-to-end development quest (<3 minutes)"
+    agents: [grail.*, axiom.*, ai.*, instant.*]
+
+# ============================================
+# 元數據 (Metadata) - Holy Grail Edition
 # ============================================
 metadata:
-  total_agents: 32
+  version: "v3.0.0 - Holy Grail Edition"
+  total_agents: 39
+  total_mcp_tools: 59
   languages:
-    python: 24
-    typescript: 6
+    python: 26
+    typescript: 13
   layers:
+    grail_orchestration: 2
+    axiom_dissolved: 5
     orchestration: 2
     specialist: 10
     service: 7
     pipeline: 6
     autonomous: 7
+  teams:
+    default_team: "teams/default-team"
+    holy_grail: "teams/holy-grail"
   playbooks:
-    total: 4
+    total: 8
     ci_cd: 2
     security: 1
     governance: 1
+    holy_grail: 4
+  execution_standards:
+    instant_threshold_ms: 100
+    fast_threshold_ms: 500
+    standard_threshold_ms: 5000
+    max_stage_ms: 30000
+    max_total_ms: 180000
+  parallelism:
+    min_agents: 64
+    max_agents: 256
+  status:
+    architecture: "v3.0.0-HOLY-GRAIL | STABLE | LEGENDARY"
+    value_proposition: "Million-Dollar Architecture"

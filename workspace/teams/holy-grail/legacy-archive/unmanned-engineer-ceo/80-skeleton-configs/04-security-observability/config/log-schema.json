@@ -1,0 +1,150 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Structured Log Schema",
+  "description": "標準化日誌格式定義",
+  "type": "object",
+  "required": [
+    "timestamp",
+    "level",
+    "service",
+    "message"
+  ],
+  "properties": {
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 格式時間戳"
+    },
+    "level": {
+      "type": "string",
+      "enum": ["debug", "info", "warn", "error", "fatal"],
+      "description": "日誌級別"
+    },
+    "service": {
+      "type": "string",
+      "description": "服務名稱",
+      "pattern": "^[a-z0-9-]+$"
+    },
+    "version": {
+      "type": "string",
+      "description": "服務版本",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "environment": {
+      "type": "string",
+      "enum": ["development", "staging", "production"],
+      "description": "執行環境"
+    },
+    "message": {
+      "type": "string",
+      "description": "日誌訊息",
+      "minLength": 1,
+      "maxLength": 1000
+    },
+    "trace_id": {
+      "type": "string",
+      "description": "分散式追蹤 ID",
+      "pattern": "^[a-f0-9]{32}$"
+    },
+    "span_id": {
+      "type": "string",
+      "description": "Span ID",
+      "pattern": "^[a-f0-9]{16}$"
+    },
+    "context": {
+      "type": "object",
+      "description": "額外上下文資訊",
+      "properties": {
+        "tenant_id": {
+          "type": "string",
+          "description": "租戶 ID"
+        },
+        "user_id": {
+          "type": "string",
+          "description": "使用者 ID"
+        },
+        "request_id": {
+          "type": "string",
+          "description": "請求 ID"
+        },
+        "correlation_id": {
+          "type": "string",
+          "description": "關聯 ID"
+        }
+      },
+      "additionalProperties": true
+    },
+    "error": {
+      "type": "object",
+      "description": "錯誤詳情",
+      "properties": {
+        "type": {
+          "type": "string",
+          "description": "錯誤類型"
+        },
+        "message": {
+          "type": "string",
+          "description": "錯誤訊息"
+        },
+        "stack": {
+          "type": "string",
+          "description": "錯誤堆疊"
+        },
+        "code": {
+          "type": "string",
+          "description": "錯誤代碼"
+        }
+      }
+    },
+    "http": {
+      "type": "object",
+      "description": "HTTP 請求相關資訊",
+      "properties": {
+        "method": {
+          "type": "string",
+          "enum": ["GET", "POST", "PUT", "PATCH", "DELETE", "HEAD", "OPTIONS"]
+        },
+        "url": {
+          "type": "string",
+          "description": "請求 URL (不含 query parameters)"
+        },
+        "status_code": {
+          "type": "integer",
+          "minimum": 100,
+          "maximum": 599
+        },
+        "duration_ms": {
+          "type": "number",
+          "description": "請求處理時間 (毫秒)"
+        },
+        "user_agent": {
+          "type": "string",
+          "description": "User Agent"
+        },
+        "ip": {
+          "type": "string",
+          "description": "客戶端 IP"
+        }
+      }
+    },
+    "performance": {
+      "type": "object",
+      "description": "性能指標",
+      "properties": {
+        "duration_ms": {
+          "type": "number",
+          "description": "操作耗時 (毫秒)"
+        },
+        "cpu_usage": {
+          "type": "number",
+          "description": "CPU 使用率 (%)"
+        },
+        "memory_usage_mb": {
+          "type": "number",
+          "description": "記憶體使用 (MB)"
+        }
+      }
+    }
+  },
+  "additionalProperties": false
+}

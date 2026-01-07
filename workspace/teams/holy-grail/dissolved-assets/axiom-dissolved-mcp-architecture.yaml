@@ -1,0 +1,2981 @@
+%YAML 1.2
+---
+# ═══════════════════════════════════════════════════════════════════════════════
+#                    AXIOM 硫酸溶解架構 - MCP 完全對齊版本
+#                    AXIOM Dissolved Architecture - Full MCP Alignment
+# ═══════════════════════════════════════════════════════════════════════════════
+#
+# Purpose: Complete dissolution of AXIOM 59-module architecture into MCP-native format
+# 用途: 將 AXIOM 59模組架構完全溶解為 MCP 原生格式
+#
+# Methodology: 硫酸溶解法 (Sulfuric Acid Dissolution)
+# - All naming conventions aligned to MCP (snake_case)
+# - All logic restructured as MCP tools/resources/prompts
+# - Seamless integration with Model Context Protocol
+#
+# Version: 1.0.0
+# Created: 2026-01-06
+# Architecture: MCP-Native | Zero Friction | Instant Integration
+# ═══════════════════════════════════════════════════════════════════════════════
+
+apiVersion: mcp.machinenativeops/v1
+kind: MCPDissolvedArchitecture
+metadata:
+  name: axiom-dissolved-mcp
+  version: "1.0.0"
+  dissolution_method: sulfuric_acid
+  source_architecture: AXIOM-v8.4
+  target_protocol: MCP-v2024.11
+  labels:
+    tier: production
+    evolution: mcp-native
+    integration: seamless
+  annotations:
+    philosophy: "Complete dissolution and MCP realignment"
+    original_modules: "59"
+    original_layers: "14"
+    mcp_tools_generated: "59"
+    mcp_resources_generated: "14"
+    mcp_servers_generated: "7"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# MCP SERVER DEFINITIONS
+# 7 MCP Servers grouping all 59 dissolved modules
+# ═══════════════════════════════════════════════════════════════════════════════
+mcp_servers:
+  # Server 1: Infrastructure & Bootstrap (L00)
+  infrastructure_server:
+    name: axiom_infrastructure_server
+    version: "1.0.0"
+    protocol: mcp
+    transport: stdio
+    description: "Infrastructure and bootstrap services - Dissolved from L00"
+    capabilities:
+      tools: true
+      resources: true
+      prompts: true
+    tools:
+      - bootstrap_core
+      - kernel_compute
+      - emergency_override
+      - resource_scheduler
+      - memory_allocator
+
+  # Server 2: Language & Input Processing (L01-L02)
+  processing_server:
+    name: axiom_processing_server
+    version: "1.0.0"
+    protocol: mcp
+    transport: stdio
+    description: "Language and input processing - Dissolved from L01-L02"
+    capabilities:
+      tools: true
+      resources: true
+      prompts: true
+    tools:
+      - language_core
+      - language_advanced
+      - input_quantum
+      - data_validator
+      - multimodal_processor
+
+  # Server 3: Network & Routing (L03)
+  network_server:
+    name: axiom_network_server
+    version: "1.0.0"
+    protocol: mcp
+    transport: stdio
+    description: "Network routing and load balancing - Dissolved from L03"
+    capabilities:
+      tools: true
+      resources: true
+    tools:
+      - protocol_routing
+      - load_balancer
+      - adaptive_router
+
+  # Server 4: Cognitive & Ethics (L04-L05)
+  cognitive_server:
+    name: axiom_cognitive_server
+    version: "1.0.0"
+    protocol: mcp
+    transport: stdio
+    description: "Cognitive processing and ethics governance - Dissolved from L04-L05"
+    capabilities:
+      tools: true
+      resources: true
+      prompts: true
+    tools:
+      - cognitive_analysis
+      - pattern_recognition
+      - semantic_processor
+      - metacognitive_monitor
+      - ethics_governance
+      - bias_detector
+      - fairness_optimizer
+
+  # Server 5: Integration & Reasoning (L06-L08)
+  reasoning_server:
+    name: axiom_reasoning_server
+    version: "1.0.0"
+    protocol: mcp
+    transport: stdio
+    description: "Integration, reasoning, and emotional intelligence - Dissolved from L06-L08"
+    capabilities:
+      tools: true
+      resources: true
+      prompts: true
+    tools:
+      - collaboration_integration
+      - api_orchestrator
+      - workflow_engine
+      - logical_reasoning
+      - inference_engine
+      - knowledge_graph
+      - emotion_content
+      - tone_adjuster
+      - empathy_engine
+
+  # Server 6: Governance & Optimization (L09-L12)
+  governance_server:
+    name: axiom_governance_server
+    version: "1.0.0"
+    protocol: mcp
+    transport: stdio
+    description: "Output, governance, and optimization - Dissolved from L09-L12"
+    capabilities:
+      tools: true
+      resources: true
+    tools:
+      - output_quality
+      - format_optimizer
+      - grammar_checker
+      - system_governance
+      - architecture_plan
+      - audit_logger
+      - policy_engine
+      - compliance_monitor
+      - system_optimization
+      - performance_tuner
+      - resource_optimizer
+      - energy_optimizer
+      - meta_strategist
+      - self_optimizer
+      - emergence_detector
+
+  # Server 7: Quantum Specialized (L13)
+  quantum_server:
+    name: axiom_quantum_server
+    version: "1.0.0"
+    protocol: mcp
+    transport: stdio
+    description: "Quantum computing specialized services - Dissolved from L13"
+    capabilities:
+      tools: true
+      resources: true
+      prompts: true
+    tools:
+      - vqe_solver
+      - qaoa_optimizer
+      - qml_engine
+      - financial_portfolio
+      - financial_risk
+      - security_cryptography
+      - security_random
+      - chemistry_drug
+      - chemistry_catalyst
+      - manufacturing_supply_chain
+      - manufacturing_scheduler
+      - logistics_routing
+      - energy_grid
+      - weather_climate
+      - aerospace_optimization
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# MCP TOOL DEFINITIONS
+# All 59 AXIOM modules dissolved into MCP tools
+# ═══════════════════════════════════════════════════════════════════════════════
+mcp_tools:
+  # ═══════════════════════════════════════════════════════════════════
+  # Layer L00: Infrastructure & Bootstrap (5 tools)
+  # ═══════════════════════════════════════════════════════════════════
+
+  bootstrap_core:
+    name: bootstrap_core
+    description: "Platform initialization and quantum backend discovery"
+    source_module: AXM-L00-BOOT-001
+    input_schema:
+      type: object
+      properties:
+        backend_type:
+          type: string
+          enum: [ibm_quantum, aws_braket, azure_quantum, local_simulator]
+          description: "Quantum backend type to discover and initialize"
+        calibration_required:
+          type: boolean
+          default: true
+          description: "Whether to perform backend calibration"
+        timeout_seconds:
+          type: integer
+          default: 30
+          description: "Initialization timeout in seconds"
+      required: [backend_type]
+    output_schema:
+      type: object
+      properties:
+        status:
+          type: string
+          enum: [initialized, failed, timeout]
+        backend_info:
+          type: object
+          properties:
+            name: { type: string }
+            qubits: { type: integer }
+            calibration_timestamp: { type: string }
+        error_rate:
+          type: number
+    capabilities:
+      - backend_discovery
+      - calibration_management
+      - error_rate_monitoring
+    quantum_enabled: true
+    priority: 1
+
+  kernel_compute:
+    name: kernel_compute
+    description: "High-performance quantum-classical compute orchestration"
+    source_module: AXM-L00-KERN-002
+    input_schema:
+      type: object
+      properties:
+        circuit:
+          type: object
+          description: "Quantum circuit to execute"
+        optimization_level:
+          type: integer
+          enum: [0, 1, 2, 3]
+          default: 3
+          description: "Circuit optimization level"
+        transpilation_target:
+          type: string
+          description: "Target backend for transpilation"
+        parallel_execution:
+          type: boolean
+          default: true
+      required: [circuit]
+    output_schema:
+      type: object
+      properties:
+        result:
+          type: object
+        execution_time_ms:
+          type: number
+        circuit_depth:
+          type: integer
+    capabilities:
+      - circuit_optimization
+      - transpilation_cache
+      - parallel_execution
+    quantum_enabled: true
+    priority: 2
+
+  emergency_override:
+    name: emergency_override
+    description: "Multi-level emergency shutdown and recovery system"
+    source_module: AXM-L00-EMER-003
+    input_schema:
+      type: object
+      properties:
+        action:
+          type: string
+          enum: [initiate_shutdown, trigger_recovery, check_status]
+        level:
+          type: string
+          enum: [component, layer, system, full]
+          default: component
+        target:
+          type: string
+          description: "Target component/layer for action"
+        force:
+          type: boolean
+          default: false
+      required: [action]
+    output_schema:
+      type: object
+      properties:
+        status:
+          type: string
+        affected_components:
+          type: array
+          items: { type: string }
+        recovery_eta_seconds:
+          type: integer
+    capabilities:
+      - multi_level_shutdown
+      - automatic_recovery
+      - security_breach_response
+    quantum_enabled: false
+    priority: 3
+
+  resource_scheduler:
+    name: resource_scheduler
+    description: "Quantum-aware resource scheduling with deadline priorities"
+    source_module: AXM-L00-SCHD-004
+    input_schema:
+      type: object
+      properties:
+        jobs:
+          type: array
+          items:
+            type: object
+            properties:
+              job_id: { type: string }
+              resource_requirements:
+                type: object
+                properties:
+                  cpu: { type: number }
+                  memory_gb: { type: number }
+                  gpu: { type: integer }
+                  qpu_slots: { type: integer }
+              deadline_ms: { type: integer }
+              priority: { type: string, enum: [low, medium, high, critical] }
+        scheduling_algorithm:
+          type: string
+          enum: [fifo, priority, deadline, quantum_aware]
+          default: quantum_aware
+      required: [jobs]
+    output_schema:
+      type: object
+      properties:
+        schedule:
+          type: array
+          items:
+            type: object
+            properties:
+              job_id: { type: string }
+              start_time: { type: string }
+              allocated_resources: { type: object }
+        estimated_completion:
+          type: string
+    capabilities:
+      - qpu_scheduling
+      - circuit_batching
+      - priority_queues
+    quantum_enabled: true
+    priority: 4
+
+  memory_allocator:
+    name: memory_allocator
+    description: "Quantum coherence-aware memory management"
+    source_module: AXM-L00-MEML-005
+    input_schema:
+      type: object
+      properties:
+        action:
+          type: string
+          enum: [allocate, deallocate, query, optimize]
+        size_bytes:
+          type: integer
+        memory_type:
+          type: string
+          enum: [standard, quantum_coherent, gpu, hugepages]
+          default: standard
+        coherence_requirements:
+          type: object
+          properties:
+            min_coherence_time_us: { type: number }
+            error_tolerance: { type: number }
+      required: [action]
+    output_schema:
+      type: object
+      properties:
+        allocation_id:
+          type: string
+        address:
+          type: string
+        coherence_score:
+          type: number
+        gc_recommended:
+          type: boolean
+    capabilities:
+      - coherence_tracking
+      - garbage_collection
+      - memory_optimization
+    quantum_enabled: true
+    priority: 5
+
+  # ═══════════════════════════════════════════════════════════════════
+  # Layer L01: Language Processing (2 tools)
+  # ═══════════════════════════════════════════════════════════════════
+
+  language_core:
+    name: language_core
+    description: "Quantum-enhanced NLP with BERT and transformer models"
+    source_module: AXM-L01-LANG-001
+    input_schema:
+      type: object
+      properties:
+        text:
+          type: string
+          description: "Input text for processing"
+        operation:
+          type: string
+          enum: [tokenize, embed, encode, classify, generate]
+        model:
+          type: string
+          default: quantum_bert_xxl
+        context_window:
+          type: integer
+          default: 32768
+        quantum_attention:
+          type: boolean
+          default: false
+          description: "Enable quantum attention mechanism (experimental)"
+      required: [text, operation]
+    output_schema:
+      type: object
+      properties:
+        result:
+          type: object
+        tokens_per_second:
+          type: number
+        model_latency_ms:
+          type: number
+        accuracy_score:
+          type: number
+    capabilities:
+      - quantum_attention
+      - superposition_encoding
+      - multilingual_support
+    quantum_enabled: true
+    priority: 6
+
+  language_advanced:
+    name: language_advanced
+    description: "Advanced semantic analysis with quantum coherence"
+    source_module: AXM-L01-LADV-002
+    input_schema:
+      type: object
+      properties:
+        text:
+          type: string
+        analysis_type:
+          type: string
+          enum: [sentiment, zero_shot_classification, conversation, entity_extraction]
+        categories:
+          type: array
+          items: { type: string }
+          description: "Categories for zero-shot classification"
+        streaming:
+          type: boolean
+          default: false
+      required: [text, analysis_type]
+    output_schema:
+      type: object
+      properties:
+        analysis_result:
+          type: object
+        semantic_accuracy:
+          type: number
+        cache_hit:
+          type: boolean
+    capabilities:
+      - sentiment_analysis
+      - zero_shot_classification
+      - conversation_processing
+    quantum_enabled: true
+    priority: 7
+
+  # ═══════════════════════════════════════════════════════════════════
+  # Layer L02: Input Processing (3 tools)
+  # ═══════════════════════════════════════════════════════════════════
+
+  input_quantum:
+    name: input_quantum
+    description: "Quantum state preparation and multimodal input processing"
+    source_module: AXM-L02-INPQ-001
+    input_schema:
+      type: object
+      properties:
+        data:
+          type: object
+          description: "Input data to encode into quantum state"
+        encoding_method:
+          type: string
+          enum: [amplitude, angle, basis, superposition]
+          default: amplitude
+        modalities:
+          type: array
+          items: { type: string, enum: [text, image, audio, video] }
+        noise_modeling:
+          type: boolean
+          default: true
+      required: [data]
+    output_schema:
+      type: object
+      properties:
+        quantum_state:
+          type: object
+        encoding_fidelity:
+          type: number
+        noise_level:
+          type: number
+    capabilities:
+      - state_preparation
+      - multimodal_fusion
+      - noise_modeling
+    quantum_enabled: true
+    priority: 8
+
+  data_validator:
+    name: data_validator
+    description: "Comprehensive validation with quality scoring"
+    source_module: AXM-L02-VALD-002
+    input_schema:
+      type: object
+      properties:
+        data:
+          type: object
+        schema:
+          type: object
+          description: "JSON schema for validation"
+        quality_metrics:
+          type: array
+          items: { type: string }
+          default: [completeness, accuracy, consistency, timeliness]
+        strict_mode:
+          type: boolean
+          default: true
+      required: [data]
+    output_schema:
+      type: object
+      properties:
+        valid:
+          type: boolean
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              path: { type: string }
+              message: { type: string }
+              severity: { type: string }
+        quality_score:
+          type: number
+    capabilities:
+      - schema_validation
+      - quality_metrics
+      - data_profiling
+    quantum_enabled: false
+    priority: 9
+
+  multimodal_processor:
+    name: multimodal_processor
+    description: "Cross-modal fusion with attention mechanisms"
+    source_module: AXM-L02-MULT-003
+    input_schema:
+      type: object
+      properties:
+        inputs:
+          type: object
+          properties:
+            text: { type: string }
+            image: { type: string, description: "Base64 encoded image" }
+            audio: { type: string, description: "Base64 encoded audio" }
+        fusion_method:
+          type: string
+          enum: [cross_attention, early_fusion, late_fusion, hierarchical]
+          default: cross_attention
+        output_modality:
+          type: string
+          enum: [text, embedding, classification]
+      required: [inputs]
+    output_schema:
+      type: object
+      properties:
+        fused_representation:
+          type: object
+        modal_alignment_score:
+          type: number
+        fusion_quality:
+          type: number
+    capabilities:
+      - cross_attention
+      - modal_encoding
+      - fusion_optimization
+    quantum_enabled: true
+    priority: 10
+
+  # ═══════════════════════════════════════════════════════════════════
+  # Layer L03: Network & Routing (3 tools)
+  # ═══════════════════════════════════════════════════════════════════
+
+  protocol_routing:
+    name: protocol_routing
+    description: "ML-based intelligent routing with quantum optimization"
+    source_module: AXM-L03-PROT-001
+    input_schema:
+      type: object
+      properties:
+        source:
+          type: string
+        destination:
+          type: string
+        payload_size_bytes:
+          type: integer
+        latency_requirement_ms:
+          type: integer
+        routing_algorithm:
+          type: string
+          enum: [shortest_path, ml_optimized, quantum_optimized, adaptive]
+          default: ml_optimized
+      required: [source, destination]
+    output_schema:
+      type: object
+      properties:
+        path:
+          type: array
+          items: { type: string }
+        estimated_latency_ms:
+          type: number
+        congestion_level:
+          type: number
+    capabilities:
+      - path_optimization
+      - congestion_prediction
+      - adaptive_routing
+    quantum_enabled: true
+    priority: 11
+
+  load_balancer:
+    name: load_balancer
+    description: "Adaptive load balancing with circuit breaker patterns"
+    source_module: AXM-L03-LOAD-002
+    input_schema:
+      type: object
+      properties:
+        service:
+          type: string
+        request:
+          type: object
+        strategy:
+          type: string
+          enum: [round_robin, least_connections, weighted, adaptive]
+          default: adaptive
+        circuit_breaker:
+          type: object
+          properties:
+            enabled: { type: boolean, default: true }
+            failure_threshold: { type: integer, default: 5 }
+            timeout_seconds: { type: integer, default: 30 }
+      required: [service, request]
+    output_schema:
+      type: object
+      properties:
+        selected_instance:
+          type: string
+        circuit_state:
+          type: string
+          enum: [closed, open, half_open]
+        load_distribution:
+          type: object
+    capabilities:
+      - circuit_breaker
+      - weighted_routing
+      - health_checking
+    quantum_enabled: true
+    priority: 12
+
+  adaptive_router:
+    name: adaptive_router
+    description: "Reinforcement learning-based routing optimization"
+    source_module: AXM-L03-ADPT-003
+    input_schema:
+      type: object
+      properties:
+        network_state:
+          type: object
+        optimization_objective:
+          type: string
+          enum: [latency, throughput, cost, reliability]
+          default: latency
+        learning_mode:
+          type: string
+          enum: [online, offline, hybrid]
+          default: online
+        exploration_rate:
+          type: number
+          default: 0.1
+      required: [network_state]
+    output_schema:
+      type: object
+      properties:
+        routing_policy:
+          type: object
+        improvement_rate:
+          type: number
+        learning_metrics:
+          type: object
+    capabilities:
+      - q_learning
+      - real_time_training
+      - route_optimization
+    quantum_enabled: true
+    priority: 13
+
+  # ═══════════════════════════════════════════════════════════════════
+  # Layer L04: Cognitive Processing (4 tools)
+  # ═══════════════════════════════════════════════════════════════════
+
+  cognitive_analysis:
+    name: cognitive_analysis
+    description: "Deep cognitive processing with transformer architectures"
+    source_module: AXM-L04-COGN-001
+    input_schema:
+      type: object
+      properties:
+        input:
+          type: object
+          description: "Input data for cognitive analysis"
+        analysis_depth:
+          type: string
+          enum: [surface, deep, comprehensive]
+          default: deep
+        attention_config:
+          type: object
+          properties:
+            heads: { type: integer, default: 32 }
+            layers: { type: integer, default: 24 }
+        reasoning_mode:
+          type: string
+          enum: [deductive, inductive, abductive, analogical]
+      required: [input]
+    output_schema:
+      type: object
+      properties:
+        analysis:
+          type: object
+        cognitive_load:
+          type: number
+        confidence:
+          type: number
+        attention_weights:
+          type: array
+    capabilities:
+      - deep_learning
+      - attention_mechanisms
+      - cognitive_modeling
+    quantum_enabled: true
+    priority: 14
+
+  pattern_recognition:
+    name: pattern_recognition
+    description: "Multi-architecture pattern detection with ensemble methods"
+    source_module: AXM-L04-PATT-002
+    input_schema:
+      type: object
+      properties:
+        data:
+          type: object
+        pattern_types:
+          type: array
+          items: { type: string }
+          default: [structural, temporal, spatial, semantic]
+        detection_method:
+          type: string
+          enum: [cnn, gnn, transformer, ensemble]
+          default: ensemble
+        anomaly_detection:
+          type: boolean
+          default: true
+      required: [data]
+    output_schema:
+      type: object
+      properties:
+        patterns:
+          type: array
+          items:
+            type: object
+            properties:
+              type: { type: string }
+              confidence: { type: number }
+              location: { type: object }
+        anomalies:
+          type: array
+        ensemble_agreement:
+          type: number
+    capabilities:
+      - ensemble_learning
+      - pattern_extraction
+      - anomaly_detection
+    quantum_enabled: true
+    priority: 15
+
+  semantic_processor:
+    name: semantic_processor
+    description: "Deep semantic understanding with BERT and GPT integration"
+    source_module: AXM-L04-SEMA-003
+    input_schema:
+      type: object
+      properties:
+        content:
+          type: string
+        processing_mode:
+          type: string
+          enum: [parse, understand, reason, synthesize]
+        knowledge_base_query:
+          type: boolean
+          default: true
+        context:
+          type: array
+          items: { type: string }
+      required: [content]
+    output_schema:
+      type: object
+      properties:
+        semantic_representation:
+          type: object
+        understanding_depth:
+          type: number
+        knowledge_links:
+          type: array
+    capabilities:
+      - semantic_parsing
+      - context_understanding
+      - knowledge_integration
+    quantum_enabled: true
+    priority: 16
+
+  metacognitive_monitor:
+    name: metacognitive_monitor
+    description: "Self-awareness engine with performance tracking"
+    source_module: AXM-L04-META-004
+    input_schema:
+      type: object
+      properties:
+        target_system:
+          type: string
+        monitoring_aspects:
+          type: array
+          items:
+            type: string
+            enum: [performance, accuracy, consistency, learning_rate]
+        introspection_depth:
+          type: string
+          enum: [shallow, medium, deep]
+          default: medium
+      required: [target_system]
+    output_schema:
+      type: object
+      properties:
+        system_awareness:
+          type: object
+        self_corrections_suggested:
+          type: array
+        performance_trajectory:
+          type: object
+    capabilities:
+      - self_correction
+      - performance_tracking
+      - introspection_analysis
+    quantum_enabled: true
+    priority: 17
+
+  # ═══════════════════════════════════════════════════════════════════
+  # Layer L05: Ethics & Governance (3 tools)
+  # ═══════════════════════════════════════════════════════════════════
+
+  ethics_governance:
+    name: ethics_governance
+    description: "Policy evaluation framework with audit logging"
+    source_module: AXM-L05-ETHG-001
+    input_schema:
+      type: object
+      properties:
+        action:
+          type: object
+          description: "Action to evaluate for ethical compliance"
+        policy_frameworks:
+          type: array
+          items: { type: string }
+          default: [ai_ethics, fairness, transparency, accountability]
+        audit_required:
+          type: boolean
+          default: true
+      required: [action]
+    output_schema:
+      type: object
+      properties:
+        compliant:
+          type: boolean
+        violations:
+          type: array
+          items:
+            type: object
+            properties:
+              policy: { type: string }
+              severity: { type: string }
+              recommendation: { type: string }
+        ethical_score:
+          type: number
+        audit_id:
+          type: string
+    capabilities:
+      - policy_evaluation
+      - ethical_analysis
+      - audit_logging
+    quantum_enabled: false
+    priority: 18
+
+  bias_detector:
+    name: bias_detector
+    description: "Multi-algorithm bias detection system"
+    source_module: AXM-L05-BIAS-002
+    input_schema:
+      type: object
+      properties:
+        model_or_data:
+          type: object
+        protected_attributes:
+          type: array
+          items: { type: string }
+          description: "Attributes to check for bias"
+        detection_algorithms:
+          type: array
+          items:
+            type: string
+            enum: [demographic_parity, equalized_odds, calibration, individual_fairness]
+          default: [demographic_parity, equalized_odds]
+      required: [model_or_data, protected_attributes]
+    output_schema:
+      type: object
+      properties:
+        bias_detected:
+          type: boolean
+        bias_scores:
+          type: object
+        fairness_metrics:
+          type: object
+        recommendations:
+          type: array
+    capabilities:
+      - demographic_parity
+      - fairness_metrics
+      - bias_mitigation
+    quantum_enabled: false
+    priority: 19
+
+  fairness_optimizer:
+    name: fairness_optimizer
+    description: "Adversarial debiasing with dual network architecture"
+    source_module: AXM-L05-FAIR-003
+    input_schema:
+      type: object
+      properties:
+        model:
+          type: object
+        fairness_constraints:
+          type: array
+          items:
+            type: object
+            properties:
+              metric: { type: string }
+              threshold: { type: number }
+        optimization_method:
+          type: string
+          enum: [adversarial, reweighting, calibration]
+          default: adversarial
+      required: [model, fairness_constraints]
+    output_schema:
+      type: object
+      properties:
+        optimized_model:
+          type: object
+        fairness_improvement:
+          type: number
+        performance_impact:
+          type: number
+    capabilities:
+      - adversarial_debiasing
+      - fairness_optimization
+      - gradient_reversal
+    quantum_enabled: false
+    priority: 20
+
+  # ═══════════════════════════════════════════════════════════════════
+  # Layer L06: Integration & Orchestration (3 tools)
+  # ═══════════════════════════════════════════════════════════════════
+
+  collaboration_integration:
+    name: collaboration_integration
+    description: "Multi-agent orchestration with circuit breaker patterns"
+    source_module: AXM-L06-COLL-001
+    input_schema:
+      type: object
+      properties:
+        agents:
+          type: array
+          items:
+            type: object
+            properties:
+              agent_id: { type: string }
+              capabilities: { type: array, items: { type: string } }
+        coordination_protocol:
+          type: string
+          enum: [consensus, leader_election, distributed, hierarchical]
+          default: consensus
+        task:
+          type: object
+      required: [agents, task]
+    output_schema:
+      type: object
+      properties:
+        coordination_result:
+          type: object
+        consensus_achieved:
+          type: boolean
+        agent_contributions:
+          type: object
+    capabilities:
+      - agent_orchestration
+      - consensus_protocols
+      - webhook_management
+    quantum_enabled: true
+    priority: 21
+
+  api_orchestrator:
+    name: api_orchestrator
+    description: "API gateway with rate limiting and authentication"
+    source_module: AXM-L06-APIS-002
+    input_schema:
+      type: object
+      properties:
+        endpoint:
+          type: string
+        method:
+          type: string
+          enum: [GET, POST, PUT, DELETE, PATCH]
+        payload:
+          type: object
+        auth_context:
+          type: object
+        rate_limit_key:
+          type: string
+      required: [endpoint, method]
+    output_schema:
+      type: object
+      properties:
+        response:
+          type: object
+        rate_limit_remaining:
+          type: integer
+        latency_ms:
+          type: number
+    capabilities:
+      - rate_limiting
+      - authentication
+      - graphql_federation
+    quantum_enabled: false
+    priority: 22
+
+  workflow_engine:
+    name: workflow_engine
+    description: "Temporal-based workflow orchestration"
+    source_module: AXM-L06-WORK-003
+    input_schema:
+      type: object
+      properties:
+        workflow_definition:
+          type: object
+          properties:
+            name: { type: string }
+            steps: { type: array }
+            saga_enabled: { type: boolean, default: true }
+        input_data:
+          type: object
+        execution_mode:
+          type: string
+          enum: [sync, async, distributed]
+          default: async
+      required: [workflow_definition]
+    output_schema:
+      type: object
+      properties:
+        workflow_id:
+          type: string
+        status:
+          type: string
+        step_results:
+          type: array
+        error_handling:
+          type: object
+    capabilities:
+      - workflow_orchestration
+      - saga_pattern
+      - error_handling
+    quantum_enabled: true
+    priority: 23
+
+  # ═══════════════════════════════════════════════════════════════════
+  # Layer L07: Reasoning & Knowledge (3 tools)
+  # ═══════════════════════════════════════════════════════════════════
+
+  logical_reasoning:
+    name: logical_reasoning
+    description: "First-order logic with neural-symbolic reasoning"
+    source_module: AXM-L07-LOGI-001
+    input_schema:
+      type: object
+      properties:
+        premises:
+          type: array
+          items: { type: string }
+        query:
+          type: string
+        reasoning_mode:
+          type: string
+          enum: [deductive, inductive, abductive, analogical]
+          default: deductive
+        neural_symbolic:
+          type: boolean
+          default: true
+      required: [premises, query]
+    output_schema:
+      type: object
+      properties:
+        conclusion:
+          type: object
+        proof_chain:
+          type: array
+        confidence:
+          type: number
+    capabilities:
+      - logical_inference
+      - theorem_proving
+      - symbolic_reasoning
+    quantum_enabled: true
+    priority: 24
+
+  inference_engine:
+    name: inference_engine
+    description: "Hybrid inference with theorem proving"
+    source_module: AXM-L07-INFR-002
+    input_schema:
+      type: object
+      properties:
+        knowledge_base:
+          type: object
+        query:
+          type: object
+        inference_method:
+          type: string
+          enum: [forward_chaining, backward_chaining, hybrid, probabilistic]
+          default: hybrid
+        max_inference_depth:
+          type: integer
+          default: 10
+      required: [knowledge_base, query]
+    output_schema:
+      type: object
+      properties:
+        inferences:
+          type: array
+        proof_correctness:
+          type: number
+        computation_steps:
+          type: integer
+    capabilities:
+      - hybrid_inference
+      - theorem_proving
+      - probabilistic_reasoning
+    quantum_enabled: true
+    priority: 25
+
+  knowledge_graph:
+    name: knowledge_graph
+    description: "Graph neural network with Neo4j backend"
+    source_module: AXM-L07-KNOW-003
+    input_schema:
+      type: object
+      properties:
+        operation:
+          type: string
+          enum: [query, insert, update, delete, traverse, embed]
+        cypher_query:
+          type: string
+        entity:
+          type: object
+        traversal_config:
+          type: object
+          properties:
+            max_depth: { type: integer, default: 5 }
+            relationship_types: { type: array, items: { type: string } }
+      required: [operation]
+    output_schema:
+      type: object
+      properties:
+        result:
+          type: object
+        graph_metrics:
+          type: object
+        embeddings:
+          type: array
+    capabilities:
+      - graph_embeddings
+      - knowledge_extraction
+      - gnn_inference
+    quantum_enabled: true
+    priority: 26
+
+  # ═══════════════════════════════════════════════════════════════════
+  # Layer L08: Emotional Intelligence (3 tools)
+  # ═══════════════════════════════════════════════════════════════════
+
+  emotion_content:
+    name: emotion_content
+    description: "BERT-based emotion classification with Plutchik model"
+    source_module: AXM-L08-EMOT-001
+    input_schema:
+      type: object
+      properties:
+        text:
+          type: string
+        classification_model:
+          type: string
+          enum: [plutchik, ekman, dimensional, custom]
+          default: plutchik
+        granularity:
+          type: string
+          enum: [coarse, fine, ultra_fine]
+          default: fine
+      required: [text]
+    output_schema:
+      type: object
+      properties:
+        emotions:
+          type: array
+          items:
+            type: object
+            properties:
+              emotion: { type: string }
+              intensity: { type: number }
+        valence:
+          type: number
+        arousal:
+          type: number
+    capabilities:
+      - emotion_classification
+      - sentiment_analysis
+      - arousal_valence
+    quantum_enabled: true
+    priority: 27
+
+  tone_adjuster:
+    name: tone_adjuster
+    description: "Neural tone transformation with style transfer"
+    source_module: AXM-L08-TONE-002
+    input_schema:
+      type: object
+      properties:
+        text:
+          type: string
+        target_tone:
+          type: string
+          enum: [formal, informal, friendly, professional, empathetic, assertive]
+        target_formality:
+          type: number
+          description: "0.0 (very informal) to 1.0 (very formal)"
+          default: 0.5
+        preserve_meaning:
+          type: boolean
+          default: true
+      required: [text, target_tone]
+    output_schema:
+      type: object
+      properties:
+        transformed_text:
+          type: string
+        style_consistency:
+          type: number
+        meaning_preservation:
+          type: number
+    capabilities:
+      - tone_transformation
+      - style_transfer
+      - formality_adjustment
+    quantum_enabled: false
+    priority: 28
+
+  empathy_engine:
+    name: empathy_engine
+    description: "Computational empathy with Theory of Mind"
+    source_module: AXM-L08-EMPA-003
+    input_schema:
+      type: object
+      properties:
+        context:
+          type: object
+          description: "Conversation or situation context"
+        user_state:
+          type: object
+          properties:
+            emotional_state: { type: string }
+            needs: { type: array, items: { type: string } }
+        response_type:
+          type: string
+          enum: [supportive, informative, action_oriented, reflective]
+          default: supportive
+      required: [context]
+    output_schema:
+      type: object
+      properties:
+        empathetic_response:
+          type: string
+        empathy_score:
+          type: number
+        theory_of_mind_analysis:
+          type: object
+    capabilities:
+      - theory_of_mind
+      - empathy_modeling
+      - emotional_response
+    quantum_enabled: false
+    priority: 29
+
+  # ═══════════════════════════════════════════════════════════════════
+  # Layer L09: Output Optimization (3 tools)
+  # ═══════════════════════════════════════════════════════════════════
+
+  output_quality:
+    name: output_quality
+    description: "Quantum-enhanced output scoring and optimization"
+    source_module: AXM-L09-OUTQ-001
+    input_schema:
+      type: object
+      properties:
+        output:
+          type: object
+        quality_dimensions:
+          type: array
+          items: { type: string }
+          default: [accuracy, coherence, relevance, completeness]
+        optimization_enabled:
+          type: boolean
+          default: true
+        target_quality:
+          type: number
+          default: 0.95
+      required: [output]
+    output_schema:
+      type: object
+      properties:
+        quality_scores:
+          type: object
+        overall_score:
+          type: number
+        optimized_output:
+          type: object
+        improvement_suggestions:
+          type: array
+    capabilities:
+      - quality_scoring
+      - output_optimization
+      - quantum_enhancement
+    quantum_enabled: true
+    priority: 30
+
+  format_optimizer:
+    name: format_optimizer
+    description: "Multi-format optimization with compression"
+    source_module: AXM-L09-FORM-002
+    input_schema:
+      type: object
+      properties:
+        content:
+          type: object
+        source_format:
+          type: string
+        target_format:
+          type: string
+        compression:
+          type: object
+          properties:
+            enabled: { type: boolean, default: true }
+            level: { type: string, enum: [low, medium, high], default: medium }
+      required: [content, target_format]
+    output_schema:
+      type: object
+      properties:
+        formatted_content:
+          type: object
+        compression_ratio:
+          type: number
+        format_quality:
+          type: number
+    capabilities:
+      - format_conversion
+      - compression
+      - optimization
+    quantum_enabled: true
+    priority: 31
+
+  grammar_checker:
+    name: grammar_checker
+    description: "Multi-language grammar validation"
+    source_module: AXM-L09-GRAM-003
+    input_schema:
+      type: object
+      properties:
+        text:
+          type: string
+        language:
+          type: string
+          default: auto
+        check_types:
+          type: array
+          items:
+            type: string
+            enum: [spelling, grammar, style, punctuation, clarity]
+          default: [spelling, grammar, punctuation]
+        auto_correct:
+          type: boolean
+          default: false
+      required: [text]
+    output_schema:
+      type: object
+      properties:
+        issues:
+          type: array
+          items:
+            type: object
+            properties:
+              type: { type: string }
+              position: { type: object }
+              message: { type: string }
+              suggestion: { type: string }
+        corrected_text:
+          type: string
+        quality_score:
+          type: number
+    capabilities:
+      - grammar_validation
+      - multi_language_support
+      - confidence_scoring
+    quantum_enabled: true
+    priority: 32
+
+  # ═══════════════════════════════════════════════════════════════════
+  # Layer L10: System Governance (5 tools)
+  # ═══════════════════════════════════════════════════════════════════
+
+  system_governance:
+    name: system_governance
+    description: "System-wide policy enforcement with OPA"
+    source_module: AXM-L10-GOVN-001
+    input_schema:
+      type: object
+      properties:
+        resource:
+          type: object
+        action:
+          type: string
+        policy_bundle:
+          type: string
+          default: default
+        dry_run:
+          type: boolean
+          default: false
+      required: [resource, action]
+    output_schema:
+      type: object
+      properties:
+        allowed:
+          type: boolean
+        violations:
+          type: array
+        compliance_score:
+          type: number
+        enforcement_details:
+          type: object
+    capabilities:
+      - policy_enforcement
+      - admission_control
+      - compliance_checking
+    quantum_enabled: false
+    priority: 33
+
+  architecture_plan:
+    name: architecture_plan
+    description: "Execute and validate architectural blueprints and deployment plans"
+    source_module: AXM-L10-ARCH-002
+    input_schema:
+      type: object
+      properties:
+        blueprint:
+          type: object
+        validation_mode:
+          type: string
+          enum: [syntax, semantic, full]
+          default: full
+        gitops_check:
+          type: boolean
+          default: true
+        deployment_trigger:
+          type: boolean
+          default: false
+      required: [blueprint]
+    output_schema:
+      type: object
+      properties:
+        validation_result:
+          type: object
+        gitops_alignment:
+          type: boolean
+        deployment_status:
+          type: string
+        rollback_available:
+          type: boolean
+    capabilities:
+      - plan_validation
+      - gitops_alignment_check
+      - deployment_trigger
+      - rollback_analysis
+    quantum_enabled: false
+    priority: 34
+
+  audit_logger:
+    name: audit_logger
+    description: "Immutable audit logging with cryptographic signatures"
+    source_module: AXM-L10-AUDT-003
+    input_schema:
+      type: object
+      properties:
+        event:
+          type: object
+          properties:
+            type: { type: string }
+            actor: { type: string }
+            resource: { type: string }
+            action: { type: string }
+            result: { type: string }
+            metadata: { type: object }
+        sign:
+          type: boolean
+          default: true
+        retention_policy:
+          type: string
+          default: standard
+      required: [event]
+    output_schema:
+      type: object
+      properties:
+        log_id:
+          type: string
+        signature:
+          type: string
+        chain_hash:
+          type: string
+        verified:
+          type: boolean
+    capabilities:
+      - immutable_logging
+      - cryptographic_signatures
+      - long_term_retention
+    quantum_enabled: false
+    priority: 35
+
+  policy_engine:
+    name: policy_engine
+    description: "Rego-based policy evaluation"
+    source_module: AXM-L10-POLY-004
+    input_schema:
+      type: object
+      properties:
+        policy:
+          type: string
+          description: "Rego policy to evaluate"
+        input_data:
+          type: object
+        policy_path:
+          type: string
+        explain_mode:
+          type: boolean
+          default: false
+      required: [input_data]
+    output_schema:
+      type: object
+      properties:
+        decision:
+          type: object
+        evaluation_time_ms:
+          type: number
+        explanation:
+          type: object
+    capabilities:
+      - rego_evaluation
+      - policy_management
+      - compliance_frameworks
+    quantum_enabled: false
+    priority: 36
+
+  compliance_monitor:
+    name: compliance_monitor
+    description: "Real-time compliance violation detection"
+    source_module: AXM-L10-COMP-005
+    input_schema:
+      type: object
+      properties:
+        target:
+          type: string
+          description: "Target system or resource to monitor"
+        compliance_standards:
+          type: array
+          items: { type: string }
+          default: [GDPR, HIPAA, SOC2, PCI_DSS]
+        monitoring_mode:
+          type: string
+          enum: [continuous, periodic, on_demand]
+          default: continuous
+      required: [target]
+    output_schema:
+      type: object
+      properties:
+        compliance_status:
+          type: object
+        violations:
+          type: array
+        remediation_actions:
+          type: array
+        next_scan:
+          type: string
+    capabilities:
+      - real_time_monitoring
+      - violation_detection
+      - alerting
+    quantum_enabled: false
+    priority: 37
+
+  # ═══════════════════════════════════════════════════════════════════
+  # Layer L11: Performance Optimization (4 tools)
+  # ═══════════════════════════════════════════════════════════════════
+
+  system_optimization:
+    name: system_optimization
+    description: "Genetic algorithms with simulated annealing"
+    source_module: AXM-L11-SOPT-001
+    input_schema:
+      type: object
+      properties:
+        objective_function:
+          type: object
+        constraints:
+          type: array
+        optimization_method:
+          type: string
+          enum: [genetic, simulated_annealing, particle_swarm, bayesian, multi_objective]
+          default: genetic
+        max_iterations:
+          type: integer
+          default: 1000
+        convergence_threshold:
+          type: number
+          default: 0.001
+      required: [objective_function]
+    output_schema:
+      type: object
+      properties:
+        optimal_solution:
+          type: object
+        fitness_value:
+          type: number
+        convergence_history:
+          type: array
+        pareto_front:
+          type: array
+    capabilities:
+      - genetic_algorithms
+      - simulated_annealing
+      - multi_objective_optimization
+    quantum_enabled: true
+    priority: 38
+
+  performance_tuner:
+    name: performance_tuner
+    description: "JVM and kernel parameter optimization"
+    source_module: AXM-L11-PERF-002
+    input_schema:
+      type: object
+      properties:
+        target_system:
+          type: string
+        tuning_domain:
+          type: string
+          enum: [jvm, kernel, database, network, application]
+        workload_profile:
+          type: object
+        auto_apply:
+          type: boolean
+          default: false
+      required: [target_system, tuning_domain]
+    output_schema:
+      type: object
+      properties:
+        recommended_parameters:
+          type: object
+        expected_improvement:
+          type: number
+        applied:
+          type: boolean
+        rollback_command:
+          type: string
+    capabilities:
+      - jvm_tuning
+      - kernel_optimization
+      - parameter_adjustment
+    quantum_enabled: false
+    priority: 39
+
+  resource_optimizer:
+    name: resource_optimizer
+    description: "Bin packing with genetic algorithms"
+    source_module: AXM-L11-RSRC-003
+    input_schema:
+      type: object
+      properties:
+        resources:
+          type: array
+          items:
+            type: object
+            properties:
+              id: { type: string }
+              requirements: { type: object }
+        nodes:
+          type: array
+          items:
+            type: object
+            properties:
+              id: { type: string }
+              capacity: { type: object }
+        optimization_goal:
+          type: string
+          enum: [utilization, cost, balance, latency]
+          default: utilization
+      required: [resources, nodes]
+    output_schema:
+      type: object
+      properties:
+        allocation:
+          type: object
+        utilization_score:
+          type: number
+        unallocated:
+          type: array
+    capabilities:
+      - bin_packing
+      - genetic_algorithms
+      - kubernetes_integration
+    quantum_enabled: true
+    priority: 40
+
+  energy_optimizer:
+    name: energy_optimizer
+    description: "DVFS control with power monitoring"
+    source_module: AXM-L11-ENRG-004
+    input_schema:
+      type: object
+      properties:
+        target_nodes:
+          type: array
+          items: { type: string }
+        optimization_mode:
+          type: string
+          enum: [performance, balanced, power_save, adaptive]
+          default: balanced
+        power_budget_watts:
+          type: number
+        thermal_limit_celsius:
+          type: number
+          default: 85
+      required: [target_nodes]
+    output_schema:
+      type: object
+      properties:
+        power_consumption:
+          type: number
+        frequency_settings:
+          type: object
+        thermal_state:
+          type: object
+        savings_percentage:
+          type: number
+    capabilities:
+      - dvfs_control
+      - power_monitoring
+      - thermal_management
+    quantum_enabled: false
+    priority: 41
+
+  # ═══════════════════════════════════════════════════════════════════
+  # Layer L12: Metacognitive & Strategic (3 tools)
+  # ═══════════════════════════════════════════════════════════════════
+
+  meta_strategist:
+    name: meta_strategist
+    description: "Multi-objective optimization with Pareto analysis"
+    source_module: AXM-L12-STRT-001
+    input_schema:
+      type: object
+      properties:
+        objectives:
+          type: array
+          items:
+            type: object
+            properties:
+              name: { type: string }
+              direction: { type: string, enum: [minimize, maximize] }
+              weight: { type: number }
+        constraints:
+          type: array
+        decision_variables:
+          type: array
+        game_theory_mode:
+          type: boolean
+          default: false
+      required: [objectives, decision_variables]
+    output_schema:
+      type: object
+      properties:
+        pareto_solutions:
+          type: array
+        optimal_strategy:
+          type: object
+        nash_equilibrium:
+          type: object
+    capabilities:
+      - multi_objective_optimization
+      - pareto_analysis
+      - game_theory
+    quantum_enabled: true
+    priority: 42
+
+  self_optimizer:
+    name: self_optimizer
+    description: "Deep Q-Network reinforcement learning"
+    source_module: AXM-L12-SOPT-002
+    input_schema:
+      type: object
+      properties:
+        environment:
+          type: object
+          description: "RL environment specification"
+        learning_config:
+          type: object
+          properties:
+            algorithm: { type: string, enum: [dqn, ppo, a3c, sac], default: dqn }
+            learning_rate: { type: number, default: 0.001 }
+            gamma: { type: number, default: 0.99 }
+        training_episodes:
+          type: integer
+          default: 1000
+        target_metric:
+          type: string
+      required: [environment]
+    output_schema:
+      type: object
+      properties:
+        trained_policy:
+          type: object
+        learning_progress:
+          type: array
+        final_reward:
+          type: number
+    capabilities:
+      - deep_q_learning
+      - meta_learning
+      - neural_architecture_search
+    quantum_enabled: true
+    priority: 43
+
+  emergence_detector:
+    name: emergence_detector
+    description: "Complexity metrics and phase transition detection"
+    source_module: AXM-L12-EMER-003
+    input_schema:
+      type: object
+      properties:
+        system_state:
+          type: object
+        analysis_type:
+          type: string
+          enum: [complexity, phase_transition, emergence, all]
+          default: all
+        time_window:
+          type: object
+          properties:
+            start: { type: string }
+            end: { type: string }
+      required: [system_state]
+    output_schema:
+      type: object
+      properties:
+        complexity_metrics:
+          type: object
+          properties:
+            fractal_dimension: { type: number }
+            entropy: { type: number }
+            lyapunov_exponents: { type: array }
+        phase_transitions:
+          type: array
+        emergent_behaviors:
+          type: array
+    capabilities:
+      - complexity_measurement
+      - phase_transition_detection
+      - emergence_analysis
+    quantum_enabled: true
+    priority: 44
+
+  # ═══════════════════════════════════════════════════════════════════
+  # Layer L13: Quantum Specialized (15 tools)
+  # ═══════════════════════════════════════════════════════════════════
+
+  vqe_solver:
+    name: vqe_solver
+    description: "General-purpose VQE implementation"
+    source_module: AXM-L13-VQE-001
+    input_schema:
+      type: object
+      properties:
+        hamiltonian:
+          type: object
+          description: "Hamiltonian to solve"
+        ansatz:
+          type: string
+          enum: [UCCSD, hardware_efficient, RY, custom]
+          default: UCCSD
+        optimizer:
+          type: string
+          enum: [COBYLA, SPSA, L_BFGS_B, SLSQP]
+          default: COBYLA
+        backend:
+          type: string
+          default: ibm_brisbane
+        shots:
+          type: integer
+          default: 8192
+        fallback_classical:
+          type: boolean
+          default: true
+      required: [hamiltonian]
+    output_schema:
+      type: object
+      properties:
+        ground_state_energy:
+          type: number
+        optimal_parameters:
+          type: array
+        convergence_history:
+          type: array
+        circuit_depth:
+          type: integer
+        execution_method:
+          type: string
+          enum: [quantum, classical_fallback]
+    capabilities:
+      - variational_quantum_eigensolver
+      - ansatz_optimization
+      - hardware_efficiency
+    quantum_enabled: true
+    fallback_enabled: true
+    priority: 45
+
+  qaoa_optimizer:
+    name: qaoa_optimizer
+    description: "General QAOA framework"
+    source_module: AXM-L13-QAOA-002
+    input_schema:
+      type: object
+      properties:
+        problem:
+          type: object
+          description: "Combinatorial optimization problem"
+        layers:
+          type: integer
+          default: 3
+        warm_start:
+          type: boolean
+          default: true
+        backend:
+          type: string
+      required: [problem]
+    output_schema:
+      type: object
+      properties:
+        optimal_solution:
+          type: object
+        approximation_ratio:
+          type: number
+        circuit_layers:
+          type: integer
+    capabilities:
+      - quantum_approximate_optimization
+      - adaptive_layers
+      - warm_starting
+    quantum_enabled: true
+    fallback_enabled: true
+    priority: 46
+
+  qml_engine:
+    name: qml_engine
+    description: "Quantum machine learning platform"
+    source_module: AXM-L13-QML-003
+    input_schema:
+      type: object
+      properties:
+        task:
+          type: string
+          enum: [classification, regression, clustering, generation]
+        model_type:
+          type: string
+          enum: [variational_classifier, quantum_kernel, qnn, hybrid]
+          default: variational_classifier
+        training_data:
+          type: object
+        quantum_feature_map:
+          type: string
+          enum: [ZZFeatureMap, PauliFeatureMap, custom]
+          default: ZZFeatureMap
+      required: [task, training_data]
+    output_schema:
+      type: object
+      properties:
+        trained_model:
+          type: object
+        accuracy:
+          type: number
+        quantum_advantage:
+          type: boolean
+    capabilities:
+      - quantum_neural_networks
+      - variational_classifiers
+      - quantum_kernels
+    quantum_enabled: true
+    fallback_enabled: true
+    priority: 47
+
+  financial_portfolio:
+    name: financial_portfolio
+    description: "Portfolio optimization with Markowitz model"
+    source_module: AXM-L13-FIN-004
+    input_schema:
+      type: object
+      properties:
+        assets:
+          type: array
+          items:
+            type: object
+            properties:
+              symbol: { type: string }
+              expected_return: { type: number }
+              risk: { type: number }
+        constraints:
+          type: object
+          properties:
+            max_risk: { type: number }
+            min_return: { type: number }
+            sector_limits: { type: object }
+        optimization_method:
+          type: string
+          enum: [quantum, classical, hybrid]
+          default: quantum
+      required: [assets]
+    output_schema:
+      type: object
+      properties:
+        portfolio:
+          type: object
+        expected_return:
+          type: number
+        sharpe_ratio:
+          type: number
+        var_95:
+          type: number
+    capabilities:
+      - portfolio_optimization
+      - risk_management
+      - sharpe_ratio_optimization
+    quantum_enabled: true
+    fallback_enabled: true
+    priority: 48
+
+  financial_risk:
+    name: financial_risk
+    description: "Quantum Monte Carlo for VaR"
+    source_module: AXM-L13-RISK-005
+    input_schema:
+      type: object
+      properties:
+        portfolio:
+          type: object
+        risk_measures:
+          type: array
+          items: { type: string }
+          default: [VaR, CVaR, expected_shortfall]
+        confidence_level:
+          type: number
+          default: 0.95
+        time_horizon_days:
+          type: integer
+          default: 1
+        simulations:
+          type: integer
+          default: 100000
+      required: [portfolio]
+    output_schema:
+      type: object
+      properties:
+        var:
+          type: number
+        cvar:
+          type: number
+        risk_contribution:
+          type: object
+        simulation_accuracy:
+          type: number
+    capabilities:
+      - quantum_monte_carlo
+      - value_at_risk
+      - credit_risk_analysis
+    quantum_enabled: true
+    fallback_enabled: true
+    priority: 49
+
+  security_cryptography:
+    name: security_cryptography
+    description: "QKD and post-quantum cryptography"
+    source_module: AXM-L13-CRYP-006
+    input_schema:
+      type: object
+      properties:
+        operation:
+          type: string
+          enum: [generate_key, encrypt, decrypt, verify, qkd_exchange]
+        algorithm:
+          type: string
+          enum: [BB84, E91, CRYSTALS_Kyber, CRYSTALS_Dilithium, SPHINCS]
+          default: CRYSTALS_Kyber
+        key_size:
+          type: integer
+          default: 256
+        data:
+          type: object
+      required: [operation]
+    output_schema:
+      type: object
+      properties:
+        result:
+          type: object
+        security_level:
+          type: integer
+        quantum_safe:
+          type: boolean
+    capabilities:
+      - quantum_key_distribution
+      - post_quantum_algorithms
+      - cryptographic_security
+    quantum_enabled: true
+    priority: 50
+
+  security_random:
+    name: security_random
+    description: "Quantum random number generation"
+    source_module: AXM-L13-QRNG-007
+    input_schema:
+      type: object
+      properties:
+        bytes_requested:
+          type: integer
+          default: 32
+        format:
+          type: string
+          enum: [raw, hex, base64]
+          default: hex
+        entropy_source:
+          type: string
+          enum: [quantum, hybrid, classical]
+          default: quantum
+      required: []
+    output_schema:
+      type: object
+      properties:
+        random_data:
+          type: string
+        entropy_bits:
+          type: number
+        source:
+          type: string
+        nist_compliant:
+          type: boolean
+    capabilities:
+      - quantum_entropy_source
+      - random_generation
+      - nist_compliance
+    quantum_enabled: true
+    priority: 51
+
+  chemistry_drug:
+    name: chemistry_drug
+    description: "Drug discovery with molecular simulation"
+    source_module: AXM-L13-DRUG-008
+    input_schema:
+      type: object
+      properties:
+        molecule:
+          type: object
+          description: "Molecular structure (SMILES or mol format)"
+        simulation_type:
+          type: string
+          enum: [energy, binding_affinity, dynamics, docking]
+          default: energy
+        target_protein:
+          type: object
+        accuracy:
+          type: string
+          enum: [screening, production, chemical_accuracy]
+          default: production
+      required: [molecule]
+    output_schema:
+      type: object
+      properties:
+        simulation_result:
+          type: object
+        binding_affinity:
+          type: number
+        molecular_properties:
+          type: object
+        drug_likeness:
+          type: number
+    capabilities:
+      - molecular_simulation
+      - drug_screening
+      - protein_folding
+    quantum_enabled: true
+    fallback_enabled: true
+    priority: 52
+
+  chemistry_catalyst:
+    name: chemistry_catalyst
+    description: "Catalyst design with quantum simulation"
+    source_module: AXM-L13-CATL-009
+    input_schema:
+      type: object
+      properties:
+        reaction:
+          type: object
+        catalyst_candidates:
+          type: array
+        optimization_target:
+          type: string
+          enum: [activity, selectivity, stability, cost]
+          default: activity
+      required: [reaction]
+    output_schema:
+      type: object
+      properties:
+        optimal_catalyst:
+          type: object
+        efficiency_prediction:
+          type: number
+        reaction_pathway:
+          type: object
+    capabilities:
+      - catalyst_optimization
+      - reaction_simulation
+      - efficiency_prediction
+    quantum_enabled: true
+    fallback_enabled: true
+    priority: 53
+
+  manufacturing_supply_chain:
+    name: manufacturing_supply_chain
+    description: "Supply chain optimization with QAOA"
+    source_module: AXM-L13-MFSC-010
+    input_schema:
+      type: object
+      properties:
+        network:
+          type: object
+          description: "Supply chain network topology"
+        demand_forecast:
+          type: object
+        constraints:
+          type: object
+        optimization_horizon_days:
+          type: integer
+          default: 30
+      required: [network]
+    output_schema:
+      type: object
+      properties:
+        optimized_flow:
+          type: object
+        cost_reduction:
+          type: number
+        resilience_score:
+          type: number
+    capabilities:
+      - supply_chain_optimization
+      - network_analysis
+      - demand_forecasting
+    quantum_enabled: true
+    fallback_enabled: true
+    priority: 54
+
+  manufacturing_scheduler:
+    name: manufacturing_scheduler
+    description: "Job shop scheduling with quantum annealing"
+    source_module: AXM-L13-MFSD-011
+    input_schema:
+      type: object
+      properties:
+        jobs:
+          type: array
+          items:
+            type: object
+            properties:
+              job_id: { type: string }
+              operations: { type: array }
+              deadline: { type: string }
+        machines:
+          type: array
+        objective:
+          type: string
+          enum: [makespan, tardiness, utilization, balanced]
+          default: makespan
+      required: [jobs, machines]
+    output_schema:
+      type: object
+      properties:
+        schedule:
+          type: object
+        makespan:
+          type: number
+        machine_utilization:
+          type: object
+    capabilities:
+      - job_scheduling
+      - quantum_annealing
+      - production_optimization
+    quantum_enabled: true
+    fallback_enabled: true
+    priority: 55
+
+  logistics_routing:
+    name: logistics_routing
+    description: "Vehicle routing problem solver"
+    source_module: AXM-L13-ROUT-012
+    input_schema:
+      type: object
+      properties:
+        depot:
+          type: object
+        deliveries:
+          type: array
+        vehicles:
+          type: array
+        constraints:
+          type: object
+          properties:
+            max_distance: { type: number }
+            time_windows: { type: boolean }
+            capacity: { type: number }
+      required: [depot, deliveries, vehicles]
+    output_schema:
+      type: object
+      properties:
+        routes:
+          type: array
+        total_distance:
+          type: number
+        total_time:
+          type: number
+        fuel_savings:
+          type: number
+    capabilities:
+      - vehicle_routing
+      - route_optimization
+      - delivery_planning
+    quantum_enabled: true
+    fallback_enabled: true
+    priority: 56
+
+  energy_grid:
+    name: energy_grid
+    description: "Smart grid optimization"
+    source_module: AXM-L13-GRID-013
+    input_schema:
+      type: object
+      properties:
+        grid_topology:
+          type: object
+        demand_forecast:
+          type: object
+        renewable_sources:
+          type: array
+        storage_units:
+          type: array
+        optimization_window_hours:
+          type: integer
+          default: 24
+      required: [grid_topology]
+    output_schema:
+      type: object
+      properties:
+        dispatch_schedule:
+          type: object
+        grid_stability:
+          type: number
+        renewable_percentage:
+          type: number
+        cost_optimization:
+          type: number
+    capabilities:
+      - grid_optimization
+      - renewable_integration
+      - load_balancing
+    quantum_enabled: true
+    fallback_enabled: true
+    priority: 57
+
+  weather_climate:
+    name: weather_climate
+    description: "Quantum-enhanced weather prediction"
+    source_module: AXM-L13-CLIM-014
+    input_schema:
+      type: object
+      properties:
+        initial_conditions:
+          type: object
+        prediction_horizon_hours:
+          type: integer
+          default: 72
+        resolution:
+          type: string
+          enum: [coarse, standard, fine, ultra_fine]
+          default: standard
+        variables:
+          type: array
+          items: { type: string }
+          default: [temperature, precipitation, wind, pressure]
+      required: [initial_conditions]
+    output_schema:
+      type: object
+      properties:
+        forecast:
+          type: object
+        uncertainty:
+          type: object
+        accuracy_estimate:
+          type: number
+    capabilities:
+      - weather_simulation
+      - climate_modeling
+      - prediction_accuracy
+    quantum_enabled: true
+    fallback_enabled: true
+    priority: 58
+
+  aerospace_optimization:
+    name: aerospace_optimization
+    description: "Trajectory and orbital mechanics optimization"
+    source_module: AXM-L13-AERO-015
+    input_schema:
+      type: object
+      properties:
+        mission:
+          type: object
+          properties:
+            type: { type: string, enum: [launch, orbit_transfer, landing, rendezvous] }
+            origin: { type: object }
+            destination: { type: object }
+        constraints:
+          type: object
+          properties:
+            max_delta_v: { type: number }
+            max_duration_hours: { type: number }
+            fuel_mass_kg: { type: number }
+        optimization_objective:
+          type: string
+          enum: [fuel, time, safety, balanced]
+          default: fuel
+      required: [mission]
+    output_schema:
+      type: object
+      properties:
+        trajectory:
+          type: object
+        delta_v_required:
+          type: number
+        mission_duration:
+          type: number
+        success_probability:
+          type: number
+    capabilities:
+      - trajectory_optimization
+      - orbital_mechanics
+      - fuel_efficiency
+    quantum_enabled: true
+    fallback_enabled: true
+    priority: 59
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# MCP RESOURCE DEFINITIONS
+# 14 Resources representing each dissolved layer
+# ═══════════════════════════════════════════════════════════════════════════════
+mcp_resources:
+  layer_l00_infrastructure:
+    uri: axiom://layers/l00-infrastructure
+    name: "Infrastructure & Bootstrap Layer"
+    description: "Immutable foundation with quantum-hardened bootstrap"
+    mime_type: application/json
+    metadata:
+      original_layer: L00
+      module_count: 5
+      quantum_enabled: true
+      slo:
+        availability: "99.999%"
+        boot_time: "<30s"
+        verification_latency: "<100ms"
+    contents:
+      modules:
+        - bootstrap_core
+        - kernel_compute
+        - emergency_override
+        - resource_scheduler
+        - memory_allocator
+
+  layer_l01_language:
+    uri: axiom://layers/l01-language
+    name: "Language Processing Layer"
+    description: "Quantum-enhanced NLP with transformer models"
+    mime_type: application/json
+    metadata:
+      original_layer: L01
+      module_count: 2
+      quantum_enabled: true
+      slo:
+        inference_latency: "<50ms"
+        tokens_per_second: ">5000"
+    contents:
+      modules:
+        - language_core
+        - language_advanced
+
+  layer_l02_input:
+    uri: axiom://layers/l02-input
+    name: "Input Processing Layer"
+    description: "Quantum state preparation and multimodal processing"
+    mime_type: application/json
+    metadata:
+      original_layer: L02
+      module_count: 3
+      quantum_enabled: true
+      slo:
+        encoding_fidelity: ">0.95"
+        validation_latency: "<100ms"
+    contents:
+      modules:
+        - input_quantum
+        - data_validator
+        - multimodal_processor
+
+  layer_l03_network:
+    uri: axiom://layers/l03-network
+    name: "Network & Routing Layer"
+    description: "ML-based intelligent routing with circuit breakers"
+    mime_type: application/json
+    metadata:
+      original_layer: L03
+      module_count: 3
+      quantum_enabled: true
+      slo:
+        latency_p99: "<10ms"
+        throughput: ">100k_rps"
+    contents:
+      modules:
+        - protocol_routing
+        - load_balancer
+        - adaptive_router
+
+  layer_l04_cognitive:
+    uri: axiom://layers/l04-cognitive
+    name: "Cognitive Processing Layer"
+    description: "Deep cognitive processing with transformer architectures"
+    mime_type: application/json
+    metadata:
+      original_layer: L04
+      module_count: 4
+      quantum_enabled: true
+      slo:
+        analysis_latency: "<200ms"
+        accuracy: ">92%"
+    contents:
+      modules:
+        - cognitive_analysis
+        - pattern_recognition
+        - semantic_processor
+        - metacognitive_monitor
+
+  layer_l05_ethics:
+    uri: axiom://layers/l05-ethics
+    name: "Ethics & Governance Layer"
+    description: "Policy evaluation and bias detection"
+    mime_type: application/json
+    metadata:
+      original_layer: L05
+      module_count: 3
+      quantum_enabled: false
+      slo:
+        evaluation_latency: "<50ms"
+        compliance: ">99%"
+    contents:
+      modules:
+        - ethics_governance
+        - bias_detector
+        - fairness_optimizer
+
+  layer_l06_integration:
+    uri: axiom://layers/l06-integration
+    name: "Integration & Orchestration Layer"
+    description: "Multi-agent orchestration and workflow engine"
+    mime_type: application/json
+    metadata:
+      original_layer: L06
+      module_count: 3
+      quantum_enabled: true
+      slo:
+        orchestration_latency: "<500ms"
+        consensus_time: "<2s"
+    contents:
+      modules:
+        - collaboration_integration
+        - api_orchestrator
+        - workflow_engine
+
+  layer_l07_reasoning:
+    uri: axiom://layers/l07-reasoning
+    name: "Reasoning & Knowledge Layer"
+    description: "Neural-symbolic reasoning with knowledge graphs"
+    mime_type: application/json
+    metadata:
+      original_layer: L07
+      module_count: 3
+      quantum_enabled: true
+      slo:
+        inference_accuracy: ">95%"
+        query_latency: "<100ms"
+    contents:
+      modules:
+        - logical_reasoning
+        - inference_engine
+        - knowledge_graph
+
+  layer_l08_emotion:
+    uri: axiom://layers/l08-emotion
+    name: "Emotional Intelligence Layer"
+    description: "Emotion classification and empathy modeling"
+    mime_type: application/json
+    metadata:
+      original_layer: L08
+      module_count: 3
+      quantum_enabled: true
+      slo:
+        emotion_accuracy: ">85%"
+        response_latency: "<100ms"
+    contents:
+      modules:
+        - emotion_content
+        - tone_adjuster
+        - empathy_engine
+
+  layer_l09_output:
+    uri: axiom://layers/l09-output
+    name: "Output Optimization Layer"
+    description: "Quality scoring and format optimization"
+    mime_type: application/json
+    metadata:
+      original_layer: L09
+      module_count: 3
+      quantum_enabled: true
+      slo:
+        quality_score: ">92%"
+        optimization_latency: "<200ms"
+    contents:
+      modules:
+        - output_quality
+        - format_optimizer
+        - grammar_checker
+
+  layer_l10_governance:
+    uri: axiom://layers/l10-governance
+    name: "System Governance Layer"
+    description: "Policy enforcement and compliance monitoring"
+    mime_type: application/json
+    metadata:
+      original_layer: L10
+      module_count: 5
+      quantum_enabled: false
+      slo:
+        policy_evaluation: "<10ms"
+        compliance_score: ">98%"
+    contents:
+      modules:
+        - system_governance
+        - architecture_plan
+        - audit_logger
+        - policy_engine
+        - compliance_monitor
+
+  layer_l11_optimization:
+    uri: axiom://layers/l11-optimization
+    name: "Performance Optimization Layer"
+    description: "System-wide optimization with genetic algorithms"
+    mime_type: application/json
+    metadata:
+      original_layer: L11
+      module_count: 4
+      quantum_enabled: true
+      slo:
+        optimization_gain: ">20%"
+        resource_utilization: ">80%"
+    contents:
+      modules:
+        - system_optimization
+        - performance_tuner
+        - resource_optimizer
+        - energy_optimizer
+
+  layer_l12_metacognition:
+    uri: axiom://layers/l12-metacognition
+    name: "Metacognitive & Strategic Layer"
+    description: "Multi-objective optimization and emergence detection"
+    mime_type: application/json
+    metadata:
+      original_layer: L12
+      module_count: 3
+      quantum_enabled: true
+      slo:
+        strategy_quality: ">90%"
+        emergence_detection: ">95%"
+    contents:
+      modules:
+        - meta_strategist
+        - self_optimizer
+        - emergence_detector
+
+  layer_l13_quantum:
+    uri: axiom://layers/l13-quantum
+    name: "Quantum Specialized Layer"
+    description: "Domain-specific quantum computing applications"
+    mime_type: application/json
+    metadata:
+      original_layer: L13
+      module_count: 15
+      quantum_enabled: true
+      fallback_enabled: true
+      slo:
+        quantum_advantage: ">10x"
+        fallback_latency: "<100ms"
+    contents:
+      modules:
+        - vqe_solver
+        - qaoa_optimizer
+        - qml_engine
+        - financial_portfolio
+        - financial_risk
+        - security_cryptography
+        - security_random
+        - chemistry_drug
+        - chemistry_catalyst
+        - manufacturing_supply_chain
+        - manufacturing_scheduler
+        - logistics_routing
+        - energy_grid
+        - weather_climate
+        - aerospace_optimization
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# MCP PROMPT DEFINITIONS
+# Reusable prompts for dissolved architecture operations
+# ═══════════════════════════════════════════════════════════════════════════════
+mcp_prompts:
+  quantum_optimization_prompt:
+    name: quantum_optimization
+    description: "Prompt for quantum optimization tasks"
+    arguments:
+      - name: problem_type
+        description: "Type of optimization problem"
+        required: true
+      - name: constraints
+        description: "Problem constraints"
+        required: false
+    template: |
+      You are using the AXIOM dissolved quantum optimization layer.
+
+      Problem Type: {{problem_type}}
+      Constraints: {{constraints}}
+
+      Available quantum tools:
+      - vqe_solver: For eigenvalue problems
+      - qaoa_optimizer: For combinatorial optimization
+      - qml_engine: For quantum machine learning
+
+      Please specify your optimization parameters and the tool will
+      automatically select the best quantum algorithm and provide
+      classical fallback if quantum execution fails.
+
+  cognitive_analysis_prompt:
+    name: cognitive_analysis
+    description: "Prompt for deep cognitive analysis"
+    arguments:
+      - name: input_data
+        description: "Data to analyze"
+        required: true
+      - name: analysis_depth
+        description: "Depth of analysis (surface, deep, comprehensive)"
+        required: false
+    template: |
+      Initiating AXIOM cognitive analysis pipeline.
+
+      Input: {{input_data}}
+      Depth: {{analysis_depth}}
+
+      The following tools will be orchestrated:
+      - cognitive_analysis: Deep cognitive processing
+      - pattern_recognition: Pattern detection
+      - semantic_processor: Semantic understanding
+      - knowledge_graph: Knowledge integration
+
+      Results will include attention weights, confidence scores,
+      and knowledge graph connections.
+
+  ethics_evaluation_prompt:
+    name: ethics_evaluation
+    description: "Prompt for ethical compliance evaluation"
+    arguments:
+      - name: action
+        description: "Action to evaluate"
+        required: true
+      - name: frameworks
+        description: "Ethical frameworks to apply"
+        required: false
+    template: |
+      AXIOM Ethics Governance Evaluation
+
+      Action: {{action}}
+      Frameworks: {{frameworks}}
+
+      This evaluation will use:
+      - ethics_governance: Policy compliance
+      - bias_detector: Fairness analysis
+      - fairness_optimizer: Bias mitigation recommendations
+
+      Full audit trail will be recorded with cryptographic signatures.
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# INTEGRATION MANIFEST
+# Seamless embedding configuration for MCP ecosystem
+# ═══════════════════════════════════════════════════════════════════════════════
+integration_manifest:
+  dissolution_summary:
+    source: "AXIOM Quantum AI Platform v8.4"
+    methodology: "硫酸溶解法 (Sulfuric Acid Dissolution)"
+    total_modules_dissolved: 59
+    total_layers_dissolved: 14
+    mcp_tools_created: 59
+    mcp_resources_created: 14
+    mcp_servers_created: 7
+    mcp_prompts_created: 3
+
+  naming_alignment:
+    convention: snake_case
+    prefix: null
+    suffix: null
+    examples:
+      - original: "AXM-L00-BOOT-001"
+        mcp: "bootstrap_core"
+      - original: "AXM-L13-VQE-001"
+        mcp: "vqe_solver"
+      - original: "AXM-L04-COGN-001"
+        mcp: "cognitive_analysis"
+
+  protocol_alignment:
+    transport: stdio
+    message_format: json_rpc_2.0
+    encoding: utf-8
+    capabilities:
+      tools: true
+      resources: true
+      prompts: true
+      logging: true
+
+  seamless_integration:
+    auto_registration: true
+    hot_reload: true
+    fallback_mechanism: classical_when_quantum_fails
+    error_handling: graceful_degradation
+    telemetry: opentelemetry
+
+  cross_references:
+    unified_pipeline: workspace/mcp/pipelines/unified-pipeline-config.yaml
+    integration_index: workspace/mcp/INTEGRATION_INDEX.yaml
+    instant_engine: workspace/src/autonomous/deployment/instant_execution_engine_v2.py
+    existing_mcp_servers: workspace/src/mcp-servers/
+
+  compatibility:
+    mcp_sdk_version: ">=1.25.1"
+    node_runtime: ">=18.0.0"
+    python_runtime: ">=3.10"
+    quantum_backends:
+      - ibm_quantum
+      - aws_braket
+      - azure_quantum
+      - local_simulator
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# VALIDATION AND DEPLOYMENT
+# ═══════════════════════════════════════════════════════════════════════════════
+validation:
+  schema_validation: strict
+  tool_count: 59
+  resource_count: 14
+  server_count: 7
+  all_tools_have_schemas: true
+  all_tools_have_descriptions: true
+  quantum_fallback_coverage: 100%
+
+deployment:
+  strategy: progressive_rollout
+  phases:
+    - phase: 1
+      servers: [infrastructure_server]
+      validation: smoke_test
+    - phase: 2
+      servers: [processing_server, network_server]
+      validation: integration_test
+    - phase: 3
+      servers: [cognitive_server, reasoning_server]
+      validation: load_test
+    - phase: 4
+      servers: [governance_server, quantum_server]
+      validation: full_validation
+
+  monitoring:
+    metrics_endpoint: /metrics
+    health_endpoint: /health
+    trace_sampling: 0.1
+    log_level: info
+
+---
+# End of AXIOM Dissolved MCP Architecture
+# 完全溶解並對齊 MCP 協議

@@ -1,0 +1,581 @@
+# ═══════════════════════════════════════════════════════════════════════════════
+#                    Legacy Scratch Processor - 暫存區處理器配置
+#                    舊資產高階推理與分佈決策引擎
+# ═══════════════════════════════════════════════════════════════════════════════
+#
+# Version: 1.0.0
+# Updated: 2025-12-08
+# Purpose: 定義暫存區 (_legacy_scratch/) 的智能處理邏輯
+#
+# 功能：
+# 1. 掃描舊資產的詞彙、結構、引用
+# 2. 使用高階推理決定分佈位置
+# 3. 決策整體整合 vs 嵌入式整合
+# 4. 生成位置建議報告
+#
+# ═══════════════════════════════════════════════════════════════════════════════
+
+version: "1.0.0"
+name: "LegacyScratchProcessor"
+description: "暫存區處理器 - 高階推理引擎，決策舊資產的分佈位置"
+
+# ============================================================================
+# 暫存區配置
+# ============================================================================
+scratch_zone:
+  path: "_legacy_scratch/"
+  description: "舊資產暫存區 - 所有待處理的舊檔案"
+
+  # 暫存區子目錄結構
+  structure:
+    intake:
+      path: "_legacy_scratch/intake/"
+      description: "新進資產接收區"
+
+    processing:
+      path: "_legacy_scratch/processing/"
+      description: "處理中的資產"
+
+    analyzed:
+      path: "_legacy_scratch/analyzed/"
+      description: "已分析完成，待決策"
+
+    archive:
+      path: "_legacy_scratch/archive/"
+      description: "僅保留知識，不整合"
+      subdirs:
+        - "axiom_docs/"
+        - "baseline_yaml/"
+        - "deprecated/"
+
+  # 檔案保護規則
+  protection:
+    keep_files:
+      - ".gitkeep"
+    gitignore_patterns:
+      - "*.tmp"
+      - "*.bak"
+      - "*.orig"
+
+# ============================================================================
+# 詞彙掃描引擎
+# ============================================================================
+vocabulary_scanner:
+  name: "VocabularyScanner"
+  description: "掃描舊資產中的關鍵詞彙並映射到現有專案"
+
+  # 掃描目標
+  scan_targets:
+    - file_extensions: [".md", ".txt", ".yaml", ".yml", ".json"]
+      scan_type: "full_text"
+    - file_extensions: [".py", ".ts", ".js", ".go"]
+      scan_type: "code_structure"
+
+  # 詞彙提取規則
+  extraction_rules:
+    # 命名空間/專案名稱
+    namespaces:
+      patterns:
+        - "(?i)axiom[-_]?system"
+        - "(?i)unmanned[-_]?island"
+        - "(?i)island[-_]?ai"
+        - "(?i)synergy[-_]?mesh"
+      mapping:
+        "machinenativeops": "machinenativeops"
+        "axiom_system": "machinenativeops"
+        "unmanned-island": "machinenativeops"
+        "unmanned_island": "machinenativeops"
+
+    # 模組類型關鍵字
+    module_types:
+      patterns:
+        - "(?i)(executor|engine|processor|handler)"
+        - "(?i)(manager|coordinator|orchestrator)"
+        - "(?i)(service|gateway|api)"
+        - "(?i)(plugin|module|component)"
+      category_mapping:
+        executor: "execution_engine"
+        engine: "core_engine"
+        processor: "data_processor"
+        handler: "event_handler"
+        manager: "resource_manager"
+        coordinator: "orchestration"
+        orchestrator: "orchestration"
+        service: "service_layer"
+        gateway: "api_gateway"
+        api: "api_layer"
+        plugin: "plugin_system"
+        module: "core_module"
+        component: "component"
+
+    # 功能領域關鍵字
+    domain_keywords:
+      patterns:
+        - "(?i)(security|auth|rbac|access)"
+        - "(?i)(kubernetes|k8s|deployment|pod)"
+        - "(?i)(governance|compliance|policy|audit)"
+        - "(?i)(ai|ml|inference|model)"
+        - "(?i)(quantum|slsa|provenance)"
+        - "(?i)(monitoring|metrics|observability)"
+      domain_mapping:
+        security: "security_mechanisms"
+        auth: "security_mechanisms"
+        rbac: "security_mechanisms"
+        kubernetes: "infrastructure"
+        k8s: "infrastructure"
+        governance: "governance"
+        compliance: "governance"
+        ai: "ai_engines"
+        ml: "ai_engines"
+        quantum: "advanced_systems"
+        slsa: "supply_chain_security"
+        monitoring: "observability"
+
+  # 引用關係掃描
+  reference_scanner:
+    # Import 語句模式
+    import_patterns:
+      python:
+        - "^from\\s+([\\w.]+)\\s+import"
+        - "^import\\s+([\\w.]+)"
+      typescript:
+        - "import\\s+.*from\\s+['\"]([^'\"]+)['\"]"
+        - "require\\s*\\(['\"]([^'\"]+)['\"]\\)"
+      yaml:
+        - "\\$ref:\\s*['\"]?([^'\"\\s]+)['\"]?"
+
+    # 路徑引用模式
+    path_patterns:
+      - "(?:src|lib|core|services)/[\\w/]+"
+      - "(?:config|governance|automation)/[\\w/]+"
+
+# ============================================================================
+# 結構分析引擎
+# ============================================================================
+structure_analyzer:
+  name: "StructureAnalyzer"
+  description: "分析舊資產的架構結構與組織方式"
+
+  # 分析維度
+  dimensions:
+    # 目錄結構分析
+    directory_structure:
+      description: "分析目錄層級與組織"
+      extracts:
+        - "depth_levels"
+        - "naming_conventions"
+        - "grouping_patterns"
+
+    # 檔案類型分布
+    file_distribution:
+      description: "分析檔案類型分布"
+      extracts:
+        - "extension_counts"
+        - "size_distribution"
+        - "language_mix"
+
+    # 模組邊界
+    module_boundaries:
+      description: "識別模組邊界與介面"
+      extracts:
+        - "public_interfaces"
+        - "internal_modules"
+        - "shared_utilities"
+
+    # 依賴關係
+    dependency_graph:
+      description: "建立依賴關係圖"
+      extracts:
+        - "internal_dependencies"
+        - "external_dependencies"
+        - "circular_dependencies"
+
+# ============================================================================
+# 高階推理決策引擎
+# ============================================================================
+reasoning_engine:
+  name: "HighLevelReasoningEngine"
+  description: "使用 AI 進行高階推理，決定舊資產的最佳分佈位置"
+
+  # 推理輸入
+  inputs:
+    required:
+      - "vocabulary_scan_result"
+      - "structure_analysis_result"
+      - "reference_scan_result"
+    optional:
+      - "historical_patterns"
+      - "project_conventions"
+
+  # 推理階段
+  reasoning_phases:
+    # Phase 1: 語意理解
+    semantic_understanding:
+      name: "語意理解"
+      description: "理解舊資產的功能意圖與目的"
+      questions:
+        - "這個資產的主要功能是什麼？"
+        - "它解決什麼問題？"
+        - "它的使用場景是什麼？"
+      output: "semantic_profile"
+
+    # Phase 2: 相似度匹配
+    similarity_matching:
+      name: "相似度匹配"
+      description: "與現有專案結構進行相似度比對"
+      methods:
+        - name: "vocabulary_similarity"
+          weight: 0.3
+          description: "詞彙相似度"
+        - name: "structural_similarity"
+          weight: 0.3
+          description: "結構相似度"
+        - name: "functional_similarity"
+          weight: 0.4
+          description: "功能相似度"
+      output: "similarity_scores"
+
+    # Phase 3: 位置決策
+    placement_decision:
+      name: "位置決策"
+      description: "決定最佳分佈位置"
+      factors:
+        - factor: "domain_fit"
+          weight: 0.35
+          description: "領域匹配度"
+        - factor: "structural_compatibility"
+          weight: 0.25
+          description: "結構相容性"
+        - factor: "dependency_alignment"
+          weight: 0.25
+          description: "依賴對齊度"
+        - factor: "naming_consistency"
+          weight: 0.15
+          description: "命名一致性"
+      output: "placement_recommendation"
+
+    # Phase 4: 整合方式決策
+    integration_decision:
+      name: "整合方式決策"
+      description: "決定整體整合 vs 嵌入式整合"
+      decision_tree:
+        - condition: "is_complete_module AND no_conflicts"
+          result: "full_integration"
+          confidence_threshold: 0.8
+
+        - condition: "is_partial_component AND has_overlap"
+          result: "embedded_integration"
+          confidence_threshold: 0.7
+
+        - condition: "is_external_dependency"
+          result: "reference_only"
+          confidence_threshold: 0.6
+
+        - condition: "is_obsolete OR fully_replaced"
+          result: "archive_only"
+          confidence_threshold: 0.9
+      output: "integration_strategy"
+
+  # 推理輸出格式
+  output_format:
+    placement_decision:
+      type: "yaml"
+      schema:
+        asset_id: "string"
+        source_path: "string"
+        target_path: "string"
+        integration_type: "enum[full, embedded, reference, archive]"
+        confidence_score: "float[0-1]"
+        reasoning: "string"
+        risks: "list[string]"
+        prerequisites: "list[string]"
+
+# ============================================================================
+# 位置匹配規則
+# ============================================================================
+placement_rules:
+  # 基於內容類型的規則
+  content_based:
+    # 執行引擎相關
+    - rule_id: "R001"
+      name: "Executor/Engine → core/"
+      patterns:
+        - "*executor*"
+        - "*engine*"
+        - "*processor*"
+      target_paths:
+        primary: "core/execution_engine/"
+        alternatives:
+          - "core/modules/"
+          - "core/ai_engines/"
+      priority: "high"
+
+    # Kubernetes 配置
+    - rule_id: "R002"
+      name: "K8s Config → infrastructure/"
+      patterns:
+        - "*deployment*"
+        - "*service*.yaml"
+        - "*rbac*"
+        - "*network*policy*"
+        - "*ingress*"
+      target_paths:
+        primary: "infrastructure/kubernetes/"
+        alternatives:
+          - "infrastructure/manifests/"
+      priority: "high"
+
+    # 治理政策
+    - rule_id: "R003"
+      name: "Governance → governance/"
+      patterns:
+        - "*policy*"
+        - "*compliance*"
+        - "*audit*"
+        - "*governance*"
+      target_paths:
+        primary: "governance/policies/"
+        alternatives:
+          - "governance/rules/"
+      priority: "medium"
+
+    # 配置檔案
+    - rule_id: "R004"
+      name: "Config → config/"
+      patterns:
+        - "*.config.yaml"
+        - "*-config.yaml"
+        - "*settings*"
+      target_paths:
+        primary: "config/"
+        alternatives:
+          - "config/modules/"
+      priority: "medium"
+
+    # 架構文檔
+    - rule_id: "R005"
+      name: "Architecture Docs → docs/"
+      patterns:
+        - "*architecture*"
+        - "*design*"
+        - "*specification*"
+      target_paths:
+        primary: "docs/architecture/"
+        alternatives:
+          - "docs/design/"
+          - "docs/refactor_playbooks/reports/"
+      priority: "low"
+
+  # 基於命名空間的規則
+  namespace_based:
+    - namespace: "axiom"
+      description: "Axiom 系統相關 → 需要適配到 machinenativeops"
+      adaptation:
+        rename_namespace: true
+        target_namespace: "machinenativeops"
+        path_prefix: "core/"
+
+    - namespace: "hlp-executor"
+      description: "HLP Executor 相關 → core/execution_engine/"
+      adaptation:
+        rename_namespace: true
+        target_namespace: "execution_engine"
+        path_prefix: "core/"
+
+    - namespace: "baseline"
+      description: "Baseline 配置 → infrastructure/kubernetes/"
+      adaptation:
+        rename_namespace: false
+        path_prefix: "infrastructure/kubernetes/baseline/"
+
+# ============================================================================
+# 嵌入點識別
+# ============================================================================
+embedding_detection:
+  name: "EmbeddingPointDetector"
+  description: "識別嵌入式整合的最佳嵌入點"
+
+  # 嵌入點類型
+  embedding_types:
+    # 模組擴展
+    module_extension:
+      description: "擴展現有模組功能"
+      detection_patterns:
+        - "現有模組缺少此功能"
+        - "功能互補但不重複"
+      embedding_strategy:
+        - "添加新方法到現有類別"
+        - "創建子模組"
+        - "擴展介面"
+
+    # 配置合併
+    config_merge:
+      description: "合併配置到現有配置檔"
+      detection_patterns:
+        - "配置結構相同"
+        - "無衝突的 key"
+      embedding_strategy:
+        - "YAML 深度合併"
+        - "JSON patch 應用"
+
+    # 功能替換
+    feature_replacement:
+      description: "替換現有功能的新實作"
+      detection_patterns:
+        - "功能目的相同"
+        - "新實作更好"
+      embedding_strategy:
+        - "deprecate 舊實作"
+        - "保留介面不變"
+        - "漸進式切換"
+
+    # 平行實作
+    parallel_implementation:
+      description: "與現有實作平行存在"
+      detection_patterns:
+        - "不同使用場景"
+        - "可選擇性使用"
+      embedding_strategy:
+        - "feature flag 控制"
+        - "策略模式"
+
+# ============================================================================
+# 衝突檢測與解決
+# ============================================================================
+conflict_resolution:
+  # 衝突類型
+  conflict_types:
+    naming_conflict:
+      description: "名稱衝突"
+      resolution_strategies:
+        - "rename_with_prefix"
+        - "rename_with_suffix"
+        - "use_namespace"
+
+    path_conflict:
+      description: "路徑衝突"
+      resolution_strategies:
+        - "create_subdirectory"
+        - "merge_contents"
+        - "versioned_path"
+
+    functionality_overlap:
+      description: "功能重疊"
+      resolution_strategies:
+        - "keep_better_implementation"
+        - "merge_features"
+        - "deprecate_old"
+
+    dependency_conflict:
+      description: "依賴衝突"
+      resolution_strategies:
+        - "version_alignment"
+        - "dependency_injection"
+        - "adapter_pattern"
+
+  # 自動解決規則
+  auto_resolution:
+    enabled: true
+    max_attempts: 3
+    fallback: "manual_review"
+
+# ============================================================================
+# 輸出生成
+# ============================================================================
+output_generation:
+  # 決策報告
+  decision_report:
+    filename: "placement_decision_{asset_id}.yaml"
+    location: "_legacy_scratch/analyzed/"
+    format: "yaml"
+    include:
+      - "asset_metadata"
+      - "scan_results"
+      - "reasoning_trace"
+      - "placement_decision"
+      - "integration_strategy"
+      - "risks_and_mitigations"
+
+  # 執行計畫
+  execution_plan:
+    filename: "execution_plan_{asset_id}.md"
+    location: "_legacy_scratch/analyzed/"
+    format: "markdown"
+    sections:
+      - "概述"
+      - "來源與目標"
+      - "步驟清單"
+      - "驗證方法"
+      - "回滾計畫"
+
+  # 風險評估
+  risk_assessment:
+    filename: "risk_assessment_{asset_id}.md"
+    location: "_legacy_scratch/analyzed/"
+    format: "markdown"
+    sections:
+      - "風險清單"
+      - "影響評估"
+      - "緩解措施"
+      - "應急計畫"
+
+# ============================================================================
+# 處理工作流程
+# ============================================================================
+workflow:
+  # 完整處理流程
+  full_process:
+    steps:
+      - step: 1
+        name: "intake"
+        action: "接收資產到 intake/"
+        inputs: ["source_files"]
+        outputs: ["asset_metadata.yaml"]
+
+      - step: 2
+        name: "scan"
+        action: "執行詞彙與結構掃描"
+        inputs: ["asset_metadata.yaml"]
+        outputs: ["scan_results.yaml"]
+
+      - step: 3
+        name: "analyze"
+        action: "高階推理分析"
+        inputs: ["scan_results.yaml"]
+        outputs: ["reasoning_result.yaml"]
+
+      - step: 4
+        name: "decide"
+        action: "生成決策報告"
+        inputs: ["reasoning_result.yaml"]
+        outputs: ["placement_decision.yaml", "execution_plan.md"]
+
+      - step: 5
+        name: "validate"
+        action: "驗證決策可行性"
+        inputs: ["placement_decision.yaml"]
+        outputs: ["validation_result.yaml"]
+
+      - step: 6
+        name: "queue"
+        action: "加入執行佇列"
+        inputs: ["validated_decision"]
+        outputs: ["execution_queue_entry"]
+
+# ============================================================================
+# 日誌與追蹤
+# ============================================================================
+logging:
+  level: "INFO"
+  output:
+    console: true
+    file: "_legacy_scratch/_logs/processor.log"
+
+  events:
+    - "asset_intake"
+    - "scan_start"
+    - "scan_complete"
+    - "reasoning_start"
+    - "reasoning_complete"
+    - "decision_made"
+    - "validation_result"

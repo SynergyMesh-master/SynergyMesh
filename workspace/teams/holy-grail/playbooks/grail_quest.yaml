@@ -1,0 +1,356 @@
+%YAML 1.2
+---
+# ═══════════════════════════════════════════════════════════════════════════════
+#                    GRAIL QUEST PLAYBOOK
+#                    聖杯任務劇本 - 終極開發者體驗
+# ═══════════════════════════════════════════════════════════════════════════════
+#
+# The Grail Quest: An end-to-end development experience that transforms
+# any request into production-ready code in under 3 minutes.
+#
+# 聖杯任務：端到端開發體驗，在 3 分鐘內將任何請求轉化為生產就緒代碼。
+#
+# ═══════════════════════════════════════════════════════════════════════════════
+
+apiVersion: playbooks.machinenativeops/v2
+kind: QuestPlaybook
+metadata:
+  name: grail_quest
+  version: "2.0.0"
+  description: "The ultimate development quest - from idea to production in <3 minutes"
+
+spec:
+  execution_mode: "INSTANT"
+  max_latency_ms: 180000  # 3 minutes max
+
+  triggers:
+    - event: "GRAIL_QUEST_STARTED"
+    - event: "RUN_CREATED"
+    - event: "CHAT_MESSAGE_CREATED"
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # QUEST STAGES
+  # ═══════════════════════════════════════════════════════════════════════════
+  stages:
+    # ─────────────────────────────────────────────────────────────────────────
+    # STAGE 1: UNDERSTAND (理解) - 5s max
+    # ─────────────────────────────────────────────────────────────────────────
+    - id: "stage_1_understand"
+      name: "理解 - Understand"
+      max_latency_ms: 5000
+      parallelism: 8
+
+      steps:
+        - id: "analyze_request"
+          action: "agents.invoke"
+          agent_id: "instant.input-analysis"
+          inputs:
+            request: "${context.user_request}"
+            mode: "comprehensive"
+          outputs:
+            - request_analysis
+
+        - id: "extract_requirements"
+          action: "agents.invoke"
+          agent_id: "axiom.cognitive"
+          parallel_with: ["analyze_request"]
+          inputs:
+            tools: ["cognitive_analysis", "semantic_processor"]
+            request: "${context.user_request}"
+          outputs:
+            - requirements
+
+        - id: "identify_patterns"
+          action: "agents.invoke"
+          agent_id: "axiom.cognitive"
+          parallel_with: ["analyze_request"]
+          inputs:
+            tools: ["pattern_recognition"]
+            request: "${context.user_request}"
+          outputs:
+            - identified_patterns
+
+    # ─────────────────────────────────────────────────────────────────────────
+    # STAGE 2: DESIGN (設計) - 10s max
+    # ─────────────────────────────────────────────────────────────────────────
+    - id: "stage_2_design"
+      name: "設計 - Design"
+      max_latency_ms: 10000
+      parallelism: 16
+      depends_on: ["stage_1_understand"]
+
+      steps:
+        - id: "design_architecture"
+          action: "agents.invoke"
+          agent_id: "ai.architect"
+          inputs:
+            requirements: "${requirements}"
+            patterns: "${identified_patterns}"
+          outputs:
+            - architecture_design
+
+        - id: "plan_security"
+          action: "agents.invoke"
+          agent_id: "ai.security"
+          parallel_with: ["design_architecture"]
+          inputs:
+            requirements: "${requirements}"
+            threat_model: "standard"
+          outputs:
+            - security_plan
+
+        - id: "plan_testing"
+          action: "agents.invoke"
+          agent_id: "ai.qa"
+          parallel_with: ["design_architecture"]
+          inputs:
+            requirements: "${requirements}"
+          outputs:
+            - test_plan
+
+        - id: "plan_deployment"
+          action: "agents.invoke"
+          agent_id: "ai.devops"
+          depends_on: ["design_architecture"]
+          inputs:
+            architecture: "${architecture_design}"
+          outputs:
+            - deployment_plan
+
+    # ─────────────────────────────────────────────────────────────────────────
+    # STAGE 3: GENERATE (生成) - 60s max
+    # ─────────────────────────────────────────────────────────────────────────
+    - id: "stage_3_generate"
+      name: "生成 - Generate"
+      max_latency_ms: 60000
+      parallelism: 128
+      depends_on: ["stage_2_design"]
+
+      steps:
+        - id: "generate_code"
+          action: "agents.invoke"
+          agent_id: "instant.code-generation"
+          inputs:
+            architecture: "${architecture_design}"
+            requirements: "${requirements}"
+            patterns: "${identified_patterns}"
+            languages:
+              - typescript
+              - python
+          outputs:
+            - generated_code
+
+        - id: "generate_tests"
+          action: "agents.invoke"
+          agent_id: "ai.qa"
+          parallel_with: ["generate_code"]
+          inputs:
+            test_plan: "${test_plan}"
+            architecture: "${architecture_design}"
+          outputs:
+            - generated_tests
+
+        - id: "generate_infra"
+          action: "agents.invoke"
+          agent_id: "ai.devops"
+          parallel_with: ["generate_code"]
+          inputs:
+            deployment_plan: "${deployment_plan}"
+            architecture: "${architecture_design}"
+          outputs:
+            - infrastructure_code
+
+        - id: "generate_docs"
+          action: "agents.invoke"
+          agent_id: "axiom.governance"
+          depends_on: ["generate_code"]
+          inputs:
+            tools: ["output_quality", "format_optimizer"]
+            code: "${generated_code}"
+            architecture: "${architecture_design}"
+          outputs:
+            - documentation
+
+    # ─────────────────────────────────────────────────────────────────────────
+    # STAGE 4: VALIDATE (驗證) - 30s max
+    # ─────────────────────────────────────────────────────────────────────────
+    - id: "stage_4_validate"
+      name: "驗證 - Validate"
+      max_latency_ms: 30000
+      parallelism: 64
+      depends_on: ["stage_3_generate"]
+
+      steps:
+        - id: "run_tests"
+          action: "agents.invoke"
+          agent_id: "ai.qa"
+          inputs:
+            code: "${generated_code}"
+            tests: "${generated_tests}"
+          outputs:
+            - test_results
+
+        - id: "security_scan"
+          action: "agents.invoke"
+          agent_id: "ai.security"
+          parallel_with: ["run_tests"]
+          inputs:
+            code: "${generated_code}"
+            security_plan: "${security_plan}"
+          outputs:
+            - security_results
+
+        - id: "compliance_check"
+          action: "agents.invoke"
+          agent_id: "axiom.governance"
+          parallel_with: ["run_tests"]
+          inputs:
+            tools: ["compliance_monitor", "policy_engine"]
+            code: "${generated_code}"
+          outputs:
+            - compliance_results
+
+        - id: "optimize_code"
+          action: "agents.invoke"
+          agent_id: "instant.optimization"
+          depends_on: ["run_tests"]
+          inputs:
+            code: "${generated_code}"
+            test_results: "${test_results}"
+          outputs:
+            - optimized_code
+
+    # ─────────────────────────────────────────────────────────────────────────
+    # STAGE 5: DEPLOY (部署) - 60s max
+    # ─────────────────────────────────────────────────────────────────────────
+    - id: "stage_5_deploy"
+      name: "部署 - Deploy"
+      max_latency_ms: 60000
+      parallelism: 32
+      depends_on: ["stage_4_validate"]
+
+      steps:
+        - id: "prepare_deployment"
+          action: "agents.invoke"
+          agent_id: "instant.deployment"
+          inputs:
+            code: "${optimized_code}"
+            infrastructure: "${infrastructure_code}"
+            strategy: "blue-green"
+          outputs:
+            - deployment_package
+
+        - id: "execute_deployment"
+          action: "agents.invoke"
+          agent_id: "instant.deployment"
+          depends_on: ["prepare_deployment"]
+          inputs:
+            package: "${deployment_package}"
+            environment: "${context.target_environment}"
+            rollback_enabled: true
+          outputs:
+            - deployment_result
+
+        - id: "verify_deployment"
+          action: "agents.invoke"
+          agent_id: "ai.devops"
+          depends_on: ["execute_deployment"]
+          inputs:
+            deployment: "${deployment_result}"
+            health_checks: true
+          outputs:
+            - verification_result
+
+    # ─────────────────────────────────────────────────────────────────────────
+    # STAGE 6: CELEBRATE (慶祝) - Quest Complete!
+    # ─────────────────────────────────────────────────────────────────────────
+    - id: "stage_6_complete"
+      name: "完成 - Complete"
+      max_latency_ms: 5000
+      depends_on: ["stage_5_deploy"]
+
+      steps:
+        - id: "generate_summary"
+          action: "agents.invoke"
+          agent_id: "axiom.governance"
+          inputs:
+            tools: ["output_quality"]
+            all_results:
+              architecture: "${architecture_design}"
+              code: "${optimized_code}"
+              tests: "${test_results}"
+              security: "${security_results}"
+              deployment: "${deployment_result}"
+          outputs:
+            - quest_summary
+          artifacts:
+            - name: "grail_quest_summary"
+              type: "markdown"
+
+        - id: "emit_quest_complete"
+          action: "events.emit"
+          depends_on: ["generate_summary"]
+          inputs:
+            event_type: "GRAIL_QUEST_COMPLETED"
+            payload:
+              quest_id: "${context.run_id}"
+              total_time_ms: "${execution.duration_ms}"
+              stages_completed: 6
+              artifacts_generated: "${execution.artifacts_count}"
+              status: "legendary_success"
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # ARTIFACTS
+  # ═══════════════════════════════════════════════════════════════════════════
+  artifacts:
+    - name: "generated_codebase"
+      type: "code"
+      path: "artifacts/grail-quests/${context.run_id}/code"
+
+    - name: "test_suite"
+      type: "code"
+      path: "artifacts/grail-quests/${context.run_id}/tests"
+
+    - name: "infrastructure"
+      type: "code"
+      path: "artifacts/grail-quests/${context.run_id}/infrastructure"
+
+    - name: "documentation"
+      type: "markdown"
+      path: "artifacts/grail-quests/${context.run_id}/docs"
+
+    - name: "quest_report"
+      type: "markdown"
+      path: "artifacts/grail-quests/${context.run_id}/QUEST_REPORT.md"
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # AUDIT
+  # ═══════════════════════════════════════════════════════════════════════════
+  audit:
+    enabled: true
+    log_path: "audit/grail-quests.jsonl"
+    events:
+      - "QUEST_STARTED"
+      - "STAGE_STARTED"
+      - "STAGE_COMPLETED"
+      - "QUEST_COMPLETED"
+      - "ERROR"
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # AUTO-HEALING
+  # ═══════════════════════════════════════════════════════════════════════════
+  auto_healing:
+    enabled: true
+    strategies:
+      - type: "retry_with_backoff"
+        max_retries: 3
+        initial_delay_ms: 500
+        backoff_multiplier: 2
+
+      - type: "fallback_to_safe"
+        trigger: "stage_failure"
+        action: "skip_optional_steps"
+
+      - type: "circuit_breaker"
+        failure_threshold: 3
+        recovery_timeout_ms: 10000

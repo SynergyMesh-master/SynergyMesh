@@ -1,0 +1,68 @@
+%YAML 1.2
+---
+document_metadata:
+  unique_id: "AXIOM-GOV-COMPLIANCE-005"
+  actual_filename: "unified-compliance-governance.yaml"
+  version: "1.0.0"
+  format_type: "governance-yaml"
+  encoding: "UTF-8"
+  parse_mode: "strict"
+  description: "Unified compliance framework and regulatory alignment"
+  creation_info:
+    created_date: "2026-01-05"
+    quantum_timestamp: "QT-2026-01-05T22:45:00Z"
+    created_by: "AXIOM-Compliance-Team"
+    target_system: "axiom-compliance-engine"
+
+governance_info:
+  policy_name: "Unified Regulatory Compliance"
+  audit_frequency: "quarterly"
+  certification_renewal: "annual"
+
+compliance_matrix:
+  data_privacy:
+    frameworks:
+      - standard: "GDPR"
+        scope: "eu-data-processing"
+        enforcement: "mandatory"
+      - standard: "CCPA"
+        scope: "california-residents"
+        enforcement: "mandatory"
+      - standard: "HIPAA"
+        scope: "healthcare-modules"
+        enforcement: "conditional"
+  
+  security:
+    frameworks:
+      - standard: "SOC2-Type-II"
+        scope: "platform-wide"
+        enforcement: "mandatory"
+      - standard: "ISO27001"
+        scope: "platform-wide"
+        enforcement: "mandatory"
+      - standard: "NIST-CSF"
+        scope: "quantum-components"
+        enforcement: "recommended"
+  
+  financial:
+    frameworks:
+      - standard: "PCI-DSS"
+        scope: "payment-processing"
+        enforcement: "conditional"
+      - standard: "Basel-III-Models"
+        scope: "risk-calculation-modules"
+        enforcement: "conditional"
+        note: "Only for financial risk modules"
+
+quantum_governance:
+  definition: "Governance of quantum resource allocation and security"
+  components:
+    - "qpu-access-control"
+    - "quantum-circuit-validation"
+    - "decoherence-monitoring"
+    - "quantum-data-sovereignty"
+  
+  policies:
+    max_circuit_depth: 1000
+    max_qubits_per_job: 127
+    priority_scheduling: "fairness-weighted"
