@@ -2,79 +2,70 @@
 # This file defines code reviewers for different parts of the repository
 # When a PR modifies these files, the corresponding reviewers are automatically requested
 
-# ====================================================================
-# MachineNativeOps Team Structure
-# ====================================================================
-# @MachineNativeOps/core-team          - Core development team
-# @MachineNativeOps/frontend-team      - Frontend team
-# @MachineNativeOps/backend-team       - Backend team
-# @MachineNativeOps/devops-team        - DevOps team
-# @MachineNativeOps/security-team      - Security team
-# @MachineNativeOps/docs-team          - Documentation team
-# @MachineNativeOps/community-mods     - Community moderators
-# @MachineNativeOps/maintainers        - Project maintainers
-# ====================================================================
+# Ownership simplified: all paths default to @MachineNativeOps
 
 # Default owners - All files not explicitly specified
-* @MachineNativeOps/maintainers
+* @MachineNativeOps
 
 # Security-related configurations - Requires security team review
-/.github/workflows/codeql-advanced.yml @MachineNativeOps/security-team
-/.github/workflows/pr-security-gate.yml @MachineNativeOps/security-team
-/.github/workflows/secret-*.yml @MachineNativeOps/security-team
-/.github/workflows/auto-vulnerability-fix.yml @MachineNativeOps/security-team
-/.github/security-policy.yml @MachineNativeOps/security-team
-/.github/secret-scanning/ @MachineNativeOps/security-team
-/.github/codeql/ @MachineNativeOps/security-team
-/config/security-network-config.yml @MachineNativeOps/security-team
-/config/prometheus-rules.yml @MachineNativeOps/security-team @MachineNativeOps/devops-team
-/SECURITY.md @MachineNativeOps/security-team
+/.github/workflows/codeql-advanced.yml @MachineNativeOps
+/.github/workflows/pr-security-gate.yml @MachineNativeOps
+/.github/workflows/secret-*.yml @MachineNativeOps
+/.github/workflows/auto-vulnerability-fix.yml @MachineNativeOps
+/.github/security-policy.yml @MachineNativeOps
+/.github/secret-scanning/ @MachineNativeOps
+/.github/codeql/ @MachineNativeOps
+/config/security-network-config.yml @MachineNativeOps
+/config/prometheus-rules.yml @MachineNativeOps
+/SECURITY.md @MachineNativeOps
 
 # Scripts and automation - Requires DevOps team review
-/scripts/ @MachineNativeOps/devops-team @MachineNativeOps/security-team
-/config/elasticsearch-config.sh @MachineNativeOps/devops-team
-/config/prometheus-config.yml @MachineNativeOps/devops-team
+/scripts/ @MachineNativeOps
+/config/elasticsearch-config.sh @MachineNativeOps
+/config/prometheus-config.yml @MachineNativeOps
 
 # GitHub Actions workflows - DevOps team responsible
-/.github/workflows/setup-runner.yml @MachineNativeOps/devops-team
-/.github/workflows/validate-*.yml @MachineNativeOps/devops-team
+/.github/workflows/setup-runner.yml @MachineNativeOps
+/.github/workflows/validate-*.yml @MachineNativeOps
 
 # Documentation - Technical writers and domain experts
-/docs/ @MachineNativeOps/docs-team
-/docs/GHAS_*.md @MachineNativeOps/security-team @MachineNativeOps/docs-team
-/docs/CODEQL_SETUP.md @MachineNativeOps/security-team @MachineNativeOps/docs-team
-/docs/SECRET_SCANNING.md @MachineNativeOps/security-team @MachineNativeOps/docs-team
-/docs/VULNERABILITY_MANAGEMENT.md @MachineNativeOps/security-team @MachineNativeOps/docs-team
-/README.md @MachineNativeOps/docs-team
+/docs/ @MachineNativeOps
+/docs/GHAS_*.md @MachineNativeOps
+/docs/CODEQL_SETUP.md @MachineNativeOps
+/docs/SECRET_SCANNING.md @MachineNativeOps
+/docs/VULNERABILITY_MANAGEMENT.md @MachineNativeOps
+/README.md @MachineNativeOps
 
 # Dependabot configuration - Security and DevOps teams jointly responsible
-/.github/dependabot.yml @MachineNativeOps/security-team @MachineNativeOps/devops-team
+/.github/dependabot.yml @MachineNativeOps
 
 # Core application code
-/core/ @MachineNativeOps/backend-team
-/core/contracts/ @MachineNativeOps/backend-team @MachineNativeOps/security-team
-/mcp-servers/ @MachineNativeOps/backend-team
+/core/ @MachineNativeOps
+/core/contracts/ @MachineNativeOps
+/mcp-servers/ @MachineNativeOps
+# Workspace MCP packages
+/workspace/mcp/namespace-mcp/ @MachineNativeOps
 
 # Advanced system source - Requires senior developer review
-/advanced-system-src/ @MachineNativeOps/core-team @MachineNativeOps/security-team
+/advanced-system-src/ @MachineNativeOps
 
 # Intelligent automation - AI/ML team
-/intelligent-automation/ @MachineNativeOps/core-team
+/intelligent-automation/ @MachineNativeOps
 
 # Autonomous systems - Critical safety components
-/autonomous-system/ @MachineNativeOps/core-team @MachineNativeOps/security-team
+/autonomous-system/ @MachineNativeOps
 
 # Testing and architecture - QA and development teams
-/test-vectors/ @MachineNativeOps/core-team
-/schemas/ @MachineNativeOps/backend-team
+/test-vectors/ @MachineNativeOps
+/schemas/ @MachineNativeOps
 
 # Important configuration files - Requires multiple team reviews
-/package.json @MachineNativeOps/backend-team @MachineNativeOps/devops-team
-/tsconfig.json @MachineNativeOps/backend-team
-/.gitignore @MachineNativeOps/devops-team
+/package.json @MachineNativeOps
+/tsconfig.json @MachineNativeOps
+/.gitignore @MachineNativeOps
 
 # Community and governance files
-/CODE_OF_CONDUCT.md @MachineNativeOps/community-mods
-/CONTRIBUTING.md @MachineNativeOps/docs-team @MachineNativeOps/community-mods
-/.github/ISSUE_TEMPLATE/ @MachineNativeOps/community-mods
-/.github/PULL_REQUEST_TEMPLATE.md @MachineNativeOps/community-mods
+/CODE_OF_CONDUCT.md @MachineNativeOps
+/CONTRIBUTING.md @MachineNativeOps
+/.github/ISSUE_TEMPLATE/ @MachineNativeOps
+/.github/PULL_REQUEST_TEMPLATE.md @MachineNativeOps
