@@ -209,14 +209,24 @@ export class GrailFormatConverter implements FormatConverter {
         if (typeof data !== 'string') {
           return data;
         }
-        return yaml.load(data);
+        try {
+          return yaml.load(data);
+        } catch (error) {
+          const message = error instanceof Error ? error.message : String(error);
+          throw new Error(`Failed to parse YAML: ${message}`);
+        }
       },
       serialize: async (data: unknown, options?: FormatOptions) => {
-        return yaml.dump(data, {
-          indent: options?.pretty ? 2 : 0,
-          lineWidth: -1, // Don't wrap long lines
-          noRefs: true   // Don't use anchors/aliases
-        });
+        try {
+          return yaml.dump(data, {
+            indent: options?.pretty ? 2 : 0,
+            lineWidth: -1, // Don't wrap long lines
+            noRefs: true   // Don't use anchors/aliases
+          });
+        } catch (error) {
+          const message = error instanceof Error ? error.message : String(error);
+          throw new Error(`Failed to serialize YAML: ${message}`);
+        }
       }
     });
 
