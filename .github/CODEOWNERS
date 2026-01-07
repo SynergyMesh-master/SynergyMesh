@@ -2,18 +2,7 @@
 # This file defines code reviewers for different parts of the repository
 # When a PR modifies these files, the corresponding reviewers are automatically requested
 
-# ====================================================================
-# MachineNativeOps Team Structure
-# ====================================================================
-# @MachineNativeOps/core-team          - Core development team
-# @MachineNativeOps/frontend-team      - Frontend team
-# @MachineNativeOps/backend-team       - Backend team
-# @MachineNativeOps/devops-team        - DevOps team
-# @MachineNativeOps/security-team      - Security team
-# @MachineNativeOps/docs-team          - Documentation team
-# @MachineNativeOps/community-mods     - Community moderators
-# @MachineNativeOps/maintainers        - Project maintainers
-# ====================================================================
+# Ownership simplified: all paths default to @MachineNativeOps
 
 # Default owners - All files not explicitly specified
 * @MachineNativeOps
