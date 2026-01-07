@@ -404,6 +404,8 @@ class WorkspaceValidator:
 
 
 class GitHubProjectAnalyzer:
+    STATUS_EMOJI = {"met": "✅", "partial": "⚠️"}
+
     def __init__(self, config: GitHubAnalyzerConfig):
         self.config = config
         self.base_url = f"https://api.github.com/repos/{config.repo_owner}/{config.repo_name}"
@@ -702,18 +704,18 @@ class GitHubProjectAnalyzer:
 
     def _format_performance_metrics(self, metrics: Dict) -> str:
         result = "| 指標 | 當前值 | 目標值 | 狀態 |\n|------|--------|--------|------|\n"
-        def _resolve_current(data: Dict[str, Any]) -> Any:
-            value = data.get("current")
-            return value if value is not None else data.get("p95", "N/A")
-
         for metric, data in metrics.items():
             status = data.get("status")
-            status_emoji = {"met": "✅", "partial": "⚠️"}.get(status, "❌")
-            current = _resolve_current(data)
+            status_emoji = self.STATUS_EMOJI.get(status, "❌")
+            current = self._resolve_current_value(data)
             # 如果缺少即時數值則使用 p95 指標作為性能代表值
             target = data.get("target", "N/A")
             result += f"| {metric} | {current} | {target} | {status_emoji} |\n"
         return result
+
+    def _resolve_current_value(self, data: Dict[str, Any]) -> Any:
+        value = data.get("current")
+        return value if value is not None else data.get("p95", "N/A")
 
     def _format_todo_list(self, todos: List[Dict]) -> str:
         result = ""
