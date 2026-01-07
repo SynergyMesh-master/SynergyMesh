@@ -2,70 +2,70 @@
 # This file defines code reviewers for different parts of the repository
 # When a PR modifies these files, the corresponding reviewers are automatically requested
 
-# Ownership simplified: all paths default to @MachineNativeOps
+# Ownership simplified: all paths default to @MachineNativeOps-admin
 
 # Default owners - All files not explicitly specified
-* @MachineNativeOps
+* @MachineNativeOps-admin
 
 # Security-related configurations - Requires security team review
-/.github/workflows/codeql-advanced.yml @MachineNativeOps
-/.github/workflows/pr-security-gate.yml @MachineNativeOps
-/.github/workflows/secret-*.yml @MachineNativeOps
-/.github/workflows/auto-vulnerability-fix.yml @MachineNativeOps
-/.github/security-policy.yml @MachineNativeOps
-/.github/secret-scanning/ @MachineNativeOps
-/.github/codeql/ @MachineNativeOps
-/config/security-network-config.yml @MachineNativeOps
-/config/prometheus-rules.yml @MachineNativeOps
-/SECURITY.md @MachineNativeOps
+/.github/workflows/codeql-advanced.yml @MachineNativeOps-admin
+/.github/workflows/pr-security-gate.yml @MachineNativeOps-admin
+/.github/workflows/secret-*.yml @MachineNativeOps-admin
+/.github/workflows/auto-vulnerability-fix.yml @MachineNativeOps-admin
+/.github/security-policy.yml @MachineNativeOps-admin
+/.github/secret-scanning/ @MachineNativeOps-admin
+/.github/codeql/ @MachineNativeOps-admin
+/config/security-network-config.yml @MachineNativeOps-admin
+/config/prometheus-rules.yml @MachineNativeOps-admin
+/SECURITY.md @MachineNativeOps-admin
 
 # Scripts and automation - Requires DevOps team review
-/scripts/ @MachineNativeOps
-/config/elasticsearch-config.sh @MachineNativeOps
-/config/prometheus-config.yml @MachineNativeOps
+/scripts/ @MachineNativeOps-admin
+/config/elasticsearch-config.sh @MachineNativeOps-admin
+/config/prometheus-config.yml @MachineNativeOps-admin
 
 # GitHub Actions workflows - DevOps team responsible
-/.github/workflows/setup-runner.yml @MachineNativeOps
-/.github/workflows/validate-*.yml @MachineNativeOps
+/.github/workflows/setup-runner.yml @MachineNativeOps-admin
+/.github/workflows/validate-*.yml @MachineNativeOps-admin
 
 # Documentation - Technical writers and domain experts
-/docs/ @MachineNativeOps
-/docs/GHAS_*.md @MachineNativeOps
-/docs/CODEQL_SETUP.md @MachineNativeOps
-/docs/SECRET_SCANNING.md @MachineNativeOps
-/docs/VULNERABILITY_MANAGEMENT.md @MachineNativeOps
-/README.md @MachineNativeOps
+/docs/ @MachineNativeOps-admin
+/docs/GHAS_*.md @MachineNativeOps-admin
+/docs/CODEQL_SETUP.md @MachineNativeOps-admin
+/docs/SECRET_SCANNING.md @MachineNativeOps-admin
+/docs/VULNERABILITY_MANAGEMENT.md @MachineNativeOps-admin
+/README.md @MachineNativeOps-admin
 
 # Dependabot configuration - Security and DevOps teams jointly responsible
-/.github/dependabot.yml @MachineNativeOps
+/.github/dependabot.yml @MachineNativeOps-admin
 
 # Core application code
-/core/ @MachineNativeOps
-/core/contracts/ @MachineNativeOps
-/mcp-servers/ @MachineNativeOps
-# Workspace MCP packages
-/workspace/mcp/namespace-mcp/ @MachineNativeOps
+/core/ @MachineNativeOps-admin
+/core/contracts/ @MachineNativeOps-admin
+/mcp-servers/ @MachineNativeOps-admin
+# Workspace MCP packages (namespaced adapters)
+/workspace/mcp/namespace-mcp/ @MachineNativeOps-admin
 
 # Advanced system source - Requires senior developer review
-/advanced-system-src/ @MachineNativeOps
+/advanced-system-src/ @MachineNativeOps-admin
 
 # Intelligent automation - AI/ML team
-/intelligent-automation/ @MachineNativeOps
+/intelligent-automation/ @MachineNativeOps-admin
 
 # Autonomous systems - Critical safety components
-/autonomous-system/ @MachineNativeOps
+/autonomous-system/ @MachineNativeOps-admin
 
 # Testing and architecture - QA and development teams
-/test-vectors/ @MachineNativeOps
-/schemas/ @MachineNativeOps
+/test-vectors/ @MachineNativeOps-admin
+/schemas/ @MachineNativeOps-admin
 
 # Important configuration files - Requires multiple team reviews
-/package.json @MachineNativeOps
-/tsconfig.json @MachineNativeOps
-/.gitignore @MachineNativeOps
+/package.json @MachineNativeOps-admin
+/tsconfig.json @MachineNativeOps-admin
+/.gitignore @MachineNativeOps-admin
 
 # Community and governance files
-/CODE_OF_CONDUCT.md @MachineNativeOps
-/CONTRIBUTING.md @MachineNativeOps
-/.github/ISSUE_TEMPLATE/ @MachineNativeOps
-/.github/PULL_REQUEST_TEMPLATE.md @MachineNativeOps
+/CODE_OF_CONDUCT.md @MachineNativeOps-admin
+/CONTRIBUTING.md @MachineNativeOps-admin
+/.github/ISSUE_TEMPLATE/ @MachineNativeOps-admin
+/.github/PULL_REQUEST_TEMPLATE.md @MachineNativeOps-admin
