@@ -503,7 +503,6 @@ deployment:
     - "mcp resource list | grep namespace-mcp://"
     - "mcp prompt list | grep quantum_optimization"
 
----
 # ═══════════════════════════════════════════════════════════════════════════════
 # END OF namespace-mcp DISSOLVED INTEGRATION MANIFEST
 # 硫酸溶解完成 - MCP 完全對齊

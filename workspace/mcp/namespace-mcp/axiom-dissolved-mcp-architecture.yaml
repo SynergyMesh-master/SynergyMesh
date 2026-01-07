@@ -2976,6 +2976,5 @@ deployment:
     trace_sampling: 0.1
     log_level: info
 
----
 # End of namespace-mcp Dissolved MCP Architecture
 # 完全溶解並對齊 MCP 協議

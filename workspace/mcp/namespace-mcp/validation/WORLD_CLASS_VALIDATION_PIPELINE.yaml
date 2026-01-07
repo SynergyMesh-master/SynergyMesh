@@ -456,7 +456,6 @@ mcpIntegration:
   typesRef: workspace/mcp/namespace-mcp/types/unifiedPipeline.ts
   loaderRef: workspace/mcp/namespace-mcp/tools/load_unified_pipeline.py
 
----
 # ═══════════════════════════════════════════════════════════════════════════════
 # 架構狀態
 # ═══════════════════════════════════════════════════════════════════════════════
