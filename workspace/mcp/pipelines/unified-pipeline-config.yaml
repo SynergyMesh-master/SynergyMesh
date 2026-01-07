@@ -1,0 +1,407 @@
+apiVersion: pipeline.machinenativeops/v3
+kind: UnifiedPipeline
+metadata:
+  name: machine-native-ops-unified-pipeline
+  version: "3.0.0"
+  mode: INSTANT-Autonomous
+  labels:
+    tier: production
+    evolution: hyper-dimensional
+    humanIntervention: "0"
+  annotations:
+    philosophy: "AI auto-evolution, instant delivery, zero latency"
+    competitiveness: "Replit | Claude | GPT equivalent"
+    standard: "INSTANT-EXECUTION-REFACTOR-PLAN"
+spec:
+  # ========================================
+  # 輸入統一層 - Input Unification Layer
+  # ========================================
+  inputUnification:
+    protocols: ["webhook", "mcp", "cli", "rest", "grpc", "eventbus", "quantum-bus"]
+    normalization: canonical_event_format
+    validation: schema_strict
+    timeout: 5000
+    eventDriven:
+      mode: "trigger-event-action"
+      closedLoop: true
+      maxConcurrentEvents: 1000
+      eventQueueSize: 10000
+
+  # ========================================
+  # 核心調度引擎 - Core Scheduling Engine
+  # ========================================
+  coreScheduling:
+    maxParallelAgents: 256
+    minParallelAgents: 64
+    taskDecomposition: ai_optimized
+    resourceArbitration: quantum_annealing
+    loadBalancing: adaptive
+    syncBarrier: enabled
+    autoScaling:
+      enabled: true
+      scaleFactor: 2.0
+      cooldownSeconds: 30
+      metrics:
+        - name: cpu_utilization
+          target: 70
+          scaleUpThreshold: 80
+        - name: latency_p99
+          target: 1000
+          scaleUpThreshold: 2000
+        - name: queue_depth
+          target: 10
+          scaleUpThreshold: 50
+
+  # ========================================
+  # 延遲閾值 - Latency Thresholds
+  # ========================================
+  latencyThresholds:
+    instant: 100       # <=100ms for instant operations
+    fast: 500          # <=500ms for fast operations
+    standard: 5000     # <=5s for standard operations
+    maxStage: 30000    # Maximum per-stage latency (30s)
+    maxTotal: 180000   # Maximum total pipeline latency (3min)
+
+  # ========================================
+  # 執行管線 - Execution Pipelines
+  # ========================================
+  pipelines:
+    - name: quantum_validation
+      type: validation
+      # Validation entrypoint (PR1064 shim that delegates to base validation logic)
+      entrypoint: tools/validation/validate_pr1064_layers.py
+      worldClassValidationRef: workspace/config/validation/world-class-validation.yaml
+      latency: 10000
+      parallelism: 32
+      priority: high
+    - name: refactor_execution
+      type: refactor
+      entrypoint: scripts/refactor/master-refactor.sh
+      latency: 30000
+      parallelism: 64
+      priority: medium
+    - name: security_compliance
+      type: security
+      policies: security/
+      latency: 5000
+      parallelism: 16
+      priority: critical
+    - name: delivery
+      type: deployment
+      manifests: infrastructure/kubernetes/
+      latency: 30000
+      parallelism: 32
+      priority: high
+      capabilities:
+        - blue-green-deployment
+        - canary-deployment
+        - zero-downtime
+        - auto-rollback
+    - name: monitoring
+      type: observability
+      dashboards: apps/quantum-dashboard/
+      latency: 1000
+      parallelism: 8
+      priority: low
+
+  # ========================================
+  # 即時交付流水線 - Instant Delivery Pipelines
+  # ========================================
+  instantPipelines:
+    - name: instant-feature-delivery
+      description: "Feature request to deployment in <2 minutes"
+      totalLatencyTarget: 120000
+      humanIntervention: 0
+      successRateTarget: 95
+      stages:
+        - name: analysis
+          agent: analyzer
+          latency: 5000
+          parallelism: 1
+        - name: generation
+          agent: generator
+          latency: 30000
+          parallelism: 64
+        - name: validation
+          agent: validator
+          latency: 10000
+          parallelism: 32
+        - name: deployment
+          agent: deployer
+          latency: 30000
+          parallelism: 32
+
+    - name: instant-fix-delivery
+      description: "Error detection to fix in <1 minute"
+      totalLatencyTarget: 60000
+      humanIntervention: 0
+      successRateTarget: 90
+      stages:
+        - name: detection
+          agent: sentinel
+          latency: 1000
+          parallelism: 1
+        - name: diagnosis
+          agent: diagnostic
+          latency: 2000
+          parallelism: 8
+        - name: fix
+          agent: fixer
+          latency: 10000
+          parallelism: 16
+        - name: deployment
+          agent: deployer
+          latency: 30000
+          parallelism: 32
+
+    - name: instant-optimization
+      description: "Continuous performance optimization"
+      totalLatencyTarget: 60000
+      humanIntervention: 0
+      successRateTarget: 85
+      stages:
+        - name: analysis
+          agent: optimizer
+          latency: 5000
+          parallelism: 4
+        - name: optimization
+          agent: generator
+          latency: 15000
+          parallelism: 16
+        - name: deployment
+          agent: deployer
+          latency: 30000
+          parallelism: 16
+
+  # ========================================
+  # MCP 集成層 - MCP Integration Layer
+  # ========================================
+  mcpIntegration:
+    serverRef: workspace/mcp
+    toolAdapters:
+      - name: validation_tooling
+        path: tools/validation/world_class_validation.py
+        capabilities: ["syntax", "semantic", "security"]
+      - name: pipeline_manifest
+        path: workspace/mcp/pipelines/unified-pipeline-config.yaml
+        capabilities: ["config", "schema"]
+      - name: code_analyzer
+        path: workspace/src/mcp-servers/code-analyzer.js
+        capabilities: ["complexity", "quality", "security"]
+      - name: test_generator
+        path: workspace/src/mcp-servers/test-generator.js
+        capabilities: ["unit", "integration", "e2e"]
+      - name: security_scanner
+        path: workspace/src/mcp-servers/security-scanner.js
+        capabilities: ["vulnerability", "owasp", "compliance"]
+      # AXIOM 溶解架構工具 (硫酸溶解法)
+      - name: axiom_dissolved_server
+        path: workspace/mcp/servers/axiom-dissolved-server.ts
+        capabilities: ["quantum", "cognitive", "governance", "optimization"]
+        tools: 59
+        resources: 14
+    realTimeSync: enabled
+    crossPlatformCoordination: enabled
+
+  # ========================================
+  # 輸出統一層 - Output Unification Layer
+  # ========================================
+  outputs:
+    auditLog: unified
+    evidenceChain: aggregated
+    statusReport: generated
+    autoRemediation: enabled
+    notifications: multi_platform
+
+  # ========================================
+  # 自動修復策略 - Auto-Healing Strategies
+  # ========================================
+  autoHealing:
+    enabled: true
+    strategies:
+      - name: retry-with-backoff
+        conditions:
+          errorType: transient
+        actions: ["retry", "notify"]
+        maxRetries: 3
+        backoffMultiplier: 2
+      - name: fallback-to-safe
+        conditions:
+          errorType: persistent
+          retryCount: 3
+        actions: ["rollback", "notify", "escalate"]
+      - name: circuit-breaker
+        conditions:
+          failureRate: 10
+          windowMinutes: 5
+        actions: ["open_circuit", "notify", "investigate"]
+
+  # ========================================
+  # 治理驗證 - Governance Validation
+  # NOTE: Some validator scripts referenced here are future integration points.
+  # Use `implementationStatus` to distinguish between implemented and planned paths.
+  # ========================================
+  governanceValidation:
+    - standard: INSTANT_EXECUTION
+      validator: vision-tracker.py
+      validatorImplementationStatus: planned  # Validator script not yet implemented
+      fallbackValidator: workspace/mcp/tools/load_unified_pipeline.py  # Use Python loader for validation
+      fallbackImplementationStatus: implemented
+      validatorPath: workspace/src/governance/scripts/vision-tracker.py
+      implementationStatus: planned  # Validator script not yet implemented
+      checkInterval: 1000
+      criteria: ["latency_compliance", "parallelism_level", "autonomy_degree"]
+      failureAction: auto-alert
+    - standard: AUTONOMY_LEVEL
+      validator: validate-autonomy.py
+      validatorImplementationStatus: planned  # Validator script not yet implemented
+      fallbackValidator: workspace/mcp/tools/load_unified_pipeline.py
+      fallbackImplementationStatus: implemented
+      validatorPath: workspace/src/governance/scripts/validate-autonomy.py
+      implementationStatus: planned  # Validator script not yet implemented
+      checkInterval: 5000
+      criteria: ["human_intervention_count", "auto_rollback_success", "self_healing_success"]
+      failureAction: escalate-to-governance
+    - standard: LATENCY_COMPLIANCE
+      validator: latency-monitor.py
+      validatorImplementationStatus: planned  # Validator script not yet implemented
+      fallbackValidator: workspace/mcp/tools/load_unified_pipeline.py
+      fallbackImplementationStatus: implemented
+      validatorPath: workspace/src/governance/scripts/latency-monitor.py
+      implementationStatus: planned  # Validator script not yet implemented
+      checkInterval: 0
+      criteria: ["all_stages_within_threshold", "total_latency_compliant", "no_bottlenecks"]
+      failureAction: auto-optimize
+
+  # ========================================
+  # 跨模組整合引用 - Cross-Module Integration References
+  # 硫酸解構法: 系統性解構與重組
+  # ========================================
+  integrationReferences:
+    # 整合索引
+    indexRef: workspace/mcp/INTEGRATION_INDEX.yaml
+
+    # AXIOM 溶解架構 (硫酸溶解法)
+    axiomDissolved:
+      architectureDefinition: workspace/mcp/axiom-dissolved-mcp-architecture.yaml
+      serverImplementation: workspace/mcp/servers/axiom-dissolved-server.ts
+      integrationManifest: workspace/mcp/AXIOM_DISSOLVED_INTEGRATION_MANIFEST.yaml
+      statistics:
+        tools: 59
+        resources: 14
+        servers: 7
+        prompts: 3
+      serverGroups:
+        - infrastructure_server   # L00: 5 tools
+        - processing_server       # L01-L02: 5 tools
+        - network_server          # L03: 3 tools
+        - cognitive_server        # L04-L05: 7 tools
+        - reasoning_server        # L06-L08: 9 tools
+        - governance_server       # L09-L12: 15 tools
+        - quantum_server          # L13: 15 tools (with fallback)
+
+    # 核心引擎層
+    engineLayer:
+      mcpIntegration:
+        path: workspace/src/core/engine/mcp_integration.py
+        provides: ["MCPToolProvider", "MCPToolConsumer", "MCPBridge"]
+      serverManager:
+        path: workspace/src/core/integrations/mcp_server_manager.py
+        provides: ["MCPServerManager", "ServerStatus"]
+      enhancedServers:
+        path: workspace/src/core/plugins/mcp_servers_enhanced/
+        provides: ["tool_registry", "workflow_orchestrator", "realtime_connector"]
+
+    # MCP 伺服器 (9 個 JavaScript 服務)
+    mcpServers:
+      basePath: workspace/src/mcp-servers/
+      servers:
+        - code-analyzer.js
+        - test-generator.js
+        - doc-generator.js
+        - slsa-validator.js
+        - security-scanner.js
+        - deployment-validator.js
+        - logic-validator.js
+        - performance-analyzer.js
+        - comprehensive-validator.js
+      deployment: workspace/src/mcp-servers/deploy/
+
+    # INSTANT 執行引擎
+    instantEngine:
+      engineV2:
+        path: workspace/src/autonomous/deployment/instant_execution_engine_v2.py
+        provides: ["InstantExecutionEngine", "ParallelAgentPool", "InstantPipeline"]
+      configuration:
+        parallelAgents: workspace/config/instant-execution/parallel-agents-config.yaml
+        eventTriggers: workspace/config/instant-execution/event-triggers-config.yaml
+      manifest: contracts/INSTANT-EXECUTION-MANIFEST.yaml
+
+    # 行為契約
+    behaviorContracts:
+      mcpServices: workspace/src/governance/37-behavior-contracts/services.mcp.yaml
+
+    # 治理層
+    governance:
+      visionStrategy: workspace/src/governance/00-vision-strategy/
+      selfHealing: workspace/src/governance/40-self-healing/
+      serviceRegistry: workspace/src/governance/24-registry/services.yaml
+
+    # CI/CD 工作流
+    cicd:
+      instantValidator: .github/workflows/instant-execution-validator.yml
+      quantumValidation: .github/workflows/quantum-validation-pr.yml
+
+  # ========================================
+  # 代理池配置 - Agent Pool Configuration
+  # ========================================
+  agentPool:
+    types:
+      - type: analyzer
+        capabilities: ["requirement-analysis", "spec-generation", "impact-assessment"]
+        maxLatency: 5000
+        defaultParallelism: 8
+      - type: generator
+        capabilities: ["instant-architecture", "multi-language", "code-synthesis"]
+        maxLatency: 30000
+        defaultParallelism: 128
+      - type: validator
+        capabilities: ["syntax", "semantic", "security", "compliance"]
+        maxLatency: 10000
+        defaultParallelism: 64
+      - type: deployer
+        capabilities: ["blue-green", "canary", "zero-downtime", "auto-rollback"]
+        maxLatency: 30000
+        defaultParallelism: 32
+      - type: sentinel
+        capabilities: ["real-time-monitoring", "anomaly-detection", "threshold-alerting"]
+        maxLatency: 1000
+        defaultParallelism: 16
+      - type: diagnostic
+        capabilities: ["root-cause-analysis", "impact-assessment", "correlation"]
+        maxLatency: 2000
+        defaultParallelism: 8
+      - type: fixer
+        capabilities: ["auto-fix-generation", "patch-application", "regression-prevention"]
+        maxLatency: 10000
+        defaultParallelism: 16
+      - type: optimizer
+        capabilities: ["performance-analysis", "auto-optimization", "resource-tuning"]
+        maxLatency: 15000
+        defaultParallelism: 16
+      - type: architect
+        capabilities: ["auto-design", "pattern-recognition", "evolution-planning"]
+        maxLatency: 5000
+        defaultParallelism: 4
+      - type: tester
+        capabilities: ["auto-test-generation", "coverage-analysis", "mutation-testing"]
+        maxLatency: 10000
+        defaultParallelism: 64
+
+    poolConfig:
+      minWorkers: 64
+      maxWorkers: 256
+      autoScaling: true
+      healthCheckInterval: 5000
+      failureThreshold: 3
+      autoRestart: true
