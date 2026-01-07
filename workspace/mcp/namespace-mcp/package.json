@@ -1,0 +1,59 @@
+{
+  "name": "@machinenativeops/grail-mcp",
+  "version": "1.0.0",
+  "description": "The Holy Grail of MCP - Legendary Conversion Engine with $10M+ Enterprise Value",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./core": {
+      "types": "./dist/core/index.d.ts",
+      "import": "./dist/core/index.js"
+    },
+    "./converters": {
+      "types": "./dist/converters/index.d.ts",
+      "import": "./dist/converters/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest",
+    "lint": "eslint src --ext .ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "mcp",
+    "grail",
+    "conversion",
+    "quantum",
+    "enterprise",
+    "legendary"
+  ],
+  "author": "MachineNativeOps",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/js-yaml": "^4.0.9",
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0",
+    "vitest": "^1.0.0"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^0.5.0",
+    "js-yaml": "^4.1.1",
+    "fast-xml-parser": "^5.3.3",
+    "js-yaml": "^4.1.1",
+    "zod": "^3.22.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "grail": {
+    "namespace": "grail",
+    "valuation": "$10M+",
+    "status": "legendary"
+  }
+}
