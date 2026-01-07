@@ -76,13 +76,16 @@ export type ActivationErrorCode =
  * Error thrown when GRAIL activation fails
  */
 export class GrailActivationError extends Error {
+  public readonly code: ActivationErrorCode;
+
   constructor(
     message: string,
-    public readonly code: ActivationErrorCode = 'UNKNOWN_ERROR',
-    public readonly cause?: unknown
+    code: ActivationErrorCode = 'UNKNOWN_ERROR',
+    cause?: unknown
   ) {
-    super(message);
+    super(message, cause !== undefined ? { cause } : undefined);
     this.name = 'GrailActivationError';
+    this.code = code;
   }
 }
 
