@@ -19,7 +19,7 @@ export * from './protocols-bridge.js';
 export * from './protocols.js';
 
 // Import for type-only exports
-import type { Grail, NamespacePath, GrailDomain } from './namespaces.js';
+import type { Grail, NamespacePath } from './namespaces.js';
 
 // ============================================================================
 // CORE TYPE ALIASES
