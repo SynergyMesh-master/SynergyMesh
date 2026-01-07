@@ -11,6 +11,7 @@ export * from './namespaces.js';
 
 // Re-export ES2015 module types (preferred over namespaces)
 export * from './converters-quantum.js';
+export * from './protocols.js';
 
 // Import for type-only exports
 import type { Grail, NamespacePath, GrailDomain } from './namespaces.js';

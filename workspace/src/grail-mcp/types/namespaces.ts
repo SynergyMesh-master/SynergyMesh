@@ -6,6 +6,9 @@
  * @style 臨床穿透 | 反諷揭露
  */
 
+// Import ES2015 module types for re-export in namespaces
+import type * as ProtocolsTypes from './protocols.js';
+
 // ============================================================================
 // NAMESPACE PATH UTILITIES
 // ============================================================================
@@ -583,71 +586,36 @@ export namespace Grail {
 
   /**
    * Protocols namespace - ops::registry (just communication standards)
+   * @deprecated Use direct imports from './protocols.js' instead
+   * @see {@link ../protocols}
    */
   export namespace Protocols {
     /**
      * Standard Protocol (no divinity required)
+     * @deprecated Use direct imports from './protocols.js' instead
      */
     export namespace Standard {
-      export interface ProtocolMessage {
-        readonly type: string;
-        readonly payload: unknown;
-        readonly signature: Uint8Array;
-        readonly timestamp: Date;
-      }
-
-      export interface StandardProtocol {
-        send(message: ProtocolMessage): Promise<void>;
-        receive(): AsyncGenerator<ProtocolMessage>;
-        verify(message: ProtocolMessage): Promise<boolean>;
-        seal(message: ProtocolMessage): Promise<ProtocolMessage>;
-      }
+      export type ProtocolMessage = ProtocolsTypes.ProtocolMessage;
+      export type StandardProtocol = ProtocolsTypes.StandardProtocol;
     }
 
     /**
      * MCP Extensions
+     * @deprecated Use direct imports from './protocols.js' instead
      */
     export namespace MCP {
-      export interface GrailToolDefinition {
-        readonly name: string;
-        readonly description: string;
-        readonly namespace: NamespacePath;
-        readonly inputSchema: unknown;
-        readonly outputSchema: unknown;
-      }
-
-      export interface GrailResourceDefinition {
-        readonly uri: string;
-        readonly name: string;
-        readonly namespace: NamespacePath;
-        readonly mimeType: string;
-      }
-
-      export interface MCPExtension {
-        registerTool(tool: GrailToolDefinition): void;
-        registerResource(resource: GrailResourceDefinition): void;
-        getTools(): GrailToolDefinition[];
-        getResources(): GrailResourceDefinition[];
-        invoke(toolName: string, params: unknown): Promise<unknown>;
-      }
+      export type GrailToolDefinition = ProtocolsTypes.GrailToolDefinition;
+      export type GrailResourceDefinition = ProtocolsTypes.GrailResourceDefinition;
+      export type MCPExtension = ProtocolsTypes.MCPExtension;
     }
 
     /**
      * Inter-Protocol Bridge
+     * @deprecated Use direct imports from './protocols.js' instead
      */
     export namespace Bridge {
-      export interface ProtocolAdapter<T, U> {
-        readonly sourceProtocol: string;
-        readonly targetProtocol: string;
-        adapt(message: T): U;
-        reverse(message: U): T;
-      }
-
-      export interface InterProtocolBridge {
-        registerAdapter<T, U>(adapter: ProtocolAdapter<T, U>): void;
-        bridge<T, U>(message: T, sourceProtocol: string, targetProtocol: string): U;
-        getSupportedBridges(): Array<[string, string]>;
-      }
+      export type ProtocolAdapter<T, U> = ProtocolsTypes.ProtocolAdapter<T, U>;
+      export type InterProtocolBridge = ProtocolsTypes.InterProtocolBridge;
     }
   }
 }
