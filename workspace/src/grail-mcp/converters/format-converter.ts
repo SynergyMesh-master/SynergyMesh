@@ -214,8 +214,6 @@ export class GrailFormatConverter implements FormatConverter {
         try {
           return yaml.load(data);
         } catch (error) {
-          const message = error instanceof Error ? error.message : String(error);
-          throw new Error(`Failed to parse YAML: ${message}`);
           throw new FormatConversionError(
             `YAML parsing failed: ${error instanceof Error ? error.message : String(error)}`,
             'PARSE_ERROR'
@@ -226,12 +224,6 @@ export class GrailFormatConverter implements FormatConverter {
         try {
           return yaml.dump(data, {
             indent: options?.pretty ? 2 : 0,
-            lineWidth: -1, // Don't wrap long lines
-            noRefs: true   // Don't use anchors/aliases
-          });
-        } catch (error) {
-          const message = error instanceof Error ? error.message : String(error);
-          throw new Error(`Failed to serialize YAML: ${message}`);
             lineWidth: -1,
             noRefs: true
           });
