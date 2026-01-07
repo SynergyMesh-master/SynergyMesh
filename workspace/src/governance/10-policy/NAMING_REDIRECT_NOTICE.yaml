@@ -1,0 +1,36 @@
+# ═══════════════════════════════════════════════════════════════════════════════
+# 🔀 REDIRECT NOTICE - Naming Policy Files Consolidated
+# ═══════════════════════════════════════════════════════════════════════════════
+#
+# IMPORTANT: This directory's naming policy files have been consolidated into:
+#   workspace/mcp/namespace-mcp/policies/
+#
+# Single Source of Truth: namespace-mcp
+#
+# Key Files:
+#   - NAMESPACE_INDEX.yaml: Complete index of all naming files
+#   - policies/unified-naming-governance-spec.yaml: Unified governance spec
+#
+# Original files in this directory are preserved for backward compatibility.
+# All new development should reference namespace-mcp as the canonical source.
+#
+# See: workspace/mcp/namespace-mcp/README.md
+# ═══════════════════════════════════════════════════════════════════════════════
+
+redirectTo: workspace/mcp/namespace-mcp/policies/
+singleSourceOfTruth: true
+consolidationVersion: "3.0.0"
+consolidationDate: "2026-01-07"
+methodology: "validation-mcp 硫酸溶解法"
+
+consolidatedFiles:
+  - naming-governance-policy.yaml
+  - naming-security-policy.yaml
+  - naming-alert-rules.yaml
+  - naming-observability-dashboard.yaml
+  - naming-validation-automations.yaml
+
+documentation:
+  - workspace/mcp/namespace-mcp/NAMESPACE_INDEX.yaml
+  - workspace/mcp/namespace-mcp/README.md
+  - workspace/mcp/namespace-mcp/REDIRECT_NOTICE.md

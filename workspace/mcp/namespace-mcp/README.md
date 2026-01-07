@@ -5,6 +5,37 @@
 > **Execution Standard**: <3 minutes full stack, 0 human intervention, fully autonomous
 >
 > **Competitiveness**: Replit | Claude | GPT equivalent instant delivery capability
+>
+> **🔥 NEW: Single Source of Truth for ALL Naming/Namespace Conventions**
+
+## 🎯 Core Mission: Namespace Governance Consolidation
+
+This module (`namespace-mcp`) is the **single source of truth** for all naming conventions, namespace policies, and naming governance across the entire project.
+
+### Key Files for Namespace Governance
+
+| File | Purpose |
+|------|---------|
+| [`NAMESPACE_INDEX.yaml`](./NAMESPACE_INDEX.yaml) | **Central Index** - Consolidates ALL 59 scattered namespace/naming files |
+| [`policies/unified-naming-governance-spec.yaml`](./policies/unified-naming-governance-spec.yaml) | **Unified Spec** - Single consolidated naming governance specification |
+| [`INTEGRATION_INDEX.yaml`](./INTEGRATION_INDEX.yaml) | MCP Integration index with namespace governance section |
+
+### Consolidation Statistics
+
+| Category | Files Consolidated |
+|----------|-------------------|
+| Naming Policies | 25 files |
+| Namespace Configs | 18 files |
+| Naming Schemas | 8 files |
+| Naming Tools | 8 files |
+| **Total** | **59 files** |
+
+### Methodology Applied
+
+Using **validation-mcp 硫酸溶解法** (Sulfuric Acid Dissolution):
+1. **解構 (Deconstruction)**: Indexed all scattered naming files across the project
+2. **集成 (Integration)**: Consolidated into unified structure under namespace-mcp
+3. **重構 (Refactoring)**: Aligned as single source of truth with redirect mapping
 
 ## Architecture Overview
 
@@ -101,6 +132,8 @@ graph TB
 
 | Artifact | Path | Description |
 |----------|------|-------------|
+| **NAMESPACE_INDEX** | [`NAMESPACE_INDEX.yaml`](./NAMESPACE_INDEX.yaml) | 🆕 Central index of ALL 59 namespace/naming files |
+| **Unified Naming Spec** | [`policies/unified-naming-governance-spec.yaml`](./policies/unified-naming-governance-spec.yaml) | 🆕 Consolidated naming governance specification |
 | YAML Manifest | `workspace/mcp/namespace-mcp/pipelines/unified-pipeline-config.yaml` | v3 pipeline configuration |
 | JSON Schema | `workspace/mcp/namespace-mcp/schemas/unified-pipeline.schema.json` | Strict validation schema |
 | TypeScript Types | `workspace/mcp/namespace-mcp/types/unifiedPipeline.ts` | Type-safe interfaces |

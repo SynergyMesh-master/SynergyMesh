@@ -1,0 +1,417 @@
+%YAML 1.2
+---
+# ═══════════════════════════════════════════════════════════════════════════════
+#                    namespace-mcp 統一命名治理規範 v3.0.0
+#                    Unified Naming Governance Specification
+# ═══════════════════════════════════════════════════════════════════════════════
+#
+# Purpose: Single consolidated specification for all naming/namespace governance
+# 用途: 所有命名/命名空間治理的統一規範
+#
+# This file consolidates policies from:
+# - workspace/src/governance/10-policy/naming-*.yaml
+# - workspace/src/governance/00-vision-strategy/naming-*.yaml
+# - workspace/src/governance/01-architecture/naming-*.yaml
+# - workspace/src/governance/dimensions/99-naming-convention/
+# - workspace/governance/policies/naming/*.yaml
+#
+# Version: 3.0.0
+# Created: 2026-01-07
+# Single Source: namespace-mcp
+# ═══════════════════════════════════════════════════════════════════════════════
+
+apiVersion: naming.namespace-mcp/v3
+kind: UnifiedNamingGovernance
+metadata:
+  name: unified-naming-governance-spec
+  version: "3.0.0"
+  mode: INSTANT-Autonomous
+  labels:
+    tier: production
+    category: naming-governance
+    status: single-source-of-truth
+  annotations:
+    consolidatedFrom: "25+ scattered policy files"
+    methodology: "validation-mcp 硫酸溶解法"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# 命名格式標準 - Naming Format Standards
+# Consolidated from: 99-naming-convention/specs/
+# ═══════════════════════════════════════════════════════════════════════════════
+namingFormats:
+  # Directory Naming (from 01-directory-naming.yaml)
+  directoryNaming:
+    format: kebab-case
+    pattern: "^[a-z0-9]+(-[a-z0-9]+)*$"
+    examples:
+      valid: ["src", "mcp-servers", "contract-service", "99-naming-convention"]
+      invalid: ["Src", "MCP_Servers", "ContractService"]
+    rules:
+      - "Use lowercase letters only"
+      - "Separate words with hyphens"
+      - "Numbers allowed but not at start"
+      - "No underscores or special characters"
+    standardRootDirs:
+      - src
+      - workspace
+      - docs
+      - config
+      - tools
+      - scripts
+      - governance
+      - templates
+      - tests
+
+  # File Naming (from 02-file-naming.yaml)
+  fileNaming:
+    patterns:
+      yaml: "^[a-z0-9]+(-[a-z0-9]+)*\\.(yaml|yml)$"
+      typescript: "^[a-z][a-zA-Z0-9]*\\.ts$"
+      python: "^[a-z_][a-z0-9_]*\\.py$"
+      javascript: "^[a-z][a-zA-Z0-9]*\\.js$"
+      markdown: "^[A-Z][A-Z0-9_]*\\.md$"
+    specialFiles:
+      - README.md
+      - CHANGELOG.md
+      - LICENSE
+      - Makefile
+      - Dockerfile
+      - package.json
+      - tsconfig.json
+      - pyproject.toml
+
+  # Key Naming (from 04-key-naming.yaml)
+  keyNaming:
+    yaml:
+      format: snake_case
+      pattern: "^[a-z][a-z0-9_]*$"
+      examples: ["api_version", "max_retry_count", "naming_policy"]
+    json:
+      format: camelCase
+      pattern: "^[a-z][a-zA-Z0-9]*$"
+      examples: ["apiVersion", "maxRetryCount", "namingPolicy"]
+    annotations:
+      format: namespaced
+      pattern: "^[a-z0-9.-]+/[a-z0-9.-]+$"
+      examples: ["machinenativeops.io/canonical-urn", "kubernetes.io/name"]
+
+  # Value Naming (from 05-value-naming.yaml)
+  valueNaming:
+    enum:
+      format: kebab-case
+      examples: ["active", "in-progress", "completed", "failed"]
+    boolean:
+      format: standard
+      values: ["true", "false"]
+    version:
+      format: semver
+      pattern: "^v?[0-9]+\\.[0-9]+\\.[0-9]+(-[a-zA-Z0-9.]+)?$"
+      examples: ["1.0.0", "v2.1.3-alpha", "3.0.0-rc.1"]
+    environment:
+      format: abbreviation
+      values: ["dev", "staging", "prod", "test"]
+
+  # URN/URI Standards (from 09-uri-urn-standards.yaml)
+  urnStandards:
+    format: "urn:machinenativeops:{domain}:{resource}:{version}"
+    pattern: "^urn:machinenativeops:[a-z0-9-]+:[a-z0-9-]+(:v[0-9]+)?$"
+    registeredDomains:
+      - governance
+      - ai
+      - core
+      - autonomous
+      - config
+      - dimension
+      - mcp
+      - namespace
+    examples:
+      - "urn:machinenativeops:governance:naming-convention:v1"
+      - "urn:machinenativeops:ai:cognitive-engine:v2"
+      - "urn:machinenativeops:mcp:namespace-mcp:v3"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# 命名空間策略 - Namespace Policies
+# Consolidated from: 23-policies/namespace-naming-policy.yaml
+# ═══════════════════════════════════════════════════════════════════════════════
+namespacePolicies:
+  kubernetes:
+    format: kebab-case
+    maxLength: 63
+    pattern: "^[a-z][a-z0-9-]*[a-z0-9]$"
+    prefixRules:
+      system: "kube-"
+      application: "app-"
+      team: "team-"
+      environment: ["dev-", "staging-", "prod-"]
+    requiredLabels:
+      - "app.kubernetes.io/name"
+      - "app.kubernetes.io/instance"
+      - "app.kubernetes.io/version"
+      - "app.kubernetes.io/managed-by"
+    constraints:
+      - "Must not start with numbers"
+      - "Must not end with hyphens"
+      - "Must be DNS-1123 compliant"
+
+  mcp:
+    format: snake_case
+    namespaceHierarchy:
+      - ops      # 冷啟動層
+      - dissect  # 解剖層
+      - facade   # 偽裝揭露層
+      - audit    # 審計層
+      - archaeology  # 考古層
+      - hype     # 炒作諷刺層
+      - reality  # 現實層
+    toolNaming:
+      pattern: "{namespace}_{function}"
+      examples: ["ops_cold_bootstrap", "audit_reality_check"]
+
+  api:
+    format: kebab-case
+    pattern: "^/api/v[0-9]+/[a-z-]+(/[a-z-]+)*$"
+    versioningFormat: "/api/v{major}"
+    examples:
+      - "/api/v1/namespaces"
+      - "/api/v2/naming-policies"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# 命名治理生命週期 - Naming Governance Lifecycle
+# Consolidated from: naming-adoption-phases.yaml, naming-governance-lifecycle.md
+# ═══════════════════════════════════════════════════════════════════════════════
+governanceLifecycle:
+  adoptionPhases:
+    - phase: 1
+      name: "Assessment"
+      duration: "1-2 weeks"
+      activities:
+        - "Audit existing naming patterns"
+        - "Identify violations"
+        - "Document exceptions"
+        
+    - phase: 2
+      name: "Planning"
+      duration: "1 week"
+      activities:
+        - "Define migration strategy"
+        - "Prioritize refactoring"
+        - "Create automation scripts"
+        
+    - phase: 3
+      name: "Implementation"
+      duration: "2-4 weeks"
+      activities:
+        - "Execute migrations"
+        - "Update tooling"
+        - "Train teams"
+        
+    - phase: 4
+      name: "Validation"
+      duration: "1 week"
+      activities:
+        - "Run validation pipelines"
+        - "Fix remaining issues"
+        - "Generate compliance reports"
+        
+    - phase: 5
+      name: "Continuous Enforcement"
+      duration: "Ongoing"
+      activities:
+        - "CI/CD validation gates"
+        - "Automated PR checks"
+        - "Regular audits"
+
+  changeProcess:
+    # From naming-rfc-workflow.yaml
+    rfcWorkflow:
+      - step: 1
+        name: "Proposal"
+        description: "Submit RFC for naming change"
+        
+      - step: 2
+        name: "Review"
+        description: "Technical review by naming governance team"
+        
+      - step: 3
+        name: "Approval"
+        description: "Stakeholder approval"
+        
+      - step: 4
+        name: "Implementation"
+        description: "Execute approved changes"
+        
+      - step: 5
+        name: "Verification"
+        description: "Validate implementation"
+
+    # From naming-exception-process.yaml
+    exceptionProcess:
+      requestTypes:
+        - "Legacy compatibility"
+        - "Third-party integration"
+        - "Performance optimization"
+      approvalLevels:
+        tier1: "Team lead approval"
+        tier2: "Architecture review board"
+        tier3: "Governance committee"
+      expirationPolicy: "Exceptions expire after 6 months unless renewed"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# 驗證與自動化 - Validation & Automation
+# Consolidated from: naming-validation-automations.yaml
+# ═══════════════════════════════════════════════════════════════════════════════
+validationAutomation:
+  ciValidation:
+    enabled: true
+    triggers:
+      - push
+      - pull_request
+    checks:
+      - name: "directory-naming"
+        validator: "conftest"
+        policy: "policy.rego"
+        
+      - name: "file-naming"
+        validator: "custom"
+        script: "naming-validator.sh"
+        
+      - name: "yaml-key-naming"
+        validator: "yamllint"
+        config: ".yamllint.yml"
+        
+      - name: "urn-format"
+        validator: "regex"
+        pattern: "urn:machinenativeops:[a-z-]+:[a-z-]+"
+
+  automatedFixes:
+    enabled: true
+    fixers:
+      - name: "kebab-case-converter"
+        target: "directories"
+        
+      - name: "snake-case-converter"
+        target: "yaml-keys"
+        
+      - name: "urn-generator"
+        target: "annotations"
+
+  reportGeneration:
+    enabled: true
+    formats: ["json", "markdown", "yaml"]
+    outputs:
+      - "naming-compliance-report"
+      - "naming-violations-summary"
+      - "naming-migration-progress"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# 監控與告警 - Monitoring & Alerting
+# Consolidated from: naming-alert-rules.yaml, naming-observability-dashboard.yaml
+# ═══════════════════════════════════════════════════════════════════════════════
+monitoringAlerts:
+  metrics:
+    - name: "naming_violations_total"
+      type: counter
+      description: "Total naming convention violations"
+      
+    - name: "naming_compliance_ratio"
+      type: gauge
+      description: "Ratio of compliant files"
+      target: 0.99
+      
+    - name: "naming_migration_progress"
+      type: gauge
+      description: "Migration completion percentage"
+
+  alertRules:
+    - name: "NamingViolationsHigh"
+      expr: "naming_violations_total > 100"
+      severity: warning
+      
+    - name: "NamingComplianceLow"
+      expr: "naming_compliance_ratio < 0.95"
+      severity: critical
+      
+    - name: "NamingMigrationStalled"
+      expr: "rate(naming_migration_progress[1h]) == 0"
+      severity: warning
+
+  dashboard:
+    panels:
+      - "Compliance Overview"
+      - "Violation Trends"
+      - "Migration Progress"
+      - "Top Violations by Category"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# 工具引用 - Tool References
+# ═══════════════════════════════════════════════════════════════════════════════
+toolReferences:
+  validators:
+    - name: "namespace-validator.py"
+      path: "workspace/mcp/namespace-mcp/tools/namespace-validator.py"
+      
+    - name: "naming-validator.sh"
+      path: "workspace/mcp/namespace-mcp/tools/naming-validator.sh"
+      
+    - name: "validate_naming.py"
+      path: "workspace/mcp/namespace-mcp/tools/validate_naming.py"
+
+  converters:
+    - name: "namespace-converter.py"
+      path: "workspace/mcp/namespace-mcp/tools/namespace-converter.py"
+      
+    - name: "naming-migration.py"
+      path: "workspace/mcp/namespace-mcp/tools/naming-migration.py"
+
+  generators:
+    - name: "naming-generator.sh"
+      path: "workspace/mcp/namespace-mcp/tools/naming-generator.sh"
+      
+    - name: "generate_resource_name.sh"
+      path: "workspace/mcp/namespace-mcp/tools/generate_resource_name.sh"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# Schema 引用 - Schema References
+# ═══════════════════════════════════════════════════════════════════════════════
+schemaReferences:
+  primary:
+    - name: "naming-policy.schema.yaml"
+      path: "workspace/mcp/namespace-mcp/schemas/naming-policy.schema.yaml"
+      
+    - name: "naming-spec.schema.yaml"
+      path: "workspace/mcp/namespace-mcp/schemas/naming-spec.schema.yaml"
+      
+    - name: "naming-convention.schema.json"
+      path: "workspace/mcp/namespace-mcp/schemas/naming-convention.schema.json"
+
+  validation:
+    - name: "unified-pipeline.schema.json"
+      path: "workspace/mcp/namespace-mcp/schemas/unified-pipeline.schema.json"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# 交叉引用 - Cross References
+# ═══════════════════════════════════════════════════════════════════════════════
+crossReferences:
+  namespaceIndex:
+    path: "workspace/mcp/namespace-mcp/NAMESPACE_INDEX.yaml"
+    description: "Complete index of all namespace/naming files"
+    
+  integrationIndex:
+    path: "workspace/mcp/namespace-mcp/INTEGRATION_INDEX.yaml"
+    description: "MCP integration index"
+    
+  validationPipeline:
+    path: "workspace/mcp/validation-mcp/validation/WORLD_CLASS_VALIDATION_PIPELINE.yaml"
+    description: "Validation pipeline from validation-mcp"
+    
+  dimensionSpec:
+    path: "workspace/src/governance/dimensions/99-naming-convention/"
+    description: "Original naming convention dimension"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# 架構狀態 - Architecture Status
+# ═══════════════════════════════════════════════════════════════════════════════
+# **規範狀態**: `UNIFIED | CONSOLIDATED | SINGLE_SOURCE`
+# **整合來源**: `25+ scattered policy files`
+# **驗證整合**: `validation-mcp methodology applied`
+# **執行模式**: `INSTANT | Zero-Latency`

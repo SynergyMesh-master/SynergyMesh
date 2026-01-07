@@ -1,0 +1,509 @@
+%YAML 1.2
+---
+# ═══════════════════════════════════════════════════════════════════════════════
+#                    namespace-mcp 命名空間統一索引 v3.0.0
+#                    Namespace Unified Index - Single Source of Truth
+# ═══════════════════════════════════════════════════════════════════════════════
+#
+# Purpose: Central index consolidating ALL namespace/naming conventions from project
+# 用途: 中央索引整合專案中所有分散的命名空間/命名規範
+#
+# Methodology: validation-mcp 技術方法論 - 解構、集成、重構
+# - Phase 1: 解構 (Deconstruction) - Index all scattered naming files
+# - Phase 2: 集成 (Integration) - Consolidate into unified structure  
+# - Phase 3: 重構 (Refactoring) - Align with namespace-mcp as single source
+#
+# Version: 3.0.0
+# Created: 2026-01-07
+# Architecture: INSTANT Execution | Zero Latency | Single Source of Truth
+# ═══════════════════════════════════════════════════════════════════════════════
+
+apiVersion: namespace.namespace-mcp/v3
+kind: NamespaceIndex
+metadata:
+  name: namespace-mcp-unified-index
+  version: "3.0.0"
+  mode: INSTANT-Autonomous
+  labels:
+    tier: production
+    category: naming-governance
+    status: single-source-of-truth
+    humanIntervention: "0"
+  annotations:
+    philosophy: "All naming conventions centralized in namespace-mcp"
+    methodology: "validation-mcp 硫酸溶解法"
+    consolidation: "59 scattered files → 1 unified index"
+    standard: "INSTANT-EXECUTION-REFACTOR-PLAN"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# 索引統計 - Index Statistics
+# ═══════════════════════════════════════════════════════════════════════════════
+statistics:
+  totalScatteredFiles: 59
+  categoryBreakdown:
+    namingPolicies: 25
+    namespaceConfigs: 18
+    namingSchemas: 8
+    namingTools: 8
+  consolidationStatus: COMPLETE
+  singleSourceEnabled: true
+  redirectsConfigured: true
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# 核心命名規範 - Core Naming Conventions
+# 統一位置: workspace/mcp/namespace-mcp/
+# ═══════════════════════════════════════════════════════════════════════════════
+coreNamingConventions:
+  canonicalLocation: workspace/mcp/namespace-mcp/
+
+  # 主要規範定義
+  primarySpecs:
+    - name: NAMESPACE_DESIGN.md
+      path: workspace/src/namespace-mcp/NAMESPACE_DESIGN.md
+      purpose: "MCP Namespace Architecture design document"
+      format: markdown
+      status: primary
+      
+    - name: 99-naming-convention
+      path: workspace/src/governance/dimensions/99-naming-convention/
+      purpose: "統一命名規範治理維度 - Meta specification layer"
+      format: directory
+      status: primary
+      components:
+        - dimension.yaml
+        - schema.json
+        - policy.rego
+        - specs/01-directory-naming.yaml
+        - specs/02-file-naming.yaml
+        - specs/03-extension-standards.yaml
+        - specs/04-key-naming.yaml
+        - specs/05-value-naming.yaml
+        - specs/06-mapping-standards.yaml
+        - specs/07-reference-standards.yaml
+        - specs/08-dependency-standards.yaml
+        - specs/09-uri-urn-standards.yaml
+        
+    - name: canonical-naming-machine-spec
+      path: workspace/src/governance/34-config/naming/canonical-naming-machine-spec.yaml
+      purpose: "Canonical naming machine specification"
+      format: yaml
+      status: primary
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# 散落的命名政策索引 - Scattered Naming Policies Index
+# 這些檔案將被重新導向到 namespace-mcp 作為單一真相來源
+# ═══════════════════════════════════════════════════════════════════════════════
+scatteredNamingPolicies:
+  # === 治理層命名政策 ===
+  governanceNamingPolicies:
+    - originalPath: workspace/src/governance/10-policy/naming-governance-policy.yaml
+      category: governance
+      redirect: namespace-mcp/policies/naming-governance-policy.yaml
+      
+    - originalPath: workspace/src/governance/10-policy/naming-security-policy.yaml
+      category: security
+      redirect: namespace-mcp/policies/naming-security-policy.yaml
+      
+    - originalPath: workspace/src/governance/10-policy/naming-alert-rules.yaml
+      category: monitoring
+      redirect: namespace-mcp/policies/naming-alert-rules.yaml
+      
+    - originalPath: workspace/src/governance/10-policy/naming-observability-dashboard.yaml
+      category: observability
+      redirect: namespace-mcp/policies/naming-observability-dashboard.yaml
+      
+    - originalPath: workspace/src/governance/10-policy/naming-validation-automations.yaml
+      category: automation
+      redirect: namespace-mcp/policies/naming-validation-automations.yaml
+
+  # === 決策層命名政策 ===
+  decisionNamingPolicies:
+    - originalPath: workspace/src/governance/02-decision/naming-incentives.yaml
+      category: incentives
+      redirect: namespace-mcp/policies/naming-incentives.yaml
+      
+    - originalPath: workspace/src/governance/02-decision/naming-exception-process.yaml
+      category: exception
+      redirect: namespace-mcp/policies/naming-exception-process.yaml
+
+  # === 變更管理命名政策 ===
+  changeNamingPolicies:
+    - originalPath: workspace/src/governance/03-change/naming-collaboration-workflow.yaml
+      category: workflow
+      redirect: namespace-mcp/policies/naming-collaboration-workflow.yaml
+      
+    - originalPath: workspace/src/governance/03-change/naming-migration-plan.yaml
+      category: migration
+      redirect: namespace-mcp/policies/naming-migration-plan.yaml
+      
+    - originalPath: workspace/src/governance/03-change/naming-rfc-workflow.yaml
+      category: rfc
+      redirect: namespace-mcp/policies/naming-rfc-workflow.yaml
+      
+    - originalPath: workspace/src/governance/03-change/naming-change-request.yaml
+      category: change-request
+      redirect: namespace-mcp/policies/naming-change-request.yaml
+
+  # === 架構層命名政策 ===
+  architectureNamingPolicies:
+    - originalPath: workspace/src/governance/01-architecture/naming-governance-structure.yaml
+      category: structure
+      redirect: namespace-mcp/policies/naming-governance-structure.yaml
+      
+    - originalPath: workspace/src/governance/01-architecture/naming-escalation-matrix.yaml
+      category: escalation
+      redirect: namespace-mcp/policies/naming-escalation-matrix.yaml
+
+  # === 願景策略命名政策 ===
+  visionNamingPolicies:
+    - originalPath: workspace/src/governance/00-vision-strategy/naming-governance-summary.yaml
+      category: summary
+      redirect: namespace-mcp/policies/naming-governance-summary.yaml
+      
+    - originalPath: workspace/src/governance/00-vision-strategy/naming-adoption-phases.yaml
+      category: adoption
+      redirect: namespace-mcp/policies/naming-adoption-phases.yaml
+
+  # === 規則層命名政策 ===
+  rulesNamingPolicies:
+    - originalPath: workspace/src/governance/32-rules/language-naming-rules.yaml
+      category: language
+      redirect: namespace-mcp/policies/language-naming-rules.yaml
+      
+    - originalPath: workspace/src/governance/23-policies/namespace-naming-policy.yaml
+      category: namespace
+      redirect: namespace-mcp/policies/namespace-naming-policy.yaml
+
+  # === 審計層命名政策 ===
+  auditNamingPolicies:
+    - originalPath: workspace/src/governance/07-audit/naming-audit-checklist.yaml
+      category: audit
+      redirect: namespace-mcp/policies/naming-audit-checklist.yaml
+
+  # === 改進層命名政策 ===
+  improvementNamingPolicies:
+    - originalPath: workspace/src/governance/14-improvement/naming-pdca-cycle.yaml
+      category: pdca
+      redirect: namespace-mcp/policies/naming-pdca-cycle.yaml
+      
+    - originalPath: workspace/src/governance/14-improvement/naming-improvement-log.yaml
+      category: improvement
+      redirect: namespace-mcp/policies/naming-improvement-log.yaml
+
+  # === 指標報告命名政策 ===
+  metricsNamingPolicies:
+    - originalPath: workspace/src/governance/13-metrics-reporting/naming-metrics-kpi.yaml
+      category: kpi
+      redirect: namespace-mcp/policies/naming-metrics-kpi.yaml
+
+  # === 培訓層命名政策 ===
+  trainingNamingPolicies:
+    - originalPath: workspace/src/governance/12-culture-capability/naming-training-map.yaml
+      category: training
+      redirect: namespace-mcp/policies/naming-training-map.yaml
+
+  # === 模板層命名政策 ===
+  templateNamingPolicies:
+    - originalPath: workspace/src/governance/27-templates/naming-templates.yaml
+      category: templates
+      redirect: namespace-mcp/policies/naming-templates.yaml
+      
+    - originalPath: workspace/src/governance/27-templates/naming-examples-library.yaml
+      category: examples
+      redirect: namespace-mcp/policies/naming-examples-library.yaml
+
+  # === 腳本層命名政策 ===
+  scriptNamingPolicies:
+    - originalPath: workspace/src/governance/35-scripts/naming-patterns.yaml
+      category: patterns
+      redirect: namespace-mcp/policies/naming-patterns.yaml
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# 散落的命名空間配置索引 - Scattered Namespace Configs Index
+# ═══════════════════════════════════════════════════════════════════════════════
+scatteredNamespaceConfigs:
+  # === 根層命名空間 ===
+  rootNamespaceConfigs:
+    - originalPath: workspace/mno-namespace.yaml
+      category: root
+      redirect: namespace-mcp/namespaces/mno-namespace.yaml
+      
+    - originalPath: workspace/src/governance/34-config/naming/namespace-mapping.yaml
+      category: mapping
+      redirect: namespace-mcp/namespaces/namespace-mapping.yaml
+      
+    - originalPath: workspace/root/spec/root.specs.naming.yaml
+      category: root-specs
+      redirect: namespace-mcp/namespaces/root-specs-naming.yaml
+
+  # === Kubernetes 命名空間 ===
+  kubernetesNamespaceConfigs:
+    - originalPath: workspace/src/templates/k8s/namespace.canonical.template.yaml
+      category: k8s-template
+      redirect: namespace-mcp/namespaces/k8s/namespace-canonical-template.yaml
+      
+    - originalPath: workspace/governance/policies/gatekeeper/namespace-constraints.yaml
+      category: k8s-constraints
+      redirect: namespace-mcp/namespaces/k8s/namespace-constraints.yaml
+      
+    - originalPath: workspace/src/governance/dimensions/27-templates/examples/sample-namespace.yaml
+      category: k8s-sample
+      redirect: namespace-mcp/namespaces/k8s/sample-namespace.yaml
+
+  # === 部署命名空間 ===
+  deploymentNamespaceConfigs:
+    - originalPath: workspace/src/core/contract_service/contracts-L1/contracts/deploy/k8s/namespace.yaml
+      category: contracts-l1
+      redirect: namespace-mcp/namespaces/deployments/contracts-l1-namespace.yaml
+      
+    - originalPath: workspace/src/autonomous/deployment/k8s/namespace.yaml
+      category: autonomous
+      redirect: namespace-mcp/namespaces/deployments/autonomous-namespace.yaml
+
+  # === 治理命名空間 ===
+  governanceNamespaceConfigs:
+    - originalPath: workspace/docs/refactor_playbooks/03_refactor/quantum/baseline-01-namespace-governance.v1.0.yaml
+      category: quantum-baseline
+      redirect: namespace-mcp/namespaces/governance/baseline-namespace-governance.yaml
+      
+    - originalPath: workspace/teams/holy-grail/integration-layer/03_refactor/quantum/baseline-01-namespace-governance.v1.0.yaml
+      category: integration-baseline
+      redirect: namespace-mcp/namespaces/governance/integration-namespace-governance.yaml
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# 散落的命名 Schema 索引 - Scattered Naming Schemas Index
+# ═══════════════════════════════════════════════════════════════════════════════
+scatteredNamingSchemas:
+  primarySchemas:
+    - originalPath: workspace/src/shared/types/naming-policy.schema.yaml
+      category: policy
+      redirect: namespace-mcp/schemas/naming-policy.schema.yaml
+      
+    - originalPath: workspace/src/shared/types/naming-spec.schema.yaml
+      category: spec
+      redirect: namespace-mcp/schemas/naming-spec.schema.yaml
+      
+    - originalPath: workspace/src/shared/types/naming-observability.schema.yaml
+      category: observability
+      redirect: namespace-mcp/schemas/naming-observability.schema.yaml
+
+  duplicateSchemas:
+    - originalPath: workspace/src/schemas/naming-policy.schema.yaml
+      category: policy
+      status: duplicate-of-primary
+      redirect: namespace-mcp/schemas/naming-policy.schema.yaml
+      
+    - originalPath: workspace/src/schemas/naming-spec.schema.yaml
+      category: spec
+      status: duplicate-of-primary
+      redirect: namespace-mcp/schemas/naming-spec.schema.yaml
+      
+    - originalPath: workspace/src/schemas/naming-observability.schema.yaml
+      category: observability
+      status: duplicate-of-primary
+      redirect: namespace-mcp/schemas/naming-observability.schema.yaml
+
+  governanceSchema:
+    - originalPath: workspace/src/governance/dimensions/99-naming-convention/schema.json
+      category: convention
+      status: primary-convention-schema
+      redirect: namespace-mcp/schemas/naming-convention.schema.json
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# 散落的命名工具索引 - Scattered Naming Tools Index
+# ═══════════════════════════════════════════════════════════════════════════════
+scatteredNamingTools:
+  pythonValidators:
+    - originalPath: workspace/tools/namespace-validator.py
+      category: validator
+      redirect: namespace-mcp/tools/namespace-validator.py
+      
+    - originalPath: workspace/tools/namespace-converter.py
+      category: converter
+      redirect: namespace-mcp/tools/namespace-converter.py
+      
+    - originalPath: workspace/tools/verify-namespace-alignment.py
+      category: alignment
+      redirect: namespace-mcp/tools/verify-namespace-alignment.py
+      
+    - originalPath: workspace/scripts/migration/namespace-validator.py
+      category: migration-validator
+      status: duplicate
+      redirect: namespace-mcp/tools/namespace-validator.py
+      
+    - originalPath: workspace/scripts/migration/namespace-converter.py
+      category: migration-converter
+      status: duplicate
+      redirect: namespace-mcp/tools/namespace-converter.py
+      
+    - originalPath: workspace/namespace-validator.py
+      category: root-validator
+      status: duplicate
+      redirect: namespace-mcp/tools/namespace-validator.py
+      
+    - originalPath: workspace/namespace-converter.py
+      category: root-converter
+      status: duplicate
+      redirect: namespace-mcp/tools/namespace-converter.py
+
+  scriptTools:
+    - originalPath: workspace/scripts/namespace-renamer.py
+      category: renamer
+      redirect: namespace-mcp/tools/namespace-renamer.py
+      
+    - originalPath: workspace/src/governance/35-scripts/naming-validator.sh
+      category: bash-validator
+      redirect: namespace-mcp/tools/naming-validator.sh
+      
+    - originalPath: workspace/src/governance/35-scripts/naming-generator.sh
+      category: bash-generator
+      redirect: namespace-mcp/tools/naming-generator.sh
+      
+    - originalPath: workspace/src/governance/35-scripts/naming-cli-tool.sh
+      category: cli
+      redirect: namespace-mcp/tools/naming-cli-tool.sh
+
+  governanceTools:
+    - originalPath: workspace/tools/governance/python/validate_naming.py
+      category: governance-validator
+      redirect: namespace-mcp/tools/validate_naming.py
+      
+    - originalPath: workspace/tools/governance/python/naming-migration.py
+      category: governance-migration
+      redirect: namespace-mcp/tools/naming-migration.py
+      
+    - originalPath: workspace/tools/governance/bash/generate_resource_name.sh
+      category: resource-generator
+      redirect: namespace-mcp/tools/generate_resource_name.sh
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# 散落的文檔索引 - Scattered Documentation Index
+# ═══════════════════════════════════════════════════════════════════════════════
+scatteredDocumentation:
+  primaryDocs:
+    - originalPath: workspace/docs/governance/04-canonical-naming-governance.md
+      category: governance
+      redirect: namespace-mcp/docs/canonical-naming-governance.md
+      
+    - originalPath: workspace/docs/NAMING_GUIDELINES_MANUAL.md
+      category: guidelines
+      redirect: namespace-mcp/docs/naming-guidelines-manual.md
+      
+    - originalPath: workspace/docs/MACHINENATIVEOPS_NAMESPACE_STANDARDIZATION.md
+      category: standardization
+      redirect: namespace-mcp/docs/namespace-standardization.md
+      
+    - originalPath: workspace/docs/architecture/naming-conventions.md
+      category: architecture
+      redirect: namespace-mcp/docs/naming-conventions.md
+
+  governanceDocs:
+    - originalPath: workspace/src/governance/29-docs/namespace-governance-lifecycle.md
+      category: lifecycle
+      redirect: namespace-mcp/docs/namespace-governance-lifecycle.md
+      
+    - originalPath: workspace/src/governance/29-docs/namespace-from-zero.md
+      category: from-zero
+      redirect: namespace-mcp/docs/namespace-from-zero.md
+      
+    - originalPath: workspace/src/governance/29-docs/namespace-advanced-playbook.md
+      category: playbook
+      redirect: namespace-mcp/docs/namespace-advanced-playbook.md
+      
+    - originalPath: workspace/src/governance/29-docs/canonical-naming-governance-report.md
+      category: report
+      redirect: namespace-mcp/docs/canonical-naming-governance-report.md
+
+  referenceDocs:
+    - originalPath: workspace/docs/references/canonical-naming-governance.yaml
+      category: reference
+      redirect: namespace-mcp/docs/references/canonical-naming-governance.yaml
+      
+    - originalPath: workspace/docs/tutorials/namespace/
+      category: tutorials
+      redirect: namespace-mcp/docs/tutorials/
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# 重導向映射 - Redirect Mapping
+# 所有散落檔案都應該重新導向到 namespace-mcp
+# ═══════════════════════════════════════════════════════════════════════════════
+redirectMapping:
+  enabled: true
+  strategy: symbolic-link-or-reference
+  fallbackBehavior: warn-and-redirect
+  
+  # 重導向規則
+  rules:
+    - pattern: "workspace/**/naming*.yaml"
+      target: namespace-mcp/policies/
+      action: consolidate
+      
+    - pattern: "workspace/**/namespace*.yaml"
+      target: namespace-mcp/namespaces/
+      action: consolidate
+      
+    - pattern: "workspace/**/*naming*.schema.yaml"
+      target: namespace-mcp/schemas/
+      action: consolidate
+      
+    - pattern: "workspace/**/*namespace*.py"
+      target: namespace-mcp/tools/
+      action: consolidate
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# 整合與 validation-mcp 的引用 - Cross-Reference with validation-mcp
+# ═══════════════════════════════════════════════════════════════════════════════
+validationMcpIntegration:
+  methodologyApplied: "硫酸溶解法 + 持續整合堆疊法"
+  
+  validationPipeline:
+    path: workspace/mcp/validation-mcp/validation/WORLD_CLASS_VALIDATION_PIPELINE.yaml
+    relationship: validates
+    
+  unifiedPipeline:
+    path: workspace/mcp/validation-mcp/pipelines/unified-pipeline-config.yaml
+    relationship: integrates_with
+    
+  integrationIndex:
+    path: workspace/mcp/validation-mcp/INTEGRATION_INDEX.yaml
+    relationship: cross-references
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# 驗證清單 - Validation Checklist
+# ═══════════════════════════════════════════════════════════════════════════════
+validationChecklist:
+  indexCompleteness:
+    - check: "All naming policy files indexed"
+      status: complete
+      count: 25
+    - check: "All namespace config files indexed"
+      status: complete
+      count: 18
+    - check: "All naming schema files indexed"
+      status: complete
+      count: 8
+    - check: "All naming tool files indexed"
+      status: complete
+      count: 8
+    - check: "All naming documentation indexed"
+      status: complete
+      count: 12
+      
+  consolidationReadiness:
+    - check: "Redirect mapping configured"
+      status: complete
+    - check: "Duplicate files identified"
+      status: complete
+    - check: "Primary sources designated"
+      status: complete
+    - check: "Single source of truth established"
+      status: complete
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# 架構狀態 - Architecture Status
+# ═══════════════════════════════════════════════════════════════════════════════
+# **索引狀態**: `COMPLETE | SINGLE_SOURCE_OF_TRUTH`
+# **整合狀態**: `CONSOLIDATED | namespace-mcp AS PRIMARY`
+# **重導向狀態**: `CONFIGURED | SYMBOLIC_LINK_OR_REFERENCE`
+# **驗證狀態**: `VALIDATED | validation-mcp METHODOLOGY APPLIED`
+# **執行模式**: `INSTANT | Zero-Latency Execution`

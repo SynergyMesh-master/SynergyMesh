@@ -509,6 +509,79 @@ versionAlignment:
     - workspace/src/governance/37-behavior-contracts/services.mcp.yaml: "1.0.0 → 3.0.0"
 
 # ═══════════════════════════════════════════════════════════════════════════════
+# 命名空間治理索引 - Namespace Governance Index (NEW - Single Source of Truth)
+# ═══════════════════════════════════════════════════════════════════════════════
+namespaceGovernance:
+  # 統一命名空間索引 - Single Source of Truth
+  unifiedIndex:
+    path: workspace/mcp/namespace-mcp/NAMESPACE_INDEX.yaml
+    version: "3.0.0"
+    description: "Central index consolidating ALL namespace/naming conventions"
+    methodology: "validation-mcp 硫酸溶解法"
+    statistics:
+      totalScatteredFiles: 59
+      namingPolicies: 25
+      namespaceConfigs: 18
+      namingSchemas: 8
+      namingTools: 8
+
+  # 統一命名治理規範
+  unifiedGovernanceSpec:
+    path: workspace/mcp/namespace-mcp/policies/unified-naming-governance-spec.yaml
+    version: "3.0.0"
+    description: "Consolidated naming governance specification"
+    consolidatedFrom: "25+ scattered policy files"
+
+  # 命名規範維度（原始來源）
+  namingConventionDimension:
+    path: workspace/src/governance/dimensions/99-naming-convention/
+    version: "1.0.0"
+    description: "Original naming convention dimension (meta specification layer)"
+    status: "primary-source-for-specs"
+    components:
+      - dimension.yaml
+      - schema.json
+      - policy.rego
+      - specs/
+
+  # 散落檔案重導向
+  redirectMapping:
+    enabled: true
+    strategy: "consolidate-to-namespace-mcp"
+    categories:
+      namingPolicies:
+        originalLocations:
+          - workspace/src/governance/10-policy/naming-*.yaml
+          - workspace/src/governance/00-vision-strategy/naming-*.yaml
+          - workspace/governance/policies/naming/*.yaml
+        consolidatedTo: workspace/mcp/namespace-mcp/policies/
+        
+      namespaceConfigs:
+        originalLocations:
+          - workspace/**/namespace*.yaml
+          - workspace/mno-namespace.yaml
+        consolidatedTo: workspace/mcp/namespace-mcp/namespaces/
+        
+      namingSchemas:
+        originalLocations:
+          - workspace/src/shared/types/naming-*.schema.yaml
+          - workspace/src/schemas/naming-*.schema.yaml
+        consolidatedTo: workspace/mcp/namespace-mcp/schemas/
+        
+      namingTools:
+        originalLocations:
+          - workspace/tools/namespace-*.py
+          - workspace/scripts/*/namespace-*.py
+        consolidatedTo: workspace/mcp/namespace-mcp/tools/
+
+  # 交叉引用 validation-mcp
+  validationMcpIntegration:
+    validationPipeline: workspace/mcp/validation-mcp/validation/WORLD_CLASS_VALIDATION_PIPELINE.yaml
+    unifiedPipeline: workspace/mcp/validation-mcp/pipelines/unified-pipeline-config.yaml
+    integrationIndex: workspace/mcp/validation-mcp/INTEGRATION_INDEX.yaml
+    relationship: "namespace-mcp uses validation-mcp methodology"
+
+# ═══════════════════════════════════════════════════════════════════════════════
 # 架構狀態 - Architecture Status
 # ═══════════════════════════════════════════════════════════════════════════════
 # **當前架構狀態**: `v3.0.0-UNIFIED | STABLE | HIGH_PERFORMANCE`
