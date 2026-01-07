@@ -14,25 +14,9 @@
       "types": "./dist/core/index.d.ts",
       "import": "./dist/core/index.js"
     },
-    "./quantum": {
-      "types": "./dist/quantum/index.d.ts",
-      "import": "./dist/quantum/index.js"
-    },
-    "./nexus": {
-      "types": "./dist/nexus/index.d.ts",
-      "import": "./dist/nexus/index.js"
-    },
-    "./market": {
-      "types": "./dist/market/index.d.ts",
-      "import": "./dist/market/index.js"
-    },
     "./converters": {
       "types": "./dist/converters/index.d.ts",
       "import": "./dist/converters/index.js"
-    },
-    "./protocols": {
-      "types": "./dist/protocols/index.d.ts",
-      "import": "./dist/protocols/index.js"
     }
   },
   "scripts": {
