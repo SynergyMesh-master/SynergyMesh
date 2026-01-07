@@ -14,12 +14,10 @@ export * from './converters-quantum.js';
 export * from './protocols-standard.js';
 export * from './protocols-mcp.js';
 export * from './protocols-bridge.js';
-export * from './protocols-mcp.js';
-export * from './protocols-bridge.js';
 export * from './protocols.js';
 
 // Import for type-only exports
-import type { Grail, NamespacePath } from './namespaces.js';
+import type { NamespacePath } from './namespaces.js';
 
 // ============================================================================
 // CORE TYPE ALIASES

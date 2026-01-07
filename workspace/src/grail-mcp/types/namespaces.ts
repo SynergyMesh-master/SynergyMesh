@@ -353,7 +353,7 @@ export interface StreamProcessor {
 
     export interface AlphaModel {
       readonly name: string;
-      readonly type: 'momentum' | 'mean-reversion' | 'statistical-arbitrage' | 'statistical-arbitrage' | 'ml-based';
+      readonly type: 'momentum' | 'mean-reversion' | 'statistical-arbitrage' | 'ml-based';
       generateSignals(data: MarketData[]): Promise<AlphaSignal[]>;
       backtest(historicalData: MarketData[]): Promise<BacktestResult>;
     }
