@@ -12,7 +12,7 @@ jobs:
       security-events: write
       contents: read
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
 
       - name: Node audit
         if: ${{ hashFiles('package-lock.json') != '' || hashFiles('pnpm-lock.yaml') != '' }}
@@ -21,7 +21,7 @@ jobs:
           npm audit --audit-level=high || true
 
       - name: Run Trivy filesystem scan
-        uses: aquasecurity/trivy-action@master
+        uses: aquasecurity/trivy-action@b6643a2595a1cbaad588e40e71356e2b8aea3432 # v0.33.1
         with:
           scan-type: fs
           ignore-unfixed: true
@@ -29,11 +29,11 @@ jobs:
           output: trivy.sarif
 
       - name: Upload Trivy results
-        uses: github/codeql-action/upload-sarif@v3
+        uses: github/codeql-action/upload-sarif@c37a8b7cd97e31de3fcbd9d84c401870edeb8d34 # v3
         with:
           sarif_file: trivy.sarif
 
       - name: OSV scanner
-        uses: google/osv-scanner-action@v1
+        uses: google/osv-scanner-action@764c91816374ff2d8fc2095dab36eecd42d61638 # v1.9.2
         with:
           scan-args: "--lockfile=pnpm-lock.yaml --lockfile=poetry.lock"
