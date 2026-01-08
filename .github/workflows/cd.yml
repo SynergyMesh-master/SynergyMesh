@@ -55,12 +55,12 @@ jobs:
     
     steps:
       - name: "檢出代碼"
-        uses: 0ad4b8f3a27c304e21892351cbf9860471245599
+        uses: actions/checkout@0ad4b8f3a27c304e21892351cbf9860471245599  # v4
         with:
           fetch-depth: 0
 
       - name: "設置 Python 環境"
-        uses: 82c7e631bb3cdc910f68e0081d534527d238d7a7
+        uses: actions/setup-python@82c7e631bb3cdc910f68e0081d534527d238d7a7  # v5
         with:
           python-version: "3.11"
 
@@ -131,7 +131,7 @@ jobs:
           cat pre-deploy-report.md
 
       - name: "上傳檢查報告"
-        uses: 65462800fd760344b1a7b4382951275a0abb4808
+        uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808  # v4
         with:
           name: pre-deploy-check-report
           path: pre-deploy-report.md
@@ -153,7 +153,7 @@ jobs:
     
     steps:
       - name: "檢出代碼"
-        uses: 0ad4b8f3a27c304e21892351cbf9860471245599
+        uses: actions/checkout@0ad4b8f3a27c304e21892351cbf9860471245599  # v4
 
       - name: "設置 Docker Buildx"
         uses: docker/setup-buildx-action@v3
@@ -213,7 +213,7 @@ jobs:
           cat docker-info.md
 
       - name: "上傳鏡像信息"
-        uses: 65462800fd760344b1a7b4382951275a0abb4808
+        uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808  # v4
         with:
           name: docker-image-info
           path: docker-info.md
@@ -231,7 +231,7 @@ jobs:
     
     steps:
       - name: "檢出代碼"
-        uses: 0ad4b8f3a27c304e21892351cbf9860471245599
+        uses: actions/checkout@0ad4b8f3a27c304e21892351cbf9860471245599  # v4
 
       - name: "運行 Trivy 漏洞掃描"
         uses: aquasecurity/trivy-action@master
@@ -264,7 +264,7 @@ jobs:
           cat container-security-report.md
 
       - name: "上傳安全掃描報告"
-        uses: 65462800fd760344b1a7b4382951275a0abb4808
+        uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808  # v4
         with:
           name: container-security-report
           path: container-security-report.md
@@ -282,10 +282,10 @@ jobs:
     
     steps:
       - name: "檢出代碼"
-        uses: 0ad4b8f3a27c304e21892351cbf9860471245599
+        uses: actions/checkout@0ad4b8f3a27c304e21892351cbf9860471245599  # v4
 
       - name: "設置 Node.js 環境"
-        uses: 1e60f620b9541d16bece96c5465dc8ee9832be0b
+        uses: actions/setup-node@1e60f620b9541d16bece96c5465dc8ee9832be0b  # v4
         with:
           node-version: "20"
 
@@ -338,7 +338,7 @@ jobs:
           docker-compose -f docker-compose.test.yml down -v
 
       - name: "上傳性能測試報告"
-        uses: 65462800fd760344b1a7b4382951275a0abb4808
+        uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808  # v4
         with:
           name: performance-test-report
           path: |
@@ -372,7 +372,7 @@ jobs:
     
     steps:
       - name: "檢出代碼"
-        uses: 0ad4b8f3a27c304e21892351cbf9860471245599
+        uses: actions/checkout@0ad4b8f3a27c304e21892351cbf9860471245599  # v4
 
       - name: "設置 Kubernetes"
         uses: azure/setup-kubectl@v3
@@ -469,7 +469,7 @@ jobs:
           cat deployment-report.md
 
       - name: "上傳部署報告"
-        uses: 65462800fd760344b1a7b4382951275a0abb4808
+        uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808  # v4
         with:
           name: deployment-report-${{ matrix.environment }}
           path: deployment-report.md
@@ -486,7 +486,7 @@ jobs:
     
     steps:
       - name: "下載所有報告"
-        uses: 6b208ae046db98c579e8a328f74b955651f427c0
+        uses: actions/download-artifact@6b208ae046db98c579e8a328f74b955651f427c0  # v4
         with:
           merge-multiple: true
 
@@ -521,7 +521,7 @@ jobs:
 
       - name: "發送通知"
         if: always()
-        uses: 60a0d83039c74a4aee543508d2ffcb1c3799cdea
+        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea  # v7
         with:
           script: |
             const fs = require('fs');
@@ -553,7 +553,7 @@ jobs:
             }
 
       - name: "上傳部署總結"
-        uses: 65462800fd760344b1a7b4382951275a0abb4808
+        uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808  # v4
         with:
           name: deployment-summary
           path: deployment-summary.md

@@ -29,12 +29,12 @@ jobs:
     
     steps:
       - name: 📥 Checkout Repository
-        uses: 0ad4b8f3a27c304e21892351cbf9860471245599
+        uses: actions/checkout@0ad4b8f3a27c304e21892351cbf9860471245599  # v4
         with:
           fetch-depth: 0
       
       - name: 🐍 Setup Python
-        uses: 82c7e631bb3cdc910f68e0081d534527d238d7a7
+        uses: actions/setup-python@82c7e631bb3cdc910f68e0081d534527d238d7a7  # v5
         with:
           python-version: '3.11'
       
@@ -215,7 +215,7 @@ jobs:
       
       - name: 💬 Comment on PR
         if: github.event_name == 'pull_request' && failure()
-        uses: 60a0d83039c74a4aee543508d2ffcb1c3799cdea
+        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea  # v7
         with:
           script: |
             const fs = require('fs');
@@ -239,7 +239,7 @@ jobs:
       
       - name: 📤 Upload Validation Report
         if: always()
-        uses: 65462800fd760344b1a7b4382951275a0abb4808
+        uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808  # v4
         with:
           name: root-specs-validation-report
           path: root-specs-validation-report.md

@@ -38,7 +38,7 @@ jobs:
       tools-available: ${{ steps.tool-check.outputs.available }}
     steps:
       - name: 检出代码
-        uses: 0ad4b8f3a27c304e21892351cbf9860471245599
+        uses: actions/checkout@0ad4b8f3a27c304e21892351cbf9860471245599  # v4
 
       - name: 收集校验目录
         id: collect-dirs
@@ -114,7 +114,7 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: 检出代码
-        uses: 0ad4b8f3a27c304e21892351cbf9860471245599
+        uses: actions/checkout@0ad4b8f3a27c304e21892351cbf9860471245599  # v4
 
       - name: Shell脚本语法检查
         run: |
@@ -182,7 +182,7 @@ jobs:
     timeout-minutes: 8
     steps:
       - name: 检出代码
-        uses: 0ad4b8f3a27c304e21892351cbf9860471245599
+        uses: actions/checkout@0ad4b8f3a27c304e21892351cbf9860471245599  # v4
 
       - name: 收集配置目录
         id: collect-dirs
@@ -318,7 +318,7 @@ jobs:
           fi
 
       - name: 上传验证报告
-        uses: 65462800fd760344b1a7b4382951275a0abb4808
+        uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808  # v4
         if: always()
         with:
           name: environment-validation-report

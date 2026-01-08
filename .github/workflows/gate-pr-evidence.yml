@@ -23,13 +23,13 @@ jobs:
 
     steps:
       - name: 📥 檢出代碼
-        uses: 0ad4b8f3a27c304e21892351cbf9860471245599
+        uses: actions/checkout@0ad4b8f3a27c304e21892351cbf9860471245599  # v4
         with:
           fetch-depth: 0
 
       - name: 🔍 驗證四大核心證據
         id: validation
-        uses: 60a0d83039c74a4aee543508d2ffcb1c3799cdea
+        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea  # v7
         with:
           script: |
             const pr = context.payload.pull_request;
