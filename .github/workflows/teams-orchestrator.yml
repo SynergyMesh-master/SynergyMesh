@@ -74,12 +74,12 @@ jobs:
     needs: determine-playbook
     steps:
       - name: "Checkout"
-        uses: 0ad4b8f3a27c304e21892351cbf9860471245599
+        uses: actions/checkout@0ad4b8f3a27c304e21892351cbf9860471245599  # v4
         with:
           fetch-depth: 0
 
       - name: "Setup Python"
-        uses: 82c7e631bb3cdc910f68e0081d534527d238d7a7
+        uses: actions/setup-python@82c7e631bb3cdc910f68e0081d534527d238d7a7  # v5
         with:
           python-version: ${{ env.PYTHON_VERSION }}
           cache: 'pip'
@@ -152,7 +152,7 @@ jobs:
           "
 
       - name: "Upload Execution Report"
-        uses: 65462800fd760344b1a7b4382951275a0abb4808
+        uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808  # v4
         with:
           name: playbook-execution-report
           path: playbook-execution-report.json
@@ -164,10 +164,10 @@ jobs:
     needs: determine-playbook
     if: contains(fromJSON('["ci_pipeline", "security_pipeline"]'), needs.determine-playbook.outputs.playbook)
     steps:
-      - uses: 0ad4b8f3a27c304e21892351cbf9860471245599
+      - uses: actions/checkout@0ad4b8f3a27c304e21892351cbf9860471245599  # v4
       
       - name: "Setup Python"
-        uses: 82c7e631bb3cdc910f68e0081d534527d238d7a7
+        uses: actions/setup-python@82c7e631bb3cdc910f68e0081d534527d238d7a7  # v5
         with:
           python-version: "3.11"
           
@@ -183,7 +183,7 @@ jobs:
     needs: determine-playbook
     if: contains(fromJSON('["ci_pipeline", "security_pipeline", "cd_pipeline"]'), needs.determine-playbook.outputs.playbook)
     steps:
-      - uses: 0ad4b8f3a27c304e21892351cbf9860471245599
+      - uses: actions/checkout@0ad4b8f3a27c304e21892351cbf9860471245599  # v4
       
       - name: "Run Security Scan"
         run: |
@@ -197,10 +197,10 @@ jobs:
     needs: determine-playbook
     if: needs.determine-playbook.outputs.playbook == 'ci_pipeline'
     steps:
-      - uses: 0ad4b8f3a27c304e21892351cbf9860471245599
+      - uses: actions/checkout@0ad4b8f3a27c304e21892351cbf9860471245599  # v4
       
       - name: "Setup Python"
-        uses: 82c7e631bb3cdc910f68e0081d534527d238d7a7
+        uses: actions/setup-python@82c7e631bb3cdc910f68e0081d534527d238d7a7  # v5
         with:
           python-version: "3.11"
           
@@ -216,7 +216,7 @@ jobs:
     needs: determine-playbook
     if: needs.determine-playbook.outputs.playbook == 'governance_pipeline'
     steps:
-      - uses: 0ad4b8f3a27c304e21892351cbf9860471245599
+      - uses: actions/checkout@0ad4b8f3a27c304e21892351cbf9860471245599  # v4
       
       - name: "Validate Schemas"
         run: |
@@ -253,7 +253,7 @@ jobs:
           cat summary.md
           
       - name: "Upload Summary"
-        uses: 65462800fd760344b1a7b4382951275a0abb4808
+        uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808  # v4
         with:
           name: pipeline-summary
           path: summary.md

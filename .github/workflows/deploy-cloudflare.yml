@@ -83,7 +83,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: 0ad4b8f3a27c304e21892351cbf9860471245599
+        uses: actions/checkout@0ad4b8f3a27c304e21892351cbf9860471245599  # v4
         with:
           fetch-depth: 0
 
@@ -133,10 +133,10 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: 0ad4b8f3a27c304e21892351cbf9860471245599
+        uses: actions/checkout@0ad4b8f3a27c304e21892351cbf9860471245599  # v4
 
       - name: Setup Node.js
-        uses: 1e60f620b9541d16bece96c5465dc8ee9832be0b
+        uses: actions/setup-node@1e60f620b9541d16bece96c5465dc8ee9832be0b  # v4
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'npm'
@@ -170,10 +170,10 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: 0ad4b8f3a27c304e21892351cbf9860471245599
+        uses: actions/checkout@0ad4b8f3a27c304e21892351cbf9860471245599  # v4
 
       - name: Setup Node.js
-        uses: 1e60f620b9541d16bece96c5465dc8ee9832be0b
+        uses: actions/setup-node@1e60f620b9541d16bece96c5465dc8ee9832be0b  # v4
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'npm'
@@ -252,10 +252,10 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: 0ad4b8f3a27c304e21892351cbf9860471245599
+        uses: actions/checkout@0ad4b8f3a27c304e21892351cbf9860471245599  # v4
 
       - name: Setup Node.js
-        uses: 1e60f620b9541d16bece96c5465dc8ee9832be0b
+        uses: actions/setup-node@1e60f620b9541d16bece96c5465dc8ee9832be0b  # v4
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'npm'
@@ -295,7 +295,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: 0ad4b8f3a27c304e21892351cbf9860471245599
+        uses: actions/checkout@0ad4b8f3a27c304e21892351cbf9860471245599  # v4
 
       - name: Install Wrangler
         run: npm install -g wrangler@${{ env.WRANGLER_VERSION }}
@@ -336,7 +336,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: 0ad4b8f3a27c304e21892351cbf9860471245599
+        uses: actions/checkout@0ad4b8f3a27c304e21892351cbf9860471245599  # v4
 
       - name: Install Wrangler
         run: npm install -g wrangler@${{ env.WRANGLER_VERSION }}
@@ -377,7 +377,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: 0ad4b8f3a27c304e21892351cbf9860471245599
+        uses: actions/checkout@0ad4b8f3a27c304e21892351cbf9860471245599  # v4
 
       - name: Install Wrangler
         run: npm install -g wrangler@${{ env.WRANGLER_VERSION }}
@@ -494,7 +494,7 @@ jobs:
 
     steps:
       - name: Create Issue on Failure
-        uses: 60a0d83039c74a4aee543508d2ffcb1c3799cdea
+        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea  # v7
         with:
           script: |
             await github.rest.issues.create({

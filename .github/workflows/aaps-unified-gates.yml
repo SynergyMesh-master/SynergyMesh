@@ -22,7 +22,7 @@ jobs:
           - 6379:6379
     
     steps:
-      - uses: 0ad4b8f3a27c304e21892351cbf9860471245599
+      - uses: actions/checkout@0ad4b8f3a27c304e21892351cbf9860471245599  # v4
         with:
           fetch-depth: 0
       
@@ -186,7 +186,7 @@ jobs:
           sleep 5
       
       - name: Upload Gate Artifacts
-        uses: 65462800fd760344b1a7b4382951275a0abb4808
+        uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808  # v4
         if: always()
         with:
           name: aaps-gate-report-${{ github.run_number }}
@@ -194,7 +194,7 @@ jobs:
           retention-days: 30
       
       - name: Upload Auto-Fix Patches
-        uses: 65462800fd760344b1a7b4382951275a0abb4808
+        uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808  # v4
         if: failure()
         with:
           name: auto-fix-patches-${{ github.run_number }}

@@ -24,10 +24,10 @@ jobs:
 
     steps:
       - name: 📥 檢出代碼
-        uses: 0ad4b8f3a27c304e21892351cbf9860471245599
+        uses: actions/checkout@0ad4b8f3a27c304e21892351cbf9860471245599  # v4
 
       - name: 🔍 檢查 root/ 變更檔案
-        uses: 60a0d83039c74a4aee543508d2ffcb1c3799cdea
+        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea  # v7
         with:
           script: |
             const owner = context.repo.owner;
