@@ -192,10 +192,10 @@ class AxiomNamespaceMigrator:
             (r'\baxiom-([a-z0-9-]+)', r'machinenativeops-\1', 'resource_name'),
 
             # Python/Code specific conversions
-            (r'axiom_system', r'machinenativenops_system', 'python'),
-            (r'axiom_monitor', r'machinenativenops_monitor', 'python'),
-            (r'axiom_validator', r'machinenativenops_validator', 'python'),
-            (r'axiom_config', r'machinenativenops_config', 'python'),
+            (r'axiom_system', r'machinenativeops_system', 'python'),
+            (r'axiom_monitor', r'machinenativeops_monitor', 'python'),
+            (r'axiom_validator', r'machinenativeops_validator', 'python'),
+            (r'axiom_config', r'machinenativeops_config', 'python'),
 
             # Environment variable conversions
             (r'\bAXIOM_([A-Z_]+)', r'MNO_\1', 'env_var'),
