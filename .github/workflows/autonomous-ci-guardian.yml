@@ -38,12 +38,12 @@ jobs:
 
     steps:
       - name: 檢出代碼
-        uses: actions/checkout@0ad4b8f3a27c304e21892351cbf9860471245599  # v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v4.2.2
         with:
           fetch-depth: 0  # Full history for pattern analysis
 
       - name: 設置 Python 環境
-        uses: actions/setup-python@82c7e631bb3cdc910f68e0081d534527d238d7a7  # v5
+        uses: actions/setup-python@8d9ed9ac5c53483de85588cdf95a591a75ab9f55  # v5.5.0
         with:
           python-version: '3.11'
           cache: 'pip'
@@ -171,7 +171,7 @@ jobs:
           cat risk-report.md
 
       - name: 上傳風險報告
-        uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808  # v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02  # v4.6.2
         with:
           name: predictive-failure-report
           path: risk-report.md
@@ -192,10 +192,10 @@ jobs:
 
     steps:
       - name: 檢出代碼
-        uses: actions/checkout@0ad4b8f3a27c304e21892351cbf9860471245599  # v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v4.2.2
 
       - name: 設置 Python 環境
-        uses: actions/setup-python@82c7e631bb3cdc910f68e0081d534527d238d7a7  # v5
+        uses: actions/setup-python@8d9ed9ac5c53483de85588cdf95a591a75ab9f55  # v5.5.0
         with:
           python-version: '3.11'
           cache: 'pip'
@@ -348,7 +348,7 @@ jobs:
           cat remediation-report.md
 
       - name: 上傳修復報告
-        uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808  # v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02  # v4.6.2
         if: always()
         with:
           name: auto-remediation-report
@@ -366,7 +366,7 @@ jobs:
 
     steps:
       - name: 下載報告
-        uses: actions/download-artifact@6b208ae046db98c579e8a328f74b955651f427c0  # v4
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093  # v4.3.0
         with:
           pattern: "*-report"
           merge-multiple: true
@@ -411,7 +411,7 @@ jobs:
 
       - name: 評論 PR（如果有問題）
         if: needs.auto-remediation.outputs.issues-found > 0
-        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea  # v7
+        uses: actions/github-script@f28e40c7f34bde8b3046d885e986cb6290c5673b  # v7
         with:
           script: |
             const fs = require('fs');
