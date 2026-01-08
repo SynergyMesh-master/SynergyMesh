@@ -154,3 +154,4 @@ workspace/mcp/namespace-mcp/servers/tools/*.js
 # MCP TypeScript compiled output - ignore all .js files except the validation script
 workspace/mcp/namespace-mcp/servers/**/*.js
 !workspace/mcp/namespace-mcp/servers/validate-tools-refactor.js
+.axiom-migration-backup/
