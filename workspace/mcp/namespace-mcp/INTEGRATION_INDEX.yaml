@@ -426,7 +426,7 @@ documentation:
     - path: workspace/docs/INSTANT_TRIGGERS_IMPLEMENTATION_REPORT.md
 
   refactorPlaybooks:
-    basePath: workspace/docs/refactor_playbooks/
+    basePath: namespace-mcp/docs/refactor_playbooks/
     relevant:
       - 01_deconstruction/
       - 02_integration/
