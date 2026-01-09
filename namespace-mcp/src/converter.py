@@ -201,7 +201,7 @@ class MachineNativeConverter:
                     rules.append(ConversionRule(
                         name=f"dependency_{lang}_{old_dep}_bare_import",
                         pattern=f'\\bimport\\s+{escaped_old}\\b',
-                        replacement=f'import {new_dep.replace("-", "_")}',
+                        replacement=f'import {new_dep}',
                         file_types=["source_code"],
                         context=f"{lang}_dependencies_bare",
                         priority=95,
@@ -212,7 +212,7 @@ class MachineNativeConverter:
                     rules.append(ConversionRule(
                         name=f"dependency_{lang}_{old_dep}_from_import",
                         pattern=f'\\bfrom\\s+{escaped_old}\\b',
-                        replacement=f'from {new_dep.replace("-", "_")}',
+                        replacement=f'from {new_dep}',
                         file_types=["source_code"],
                         context=f"{lang}_dependencies_from",
                         priority=95,
