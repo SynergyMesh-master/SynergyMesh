@@ -51,4 +51,13 @@ while [ $# -gt 0 ]; do
     esac
 done
 
-python3 "$SRC_DIR/advanced_converter.py" "$SOURCE_PATH" "$TARGET_PATH" "${EXTRA_ARGS[@]}"
+if ! command -v python3 >/dev/null 2>&1; then
+    echo "未找到 python3，請先安裝 Python 3.8+"
+    exit 1
+fi
+
+if [ ${#EXTRA_ARGS[@]} -eq 0 ]; then
+    python3 "$SRC_DIR/advanced_converter.py" "$SOURCE_PATH" "$TARGET_PATH"
+else
+    python3 "$SRC_DIR/advanced_converter.py" "$SOURCE_PATH" "$TARGET_PATH" "${EXTRA_ARGS[@]}"
+fi

@@ -26,12 +26,19 @@ class AdvancedMachineNativeConverter(MachineNativeConverter):
         """
         目前直接調用基礎轉換器，預留高級語意/增強策略掛鉤。
         """
+        original_semantic_rules = self.conversion_rules.get("semantic", [])
+
         if not self.enable_semantic:
             # 暫時允許禁用語意層，透過移除該層規則實現
+            self.conversion_rules = dict(self.conversion_rules)
             self.conversion_rules["semantic"] = []
             logger.info("已禁用語意層轉換 (semantic layer skipped)")
 
-        return super().convert_project(source_path, target_path)
+        try:
+            return super().convert_project(source_path, target_path)
+        finally:
+            # 恢復原規則以避免重複實例或多次調用時的副作用
+            self.conversion_rules["semantic"] = original_semantic_rules
 
 
 def main():

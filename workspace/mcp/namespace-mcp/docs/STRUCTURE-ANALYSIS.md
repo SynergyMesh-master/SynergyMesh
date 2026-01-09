@@ -2,7 +2,7 @@
 
 本文件對 `workspace/mcp/namespace-mcp` 的實際目錄、關鍵檔案與入口進行快速盤點，作為後續架構協助的事前準備。
 
-## 目錄實況（2026-01-09）
+## 目錄實況（近期同步）
 - `config/`：`conversion.yaml`、`mcp-rules.yaml`、`governance.yaml` 三個主要配置。
 - `src/`：`converter.py` 單一核心轉換器。
 - `scripts/`：`convert.sh`（轉換入口）、`test.sh`（測試入口）。
