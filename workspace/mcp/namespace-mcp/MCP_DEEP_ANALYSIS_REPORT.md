@@ -1,9 +1,14 @@
-# namespace-mcp /workspace/mcp 深度分析報告（2026-01-06）
+# namespace-mcp /workspace/mcp 深度分析報告（2026-01-09）
 
 **INSTANT 執行重構計劃對齊**
 - 核心理念：AI自動演化、即時交付、零延遲執行；標準：<3分鐘完整堆疊、0次人工介入、完全自治；競爭力：對標 Replit / Claude 4 / GPT 的即時交付能力
 - 執行模式：事件驅動（trigger → event → action）、閉環執行、0次人工介入、AI 100% 決策、並行 64–256 代理
 - 延遲閾值：≤100ms / ≤500ms / ≤5s；狀態為二元（已實現 / 未實現）；傳統時間線與人工審批模式已廢棄
+
+### 2026-01-09 快速差異摘要
+- `workspace/src/mcp-servers/README.md` 衝突標記已清除，文檔恢復為單一權威版本。
+- `tools/github_project_analyzer.py` 已升級至 v2.1.0，支援本地掃描（使用 `--local-path`）以輸出實際 MCP 伺服器、治理腳本與流水線配置。
+- `governanceValidation` 仍標記為 `planned`，但治理驗證腳本（vision-tracker.py / validate-autonomy.py / latency-monitor.py）已存在，需修正配置與接線；性能/延遲指標仍依賴 manifest 配置與樣板值。
 
 ## 專案與範圍
 - **平台／倉庫**：GitHub `namespace-mcp`
@@ -12,7 +17,7 @@
   - 架構與標準：`workspace/mcp/namespace-mcp/README.md`、`workspace/mcp/namespace-mcp/pipelines/unified-pipeline-config.yaml`  
   - 型別與載入：`workspace/mcp/namespace-mcp/types/unifiedPipeline.ts`、`workspace/mcp/namespace-mcp/tools/load_unified_pipeline.py`  
   - 自動化掃描腳本：`workspace/mcp/namespace-mcp/tools/github_project_analyzer.py`  
-  - MCP 端點與周邊：`workspace/src/mcp-servers/`（README 中含未解決衝突段落）
+  - MCP 端點與周邊：`workspace/src/mcp-servers/`（README 已清除衝突並可直接參照）
 
 ---
 
@@ -46,8 +51,8 @@
   - **型別與載入**：TS 與 Python loader 均提供 isInstant/validate_latency/validate_parallelism 等執行期檢查。
 - **成熟度觀察**  
   - 主管線與即時管線規格完整，並行與延遲邊界明確。  
-  - 治理驗證腳本標為 `planned`（尚未落地），表示治理能力部分未實裝。  
-  - MCP 端 README 含衝突標記，可能影響文檔可信度。
+  - 治理驗證腳本已存在於 `workspace/src/governance/scripts`，但 manifest 仍標記 `planned`，表示配置狀態需更新與接線。  
+  - MCP 端 README 已整理並無衝突標記，文檔可讀性恢復。
 - **性能與指標**（來自 manifest 配置）  
   - 延遲閾值：instant ≤100ms、fast ≤500ms、standard ≤5s、maxStage 30s、maxTotal 3min。  
   - 並行：min 64 / max 256 代理；auto-scaling 指標包括 CPU、p99 latency、queue depth。  
@@ -57,26 +62,35 @@
   - 多語言型別與 loader 鎖定一致性，降低配置漂移風險；  
   - MCP 工具覆蓋分析、測試、安全、性能多維度，支援跨平台協調。
 
-**小結**：核心執行與即時管線配置完善並具自動化彈性；治理與文檔一致性仍需補完。
+**小結**：核心執行與即時管線配置完善並具自動化彈性；  
+治理與文檔一致性仍需補完。
 
 ---
 
 ## 3. 待完成功能清單（依優先順序）
-| 優先級 | 項目 | 內容與依賴 | 建議時程 |
-|--------|------|-----------|---------|
-| 🔴 高 | 清除 MCP 伺服器 README 衝突段落 | `workspace/src/mcp-servers/README.md` 存在 `<<<<<<<` 衝突標記，需整理以恢復可讀性 | 即日（≤2 小時） |
-| 🔴 高 | 落地治理驗證腳本 | `governanceValidation` 中的 `vision-tracker.py`、`validate-autonomy.py`、`latency-monitor.py` 標記為 `planned`，需實作或提供替代檢查 | 3–5 天 |
-| 🟠 中 | 以實際觀測數據更新分析腳本 | `tools/github_project_analyzer.py` 目前輸出模板化數據，應接入倉庫/觀測指標或局部掃描（mcp 路徑） | 2–3 天 |
-| 🟠 中 | 補充自動測試 | 為 `load_unified_pipeline.py` 與 TS 型別新增最小單元/模式測試，驗證 humanIntervention=0、延遲/並行邊界 | 2 天 |
-| 🟡 低 | 補齊 CI 可觀測性 | 針對 MCP 端 workflow（manifest 指向 `.github/workflows/instant-execution-validator.yml` 等）補充成功率/延遲儀表板 | 3 天 |
+
+- 🔴 高 — 修正治理驗證接線  
+  - 說明：`governanceValidation` 已有 `vision-tracker.py`、`validate-autonomy.py`、`latency-monitor.py`，但仍標記為 `planned`；需改為 `implemented` 並校驗調用路徑。  
+  - 建議時程：3–5 天  
+
+- 🔴 高 — 接入觀測數據替換樣板指標  
+  - 說明：`tools/github_project_analyzer.py` 支援 `--local-path` 本地掃描，但性能/延遲仍為樣板值；需接入監控或真實測試數據。  
+  - 建議時程：2–3 天  
+
+- 🟠 中 — 補充自動測試  
+  - 說明：為 `load_unified_pipeline.py` 與 TS 型別新增最小單元/模式測試，驗證 humanIntervention=0、延遲/並行邊界。  
+  - 建議時程：2 天  
+
+- 🟡 低 — 補齊 CI 可觀測性  
+  - 說明：針對 MCP 端 workflow（如 `.github/workflows/instant-execution-validator.yml`）補充成功率/延遲儀表板。  
+  - 建議時程：3 天  
 
 ---
 
 ## 4. 問題診斷（急救站）
 - **已知問題**  
-  - 文檔衝突：`workspace/src/mcp-servers/README.md` 仍含 merge 衝突標記，需手動修復。  
-  - 治理腳本缺失：`governanceValidation` 三項標記 `planned`，目前無實際驗證執行。  
-  - 分析腳本為樣板：`tools/github_project_analyzer.py` 內部 `_analyze_*` 函式目前硬編範例功能與性能值，未讀取本地 `workspace/mcp` 內容或 CI 產物。  
+  - 治理配置不一致：`governanceValidation` 三項標記 `planned`，但 `workspace/src/governance/scripts` 已有對應腳本；需將 manifest 改為 `implemented` 並驗證調用鏈。  
+  - 指標樣板：`tools/github_project_analyzer.py` 支援本地掃描，但性能/延遲仍以樣板值輸出；需接入觀測或真實測試數據。  
 - **潛在技術債／風險**  
   - MCP 端點缺少自動測試與 lint 覆蓋（README 提到命令，但缺乏狀態證據）。  
   - 高並行配置（最多 256 agents）若無監控與節流，可能觸發資源尖峰。  
@@ -88,13 +102,13 @@
   - 確認 MCP 端工具的輸入驗證覆蓋（安全掃描器存在但未見自動化報表）；  
   - `toolAdapters` 路徑包含 shell/JS 執行器，需確保 CI 中執行安全掃描。
 
-**小結**：文檔衝突與治理驗證缺位是當前最急迫的可見問題；性能與安全指標需要實測與報表化。
+**小結**：治理驗證缺位與實測指標缺乏是當前最急迫的可見問題；性能與安全指標仍需以實際觀測數據補齊。
 
 ---
 
 ## 5. 深度細節補充
 - **代碼質量**：TS 型別與 Python dataclass 具明確邊界； `_safe_construct` 會記錄未知欄位警告，利於向前相容。建議為 MCP JS 端與 loader 補充 lint/test pipeline，降低靜態缺陷風險。  
-- **文檔**：`workspace/mcp/namespace-mcp/README.md` 架構詳盡；MCP 端 README 需修復衝突後再對齊。可增設「實測指標/運行手冊」區塊。  
+- **文檔**：`workspace/mcp/namespace-mcp/README.md` 架構詳盡；MCP 端 README 已清除衝突，需持續與架構對齊並補充「實測指標/運行手冊」區塊。  
 - **測試策略**：目前未見針對 `tools`/`types` 的自動測試；建議新增最小單元測試（載入合法/違規 manifest、延遲/並行邊界、humanIntervention 斷言）。  
 - **CI/CD 與部署**：manifest 指向 `.github/workflows/instant-execution-validator.yml`、`quantum-validation-pr.yml`，但缺少 MCP 端特定報告；建議在 CI 中加入 `npm run check:strict`（MCP servers README 所述）並產生構件。  
 - **社群與貢獻**：未在 mcp 子專案發現貢獻者/活躍度指標；可透過 GitHub Insights 或 analyzer 腳本增補。  
@@ -105,11 +119,16 @@
 ---
 
 ## 行動建議（可執行清單）
-1) **修復文檔衝突**：整理 `workspace/src/mcp-servers/README.md`，恢復單一權威版本。  
-2) **落實治理驗證**：為 `governanceValidation` 三個標準提供腳本或移除 `planned` 標記並更新 README。  
-3) **實測指標回填**：以 `load_unified_pipeline.py` + 實際延遲數據生成報表，更新 analyzer 腳本輸出。  
-4) **補測試與 CI**：新增 loader/TS 型別單元測試並在 CI（instant-execution / quantum workflows）中執行；加入安全與依賴掃描。  
-5) **監控與容量防護**：對 auto-scaling 目標（CPU、p99、queue depth）建立儀表板與警戒，防止 256 代理並行帶來資源風險。
+1) **落實治理驗證**  
+   - 將 unified-pipeline-config.yaml 中 `governanceValidation` 標記改為 `implemented`。  
+   - 確保調用現有腳本（vision-tracker / validate-autonomy / latency-monitor）並與 README 對齊。  
+2) **實測指標回填**  
+   - 以 `load_unified_pipeline.py` 搭配實際延遲/性能數據生成報表，更新 analyzer 輸出以取代樣板值。  
+3) **補測試與 CI**  
+   - 新增 loader/TS 型別單元測試並在 CI（instant-execution / quantum workflows）中執行。  
+   - 加入安全與依賴掃描。  
+4) **監控與容量防護**  
+   - 針對 auto-scaling 目標（CPU、p99、queue depth）建立儀表板與警戒，防止 256 代理並行帶來資源風險。
 
 ---
 
