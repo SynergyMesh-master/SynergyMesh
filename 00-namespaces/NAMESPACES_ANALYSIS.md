@@ -20,7 +20,7 @@ English summary: Consolidated analysis of namespaces-adk, namespaces-mcp, and na
 
 ## namespaces-adk（Under Development）
 - **參考來源**：`namespaces-adk.txt`、`IMPLEMENTATION_SUMMARY.md`、`README.md`、`config/*`。
-- **現況**：目前檔案僅有配置 (`settings.yaml`、`logging.yaml`、`policies.yaml`) 與封包初始化 (`adk/__init__.py`)，未見文件所述的核心/治理/可觀測性/安全/插件目錄與模組檔案。
+ - **現況**：目前檔案僅有配置 (`settings.yaml`、`logging.yaml`、`policies.yaml`) 與套件初始化 (`adk/__init__.py`)，未見文件所述的核心/治理/可觀測性/安全/插件目錄與模組檔案。
 - **缺口**：核心/治理/觀測/安全模組與測試、範例皆缺，需依文件落實程式碼。
 
 ## 統一建議
