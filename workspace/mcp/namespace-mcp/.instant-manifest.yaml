@@ -1,247 +1,29 @@
-# INSTANT Manifest for namespace-mcp
-# Version: 1.0.0
-# Compliance: INSTANT Standard v1.0
-
+name: namespace-mcp
+version: "2.0.1"
+status: active
+description: "INSTANT manifest for namespace-mcp; enumerates expected artifacts referenced in project docs."
+artifacts:
+  - path: config/conversion.yaml
+    type: config
+  - path: config/mcp-rules.yaml
+    type: config
+  - path: config/governance.yaml
+    type: config
+  - path: src/converter.py
+    type: runtime
+  - path: src/advanced_converter.py
+    type: runtime
+  - path: scripts/convert.sh
+    type: script
+  - path: scripts/advanced-convert.sh
+    type: script
+  - path: examples/example-project
+    type: example-source
+  - path: examples/converted-example
+    type: example-output
+  - path: reports/
+    type: output
 metadata:
-  name: namespace-mcp
-  version: 2.0.1
-  type: mcp-converter
-  category: governance-alignment
-  instant_compliant: true
-  created: "2024-01-09T00:00:00Z"
-  updated: "2024-01-09T03:00:00Z"
-
-instant_standards:
-  structure:
-    type: modular
-    pattern: feature-based
-    depth: 3
-    naming: kebab-case
-  
-  configuration:
-    format: yaml
-    location: config/
-    validation: schema-based
-  
-  documentation:
-    format: markdown
-    location: docs/
-    completeness: 100%
-  
-  testing:
-    framework: pytest
-    location: tests/
-    coverage: 80%
-  
-  execution:
-    entry_points:
-      - scripts/convert.sh
-      - scripts/advanced-convert.sh
-      - src/converter.py
-      - src/advanced_converter.py
-
-structure:
-  root: workspace/mcp/namespace-mcp
-  
-  directories:
-    config:
-      purpose: Configuration files
-      instant_role: configuration-layer
-      files:
-        - conversion.yaml
-        - governance.yaml
-        - mcp-rules.yaml
-    
-    src:
-      purpose: Source code
-      instant_role: execution-layer
-      files:
-        - converter.py
-        - advanced_converter.py
-    
-    scripts:
-      purpose: Execution scripts
-      instant_role: automation-layer
-      files:
-        - convert.sh
-        - advanced-convert.sh
-        - test.sh
-    
-    docs:
-      purpose: Documentation
-      instant_role: documentation-layer
-      files:
-        - architecture.md
-        - usage.md
-    
-    tests:
-      purpose: Test suite
-      instant_role: validation-layer
-      files:
-        - test_converter.py
-    
-    examples:
-      purpose: Usage examples
-      instant_role: demonstration-layer
-      subdirs:
-        - example-project
-        - converted-example
-    
-    reports:
-      purpose: Conversion reports
-      instant_role: output-layer
-      generated: true
-
-dependencies:
-  runtime:
-    - python: ">=3.8"
-    - pyyaml: ">=6.0"
-  
-  development:
-    - pytest: ">=7.0"
-    - pylint: ">=2.0"
-
-interfaces:
-  cli:
-    - name: convert
-      command: ./scripts/convert.sh
-      args: [source_path, target_path]
-    
-    - name: advanced-convert
-      command: ./scripts/advanced-convert.sh
-      args: [source_path, target_path]
-  
-  api:
-    - class: MachineNativeConverter
-      module: src.converter
-      methods:
-        - convert_project
-        - _apply_layer_conversion
-    
-    - class: AdvancedConverter
-      module: src.advanced_converter
-      methods:
-        - convert_project
-        - _deep_scan_project
-        - _multi_pass_conversion
-
-governance:
-  alignment_layers:
-    - namespace
-    - dependency
-    - reference
-    - structure
-    - semantic
-    - governance
-  
-  compliance:
-    - SLSA-L3+
-    - ISO27001
-    - SOC2
-    - GDPR
-    - CCPA
-    - MCP-2024.1
-  
-  security:
-    - zero-trust
-    - quantum-safe-hashing
-    - immutable-audit-trail
-
-execution_flow:
-  phases:
-    1_initialization:
-      - load_configuration
-      - validate_environment
-      - initialize_converter
-    
-    2_scanning:
-      - deep_scan_project
-      - detect_dependencies
-      - analyze_structure
-    
-    3_conversion:
-      - apply_namespace_alignment
-      - apply_dependency_alignment
-      - apply_reference_alignment
-      - apply_structure_alignment
-      - apply_semantic_alignment
-      - apply_governance_alignment
-    
-    4_validation:
-      - verify_conversions
-      - check_compliance
-      - generate_reports
-    
-    5_finalization:
-      - cleanup_artifacts
-      - generate_enterprise_config
-      - create_audit_trail
-
-outputs:
-  primary:
-    - converted_project/
-    - CONVERSION-REPORT.md
-    - conversion-report.json
-  
-  secondary:
-    - .enterprise-config.yaml
-    - ssot-audit-trail.json
-  
-  metrics:
-    - files_processed
-    - changes_made
-    - dependencies_converted
-    - compliance_score
-
-quality_gates:
-  pre_conversion:
-    - source_path_exists
-    - configuration_valid
-    - dependencies_available
-  
-  post_conversion:
-    - all_files_processed
-    - no_critical_errors
-    - compliance_verified
-    - reports_generated
-
-integration:
-  upstream:
-    - machine-native-ops/workspace
-    - machine-native-ops/governance
-  
-  downstream:
-    - converted-projects/
-    - enterprise-deployments/
-
-versioning:
-  scheme: semver
-  current: 2.0.1
-  changelog: CHANGELOG.md
-  
-  history:
-    - version: 1.0.0
-      date: "2024-01-09"
-      changes: Initial release
-    
-    - version: 2.0.0
-      date: "2024-01-09"
-      changes: Advanced converter with auto-detection
-    
-    - version: 2.0.1
-      date: "2024-01-09"
-      changes: Enhanced dependency conversion
-
-instant_validation:
-  structure_check: passed
-  naming_convention: passed
-  documentation_complete: passed
-  test_coverage: passed
-  configuration_valid: passed
-  execution_verified: passed
-  
-  score: 100%
-  status: INSTANT_COMPLIANT
-  certified: true
-  certified_by: MachineNativeOps
-  certified_at: "2024-01-09T03:00:00Z"
+  slsa_level: "L3+"
+  mcp_protocol: "2024.1"
+  updated_at: "2025-01-09"
