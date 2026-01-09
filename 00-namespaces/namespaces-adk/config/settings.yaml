@@ -1,0 +1,113 @@
+# Namespace-ADK Runtime Settings
+
+# Agent Configuration
+agent:
+  name: "default-agent"
+  version: "1.0.0"
+  environment: "development"
+  
+  # Performance
+  max_concurrent_workflows: 10
+  max_workflow_duration_seconds: 300
+  
+  # Sandbox
+  sandbox_enabled: true
+  sandbox_pool_size: 5
+  
+  # Memory
+  memory_backend: "redis"
+  context_window_size: 10000
+
+# MCP Configuration
+mcp:
+  # Server configurations
+  servers:
+    - url: "http://localhost:8000"
+      transport: "http"
+      timeout: 30
+  
+  # Tool routing
+  routing_strategy: "priority"
+  fallback_enabled: true
+  max_retries: 3
+
+# Observability
+observability:
+  # Logging
+  logging:
+    level: "INFO"
+    format: "json"
+    enable_context_propagation: true
+  
+  # Tracing
+  tracing:
+    enabled: true
+    exporter: "otlp"
+    endpoint: "localhost:4317"
+  
+  # Metrics
+  metrics:
+    enabled: true
+    exporter: "prometheus"
+    port: 9090
+
+# Governance
+governance:
+  # MI9 Runtime
+  mi9:
+    enabled: true
+    intervention_level: "monitor"
+  
+  # ARI Index
+  ari:
+    autonomy_weight: 0.4
+    adaptability_weight: 0.3
+    continuity_weight: 0.3
+  
+  # Containment
+  containment:
+    default_level: "none"
+    auto_escalate: true
+
+# Security
+security:
+  # Authentication
+  auth:
+    enabled: true
+    method: "token"
+    token_expiry_hours: 24
+  
+  # Permissioning
+  permissioning:
+    enabled: true
+    default_role: "user"
+  
+  # PII Filtering
+  pii_filter:
+    enabled: true
+    redaction_char: "*"
+
+# Plugin Configuration
+plugins:
+  directories:
+    - "adk/plugins/tool_plugins"
+    - "adk/plugins/memory_plugins"
+    - "adk/plugins/workflow_plugins"
+    - "adk/plugins/sdk_integrations"
+  
+  hot_reload: true
+  auto_discover: true
+
+# Storage
+storage:
+  # Redis (memory)
+  redis:
+    host: "localhost"
+    port: 6379
+    db: 0
+  
+  # ChromaDB (vector)
+  chroma:
+    host: "localhost"
+    port: 8000
+    collection_name: "adk_memory"

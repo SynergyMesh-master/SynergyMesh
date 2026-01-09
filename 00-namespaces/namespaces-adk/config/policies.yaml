@@ -1,0 +1,80 @@
+# Governance Policies
+
+# Containment Policies
+containment_policies:
+  - policy_id: "auto_escalate_on_drift"
+    name: "Auto-escalate on Drift Detection"
+    description: "Automatically escalate containment level when drift is detected"
+    trigger:
+      event_type: "drift.detected"
+      severity: "high"
+    action:
+      escalate_to: "restrict"
+  
+  - policy_id: "isolate_on_critical_drift"
+    name: "Isolate on Critical Drift"
+    description: "Isolate agent on critical drift detection"
+    trigger:
+      event_type: "drift.detected"
+      severity: "critical"
+    action:
+      escalate_to: "isolate"
+
+# Access Control Policies
+access_policies:
+  - policy_id: "admin_full_access"
+    name: "Administrator Full Access"
+    resource: "*"
+    allowed_roles:
+      - "admin"
+    allowed_permissions: "*"
+    enabled: true
+  
+  - policy_id: "user_limited_access"
+    name: "User Limited Access"
+    resource: "*"
+    allowed_roles:
+      - "user"
+    allowed_permissions:
+      - "read"
+      - "tool_invoke"
+      - "workflow_start"
+    enabled: true
+  
+  - policy_id: "tool_restriction"
+    name: "Restricted Tools"
+    resource: "tool:sensitive_tool"
+    allowed_roles:
+      - "admin"
+    denied_roles:
+      - "user"
+      - "readonly"
+    enabled: true
+
+# Workflow Policies
+workflow_policies:
+  - policy_id: "max_duration"
+    name: "Maximum Workflow Duration"
+    description: "Terminate workflows that exceed maximum duration"
+    max_duration_seconds: 300
+    action: "terminate"
+  
+  - policy_id: "approval_required"
+    name: "Human Approval Required"
+    description: "Require human approval for critical actions"
+    requires_approval:
+      - "tool:delete"
+      - "tool:admin"
+      - "workflow:destructive"
+
+# Rate Limiting Policies
+rate_limiting:
+  - policy_id: "global_rate_limit"
+    name: "Global Rate Limit"
+    limit_per_minute: 100
+    scope: "global"
+  
+  - policy_id: "tool_rate_limit"
+    name: "Tool Rate Limit"
+    limit_per_minute: 10
+    scope: "tool"

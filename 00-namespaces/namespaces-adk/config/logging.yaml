@@ -1,0 +1,56 @@
+# Logging Configuration
+
+version: 1
+
+formatters:
+  json:
+    class: 'pythonjsonlogger.jsonlogger.JsonFormatter'
+    format: '%(asctime)s %(name)s %(levelname)s %(message)s'
+
+  standard:
+    format: '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+
+handlers:
+  console:
+    class: 'logging.StreamHandler'
+    level: 'INFO'
+    formatter: 'json'
+    stream: 'ext://sys.stdout'
+
+  file:
+    class: 'logging.handlers.RotatingFileHandler'
+    level: 'DEBUG'
+    formatter: 'json'
+    filename: 'logs/adk.log'
+    maxBytes: 10485760  # 10MB
+    backupCount: 10
+
+loggers:
+  adk:
+    level: 'INFO'
+    handlers: ['console', 'file']
+    propagate: false
+
+  adk.core:
+    level: 'DEBUG'
+    handlers: ['console', 'file']
+    propagate: false
+
+  adk.mcp:
+    level: 'INFO'
+    handlers: ['console', 'file']
+    propagate: false
+
+  adk.governance:
+    level: 'INFO'
+    handlers: ['console', 'file']
+    propagate: false
+
+  adk.security:
+    level: 'WARNING'
+    handlers: ['console', 'file']
+    propagate: false
+
+root:
+  level: 'WARNING'
+  handlers: ['console']
