@@ -334,6 +334,18 @@ items:
     description: "Automated PR review and merge workflow."
 
   # ===== Guides 指南 =====
+  - id: "unmanned_island_overview"
+    path: "docs/README.md"
+    title: "Unmanned Island System Overview 專案總覽"
+    domain: "guides"
+    layer: "platform-core"
+    type: "index"
+    tags: ["overview", "index", "unmanned-island-system"]
+    owner: "docs-team"
+    status: "stable"
+    last_reviewed: "2026-01-09"
+    description: "Primary bilingual overview and navigation entry point for the Unmanned Island System."
+
   - id: "quick_start"
     path: "docs/QUICK_START.md"
     title: "Quick Start Guide 快速入門指南"
