@@ -79,7 +79,8 @@ class EventSchemaRegistry:
     @classmethod
     def get_schema(cls, event_type: EventType) -> Optional[EventSchemaDef]:
         """Get schema for an event type."""
-        return cls.SCHEMAS.get(event_type.value)
+        key = event_type.value if isinstance(event_type, EventType) else str(event_type)
+        return cls.SCHEMAS.get(key)
     
     @classmethod
     def validate_event(cls, event: Dict[str, Any]) -> tuple[bool, Optional[str]]:

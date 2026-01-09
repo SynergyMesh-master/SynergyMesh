@@ -30,7 +30,10 @@ class PIIType(Enum):
 
 @dataclass
 class PIIMatch:
-    """A PII match."""
+    """
+    A PII match with a confidence score (0.0–1.0) and optional metadata
+    describing match context (for example, the path of the matched field).
+    """
     pii_type: PIIType
     start: int
     end: int
