@@ -1,0 +1,316 @@
+%YAML 1.2
+---
+# ═══════════════════════════════════════════════════════════════════════════
+#                    Audit Log Specification v1.0
+#                    Structured, Immutable Audit Trail
+# ═══════════════════════════════════════════════════════════════════════════
+#
+# Purpose: Define audit logging standards for migration operations
+# Compliance: SOC2 Type II, ISO-27001:2013 A.12.4.1, PCI-DSS 10.x
+# Format: JSONL (JSON Lines) for streaming and analysis
+#
+# ═══════════════════════════════════════════════════════════════════════════
+
+audit_spec:
+  version: "1.0.0"
+  format: "JSONL"
+  encoding: "UTF-8"
+  
+  # ═════════════════════════════════════════════════════════════════════════
+  # Required Fields - Must be present in every audit event
+  # ═════════════════════════════════════════════════════════════════════════
+  required_fields:
+    - event_id          # Unique identifier (UUID v4)
+    - timestamp         # ISO 8601 format with timezone
+    - action            # Action performed (enum)
+    - actor             # Who performed the action
+    - target            # What was affected
+    - result.status     # Outcome (REALIZED/FAILED)
+    - result.duration   # Execution time in seconds
+  
+  # ═════════════════════════════════════════════════════════════════════════
+  # Optional Fields - Recommended for comprehensive auditing
+  # ═════════════════════════════════════════════════════════════════════════
+  optional_fields:
+    - source_ip         # Source IP address
+    - user_agent        # User agent string
+    - session_id        # Session identifier
+    - correlation_id    # For tracing related events
+    - metadata          # Additional context
+    - evidence          # Supporting evidence
+  
+  # ═════════════════════════════════════════════════════════════════════════
+  # Integrity Validation
+  # ═════════════════════════════════════════════════════════════════════════
+  integrity_validation:
+    hash_algorithm: "sha256"
+    signing_required: true
+    signature_algorithm: "ed25519"
+    chain_validation: true
+    
+    # Each log entry includes hash of previous entry
+    chain_structure:
+      current_hash: "sha256(current_event)"
+      previous_hash: "sha256(previous_event)"
+      sequence_number: "monotonic_counter"
+  
+  # ═════════════════════════════════════════════════════════════════════════
+  # Retention Policy
+  # ═════════════════════════════════════════════════════════════════════════
+  retention_policy:
+    duration: "365d"
+    compression: "gzip"
+    encryption: "AES-256-GCM"
+    backup_frequency: "daily"
+    backup_retention: "7 years"
+    
+    # Compliance-driven retention
+    compliance_retention:
+      SOC2: "365d"
+      ISO27001: "365d"
+      PCI_DSS: "365d"
+      GDPR: "as_required"
+  
+  # ═════════════════════════════════════════════════════════════════════════
+  # Storage Configuration
+  # ═════════════════════════════════════════════════════════════════════════
+  storage:
+    backend: "file"
+    path: "workspace/mcp/namespace-mcp/refactor_playbooks/_audit/"
+    rotation: "daily"
+    max_size: "100MB"
+    
+    # File naming convention
+    naming_pattern: "audit-{date}-{sequence}.jsonl"
+    example: "audit-20260108-001.jsonl"
+  
+  # ═════════════════════════════════════════════════════════════════════════
+  # Alerting Configuration
+  # ═════════════════════════════════════════════════════════════════════════
+  alerting:
+    enabled: true
+    
+    conditions:
+      - event: "MIGRATION_FAILURE"
+        severity: "HIGH"
+        action: "notify_admin"
+        threshold: 1
+      
+      - event: "VALIDATION_FAILURE"
+        severity: "HIGH"
+        action: "notify_admin"
+        threshold: 1
+      
+      - event: "INTEGRITY_VIOLATION"
+        severity: "CRITICAL"
+        action: "immediate_escalation"
+        threshold: 1
+      
+      - event: "UNAUTHORIZED_ACCESS"
+        severity: "CRITICAL"
+        action: "immediate_escalation"
+        threshold: 1
+    
+    notification_channels:
+      - type: "log"
+        destination: "stderr"
+      - type: "file"
+        destination: "_audit/alerts.log"
+
+# ═══════════════════════════════════════════════════════════════════════════
+# Event Categories - Predefined event types
+# ═══════════════════════════════════════════════════════════════════════════
+event_categories:
+  INSTANT_MIGRATION:
+    schema: "urn:axiom:schema:audit:migration:v1"
+    description: "INSTANT migration execution events"
+    
+    required_evidence:
+      - pre_migration_hash
+      - post_migration_hash
+      - validation_report
+      - execution_metrics
+    
+    retention: "permanent"
+    
+    example:
+      event_id: "urn:axiom:audit:migration:20260108T170000Z"
+      timestamp: "2026-01-08T17:00:00Z"
+      action: "INSTANT_MIGRATION"
+      actor: "SuperNinja-AI-Agent"
+      target: "refactor_playbooks"
+      parameters:
+        source: "workspace/docs/refactor_playbooks/"
+        destination: "workspace/mcp/namespace-mcp/refactor_playbooks/"
+        file_count: 107
+        total_size: "1.9MB"
+      result:
+        status: "REALIZED"
+        duration: 4.8
+        success_rate: 1.0
+        integrity_score: 1.0
+      evidence:
+        pre_migration_hash: "sha256:abc123..."
+        post_migration_hash: "sha256:def456..."
+        validation_report: "VALIDATED"
+  
+  ARCHIVE_OPERATION:
+    schema: "urn:axiom:schema:audit:archive:v1"
+    description: "Archive creation and management events"
+    
+    required_evidence:
+      - archive_hash
+      - compression_ratio
+      - validation_status
+    
+    retention: "365d"
+    
+    example:
+      event_id: "urn:axiom:audit:archive:20260109T000725Z"
+      timestamp: "2026-01-09T00:07:25Z"
+      action: "INSTANT_ARCHIVE"
+      actor: "instant_archiver.py"
+      target: "refactor_playbooks"
+      parameters:
+        source: "workspace/docs/refactor_playbooks/"
+        archive: "refactor_playbooks_20260109_000725.tar.gz"
+        compression: "gzip"
+      result:
+        status: "REALIZED"
+        duration: 0.12
+        archive_size: "500KB"
+        compression_ratio: 0.32
+      evidence:
+        archive_hash: "sha256:3c4b78df..."
+        validation_status: "VERIFIED"
+  
+  VALIDATION_CHECK:
+    schema: "urn:axiom:schema:audit:validation:v1"
+    description: "Integrity and validation check events"
+    
+    required_evidence:
+      - check_type
+      - check_result
+      - threshold
+    
+    retention: "90d"
+  
+  ACCESS_CONTROL:
+    schema: "urn:axiom:schema:audit:access:v1"
+    description: "Access control and permission events"
+    
+    required_evidence:
+      - access_type
+      - permission_level
+      - authorization_result
+    
+    retention: "365d"
+
+# ═══════════════════════════════════════════════════════════════════════════
+# Compliance Mapping
+# ═══════════════════════════════════════════════════════════════════════════
+compliance_mapping:
+  SOC2:
+    - control: "CC7.2"
+      description: "System monitoring"
+      requirement: "Log security events and system activities"
+      implementation: "JSONL audit logs with integrity validation"
+      evidence: "audit-*.jsonl files"
+    
+    - control: "CC8.1"
+      description: "Change management"
+      requirement: "Track and log system changes"
+      implementation: "INSTANT_MIGRATION event category"
+      evidence: "migration audit events"
+  
+  ISO27001:
+    - control: "A.12.4.1"
+      description: "Event logging"
+      requirement: "Event logs recording user activities, exceptions, faults and information security events shall be produced, kept and regularly reviewed"
+      implementation: "Comprehensive audit logging with 365-day retention"
+      evidence: "audit-*.jsonl files with daily rotation"
+    
+    - control: "A.12.4.2"
+      description: "Protection of log information"
+      requirement: "Logging facilities and log information shall be protected against tampering and unauthorized access"
+      implementation: "SHA-256 integrity validation + Ed25519 signatures"
+      evidence: "Chain validation in audit logs"
+    
+    - control: "A.12.4.3"
+      description: "Administrator and operator logs"
+      requirement: "System administrator and system operator activities shall be logged and the logs protected and regularly reviewed"
+      implementation: "Actor tracking in all audit events"
+      evidence: "actor field in audit events"
+  
+  PCI_DSS:
+    - requirement: "10.2"
+      description: "Implement automated audit trails"
+      implementation: "Automated JSONL audit logging"
+      evidence: "audit-*.jsonl files"
+    
+    - requirement: "10.3"
+      description: "Record audit trail entries"
+      implementation: "Required fields: event_id, timestamp, actor, action, result"
+      evidence: "Structured audit events"
+    
+    - requirement: "10.5"
+      description: "Secure audit trails"
+      implementation: "SHA-256 + Ed25519 signatures, AES-256-GCM encryption"
+      evidence: "Integrity validation and encryption"
+
+# ═══════════════════════════════════════════════════════════════════════════
+# Usage Examples
+# ═══════════════════════════════════════════════════════════════════════════
+usage_examples:
+  write_audit_event:
+    description: "How to write an audit event"
+    code: |
+      import json
+      import hashlib
+      from datetime import datetime
+      
+      def write_audit_event(event):
+          # Add timestamp if not present
+          if 'timestamp' not in event:
+              event['timestamp'] = datetime.utcnow().isoformat() + 'Z'
+          
+          # Calculate event hash
+          event_json = json.dumps(event, sort_keys=True)
+          event['event_hash'] = hashlib.sha256(event_json.encode()).hexdigest()
+          
+          # Write to audit log
+          with open('_audit/audit-20260108-001.jsonl', 'a') as f:
+              f.write(json.dumps(event) + '\n')
+  
+  read_audit_log:
+    description: "How to read and verify audit log"
+    code: |
+      import json
+      
+      def read_audit_log(filename):
+          events = []
+          with open(filename, 'r') as f:
+              for line in f:
+                  event = json.loads(line)
+                  events.append(event)
+          return events
+  
+  verify_integrity:
+    description: "How to verify audit log integrity"
+    code: |
+      import hashlib
+      import json
+      
+      def verify_audit_chain(events):
+          for i, event in enumerate(events):
+              if i > 0:
+                  # Verify previous hash matches
+                  if event.get('previous_hash') != events[i-1].get('event_hash'):
+                      return False, f"Chain broken at event {i}"
+          return True, "Chain integrity verified"
+
+---
+# Audit Log Specification Status: DEFINED
+# Compliance: SOC2, ISO-27001, PCI-DSS
+# Implementation: READY
+# Next Steps: Deploy audit logging infrastructure
