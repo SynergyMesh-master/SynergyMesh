@@ -23,6 +23,6 @@
 
 ## 待核對／缺失項
 - README 中提到的 `.instant-manifest.yaml`, `advanced_converter.py`, `advanced-convert.sh`, `converted-example/`, `reports/` 等項目目前不在目錄中，若需啟用需另行補齊或調整文檔。
-- 未見 `.instant-manifest.yaml` 或其他自動化生成工件; 現有流程以 `config/` 與 `scripts/convert.sh` 為主。
+- 未見 `.instant-manifest.yaml` 或其他自動化生成工件，現有流程以 `config/` 與 `scripts/convert.sh` 為主。
 
 以上盤點可作為後續架構調整與治理校驗的即時基線。
