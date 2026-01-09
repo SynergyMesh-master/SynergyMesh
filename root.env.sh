@@ -32,7 +32,7 @@ export BOOT_MODE="${BOOT_MODE:-production}"
 export MACHINENATIVEOPS_VERSION="v1.0.0"
 export CONTROLPLANE_VERSION="v1.0.0"
 
-echo "✅ MachineNativeOps AAPS 環境已加載"
+echo "✅ MachineNativeOps Taxonomy Root Layer 環境已加載"
 echo "   Controlplane: ${CONTROLPLANE_PATH}"
 echo "   Workspace: ${WORKSPACE_PATH}"
 echo "   Boot Mode: ${BOOT_MODE}"

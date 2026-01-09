@@ -2,7 +2,17 @@
 
 ## 📋 概述
 
-Controlplane 是 MachineNativeOps AAPS 的治理控制層，集中管理所有配置、規格、驗證和治理文件。
+Controlplane 是 MachineNativeOps Taxonomy Root Layer 的治理控制層，集中管理所有配置、規格、驗證和治理文件。
+
+### Taxonomy 配置 / 命名索引
+
+- `../root.bootstrap.yaml` - Taxonomy 根入口，定義 controlplane 路徑與版本鎖定
+- `../root.fs.map` - FHS 掛載與唯讀範圍索引（controlplane 掛載到 /controlplane）
+- `../root.env.sh` - 環境變數索引，提供 controlplane / workspace 錨點
+- `config/root.config.yaml` - 根層基線配置
+- `config/root.governance.yaml` - 治理與命名策略
+- `config/root.modules.yaml` - 模組分類映射
+- `registries/` - 模組與 URN 註冊表
 
 ---
 

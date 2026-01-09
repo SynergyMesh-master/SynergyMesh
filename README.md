@@ -2,10 +2,10 @@
 
 本倉庫同時包含：
 
-- **AAPS Root Layer**：以 Linux FHS 風格落地的最小根層骨架，並將治理配置集中到 `controlplane/`。
+- **Taxonomy Root Layer**（專案命名分類法）：以 Linux FHS 風格落地的最小根層骨架，並以嚴謹的 taxonomy 命名分類將治理配置集中到 `controlplane/`。
 - **CI/CD System**：以 GitHub Actions 為核心的企業級交付流水線，包含安全掃描、驗證閘門、Cloudflare 部署等。
 
-若你是第一次進來：先看「AAPS Root Layer」理解目錄邊界，再看「CI/CD System」了解交付與驗證機制。
+若你是第一次進來：先看「Taxonomy Root Layer」理解目錄邊界，再看「CI/CD System」了解交付與驗證機制。
 
 ---
 
@@ -20,16 +20,26 @@
 
 ---
 
-## 🏗️ AAPS Root Layer
+## 🏗️ Taxonomy Root Layer
 
 ## 🏗️ 架構概述
 
-本項目採用「類 Linux 最小系統骨架」+ Controlplane 分離架構。
+Taxonomy Root Layer（專案命名分類法）以「類 Linux 最小系統骨架」+ Controlplane 分離架構為基礎，強調所有命名、模組與治理條目皆經過嚴格分類，確保層級清晰、可追溯且具備高級感。
+
+### Taxonomy 配置 / 命名索引
+
+- `root.bootstrap.yaml`：Taxonomy 根入口，定義 controlplane path 與 version lock。
+- `root.fs.map`：文件系統映射索引，將分類後的掛載點固化為唯讀/讀寫邏輯。
+- `root.env.sh`：環境變數索引，為 taxonomy 目錄提供可移植的路徑錨點。
+- `controlplane/config/root.config.yaml`：系統級預設設定，對應 taxonomy 模組的基線配置。
+- `controlplane/config/root.governance.yaml`：治理策略與命名分類對應的約束條件。
+- `controlplane/config/root.modules.yaml`：模組分類映射表，維護 taxonomy 分類到模組的對應關係。
+- `controlplane/registries/`：註冊表索引，列舉所有受治理的分類與模組註冊記錄。
 
 ### 根層結構（極簡化）
 
 ```
-machine-native-ops-aaps/
+machine-native-ops-taxonomy-root-layer/
 ├── bin/                    # 基本用戶命令二進制檔案
 ├── sbin/                   # 系統管理二進制檔案
 ├── etc/                    # 系統配置檔案

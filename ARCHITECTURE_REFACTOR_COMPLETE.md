@@ -33,7 +33,7 @@ instant_system/
 
 ### 2. 📋 評估報告系統重構
 ```
-assessment_system/
+workspace/assessment_system/
 ├── complete_refactor_assessment.md      # 重命名核心評估
 ├── migration_visual_comparison.md
 ├── migration_execution_checklist.md
@@ -47,7 +47,7 @@ assessment_system/
 
 ### 3. 🏠 原始開發檔案重構
 ```
-original_dev/
+workspace/original_dev/
 └── original_axiom_backup/
     ├── core/        # 原始核心檔案
     ├── plugins/     # 原始插件檔案
@@ -85,9 +85,9 @@ original_dev/
 
 ### ✅ 命名規範化
 - **生產系統**: namespace-mcp/axiom (遠端同步)
-- **原始開發**: original_dev/original_axiom_backup (本地保留)
+- **原始開發**: workspace/original_dev/original_axiom_backup (本地保留)
 - **INSTANT產物**: instant_system/ (獨立架構)
-- **評估文檔**: assessment_system/ (決策支持)
+- **評估文檔**: workspace/assessment_system/ (決策支持)
 
 ### ✅ 同步狀態維持
 - **遠端儲存庫**: 6,244個檔案，核心系統100%同步

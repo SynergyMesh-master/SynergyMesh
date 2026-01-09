@@ -5,9 +5,9 @@ apiVersion: root.bootstrap/v1
 kind: RootBootstrap
 
 metadata:
-  name: machine-native-ops-aaps-bootstrap
+  name: machine-native-ops-taxonomy-bootstrap
   version: v1.0.0
-  description: Root layer bootstrap configuration for MachineNativeOps AAPS
+  description: Root layer bootstrap configuration for MachineNativeOps Taxonomy Root Layer
 
 controlplane:
   # Controlplane 路徑
