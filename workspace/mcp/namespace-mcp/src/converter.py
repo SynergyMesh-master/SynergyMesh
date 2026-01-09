@@ -605,7 +605,7 @@ def main():
                 repo_root = candidate
                 break
         
-        repo_root = repo_root or resolved_path.parents[4]
+        repo_root = repo_root or Path.cwd()
         default_target = repo_root / "outputs" / "namespace-mcp-scan"
         
         if not args.source:
