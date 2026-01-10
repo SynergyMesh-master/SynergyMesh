@@ -183,21 +183,21 @@ export interface IStorage<K, V> {
 }
 
 export class StorageFactory {
-  static async createMemoryStorage<K, V>(config?: StorageConfig): Promise<IStorage<K, V>> {
+  static async createMemoryStorage<V>(config?: StorageConfig): Promise<IStorage<string, V>> {
     const { MemoryStorage } = await import('./memory-storage');
     return new MemoryStorage<V>(config);
   }
 
-  static async createFileStorage<K, V>(config?: StorageConfig): Promise<IStorage<K, V>> {
+  static async createFileStorage<V>(config?: StorageConfig): Promise<IStorage<string, V>> {
     const { FileStorage } = await import('./file-storage');
     return new FileStorage<V>(config);
   }
 
-  static async createDatabaseStorage<K, V>(
+  static async createDatabaseStorage<V>(
     adapter: IDatabaseAdapter<V>,
     dbConfig: { type: string; host?: string; port?: number; database?: string },
     config?: StorageConfig
-  ): Promise<IStorage<K, V>> {
+  ): Promise<IStorage<string, V>> {
     const { DatabaseStorage } = await import('./database-storage');
     return new DatabaseStorage<V>(adapter, dbConfig, config);
   }

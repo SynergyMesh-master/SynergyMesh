@@ -100,11 +100,11 @@ export class ConsistencyChecker extends EventEmitter {
     const anomalies: ConsistencyAnomaly[] = [];
     
     // Check data integrity
-    const dataIntegrityAnomalies = await this.checkDataIntegrity(node);
+    const dataIntegrityAnomalies = await this.checkDataIntegrity();
     anomalies.push(...dataIntegrityAnomalies);
     
     // Check version consistency
-    const versionAnomalies = await this.checkVersionConsistency(node);
+    const versionAnomalies = await this.checkVersionConsistency();
     anomalies.push(...versionAnomalies);
     
     const checkTime = Date.now() - startTime;
@@ -123,7 +123,7 @@ export class ConsistencyChecker extends EventEmitter {
     };
   }
   
-  private async checkDataIntegrity(_node: ReplicationNode): Promise<ConsistencyAnomaly[]> {
+  private async checkDataIntegrity(): Promise<ConsistencyAnomaly[]> {
     const anomalies: ConsistencyAnomaly[] = [];
     
     // Mock implementation - would check checksums, corruption, etc.
@@ -131,7 +131,7 @@ export class ConsistencyChecker extends EventEmitter {
     return anomalies;
   }
   
-  private async checkVersionConsistency(_node: ReplicationNode): Promise<ConsistencyAnomaly[]> {
+  private async checkVersionConsistency(): Promise<ConsistencyAnomaly[]> {
     const anomalies: ConsistencyAnomaly[] = [];
     
     // Mock implementation - would check vector clocks, version numbers
