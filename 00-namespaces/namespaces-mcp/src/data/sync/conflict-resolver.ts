@@ -192,7 +192,7 @@ export class ConflictResolver extends EventEmitter {
   private resolveManualMerge(conflict: Conflict): Record<string, unknown> {
     // In a real implementation, this would require user input
     // For now, return the first operation's data
-    return conflict.operations[0]?.data || null;
+    return conflict.operations[0]?.data || {};
   }
   
   getUnresolvedConflicts(): Conflict[] {
