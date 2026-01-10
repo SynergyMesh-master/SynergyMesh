@@ -342,8 +342,20 @@ export class MetricsCollector extends EventEmitter {
   }
   
   private percentile(values: number[], p: number): number {
-    const index = Math.ceil(values.length * p) - 1;
-    return values[Math.max(0, index)];
+    if (values.length === 0) {
+      return NaN;
+    }
+
+    if (p <= 0) {
+      return values[0];
+    }
+
+    if (p >= 1) {
+      return values[values.length - 1];
+    }
+
+    const index = Math.floor(values.length * p);
+    return values[Math.min(index, values.length - 1)];
   }
   
   private startCollection(interval: number): void {
