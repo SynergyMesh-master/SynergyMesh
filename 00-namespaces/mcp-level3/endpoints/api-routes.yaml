@@ -1,0 +1,474 @@
+# MCP Level 3 REST/JSON-RPC API Routes
+# Complete endpoint mapping for all semantic engines
+# Version: 1.0.0
+
+api_version: "v1"
+base_path: "/api/v1"
+protocol: ["REST", "JSON-RPC"]
+
+# RAG Engine Endpoints
+rag_endpoints:
+  vector:
+    - path: "/rag/vector/query"
+      method: "POST"
+      description: "Query vector store with semantic search"
+      input_schema:
+        query: "string"
+        top_k: "integer"
+        threshold: "float"
+        filters: "object"
+      output_schema:
+        chunks: "array[VectorChunk]"
+        relevance_scores: "array[float]"
+        retrieval_time_ms: "integer"
+      
+    - path: "/rag/vector/store"
+      method: "POST"
+      description: "Store vector chunks"
+      input_schema:
+        chunks: "array[VectorChunk]"
+      output_schema:
+        stored_count: "integer"
+        duration_ms: "integer"
+
+  graph:
+    - path: "/rag/graph/query"
+      method: "POST"
+      description: "Query knowledge graph"
+      input_schema:
+        query: "string"
+        max_depth: "integer"
+        max_results: "integer"
+      output_schema:
+        triplets: "array[KnowledgeTriplet]"
+        entities: "array[EntityNode]"
+        relationships: "array[RelationshipEdge]"
+      
+    - path: "/rag/graph/extract"
+      method: "POST"
+      description: "Extract triplets from text"
+      input_schema:
+        text: "string"
+        source: "string"
+      output_schema:
+        triplets: "array[KnowledgeTriplet]"
+
+  hybrid:
+    - path: "/rag/hybrid/query"
+      method: "POST"
+      description: "Hybrid vector + graph retrieval"
+      input_schema:
+        query: "string"
+        vector_weight: "float"
+        graph_weight: "float"
+        fusion_method: "string"
+      output_schema:
+        context: "HybridContext"
+        fusion_score: "float"
+
+# DAG Engine Endpoints
+dag_endpoints:
+  - path: "/dag/build"
+    method: "POST"
+    description: "Build DAG from definition"
+    input_schema:
+      definition: "DAGDefinition"
+    output_schema:
+      dag_id: "string"
+      validation: "DAGValidationResult"
+      
+  - path: "/dag/lineage"
+    method: "GET"
+    description: "Get artifact lineage"
+    input_schema:
+      artifact_id: "string"
+      depth: "integer"
+    output_schema:
+      lineage_graph: "LineageGraph"
+      
+  - path: "/dag/dependency"
+    method: "GET"
+    description: "Get dependency matrix"
+    input_schema:
+      workflow_id: "string"
+    output_schema:
+      dependency_matrix: "DependencyMatrix"
+      
+  - path: "/dag/validate"
+    method: "POST"
+    description: "Validate DAG structure"
+    input_schema:
+      dag_definition: "DAGDefinition"
+    output_schema:
+      validation_result: "DAGValidationResult"
+
+# Governance Engine Endpoints
+governance_endpoints:
+  policy:
+    - path: "/governance/policy/evaluate"
+      method: "POST"
+      description: "Evaluate policy against request"
+      input_schema:
+        policy_id: "string"
+        request: "object"
+      output_schema:
+        decision: "boolean"
+        reason: "string"
+        
+    - path: "/governance/policy/create"
+      method: "POST"
+      description: "Create new policy"
+      input_schema:
+        policy: "PolicyDefinition"
+      output_schema:
+        policy_id: "string"
+
+  rbac:
+    - path: "/governance/rbac/check"
+      method: "POST"
+      description: "Check RBAC permissions"
+      input_schema:
+        user_id: "string"
+        resource: "string"
+        action: "string"
+      output_schema:
+        allowed: "boolean"
+        
+  abac:
+    - path: "/governance/abac/check"
+      method: "POST"
+      description: "Check ABAC permissions"
+      input_schema:
+        attributes: "object"
+        resource: "string"
+        action: "string"
+      output_schema:
+        allowed: "boolean"
+        
+  audit:
+    - path: "/governance/audit/log"
+      method: "POST"
+      description: "Log audit event"
+      input_schema:
+        event: "AuditEvent"
+      output_schema:
+        log_id: "string"
+        
+    - path: "/governance/audit/query"
+      method: "GET"
+      description: "Query audit logs"
+      input_schema:
+        filters: "object"
+        start_time: "string"
+        end_time: "string"
+      output_schema:
+        logs: "array[AuditLog]"
+
+  prompt:
+    - path: "/governance/prompt/validate"
+      method: "POST"
+      description: "Validate prompt security"
+      input_schema:
+        prompt: "string"
+      output_schema:
+        safe: "boolean"
+        threats: "array[string]"
+
+# Taxonomy Engine Endpoints
+taxonomy_endpoints:
+  - path: "/taxonomy/entity/recognize"
+    method: "POST"
+    description: "Recognize entities in text"
+    input_schema:
+      text: "string"
+    output_schema:
+      entities: "array[Entity]"
+      
+  - path: "/taxonomy/relationship/extract"
+    method: "POST"
+    description: "Extract relationships"
+    input_schema:
+      text: "string"
+    output_schema:
+      relationships: "array[Relationship]"
+      
+  - path: "/taxonomy/ontology/resolve"
+    method: "POST"
+    description: "Resolve ontology"
+    input_schema:
+      entity: "string"
+      context: "string"
+    output_schema:
+      resolved: "ResolvedEntity"
+      
+  - path: "/taxonomy/classify"
+    method: "POST"
+    description: "Classify entity"
+    input_schema:
+      entity: "string"
+    output_schema:
+      classification: "string"
+      confidence: "float"
+      
+  - path: "/taxonomy/disambiguate"
+    method: "POST"
+    description: "Disambiguate entity"
+    input_schema:
+      entity: "string"
+      candidates: "array[string]"
+    output_schema:
+      resolved: "string"
+      confidence: "float"
+
+# Execution Engine Endpoints
+execution_endpoints:
+  - path: "/execution/schedule"
+    method: "POST"
+    description: "Schedule workflow execution"
+    input_schema:
+      workflow_id: "string"
+      schedule: "string"
+    output_schema:
+      execution_id: "string"
+      
+  - path: "/execution/trigger"
+    method: "POST"
+    description: "Trigger immediate execution"
+    input_schema:
+      workflow_id: "string"
+      payload: "object"
+    output_schema:
+      execution_id: "string"
+      
+  - path: "/execution/status"
+    method: "GET"
+    description: "Get execution status"
+    input_schema:
+      execution_id: "string"
+    output_schema:
+      status: "string"
+      progress: "float"
+      
+  - path: "/execution/rollback"
+    method: "POST"
+    description: "Rollback execution"
+    input_schema:
+      execution_id: "string"
+    output_schema:
+      rollback_status: "string"
+      
+  - path: "/execution/retry"
+    method: "POST"
+    description: "Retry failed execution"
+    input_schema:
+      execution_id: "string"
+    output_schema:
+      new_execution_id: "string"
+
+# Validation Engine Endpoints
+validation_endpoints:
+  schema:
+    - path: "/validation/schema/validate"
+      method: "POST"
+      description: "Validate against schema"
+      input_schema:
+        data: "object"
+        schema: "object"
+      output_schema:
+        valid: "boolean"
+        errors: "array[string]"
+        
+  shacl:
+    - path: "/validation/shacl/check"
+      method: "POST"
+      description: "SHACL validation"
+      input_schema:
+        data_graph: "string"
+        shapes_graph: "string"
+      output_schema:
+        conforms: "boolean"
+        violations: "array[object]"
+        
+  policy:
+    - path: "/validation/policy/validate"
+      method: "POST"
+      description: "Validate policy compliance"
+      input_schema:
+        artifact: "object"
+        policy_id: "string"
+      output_schema:
+        compliant: "boolean"
+        violations: "array[string]"
+        
+  test:
+    - path: "/validation/test/run"
+      method: "POST"
+      description: "Run test suite"
+      input_schema:
+        test_suite_id: "string"
+      output_schema:
+        results: "TestResults"
+        
+  faithfulness:
+    - path: "/validation/faithfulness/evaluate"
+      method: "POST"
+      description: "Evaluate answer faithfulness"
+      input_schema:
+        answer: "string"
+        context: "HybridContext"
+      output_schema:
+        faithful: "boolean"
+        score: "float"
+        evidence: "array[string]"
+        
+  relevance:
+    - path: "/validation/relevance/score"
+      method: "POST"
+      description: "Score answer relevance"
+      input_schema:
+        answer: "string"
+        query: "string"
+      output_schema:
+        score: "float"
+
+# Promotion Engine Endpoints
+promotion_endpoints:
+  - path: "/promotion/plan"
+    method: "POST"
+    description: "Create promotion plan"
+    input_schema:
+      artifact_id: "string"
+      target_env: "string"
+    output_schema:
+      plan_id: "string"
+      
+  - path: "/promotion/apply"
+    method: "POST"
+    description: "Apply promotion"
+    input_schema:
+      plan_id: "string"
+    output_schema:
+      promotion_id: "string"
+      status: "string"
+      
+  - path: "/promotion/status"
+    method: "GET"
+    description: "Get promotion status"
+    input_schema:
+      promotion_id: "string"
+    output_schema:
+      status: "string"
+      progress: "float"
+      
+  - path: "/promotion/rollback"
+    method: "POST"
+    description: "Rollback promotion"
+    input_schema:
+      promotion_id: "string"
+    output_schema:
+      rollback_status: "string"
+      
+  - path: "/promotion/approve"
+    method: "POST"
+    description: "Approve promotion"
+    input_schema:
+      promotion_id: "string"
+      approver_id: "string"
+    output_schema:
+      approved: "boolean"
+
+# Artifact Registry Endpoints
+registry_endpoints:
+  - path: "/artifact/register"
+    method: "POST"
+    description: "Register new artifact"
+    input_schema:
+      artifact: "object"
+      metadata: "object"
+    output_schema:
+      artifact_id: "string"
+      
+  - path: "/artifact/retrieve"
+    method: "GET"
+    description: "Retrieve artifact"
+    input_schema:
+      artifact_id: "string"
+      version: "string"
+    output_schema:
+      artifact: "object"
+      
+  - path: "/artifact/list"
+    method: "GET"
+    description: "List artifacts"
+    input_schema:
+      filters: "object"
+      limit: "integer"
+    output_schema:
+      artifacts: "array[object]"
+      
+  - path: "/artifact/update"
+    method: "PUT"
+    description: "Update artifact"
+    input_schema:
+      artifact_id: "string"
+      updates: "object"
+    output_schema:
+      version: "string"
+      
+  - path: "/artifact/delete"
+    method: "DELETE"
+    description: "Delete artifact"
+    input_schema:
+      artifact_id: "string"
+    output_schema:
+      deleted: "boolean"
+      
+  - path: "/artifact/version"
+    method: "GET"
+    description: "Get artifact versions"
+    input_schema:
+      artifact_id: "string"
+    output_schema:
+      versions: "array[string]"
+
+# Semantic Dependency Graph Endpoints
+dependency_graph_endpoints:
+  - path: "/dag/visualize"
+    method: "GET"
+    description: "Visualize L3 DAG"
+    output_schema:
+      graph: "VisualDAG"
+      
+  - path: "/dag/matrix"
+    method: "GET"
+    description: "Get dependency matrix"
+    output_schema:
+      matrix: "DependencyMatrix"
+      
+  - path: "/dag/topology"
+    method: "GET"
+    description: "Get engine topology"
+    output_schema:
+      topology: "EngineTopology"
+
+# Global API Configuration
+api_config:
+  rate_limiting:
+    default: "1000 req/min"
+    burst: "100 req/sec"
+    
+  authentication:
+    required: true
+    methods: ["Bearer", "API-Key"]
+    
+  cors:
+    enabled: true
+    origins: ["*"]
+    
+  versioning:
+    strategy: "url_path"
+    current: "v1"
+    
+  documentation:
+    swagger: "/api/docs"
+    openapi: "/api/openapi.json"
