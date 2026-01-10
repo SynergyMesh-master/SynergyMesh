@@ -1,0 +1,106 @@
+# Protocol Module Manifest
+# Defines module metadata and dependencies
+
+version: "2.0.0"
+semantic_role: manifest_storage
+artifact_type: manifest
+semantic_root: true
+
+module:
+  name: "protocol"
+  version: "1.0.0"
+  description: "Protocol layer providing JSON-RPC handler, transport layer, and protocol validation"
+  author: "MCP Core Team"
+  license: "MIT"
+  homepage: "https://github.com/MachineNativeOps/machine-native-ops"
+  repository: "https://github.com/MachineNativeOps/machine-native-ops"
+  
+  keywords:
+    - "protocol"
+    - "json-rpc"
+    - "transport"
+    - "mcp"
+    - "validation"
+
+  category: "protocol"
+  semantic_classification: "protocol_layer"
+
+dependencies:
+  required:
+    - name: "communication"
+      version: "^1.0.0"
+      artifact: "communication.manifest.yaml"
+  optional: []
+  peer: []
+
+provides:
+  capabilities:
+    - "json-rpc-handler"
+    - "transport-layer"
+    - "protocol-validator"
+    - "message-router"
+  
+  endpoints:
+    - "prompts/list"
+    - "prompts/get"
+    - "tools/list"
+    - "tools/call"
+  
+  artifacts:
+    - type: "schema"
+      path: "schemas/protocol.schema.yaml"
+    - type: "spec"
+      path: "specs/protocol.spec.yaml"
+    - type: "policy"
+      path: "policies/protocol.policy.yaml"
+    - type: "bundle"
+      path: "bundles/protocol.bundle.yaml"
+
+configuration:
+  default_settings:
+    json_rpc_version: "2.0"
+    max_request_size: "10MB"
+    timeout: "30s"
+    retry_attempts: 3
+  
+  performance_targets:
+    request_processing: "<20ms"
+    throughput: ">5000 req/sec"
+    latency_p99: "<50ms"
+
+deployment:
+  runtime: "nodejs"
+  min_version: "18.0.0"
+  resources:
+    cpu: "1000m"
+    memory: "512Mi"
+  
+  health_check:
+    endpoint: "/health"
+    interval: "30s"
+    timeout: "5s"
+
+lifecycle:
+  status: "active"
+  created_at: "2025-01-10T12:00:00Z"
+  updated_at: "2025-01-10T13:00:00Z"
+  deprecated: false
+  deprecation_date: null
+
+metadata:
+  tags:
+    - "phase-1"
+    - "protocol"
+    - "json-rpc"
+  
+  maintainers:
+    - name: "MCP Core Team"
+      email: "mcp@example.com"
+  
+  references:
+    - type: "dependency-registry"
+      path: "registries/dependency-registry.yaml"
+    - type: "reference-registry"
+      path: "registries/reference-registry.yaml"
+    - type: "naming-registry"
+      path: "registries/naming-registry.yaml"
