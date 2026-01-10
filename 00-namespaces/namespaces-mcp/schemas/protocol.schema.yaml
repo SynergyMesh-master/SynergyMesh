@@ -1,0 +1,157 @@
+# Protocol Module Schema
+# Defines data structure and validation rules
+
+version: "2.0.0"
+semantic_role: schema_definitions
+artifact_type: schema
+semantic_root: false
+
+schema_definitions:
+  JSONRPCRequest:
+    type: "object"
+    description: "JSON-RPC 2.0 request structure"
+    required:
+      - "jsonrpc"
+      - "method"
+      - "id"
+    properties:
+      jsonrpc:
+        type: "string"
+        enum: ["2.0"]
+        description: "JSON-RPC version"
+      method:
+        type: "string"
+        description: "Method name"
+        pattern: "^[a-zA-Z][a-zA-Z0-9_/]*$"
+      params:
+        type: "object"
+        description: "Method parameters"
+      id:
+        type: ["string", "number", "null"]
+        description: "Request identifier"
+
+  JSONRPCResponse:
+    type: "object"
+    description: "JSON-RPC 2.0 response structure"
+    required:
+      - "jsonrpc"
+      - "id"
+    properties:
+      jsonrpc:
+        type: "string"
+        enum: ["2.0"]
+      result:
+        type: "any"
+        description: "Method result (if successful)"
+      error:
+        type: "object"
+        description: "Error object (if failed)"
+        properties:
+          code:
+            type: "integer"
+          message:
+            type: "string"
+          data:
+            type: "any"
+      id:
+        type: ["string", "number", "null"]
+
+  JSONRPCError:
+    type: "object"
+    description: "JSON-RPC error structure"
+    required:
+      - "code"
+      - "message"
+    properties:
+      code:
+        type: "integer"
+        description: "Error code"
+      message:
+        type: "string"
+        description: "Error message"
+      data:
+        type: "any"
+        description: "Additional error data"
+
+  TransportMessage:
+    type: "object"
+    description: "Transport layer message"
+    required:
+      - "id"
+      - "type"
+      - "payload"
+    properties:
+      id:
+        type: "string"
+        format: "uuid"
+      type:
+        type: "string"
+        enum: ["request", "response", "notification"]
+      payload:
+        type: "object"
+      metadata:
+        type: "object"
+        properties:
+          timestamp:
+            type: "string"
+            format: "date-time"
+          source:
+            type: "string"
+          destination:
+            type: "string"
+
+  ProtocolCapabilities:
+    type: "object"
+    description: "Protocol capabilities"
+    properties:
+      experimental:
+        type: "object"
+      prompts:
+        type: "object"
+        properties:
+          listChanged:
+            type: "boolean"
+      resources:
+        type: "object"
+        properties:
+          subscribe:
+            type: "boolean"
+          listChanged:
+            type: "boolean"
+      tools:
+        type: "object"
+        properties:
+          listChanged:
+            type: "boolean"
+      logging:
+        type: "object"
+
+validation_rules:
+  jsonrpc_request:
+    - rule: "version_required"
+      description: "JSON-RPC version must be 2.0"
+    - rule: "method_format"
+      description: "Method name must follow naming convention"
+    - rule: "id_unique"
+      description: "Request ID must be unique"
+  
+  jsonrpc_response:
+    - rule: "result_or_error"
+      description: "Response must contain either result or error"
+    - rule: "id_match"
+      description: "Response ID must match request ID"
+  
+  transport:
+    - rule: "message_size"
+      description: "Message size must not exceed limit"
+    - rule: "payload_valid"
+      description: "Payload must be valid JSON"
+
+metadata:
+  created_at: "2025-01-10T13:00:00Z"
+  updated_at: "2025-01-10T13:00:00Z"
+  version: "2.0.0"
+  status: "active"
+  references:
+    - "protocol.manifest.yaml"
+    - "protocol.spec.yaml"
