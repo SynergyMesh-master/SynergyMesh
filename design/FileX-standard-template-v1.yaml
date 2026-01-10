@@ -2,6 +2,12 @@
 # Bi-Directional Governance Loop Artifact Template
 # Version: 1.0.0
 # Purpose: Ensures bi-directional governance closure for all artifacts
+#
+# NOTE: This file contains TWO YAML documents:
+#   1. The FileX template specification (main document)
+#   2. The validation schema definition (supporting document)
+# Multi-document YAML is intentional for keeping template and schema together.
+# Use YAML parsers that support multi-document streams (yaml.safe_load_all in Python).
 
 apiVersion: machinenativeops.io/v1
 kind: FileXArtifact

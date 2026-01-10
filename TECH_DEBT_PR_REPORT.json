@@ -1,0 +1,41 @@
+{
+  "summary": {
+    "total": 5,
+    "critical": 2,
+    "high": 2,
+    "medium": 1,
+    "low": 0
+  },
+  "issues": [
+    {
+      "severity": "HIGH",
+      "category": "YAML Syntax",
+      "file": "design/FileX-standard-template-v1.yaml",
+      "issue": "Invalid YAML: expected a single document in the stream\n  in \"design/FileX-standard-template-v1.yaml\", line 6, column 1\nbut found another document\n  in \"design/FileX-standard-template-v1.yaml\", line 323, column 1"
+    },
+    {
+      "severity": "CRITICAL",
+      "category": "Implementation Gap",
+      "file": ".github/workflows/gate-lock-attest.yaml",
+      "issue": "Validation script /usr/local/bin/validate-artifact does not exist"
+    },
+    {
+      "severity": "HIGH",
+      "category": "Implementation Gap",
+      "file": ".github/workflows/gate-lock-attest.yaml",
+      "issue": "Hardcoded path /usr/local/bin/validate-artifact - tool not implemented"
+    },
+    {
+      "severity": "MEDIUM",
+      "category": "Dependency",
+      "file": "root/.root.semantic-root.yaml",
+      "issue": "Prometheus monitoring enabled but integration not verified"
+    },
+    {
+      "severity": "CRITICAL",
+      "category": "Dependency",
+      "file": ".github/workflows/gate-lock-attest.yaml",
+      "issue": "Workflow depends on non-existent validate-artifact tool"
+    }
+  ]
+}

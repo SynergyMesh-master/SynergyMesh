@@ -1,0 +1,215 @@
+{
+  "summary": {
+    "total_items": 1266,
+    "target_reduction": 633,
+    "by_type": {
+      "DEPRECATED": 15,
+      "TODO": 76,
+      "HIGH_COMPLEXITY": 1170,
+      "XXX": 4,
+      "FIXME": 1
+    },
+    "by_severity": {
+      "LOW": 90,
+      "MEDIUM": 1176
+    },
+    "by_directory": {
+      "root": 16,
+      "mcp": 2,
+      "examples": 12,
+      "teams": 239,
+      "scripts": 42,
+      "engine": 47,
+      "tools": 132,
+      "docs": 29,
+      "tests": 5,
+      "config": 4,
+      "src": 719,
+      "original_dev": 19
+    }
+  },
+  "high_priority": [],
+  "medium_priority": [
+    {
+      "file": "governance-system-implementation.py",
+      "line": 116,
+      "type": "HIGH_COMPLEXITY",
+      "message": "Function '__init__' has 552 lines (threshold: 100)"
+    },
+    {
+      "file": "governance-system-implementation.py",
+      "line": 164,
+      "type": "HIGH_COMPLEXITY",
+      "message": "Function '_setup_directories' has 514 lines (threshold: 100)"
+    },
+    {
+      "file": "governance-system-implementation.py",
+      "line": 514,
+      "type": "HIGH_COMPLEXITY",
+      "message": "Function '_copy_verification_stages' has 232 lines (threshold: 100)"
+    },
+    {
+      "file": "restructure_project.py",
+      "line": 20,
+      "type": "HIGH_COMPLEXITY",
+      "message": "Function '__init__' has 260 lines (threshold: 100)"
+    },
+    {
+      "file": "restructure_project.py",
+      "line": 26,
+      "type": "HIGH_COMPLEXITY",
+      "message": "Function 'log_change' has 255 lines (threshold: 100)"
+    },
+    {
+      "file": "restructure_project.py",
+      "line": 31,
+      "type": "HIGH_COMPLEXITY",
+      "message": "Function 'create_backup' has 251 lines (threshold: 100)"
+    },
+    {
+      "file": "restructure_project.py",
+      "line": 46,
+      "type": "HIGH_COMPLEXITY",
+      "message": "Function 'create_standardized_directory_structure' has 240 lines (threshold: 100)"
+    },
+    {
+      "file": "restructure_project.py",
+      "line": 152,
+      "type": "HIGH_COMPLEXITY",
+      "message": "Function 'update_namespace_references' has 144 lines (threshold: 100)"
+    },
+    {
+      "file": "restructure_project.py",
+      "line": 205,
+      "type": "HIGH_COMPLEXITY",
+      "message": "Function 'update_configuration_files' has 106 lines (threshold: 100)"
+    },
+    {
+      "file": "namespace-validator.py",
+      "line": 23,
+      "type": "HIGH_COMPLEXITY",
+      "message": "Function '__init__' has 145 lines (threshold: 100)"
+    },
+    {
+      "file": "mcp/validation-mcp/tools/github_project_analyzer.py",
+      "line": 55,
+      "type": "HIGH_COMPLEXITY",
+      "message": "Function '__init__' has 695 lines (threshold: 100)"
+    },
+    {
+      "file": "mcp/validation-mcp/tools/github_project_analyzer_v2.py",
+      "line": 30,
+      "type": "HIGH_COMPLEXITY",
+      "message": "Function '__init__' has 416 lines (threshold: 100)"
+    },
+    {
+      "file": "examples/enterprise-orchestrator-example.py",
+      "line": 35,
+      "type": "HIGH_COMPLEXITY",
+      "message": "Function 'demo_multi_tenancy' has 193 lines (threshold: 100)"
+    },
+    {
+      "file": "examples/enterprise-orchestrator-example.py",
+      "line": 74,
+      "type": "HIGH_COMPLEXITY",
+      "message": "Function 'demo_dependency_resolution' has 167 lines (threshold: 100)"
+    },
+    {
+      "file": "examples/enterprise-orchestrator-example.py",
+      "line": 151,
+      "type": "HIGH_COMPLEXITY",
+      "message": "Function 'demo_fault_tolerance' has 113 lines (threshold: 100)"
+    },
+    {
+      "file": "examples/enterprise-orchestrator-example.py",
+      "line": 161,
+      "type": "HIGH_COMPLEXITY",
+      "message": "Function 'failing_task' has 106 lines (threshold: 100)"
+    },
+    {
+      "file": "examples/enterprise-orchestrator-example.py",
+      "line": 165,
+      "type": "HIGH_COMPLEXITY",
+      "message": "Function 'success_task' has 103 lines (threshold: 100)"
+    },
+    {
+      "file": "examples/debug-examples/demo.py",
+      "line": 23,
+      "type": "HIGH_COMPLEXITY",
+      "message": "Function 'demo_basic_debugging' has 200 lines (threshold: 100)"
+    },
+    {
+      "file": "examples/debug-examples/demo.py",
+      "line": 72,
+      "type": "HIGH_COMPLEXITY",
+      "message": "Function 'demo_chat_interface' has 165 lines (threshold: 100)"
+    },
+    {
+      "file": "examples/debug-examples/demo.py",
+      "line": 101,
+      "type": "HIGH_COMPLEXITY",
+      "message": "Function 'demo_advanced_features' has 143 lines (threshold: 100)"
+    },
+    {
+      "file": "examples/debug-examples/demo.py",
+      "line": 137,
+      "type": "HIGH_COMPLEXITY",
+      "message": "Function 'demo_error_analysis' has 118 lines (threshold: 100)"
+    },
+    {
+      "file": "teams/default-team/orchestrator/gate_handler.py",
+      "line": 22,
+      "type": "HIGH_COMPLEXITY",
+      "message": "Function '__init__' has 276 lines (threshold: 100)"
+    },
+    {
+      "file": "teams/default-team/orchestrator/main.py",
+      "line": 77,
+      "type": "HIGH_COMPLEXITY",
+      "message": "Function '__init__' has 671 lines (threshold: 100)"
+    },
+    {
+      "file": "teams/default-team/orchestrator/main.py",
+      "line": 564,
+      "type": "HIGH_COMPLEXITY",
+      "message": "Function 'lifespan' has 281 lines (threshold: 100)"
+    },
+    {
+      "file": "teams/default-team/orchestrator/main.py",
+      "line": 592,
+      "type": "HIGH_COMPLEXITY",
+      "message": "Function 'request_middleware' has 260 lines (threshold: 100)"
+    },
+    {
+      "file": "teams/default-team/orchestrator/main.py",
+      "line": 624,
+      "type": "HIGH_COMPLEXITY",
+      "message": "Function 'receive_message' has 240 lines (threshold: 100)"
+    },
+    {
+      "file": "teams/default-team/orchestrator/main.py",
+      "line": 667,
+      "type": "HIGH_COMPLEXITY",
+      "message": "Function 'health_check' has 210 lines (threshold: 100)"
+    },
+    {
+      "file": "teams/default-team/orchestrator/main.py",
+      "line": 681,
+      "type": "HIGH_COMPLEXITY",
+      "message": "Function 'readiness_check' has 199 lines (threshold: 100)"
+    },
+    {
+      "file": "teams/default-team/orchestrator/main.py",
+      "line": 695,
+      "type": "HIGH_COMPLEXITY",
+      "message": "Function 'list_incidents' has 184 lines (threshold: 100)"
+    },
+    {
+      "file": "teams/default-team/orchestrator/main.py",
+      "line": 719,
+      "type": "HIGH_COMPLEXITY",
+      "message": "Function 'get_incident' has 168 lines (threshold: 100)"
+    }
+  ],
+  "low_priority_count": 90
+}

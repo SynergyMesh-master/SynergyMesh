@@ -27,48 +27,55 @@ jobs:
       - name: Install dependencies
         run: |
           pip install pyyaml
+      
+      - name: Setup validation tool
+        run: |
+          # Use the validation tool from the repository
+          chmod +x tools/validation/validate-artifact.py
+          echo "VALIDATE_TOOL=${{ github.workspace }}/tools/validation/validate-artifact.py" >> $GITHUB_ENV
           
       - name: Find artifacts
         id: find-artifacts
         run: |
           echo "Finding FileX artifacts..."
           artifacts=$(find . -name "*.yaml" -type f | grep -v node_modules | grep -v .git | head -10)
-          echo "artifacts=$(echo $artifacts | jq -R -s -c 'split("\n") | map(select(length > 0))')" >> $GITHUB_OUTPUT
+          echo "Found $(echo "$artifacts" | wc -l) artifacts"
           
       - name: Structural Validation Gate
         run: |
           echo "🔍 [Gate 1/5] Running Structural Validation..."
-          python3 /usr/local/bin/validate-artifact --level structural ${{ steps.find-artifacts.outputs.artifacts }}
+          python3 $VALIDATE_TOOL --level structural
           echo "✅ Structural validation gate passed"
       
       - name: Semantic Validation Gate
         run: |
           echo "🔍 [Gate 2/5] Running Semantic Validation..."
-          python3 /usr/local/bin/validate-artifact --level semantic ${{ steps.find-artifacts.outputs.artifacts }}
+          python3 $VALIDATE_TOOL --level semantic
           echo "✅ Semantic validation gate passed"
       
       - name: Dependency Validation Gate
         run: |
           echo "🔍 [Gate 3/5] Running Dependency Validation..."
-          python3 /usr/local/bin/validate-artifact --level dependency ${{ steps.find-artifacts.outputs.artifacts }}
+          python3 $VALIDATE_TOOL --level dependency
           echo "✅ Dependency validation gate passed"
       
       - name: Governance Validation Gate
         run: |
           echo "🔍 [Gate 4/5] Running Governance Validation..."
-          python3 /usr/local/bin/validate-artifact --level governance ${{ steps.find-artifacts.outputs.artifacts }}
+          python3 $VALIDATE_TOOL --level governance
           echo "✅ Governance validation gate passed"
       
       - name: Closure Validation Gate
         run: |
           echo "🔍 [Gate 5/5] Running Closure Validation..."
-          python3 /usr/local/bin/validate-artifact --level closure ${{ steps.find-artifacts.outputs.artifacts }}
+          python3 $VALIDATE_TOOL --level closure
           echo "✅ Closure validation gate passed"
       
       - name: Generate Attestation Bundle
         run: |
           echo "📜 Generating attestation bundle..."
-          # Attestation generation happens in validate-artifact
+          mkdir -p attestations
+          python3 $VALIDATE_TOOL --level all --attestation attestations/validation-attestation.yaml
           echo "✅ Attestation bundle generated"
       
       - name: Gate Lock
